@@ -1,0 +1,24 @@
+25-10-2004 Bacula web 1.1
+	- Add array_fill function (as Mikael suggested)
+	- Fix url encode of links. (reported by Phil Stracchino)
+	- Upgrade Smarty to 2.6.6 version.
+	- Add French translation
+	
+04-08-2004 Bacula web 1.0
+	- Add Italian translation
+	- Change some colors of graphs. More clear now (I hope).
+	- (0000012) Fix, don't load config in report.php
+	- (0000015) Fix, error date in When expire? field.
+	
+14-06-2004 Bacula web 1.0 Beta2
+	- (0000009) Fix incorrect date of "select report".
+	- (0000010) Fix incorrect symbolic link (Add paths.php).
+	- (0000008) Fix elapsed time of execution of jobs more than 24h in Lite mode.
+	
+11-06-2004 Bacula-web 1.0 Beta1 
+	- Check connection error (reported by Thomas Contamine)              
+	- register_globals on/off compatible (reported by Thomas Contamine)
+	- Fix bug in graph type=69. The data now is correct.
+	- Fix config system.
+	- Very internal fixes.
+	+ Add "Last report".

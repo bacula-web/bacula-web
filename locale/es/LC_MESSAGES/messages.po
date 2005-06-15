@@ -1,0 +1,238 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Bacula-web\n"
+"POT-Creation-Date: 2004-06-11 13:02+0200\n"
+"PO-Revision-Date: 2004-06-10 18:35+0100\n"
+"Last-Translator: Juan Luis Francés <bacula_listATveloxia.com>\n"
+"Language-Team: LANGUAGE <bacula_listATveloxia.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: lang.c:1 lang.c:2
+msgid "Bytes transferred last 30 days from ALL clients"
+msgstr "Bytes transferidos los últimos 30 días de todos los clientes."
+
+#: lang.c:3
+msgid "GENERAL DATA"
+msgstr "DATOS GENERALES"
+
+#: lang.c:4
+msgid "Total clients:"
+msgstr "Clientes totales:"
+
+#: lang.c:5
+msgid "Total bytes stored"
+msgstr "Bytes totales guardados"
+
+#: lang.c:6
+msgid "Total files:"
+msgstr "Archivos totales:"
+
+#: lang.c:7
+msgid "Last month, bytes transferred"
+msgstr "Último mes, bytes transferidos"
+
+#: lang.c:8
+msgid "Last month, bytes transferred (pie)"
+msgstr "Último mes, bytes transferidos(queso)"
+
+#: lang.c:9
+msgid "General%20report"
+msgstr "Informe%20general"
+
+#: lang.c:10
+msgid "Status from last 24h"
+msgstr "Estado de las últimas 24h"
+
+#: lang.c:11
+msgid "Errors:"
+msgstr "Errores:"
+
+#: lang.c:12
+msgid "Terminated Jobs:"
+msgstr "Jobs terminados:"
+
+#: lang.c:13
+msgid "Total time spent to do backup:"
+msgstr "Tiempo total en hacer el backup:"
+
+#: lang.c:14
+msgid "Bytes transferred last 24h"
+msgstr "Bytes transferidos en las últimas 24h"
+
+#: lang.c:15
+msgid "Show details"
+msgstr "Mostrar detalles"
+
+#: lang.c:16
+msgid "Jobs with errors"
+msgstr "Jobs con errores"
+
+#: lang.c:17
+msgid "Name"
+msgstr "Nombre"
+
+#: lang.c:18
+msgid "EndTime"
+msgstr ""
+
+#: lang.c:19
+msgid "JobStatus"
+msgstr ""
+
+#: lang.c:20
+msgid "Detailed report"
+msgstr "Informe detallado"
+
+#: lang.c:21 lang.c:42
+msgid "Select a job:"
+msgstr "Seleccione un job:"
+
+#: lang.c:22
+msgid "go"
+msgstr "Ir"
+
+#: lang.c:23
+msgid "Elapsed time"
+msgstr ""
+
+#: lang.c:24
+msgid "Job"
+msgstr "Job"
+
+#: lang.c:25
+msgid "Start Time"
+msgstr ""
+
+#: lang.c:26
+msgid "End Time"
+msgstr ""
+
+#: lang.c:27
+msgid "Type"
+msgstr "Tipo"
+
+#: lang.c:28
+msgid "Pool"
+msgstr ""
+
+#: lang.c:29 lang.c:40
+msgid "Status"
+msgstr "Estado"
+
+#: lang.c:30
+msgid "Stats Bacula: Job"
+msgstr "Bacula estadísticas: Job"
+
+#: lang.c:31
+msgid "Client:"
+msgstr "Cliente:"
+
+#: lang.c:32
+msgid "Period: From"
+msgstr "Período: De"
+
+#: lang.c:33
+msgid "to"
+msgstr "a"
+
+#: lang.c:34
+msgid "Bytes transferred in the period:"
+msgstr "Bytes transferidos en el período:"
+
+#: lang.c:35
+msgid "Files transferred in the period:"
+msgstr "Archivos transferidos en el período:"
+
+#: lang.c:36
+msgid "Date"
+msgstr "Fecha"
+
+#: lang.c:37
+msgid "Elapsed"
+msgstr "Transcurrido"
+
+#: lang.c:38
+msgid "Level"
+msgstr "Nivel"
+
+#: lang.c:39
+msgid "Bytes"
+msgstr "Bytes"
+
+#: lang.c:41
+msgid "SELECT NEW REPORT"
+msgstr "SELECCIONAR NUEVO INFORME"
+
+#: lang.c:43
+msgid "Graph mode:"
+msgstr "Modo gráfico"
+
+#: lang.c:44
+msgid "lines"
+msgstr "líneas"
+
+#: lang.c:45
+msgid "linepoints"
+msgstr ""
+
+#: lang.c:46
+msgid "points"
+msgstr "puntos"
+
+#: lang.c:47
+msgid "bars"
+msgstr "barras"
+
+#: lang.c:48
+msgid "area"
+msgstr "área"
+
+#: lang.c:49
+msgid "Data to show:"
+msgstr "Datos a mostrar"
+
+#: lang.c:50
+msgid "Transferred bytes"
+msgstr "Bytes transferidos"
+
+#: lang.c:51
+msgid "Start period:"
+msgstr ""
+
+#: lang.c:52
+msgid "End period:"
+msgstr ""
+
+#: lang.c:53
+msgid "Create report"
+msgstr "Crear informe"
+
+#: lang.c:54
+msgid "Volume Name"
+msgstr ""
+
+#: lang.c:55
+msgid "Volume Bytes"
+msgstr ""
+
+#: lang.c:56
+msgid "Media Type"
+msgstr ""
+
+#: lang.c:57
+msgid "When expire?"
+msgstr "Cuándo expira?"
+
+#: lang.c:58
+msgid "Last Written"
+msgstr ""
+
+#: lang.c:59
+msgid "Volume Status"
+msgstr ""

@@ -1,0 +1,239 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2004-06-11 13:02+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: lang.c:1 lang.c:2
+msgid "Bytes transferred last 30 days from ALL clients"
+msgstr "Octets transférés durant les 30 derniers jours de TOUS les clients"
+
+#: lang.c:3
+msgid "GENERAL DATA"
+msgstr "DONNEES GENERALES"
+
+#: lang.c:4
+msgid "Total clients:"
+msgstr "Nombre total de clients:"
+
+#: lang.c:5
+msgid "Total bytes stored"
+msgstr "Total des octets stockés"
+
+#: lang.c:6
+msgid "Total files:"
+msgstr " Nombre total de fichiers:"
+
+#: lang.c:7
+msgid "Last month, bytes transferred"
+msgstr "Octets transférés le mois dernier"
+
+#: lang.c:8
+msgid "Last month, bytes transferred (pie)"
+msgstr "Octets transférés le mois dernier (pie)"
+
+#: lang.c:9
+msgid "General%20report"
+msgstr "Rapport%20général"
+
+#: lang.c:10
+msgid "Status from last 24h"
+msgstr "Status des dernières 24h"
+
+#: lang.c:11
+msgid "Errors:"
+msgstr "Erreurs:"
+
+#: lang.c:12
+msgid "Terminated Jobs:"
+msgstr "Travaux terminés:"
+
+#: lang.c:13
+msgid "Total time spent to do backup:"
+msgstr "Temps total passé à faire la sauvegarde:"
+
+#: lang.c:14
+msgid "Bytes transferred last 24h"
+msgstr "Octets transférés durants les dernières 24h"
+
+#: lang.c:15
+msgid "Show details"
+msgstr "Afficher les détails"
+
+#: lang.c:16
+msgid "Jobs with errors"
+msgstr "Travaux comportant des erreurs"
+
+#: lang.c:17
+msgid "Name"
+msgstr "Nom"
+
+#: lang.c:18
+msgid "EndTime"
+msgstr "Heure de fin"
+
+#: lang.c:19
+msgid "JobStatus"
+msgstr "Etat du travail"
+
+#: lang.c:20
+msgid "Detailed report"
+msgstr "Rapport détaillé"
+
+#: lang.c:21 lang.c:42
+msgid "Select a job:"
+msgstr "Sélectionnez un job:"
+
+#: lang.c:22
+msgid "go"
+msgstr " Démarrer !"
+
+#: lang.c:23
+msgid "Elapsed time"
+msgstr "Temps écoulé"
+
+#: lang.c:24
+msgid "Job"
+msgstr ""
+
+#: lang.c:25
+msgid "Start Time"
+msgstr "Heure de début"
+
+#: lang.c:26
+msgid "End Time"
+msgstr "Heure de fin"
+
+#: lang.c:27
+msgid "Type"
+msgstr ""
+
+#: lang.c:28
+msgid "Pool"
+msgstr ""
+
+#: lang.c:29 lang.c:40
+msgid "Status"
+msgstr "Etat"
+
+#: lang.c:30
+msgid "Stats Bacula: Job"
+msgstr "Statistiques Bacula: Job"
+
+#: lang.c:31
+msgid "Client:"
+msgstr ""
+
+#: lang.c:32
+msgid "Period: From"
+msgstr "Période: Du"
+
+#: lang.c:33
+msgid "to"
+msgstr "au"
+
+#: lang.c:34
+msgid "Bytes transferred in the period:"
+msgstr "Octets transférés durant la période:"
+
+#: lang.c:35
+msgid "Files transferred in the period:"
+msgstr "Fichiers transférés durant la période:"
+
+#: lang.c:36
+msgid "Date"
+msgstr ""
+
+#: lang.c:37
+msgid "Elapsed"
+msgstr "Ecoulés"
+
+#: lang.c:38
+msgid "Level"
+msgstr "Niveau"
+
+#: lang.c:39
+msgid "Bytes"
+msgstr "Octets"
+
+#: lang.c:41
+msgid "SELECT NEW REPORT"
+msgstr "SELECTIONNER UN NOUVEAU RAPPORT"
+
+#: lang.c:43
+msgid "Graph mode:"
+msgstr "Mode Graphique:"
+
+#: lang.c:44
+msgid "lines"
+msgstr "lignes"
+
+#: lang.c:45
+msgid "linepoints"
+msgstr "lignes de points"
+
+#: lang.c:46
+msgid "points"
+msgstr ""
+
+#: lang.c:47
+msgid "bars"
+msgstr "histogrammes"
+
+#: lang.c:48
+msgid "area"
+msgstr "aire"
+
+#: lang.c:49
+msgid "Data to show"
+msgstr "Données à afficher:"
+
+#: lang.c:50
+msgid "Transferred bytes"
+msgstr "Octets transférés"
+
+#: lang.c:51
+msgid "Start period:"
+msgstr "Période de début:"
+
+#: lang.c:52
+msgid "End period:"
+msgstr "Période de fin:"
+
+#: lang.c:53
+msgid "Create report"
+msgstr "Créer un rapport"
+
+#: lang.c:54
+msgid "Volume Name"
+msgstr "Nom du Volume"
+
+#: lang.c:55
+msgid "Volume Bytes"
+msgstr "Taille du volume (octets)"
+
+#: lang.c:56
+msgid "Media Type"
+msgstr "Type de média"
+
+#: lang.c:57
+msgid "When expire?"
+msgstr "Date d'expiration:"
+
+#: lang.c:58
+msgid "Last Written"
+msgstr "Dernier enregistrement"
+
+#: lang.c:59
+msgid "Volume Status"
+msgstr "Etat du volume"

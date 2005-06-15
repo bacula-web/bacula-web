@@ -1,0 +1,9 @@
+2004-03-01	Sagi Bashari  <sagi@boom.org.il>
+
+	* tsmarty2c.php:
+	- added support for directories (originally by Uros Gruber  <uros.gruber@vizija.si>)
+	- fixed bug that prevented more than 1 block per line (reported by Eneko Lacunza  <enlar@euskal.org>)
+	- convert new line to \n in output string
+
+	* smarty_gettext.php:
+	- run nl2br() when escaping html
