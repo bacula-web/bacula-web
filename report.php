@@ -56,9 +56,9 @@ else if ($dbSql->driver == "pgsql")
                 or die("Error query row 56");
 
 while ( $tmp = $res_jobs->fetchRow(DB_FETCHMODE_ASSOC) ) {
-        $tdate = explode (":",$tmp[elapsed]);                                                                           // Temporal "workaround" ;) Fix later
+        $tdate = explode (":",$tmp['elapsed']);                                                                           // Temporal "workaround" ;) Fix later
         if ( $tdate[0] > 300000 )
-                $tmp[elapsed] = "00:00:00";
+                $tmp['elapsed'] = "00:00:00";
         array_push($a_jobs,$tmp);
 }
 $smarty->assign('jobs',$a_jobs);
