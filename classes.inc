@@ -1,7 +1,7 @@
 <?
 /* 
 +-------------------------------------------------------------------------+
-| Copyright (C) 2004 Juan Luis Francés Jiménez                            |
+| Copyright (C) 2004-2005 Juan Luis Frances Jiminez                       |
 |                                                                         |
 | This program is free software; you can redistribute it and/or           |
 | modify it under the terms of the GNU General Public License             |
@@ -46,7 +46,7 @@ class Bweb extends DB {
                 $this->dsn[username] = $conf->get(CONFIG_FILE,"DATABASE","login");
                 $this->dsn[password] = $conf->get(CONFIG_FILE,"DATABASE","pass");
                 $this->dsn[database] = $conf->get(CONFIG_FILE,"DATABASE","db_name");
-                $this->dsn[phptype] = $conf->get(CONFIG_FILE,"DATABASE","db_type");                     // mysql, (sqlite, pgsql) -->> Yet not checked
+                $this->dsn[phptype] = $conf->get(CONFIG_FILE,"DATABASE","db_type");   // mysql, (sqlite, pgsql) -->> Yet not checked
                 if (  $conf->get(CONFIG_FILE,"DATABASE","db_port") )
                         $this->dsn[port] = $conf->get(CONFIG_FILE,"DATABASE","db_port");
                         
@@ -67,7 +67,7 @@ class Bweb extends DB {
 
         
          
-        function CalculateBytesPeriod($server,$StartDate,$EndPeriod) {                          // Bytes transferred in a period.
+        function CalculateBytesPeriod($server,$StartDate,$EndPeriod) {   // Bytes transferred in a period.
 
                 $result =& $this->link->query("select SUM(JobBytes) from Job WHERE EndTime < '$EndPeriod' and EndTime > '$StartDate' and Name='$server'")
                         or die("classes.inc: Error query: 1");
@@ -77,7 +77,7 @@ class Bweb extends DB {
 
         
          
-        function CalculateFilesPeriod($server,$StartDate,$EndPeriod) {                          // Number of files transferred in a period.
+        function CalculateFilesPeriod($server,$StartDate,$EndPeriod) {    // Number of files transferred in a period.
 
                 $result =& $this->link->query("select SUM(JobFiles) from Job WHERE EndTime < '$EndPeriod' and EndTime > '$StartDate' and Name='$server'")
                         or die("classes.inc: Error query: 2");
@@ -163,7 +163,7 @@ class BGraph {
         
                 require_once ("external_packages/phplot/phplot.php");
 
-                if ( empty($this->sizex) || empty($this->sizey) ) {                                             //Default size
+                if ( empty($this->sizex) || empty($this->sizey) ) {    //Default size
                         $this->sizex = "600";
                         $this->sizey = "400";
                 }
@@ -172,7 +172,7 @@ class BGraph {
                 }
                 
                 $legend = $leyenda;
-//              $bgcolor = array(222,206,215);                                                                                  // Background color of graph
+//              $bgcolor = array(222,206,215);      // Background color of graph
                 $bgcolor = array(207,231,231);
                 $fgcolor = array(110,41,57);
                 
@@ -209,8 +209,8 @@ class BGraph {
                 if ( $this->Leg == 1 ) {
                         $this->MarginLeftWithLegend($legend);
                         $graph->SetMarginsPixels($this->MarginLeft,10,35,$this->MarginBottom);
-                        $graph->SetLegend($legend);                     
-                }
+                        $graph->SetLegend($legend);
+				}
                 else
                         $graph->SetMarginsPixels(90,35,35,$this->MarginBottom);
 //              $graph->SetDataColors(array($fgcolor),array( "black"));
@@ -243,7 +243,7 @@ class BGraph {
                 $maxlen = 0;
                 
                 while (next($clients)) {
-                        $tmp = strlen (current($clients));
+                        $tmp = strlen(current($clients));
                         if ( $tmp > $maxlen )
                                 $maxlen = $tmp;
                 }
@@ -263,7 +263,7 @@ class BCreateGraph extends BGraph {
         var $derecha;
         var $StartDate;
         var $EndDate;
-        var $elapsed;                                                                                                                           // Default elapsed time to show complex graphs
+        var $elapsed;                        // Default elapsed time to show complex graphs
         
         
         
@@ -271,7 +271,7 @@ class BCreateGraph extends BGraph {
         
                 $this->StartDate = "1900-01-01";
                 $this->EndDate = "4000-01-01";
-                $this->elapsed = "86400";                                                                                               // 24 hours in seconds.
+                $this->elapsed = "86400";                   // 24 hours in seconds.
                 
          }              
          
@@ -288,7 +288,7 @@ class BCreateGraph extends BGraph {
                 $DB_bacula = new Bweb();
                 $datos = $this->SQLPrepareData($server,$tipo_dato);
         
-                if ( empty($datos) ) {                                                                                                  //No data = No stats = Empty graph
+                if ( empty($datos) ) {                       //No data = No stats = Empty graph
                         header("Content-type: image/png");
                         $img= @ImageCreate(200,100) or die ("Cannot intialize GD stream");
                         $bgc= ImageColorAllocate($img, 0, 255,255);
@@ -299,9 +299,9 @@ class BCreateGraph extends BGraph {
                         return; 
                 }
         
-                if ( empty ($xlabel) ) {                                                                                                // If no label, table names like leyends
+                if ( empty ($xlabel) ) {                       // If no label, table names like leyends
                         $xlabel=$derecha; $ylabel=$izquierda; 
-                }                                                       
+                } 
                         
                 $this->SetDataType("text-data");
                 $this->BShowGraph($datos,$title,$xlabel,$ylabel,$this->clientes,$tipo);
@@ -310,13 +310,13 @@ class BCreateGraph extends BGraph {
 
 
  
-        function SQLPrepareData($servidor,$tipo_dato=0) {                                                       // Prepare bytes data from database.
+        function SQLPrepareData($servidor,$tipo_dato=0) {         // Prepare bytes data from database.
 
                 global $DB_bacula;
                 global $izquierda;
                 global $derecha;
         
-                if ( $tipo_dato<30 ) {                                                                                                  // Simple graph. Only 2 data 
+                if ( $tipo_dato<30 ) {               // Simple graph. Only 2 data 
         
                 switch ($tipo_dato)
                                 {
@@ -339,20 +339,20 @@ class BCreateGraph extends BGraph {
                         $whole_result[] = $this->array_merge_php4($row["$derecha"],$row[$izquierda]);
                 }
                 $result->free();
-        } else {                                                                                                                                // Complex graph. 3 or more data.
+        } else {                                                // Complex graph. 3 or more data.
                 
                         switch ( $tipo_dato )
                                 {
-                                case '30':                                                                                                              // Unused, at this time.
+                                case '30':                      // Unused, at this time.
                                         $result = $DB_bacula->link->query("select JobBytes,JobFiles,Jobid from Job where Name='$servidor' order by EndTime asc")
                                                 or die ("classes.inc: Error at query: 6");
                                         while ( $row = $result->fetchRow(DB_FETCHMODE_ASSOC) )
                                                 $whole_result[] = array_merge($row["Jobid"],$row["JobFiles"],$row["JobBytes"]);
                                         $result->free();
                                         break;
-                                case BACULA_TYPE_BYTES_ENDTIME_ALLJOBS:                                                 // Special: Generic graph from all clientes.
-                                        $i = -1;                                                                                                        // Counter of number of jobs of one cliente. SP: Contador del número de jobs totales de un cliente.
-                                        $i2 = 0;                                                                                                        // Counter of number of keys of array. SP: Contador del número de valores del array.
+                                case BACULA_TYPE_BYTES_ENDTIME_ALLJOBS:  // Special: Generic graph from all clientes.
+                                        $i = -1;                         // Counter of number of jobs of one cliente. SP: Contador del nmero de jobs totales de un cliente.
+                                        $i2 = 0;                         // Counter of number of keys of array. SP: Contador del nmero de valores del array.
                                         
                                         $res = $DB_bacula->link->query("select Name from Job where UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-$this->elapsed  group by Name order by Name desc")
                                                 or die ("classes.inc: Error at query: 7");
@@ -371,8 +371,8 @@ class BCreateGraph extends BGraph {
 //                                      echo "</pre>";
                                         
                                         
-                                        $spr = array();                                                                                         // Temporal array
-                                        $spr2 = array();                                                                                        // Temporal array
+                                        $spr = array();                        // Temporal array
+                                        $spr2 = array();                       // Temporal array
                                         $whole_result = array();
                                         
                                         while ( $tmpdata = $resdata->fetchRow() ) {
@@ -394,8 +394,8 @@ class BCreateGraph extends BGraph {
 //                                              print_r ($spr2);
 //                                              echo "</pre>";
                                                 
-                                                reset ($this->clientes);                                                                
-                                                do { 
+                                                reset ($this->clientes);        
+												do { 
                                                         if ( $spr2[current($this->clientes)] != NULL)
                                                                 array_push($spr,$spr2[current($this->clientes)]);
                                                         else
@@ -412,9 +412,9 @@ class BCreateGraph extends BGraph {
                                                 $spr2 = array();
                                         }
                                 
-                                        for ( $i = 0; $i < count($whole_result); $i++ ) {                       // To equal the arrays so that the graph is not unsquared. SP:Igualamos las matrices para que la gráfica no se descuadre
+                                        for ( $i = 0; $i < count($whole_result); $i++ ) {  // To equal the arrays so that the graph is not unsquared. SP:Igualamos las matrices para que la grï¿½ica no se descuadre
                                                 $tmp = count($whole_result[$i]);
-                                                if ( $i2 < $tmp )                                                                               // Estupidez?. Check this code later...
+                                                if ( $i2 < $tmp )                // Estupidez?. Check this code later...
                                                         continue;
                                                 $tmp = $i2 - $tmp;
                                                 for ( $a = 0; $a <= $tmp; $a++ )
@@ -437,7 +437,7 @@ class BCreateGraph extends BGraph {
 
 
 
-        //Conversión de la fecha a Mysql-format para Smarty.           THE SAME FUNCTION AT 2 CLASSES. THIS WAY IS BUGGY. TO SOLVE LATER.
+        //Conversiï¿½ de la fecha a Mysql-format para Smarty.           THE SAME FUNCTION AT 2 CLASSES. THIS WAY IS BUGGY. TO SOLVE LATER.
         function PrepareDate($StartDateMonth,$StartDateDay,$StartDateYear,$EndDateMonth,$EndDateDay,$EndDateYear){
         
                 $this->StartDate = $StartDateYear."-".$StartDateMonth."-".$StartDateDay." 00:00:00";
