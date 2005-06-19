@@ -17,7 +17,7 @@
 			<table class=genmed cellspacing="1" cellpadding="3" border=0 align="center">
 				<tr><td>
 						{if $server==""}
-							<img src=stats.php?server={$server}&tipo_dato=69&title={t}General%20report{/t}&modo_graph=bars&sizex=400&sizey=250&MBottom=20&legend=1>
+							<img src=stats.php?server={$server}&tipo_dato=69&title={t}General%20report{/t}&modo_graph=bars&sizex=420&sizey=250&MBottom=20&legend=1>
 						{else}
 							<img src=stats.php?server={$server}&tipo_dato=3&title={$server}&modo_graph=bars>
 						{/if}

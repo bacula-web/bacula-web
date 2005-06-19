@@ -1,19 +1,188 @@
+2004-10-24 18:40  migueldb
+
+	* phplot.php:
+
+	  + array_merge_php4(): added to cope with the bug introduced by
+	  the change in array_merge() from PHP4 to PHP5 (I haven't verified
+	  this)
+
+	  + Fixed some divisions by zero, thanks to an old bug report.
+
+2004-10-24 17:44  migueldb
+
+	* README.txt, doc/quickstart.html, examples/create_chart.php,
+	  examples/format_chart.php, examples/inline_image.php:
+
+	  + Updated to the latest changes in phplot
+
+2004-10-24 17:40  migueldb
+
+	* doc/index.php:
+
+	  + Minimal change
+
+2004-09-09 20:27  migueldb
+
+	* phplot.php:
+
+	  + SetPointSize(): deprecated
+
+	  + SetPointSizes(): added as replacement for SetPointSize().Now
+	  able to set point sizes on a per line basis.
+
+	  + SetPointShape(): deprecated.
+
+	  + SetPointShapes(): added as replacement for SetPointShape(). Now
+	  able to set point shape on a per line basis.
+
+	  + DrawDot(): now needs record number to decide which dot shape
+	  and size to draw.
+
+	  + CalcMargins(): dirty fix for x data label placing.
+
+	  + tile_img(): fixed tile placement.
+
+2004-06-14 14:19  migueldb
+
+	* phplot.php:
+
+	  + SetXTickLabelPos() and others: more on the bug reported by Jo
+	  Demol.
+
+2004-06-14 11:35  migueldb
+
+	* phplot.php:
+
+	  + Fixed bug reported by Jo Demol.
+
+2004-05-11 14:14  migueldb
+
+	* phplot.php:
+
+	  + SetBgImage(): added.
+
+	  + SetPlotAreaBgImage(): added.
+
+	  + SetInputFile(): deprecated.
+
+	  + DrawBackground(): now accepts images as backgrounds.
+
+	  + DrawPlotAreaBackground(): now accepts images as backgrounds.
+
+	  + tile_img(): internal method added.
+
+2004-04-14 13:26  migueldb
+
+	* phplot.php:
+
+	  + DrawXAxis(): No more horizontal tick nor label at X-axis'
+	  sides.
+
+2004-03-21 18:01  migueldb
+
+	* phplot.php:
+
+	  + x/y_label_type automaticaally set to 'data' when setting label
+	  precision.
+
+	  + minor corrections.
+
+2004-03-03 08:17  afan
+
+	* phplot.php: PlotAreaWorld - last fix
+
+2004-03-03 02:40  migueldb
+
+	* phplot.php:
+
+	  + SetPlotAreaWorld(): fixed.
+
+2004-03-01 21:14  afan
+
+	* phplot.php: Needed one more = in  ($ymin === NULL)
+
+2004-02-29 11:21  afan
+
+	* phplot.php: phplot.php SetPlotAreaWorld - changed ($!ymin) to
+	  ($ymin == NULL) for cases where $ymin = 0. (also done for ymax,
+	  xmin, xmax) afan
+
+2004-02-23 10:34  migueldb
+
+	* phplot.php:
+
+	  + SetPlotAreaWorld(): Fixed the calculation of max and min y.
+
+2004-02-14 12:29  migueldb
+
+	* phplot.php:
+
+	  + SetPlotAreaWorld(): Fine grained control over which values are
+	  auto-calculated. Should fix some trouble with y-scaling.
+
+	  + DrawGraph(): yet another fix to drawing order...
+
+	  + CheckOption(): fixes problems with mixedcase arguments.
+
+	  + SetFileFormat(), FormatLabel(): typos fixed.
+
+2004-01-30 12:56  migueldb
+
+	* examples/data_sample1.php:
+
+	  + Added "stacked bars" plot type.
+
+2004-01-30 12:50  migueldb
+
+	* phplot.php:
+
+	  + DrawStackedBars(): added plot type.
+
+	  + SetEqualXCoord(): renamed to more intuitive CalcBarWidths().
+	  Modified for stacked bars.
+
+	  + Changed graphing order. The grids are again at the background,
+	  as they should. Added var $grid_at_foreground (bool) to alter
+	  this.
+
+	  + text-data-pie renamed to text-data-single.
+
+	  + SetPlotAreaWorld(): fixed min_y bug.
+
+2004-01-29 17:10  migueldb
+
+	* phplot.php:
+
+	  + SetPlotAreaWorld(): default behaviour is to adjust Y axis to Y
+	  min/max.
+
+	  + SetSkipLeftTick(), SetSkipRightTick(): added.
+
+	  + SetFileFormat(): fixed silly bug that prevented selections from
+	  being made.
+
+2004-01-28 20:00  migueldb
+
+	* phplot.php, doc/quickstart.html:
+
+	  + Merged final changes to rel-5-0 into main trunk.
+
 2004-01-28 19:12  migueldb
 
-	* phplot.php (rel-5-0):
+	* phplot.php:
 
 	  + DrawGraph(): Fixed graph drawing order for default plots
-	  (bars). Removed some redundant lines of code.
+	  (bars). Removed some redundat lines of code.
 
 2004-01-28 18:58  migueldb
 
-	* doc/quickstart.html (rel-5-0):
+	* doc/quickstart.html:
 
 	  + More stuff...
 
 2004-01-28 18:49  migueldb
 
-	* phplot.php (rel-5-0):
+	* phplot.php:
 
 	  + DrawPieChart(): fixed use of old variable.
 
@@ -21,7 +190,7 @@
 
 2004-01-27 12:12  migueldb
 
-	* phplot.php (rel-5-0):
+	* phplot.php:
 
 	  + Added missing SetSkipTopTick()
 
@@ -32,7 +201,7 @@
 
 2004-01-27 00:03  migueldb
 
-	* doc/index.php (rel-5-0): [no log message]
+	* doc/index.php: [no log message]
 
 2004-01-25 20:28  migueldb
 
@@ -143,6 +312,10 @@
 
 	  + Doc by Afan. With slight corrections.
 
+2004-01-21 18:44  migueldb
+
+	* examples/rgb.inc.php, doc/index.html: [no log message]
+
 2004-01-21 18:43  migueldb
 
 	* phplot.php:
@@ -229,6 +402,12 @@
 
 	  + DoExponentialMovingAverage(): added. Needs testing.
 
+2003-12-27 14:53  migueldb
+
+	* benjamingothic.ttf:
+
+	  + The TTFont is only needed in 'examples/'.
+
 2003-12-27 14:52  migueldb
 
 	* phplot.php:
@@ -286,6 +465,12 @@
 
 	  + Corrected some comments.
 
+2003-12-24 12:52  migueldb
+
+	* examples/example5.php:
+
+	  + Now in format_chart.php
+
 2003-12-24 12:47  migueldb
 
 	* examples/example4.php: Ooops! I deleted the wrong file!
@@ -302,6 +487,11 @@
 	* examples/example4.php:
 
 	  + Inserted example in example-o-matic as 'randfunction'
+
+2003-12-24 12:35  migueldb
+
+	* examples/test1.php: inserted example in example-o-matic as
+	  'randfunction'
 
 2003-12-24 10:38  migueldb
 
@@ -355,7 +545,7 @@
 
 2003-12-15 16:50  migueldb
 
-	* examples/: example4.php, example9.php:
+	* examples/: example4.php, example5.php, example9.php, test1.php:
 
 	  + Updated examples to work with new PHPlot.
 
@@ -810,6 +1000,12 @@
 
 	  + Fixed a typo.
 
+2003-11-24 17:03  migueldb
+
+	* doc/: examples.html, function_reference.html, quick_start.php:
+
+	  + Inserted into index.html (some time ago)
+
 2003-11-24 17:00  migueldb
 
 	* doc/style.css:
@@ -890,6 +1086,12 @@
 
 	  + Slight modifications to data label placement
 
+2003-11-24 11:30  migueldb
+
+	* doc/index.html:
+
+	  + More reorganisation
+
 2003-11-23 23:53  migueldb
 
 	* phplot.php:
@@ -910,9 +1112,25 @@
 	  + When drawing pie charts (no axis titles nor labels), maximize
 	  plot area.
 
+2003-11-23 21:48  migueldb
+
+	* doc/index.html:
+
+	  + Included function_reference.html links here.
+
 2003-11-23 21:42  migueldb
 
-	* doc/schema.html: [no log message]
+	* doc/: index.html, schema.html: [no log message]
+
+2003-11-23 21:39  migueldb
+
+	* doc/index.html:
+
+	  + New welcome page, some text.
+
+	  + Some features listed.
+
+	  + Uses stylesheet
 
 2003-11-23 21:37  migueldb
 

@@ -48,9 +48,13 @@ $smarty->assign('filesperiod',$files);
 
 // Array with jobs data
 $a_jobs = array();
-$res_jobs = $dbSql->link->query("select *,SEC_TO_TIME( UNIX_TIMESTAMP(Job.EndTime)-UNIX_TIMESTAMP(Job.StartTime) ) as elapsed from Job where EndTime < '$dbSql->EndDate' and EndTime > '$dbSql->StartDate' and Name='$_GET[server]' order by EndTime")
-	or die("Error query row 50");
-	
+if ($dbSql->driver == "mysql")
+	$res_jobs = $dbSql->link->query("select *,SEC_TO_TIME( UNIX_TIMESTAMP(Job.EndTime)-UNIX_TIMESTAMP(Job.StartTime) ) as elapsed from Job where EndTime < '$dbSql->EndDate' and EndTime > '$dbSql->StartDate' and Name='$_GET[server]' order by EndTime")
+		or die("Error query row 50");
+else if ($dbSql->driver == "pgsql")
+	$res_jobs = $dbSql->link->query("select jobid as \"JobId\",job as \"Job\",name as \"Name\",type as \"Type\",level as \"Level\",clientid as \"ClientId\",jobstatus as \"JobStatus\",schedtime as \"SchedTime\",starttime as \"StartTime\",endtime as \"EndTime\",jobtdate as \"JobtDate\",volsessionid as \"VolSessionId\",volsessiontime as \"VolSessionTime\",jobfiles as \"JobFiles\",jobbytes as \"JobBytes\",joberrors as \"JobErrors\",jobmissingfiles as \"JobMissingFiles\",poolid as \"PoolId\",filesetid as \"FilesetId\",purgedfiles as \"PurgedFiles\",hasbase,Job.EndTime::timestamp-Job.StartTime::timestamp as elapsed from Job where EndTime < '$dbSql->EndDate' and EndTime > '$dbSql->StartDate' and Name='$_GET[server]' order by EndTime")
+		or die("Error query row 56");
+
 while ( $tmp = $res_jobs->fetchRow(DB_FETCHMODE_ASSOC) ) {
 	$tdate = explode (":",$tmp[elapsed]);										// Temporal "workaround" ;) Fix later
 	if ( $tdate[0] > 300000 )

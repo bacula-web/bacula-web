@@ -31,6 +31,14 @@
 	<td>
 	<font color=red>{$files_totales}</font>
 	</td>
+	
+	<td width=35%>
+	{t}Database size{/t}:
+	</td>
+	
+	<td>
+	<font color=red>{$database_size|fsize_format}</font>
+	</td>
 </tr>
 
 <tr>

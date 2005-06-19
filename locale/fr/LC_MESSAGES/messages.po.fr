@@ -1,18 +1,18 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translation of messages.po to french
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# Morgan LEFIEUX <comete@archlinuxfr.org>, 2004.
 #
-#, fuzzy
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: messages_fr.po\n"
 "POT-Creation-Date: 2004-06-11 13:02+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2004-11-25 HO:MI+ZONE\n"
+"Last-Translator: Morgan LEFIEUX <comete@archlinuxfr.org>\n"
+"Language-Team: FRENCH <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bits\n"
 
 #: lang.c:1 lang.c:2
 msgid "Bytes transferred last 30 days from ALL clients"
@@ -92,7 +92,7 @@ msgstr "Rapport détaillé"
 
 #: lang.c:21 lang.c:42
 msgid "Select a job:"
-msgstr "Sélectionnez un job:"
+msgstr "Sélectionnez un travail:"
 
 #: lang.c:22
 msgid "go"
@@ -104,7 +104,7 @@ msgstr "Temps écoulé"
 
 #: lang.c:24
 msgid "Job"
-msgstr ""
+msgstr "Travail"
 
 #: lang.c:25
 msgid "Start Time"
@@ -116,11 +116,11 @@ msgstr "Heure de fin"
 
 #: lang.c:27
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: lang.c:28
 msgid "Pool"
-msgstr ""
+msgstr "Pool"
 
 #: lang.c:29 lang.c:40
 msgid "Status"
@@ -132,7 +132,7 @@ msgstr "Statistiques Bacula: Job"
 
 #: lang.c:31
 msgid "Client:"
-msgstr ""
+msgstr "Client:"
 
 #: lang.c:32
 msgid "Period: From"
@@ -152,7 +152,7 @@ msgstr "Fichiers transférés durant la période:"
 
 #: lang.c:36
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: lang.c:37
 msgid "Elapsed"
@@ -184,7 +184,7 @@ msgstr "lignes de points"
 
 #: lang.c:46
 msgid "points"
-msgstr ""
+msgstr "points"
 
 #: lang.c:47
 msgid "bars"

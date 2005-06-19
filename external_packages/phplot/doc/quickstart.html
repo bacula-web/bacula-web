@@ -93,18 +93,15 @@ and then defining the variable:</p>
 <div class="box">
 <pre>&lt;?php
 include('./phplot.php');  // here we include the PHPlot code 
-$graph = new PHPlot();   // here we define the variable graph 
+$graph =& new PHPlot();   // here we define the variable graph
 
 //Rest of code goes below
 ?&gt;</pre>
 </div>
 
-<p>The above code assigns the PHPlot object to the variable <code>$graph</code>.</p>
-
-<p>Now we have created a PHPlot graph object, we can access
-information about the object and manipulate the object. In these
-following examples, <code>$graph</code> is the variable/object we created
-above.</p>
+<p>The above code assigns the PHPlot object to the variable <code>$graph</code>. Please,
+use that '&' to create a reference, it is needed by phplot's approximation of a destructor,
+a facility unavailable in PHP4.</p>
 
 <p> <a href="#top">Back to top</a> </p>
 
@@ -119,7 +116,7 @@ above.</p>
 include('./PHPlot.php');
 
 //Define the object
-$graph = new PHPlot();
+$graph =& new PHPlot();
 
 //Define some data
 $example_data = array(
@@ -134,8 +131,8 @@ $example_data = array(
 $graph-&gt;SetDataValues($example_data);
 
 //Draw it
-$graph-&gt;DrawGraph(); // remember, since in this example we have one graph, PHPlot 
-                        // does the <i>PrintImage </i>part for you 
+$graph-&gt;DrawGraph(); // remember, since in this example we have one graph, PHPlot
+                        // does the <i>PrintImage </i>part for you
 ?&gt;</pre>
 </div>
 
@@ -146,7 +143,7 @@ $graph-&gt;DrawGraph(); // remember, since in this example we have one graph, PH
   <br />Figure 1
 </div>
 
-<p>That's a great start, but now we'd like to specify the width and height 
+<p>That's a great start, but now we'd like to specify the width and height
 of the image.</p>
 
 
@@ -154,57 +151,57 @@ of the image.</p>
 <p>
 Lets say we want it to have a width of 300 and a height of 250 pixels.
 So instead of having the line <br /><br />
-    <code>$graph = new PHPlot();</code> <br /><br />
+    <code>$graph =& new PHPlot();</code> <br /><br />
 we replace it with <br /><br />
-    <code>$graph = new PHPlot(300,250);</code><br /><br />
+    <code>$graph =& new PHPlot(300,250);</code><br /><br />
 and you have specified the size in pixels of the image to be created.
 A couple of things to note:
 </p>
 <ul>
   <li>The default is <em>not</em> to use TTF fonts. </li>
   <li>Since there was only one graph on the image we didn't have to
-	specify PrintImage, DrawGraph took care of it for us. 
+	specify PrintImage, DrawGraph took care of it for us.
   </li>
   <li>
 	We did not specify the data type. If you do not specify the data
-	type PHPlot assumes <code>text-data</code>. 
+	type PHPlot assumes <code>text-data</code>.
   </li>
   <li>
 	We did not specify the file type (gif, png, jpg, ...) .
-	PHPlot 5.0 assumes PNG image formats. 
+	PHPlot 5.0 assumes PNG image formats.
   </li>
   <li>
 	The data is passed in as an array of arrays. This may seem awkward
-	now, but as we add functionality this will be beneficial. 
-  </li> 
+	now, but as we add functionality this will be beneficial.
+  </li>
 </ul>
 <p>Ok, now we're ready to add some customization to the plot. Let's change
-the size, the title and the x/y axis labels. All we need to do is modify 
+the size, the title and the x/y axis labels. All we need to do is modify
 the variable <code>$graph</code> before printing the image. We achieve this with:
 </p>
 <div class="box">
-<pre>&lt;?php            
+<pre>&lt;?php
 include ('./phplot.php');
 
 //create an graph object 300x250 pixels
-$graph = new PHPlot(300,250); 
+$graph =& new PHPlot(300,250);
 //Set titles
 $graph-&gt;SetTitle("Title\n\rSubtitle");
 $graph-&gt;SetXTitle('X data');
 $graph-&gt;SetYTitle('Y data');
 
-//...rest of code
+//...rest of the code
 
 
 ?&gt;</pre>
 </div>
 <div align=center>
  <img src="imgs/qstart_fig2.png" name="graphic1" align="bottom" border="0"><br />
- Figure 2 
+ Figure 2
 </div>
 
-<p>Note that in order for the "\n" and "\r " to be interpreted as 
-new line/new return characters for <code>SetTitle </code>you have to 
+<p>Note that in order for the "\n" and "\r " to be interpreted as
+new line/new return characters for <code>SetTitle </code>you have to
 enclose the string in <b>double </b>quotes.</p>
 
 <h3><a name="lines"></a>Case 2: Multiple Lines per Graph </h3>
@@ -223,7 +220,7 @@ Now our data will have three Y values for each position on the X axis
 include('./phplot.php');
 
 //Define the object
-$graph = new PHPlot(300,250);
+$graph =& new PHPlot(300,250);
 
 //Set titles
 $graph-&gt;SetTitle("Title\n\rSubtitle");
@@ -260,7 +257,7 @@ Also the missing data point is skipped, this behaviour can be adjusted with
 <p>
 This gives you the basics of how to create a graph in PHPlot.
 A nice start, but now we'd like to add some customization, namely different
-fonts, margins and types of graphs. 
+fonts, margins and types of graphs.
 </p>
 <p><a href="#top">Back to top</a> </p>
 
@@ -270,9 +267,9 @@ fonts, margins and types of graphs.
 <ul>
 	<li><code>bars</code> (with optional shadows)</li>
 	<li><code>lines</code></li>
-	<li><code>linepoints</code> (a faster way of plotting when 
+	<li><code>linepoints</code> (a faster way of plotting when
         you want both points and lines)</li>
-	<li><code>area</code></li> 
+	<li><code>area</code></li>
 	<li><code>points</code> (lots of point types here)</li>
 	<li><code>pie</code> (2D or 3D)</li>
 	<li><code>thinbarline</code> (sometimes also called impulse) </li>
@@ -282,7 +279,7 @@ fonts, margins and types of graphs.
 </p>
 <p>You specify which type with the <code>SetPlotType</code> function.
 We'll look at that function with bars and lines in the next example when we look at
-multiple graphs per image. 
+multiple graphs per image.
 </p>
 <p>As we discussed before, there are several ways we can manipulate
 the look/feel of the graph object. Almost every parameter of ticks, grids and data labels
@@ -300,7 +297,7 @@ can be adjusted via (among many others):
   <li><code>SetNumYticks()</code></li>
   <li><code>SetSkipTopTick()</code></li>
   <li><code>SetSkipBottomTick()</code></li>
-  
+
   <li><code>SetDrawXGrid()</code></li>
   <li><code>SetDrawYGrid()</code></li>
   <li><code>SetDrawDashedGrid()</code></li>
@@ -312,7 +309,7 @@ can be adjusted via (among many others):
   <li><code>SetYLabelAngle()</code></li>
   <li><code>SetXLabelType()</code></li>
   <li><code>SetYLabelType()</code></li>
-</ul>  
+</ul>
 As we go further we will introduce some of these features of PHPlot.
 For more specialized examples, please go <a href="index.php">back to the index</a> and
 look in the examples section.
@@ -326,7 +323,7 @@ look in the examples section.
 on it is a straightforward process. As in the previous examples we
 first have to create an object (e.g. variable) but now we tell it to
 <i>not</i> print the image at the same time as the draw command. Now
-we want it to wait for the explicit <code>PrintImage</code> function call. 
+we want it to wait for the explicit <code>PrintImage</code> function call.
 To tell PHPlot this is the way we want to work, we use the
 <code>SetPrintImage</code> function.
 <code>SetPrintImage(TRUE)</code> is the default, and tells to draw the image
@@ -334,26 +331,26 @@ when <code>DrawGraph</code> is called. To turn this
 off we use <code>SetPrintImage(FALSE)</code>.</p>
 <p>Now we will draw several images entirely within one object. That
 means that if we set a value for one graph, there will be a couple of
-other commands we will need. 
+other commands we will need.
 </p>
 <p>To specify in pixels the placement of each graph we use
 <code>SetNewPlotAreaPixels</code>. The format is
 <code>SetNewPlotAreaPixels(upper_left_x, upper_left_y, lower_right_x,
 lower_right_y)</code> . Again we are using the GD coordinates where 0,0
-is the upper left corner of the image. 
+is the upper left corner of the image.
 </p>
 <p>In more detail:</p>
 <div class="box">
 <pre>&lt;?php
-include('./PHPlot.php');  // here we include the PHPlot code 
-$graph = new PHPlot(400,250);   // here we define the variable $graph 
+include('./PHPlot.php');  // here we include the PHPlot code
+$graph =& new PHPlot(400,250);   // here we define the variable $graph
 $graph-&gt;SetPrintImage(0); //Don't draw the image yet
 
 //....Data and Values for first graph here .....
 
 $graph-&gt;SetNewPlotAreaPixels(70,10,375,100);  // where to place it
 
-$graph-&gt;DrawGraph();   //Draw the first graph to the image. 
+$graph-&gt;DrawGraph();   //Draw the first graph to the image.
 
 //....Data and Values for second graph here .....
 
@@ -373,7 +370,7 @@ $graph-&gt;PrintImage();
 include('./phplot.php');
 
 //Define the object
-$graph = new PHPlot(400,250);
+$graph =& new PHPlot(400,250);
 
 $graph-&gt;SetPrintImage(0); //Don't draw the image until specified explicitly
 
@@ -399,10 +396,10 @@ $graph-&gt;SetPlotType("lines");
 $graph-&gt;SetLineWidth(1);
 
 $graph-&gt;SetNewPlotAreaPixels(70,10,375,100);  // where do we want the graph to go
-$graph-&gt;DrawGraph(); // remember, since we said not to draw yet, PHPlot 
+$graph-&gt;DrawGraph(); // remember, since we said not to draw yet, PHPlot
                      // still needs a <i>PrintImage </i>command to write an image.
 
-                     
+
 //Now do the second chart on the same image
 unset($example_data);  //we are re-using $example_data (to save memory), but you don't have to
 $example_data = array(
@@ -439,7 +436,7 @@ $graph-&gt;PrintImage();
 <div align="center">
   <img src="imgs/qstart_fig4.png" name="graphic3" align="top" border="0" /> <br />
   Figure 4 <br />
-</div>  
+</div>
 
 <p>
 You must remember that world Coordinates are the XY coordinates relative to the

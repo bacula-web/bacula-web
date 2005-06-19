@@ -11,17 +11,17 @@ News and bugs: http://indpnday.com/bacula_stuff/bacula-web/mantisbt/login_page.p
 
 REQUERIMENTS:
 **************
-	
-	- Web server	(Tested with apache)
-	- PHP			(Tested with php.4.3.4)
-		- Gettext	(Optional)
-		- GD 2.x
-		- TrueType (optional)
-		- Pear DB (http://pear.php.net/package/DB)
-		- MySQL,SQLite or PgSQL
-	- Bacula (Oh!, yes, you need this ;-) ) http://www.bacula.org
+        
+        - Web server    (Tested with apache)
+        - PHP                   (Tested with php.4.3.4)
+                - Gettext       (Optional)
+                - GD 2.x
+                - TrueType (optional)
+                - Pear DB (http://pear.php.net/package/DB)
+                - MySQL or PostgreSQL
+        - Bacula (Oh!, yes, you need this ;-) ) http://www.bacula.org
 
-		
+                
 INSTALL
 *******
 - Copy this distribution to root directory or a subdirectory of your webroot.

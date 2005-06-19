@@ -14,6 +14,7 @@
 | GNU General Public License for more details.                            |
 +-------------------------------------------------------------------------+ 
 */
+// Last Err: 
 require ("paths.php");
 require($smarty_path."Smarty.class.php");
 include "classes.inc";
@@ -34,14 +35,15 @@ require("lang.php");
 
 // generaldata.tpl & last_run_report.tpl (last24bytes)
 $client = $dbSql->link->query("select count(*) from Client")
-	or die ("Error query at row 37");
+	or die ("Error query: 1");
 $totalfiles = $dbSql->link->query("select count(FilenameId) from Filename")
-	or die ("Error query at row 39");
+	or die ("Error query: 2");
 $last24bytes = $dbSql->link->query("select sum(JobBytes),count(*) from Job where Endtime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-86400")
-	or die ("Error query at row 41");
+	or die ("Error query: 3");
 $bytes_stored =& $dbSql->link->getOne("select SUM(VolBytes) from Media")
-	or die ("Error query at row 43");
+	or die ("Error query: 4");
 
+$smarty->assign('database_size', $dbSql->GetDbSize());
 $smarty->assign('bytes_stored',$bytes_stored);
 
 $tmp = $client->fetchRow();
@@ -81,7 +83,7 @@ $smarty->assign('volumes',$volumes);
 // last_run_report.tpl
 if ($mode == "Lite" && $_GET['Full_popup'] != "yes") {
 	$tmp = array();
-	$status = $dbSql->link->query("select JobId,Name,EndTime,JobStatus from Job where EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) >UNIX_TIMESTAMP(NOW())-86400 and JobStatus!=\"T\"" )		
+	$status = $dbSql->link->query("select JobId,Name,EndTime,JobStatus from Job where EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) >UNIX_TIMESTAMP(NOW())-86400 and JobStatus!='T'" )		
 		or die ("Error: query at row 85");
 	$smarty->assign('status', $status->numRows());
 	if ( $status->numRows() ) {
@@ -107,12 +109,15 @@ if ($mode == "Lite" && $_GET['Full_popup'] != "yes") {
 }
 else if ($mode == "Full" || $_GET['Full_popup'] == "yes" ){
 	$tmp1 = array();
-	$query = "select SEC_TO_TIME( UNIX_TIMESTAMP(Job.EndTime)-UNIX_TIMESTAMP(Job.StartTime) )
-			as elapsed,Job.Name,Job.StartTime,Job.EndTime,Job.Level,Pool.Name,Job.JobStatus from Job 
-			LEFT JOIN Pool ON Job.PoolId=Pool.PoolId where EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) >UNIX_TIMESTAMP(NOW())-86400 
-			order by elapsed ";													// Full report array		
+	if ( $dbSql->driver == "mysql")
+		$query = "select SEC_TO_TIME( UNIX_TIMESTAMP(Job.EndTime)-UNIX_TIMESTAMP(Job.StartTime) )
+				as elapsed,Job.Name,Job.StartTime,Job.EndTime,Job.Level,Pool.Name,Job.JobStatus from Job 
+				LEFT JOIN Pool ON Job.PoolId=Pool.PoolId where EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) >UNIX_TIMESTAMP(NOW())-86400 
+				order by elapsed ";													// Full report array
+	if ( $dbSql->driver == "pgsql")
+		$query = "select Job.EndTime::timestamp-Job.StartTime::timestamp as elapsed,Job.Name,Job.StartTime,Job.EndTime,Job.Level,Pool.Name,Job.JobStatus from Job LEFT JOIN Pool ON Job.PoolId=Pool.PoolId where EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) >UNIX_TIMESTAMP(NOW())-86400 order by elapsed ";
 	$status = $dbSql->link->query($query)
-		or die ("Error: query at row 115");
+		or die ("Error: query at row 118");
 	while ( $tmp = $status->fetchRow() ) {
 		$tdate = explode (":",$tmp[0]);
 		if ( $tdate[0] > 300000 )												// Temporal "workaround" ;) Fix later
