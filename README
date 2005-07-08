@@ -1,11 +1,7 @@
 This is my little contribution to the bacula community and the 
 best backup software (http://www.bacula.org).
 
-OFFICIAL WEB
-*************
-Not yet.
-
-Sorry for any inconvenience, I've had no time to have this done.
+Juan Luis Francés Jiménez  (bacula_list [at] veloxia.com)
 
 News and bugs: http://indpnday.com/bacula_stuff/bacula-web/mantisbt/login_page.php
 
@@ -60,8 +56,6 @@ $ xgettext lang.c
 
 
 PS: Feel free to make improvements to the code. All suggestions are welcome.
-
-Temporal contact: bacula_list [at] veloxia.com
 
 
 Bacula®is a registered trademark of Kern Sibbald and John Walker
