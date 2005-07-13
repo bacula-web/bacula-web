@@ -247,7 +247,7 @@ class BGraph {
                         if ( $tmp > $maxlen )
                                 $maxlen = $tmp;
                 }
-                $this->MarginLeft = $maxlen * 11;
+                $this->MarginLeft = $maxlen * 9;
         }       
 
 }//end class
