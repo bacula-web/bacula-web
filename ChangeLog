@@ -1,8 +1,9 @@
 - - - -  Bacula web 1.2
 	- Human redable Y-axis of graphs
 	- Updated French translation
-	- Initial support for PostgreSQL
+	- Initial support for PostgreSQL (thanks to Dan Langille)
 	- Upgrade Phplot to 5.0rc2 version.
+	- Add templates_c to cvs repository.
 	
 25-10-2004 Bacula web 1.1
     - Add array_fill function (as Mikael suggested)

@@ -42,11 +42,11 @@ class Bweb extends DB {
                 $conf = new Config_File (CONFIG_DIR);
                 
                 
-                $this->dsn[hostspec] = $conf->get(CONFIG_FILE,"DATABASE","host");
-                $this->dsn[username] = $conf->get(CONFIG_FILE,"DATABASE","login");
-                $this->dsn[password] = $conf->get(CONFIG_FILE,"DATABASE","pass");
-                $this->dsn[database] = $conf->get(CONFIG_FILE,"DATABASE","db_name");
-                $this->dsn[phptype] = $conf->get(CONFIG_FILE,"DATABASE","db_type");   // mysql, (sqlite, pgsql) -->> Yet not checked
+                $this->dsn['hostspec'] = $conf->get(CONFIG_FILE,"DATABASE","host");
+                $this->dsn['username'] = $conf->get(CONFIG_FILE,"DATABASE","login");
+                $this->dsn['password'] = $conf->get(CONFIG_FILE,"DATABASE","pass");
+                $this->dsn['database'] = $conf->get(CONFIG_FILE,"DATABASE","db_name");
+                $this->dsn['phptype'] = $conf->get(CONFIG_FILE,"DATABASE","db_type");   // mysql, (sqlite, pgsql) -->> Yet not checked
                 if (  $conf->get(CONFIG_FILE,"DATABASE","db_port") )
                         $this->dsn[port] = $conf->get(CONFIG_FILE,"DATABASE","db_port");
                         
@@ -104,7 +104,7 @@ class Bweb extends DB {
                         if ($this->driver == "mysql" )
                                 $result = $this->link->query("select Media.VolumeName, Media.VolBytes,Media.VolStatus,Pool.Name,Media.MediaType,Media.LastWritten,FROM_UNIXTIME(UNIX_TIMESTAMP(Media.LastWritten)+Media.VolRetention ) as expire from Pool LEFT JOIN Media ON Media.PoolId=Pool.PoolId where Name='$tmp[0]' order by Media.VolumeName");
                         else if ($this->driver == "pgsql")
-                                $result = $this->link->query("select Media.VolumeName, Media.VolBytes,Media.VolStatus,Pool.Name,Media.MediaType,Media.LastWritten,FROM_UNIXTIME(Media.LastWritten::Timestamp without time zone + Media.VolRetention) as expire from Pool LEFT JOIN Media ON Media.PoolId=Pool.PoolId where Name='$tmp[0]' order by Media.VolumeName");                                                          
+				$result = $this->link->query("select Media.VolumeName, Media.VolBytes,Media.VolStatus,Pool.Name,Media.MediaType,Media.LastWritten, Media.LastWritten + Media.VolRetention * interval '1 second' as expire from Pool LEFT JOIN Media ON Media.PoolId=Pool.PoolId where Name='$tmp[0]' order by Media.VolumeName");
                         while ( $tmp1 = $result->fetchRow() ) {
                                 $pos = array_key_exists($tmp[0],$volume);
                                 if ($pos != FALSE)
@@ -354,14 +354,18 @@ class BCreateGraph extends BGraph {
                                         $i = -1;                         // Counter of number of jobs of one cliente. SP: Contador del nmero de jobs totales de un cliente.
                                         $i2 = 0;                         // Counter of number of keys of array. SP: Contador del nmero de valores del array.
                                         
+                                        if ($DB_bacula->driver == "mysql") {
                                         $res = $DB_bacula->link->query("select Name from Job where UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-$this->elapsed  group by Name order by Name desc")
                                                 or die ("classes.inc: Error at query: 7");
-                                        if ($DB_bacula->driver == "mysql")
                                                 $resdata = $DB_bacula->link->query("select date_format(EndTime,\"%Y-%m-%d\") from Job where UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-$this->elapsed  group by date_format(EndTime, \"%Y-%m-%d\") order by EndTime")
                                                         or die ("classes.inc: Error at query: 8");
-                                        else if ($DB_bacula->driver == "pgsql")
-                                                $resdata = $DB_bacula->link->query("select date_format(EndTime,'%Y-%m-%d') from Job where UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-$this->elapsed  group by EndTime order by EndTime")                                                   
+					}
+                                        else if ($DB_bacula->driver == "pgsql") {
+						$res = $DB_bacula->link->query("select Name from Job where EndTime > now()) - $this->elapsed  group by Name order by Name desc")
+							or die ("classes.inc: Error at query: 8");
+                                                $resdata = $DB_bacula->link->query("select date_format(EndTime,\"%Y-%m-%d\") from Job where EndTime > NOW() - $this->elapsed  group by date_format(EndTime,\"%Y-%m-%d\") order by EndTime")
                                                         or die ("classes.inc: Error at query: 9");
+					}
                                         
                                         while ( $tmpdata = $res->fetchRow() )
                                                 array_push($this->clientes,$tmpdata[0]);
