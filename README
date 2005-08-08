@@ -5,7 +5,7 @@ Juan Luis Francés Jiménez  (bacula_list [at] veloxia.com)
 
 News and bugs: http://indpnday.com/bacula_stuff/bacula-web/mantisbt/login_page.php
 
-REQUERIMENTS:
+REQUIREMENTS:
 **************
         
         - Web server    (Tested with apache)
