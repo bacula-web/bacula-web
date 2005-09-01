@@ -1,3 +1,4 @@
+- Multi catalog
 - Improve check errors routines.
 - Improve security. (stats.php mainly)
 - Optimize database querys (Very poor now) (TO_DAYS,etc.).
@@ -11,7 +12,6 @@
 
 LOW PRIORITY
 ------------
-- Multi catalog
 - WebConsole!!!
 - Add support to PDF creation.
 - Build documentation of classes.

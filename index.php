@@ -47,7 +47,7 @@ if ( $dbSql->driver == "pgsql")
 $bytes_stored =& $dbSql->link->getOne("select SUM(VolBytes) from Media")
         or die ("Error query: 4");
 
-$smarty->assign('database_size', $dbSql->GetDbSize()*1000000);
+$smarty->assign('database_size', $dbSql->GetDbSize());
 $smarty->assign('bytes_stored',$bytes_stored);
 
 $tmp = $client->fetchRow();

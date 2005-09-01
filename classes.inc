@@ -124,8 +124,8 @@ class Bweb extends DB {
                         $dbsize = $this->link->query("show table status")
                                 or die ("classes.inc: Error query: 3");
                         if ( $dbsize->numRows() ) {
-                                while ( $res = $dbsize->fetchRow() )
-                                        $database_size += $res[5];
+                                while ( $res = $dbsize->fetchRow(DB_FETCHMODE_ASSOC) )
+                                        $database_size += $res["Data_length"];
                         }
                         else
                                 return 0;

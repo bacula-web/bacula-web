@@ -3,10 +3,12 @@
 	- Updated French translation
 	- Initial support for PostgreSQL (thanks to Dan Langille)
 	- Upgrade Phplot to 5.0rc2 version.
-	- Add templates_c to cvs repository.
+	- Added templates_c to cvs repository.
+	- Added German translation
+	- Fix mysql database size (reported by Roland Arendes)
 	
 25-10-2004 Bacula web 1.1
-    - Add array_fill function (as Mikael suggested)
+	- Add array_fill function (as Mikael suggested)
 	- Fix url encode of links. (reported by Phil Stracchino) 
 	- Upgrade Smarty to 2.6.6 version.
 	- Add French translation	
