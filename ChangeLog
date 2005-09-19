@@ -6,6 +6,7 @@
 	- Added templates_c to cvs repository.
 	- Added German translation
 	- Fix mysql database size (reported by Roland Arendes)
+	- Added JobID column in report template. (thanks to Stephan Ebeit)
 	
 25-10-2004 Bacula web 1.1
 	- Add array_fill function (as Mikael suggested)

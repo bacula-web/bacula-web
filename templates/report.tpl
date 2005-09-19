@@ -65,6 +65,7 @@
 			<td>  
 				<table width=100% border=0 class=genmed cellpadding=0 cellspacing=2>
 				<tr class=titulo2>
+					<td background="images/bg7.gif" height=25>{t}JobID{/t}</td>
 					<td background="images/bg7.gif" height=25>{t}Date{/t}</td>
 					<td background="images/bg7.gif" height=25>{t}Elapsed{/t}</td>
 					<td background="images/bg7.gif" height=25>{t}Level{/t}</td>
@@ -73,6 +74,7 @@
 				</tr>
 				{section name=job loop=$jobs}
 				<tr class={cycle values="table1,table2"}>
+					<td align=center>{$jobs[job].JobId}</td>
 				  	<td {popup caption="Sheduled time" text=$jobs[job].SchedTime}>{$jobs[job].StartTime}</td>
 				  	<td {popup autostatus=yes caption="EndTime" text=$jobs[job].EndTime}>{$jobs[job].elapsed}</td>
 					<td align=center>{$jobs[job].Level}</td>
