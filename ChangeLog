@@ -7,11 +7,13 @@
 	- Added German translation
 	- Fix mysql database size (reported by Roland Arendes)
 	- Added JobID column in report template. (thanks to Stephan Ebeit)
+	- Upgraded Smarty to 2.6.10 version.
+	- Added multicatalog support
 	
 25-10-2004 Bacula web 1.1
 	- Add array_fill function (as Mikael suggested)
 	- Fix url encode of links. (reported by Phil Stracchino) 
-	- Upgrade Smarty to 2.6.6 version.
+	- Upgraded Smarty to 2.6.6 version.
 	- Add French translation	
 	
 04-08-2004 Bacula web 1.0

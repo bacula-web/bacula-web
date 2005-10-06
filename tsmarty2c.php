@@ -1,4 +1,4 @@
-#!/usr/local/bin/php -qn
+#!/usr/bin/php -qn
 <?php
 /**
  * tsmarty2c.php - rips gettext strings from smarty template

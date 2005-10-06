@@ -15,6 +15,7 @@ REQUIREMENTS:
                 - TrueType (optional)
                 - Pear DB (http://pear.php.net/package/DB)
                 - MySQL or PostgreSQL
+		- Sessions
         - Bacula (Oh!, yes, you need this ;-) ) http://www.bacula.org
 
                 

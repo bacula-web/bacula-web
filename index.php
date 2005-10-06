@@ -15,6 +15,7 @@
 +-------------------------------------------------------------------------+ 
 */
 // Last Err: 
+session_start();
 require ("paths.php");
 require($smarty_path."Smarty.class.php");
 include "classes.inc";
@@ -32,6 +33,11 @@ $mode = $smarty->get_config_vars("mode");                                       
 
 require("lang.php");
 
+//Assign dbs
+if ( count($dbSql->dbs) >1 ) {
+  $smarty->assign("dbs", $dbSql->dbs);
+  $smarty->assign("dbs_now", $_SESSION['DATABASE']);
+}
 
 // generaldata.tpl & last_run_report.tpl (last24bytes)
 $client = $dbSql->link->query("select count(*) from Client")

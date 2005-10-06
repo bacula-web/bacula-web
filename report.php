@@ -14,7 +14,7 @@
 | GNU General Public License for more details.                            |
 +-------------------------------------------------------------------------+ 
 */
-
+session_start();
 require ("paths.php");
 require($smarty_path."Smarty.class.php");
 include "classes.inc";

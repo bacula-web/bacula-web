@@ -34,21 +34,45 @@ class Bweb extends DB {
         var $StartDate;
         var $EndDate;
         var $driver;
+	var $dbs;
 
 
 
         function Bweb() {
                 
                 $conf = new Config_File (CONFIG_DIR);
-                
-                
-                $this->dsn['hostspec'] = $conf->get(CONFIG_FILE,"DATABASE","host");
-                $this->dsn['username'] = $conf->get(CONFIG_FILE,"DATABASE","login");
-                $this->dsn['password'] = $conf->get(CONFIG_FILE,"DATABASE","pass");
-                $this->dsn['database'] = $conf->get(CONFIG_FILE,"DATABASE","db_name");
-                $this->dsn['phptype'] = $conf->get(CONFIG_FILE,"DATABASE","db_type");   // mysql, (sqlite, pgsql) -->> Yet not checked
-                if (  $conf->get(CONFIG_FILE,"DATABASE","db_port") )
-                        $this->dsn[port] = $conf->get(CONFIG_FILE,"DATABASE","db_port");
+		$this->dbs = array();
+		$i = 2;
+		$sections = $conf->get(CONFIG_FILE,"DATABASE","host");
+		array_push($this->dbs, "DATABASE");
+		while ( !empty($sections) ) {                
+			$sections = $conf->get(CONFIG_FILE,"DATABASE".$i,"host");
+			if ( !empty($sections) )
+				array_push($this->dbs,"DATABASE".$i);
+			$i++;
+		}
+
+		if ( $i < 4)
+			$sec = "DATABASE";
+		else {
+			if ( !empty($_POST['sel_database']) ) {
+				$_SESSION['DATABASE'] = $_POST['sel_database'];
+				$sec = $_POST['sel_database'];
+			} else {
+				if (isset($_SESSION['DATABASE']) )
+					$sec = $_SESSION['DATABASE'];
+				else
+					$sec = "DATABASE";
+			}
+		}
+
+                $this->dsn['hostspec'] = $conf->get(CONFIG_FILE,$sec,"host");
+                $this->dsn['username'] = $conf->get(CONFIG_FILE,$sec,"login");
+                $this->dsn['password'] = $conf->get(CONFIG_FILE,$sec,"pass");
+                $this->dsn['database'] = $conf->get(CONFIG_FILE,$sec,"db_name");
+                $this->dsn['phptype'] = $conf->get(CONFIG_FILE,$sec,"db_type");   // mysql, (sqlite, pgsql) -->> Yet not checked
+                if (  $conf->get(CONFIG_FILE,$sec,"db_port") )
+                        $this->dsn[port] = $conf->get(CONFIG_FILE,$sec,"db_port");
                         
                 $this->link =& $this->connect($this->dsn);
                 
@@ -56,14 +80,12 @@ class Bweb extends DB {
                     die($this->link->getMessage());
                 $this->driver = $this->dsn[phptype];                            
                 register_shutdown_function(array(&$this,'close'));
-         }
-
-
+	}
                 
         function close() {
 
                 $this->link->disconnect();
-         }      
+        }      
 
         
          
@@ -73,7 +95,7 @@ class Bweb extends DB {
                         or die("classes.inc: Error query: 1");
                 $return =& $result->fetchRow(); 
                 return $return[0];
-         }//end function
+        }//end function
 
         
          
@@ -83,7 +105,7 @@ class Bweb extends DB {
                         or die("classes.inc: Error query: 2");
                 $return =& $result->fetchRow();
                 return $return[0];
-         }//end function 
+        }//end function 
 
                  
 
