@@ -20,7 +20,7 @@
 		<form method=post action=index.php>
 		<td background="{#root#}/images/bg2.png" align="right" valign="top">
 		{t}Select{/t}: 
-		<select name=sel_database style="font-family:verdana;font-size: 6px;color: white; background-color:#666;" onchange=submit()>
+		<select name=sel_database style="font-family:verdana;font-size: 10px;color: white; background-color:#666;" onchange=submit()>
 		{html_options values=$dbs output=$dbs selected=$dbs_now}
 		</select>
 		</td>
