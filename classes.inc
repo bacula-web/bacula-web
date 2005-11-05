@@ -383,9 +383,9 @@ class BCreateGraph extends BGraph {
                                                         or die ("classes.inc: Error at query: 8");
 					}
                                         else if ($DB_bacula->driver == "pgsql") {
-						$res = $DB_bacula->link->query("select Name from Job where EndTime > now()) - $this->elapsed  group by Name order by Name desc")
+						$res = $DB_bacula->link->query("select Name from Job where EndTime > now() - interval '$this->elapsed seconds'  group by Name order by Name desc")
 							or die ("classes.inc: Error at query: 8");
-                                                $resdata = $DB_bacula->link->query("select date_format(EndTime,\"%Y-%m-%d\") from Job where EndTime > NOW() - $this->elapsed  group by date_format(EndTime,\"%Y-%m-%d\") order by EndTime")
+                                                $resdata = $DB_bacula->link->query("select date(EndTime) from Job where EndTime > NOW() - interval '$this->elapsed seconds' group by EndTime order by EndTime")
                                                         or die ("classes.inc: Error at query: 9");
 					}
                                         
@@ -408,7 +408,7 @@ class BCreateGraph extends BGraph {
                                                         $result = $DB_bacula->link->query("select date_format(EndTime,\"%Y-%m-%d\"),SUM(JobBytes),Name,count(Name) as Nname from Job WHERE EndTime like '$tmpdata[0]%' group by Name order by Name desc")
                                                                 or die ("classes.inc: Error at query: 10");
                                                 else if ($DB_bacula->driver == "pgsql")
-                                                        $result = $DB_bacula->link->query("select date_format(EndTime,'%Y-%m-%d'),SUM(JobBytes),Name,count(Name) as Nname from Job WHERE EndTime like '$tmpdata[0]%' group by EndTime,Name order by Name desc")
+                                                        $result = $DB_bacula->link->query("select date(EndTime),SUM(JobBytes),Name,count(Name) as Nname from Job WHERE EndTime like '$tmpdata[0]%' group by EndTime,Name order by Name desc")
                                                                 or die ("classes.inc: Error at query: 11");
                                                 while ( $row = $result->fetchRow(DB_FETCHMODE_ASSOC) ) {
                                                         $spr2 = array_merge($spr2,array($row["Name"]=>$row["SUM(JobBytes)"]));
