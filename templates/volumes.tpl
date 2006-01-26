@@ -23,7 +23,7 @@
                                         <td background="images/bg5.png" class=tbl_pool_inter_2>{t}Volume Bytes{/t}</td>
                                         <td background="images/bg5.png" class=tbl_pool_inter_2>{t}Media Type{/t}</td>
                                         <td background="images/bg5.png" class=tbl_pool_inter_2>{t}When expire?{/t}</td>
-                                        <td background="images/bg5.png" class=tbl_pool_inter_2>{t}Last Written{/t}                                      
+                                        <td background="images/bg5.png" class=tbl_pool_inter_2>{t}Last Written{/t}</td>                                      
                                         <td background="images/bg5.png" class=tbl_pool_inter_3>{t}Volume Status{/t}</td>
                                 </tr>
                         {/if}

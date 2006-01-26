@@ -60,13 +60,16 @@ $tmp = $client->fetchRow();
 $smarty->assign('clientes_totales',$tmp[0]);
 
 $tmp = $last24bytes->fetchRow();
-if ( empty($tmp[0]) ) {                                                                                                                 // No data for last 24, search last 48
+/*if ( empty($tmp[0]) ) {                                                                                                                 // No data for last 24, search last 48
         if ( $dbSql->driver == "mysql" )
           $last24bytes = $dbSql->link->query("select sum(JobBytes) from Job where Endtime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-172800" );
         if ( $dbSql->driver == "pgsql")
-          $last24bytes = $dbSql->link->query("select sum(JobBytes) from Job where Endtime <= NOW() and EndTime > NOW()-172800" );
+          $last24bytes = $dbSql->link->query("select sum(JobBytes) from Job where Endtime <= NOW() and EndTime > NOW()-172800 * interval '1 second'" )
+            or die ("Error query: 4.1");
         $smarty->assign('when',"yesterday");
-}
+        $tmp = $last24bytes->fetchRow();        
+}*/
+
 $smarty->assign('bytes_totales',$tmp[0]);
 $smarty->assign('total_jobs', $tmp[1]);
 
@@ -76,6 +79,7 @@ $smarty->assign('files_totales',$tmp[0]);
 $client->free();
 $totalfiles->free();
 $last24bytes->free();
+
 
 
 // report_select.tpl & last_run_report.tpl
@@ -136,7 +140,7 @@ else if ($mode == "Full" || $_GET['Full_popup'] == "yes" ){
                                 LEFT JOIN Pool ON Job.PoolId=Pool.PoolId where EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) >UNIX_TIMESTAMP(NOW())-86400 
                                 order by elapsed ";                                                                                                     // Full report array
         if ( $dbSql->driver == "pgsql")
-                $query = "select Job.EndTime - Job.StartTime )
+                $query = "select (Job.EndTime - Job.StartTime )
                                 as elapsed,Job.Name,Job.StartTime,Job.EndTime,Job.Level,Pool.Name,Job.JobStatus from Job
                                 LEFT JOIN Pool ON Job.PoolId=Pool.PoolId where EndTime <= NOW() and EndTime > NOW() - 86400 * interval '1 second'
                                 order by elapsed ";

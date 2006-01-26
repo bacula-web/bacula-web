@@ -1,4 +1,8 @@
-- - - -  Bacula web 1.2
+26-01-2006 Bacula-web 1.3
+	- (0000019,0000021) Fixed psql querys.
+	- Fixed XTicks (Graphs).
+
+06-10-2005  Bacula web 1.2
 	- Human redable Y-axis of graphs
 	- Updated French translation
 	- Initial support for PostgreSQL (thanks to Dan Langille)

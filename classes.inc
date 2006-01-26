@@ -35,6 +35,7 @@ class Bweb extends DB {
         var $EndDate;
         var $driver;
 	var $dbs;
+	var $dbs_name;
 
 
 
@@ -70,7 +71,7 @@ class Bweb extends DB {
                 $this->dsn['username'] = $conf->get(CONFIG_FILE,$sec,"login");
                 $this->dsn['password'] = $conf->get(CONFIG_FILE,$sec,"pass");
                 $this->dsn['database'] = $conf->get(CONFIG_FILE,$sec,"db_name");
-                $this->dsn['phptype'] = $conf->get(CONFIG_FILE,$sec,"db_type");   // mysql, (sqlite, pgsql) -->> Yet not checked
+                $this->dsn['phptype'] = $conf->get(CONFIG_FILE,$sec,"db_type");   // mysql, pgsql
                 if (  $conf->get(CONFIG_FILE,$sec,"db_port") )
                         $this->dsn[port] = $conf->get(CONFIG_FILE,$sec,"db_port");
                         
@@ -80,6 +81,7 @@ class Bweb extends DB {
                     die($this->link->getMessage());
                 $this->driver = $this->dsn[phptype];                            
                 register_shutdown_function(array(&$this,'close'));
+		$this->dbs_name = $this->dsn['database'];
 	}
                 
         function close() {
@@ -153,8 +155,10 @@ class Bweb extends DB {
                                 return 0;
                 }
                 else if ( $this->driver == "pgsql") {
-                        $dbsize = $this->link->query("select database_size('bacula')")
+                        $dbsize = $this->link->query("select pg_database_size('$this->dbs_name')")
                                 or die ("classes.inc: Error query: 4");
+			if (PEAR::isError($dbsize))
+	                    die($dbsize->getMessage());
                         if ( $dbsize->numRows() ) {
                                 while ( $res = $dbsize->fetchRow() )
                                         $database_size += $res[0];
@@ -221,7 +225,7 @@ class BGraph {
                         $graph->SetXDataLabelAngle(90);
                 else
                         $graph->SetXDataLabelAngle(0);
-//              $graph->SetNumXTicks(10);
+		$graph->SetNumXTicks(1);
 //              $graph->SetXDataLabelPos('none');
 //              $graph->SetXTickLabelPos('plotdown');
                 
@@ -373,7 +377,7 @@ class BCreateGraph extends BGraph {
                                         $result->free();
                                         break;
                                 case BACULA_TYPE_BYTES_ENDTIME_ALLJOBS:  // Special: Generic graph from all clientes.
-                                        $i = -1;                         // Counter of number of jobs of one cliente. SP: Contador del nmero de jobs totales de un cliente.
+                                        $i = -1;                         // Counter of number of jobs of one client. SP: Contador del nmero de jobs totales de un cliente.
                                         $i2 = 0;                         // Counter of number of keys of array. SP: Contador del nmero de valores del array.
                                         
                                         if ($DB_bacula->driver == "mysql") {
@@ -383,12 +387,14 @@ class BCreateGraph extends BGraph {
                                                         or die ("classes.inc: Error at query: 8");
 					}
                                         else if ($DB_bacula->driver == "pgsql") {
-						$res = $DB_bacula->link->query("select Name from Job where EndTime > now() - interval '$this->elapsed seconds'  group by Name order by Name desc")
+						$res = $DB_bacula->link->query("select Name from Job where EndTime > now() - 1*interval'$this->elapsed s'  group by Name order by Name desc")
 							or die ("classes.inc: Error at query: 8");
-                                                $resdata = $DB_bacula->link->query("select date(EndTime) from Job where EndTime > NOW() - interval '$this->elapsed seconds' group by EndTime order by EndTime")
+                                                $resdata = $DB_bacula->link->query("select to_char(EndTime,'YY-MM-DD') from Job where EndTime > NOW() - 1*interval'$this->elapsed s'  group by EndTime order by EndTime")
                                                         or die ("classes.inc: Error at query: 9");
 					}
                                         
+					if (PEAR::isError($resdata))
+						die("classes.inc: Error at query: 9.1<br>".$resdata->getMessage());
                                         while ( $tmpdata = $res->fetchRow() )
                                                 array_push($this->clientes,$tmpdata[0]);
                                                 
@@ -405,13 +411,15 @@ class BCreateGraph extends BGraph {
                                                 $count++;
                                                 array_push($spr,$tmpdata[0]);
                                                 if ($DB_bacula->driver == "mysql")
-                                                        $result = $DB_bacula->link->query("select date_format(EndTime,\"%Y-%m-%d\"),SUM(JobBytes),Name,count(Name) as Nname from Job WHERE EndTime like '$tmpdata[0]%' group by Name order by Name desc")
+                                                        $result = $DB_bacula->link->query("select date_format(EndTime,\"%Y-%m-%d\"),SUM(JobBytes) as sum,Name as name,count(Name) as Nname from Job WHERE EndTime like '$tmpdata[0]%' group by Name order by Name desc")
                                                                 or die ("classes.inc: Error at query: 10");
-                                                else if ($DB_bacula->driver == "pgsql")
-                                                        $result = $DB_bacula->link->query("select date(EndTime),SUM(JobBytes),Name,count(Name) as Nname from Job WHERE EndTime like '$tmpdata[0]%' group by EndTime,Name order by Name desc")
+                                                else if ($DB_bacula->driver == "pgsql") {
+							$query = "select to_char(EndTime,'YY-MM-DD'),SUM(JobBytes) as sum,Name,count(Name) as Nname from Job WHERE EndTime like '%$tmpdata[0]%' group by EndTime,Name order by Name desc";
+                                                        $result = $DB_bacula->link->query($query)
                                                                 or die ("classes.inc: Error at query: 11");
+						}
                                                 while ( $row = $result->fetchRow(DB_FETCHMODE_ASSOC) ) {
-                                                        $spr2 = array_merge($spr2,array($row["Name"]=>$row["SUM(JobBytes)"]));
+                                                        $spr2 = array_merge($spr2,array($row["name"]=>$row["sum"]));
                                                         $i = $result->numRows();
                                                 }
 
@@ -421,7 +429,7 @@ class BCreateGraph extends BGraph {
 //                                              echo "</pre>";
                                                 
                                                 reset ($this->clientes);        
-												do { 
+						do {
                                                         if ( $spr2[current($this->clientes)] != NULL)
                                                                 array_push($spr,$spr2[current($this->clientes)]);
                                                         else
@@ -437,7 +445,7 @@ class BCreateGraph extends BGraph {
                                                 $spr = array();
                                                 $spr2 = array();
                                         }
-                                
+
                                         for ( $i = 0; $i < count($whole_result); $i++ ) {  // To equal the arrays so that the graph is not unsquared. SP:Igualamos las matrices para que la gr�ica no se descuadre
                                                 $tmp = count($whole_result[$i]);
                                                 if ( $i2 < $tmp )                // Estupidez?. Check this code later...
@@ -463,7 +471,7 @@ class BCreateGraph extends BGraph {
 
 
 
-        //Conversi� de la fecha a Mysql-format para Smarty.           THE SAME FUNCTION AT 2 CLASSES. THIS WAY IS BUGGY. TO SOLVE LATER.
+        //Convert date from mysql to smarty.           THE SAME FUNCTION AT 2 CLASSES. THIS WAY IS BUGGY. TO SOLVE LATER.
         function PrepareDate($StartDateMonth,$StartDateDay,$StartDateYear,$EndDateMonth,$EndDateDay,$EndDateYear){
         
                 $this->StartDate = $StartDateYear."-".$StartDateMonth."-".$StartDateDay." 00:00:00";
