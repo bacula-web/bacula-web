@@ -26,6 +26,7 @@ INSTALL
 - Copy this distribution to root directory or a subdirectory of your webroot.
 - Edit configs/bacula.conf with your preferences
 - Run "test.php" from your browser.
+- You need to turn on the short_open_tag option in php.ini
 
 
 NOTES
