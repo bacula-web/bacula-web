@@ -14,7 +14,7 @@ REQUIREMENTS:
                 - GD 2.x
                 - TrueType (optional)
                 - Pear DB (http://pear.php.net/package/DB)
-                - MySQL or PostgreSQL
+                - MySQL or PostgreSQL (SQLite is not supported)
                 - Sessions
         - If you use PostgreSQL
                 - dbsize contrib package
