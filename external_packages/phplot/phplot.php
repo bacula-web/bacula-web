@@ -164,7 +164,7 @@ class PHPlot {
     var $error_bar_colors = array('SkyBlue', 'green', 'orange', 'blue', 'orange', 'red', 'violet', 'azure1');
     var $data_border_colors = array('black');
 
-    var $line_widths = 1;                  // single value or array
+    var $line_widths = array(1);           // single value or array
     var $line_styles = array('solid', 'solid', 'dashed');   // single value or array
     var $dashed_style = '2-4';              // colored dots-transparent dots
 
