@@ -1,13 +1,18 @@
 {* Página principal BACULA *}
 {config_load  file=bacula.conf}
-{popup_init src="js/overlib.js"}
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
 <head>
+{popup_init src="js/overlib.js"}
+<title>{t}Stats Bacula: Job{/t} {$smarty.get.server}</title>
 
-<title>{t}Stats Bacula: Job{/t} {$smarty.get.server}</title></head>
+<link rel="stylesheet" type="text/css" href="style/default.css" />
+
+</head>
+
 <body>
-
-{include file=css.tpl}
 
 <table width=100% border=1 class=back>
 <tr>
