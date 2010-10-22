@@ -1,10 +1,8 @@
 {* BACULA main page*}
 
-{config_load file=bacula.conf}
-
-{include file=css.tpl}
-
 {include file=header.tpl}
+
+{config_load file=bacula.conf}
 
 <table width=1000px border=0 cellspacing=5 class=back>
 	<tr><td valign=top width=60%> {include file=generaldata.tpl} <br> {include file=volumes.tpl}</td>

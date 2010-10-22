@@ -1,6 +1,8 @@
-<HTML>
-<HEAD>
-{popup_init src="js/overlib.js"}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+{*{popup_init src="js/overlib.js"}*}
 {literal}
 <script language="Javascript">
 	function OpenWin(URL,wid,hei) {
@@ -8,13 +10,15 @@
 	}
 </script>
 {/literal}
-<TITLE>{#title#}</TITLE>
-</HEAD>
-<BODY bgcolor="#ffffff">
+<link rel="stylesheet" type="text/css" href="style/default.css" />
+<title>bacula-web</title>
+</head>
+<body>
+
 <table width=1000px cellpadding=0 cellspacing=0 border=0 bgcolor="#2F92AF">
  <tr>
- 	<td class=titulo2 background="images/bg2.png" valign="bottom">
- 	 {#title#}
+ 	<td class="titulo2" background="images/bg2.png" valign="bottom">
+ 	 bacula-web
  	</td>
 	{if $dbs ne ""}
 		<form method=post action=index.php>
@@ -32,7 +36,7 @@
  	Bugs?
  	</a>
  	</td>
- 	<td background="images/end2.png>
+ 	<td background="images/end2.png">
  	<img src="images/empty.png">
  	</td>
  </tr>

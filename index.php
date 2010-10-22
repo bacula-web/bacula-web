@@ -23,8 +23,10 @@ include "classes.inc";
 $smarty = new Smarty;                                                                                                                   // Template engine
 $dbSql = new Bweb();
 
-//$smarty->compile_check = true;
-//$smarty->debugging = true;
+$smarty->compile_check = true;
+$smarty->debugging = false;
+$smarty->force_compile = true;
+
 $smarty->template_dir = "./templates";
 $smarty->compile_dir = "./templates_c";
 $smarty->config_dir     = "./configs";
