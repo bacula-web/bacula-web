@@ -18,7 +18,7 @@
 			<td colspan=6>&nbsp;</td></tr>
         <tr>
 			<!-- <td align=left style="background-color: #E0C8E5; color: black;" background="images/bg6.png"> -->
-			<td style="text-align: left; background-color: #E0C8E5; color: black; background-image: url('images/bg6.png');">
+			<td style="text-align: left; background-color: #E0C8E5; color: black; background-image: url('../images/bg6.png');">
                 {$current}
             </td>
         </tr>
@@ -40,14 +40,18 @@
                                         <td>{$current3.0}</td>
                                         <td>{$current3.1|fsize_format|default:0}</td>
                                         <td>{$current3.4}</td>
-                                        <td {popup text="$current3.6}">
-											{if $current3.6|date_format:"%Y" <= "1979"}--
-											{else}{$current3.6|date_format:"%Y/%m/%d"}
+                                        <td {popup text='$current3.6}>
+											{if $current3.6|date_format:"%Y" <= "1979"}
+											  --
+											{else}
+											  {$current3.6|date_format:"%Y/%m/%d"}
 											{/if}
 										</td>
-                                        <td {popup text="$current3.5}">
-											{if $current3.5 == "0000-00-00 00:00:00"}--
-											{else}{$current3.5|date_format:"%Y/%m/%d"}
+                                        <td {popup text='$current3.5}>
+											{if $current3.5 == "0000-00-00 00:00:00"}
+											  --
+											{else}
+											  {$current3.5|date_format:"%Y/%m/%d"}
 											{/if}
 										</td>
                                         <td>
