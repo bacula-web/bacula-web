@@ -1,4 +1,4 @@
-<?
+<?php
 
 function Check($function,$text,$description="") {
 	

@@ -1,4 +1,4 @@
-<?
+<?php
 // LOCATION OF EXTERNAL PACKAGES
 // -----------------------------
 
