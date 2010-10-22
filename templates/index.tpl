@@ -37,9 +37,9 @@
 	<div class="box">
 		<p class="title">General report</p>
 		{if $server==""} 
-		  <img src="stats.php?server={$server}&tipo_dato=69&title=General%20report&modo_graph=bars&sizex=420&sizey=250&MBottom=20&legend=1" />
+		  <img src="stats.php?server={$server}&amp;tipo_dato=69&amp;title=General%20report&amp;modo_graph=bars&amp;sizex=420&amp;sizey=250&amp;MBottom=20&amp;legend=1" />
 		{else}
-		  <img src="stats.php?server={$server}&tipo_dato=3&title={$server}&modo_graph=bars" />
+		  <img src="stats.php?server={$server}&amp;tipo_dato=3&amp;title={$server}&amp;modo_graph=bars" />
 		{/if}
 	</div> <!-- end div box -->
 <!--
