@@ -9,16 +9,14 @@
         <td class=tbl_header2 background="images/end4.png"><img src="images/empty.png"></td>
 </tr>
 -->
-<table width="100%">
-	<tr>
-		<td colspan=2>
-			<table border=0 width=100% class=code cellspacing=0 cellpadding=0>
-				{foreach from=$pools item=current}
-			<tr>
+<table border=1 width=100% class=code cellspacing=0 cellpadding=0>
+	{foreach from=$pools item=current}
+		<tr>
 			<td colspan=6>&nbsp;</td></tr>
         <tr>
 			<!-- <td align=left style="background-color: #E0C8E5; color: black;" background="images/bg6.png"> -->
-			<td style="text-align: left; background-color: #E0C8E5; color: black; background-image: url('../images/bg6.png');">
+			<!-- <td colspan="6" style="text-align: left; background-color: #E0C8E5; color: black; background-image: url('../images/bg6.png');"> -->
+			<td colspan="6" class="pool_name">
                 {$current}
             </td>
         </tr>
@@ -75,9 +73,6 @@
                 {/foreach}
         {/foreach}
 {/foreach}
-</table>
-</td>
-</tr>
 </table>
 
 </div> <!-- end div box -->

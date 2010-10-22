@@ -94,6 +94,14 @@ table {
  width: 100%;
  margin: 0px;
 }
+.pool_name {
+ text-align: left; 
+ font-weight: bold;
+ font-size: 9pt;
+ padding: 2px;
+ background-color: #E0C8E5; 
+ color: black; 
+}
 
 a:link { color: #0000c0 }
 a:visited { color: #0000c0 }
