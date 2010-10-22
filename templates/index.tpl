@@ -1,4 +1,19 @@
-{* BACULA main page*}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+{*{popup_init src="js/overlib.js"}*}
+{literal}
+<script language="Javascript">
+	function OpenWin(URL,wid,hei) {
+		window.open(URL,"window1","width="+wid+",height="+hei+",scrollbars=yes,menubar=no,location=no,resizable=no")
+	}
+</script>
+{/literal}
+<link rel="stylesheet" type="text/css" href="style/default.css" />
+<title>bacula-web</title>
+</head>
+<body>
 
 {include file=header.tpl}
 

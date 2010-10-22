@@ -1,20 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-  "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-{*{popup_init src="js/overlib.js"}*}
-{literal}
-<script language="Javascript">
-	function OpenWin(URL,wid,hei) {
-		window.open(URL,"window1","width="+wid+",height="+hei+",scrollbars=yes,menubar=no,location=no,resizable=no")
-	}
-</script>
-{/literal}
-<link rel="stylesheet" type="text/css" href="style/default.css" />
-<title>bacula-web</title>
-</head>
-<body>
-
+<!-- Header -->
 <table width=1000px cellpadding=0 cellspacing=0 border=0 bgcolor="#2F92AF">
  <tr>
  	<td class="titulo2" background="images/bg2.png" valign="bottom">
@@ -41,3 +25,4 @@
  	</td>
  </tr>
 </table>
+<!-- End Header -->
