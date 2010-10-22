@@ -3,7 +3,6 @@
   "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-{*{popup_init src="js/overlib.js"}*}
 {literal}
 <script type="text/javascript">
 	function OpenWin(URL,wid,hei) {
@@ -15,6 +14,7 @@
 <title>bacula-web</title>
 </head>
 <body>
+{popup_init src='./js/overlib.js'}
 {include file=header.tpl}
 
 <div id="main_left">
