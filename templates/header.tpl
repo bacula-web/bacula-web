@@ -1,9 +1,25 @@
 <!-- Header -->
-<table width=1000px cellpadding=0 cellspacing=0 border=0 bgcolor="#2F92AF">
+<div id="header">
+ <p class="title">bacula-web</p>
+</div>
+
+<div id="subheader">
+ <ul>
+	<li> 
+		<a href="index.php">Refresh</a>
+	</li>
+	<li>
+		<a href="http://bacula-web.dflc.ch/bugs" target="_blank">Bugs</a
+	<li>
+		<a href="http://bacula-web.dflc.ch" target="_blank">About</a>
+	</li>
+ </ul>
+</div>
+
+<!-- 
+<table width="100%" cellpadding=0 cellspacing=0 border=0 bgcolor="#2F92AF">
  <tr>
- 	<td class="titulo2" background="images/bg2.png" valign="bottom">
- 	 bacula-web
- 	</td>
+
 	{if $dbs ne ""}
 		<form method=post action=index.php>
 		<td background="{#root#}/images/bg2.png" align="right" valign="top">
@@ -12,17 +28,9 @@
 		{html_options values=$dbs output=$dbs selected=$dbs_now}
 		</select>
 		</td>
-		</form>
 	{/if}
- 	<td background="{#root#}/images/bg2.png" align=right width=7%>
-	<a href="{php $_SERVER['PHP_SELF'];}"><img src="{#root#}/images/refresh.gif" alt='Refresh'></a>
- 	<a href="http://indpnday.com/bacula_stuff/bacula-web/mantisbt/login_page.php" target="_blank" {popup text="They grow thanks to Juan Luis Francés...Please, click here to report them"}>
- 	Bugs?
- 	</a>
- 	</td>
- 	<td background="images/end2.png">
- 	<img src="images/empty.png">
- 	</td>
- </tr>
-</table>
+    </tr>
+  </table>
+</form>
+-->
 <!-- End Header -->

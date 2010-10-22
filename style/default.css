@@ -1,5 +1,47 @@
 body{
   background-color: #ffffff;
+  padding: 0px;
+  margin: 0px;
+  
+  font-family: Arial,Verdana;
+}
+
+#header{
+ width: 100%;
+ padding: 0px;
+ margin: 0px;
+ background-color: #1E90FF ;
+}
+#header p.title{
+ vertical-align: middle;
+ background-image: url('images/bg2.png');
+ font-size: 18pt;
+ font-variant: small-caps;
+ font-weight: bold;
+ text-align: right;
+ color: #FFFFFF;
+ padding: 0.5em;
+}
+#subheader {
+ width: 100%;
+ font-size: 10pt;
+ margin: 0px;
+ padding: 0px;
+ border-bottom: 1px solid black;
+}
+#subheader ul {
+ height: 20px;
+ margin: 0px;
+}
+
+#subheader li {
+ display: inline;
+ float: right;
+ padding: 0px 10px 0px 10px;
+}
+
+#subheader li a {
+ text-decoration: none;
 }
 
 a:link { color: #0000c0 }
@@ -102,3 +144,4 @@ td,input,select {
 .size_small { 
  font-size: 9px; 
 }
+
