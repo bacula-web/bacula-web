@@ -87,7 +87,10 @@ td,input,select {
  background-color: #FAFAFA; 
  border: #D1D7DC; 
  border-style: solid;
- border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px
+ border-left-width: 1px; 
+ border-top-width: 1px; 
+ border-right-width: 1px; 
+ border-bottom-width: 1px
 }
 .notas { 
  font-size : 13px; 

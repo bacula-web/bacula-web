@@ -1,3 +1,5 @@
+<!-- last_run_report.tpl -->
+
 <table width=90% align=center {if !$status }background="images/backlast.gif"{else}background="images/backlastred.gif" {/if} style="background-repeat:no-repeat" height=178px border=0 cellspacing=0 cellpadding=0>
  <tr>
  	<td colspan=2 align=center style="font-size: 12px; font-weight: bold; background-repeat: repeat" background="images/bg6.png" height=25>
@@ -122,10 +124,12 @@
  
  <tr>
  	<td align=right colspan=2 valign=bottom>
- 		<table widh=100% cellpadding=0 cellspacing=3 border=0>
+ 		<form method="get" action="report.php" target="_blank">
+		<table width="100%" cellpadding="0" cellspacing="3" border="1">
  			<tr bgcolor=white>
-				<td align=right colspan=3 background="images/bg1.png" style="font-size: 12px; font-weight: bold;">
-				<i>{t}Detailed report{/t}</i>
+				<!-- <td align=right colspan=3 background="images/bg1.png" style="font-size: 12px; font-weight: bold;"> -->
+				<td colspan="3" style="text-align: center; background-image: url(images/bg1.png); font-size: 12px; font-weight: bold;">
+				Detailed report
 				</td>
  			</tr>
  			
@@ -133,10 +137,9 @@
  				<td align=left>
  					{t}Select a job:{/t}
  				</td> 			
- 				<form method=get action="report.php" target="_blank">
- 				<input type=hidden name="default" value="1">
  				<td align=right>
- 					<select name=server>
+					<input type=hidden name="default" value="1"> 				
+					<select name=server>
  						{if $smarty.get.server!=""}
  							{html_options values=$smarty.get.server output=$smarty.get.server}
  						{else}
@@ -147,9 +150,10 @@
  				<td>
  					<input type=submit value="{t}go{/t}">
  				</td>
- 				</form>
+ 				
  			</tr>
  		</table>
+		</form>
  	</td>
  </tr>
 {else if #mode# == "Full" || $smarty.get.Full_popup == "yes"}
@@ -193,3 +197,5 @@
  </tr>
 {/if}
 </table>
+
+<!-- end last_run_report.tpl -->

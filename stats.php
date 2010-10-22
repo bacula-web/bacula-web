@@ -58,6 +58,4 @@ else if (!isset($_GET['ylabel']))
 	$graph->BCreate ($_GET['server'],$_GET['tipo_dato'],$_GET['title'],$_GET['modo_graph'],$_GET['xlabel']);
 else
 	$graph->BCreate ($_GET['server'],$_GET['tipo_dato'],$_GET['title'],$_GET['modo_graph'],$_GET['xlabel'],$_GET['ylabel']);
-
-
 ?>

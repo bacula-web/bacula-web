@@ -1,4 +1,4 @@
-{* Design of table of pools *}
+<!-- volumes.tpl -->
 <table border=0 width=100% class=code cellspacing=0 cellpadding=0>
 <tr align=center width=100%>
         <td class=tbl_header2 background="images/bg4.png"><b>Pools</b></td>
@@ -31,8 +31,16 @@
                                         <td>{$current3.0}</td>
                                         <td>{$current3.1|fsize_format|default:0}</td>
                                         <td>{$current3.4}</td>
-                                        <td {popup text="$current3.6}">{if $current3.6|date_format:"%Y" <= "1979"}--{else}{$current3.6|date_format:"%Y/%m/%d"}{/if}</td>
-                                        <td {popup text="$current3.5}">{if $current3.5 == "0000-00-00 00:00:00"}--{else}{$current3.5|date_format:"%Y/%m/%d"}{/if}</td>
+                                        <td {popup text="$current3.6}">
+											{if $current3.6|date_format:"%Y" <= "1979"}--
+											{else}{$current3.6|date_format:"%Y/%m/%d"}
+											{/if}
+										</td>
+                                        <td {popup text="$current3.5}">
+											{if $current3.5 == "0000-00-00 00:00:00"}--
+											{else}{$current3.5|date_format:"%Y/%m/%d"}
+											{/if}
+										</td>
                                         <td>
                                                 <font color=
                                                 {if $current3.2 == "Error"}
@@ -56,3 +64,4 @@
 {/foreach}
 </table>
 </td></tr></table>
+<!-- End volumes.tpl -->
