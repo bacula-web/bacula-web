@@ -4,7 +4,7 @@
 </td></tr>
 <tr><td class=code>
 
-<table class=genmed width="90%" cellspacing="1" cellpadding="3" border="0" align="center" border=0>
+<table class=genmed width="90%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>	
 	<td width=35%>
 	{t}Total clients:{/t}

@@ -20,7 +20,7 @@
 {config_load file=bacula.conf}
 
 <table width=1000px border=0 cellspacing=5 class=back>
-	<tr><td valign=top width=60%> {include file=generaldata.tpl} <br> {include file=volumes.tpl}</td>
+	<tr><td valign=top width=60%> {include file=generaldata.tpl} <br /> {include file=volumes.tpl}</td>
 		<td valign=top width=40% bgcolor=#DDDFF9 style="border-style: solid; border-color: grey">
 			{if !#IndexReport#}
 				{include file=last_run_report.tpl} 	
