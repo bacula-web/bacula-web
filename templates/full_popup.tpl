@@ -1,8 +1,10 @@
 {config_load file=bacula.conf}
 <html>
 <head>
-{include file=css.tpl}
-<title>Popup</title></head>
+<link rel="stylesheet" type="text/css" href="style/default.css" />
+<title>Job Report</title>
+</head>
+
 <body bgcolor="#FBF7CE" topmargin=0 bottommargin=0 leftmargin=0 rightmargin=0 marginwidth=0 marginheight=0>
 {if $smarty.get.Full_popup == "yes"}
 	{include file=last_run_report.tpl}
