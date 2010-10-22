@@ -9,13 +9,11 @@
         <td class=tbl_header2 background="images/end4.png"><img src="images/empty.png"></td>
 </tr>
 -->
-<table border=1 width=100% class=code cellspacing=0 cellpadding=0>
+<table>
 	{foreach from=$pools item=current}
 		<tr>
 			<td colspan=6>&nbsp;</td></tr>
         <tr>
-			<!-- <td align=left style="background-color: #E0C8E5; color: black;" background="images/bg6.png"> -->
-			<!-- <td colspan="6" style="text-align: left; background-color: #E0C8E5; color: black; background-image: url('../images/bg6.png');"> -->
 			<td colspan="6" class="pool_name">
                 {$current}
             </td>
@@ -25,13 +23,13 @@
                 {foreach from=$key item=current3 name=loop}
                 {if $current3.3 == $current && $current3.0 != ""}
                         {if $smarty.foreach.loop.first == TRUE}
-                                <tr style="text-align: center; background-image: url('../images/bg5.png'); border: 1px solid black;">
-                                        <td style="font-size: 5pt;">Volume Name</td>
-                                        <td>Volume Bytes</td>
-                                        <td>Media Type</td>
-                                        <td>Expire on</td>
-                                        <td>Last Written</td>                                      
-                                        <td>Volume Status</td>
+                                <tr>
+                                        <td class="tbl_vol_header">Volume Name</td>
+                                        <td class="tbl_vol_header">Volume Bytes</td>
+                                        <td class="tbl_vol_header">Media Type</td>
+                                        <td class="tbl_vol_header">Expire on</td>
+                                        <td class="tbl_vol_header">Last Written</td>                                      
+                                        <td class="tbl_vol_header">Volume Status</td>
                                 </tr>
                         {/if}
                                 <tr align=center bgcolor={cycle values="#D9E3FC,#CBE7F5"}>

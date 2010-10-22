@@ -93,6 +93,7 @@ body{
 table {
  width: 100%;
  margin: 0px;
+ border-collapse: collapse;
 }
 .pool_name {
  text-align: left; 
@@ -101,6 +102,11 @@ table {
  padding: 2px;
  background-color: #E0C8E5; 
  color: black; 
+}
+
+.tbl_vol_header {
+ text-align: center; 
+ background-image: url('../images/bg5.png'); 
 }
 
 a:link { color: #0000c0 }
