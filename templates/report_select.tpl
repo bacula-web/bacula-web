@@ -1,9 +1,11 @@
+<form method=get action=report.php {if !isset($smarty.get.default) }target=_blank{/if}>
 <table width=100% border=0>
- <tr><td align=center colspan=3 class=titulo background="images/bg8.png">
+ <tr>
+	<td colspan="3" style="text-align: center; background-image: url('images/bg8.png');" class="titulo">
 	{t}SELECT NEW REPORT{/t}
  </td></tr>
  <tr class=table1><td align=left>
-	<form method=get action=report.php {if !isset($smarty.get.default) }target=_blank{/if}>
+	
 	<input type=hidden name=default value=2>
 	{t}Select a job:{/t}
 	</td>
@@ -26,38 +28,37 @@
 	<option value="area">{t}area{/t}</option>
 	</select>
 	
- </td>
+	</td>
  
- </tr>
- <tr class=table1>
-	<td>
-	{t}Data to show:{/t}
-	</td>
-	<td align=right>
-	<select name="tipo_dato">
-	<option value="3" selected>{t}Transferred bytes{/t}</option>
-	</select>
-	</td>	
- </tr>
- <tr class=table2>
-  <td align=left>
-	{t}Start period:{/t}
-  </td>
-  <td align=right>
- {html_select_date prefix="StartDate" time=$time2 field_order="DMY" start_year="-1" end_year="+1" display_days=true}
-  </td>
- </tr>
- <tr class=table1>
-  <td align=left>{t}End period:{/t}
-  </td>
-  <td align=right>
-  {html_select_date prefix="EndDate" time=$time field_order="DMY" start_year="-1" end_year="+1" display_days=true}
-  </td>
- </tr>
- <tr>	
-	<td colspan=3 align=center>
-	<input type=submit value="{t}Create report{/t}">
-	</form>
-	</td>
- </tr>
- </table>
+	</tr>
+	<tr class=table1>
+		<td>
+		{t}Data to show:{/t}
+		</td>
+		<td align=right>
+			<select name="tipo_dato">
+				<option value="3" selected>{t}Transferred bytes{/t}</option>
+			</select>
+		</td>	
+	</tr>
+	<tr class=table2>
+		<td align=left>
+			{t}Start period:{/t}
+		</td>
+		<td align=right>
+			{html_select_date prefix="StartDate" time=$time2 field_order="DMY" start_year="-1" end_year="+1" display_days=true}
+		</td>
+			</tr>
+			<tr class=table1>
+				<td align=left>{t}End period:{/t}</td>
+				<td align=right>
+					{html_select_date prefix="EndDate" time=$time field_order="DMY" start_year="-1" end_year="+1" display_days=true}
+				</td>
+			</tr>
+			<tr>	
+				<td colspan=3 align=center>
+					<input type=submit value="{t}Create report{/t}" />
+			</td>
+		</tr>
+	</table>
+ </form>
