@@ -4,7 +4,7 @@
 <head>
 {*{popup_init src="js/overlib.js"}*}
 {literal}
-<script language="Javascript">
+<script type="text/javascript">
 	function OpenWin(URL,wid,hei) {
 		window.open(URL,"window1","width="+wid+",height="+hei+",scrollbars=yes,menubar=no,location=no,resizable=no")
 	}
