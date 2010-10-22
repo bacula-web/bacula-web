@@ -319,7 +319,7 @@ class BCreateGraph extends BGraph {
                         $img= @ImageCreate(200,100) or die ("Cannot intialize GD stream");
                         $bgc= ImageColorAllocate($img, 0, 255,255);
                         $txc= ImageColorAllocate($img, 0,0,0);
-                        ImageString($img, 5, 4, 4, "None data to process", $txc);
+                        ImageString($img, 5, 4, 4, "No data to process", $txc);
                         ImagePng($img);
                         ImageDestroy($img);
                         return; 
