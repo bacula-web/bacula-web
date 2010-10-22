@@ -1,10 +1,16 @@
-<table class=genmed cellspacing="0" cellpadding="0" border=1 align="center" width=90%>
-<tr><td align=center class=tbl_medium background="images/bg3.png">
-{t}GENERAL DATA{/t}
-</td></tr>
-<tr><td class=code>
+<div class="box">
+	<p class="title">General informations</p>
+<!--
+<table class=genmed cellspacing="0" cellpadding="0" border=1 align="center" width=100%>
+<tr>
+  <td align=center class=tbl_medium background="images/bg3.png">
+	General information
+  </td>
+</tr>
+</table>
+-->
 
-<table class=genmed width="90%" cellspacing="1" cellpadding="3" border="0" align="center">
+<table class=genmed width="100%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>	
 	<td width=35%>
 	{t}Total clients:{/t}
@@ -50,6 +56,4 @@
 	</td>
 </tr>
 </table>
-
-</td></tr>
-</table>
+</div> <!-- end div box -->

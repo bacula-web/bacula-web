@@ -1,12 +1,17 @@
 <!-- last_run_report.tpl -->
 
-<table width=90% align=center {if !$status }background="images/backlast.gif"{else}background="images/backlastred.gif" {/if} style="background-repeat:no-repeat" height=178px border=0 cellspacing=0 cellpadding=0>
+<div class="box">
+	<p class="title">Last 24 hours status</p>
+<!--	
+<table width=100% align=center {if !$status }background="images/backlast.gif"{else}background="images/backlastred.gif" {/if} style="background-repeat:no-repeat" height=178px border=0 cellspacing=0 cellpadding=0>
  <tr>
  	<td colspan=2 align=center style="font-size: 12px; font-weight: bold; background-repeat: repeat" background="images/bg6.png" height=25>
  		{t}Status from last 24h{/t}
  	</td>
  </tr>
+-->
 {if #mode# == "Lite" && $smarty.get.Full_popup != "yes"}
+<table width="100%">
  <tr>
  	<td>
  		<b>{t}Errors:{/t}</b>
@@ -46,9 +51,11 @@
  		<a href="javascript:OpenWin('index.php?Full_popup=yes','490','350')">{t}Show details{/t}</a>
  	</td>
  </tr>
+ </table>
  
  {if $status != 0}
- 	<tr>
+<table>
+	<tr>
  		<td colspan=2>
  			<table border=0 cellpadding=0 cellspacing=0>
  				<tr>
@@ -119,20 +126,27 @@
  				{/section}
  			</table>
  		</td>
- 	</tr> 
+ 	</tr>
+</table>	
  {/if}
+</div> <!-- end div box --> 
  
+<div class="box">
+	<p class="title">Detailled report</p>
+ 
+ <form method="get" action="report.php" target="_blank">
+ <table>
+ <!--
  <tr>
  	<td align=right colspan=2 valign=bottom>
- 		<form method="get" action="report.php" target="_blank">
-		<table width="100%" cellpadding="0" cellspacing="3" border="1">
+
+		<table width="100%" cellpadding="0" cellspacing="3" border="0">
  			<tr bgcolor=white>
-				<!-- <td align=right colspan=3 background="images/bg1.png" style="font-size: 12px; font-weight: bold;"> -->
 				<td colspan="3" style="text-align: center; background-image: url(images/bg1.png); font-size: 12px; font-weight: bold;">
 				Detailed report
 				</td>
  			</tr>
- 			
+  -->		
  			<tr>
  				<td align=left>
  					{t}Select a job:{/t}
@@ -152,50 +166,46 @@
  				</td>
  				
  			</tr>
- 		</table>
+ </table>
 		</form>
- 	</td>
- </tr>
 {else if #mode# == "Full" || $smarty.get.Full_popup == "yes"}
- <tr>
- 	<td>
- 		<table width=100% class="genmed" cellpadding=2 cellspacing=0>
- 			<tr class="tbl_header1">
- 				<td><b>{t}Elapsed time{/t}</b></td>
- 				<td><b>{t}Client{/t}</b></td>
- 				<td><b>{t}Start Time{/t}</b></td>
- 				<td><b>{t}End Time{/t}</b></td>
- 				<td><b>{t}Type{/t}</b></td>
- 				<td><b>{t}Pool{/t}</b></td>
- 				<td><b>{t}Status{/t}</b></td>
- 			</tr>
- 			{section name=job loop=$clients}
- 				<tr class={cycle values="table3,table4"}>
- 					{section name=row loop=$clients[job]}
- 						<td align=left class="size_small">
- 							{if $smarty.section.row.iteration == 2}
- 							<a href=report.php?default=1&server={$clients[job][row]|escape:"url"} target="_blank">
- 							{/if}
- 							{if $smarty.section.row.last == TRUE}
-							  	{if $clients[job][row] eq "T"}
-								  	<img src={#root#}/images/s_ok.gif>
-							  	{else}
-									<img src={#root#}/images/s_error.gif>
-								{/if}
-							{else}
-							{$clients[job][row]}
-							{/if}
-							{if $smarty.section.row.iteration == 2}
-							</a>
-							{/if}
- 						</td>
- 					{/section}
- 				</tr>
- 			{/section}
- 		</table>
+<table>
+	<tr class="tbl_header1">
+ 		<td><b>{t}Elapsed time{/t}</b></td>
+		<td><b>{t}Client{/t}</b></td>
+ 		<td><b>{t}Start Time{/t}</b></td>
+ 		<td><b>{t}End Time{/t}</b></td>
+ 		<td><b>{t}Type{/t}</b></td>
+ 		<td><b>{t}Pool{/t}</b></td>
+ 		<td><b>{t}Status{/t}</b></td>
+ 	</tr>
+ 	{section name=job loop=$clients}
+ 	<tr class={cycle values="table3,table4"}>
+ 		{section name=row loop=$clients[job]}
+			<td align=left class="size_small">
+			{if $smarty.section.row.iteration == 2}
+ 				<a href=report.php?default=1&server={$clients[job][row]|escape:"url"} target="_blank">
+ 			{/if}
+ 			{if $smarty.section.row.last == TRUE}
+			{if $clients[job][row] eq "T"}
+			  	<img src={#root#}/images/s_ok.gif>
+			{else}
+				<img src={#root#}/images/s_error.gif>
+			{/if}
+			{else}
+				{$clients[job][row]}
+			{/if}
+				{if $smarty.section.row.iteration == 2}
+			</a>
+			{/if}
+			</td>
+		{/section}
+ 	</tr>
+ 		{/section}
  	</td>
  </tr>
-{/if}
 </table>
+{/if}
 
+</div>
 <!-- end last_run_report.tpl -->

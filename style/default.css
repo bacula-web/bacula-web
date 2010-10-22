@@ -1,6 +1,6 @@
 body{
   background-color: #ffffff;
-  padding: 0px;
+  padding: 3px;
   margin: 0px;
   
   font-family: Arial,Verdana;
@@ -10,22 +10,23 @@ body{
  width: 100%;
  padding: 0px;
  margin: 0px;
+ margin-bottom: 15px;
  background-color: #1E90FF ;
 }
-#header p.title{
+#header p {
+ margin: 0px;
+ padding: 5px;
+ color: #FFFFFF;
  vertical-align: middle;
- background-image: url('images/bg2.png');
  font-size: 18pt;
  font-variant: small-caps;
  font-weight: bold;
  text-align: right;
- color: #FFFFFF;
- padding: 0.5em;
 }
+
 #subheader {
- width: 100%;
  font-size: 10pt;
- margin: 0px;
+ margin: 0em;
  padding: 0px;
  border-bottom: 1px solid black;
 }
@@ -42,6 +43,56 @@ body{
 
 #subheader li a {
  text-decoration: none;
+}
+
+#main_left {
+ position: absolute; 
+ left:5px; 
+ width: 550px; 
+ border:none; 
+ margin-top: 1em; 
+ background-color: #FFFFFF;
+}
+
+#main_right {
+ position: absolute; 
+ left:560px; 
+ width: 420px; 
+ border: none; 
+ margin-top: 1em;
+}
+
+.box {
+ border: 1px solid black;
+ width: 100%;
+ margin: 10px 0px 0px 0px;
+ padding: 0px;
+ text-align: center;
+}
+
+.box p.title {
+ height: auto;
+ text-align: center;
+ vertical-align: middle;
+ font-size: 11pt;
+ background-color: #1E90FF;
+ color: white;
+ font-weight: bold;
+ padding: 0px;
+ margin-top: 0px;
+ margin-bottom: 5px;
+ padding-top: 5px;
+ padding-bottom: 5px;
+}
+
+.box img {
+ width: 410px;
+ margin: 0px;
+}
+
+table {
+ width: 100%;
+ margin: 0px;
 }
 
 a:link { color: #0000c0 }
@@ -77,6 +128,7 @@ td,input,select {
  border-left-width: 1px; 
  border-top-width: 1px; 
  border-right-width: 0px;
+ background-image:url('../images/bg5.png');
 }
 .tbl_pool_inter_2 { 
  background-color: #D4D4D9; 

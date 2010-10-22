@@ -1,30 +1,39 @@
 <!-- volumes.tpl -->
+
+<div class="box">
+	<p class="title">Pools</p>
+<!--
 <table border=0 width=100% class=code cellspacing=0 cellpadding=0>
 <tr align=center width=100%>
         <td class=tbl_header2 background="images/bg4.png"><b>Pools</b></td>
         <td class=tbl_header2 background="images/end4.png"><img src="images/empty.png"></td>
 </tr>
-<tr><td colspan=2>
-<table border=0 width=100% class=code cellspacing=0 cellpadding=0>
-{foreach from=$pools item=current}
-        <tr><td colspan=6>&nbsp;</td></tr>
+-->
+<table width="100%">
+	<tr>
+		<td colspan=2>
+			<table border=0 width=100% class=code cellspacing=0 cellpadding=0>
+				{foreach from=$pools item=current}
+			<tr>
+			<td colspan=6>&nbsp;</td></tr>
         <tr>
-                <th align=left style="background-color: #E0C8E5; color: black;" background="images/bg6.png">
+			<!-- <td align=left style="background-color: #E0C8E5; color: black;" background="images/bg6.png"> -->
+			<td style="text-align: left; background-color: #E0C8E5; color: black; background-image: url('images/bg6.png');">
                 {$current}
-                </th>
+            </td>
         </tr>
         {foreach from=$volumes item=current2}
                 {assign var=key value=$current2}
                 {foreach from=$key item=current3 name=loop}
                 {if $current3.3 == $current && $current3.0 != ""}
                         {if $smarty.foreach.loop.first == TRUE}
-                                <tr align=center background="images/bg5.png">
-                                        <td background="images/bg5.png" class=tbl_pool_inter_1>{t}Volume Name{/t}</td>
-                                        <td background="images/bg5.png" class=tbl_pool_inter_2>{t}Volume Bytes{/t}</td>
-                                        <td background="images/bg5.png" class=tbl_pool_inter_2>{t}Media Type{/t}</td>
-                                        <td background="images/bg5.png" class=tbl_pool_inter_2>{t}When expire?{/t}</td>
-                                        <td background="images/bg5.png" class=tbl_pool_inter_2>{t}Last Written{/t}</td>                                      
-                                        <td background="images/bg5.png" class=tbl_pool_inter_3>{t}Volume Status{/t}</td>
+                                <tr style="text-align: center; background-image: url('../images/bg5.png'); border: 1px solid black;">
+                                        <td style="font-size: 5pt;">Volume Name</td>
+                                        <td>Volume Bytes</td>
+                                        <td>Media Type</td>
+                                        <td>Expire on</td>
+                                        <td>Last Written</td>                                      
+                                        <td>Volume Status</td>
                                 </tr>
                         {/if}
                                 <tr align=center bgcolor={cycle values="#D9E3FC,#CBE7F5"}>
@@ -63,5 +72,10 @@
         {/foreach}
 {/foreach}
 </table>
-</td></tr></table>
+</td>
+</tr>
+</table>
+
+</div> <!-- end div box -->
+
 <!-- End volumes.tpl -->

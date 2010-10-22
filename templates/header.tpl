@@ -1,7 +1,7 @@
 <!-- Header -->
 <div id="header">
- <p class="title">bacula-web</p>
-</div>
+ <p>bacula-web</p>
+</div> <!-- end div header -->
 
 <div id="subheader">
  <ul>
@@ -14,9 +14,9 @@
 		<a href="http://bacula-web.dflc.ch" target="_blank">About</a>
 	</li>
  </ul>
-</div>
+</div> <!-- end div subheader -->
 
-<!-- 
+<!-- Multi catalog selection will added in next release
 <table width="100%" cellpadding=0 cellspacing=0 border=0 bgcolor="#2F92AF">
  <tr>
 
