@@ -132,7 +132,7 @@ class Bweb extends DB {
                         while ( $tmp1 = $result->fetchRow() ) {
                                 $pos = array_key_exists($tmp[0],$volume);
                                 if ($pos != FALSE)
-                                        array_push($volume["$tmp[0]"],$tmp1);
+                                        array_push($vo	lume["$tmp[0]"],$tmp1);
                                 else
                                         $volume += array($tmp[0]=>array($tmp1));
                         }
@@ -169,8 +169,27 @@ class Bweb extends DB {
         $dbsize->free();
         return $database_size;  
         }
-
-}
+		
+		function bytesToSize($bytes, $precision = 2)
+		{  
+			$kilobyte = 1024;
+			$megabyte = $kilobyte * 1024;
+			$gigabyte = $megabyte * 1024;
+			$terabyte = $gigabyte * 1024;
+			if (($bytes >= 0) && ($bytes < $kilobyte)) {
+				return $bytes . ' B'; }
+			{ elseif (($bytes >= $kilobyte) && ($bytes < $megabyte)) {
+				return round($bytes / $kilobyte, $precision) . ' KB';
+			} elseif (($bytes >= $megabyte) && ($bytes < $gigabyte)) {
+				return round($bytes / $megabyte, $precision) . ' MB';
+			} elseif (($bytes >= $gigabyte) && ($bytes < $terabyte)) {
+				return round($bytes / $gigabyte, $precision) . ' GB';
+			} elseif ($bytes >= $terabyte) {
+				return round($bytes / $gigabyte, $precision) . ' TB';
+			} else {
+				return $bytes . ' B'; }
+			}
+		}
 
 class BGraph {
 
