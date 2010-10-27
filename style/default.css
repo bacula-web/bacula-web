@@ -11,7 +11,7 @@ body{
  padding: 0px;
  margin: 0px;
  margin-bottom: 15px;
- background-color: #1E90FF ;
+ background-color: #736F6E;
 }
 #header p {
  margin: 0px;
@@ -75,7 +75,8 @@ body{
  text-align: center;
  vertical-align: middle;
  font-size: 11pt;
- background-color: #1E90FF;
+ /*background-color: #1E90FF;*/
+ background-color: #888888;
  color: white;
  font-weight: bold;
  padding: 0px;
