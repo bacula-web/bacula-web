@@ -43,7 +43,7 @@
  		<b>{t}Bytes transferred last 24h{/t}</b>
  	</td> 
  	<td style="font-size: 13px; color: blue">
- 		{$bytes_totales|fsize_format}
+ 		{$bytes_totales}
  	</td>
  </tr> 
  <tr>

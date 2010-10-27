@@ -25,7 +25,7 @@
 	</td>
 	
 	<td>
-	<font color=red>{$bytes_stored|fsize_format}</font>
+	<font color=red>{$bytes_stored}</font>
 	</td>
 </tr>
 
@@ -43,7 +43,7 @@
 	</td>
 	
 	<td>
-	<font color=red>{$database_size|fsize_format}</font>
+	<font color=red>{$database_size}</font>
 	</td>
 </tr>
 

@@ -55,9 +55,13 @@ if ( $dbSql->driver == "pgsql")
 $bytes_stored =& $dbSql->link->getOne("select SUM(VolBytes) from Media")
         or die ("Error query: 4");
 
+// Database size
 $smarty->assign('database_size', $dbSql->GetDbSize());
-$smarty->assign('bytes_stored',$bytes_stored);
 
+// Total bytes stored
+$smarty->assign('bytes_stored', $dbSql->human_file_size($bytes_stored) );
+
+// Number of clients
 $tmp = $client->fetchRow();
 $smarty->assign('clientes_totales',$tmp[0]);
 
@@ -72,7 +76,9 @@ $tmp = $last24bytes->fetchRow();
         $tmp = $last24bytes->fetchRow();        
 }*/
 
-$smarty->assign('bytes_totales',$tmp[0]);
+// Transfered bytes since last 24 hours
+$smarty->assign('bytes_totales', $dbSql->human_file_size( $tmp[0] ) );
+
 $smarty->assign('total_jobs', $tmp[1]);
 
 $tmp = $totalfiles->fetchRow();

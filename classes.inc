@@ -79,7 +79,7 @@ class Bweb extends DB {
                 
                 if (DB::isError($this->link))
                     die($this->link->getMessage());
-                $this->driver = $this->dsn[phptype];                            
+                $this->driver = $this->dsn['phptype'];                            
                 register_shutdown_function(array(&$this,'close'));
 		$this->dbs_name = $this->dsn['database'];
 	}
@@ -132,7 +132,7 @@ class Bweb extends DB {
                         while ( $tmp1 = $result->fetchRow() ) {
                                 $pos = array_key_exists($tmp[0],$volume);
                                 if ($pos != FALSE)
-                                        array_push($vo	lume["$tmp[0]"],$tmp1);
+                                        array_push($volume["$tmp[0]"],$tmp1);
                                 else
                                         $volume += array($tmp[0]=>array($tmp1));
                         }
@@ -143,53 +143,61 @@ class Bweb extends DB {
                 return $volume;
         }
         
-        function GetDbSize() {
-                if ( $this->driver == "mysql") {
-                        $dbsize = $this->link->query("show table status")
-                                or die ("classes.inc: Error query: 3");
-                        if ( $dbsize->numRows() ) {
-                                while ( $res = $dbsize->fetchRow(DB_FETCHMODE_ASSOC) )
-                                        $database_size += $res["Data_length"];
-                        }
-                        else
-                                return 0;
-                }
-                else if ( $this->driver == "pgsql") {
-                        $dbsize = $this->link->query("select pg_database_size('$this->dbs_name')")
-                                or die ("classes.inc: Error query: 4");
-			if (PEAR::isError($dbsize))
-	                    die($dbsize->getMessage());
-                        if ( $dbsize->numRows() ) {
-                                while ( $res = $dbsize->fetchRow() )
-                                        $database_size += $res[0];
-                        }
-                        else
-                                return 0;
-                }       
-        $dbsize->free();
-        return $database_size;  
-        }
+		function human_file_size( $size, $decimal = 2 )
+		{
+			$unit_id = 0;
+			$lisible = false;
+			$units = array('B','KB','MB','GB','TB');
+			$hsize = $size;
+				
+			while( !$lisible ) {
+				if ( $hsize >= 1024 ) {
+					$hsize    = $hsize / 1024;
+					$unit_id += 1;
+				} 
+				else {
+					$lisible = true;
+				} 
+			} 
+			// Format human size
+			$hsize = sprintf("%." . $decimal . "f", $hsize);
+			return $hsize . ' ' . $units[$unit_id];
+		} // end function
+
 		
-		function bytesToSize($bytes, $precision = 2)
-		{  
-			$kilobyte = 1024;
-			$megabyte = $kilobyte * 1024;
-			$gigabyte = $megabyte * 1024;
-			$terabyte = $gigabyte * 1024;
-			if (($bytes >= 0) && ($bytes < $kilobyte)) {
-				return $bytes . ' B'; }
-			{ elseif (($bytes >= $kilobyte) && ($bytes < $megabyte)) {
-				return round($bytes / $kilobyte, $precision) . ' KB';
-			} elseif (($bytes >= $megabyte) && ($bytes < $gigabyte)) {
-				return round($bytes / $megabyte, $precision) . ' MB';
-			} elseif (($bytes >= $gigabyte) && ($bytes < $terabyte)) {
-				return round($bytes / $gigabyte, $precision) . ' GB';
-			} elseif ($bytes >= $terabyte) {
-				return round($bytes / $gigabyte, $precision) . ' TB';
-			} else {
-				return $bytes . ' B'; }
-			}
-		}
+		function GetDbSize() 
+		{
+			$database_size = 0;
+			if ( $this->driver == "mysql") {
+				$dbsize = $this->link->query("show table status") or die ("classes.inc: Error query: 3");
+				
+				if ( $dbsize->numRows() ) {
+					while ( $res = $dbsize->fetchRow(DB_FETCHMODE_ASSOC) )
+						$database_size += $res["Data_length"];
+                } else {
+					return 0;
+				} // end if else
+            } // end if
+            else if ( $this->driver == "pgsql") {
+				$dbsize = $this->link->query("select pg_database_size('$this->dbs_name')") or die ("classes.inc: Error query: 4");
+				
+				if (PEAR::isError($dbsize))
+					die($dbsize->getMessage());
+                    
+					if ( $dbsize->numRows() ) {
+						while ( $res = $dbsize->fetchRow() )
+							$database_size += $res[0];
+                    } else {
+						return 0;
+					}
+            } // end if       
+				
+			$dbsize->free();
+		
+			return $this->human_file_size( $database_size );  
+        } // end function GetDbSize()
+		
+} // end class Bweb
 
 class BGraph {
 
