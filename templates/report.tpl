@@ -29,7 +29,7 @@
 						{t}Bytes transferred in the period:{/t}
 					</td>
 					<td align=right width=15% class=table2>
-						{$bytesperiod|fsize_format}
+						{$bytesperiod}
 					</td>
 				</tr>
 				<tr>
@@ -78,7 +78,7 @@
 				  	<td {popup caption="Sheduled time" text=$jobs[job].SchedTime}>{$jobs[job].StartTime}</td>
 				  	<td {popup autostatus=yes caption="EndTime" text=$jobs[job].EndTime}>{$jobs[job].elapsed}</td>
 					<td align=center>{$jobs[job].Level}</td>
-				  	<td align=right>{$jobs[job].JobBytes|fsize_format}</td>
+				  	<td align=right>{$jobs[job].JobBytes}</td>
 				  	<td align=center width=1%>
 					  	{if $jobs[job].JobStatus eq "T"}
 						  	<img src={#root#}/images/s_ok.gif>

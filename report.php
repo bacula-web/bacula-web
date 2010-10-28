@@ -43,7 +43,7 @@ $bytes = $dbSql->CalculateBytesPeriod($_GET['server'],$dbSql->StartDate,$dbSql->
 $files = $dbSql->CalculateFilesPeriod($_GET['server'],$dbSql->StartDate,$dbSql->EndDate);
 $smarty->assign('startperiod',$dbSql->StartDate);
 $smarty->assign('endperiod',$dbSql->EndDate); 
-$smarty->assign('bytesperiod',$bytes);
+$smarty->assign('bytesperiod',$dbSql->human_file_size( $bytes ) );
 $smarty->assign('filesperiod',$files);
 
 // Array with jobs data
@@ -56,9 +56,11 @@ else if ($dbSql->driver == "pgsql")
                 or die("Error query row 56");
 
 while ( $tmp = $res_jobs->fetchRow(DB_FETCHMODE_ASSOC) ) {
-        $tdate = explode (":",$tmp['elapsed']);                                                                           // Temporal "workaround" ;) Fix later
+        $tdate = explode (":",$tmp['elapsed']);		// Temporal "workaround" ;) Fix later
         if ( $tdate[0] > 300000 )
                 $tmp['elapsed'] = "00:00:00";
+		$tmp['JobBytes'] = $dbSql->human_file_size( $tmp['JobBytes'] );
+		var_dump( $tmp );
         array_push($a_jobs,$tmp);
 }
 $smarty->assign('jobs',$a_jobs);
