@@ -1,65 +1,12 @@
-This is my little contribution to the bacula community and the 
-best backup software (http://www.bacula.org).
+About bacula-web
 
-Juan Luis Francés Jiménez  (bacula_list [at] veloxia.com)
+This is my little contribution to the bacula community and the best backup software (http://www.bacula.org).
 
-News and bugs: http://indpnday.com/bacula_stuff/bacula-web/mantisbt/login_page.php
+Bacula-web was firstly developed by Juan-Luis Frances and I'm just looking forward to support and develop this project.
 
-REQUIREMENTS:
-**************
-        
-        - Web server    (Tested with apache)
-        - PHP                   (Tested with php.4.3.4)
-                - Gettext       (Optional)
-                - GD 2.x
-                - TrueType (optional)
-                - Pear DB (http://pear.php.net/package/DB)
-                - MySQL or PostgreSQL (SQLite is not supported)
-                - Sessions
-        - If you use PostgreSQL
-                - dbsize contrib package
-        - Bacula (Oh!, yes, you need this ;-) ) http://www.bacula.org
+You should find more informations on the project page at bacula-web.dflc.ch
 
-                
-INSTALL
-*******
-- Copy this distribution to root directory or a subdirectory of your webroot.
-- Edit configs/bacula.conf with your preferences
-- Run "test.php" from your browser.
-- You need to turn on the short_open_tag option in php.ini
+Thank you for using bacula-web
 
 
-NOTES
-*****
-- Best resolution: 1024x768
-- Best viewed with Firefox.
-- Tested with Microsoft Explorer.
-- Restart web server if language changes isn't showing itself.
-
-KNOWN BUGS
-**********
-- In Pie graphs, the margins don't work. It is a phplot bug.
-- The total elapsed time "calculation" is rudimentary. If you have 2 or more concurrency jobs this is not real.
-
-Send your bugs at this link: http://indpnday.com/bacula_stuff/bacula-web/mantisbt/login_page.php
-
-TEMPLATES
-*********
-- In this version you will have to edit code pages (*.php) to show diferent templates.
-- Bacula-web needs a good designer!!! ;-)
-
-TRANSLATIONS
-************
-- Edit "messages.po" and send me, please, with your LANGUAGE code.
-
-- You can extract strings with this command: 
-$ ./tsmarty2c.php templates > lang.c
-$ xgettext lang.c
-- Now you must have this file: messages.po
-- Edit and send me, please.
-
-
-PS: Feel free to make improvements to the code. All suggestions are welcome.
-
-
-Bacula®is a registered trademark of Kern Sibbald and John Walker
+Bacula is a registered trademark of Kern Sibbald and John Walker
