@@ -88,8 +88,6 @@ $client->free();
 $totalfiles->free();
 $last24bytes->free();
 
-
-
 // report_select.tpl & last_run_report.tpl
 $res = $dbSql->link->query("select Name from Job group by Name");
 $a_jobs = array();
@@ -99,11 +97,8 @@ $smarty->assign('total_name_jobs',$a_jobs);
 $smarty->assign('time2',( (time())-2678400) );                                                                  // Current time - 1 month. <select> date
 $res->free();
 
-// volumes.tpl
-$volumes = $dbSql->GetDataVolumes();                                                                                    // Obtain array with info
-$pools = array_keys($volumes);                                                                                                  // Extract Pools
-$smarty->assign('pools',$pools);        
-$smarty->assign('volumes',$volumes);
+// Get volumes list (volumes.tpl)
+$smarty->assign('pools',$dbSql->GetVolumeList() );
 
 // last_run_report.tpl
 if ($mode == "Lite" && $_GET['Full_popup'] != "yes") {

@@ -9,68 +9,37 @@
         <td class=tbl_header2 background="images/end4.png"><img src="images/empty.png"></td>
 </tr>
 -->
-<table>
-	{foreach from=$pools item=current}
+<table border=0 width=100% class=code cellspacing=0 cellpadding=0>
+	{foreach from=$pools item=pool key=pool_name}
+	<tr>
+		<th colspan="6" style="font-size: 10pt; text-align: center; background-color: #E0C8E5; color: black; padding: 3px;">
+			{$pool_name}
+		</th>
+	</tr>
+	<tr style="text-align: center;">
+		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>Name</td>
+		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>{t}Bytes{/t}</td>
+		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>{t}Media Type{/t}</td>
+		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>{t}Expire{/t}</td>
+		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>{t}Last written{/t}</td>
+		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>{t}Status{/t}</td>
+	</tr>
+	{foreach from=$pool item=volume}
+		<tr style="text-align: center;">
+			<td style="text-align: left;">{$volume.volumename}</td>
+			<td>{$volume.volbytes}</td>
+			<td>{$volume.mediatype}</td>
+			<td>{$volume.expire}</td>
+			<td>{$volume.lastwritten}</td>
+			<td>{$volume.volstatus}</td>
+		{foreachelse}
 		<tr>
-			<td colspan=6>&nbsp;</td></tr>
-        <tr>
-			<td colspan="6" class="pool_name">
-                {$current}
-            </td>
-        </tr>
-        {foreach from=$volumes item=current2}
-                {assign var=key value=$current2}
-                {foreach from=$key item=current3 name=loop}
-                {if $current3.3 == $current && $current3.0 != ""}
-                        {if $smarty.foreach.loop.first == TRUE}
-                                <tr>
-                                        <td class="tbl_vol_header">Volume Name</td>
-                                        <td class="tbl_vol_header">Volume Bytes</td>
-                                        <td class="tbl_vol_header">Media Type</td>
-                                        <td class="tbl_vol_header">Expire on</td>
-                                        <td class="tbl_vol_header">Last Written</td>                                      
-                                        <td class="tbl_vol_header">Volume Status</td>
-                                </tr>
-                        {/if}
-                                <tr align=center bgcolor={cycle values="#D9E3FC,#CBE7F5"}>
-                                        <td>{$current3.0}</td>
-                                        <td>{$current3.1}</td>
-                                        <td>{$current3.4}</td>
-                                        <td {popup text='$current3.6}>
-											{if $current3.6|date_format:"%Y" <= "1979"}
-											  --
-											{else}
-											  {$current3.6|date_format:"%Y/%m/%d"}
-											{/if}
-										</td>
-                                        <td {popup text='$current3.5}>
-											{if $current3.5 == "0000-00-00 00:00:00"}
-											  --
-											{else}
-											  {$current3.5|date_format:"%Y/%m/%d"}
-											{/if}
-										</td>
-                                        <td>
-                                                <font color=
-                                                {if $current3.2 == "Error"}
-                                                        red>
-                                                {elseif $current3.2 == "Purged"}
-                                                        blue>
-                                                {elseif $current3.2 == "Append"}
-                                                        green>
-                                                {elseif $current3.2 == "Recycle"}
-                                                        orange>
-                                                {else}
-                                                        "">
-                                                {/if}
-                                                {$current3.2}
-                                                </font>
-                                        </td>
-                                </tr>
-                        {/if}
-                {/foreach}
-        {/foreach}
-{/foreach}
+			<td colspan="6" style="text-align: center; font-weight: bold; font-size: 8pt; padding: 1em;">
+				No volume in this pool
+			</td>
+		{/foreach}
+		</tr>
+	{/foreach}
 </table>
 
 </div> <!-- end div box -->

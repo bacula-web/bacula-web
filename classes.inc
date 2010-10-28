@@ -118,8 +118,6 @@ class Bweb extends DB {
                 
         }//end function
  
-
-
         function GetDataVolumes() {
 
                 $volume = array();
@@ -196,6 +194,94 @@ class Bweb extends DB {
 		
 			return $this->human_file_size( $database_size );  
         } // end function GetDbSize()
+
+		// Return an array of volumes ordered by poolid and volume name
+		function GetVolumeList() {
+
+                $volumes   = array();
+                $query     = "";
+				$debug	   = false;
+				
+				// Get the list of pools id
+				$query = "SELECT Pool.poolid, Pool.name FROM Pool ORDER BY Pool.poolid";
+				
+				$this->link->setFetchMode(DB_FETCHMODE_ASSOC);
+				$pools = $this->link->query( $query );
+				
+				if( PEAR::isError( $pools ) )
+					die("Error: Failed to get pool list <br />SQL Query: $query<br />" . $pools->getMessage() );
+				
+				while( $pool = $pools->fetchRow() ) {
+					switch( $this->driver )
+					{
+						case 'mysql':
+/*
+							$query  = "SELECT Media.VolumeName, Media.VolBytes, Media.VolStatus, Pool.Name, Media.MediaType,Media.LastWritten, FROM_UNIXTIME(UNIX_TIMESTAMP(Media.LastWritten)+Media.VolRetention ) AS expire 
+									   FROM Pool LEFT JOIN Media ON Media.PoolId=Pool.PoolId WHERE poolid='$pool[0]' 
+									   ORDER BY Media.VolumeName";
+*/
+							$query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention
+									   FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid
+								       WHERE Media.poolid = '". $pool['poolid'] . "' ORDER BY Media.volumename";
+						break;
+						case 'pgsql':
+							$query  = "SELECT media.volumename, media.volbytes, media.volstatus, media.mediatype, media.lastwritten, media.volretention
+									   FROM media LEFT JOIN pool ON media.poolid = pool.poolid
+								       WHERE media.poolid = '". $pool['poolid'] . "' ORDER BY media.volumename";
+							/*
+							$query  = "SELECT Media.VolumeName, Media.VolBytes,Media.VolStatus,Pool.Name,Media.MediaType,Media.LastWritten, Media.LastWritten + Media.VolRetention * interval '1 second' AS expire 
+									   FROM Pool LEFT JOIN Media ON media.poolid=pool.poolid WHERE poolid='$pool[0]' 
+									   ORDER BY Media.VolumeName";
+							*/
+						break;
+						case 'sqlite':
+							$query  = "";		// not yet implemented
+						break;
+						default:
+						break;
+					} // end switch
+					
+					$this->link->setFetchMode(DB_FETCHMODE_ASSOC);
+					$medias = $this->link->query( $query );
+
+					if( PEAR::isError( $medias ) ) {
+						die( "Failed to get media list for pool $volume[0] <br /> " . $medias->getMessage() );
+					}else {
+						if( $debug ) echo "Found " . $medias->numRows() . " medias for pool " . $pool['name'] . " <br />";
+					
+						// Create array key for each pool
+						if( !array_key_exists( $pool['name'], $volumes) )
+						{
+							$volumes[ $pool['name'] ] = array();
+						}
+						while( $media = $medias->fetchRow() ) {
+							if( $debug ) {
+								var_dump( $media );
+							}
+
+							if( $medias->numRows() == 0 ) {
+								if( $debug ) echo "No media in pool " . $pool['name'] . "<br />";
+							} else {
+									if( $media['lastwritten'] != "0000-00-00 00:00:00" ) {
+										// Calculate expiration date
+										$expire_date     = strtotime($media['lastwritten']) + $media['volretention'];
+										$media['expire'] = strftime("%Y-%M-%D", $expire_date);
+										
+										// Media used size in a more readable format
+										$media['volbytes'] = $this->human_file_size( $media['volbytes'] );
+									} else {
+										$media['lastwritten'] = "N/A";
+										$media['expire']      = "N/A";
+										$media['volbytes'] 	  = "0 KB";
+									}								
+								// Add the media in pool array
+								array_push( $volumes[ $pool['name']], $media);
+							}
+						} // end while
+					} // end if else
+				} // end while
+				return $volumes;
+        } // end function GetVolumeList()
 		
 } // end class Bweb
 
