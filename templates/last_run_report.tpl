@@ -3,9 +3,9 @@
 <div class="box">
 	<p class="title">Last 24 hours status</p>
 <!--	
-<table width=100% align=center {if !$status }background="images/backlast.gif"{else}background="images/backlastred.gif" {/if} style="background-repeat:no-repeat" height=178px border=0 cellspacing=0 cellpadding=0>
+<table width=100% align=center {if !$status }background="style/images/backlast.gif"{else}background="style/images/backlastred.gif" {/if} style="background-repeat:no-repeat" height=178px border=0 cellspacing=0 cellpadding=0>
  <tr>
- 	<td colspan=2 align=center style="font-size: 12px; font-weight: bold; background-repeat: repeat" background="images/bg6.png" height=25>
+ 	<td colspan=2 align=center style="font-size: 12px; font-weight: bold; background-repeat: repeat" background="style/images/bg6.png" height=25>
  		{t}Status from last 24h{/t}
  	</td>
  </tr>
@@ -64,10 +64,10 @@
  					</td>
  				</tr>
  				<tr>
- 					<td background="images/bg6.png"><b>JobId&nbsp;</b></td>
- 					<td background="images/bg6.png"><b>{t}Name{/t}</b></td>
- 					<td background="images/bg6.png"><b>{t}EndTime{/t}</b></td>
- 					<td background="images/bg6.png"><b>{t}JobStatus{/t}</b></td>
+ 					<td background="style/images/bg6.png"><b>JobId&nbsp;</b></td>
+ 					<td background="style/images/bg6.png"><b>{t}Name{/t}</b></td>
+ 					<td background="style/images/bg6.png"><b>{t}EndTime{/t}</b></td>
+ 					<td background="style/images/bg6.png"><b>{t}JobStatus{/t}</b></td>
  				</tr>
  				{section name=row loop=$errors_array} 
  				<tr {* bgcolor=#{cycle values="E6E6F5,E1E5E0"} *}>
@@ -142,7 +142,7 @@
 
 		<table width="100%" cellpadding="0" cellspacing="3" border="0">
  			<tr bgcolor=white>
-				<td colspan="3" style="text-align: center; background-image: url(images/bg1.png); font-size: 12px; font-weight: bold;">
+				<td colspan="3" style="text-align: center; background-image: url('style/images/bg1.png'); font-size: 12px; font-weight: bold;">
 				Detailed report
 				</td>
  			</tr>
@@ -188,9 +188,9 @@
  			{/if}
  			{if $smarty.section.row.last == TRUE}
 			{if $clients[job][row] eq "T"}
-			  	<img src={#root#}/images/s_ok.gif>
+			  	<img src={#root#}/style/images/s_ok.gif>
 			{else}
-				<img src={#root#}/images/s_error.gif>
+				<img src={#root#}/style/images/s_error.gif>
 			{/if}
 			{else}
 				{$clients[job][row]}

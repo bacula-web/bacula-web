@@ -3,7 +3,7 @@
 <!--
 <table class=genmed cellspacing="0" cellpadding="0" border=1 align="center" width=100%>
 <tr>
-  <td align=center class=tbl_medium background="images/bg3.png">
+  <td align=center class=tbl_medium background="style/images/bg3.png">
 	General information
   </td>
 </tr>

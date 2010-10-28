@@ -5,8 +5,8 @@
 <!--
 <table border=0 width=100% class=code cellspacing=0 cellpadding=0>
 <tr align=center width=100%>
-        <td class=tbl_header2 background="images/bg4.png"><b>Pools</b></td>
-        <td class=tbl_header2 background="images/end4.png"><img src="images/empty.png"></td>
+        <td class=tbl_header2 background="style/images/bg4.png"><b>Pools</b></td>
+        <td class=tbl_header2 background="style/images/end4.png"><img src="style/images/empty.png"></td>
 </tr>
 -->
 <table border=0 width=100% class=code cellspacing=0 cellpadding=0>
@@ -17,12 +17,12 @@
 		</th>
 	</tr>
 	<tr style="text-align: center;">
-		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>Name</td>
-		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>{t}Bytes{/t}</td>
-		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>{t}Media Type{/t}</td>
-		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>{t}Expire{/t}</td>
-		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>{t}Last written{/t}</td>
-		<td style="background-image: url(images/bg5.png);" class=tbl_pool_inter_1>{t}Status{/t}</td>
+		<td style="background-image: url(style/images/bg5.png);" class=tbl_pool_inter_1>Name</td>
+		<td style="background-image: url(style/images/bg5.png);" class=tbl_pool_inter_1>{t}Bytes{/t}</td>
+		<td style="background-image: url(style/images/bg5.png);" class=tbl_pool_inter_1>{t}Media Type{/t}</td>
+		<td style="background-image: url(style/images/bg5.png);" class=tbl_pool_inter_1>{t}Expire{/t}</td>
+		<td style="background-image: url(style/images/bg5.png);" class=tbl_pool_inter_1>{t}Last written{/t}</td>
+		<td style="background-image: url(style/images/bg5.png);" class=tbl_pool_inter_1>{t}Status{/t}</td>
 	</tr>
 	{foreach from=$pool item=volume}
 		<tr style="text-align: center;">

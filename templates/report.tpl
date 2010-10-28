@@ -65,12 +65,12 @@
 			<td>  
 				<table width=100% border=0 class=genmed cellpadding=0 cellspacing=2>
 				<tr class=titulo2>
-					<td style="background-image: url('images/bg7.gif'); height: 25px;">{t}JobID{/t}</td>
-					<td style="background-image: url('images/bg7.gif'); height: 25px;">{t}Date{/t}</td>
-					<td style="background-image: url('images/bg7.gif'); height: 25px;">{t}Elapsed{/t}</td>
-					<td style="background-image: url('images/bg7.gif'); height: 25px;">{t}Level{/t}</td>
-					<td style="background-image: url('images/bg7.gif'); height: 25px;">{t}Bytes{/t}</td>
-					<td style="background-image: url('images/bg7.gif'); height: 25px;">{t}Status{/t}</td>
+					<td style="background-image: url('style/images/bg7.gif'); height: 25px;">{t}JobID{/t}</td>
+					<td style="background-image: url('style/images/bg7.gif'); height: 25px;">{t}Date{/t}</td>
+					<td style="background-image: url('style/images/bg7.gif'); height: 25px;">{t}Elapsed{/t}</td>
+					<td style="background-image: url('style/images/bg7.gif'); height: 25px;">{t}Level{/t}</td>
+					<td style="background-image: url('style/images/bg7.gif'); height: 25px;">{t}Bytes{/t}</td>
+					<td style="background-image: url('style/images/bg7.gif'); height: 25px;">{t}Status{/t}</td>
 				</tr>
 				{section name=job loop=$jobs}
 				<tr class={cycle values="table1,table2"}>
@@ -81,9 +81,9 @@
 				  	<td align=right>{$jobs[job].JobBytes}</td>
 				  	<td align=center width=1%>
 					  	{if $jobs[job].JobStatus eq "T"}
-						  	<img src={#root#}/images/s_ok.gif>
+						  	<img src=style/images/s_ok.gif>
 					  	{else}
-							<img src={#root#}/images/s_error.gif>
+							<img src=style/images/s_error.gif>
 						{/if}
 					</td>
 				</tr>

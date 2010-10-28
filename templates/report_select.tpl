@@ -1,7 +1,7 @@
 <form method=get action=report.php {if !isset($smarty.get.default) }target=_blank{/if}>
 <table width=100% border=0>
  <tr>
-	<td colspan="3" style="text-align: center; background-image: url('images/bg8.png');" class="titulo">
+	<td colspan="3" style="text-align: center; background-image: url('style/images/bg8.png');" class="titulo">
 	{t}SELECT NEW REPORT{/t}
  </td></tr>
  <tr class=table1><td align=left>

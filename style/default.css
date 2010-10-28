@@ -107,7 +107,7 @@ table {
 
 .tbl_vol_header {
  text-align: center; 
- background-image: url('../images/bg5.png'); 
+ background-image: url('../style/images/bg5.png'); 
 }
 
 a:link { color: #0000c0 }
@@ -143,7 +143,7 @@ td,input,select {
  border-left-width: 1px; 
  border-top-width: 1px; 
  border-right-width: 0px;
- background-image:url('../images/bg5.png');
+ background-image:url('../style/images/bg5.png');
 }
 .tbl_pool_inter_2 { 
  background-color: #D4D4D9; 
