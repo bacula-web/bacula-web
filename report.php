@@ -60,7 +60,6 @@ while ( $tmp = $res_jobs->fetchRow(DB_FETCHMODE_ASSOC) ) {
         if ( $tdate[0] > 300000 )
                 $tmp['elapsed'] = "00:00:00";
 		$tmp['JobBytes'] = $dbSql->human_file_size( $tmp['JobBytes'] );
-		var_dump( $tmp );
         array_push($a_jobs,$tmp);
 }
 $smarty->assign('jobs',$a_jobs);
