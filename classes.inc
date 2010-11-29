@@ -31,21 +31,38 @@ if (!function_exists('array_fill')) {                                           
 
 class Bweb extends DB {
 
-        var $StartDate;
-        var $EndDate;
-        var $driver;
+    var $StartDate;
+    var $EndDate;
+    var $driver;
 	var $dbs;
 	var $dbs_name;
+	
+	public $db_link;						// Database link
+	private $db_dsn;						// Data Source Name
+	
+	private $config_file;					// Config filename
+	private $config;						// Loaded config from bacula.conf
+	private $catalogs = array();			// Catalog array
 
-
-
-        function Bweb() {
-                
-                $conf = new Config_File (CONFIG_DIR);
+    function __construct()
+	{             
+		$this->catalogs = array();
+		
+		// Loading configuration
+		$this->config_file = getcwd() . '/configs/bacula.conf';
+		if( !$this->load_config() )
+			die( "Unable to load configuration");
+			
+		//echo "Number of catalog defined " . count($this->catalogs) . "<br />";
+		
+		/*
+		$conf = new Config_File (CONFIG_DIR);
 		$this->dbs = array();
+
 		$i = 2;
 		$sections = $conf->get(CONFIG_FILE,"DATABASE","host");
 		array_push($this->dbs, "DATABASE");
+
 		while ( !empty($sections) ) {                
 			$sections = $conf->get(CONFIG_FILE,"DATABASE".$i,"host");
 			if ( !empty($sections) )
@@ -67,33 +84,77 @@ class Bweb extends DB {
 			}
 		}
 
-                $this->dsn['hostspec'] = $conf->get(CONFIG_FILE,$sec,"host");
-                $this->dsn['username'] = $conf->get(CONFIG_FILE,$sec,"login");
-                $this->dsn['password'] = $conf->get(CONFIG_FILE,$sec,"pass");
-                $this->dsn['database'] = $conf->get(CONFIG_FILE,$sec,"db_name");
-                $this->dsn['phptype'] = $conf->get(CONFIG_FILE,$sec,"db_type");   // mysql, pgsql
-                if (  $conf->get(CONFIG_FILE,$sec,"db_port") )
-                        $this->dsn[port] = $conf->get(CONFIG_FILE,$sec,"db_port");
-                        
-                $this->link =& $this->connect($this->dsn);
-                
-                if (DB::isError($this->link))
-                    die($this->link->getMessage());
-                $this->driver = $this->dsn['phptype'];                            
-                register_shutdown_function(array(&$this,'close'));
-		$this->dbs_name = $this->dsn['database'];
+        $this->dsn['hostspec'] = $conf->get(CONFIG_FILE,$sec,"host");
+        $this->dsn['username'] = $conf->get(CONFIG_FILE,$sec,"login");
+        $this->dsn['password'] = $conf->get(CONFIG_FILE,$sec,"pass");
+        $this->dsn['database'] = $conf->get(CONFIG_FILE,$sec,"db_name");
+        $this->dsn['phptype']  = $conf->get(CONFIG_FILE,$sec,"db_type");   // mysql, pgsql
+        
+		if (  $conf->get(CONFIG_FILE,$sec,"db_port") )
+			$this->dsn[port] = $conf->get(CONFIG_FILE,$sec,"db_port");
+		*/
+		
+		// Construct a valid dsn
+        $this->db_dsn['hostspec'] = $this->catalogs[0]["host"];
+        $this->db_dsn['username'] = $this->catalogs[0]["login"];
+		$this->db_dsn['password'] = $this->catalogs[0]["pass"];
+		$this->db_dsn['database'] = $this->catalogs[0]["db_name"];
+		$this->db_dsn['phptype']  = $this->catalogs[0]["db_type"];
+		
+		                        
+        $this->db_link = $this->connect($this->db_dsn);
+        
+		if (DB::isError($this->db_link)) {
+			die($this->db_link->getMessage());
+		}else {
+			$this->driver = $this->db_dsn['phptype'];                            
+            register_shutdown_function(array(&$this,'close'));
+			$this->dbs_name = $this->db_dsn['database'];
+		}
 	}
                 
-        function close() {
-
-                $this->link->disconnect();
-        }      
+    function load_config()
+	{
+		$this->config = parse_ini_file( $this->config_file, true );
+		
+		if( !$this->config == false ) {
+			// Loading database connection information
+			foreach( $this->config as $parameter => $value )
+			{
+				//echo "Param $parameter = $value <br />";
+				if( is_array($value) ){		// Parsing database section
+					array_push( $this->catalogs, $value );
+				}
+			}
+			return true;
+		}else
+			return false;
+	}
+	
+	public function get_config_param( $param )
+	{
+		if( isset( $this->config[$param] ) )
+			return $this->config[$param];
+		else
+			return false;
+	}
+	
+	public function Get_Nb_Catalogs() 
+	{
+		return count( $this->catalogs );
+	}
+	
+	
+	function close() 
+	{
+		$this->db_link->disconnect();
+    }      
 
         
          
         function CalculateBytesPeriod($server,$StartDate,$EndPeriod) {   // Bytes transferred in a period.
 
-                $result =& $this->link->query("select SUM(JobBytes) from Job WHERE EndTime < '$EndPeriod' and EndTime > '$StartDate' and Name='$server'")
+                $result =& $this->db_link->query("select SUM(JobBytes) from Job WHERE EndTime < '$EndPeriod' and EndTime > '$StartDate' and Name='$server'")
                         or die("classes.inc: Error query: 1");
                 $return =& $result->fetchRow(); 
                 return $return[0];
@@ -103,7 +164,7 @@ class Bweb extends DB {
          
         function CalculateFilesPeriod($server,$StartDate,$EndPeriod) {    // Number of files transferred in a period.
 
-                $result =& $this->link->query("select SUM(JobFiles) from Job WHERE EndTime < '$EndPeriod' and EndTime > '$StartDate' and Name='$server'")
+                $result =& $this->db_link->query("select SUM(JobFiles) from Job WHERE EndTime < '$EndPeriod' and EndTime > '$StartDate' and Name='$server'")
                         or die("classes.inc: Error query: 2");
                 $return =& $result->fetchRow();
                 return $return[0];
@@ -121,12 +182,12 @@ class Bweb extends DB {
         function GetDataVolumes() {
 
                 $volume = array();
-                $res = $this->link->query("SELECT Name FROM Pool");
+                $res = $this->db_link->query("SELECT Name FROM Pool");
                 while ( $tmp =& $res->fetchRow() ) {
                         if ($this->driver == "mysql" )
-                                $result = $this->link->query("select Media.VolumeName, Media.VolBytes,Media.VolStatus,Pool.Name,Media.MediaType,Media.LastWritten,FROM_UNIXTIME(UNIX_TIMESTAMP(Media.LastWritten)+Media.VolRetention ) as expire from Pool LEFT JOIN Media ON Media.PoolId=Pool.PoolId where Name='$tmp[0]' order by Media.VolumeName");
+                                $result = $this->db_link->query("select Media.VolumeName, Media.VolBytes,Media.VolStatus,Pool.Name,Media.MediaType,Media.LastWritten,FROM_UNIXTIME(UNIX_TIMESTAMP(Media.LastWritten)+Media.VolRetention ) as expire from Pool LEFT JOIN Media ON Media.PoolId=Pool.PoolId where Name='$tmp[0]' order by Media.VolumeName");
                         else if ($this->driver == "pgsql")
-				$result = $this->link->query("select Media.VolumeName, Media.VolBytes,Media.VolStatus,Pool.Name,Media.MediaType,Media.LastWritten, Media.LastWritten + Media.VolRetention * interval '1 second' as expire from Pool LEFT JOIN Media ON Media.PoolId=Pool.PoolId where Name='$tmp[0]' order by Media.VolumeName");
+				$result = $this->db_link->db_query("select Media.VolumeName, Media.VolBytes,Media.VolStatus,Pool.Name,Media.MediaType,Media.LastWritten, Media.LastWritten + Media.VolRetention * interval '1 second' as expire from Pool LEFT JOIN Media ON Media.PoolId=Pool.PoolId where Name='$tmp[0]' order by Media.VolumeName");
                         while ( $tmp1 = $result->fetchRow() ) {
                                 $pos = array_key_exists($tmp[0],$volume);
                                 if ($pos != FALSE)
@@ -167,7 +228,7 @@ class Bweb extends DB {
 		{
 			$database_size = 0;
 			if ( $this->driver == "mysql") {
-				$dbsize = $this->link->query("show table status") or die ("classes.inc: Error query: 3");
+				$dbsize = $this->db_link->query("show table status") or die ("classes.inc: Error query: 3");
 				
 				if ( $dbsize->numRows() ) {
 					while ( $res = $dbsize->fetchRow(DB_FETCHMODE_ASSOC) )
@@ -177,23 +238,32 @@ class Bweb extends DB {
 				} // end if else
             } // end if
             else if ( $this->driver == "pgsql") {
-				$dbsize = $this->link->query("select pg_database_size('$this->dbs_name')") or die ("classes.inc: Error query: 4");
+				$dbsize = $this->db_link->query("select pg_database_size('$this->dbs_name')") or die ("classes.inc: Error query: 4");
 				
 				if (PEAR::isError($dbsize))
 					die($dbsize->getMessage());
                     
-					if ( $dbsize->numRows() ) {
-						while ( $res = $dbsize->fetchRow() )
-							$database_size += $res[0];
-                    } else {
-						return 0;
-					}
+				if ( $dbsize->numRows() ) {
+					while ( $res = $dbsize->fetchRow() )
+						$database_size += $res[0];
+                } else {
+					return 0;
+				}
             } // end if       
 				
 			$dbsize->free();
 		
 			return $this->human_file_size( $database_size );  
         } // end function GetDbSize()
+		
+		public function Get_Nb_Clients()
+		{
+			$clients = $this->db_link->query("SELECT COUNT(*) AS nb_client FROM Client");
+			if( PEAR::isError($clients) )
+				die( "Unable to get client number" );
+			else
+				return $clients->fetchRow( DB_FETCHMODE_ASSOC );
+		}
 
 		// Return an array of volumes ordered by poolid and volume name
 		function GetVolumeList() {
@@ -205,8 +275,8 @@ class Bweb extends DB {
 				// Get the list of pools id
 				$query = "SELECT Pool.poolid, Pool.name FROM Pool ORDER BY Pool.poolid";
 				
-				$this->link->setFetchMode(DB_FETCHMODE_ASSOC);
-				$pools = $this->link->query( $query );
+				$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
+				$pools = $this->db_link->query( $query );
 				
 				if( PEAR::isError( $pools ) )
 					die("Error: Failed to get pool list <br />SQL Query: $query<br />" . $pools->getMessage() );
@@ -241,8 +311,8 @@ class Bweb extends DB {
 						break;
 					} // end switch
 					
-					$this->link->setFetchMode(DB_FETCHMODE_ASSOC);
-					$medias = $this->link->query( $query );
+					$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
+					$medias = $this->db_link->query( $query );
 
 					if( PEAR::isError( $medias ) ) {
 						die( "Failed to get media list for pool $volume[0] <br /> " . $medias->getMessage() );
@@ -472,7 +542,7 @@ class BCreateGraph extends BGraph {
                                         $derecha="endtime";
                                         break;
                                 }
-                        $result = $DB_bacula->link->query("select $derecha,$izquierda from Job where Name='$servidor' and EndTime < '$this->EndDate' and EndTime > '$this->StartDate' order by SchedTime asc")
+                        $result = $DB_bacula->db_link->query("select $derecha,$izquierda from Job where Name='$servidor' and EndTime < '$this->EndDate' and EndTime > '$this->StartDate' order by SchedTime asc")
                                 or die ("classes.inc: Error at query: 5");
                 while ( $row = $result->fetchRow(DB_FETCHMODE_ASSOC) ) {
                         $whole_result[] = $this->array_merge_php4($row["$derecha"],$row[$izquierda]);
@@ -483,7 +553,7 @@ class BCreateGraph extends BGraph {
                         switch ( $tipo_dato )
                                 {
                                 case '30':                      // Unused, at this time.
-                                        $result = $DB_bacula->link->query("select JobBytes,JobFiles,Jobid from Job where Name='$servidor' order by EndTime asc")
+                                        $result = $DB_bacula->db_link->query("select JobBytes,JobFiles,Jobid from Job where Name='$servidor' order by EndTime asc")
                                                 or die ("classes.inc: Error at query: 6");
                                         while ( $row = $result->fetchRow(DB_FETCHMODE_ASSOC) )
                                                 $whole_result[] = array_merge($row["Jobid"],$row["JobFiles"],$row["JobBytes"]);
@@ -494,15 +564,15 @@ class BCreateGraph extends BGraph {
                                         $i2 = 0;                         // Counter of number of keys of array. SP: Contador del nmero de valores del array.
                                         
                                         if ($DB_bacula->driver == "mysql") {
-                                        $res = $DB_bacula->link->query("select Name from Job where UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-$this->elapsed  group by Name order by Name desc")
+                                        $res = $DB_bacula->db_link->query("select Name from Job where UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-$this->elapsed  group by Name order by Name desc")
                                                 or die ("classes.inc: Error at query: 7");
-                                                $resdata = $DB_bacula->link->query("select date_format(EndTime,\"%Y-%m-%d\") from Job where UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-$this->elapsed  group by date_format(EndTime, \"%Y-%m-%d\") order by EndTime")
+                                                $resdata = $DB_bacula->db_link->query("select date_format(EndTime,\"%Y-%m-%d\") from Job where UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-$this->elapsed  group by date_format(EndTime, \"%Y-%m-%d\") order by EndTime")
                                                         or die ("classes.inc: Error at query: 8");
 					}
                                         else if ($DB_bacula->driver == "pgsql") {
-						$res = $DB_bacula->link->query("select Name from Job where EndTime > now() - 1*interval'$this->elapsed s'  group by Name order by Name desc")
+						$res = $DB_bacula->db_link->query("select Name from Job where EndTime > now() - 1*interval'$this->elapsed s'  group by Name order by Name desc")
 							or die ("classes.inc: Error at query: 8");
-                                                $resdata = $DB_bacula->link->query("select to_char(EndTime,'YY-MM-DD') from Job where EndTime > NOW() - 1*interval'$this->elapsed s'  group by EndTime order by EndTime")
+                                                $resdata = $DB_bacula->db_link->query("select to_char(EndTime,'YY-MM-DD') from Job where EndTime > NOW() - 1*interval'$this->elapsed s'  group by EndTime order by EndTime")
                                                         or die ("classes.inc: Error at query: 9");
 					}
                                         
@@ -516,19 +586,20 @@ class BCreateGraph extends BGraph {
 //                                      echo "</pre>";
                                         
                                         
-                                        $spr = array();                        // Temporal array
-                                        $spr2 = array();                       // Temporal array
-                                        $whole_result = array();
-                                        
+                                        $spr 			= array();                        // Temporal array
+                                        $spr2 			= array();                       // Temporal array
+                                        $whole_result 	= array();
+                                        $count 			= 0;
+										
                                         while ( $tmpdata = $resdata->fetchRow() ) {
                                                 $count++;
                                                 array_push($spr,$tmpdata[0]);
                                                 if ($DB_bacula->driver == "mysql")
-                                                        $result = $DB_bacula->link->query("select date_format(EndTime,\"%Y-%m-%d\"),SUM(JobBytes) as sum,Name as name,count(Name) as Nname from Job WHERE EndTime like '$tmpdata[0]%' group by Name order by Name desc")
+                                                        $result = $DB_bacula->db_link->query("select date_format(EndTime,\"%Y-%m-%d\"),SUM(JobBytes) as sum,Name as name,count(Name) as Nname from Job WHERE EndTime like '$tmpdata[0]%' group by Name order by Name desc")
                                                                 or die ("classes.inc: Error at query: 10");
                                                 else if ($DB_bacula->driver == "pgsql") {
 							$query = "select to_char(EndTime,'YY-MM-DD'),SUM(JobBytes) as sum,Name,count(Name) as Nname from Job WHERE EndTime like '%$tmpdata[0]%' group by EndTime,Name order by Name desc";
-                                                        $result = $DB_bacula->link->query($query)
+                                                        $result = $DB_bacula->db_link->query($query)
                                                                 or die ("classes.inc: Error at query: 11");
 						}
                                                 while ( $row = $result->fetchRow(DB_FETCHMODE_ASSOC) ) {
