@@ -56,4 +56,5 @@
 	</td>
 </tr>
 </table>
-</div> <!-- end div box -->
+</div> 
+<!-- end div box -->

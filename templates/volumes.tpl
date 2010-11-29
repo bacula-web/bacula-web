@@ -1,15 +1,9 @@
 <!-- volumes.tpl -->
 
 <div class="box">
-	<p class="title">Pools</p>
-<!--
-<table border=0 width=100% class=code cellspacing=0 cellpadding=0>
-<tr align=center width=100%>
-        <td class=tbl_header2 background="style/images/bg4.png"><b>Pools</b></td>
-        <td class=tbl_header2 background="style/images/end4.png"><img src="style/images/empty.png"></td>
-</tr>
--->
-<table border=0 width="100%" class=code cellspacing=0 cellpadding=0>
+  <p class="title">Pools</p>
+	
+  <table width="100%">
 	{foreach from=$pools item=pool key=pool_name}
 	<tr>
 		<th colspan="6" style="font-size: 10pt; text-align: center; background-color: #E0C8E5; color: black; padding: 3px;">
@@ -40,7 +34,7 @@
 		{/foreach}
 		</tr>
 	{/foreach}
-</table>
+  </table>
 
 </div> <!-- end div box -->
 

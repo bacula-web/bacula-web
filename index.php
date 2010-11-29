@@ -101,7 +101,7 @@ $query = "";
 	die( "Unable to get Total Job Bytes from catalog" . $last24bytes->getMessage() );
   }else {
 	$tmp = $last24bytes->fetchRow();
-	var_dump( $tmp );
+	//var_dump( $tmp );
 	// Transfered bytes since last 24 hours
 	$smarty->assign('bytes_totales', $dbSql->human_file_size( $tmp[0] ) );
 
@@ -144,6 +144,9 @@ $res->free();
 // Get volumes list (volumes.tpl)
 $smarty->assign('pools',$dbSql->GetVolumeList() );
 
+// Last job status (default is last 24 hours)
+$smarty->assign( 'lastjobs', $dbSql->GetLastJobs() );
+
 // last_run_report.tpl
 if ( $mode == "Lite" && $_GET['Full_popup'] == "yes" ) {
         $tmp = array();
@@ -175,11 +178,17 @@ if ( $mode == "Lite" && $_GET['Full_popup'] == "yes" ) {
                 or die ( "Error: query at row 98" );
         */
 		$smarty->assign('status', $status->numRows() );
+		
         if ( $status->numRows() ) {
-                while ( $res = $status->fetchRow() )
-                        array_push($tmp, $res);
-                $smarty->assign('errors_array',$tmp);
-        }
+			echo "status nomrow -> " . $status->numRows() . "<br />";
+			while ( $res = $status->fetchRow() ) {
+				array_push($tmp, $res);
+			}
+            
+			$smarty->assign('errors_array',$tmp);
+        }else {
+			//echo "status pas marche ...<br />";
+		}
         $status->free();
         
         // Total Elapsed Time. Only for single Job.

@@ -23,6 +23,7 @@ define('BACULA_TYPE_BYTES_ENDTIME_ALLJOBS', 69);
 
 require_once "paths.php";
 require_once "DB.php";                                                                                                                  // Pear DB
+require_once "config.inc.php";
 require_once($smarty_path."Config_File.class.php");
 
 if (!function_exists('array_fill')) {                                                                                   // For PHP < 4.2.0 users 
@@ -352,6 +353,32 @@ class Bweb extends DB {
 				} // end while
 				return $volumes;
         } // end function GetVolumeList()
+		
+		public function GetLastJobs( $delay = LAST_DAY )
+		{
+			switch( $this->driver )
+			{
+				case 'mysql':
+					$query  = "SELECT JobId, Name, EndTime, JobStatus ";
+					$query .= "FROM Job ";
+					$query .= "WHERE EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-86400 and JobStatus!='T'";
+				break;
+				case 'pgsql':
+					$query  = "SELECT JobId, Name, EndTime, JobStatus ";
+					$query .= "FROM Job ";
+					$query .= "WHERE EndTime <= NOW() and EndTime >NOW() - 86400 * interval '1 second' and JobStatus!= 'T'";
+				break;
+			}
+		
+			$lastjobstatus = $this->db_link->query( $query );
+		
+			if (PEAR::isError( $lastjobstatus ) ) {
+				die( "Unable to get last job status from catalog<br />" . $status->getMessage() );
+			}else {
+				//echo "numrows = " . $lastjobstatus->numRows() . "<br />";
+				return $lastjobstatus->numRows();
+			}
+		} // end function GetLastJobStatus()
 		
 } // end class Bweb
 

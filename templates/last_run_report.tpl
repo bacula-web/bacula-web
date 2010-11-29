@@ -135,39 +135,30 @@
 	<p class="title">Detailled report</p>
  
  <form method="get" action="report.php" target="_blank">
- <table>
-
- <tr>
- 	<td align=right colspan=2 valign=bottom>
-
-		<table width="100%" cellpadding="0" cellspacing="3" border="0">
+   <table width="100%" cellpadding="0" cellspacing="3" border="0">
+<!--
  			<tr bgcolor=white>
 				<td colspan="3" style="text-align: center; background-image: url('style/images/bg1.png'); font-size: 12px; font-weight: bold;">
 				Detailed report
 				</td>
  			</tr>
-		
- 			<tr>
- 				<td align=left>
- 					{t}Select a job:{/t}
- 				</td> 			
- 				<td align=right>
-					<input type=hidden name="default" value="1"> 				
-					<select name=server>
- 						{if $smarty.get.server!=""}
- 							{html_options values=$smarty.get.server output=$smarty.get.server}
- 						{else}
- 							{html_options values=$total_name_jobs output=$total_name_jobs}
- 						{/if}
- 					</select>
- 				</td>
- 				<td>
- 					<input type=submit value="{t}go{/t}">
- 				</td>
- 				
- 			</tr>
- </table>
-		</form>
+-->		
+	 <tr>
+ 	   <td class="label">{t}Select a job:{/t}</td>
+ 	   <td align=center>
+	     <input type=hidden name="default" value="1"> 				
+		   <select name=server>
+ 		     {if $smarty.get.server != ""}
+ 				{html_options values=$smarty.get.server output=$smarty.get.server}
+ 			 {else}
+ 		   	    {html_options values=$total_name_jobs output=$total_name_jobs}
+ 		     {/if}
+ 		   </select>
+ 	     <input type=submit value="{t}go{/t}">
+	   </td>
+     </tr>
+   </table>
+ </form>
 {else if #mode# == "Full" || $smarty.get.Full_popup == "yes"}
 <table>
 	<tr class="tbl_header1">

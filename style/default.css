@@ -91,6 +91,22 @@ body{
  margin: 0px;
 }
 
+.box table
+{
+ margin-left: 5px;
+ margin-right: 5px;
+}
+.box table tr td
+{
+ padding: 2px;
+}
+.box table tr td.label
+{
+ font-weight: bold;
+ width: 150px;
+ text-align: left;
+}
+
 table {
  width: 100%;
  margin: 0px;
