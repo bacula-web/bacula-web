@@ -2,27 +2,19 @@
 
 <div class="box">
 	<p class="title">Last 24 hours status</p>
-<!--	
-<table width=100% align=center {if !$status }background="style/images/backlast.gif"{else}background="style/images/backlastred.gif" {/if} style="background-repeat:no-repeat" height=178px border=0 cellspacing=0 cellpadding=0>
- <tr>
- 	<td colspan=2 align=center style="font-size: 12px; font-weight: bold; background-repeat: repeat" background="style/images/bg6.png" height=25>
- 		{t}Status from last 24h{/t}
- 	</td>
- </tr>
--->
 {* {if $mode == "Lite" && $smarty.get.Full_popup != "yes"} *}
 <table>
  <tr>
- 	<td class="label">Failed jobs</td> <td class="info">{$jobserror}</td>
+ 	<td class="label">Failed jobs</td> <td class="info">{$failed_jobs}</td>
  </tr>
  <tr>
- 	<td class="label">Completed jobs</td> <td class="info">{$total_jobs}</td>
+ 	<td class="label">Completed jobs</td> <td class="info">{$completed_jobs}</td>
  </tr> 
  <tr>
- 	<td class="label">Backup elapsed time</td> <td class="info">{$totalElapsed}</td>
+ 	<td class="label">Elapsed time</td> <td class="info">{$totalElapsed}</td>
  </tr>
  <tr>
- 	<td class="label">Transferred bytes</td> <td class="info">{$bytes_totales}</td>
+ 	<td class="label">Transferred Bytes</td> <td class="info">{$bytes_totales}</td>
  </tr> 
  <tr>
  	<td colspan=2 align=center>

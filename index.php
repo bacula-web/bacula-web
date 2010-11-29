@@ -131,66 +131,32 @@ $smarty->assign('clientes_totales',$nb_clients["nb_client"] );
         $tmp = $last24bytes->fetchRow();        
 }*/
 
-// report_select.tpl & last_run_report.tpl
-$res = $dbSql->db_link->query("select Name from Job group by Name");
+// Backup Job list for report.tpl and last_run_report.tpl
+$smarty->assign( 'total_name_jobs', $dbSql->Get_BackupJob_Names() );
+
+/*$res = $dbSql->db_link->query("select Name from Job group by Name");
 
 $a_jobs = array();
-while ( $tmp = $res->fetchRow() )
+while( $tmp = $res->fetchRow() )
         array_push($a_jobs, $tmp[0]);
 $smarty->assign('total_name_jobs',$a_jobs);
 $smarty->assign('time2',( (time())-2678400) );                                                                  // Current time - 1 month. <select> date
 $res->free();
+*/
 
 // Get volumes list (volumes.tpl)
 $smarty->assign('pools',$dbSql->GetVolumeList() );
 
-// Last job status (default is last 24 hours)
-$smarty->assign( 'lastjobs', $dbSql->GetLastJobs() );
+// Completed jobs number
+$failed_jobs = $dbSql->GetLastJobs();
+$smarty->assign( 'completed_jobs', $failed_jobs['completed_jobs'] );
+
+// Failed jobs number (last_run_report.tpl)
+$failed_jobs = $dbSql->GetLastErrorJobs();
+$smarty->assign( 'failed_jobs', $failed_jobs['failed_jobs'] );
 
 // last_run_report.tpl
 if ( $mode == "Lite" && $_GET['Full_popup'] == "yes" ) {
-        $tmp = array();
-        switch( $dbSql->driver )
-		{
-			case 'mysql':
-				$query  = "SELECT JobId, Name, EndTime, JobStatus ";
-				$query .= "FROM Job ";
-				$query .= "WHERE EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-86400 and JobStatus!='T'";
-			break;
-			case 'pgsql':
-				$query  = "SELECT JobId, Name, EndTime, JobStatus ";
-				$query .= "FROM Job ";
-				$query .= "WHERE EndTime <= NOW() and EndTime >NOW() - 86400 * interval '1 second' and JobStatus!= 'T'";
-			break;
-		}
-		
-		$status = $dbSql->db_link->query( $query );
-		
-		if (PEAR::isError( $status ) )
-			die( "Unable to get last job status from catalog<br />" . $status->getMessage() );
-		
-		/*
-		if ( $dbSql->driver == "mysql" )
-          $status = $dbSql->db_link->query("select JobId,Name,EndTime,JobStatus from Job where EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) >UNIX_TIMESTAMP(NOW())-86400 and JobStatus!='T'" )               
-                or die ("Error: query at row 95");
-        if ( $dbSql->driver == "pgsql" )
-          $status = $dbSql->db_link->query("select JobId,Name,EndTime,JobStatus from Job where EndTime <= NOW() and EndTime >NOW() - 86400 * interval '1 second' and JobStatus!= 'T'")
-                or die ( "Error: query at row 98" );
-        */
-		$smarty->assign('status', $status->numRows() );
-		
-        if ( $status->numRows() ) {
-			echo "status nomrow -> " . $status->numRows() . "<br />";
-			while ( $res = $status->fetchRow() ) {
-				array_push($tmp, $res);
-			}
-            
-			$smarty->assign('errors_array',$tmp);
-        }else {
-			//echo "status pas marche ...<br />";
-		}
-        $status->free();
-        
         // Total Elapsed Time. Only for single Job.
         if ( $dbSql->driver == "mysql" )
           $ret = $dbSql->db_link->query("select UNIX_TIMESTAMP(EndTime)-UNIX_TIMESTAMP(StartTime) as elapsed from Job where EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-84600")

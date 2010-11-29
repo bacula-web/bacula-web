@@ -356,29 +356,86 @@ class Bweb extends DB {
 		
 		public function GetLastJobs( $delay = LAST_DAY )
 		{
+			$query 		= "";
+			$start_date = "";
+			$end_date 	= "";
+			
+			// Interval calculation
+			$end_date   = mktime();
+			$start_date = $end_date - $delay;
+			
+			$start_date = date( "Y-m-d H:m:s", $start_date );
+			$end_date   = date( "Y-m-d H:m:s", $end_date );
+			
 			switch( $this->driver )
 			{
 				case 'mysql':
-					$query  = "SELECT JobId, Name, EndTime, JobStatus ";
-					$query .= "FROM Job ";
-					$query .= "WHERE EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-86400 and JobStatus!='T'";
-				break;
-				case 'pgsql':
-					$query  = "SELECT JobId, Name, EndTime, JobStatus ";
-					$query .= "FROM Job ";
-					$query .= "WHERE EndTime <= NOW() and EndTime >NOW() - 86400 * interval '1 second' and JobStatus!= 'T'";
+					$query  = 'SELECT COUNT(JobId) AS completed_jobs ';
+					$query .= 'FROM Job ';
+					$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date' ";
+					$query .= "AND JobStatus = 'T'";
 				break;
 			}
 		
-			$lastjobstatus = $this->db_link->query( $query );
+			$jobs = $this->db_link->query( $query );
 		
 			if (PEAR::isError( $lastjobstatus ) ) {
-				die( "Unable to get last job status from catalog<br />" . $status->getMessage() );
+				die( "Unable to get last completed jobs status from catalog<br />" . $status->getMessage() );
 			}else {
-				//echo "numrows = " . $lastjobstatus->numRows() . "<br />";
-				return $lastjobstatus->numRows();
+				return $jobs->fetchRow();
 			}
 		} // end function GetLastJobStatus()
+		
+		public function GetLastErrorJobs( $delay = LAST_DAY )
+		{
+			$query 		= "";
+			$start_date = "";
+			$end_date 	= "";
+			
+			// Interval calculation
+			$end_date   = mktime();
+			$start_date = $end_date - $delay;
+			
+			$start_date = date( "Y-m-d H:m:s", $start_date );
+			$end_date   = date( "Y-m-d H:m:s", $end_date );
+			
+			//echo "start date: $start_date <br />";
+			//echo "end date: $end_date <br />";
+			
+			switch( $this->driver )
+			{
+				default:
+					$query  = 'SELECT COUNT(JobId) AS failed_jobs ';
+					$query .= 'FROM Job ';
+					$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date' ";
+					$query .= "AND JobStatus = 'f'";
+				break;
+			}				
+			$result = $this->db_link->query( $query );
+			
+			if (PEAR::isError( $result ) ) {
+				die( "Unable to get last failed jobs status from catalog<br />query = $query <br />" . $result->getMessage() );
+			}else {
+				return $result->fetchRow( DB_FETCHMODE_ASSOC );
+			} // end if else
+		} // end function GetLastErrorJobs
+		
+		public function Get_BackupJob_Names()
+		{
+			$query 		= "SELECT Name FROM Job GROUP BY Name";
+			$backupjobs = array();
+			
+			$result = $this->db_link->query( $query );
+			
+			if (PEAR::isError( $result ) ) {
+				die("Unable to get BackupJobs list from catalog" );
+			}else{
+				while( $backupjob = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) {
+					array_push( $backupjobs, $backupjob["Name"] );
+				}
+				return $backupjobs;
+			}
+		}
 		
 } // end class Bweb
 
@@ -712,3 +769,4 @@ class BCreateGraph extends BGraph {
 }//end class
 
 ?>
+
