@@ -19,7 +19,7 @@ require ("paths.php");
 require($smarty_path."Smarty.class.php");
 include "classes.inc";
 
-$smarty = new Smarty;     
+$smarty = new Smarty();     
 $dbSql = new Bweb();
 
 require("lang.php");
