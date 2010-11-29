@@ -10,7 +10,7 @@
  	</td>
  </tr>
 -->
-{if #mode# == "Lite" && $smarty.get.Full_popup != "yes"}
+{if $mode == "Lite" && $smarty.get.Full_popup != "yes"}
 <table width="100%">
  <tr>
  	<td>
@@ -136,7 +136,7 @@
  
  <form method="get" action="report.php" target="_blank">
  <table>
- <!--
+
  <tr>
  	<td align=right colspan=2 valign=bottom>
 
@@ -146,7 +146,7 @@
 				Detailed report
 				</td>
  			</tr>
-  -->		
+		
  			<tr>
  				<td align=left>
  					{t}Select a job:{/t}

@@ -9,7 +9,7 @@
         <td class=tbl_header2 background="style/images/end4.png"><img src="style/images/empty.png"></td>
 </tr>
 -->
-<table border=0 width=100% class=code cellspacing=0 cellpadding=0>
+<table border=0 width="100%" class=code cellspacing=0 cellpadding=0>
 	{foreach from=$pools item=pool key=pool_name}
 	<tr>
 		<th colspan="6" style="font-size: 10pt; text-align: center; background-color: #E0C8E5; color: black; padding: 3px;">

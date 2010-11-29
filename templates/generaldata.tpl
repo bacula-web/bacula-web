@@ -12,7 +12,7 @@
 
 <table class=genmed width="100%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>	
-	<td width=35%>
+	<td>
 	{t}Total clients:{/t}
 	</td>
 
@@ -20,7 +20,7 @@
 	<font color=red>{$clientes_totales}</font>
 	</td>
 
-	<td width=35%>
+	<td>
 	{t}Total bytes stored{/t}:
 	</td>
 	
@@ -30,7 +30,7 @@
 </tr>
 
 <tr>
-	<td width=35%>
+	<td>
 	{t}Total files:{/t}
 	</td>
 	
@@ -38,7 +38,7 @@
 	<font color=red>{$files_totales}</font>
 	</td>
 	
-	<td width=35%>
+	<td>
 	{t}Database size{/t}:
 	</td>
 	

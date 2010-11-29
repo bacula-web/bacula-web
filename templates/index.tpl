@@ -1,4 +1,3 @@
-{config_load file=bacula.conf}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
   "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -24,22 +23,18 @@
 </div>
 
 <div id="main_right">
-  {if !#IndexReport#}
-    {include file=last_run_report.tpl} 	
-  {else}
-    {include file=report_select.tpl}
-  {/if}
+	{include file="$last_report"} 	
+  
 <!--  <table class=genmed cellspacing="1" cellpadding="3" border=0 align="center">
-
 		<tr>
 		  <td>
 -->
 	<div class="box">
 		<p class="title">General report</p>
 		{if $server==""} 
-		  <img src="stats.php?server={$server}&amp;tipo_dato=69&amp;title=General%20report&amp;modo_graph=bars&amp;sizex=420&amp;sizey=250&amp;MBottom=20&amp;legend=1" />
+		  <img src="stats.php?server={$server}&amp;tipo_dato=69&amp;title=General%20report&amp;modo_graph=bars&amp;sizex=420&amp;sizey=250&amp;MBottom=20&amp;legend=1" alt="" />
 		{else}
-		  <img src="stats.php?server={$server}&amp;tipo_dato=3&amp;title={$server}&amp;modo_graph=bars" />
+		  <img src="stats.php?server={$server}&amp;tipo_dato=3&amp;title={$server}&amp;modo_graph=bars" alt="" />
 		{/if}
 	</div> <!-- end div box -->
 <!--

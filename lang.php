@@ -18,11 +18,13 @@
 // and we check if it is present at the system
 
 if ( function_exists("gettext") ) {
-        require($smarty_gettext_path."smarty_gettext.php");     
+        global $dbSql;
+		
+		require($smarty_gettext_path."smarty_gettext.php");     
         $smarty->register_block('t','smarty_translate');
         
-        $vars = $smarty->get_config_vars();
-        $language = $vars['lang'];
+        //$vars = $smarty->get_config_vars();
+        $language = $dbSql->get_config_param("lang");
         $domain = "messages";   
         putenv("LANG=$language"); 
         setlocale(LC_ALL, $language);

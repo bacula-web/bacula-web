@@ -13,24 +13,15 @@
 	<li>
 		<a href="http://bacula-web.dflc.ch" target="_blank">About</a>
 	</li>
+	<!-- Condifitional catalog selection if more than 1 catalog is defined in the configuration -->
+	{if $dbs > 1}
+	<li>
+		<form method=post action=index.php>
+			{t}Catalog{/t}&nbsp; <select name=sel_database OnChange=submit()> {html_options values={$dbs} name=$selected_db=$dbs_now} </select>
+		</form>
+	</li>
+	{/if}
  </ul>
 </div> <!-- end div subheader -->
 
-<!-- Multi catalog selection will added in next release
-<table width="100%" cellpadding=0 cellspacing=0 border=0 bgcolor="#2F92AF">
- <tr>
-
-	{if $dbs ne ""}
-		<form method=post action=index.php>
-		<td background="{#root#}style/images/bg2.png" align="right" valign="top">
-		{t}Select{/t}: 
-		<select name=sel_database style="font-family:verdana;font-size: 10px;color: white; background-color:#666;" onchange=submit()>
-		{html_options values=$dbs output=$dbs selected=$dbs_now}
-		</select>
-		</td>
-	{/if}
-    </tr>
-  </table>
-</form>
--->
 <!-- End Header -->
