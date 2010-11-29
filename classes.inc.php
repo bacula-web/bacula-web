@@ -333,10 +333,10 @@ class Bweb extends DB {
 							if( $medias->numRows() == 0 ) {
 								if( $debug ) echo "No media in pool " . $pool['name'] . "<br />";
 							} else {
-									if( $media['lastwritten'] != "0000-00-00 00:00:00" ) {
+									if( ($media['lastwritten'] != "0000-00-00 00:00:00") && $media['volstatus'] == 'Full' ) {
 										// Calculate expiration date
 										$expire_date     = strtotime($media['lastwritten']) + $media['volretention'];
-										$media['expire'] = strftime("%Y-%M-%D", $expire_date);
+										$media['expire'] = strftime("%Y-%m-%d", $expire_date);
 										
 										// Media used size in a more readable format
 										$media['volbytes'] = $this->human_file_size( $media['volbytes'] );
