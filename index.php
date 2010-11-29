@@ -140,6 +140,7 @@ $smarty->assign( 'elapsed_jobs', $dbSql->Get_ElapsedTime_Job() );
 
 // last_run_report.tpl
 if ( $mode == "Lite" && $_GET['Full_popup'] == "yes" ) {
+/*
         // Total Elapsed Time. Only for single Job.
         if ( $dbSql->driver == "mysql" )
           $ret = $dbSql->db_link->query("select UNIX_TIMESTAMP(EndTime)-UNIX_TIMESTAMP(StartTime) as elapsed from Job where EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-84600")
@@ -157,10 +158,11 @@ if ( $mode == "Lite" && $_GET['Full_popup'] == "yes" ) {
                 $TotalElapsed = gmstrftime("%H:%M:%S", $TotalElapsed);
         $smarty->assign('TotalElapsed',$TotalElapsed);
         $ret->free();
-		
+*/		
 		
 }
 else if ($mode == "Full" || $_GET['Full_popup'] == "yes" ){
+/*
         $tmp1 = array();
         if ( $dbSql->driver == "mysql")
                 $query = "select SEC_TO_TIME( UNIX_TIMESTAMP(Job.EndTime)-UNIX_TIMESTAMP(Job.StartTime) )
@@ -182,9 +184,8 @@ else if ($mode == "Full" || $_GET['Full_popup'] == "yes" ){
         }
         
         $smarty->assign('clients',$tmp1);
-}  
-
-
+*/
+}
 if ($_GET['Full_popup'] == "yes" || $_GET['pop_graph1'] == "yes" || $_GET['pop_graph2'] == "yes")
         $smarty->display('full_popup.tpl');
 else

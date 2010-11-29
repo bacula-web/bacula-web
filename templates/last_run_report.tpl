@@ -18,7 +18,8 @@
  </tr> 
  <tr>
  	<td colspan=2 align=center>
- 		<a href="javascript:OpenWin('index.php?Full_popup=yes','490','350')">{t}Show details{/t}</a>
+ 		<!-- <a href="javascript:OpenWin('index.php?Full_popup=yes','490','350')">{t}Show details{/t}</a> -->
+		<a href="jobs.php" title="Show last jobs details">Show last jobs status</a>
  	</td>
  </tr>
 </table>

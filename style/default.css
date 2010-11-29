@@ -62,6 +62,14 @@ body{
  margin-top: 1em;
 }
 
+#main_center {
+ position: absolute; 
+ left:5px; 
+ width: 900px; 
+ border: 1px solid red; 
+ margin-top: 1em;
+}
+
 .box {
  border: 1px solid black;
  width: 100%;
@@ -86,7 +94,7 @@ body{
  padding-bottom: 5px;
 }
 
-.box img {
+.box img.report {
  width: 410px;
  margin: 0px;
 }
@@ -96,6 +104,12 @@ body{
  width: 100%;
  margin: 0px;
 }
+
+.box table th {
+ font-size: 10pt;
+ background-color: #CACACA;
+}
+
 .box table tr td
 {
  padding: 2px;
