@@ -27,7 +27,7 @@
 // $modo_graph= Type of graph (bars, lines, linepoints, area, points, and pie).
 // $elapsed = Period in seconds to show complex graph (tipo_dato <3) 1 month = 18144000
 session_start();
-require ("classes.inc");
+require ("classes.inc.php");
 
 $graph = new BCreateGraph();
 
