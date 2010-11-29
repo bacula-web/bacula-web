@@ -25,18 +25,18 @@
   <!-- General information -->
   <div class="box">
 	<p class="title">General informations</p>
-	<table>
+	<table width="90%">
 	  <tr>
-	    <td class="label">{t}Clients{/t}</td> <td>{$clientes_totales}</td>
+	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clientes_totales}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Total bytes stored{/t}:</td> <td>{$bytes_stored}</td>
+		<td class="label">{t}Total bytes stored{/t}:</td> <td class="info">{$bytes_stored}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Total files:{/t}</td> <td>{$files_totales}</td>
+		<td class="label">{t}Total files:{/t}</td> <td class="info">{$files_totales} file(s)</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Database size{/t}:</td> <td>{$database_size}</td>
+		<td class="label">{t}Database size{/t}:</td> <td class="info">{$database_size}</td>
 	  </tr>
 	  <tr>
 		<td colspan=2 align=center>

@@ -3,7 +3,7 @@
 <div class="box">
   <p class="title">Pools</p>
 	
-  <table width="100%">
+  <table>
 	{foreach from=$pools item=pool key=pool_name}
 	<tr>
 		<th colspan="6" style="font-size: 10pt; text-align: center; background-color: #E0C8E5; color: black; padding: 3px;">

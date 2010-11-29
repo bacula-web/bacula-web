@@ -10,50 +10,28 @@
  	</td>
  </tr>
 -->
-{if $mode == "Lite" && $smarty.get.Full_popup != "yes"}
-<table width="100%">
+{* {if $mode == "Lite" && $smarty.get.Full_popup != "yes"} *}
+<table>
  <tr>
- 	<td>
- 		<b>{t}Errors:{/t}</b>
- 	</td>
- 	<td style="font-size: 13px; color: blue">
- 		{$status}
- 	</td>
+ 	<td class="label">Failed jobs</td> <td class="info">{$jobserror}</td>
  </tr>
-
  <tr>
- 	<td>
- 		<b>{t}Terminated Jobs:{/t}</b>
- 	</td>
- 	<td style="font-size: 13px; color: blue">
- 		{$total_jobs}
- 	</td>
+ 	<td class="label">Completed jobs</td> <td class="info">{$total_jobs}</td>
  </tr> 
  <tr>
- 	<td>
- 		<b>{t}Total time spent to do backup:{/t}</b>
- 	</td> 
- 	<td style="font-size: 13px; color: blue">
- 		{$TotalElapsed}
- 	</td>
+ 	<td class="label">Backup elapsed time</td> <td class="info">{$totalElapsed}</td>
  </tr>
- 
  <tr>
- 	<td>
- 		<b>{t}Bytes transferred last 24h{/t}</b>
- 	</td> 
- 	<td style="font-size: 13px; color: blue">
- 		{$bytes_totales}
- 	</td>
+ 	<td class="label">Transferred bytes</td> <td class="info">{$bytes_totales}</td>
  </tr> 
  <tr>
  	<td colspan=2 align=center>
  		<a href="javascript:OpenWin('index.php?Full_popup=yes','490','350')">{t}Show details{/t}</a>
  	</td>
  </tr>
- </table>
+</table>
  
- {if $status != 0}
+{* {if $status != 0} *}
 <table>
 	<tr>
  		<td colspan=2>
@@ -128,7 +106,7 @@
  		</td>
  	</tr>
 </table>	
- {/if}
+ {* {/if} *}
 </div> <!-- end div box --> 
  
 <div class="box">
@@ -159,7 +137,7 @@
      </tr>
    </table>
  </form>
-{else if #mode# == "Full" || $smarty.get.Full_popup == "yes"}
+{* {else if #mode# == "Full" || $smarty.get.Full_popup == "yes"} *}
 <table>
 	<tr class="tbl_header1">
  		<td><b>{t}Elapsed time{/t}</b></td>
@@ -196,7 +174,7 @@
  	</td>
  </tr>
 </table>
-{/if}
+{* {/if} *}
 
 </div>
 <!-- end last_run_report.tpl -->

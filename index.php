@@ -153,7 +153,7 @@ if ( $mode == "Lite" && $_GET['Full_popup'] == "yes" ) {
         switch( $dbSql->driver )
 		{
 			case 'mysql':
-				$query  = "SELECT JobId, Name, EndTime, JobStatus";
+				$query  = "SELECT JobId, Name, EndTime, JobStatus ";
 				$query .= "FROM Job ";
 				$query .= "WHERE EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-86400 and JobStatus!='T'";
 			break;
