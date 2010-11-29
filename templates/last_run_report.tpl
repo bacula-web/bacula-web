@@ -11,7 +11,7 @@
  	<td class="label">Completed jobs</td> <td class="info">{$completed_jobs}</td>
  </tr> 
  <tr>
- 	<td class="label">Elapsed time</td> <td class="info">{$totalElapsed}</td>
+ 	<td class="label">Elapsed time</td> <td class="info">{$elapsed_jobs}</td>
  </tr>
  <tr>
  	<td class="label">Transferred Bytes</td> <td class="info">{$bytes_totales}</td>

@@ -379,7 +379,7 @@ class Bweb extends DB {
 		
 			$jobs = $this->db_link->query( $query );
 		
-			if (PEAR::isError( $lastjobstatus ) ) {
+			if (PEAR::isError( $jobs ) ) {
 				die( "Unable to get last completed jobs status from catalog<br />" . $status->getMessage() );
 			}else {
 				return $jobs->fetchRow();
@@ -436,6 +436,44 @@ class Bweb extends DB {
 				return $backupjobs;
 			}
 		}
+		
+		public function Get_ElapsedTime_Job( $delay = LAST_DAY )
+		{
+			$query 			= "";
+			$total_elapsed	= 0;
+			
+			// Interval calculation
+			$end_date   = mktime();
+			$start_date = $end_date - $delay;
+			
+			$start_date = date( "Y-m-d H:m:s", $start_date );
+			$end_date   = date( "Y-m-d H:m:s", $end_date );
+			
+			switch( $this->driver )
+			{
+				case 'mysql':
+					$query  = "SELECT UNIX_TIMESTAMP(EndTime) - UNIX_TIMESTAMP(StartTime) AS elapsed from Job ";
+					$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date'";
+				break;
+			}
+			$result = $this->db_link->query( $query );
+			
+			if( PEAR::isError($result) ){
+				die( "Unable to get elapsed time for jobs from catalog<br />query = $query <br />" . $result->getMessage() );
+			}else {
+				while( $time = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) {
+					//echo 'elapsed = ' . $time['elapsed'] . '<br />';
+					$total_elapsed += $time['elapsed'];
+				}
+				// Verify if elapsed time is more than 1 day
+				if ( $total_elapsed > 86400 ) {
+					return gmstrftime("%d days %H:%M:%S", $total_elapsed );
+				}else {
+					return gmstrftime("%H:%M:%S", $total_elapsed );
+				}
+			}
+		}
+			
 		
 } // end class Bweb
 

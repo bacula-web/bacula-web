@@ -121,39 +121,22 @@ $smarty->assign('bytes_stored', $dbSql->human_file_size($bytes_stored) );
 $nb_clients = $dbSql->Get_Nb_Clients();
 $smarty->assign('clientes_totales',$nb_clients["nb_client"] );
 
-/*if ( empty($tmp[0]) ) {                                                                                                                 // No data for last 24, search last 48
-        if ( $dbSql->driver == "mysql" )
-          $last24bytes = $dbSql->db_link->query("select sum(JobBytes) from Job where Endtime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-172800" );
-        if ( $dbSql->driver == "pgsql")
-          $last24bytes = $dbSql->db_link->query("select sum(JobBytes) from Job where Endtime <= NOW() and EndTime > NOW()-172800 * interval '1 second'" )
-            or die ("Error query: 4.1");
-        $smarty->assign('when',"yesterday");
-        $tmp = $last24bytes->fetchRow();        
-}*/
-
 // Backup Job list for report.tpl and last_run_report.tpl
 $smarty->assign( 'total_name_jobs', $dbSql->Get_BackupJob_Names() );
-
-/*$res = $dbSql->db_link->query("select Name from Job group by Name");
-
-$a_jobs = array();
-while( $tmp = $res->fetchRow() )
-        array_push($a_jobs, $tmp[0]);
-$smarty->assign('total_name_jobs',$a_jobs);
-$smarty->assign('time2',( (time())-2678400) );                                                                  // Current time - 1 month. <select> date
-$res->free();
-*/
 
 // Get volumes list (volumes.tpl)
 $smarty->assign('pools',$dbSql->GetVolumeList() );
 
-// Completed jobs number
+// Last 24 hours completed jobs number (last_run_report.tpl)
 $failed_jobs = $dbSql->GetLastJobs();
 $smarty->assign( 'completed_jobs', $failed_jobs['completed_jobs'] );
 
-// Failed jobs number (last_run_report.tpl)
+// Last 24 hours failed jobs number (last_run_report.tpl)
 $failed_jobs = $dbSql->GetLastErrorJobs();
 $smarty->assign( 'failed_jobs', $failed_jobs['failed_jobs'] );
+
+// Last 24 hours elapsed time (last_run_report.tpl)
+$smarty->assign( 'elapsed_jobs', $dbSql->Get_ElapsedTime_Job() );
 
 // last_run_report.tpl
 if ( $mode == "Lite" && $_GET['Full_popup'] == "yes" ) {
@@ -174,6 +157,8 @@ if ( $mode == "Lite" && $_GET['Full_popup'] == "yes" ) {
                 $TotalElapsed = gmstrftime("%H:%M:%S", $TotalElapsed);
         $smarty->assign('TotalElapsed',$TotalElapsed);
         $ret->free();
+		
+		
 }
 else if ($mode == "Full" || $_GET['Full_popup'] == "yes" ){
         $tmp1 = array();
