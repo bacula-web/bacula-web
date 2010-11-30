@@ -1,17 +1,24 @@
 <?php
-	require_once "DB.php";
-	
-	function Checkold($function,$text,$description="") 
-	{
-		if  (!function_exists($function) )
-			echo "<td> ".$text." disabled</td><td>&nbsp;" . $description;
-		else
-			echo "<td> " . $text . " enabled<td>&nbsp;";
-	}
-	
+  require_once ("paths.php");
+  require_once ($smarty_path."Smarty.class.php");
+  require_once ("classes.inc.php");
+
+  $smarty = new Smarty(); 
+  
+  //require_once ("lang.php");
+
+  // Smarty configuration
+  $smarty->compile_check = true;
+  $smarty->debugging = false;
+  $smarty->force_compile = true;
+
+  $smarty->template_dir = "./templates";
+  $smarty->compile_dir = "./templates_c";
+  $smarty->config_dir     = "./configs";  
+  
 	function Check( $support, $description, $error_message )
 	{
-		$result  = "Checking " . $description . " </td>";
+		$result  = $description . " </td>";
 		$ok 	 = false;
 		
 		switch( $support )
@@ -40,79 +47,5 @@
 		
 		echo $result;
 	}
+	$smarty->display('test.tpl');
 ?>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-  "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-	<title>Bacula-web - Test page</title>
-	
-	<style type="text/css">
-		body{
-			font-family: arial, verdana, helvetica;
-			font-size: 10pt;
-			padding-left: 100px;
-		}
-		table{
-			
-			margin: 20px 0px 0px 100px;
-			border: thin solid black;
-			border-collapse: collapse;
-		}
-		td{
-			margin: 0px;
-			padding: 1em;
-			border-top: thin solid black;
-		}
-		img{
-			margin-top: 1em;
-		}
-		
-	</style>
-</head>
-<body>
-
-<table>
-<tr>
-	<td width="300">
-		<?php 
-			Check( "php-gettext", "PHP Gettext support", "If you want Bacula-web in your language, please compile PHP with Gettext support" );
-		?>
-	</td>
-</tr>
-<tr>
-	<td>
-		<?php 
-			Check("pear-db", "PEAR DB support", "PEAR DB support not found, please read the Bacula-web installation document");
-		?>
-	</td>
-</tr>
-<tr>
-	<td>
-		<?php
-			Check( "php-gd", "PHP GD support", "This is required by phplot, please compile php with GD support" );
-		?>
-	</td>
-</tr>
-<tr>
-	<td>
-		<?php
-			Check( "smarty-cache", "Smarty cache folder write permission", "Smarty template engine need write permissions to templates_c folder" );
-		?>
-	</td>
-</tr>
-
-<tr>
-	<td colspan="3">
-		<center>
-			Testing your graph system capabilities (Bacula-web only use PNG) <br />
-			<img src="simplegraph.php" /> 
-		</center>
-	</td>
-</tr>
-</table>
-
-</body>
-
-</html>

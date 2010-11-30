@@ -17,7 +17,7 @@
 	{if $dbs > 1}
 	<li>
 		<form method=post action=index.php>
-			{t}Catalog{/t}&nbsp; <select name=sel_database OnChange=submit()> {html_options values={$dbs} name=$selected_db=$dbs_now} </select>
+			Catalog&nbsp; <select name=sel_database OnChange=submit()> {html_options values={$dbs} name=$selected_db=$dbs_now} </select>
 		</form>
 	</li>
 	{/if}
