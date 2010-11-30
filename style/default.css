@@ -2,8 +2,32 @@ body{
   background-color: #ffffff;
   padding: 3px;
   margin: 0px;
-  
   font-family: Arial,Verdana;
+  font-size: 10pt;
+}
+
+a:link, a:visited {
+  color: #736F6E;
+  font-size: 10pt;
+}
+
+a:hover { color: #736F6E }
+
+#nav
+{
+ margin: 10px;
+ /*border: 1px solid green;*/
+ font-size: 11pt;
+}
+
+#nav a:link{
+ font-size: 11pt;
+ font-weight: bold;
+}
+
+#nav a:visited{
+ font-size: 11pt;
+ font-weight: bold;
 }
 
 #header{
@@ -47,7 +71,7 @@ body{
 
 #main_left {
  position: absolute; 
- left:5px; 
+ left:10px; 
  width: 550px; 
  border:none; 
  margin-top: 1em; 
@@ -64,9 +88,9 @@ body{
 
 #main_center {
  position: absolute; 
- left:5px; 
+ left:10px; 
  width: 900px; 
- border: 1px solid red; 
+ /*border: 1px solid red; */
  margin-top: 1em;
 }
 
@@ -147,9 +171,6 @@ table {
  background-image: url('../style/images/bg5.png'); 
 }
 
-a:link { color: #0000c0 }
-a:visited { color: #0000c0 }
-a:hover { color: #6040ff }
 img {border: 0}
 
 td,input,select { 
