@@ -14,7 +14,7 @@
 
 </head>
 <body>
-{popup_init src='./js/overlib.js'}
+{popup_init src='./external_packages/js/overlib.js'}
 {include file=header.tpl}
 
 <div id="nav">

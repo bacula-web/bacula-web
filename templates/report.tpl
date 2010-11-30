@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="style/default.css" />
 </head>
 <body>
-{popup_init src="js/overlib.js"}
+{popup_init src="./external_packages/js/overlib.js"}
 <table width=100% border=1 class=back>
 <tr>
 	<td width=65% valign=top>
