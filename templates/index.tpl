@@ -38,16 +38,6 @@
 	  <tr>
 		<td class="label">{t}Database size{/t}:</td> <td class="info">{$database_size}</td>
 	  </tr>
-	  <tr>
-		<td colspan=2 align=center>
-		  <a href="javascript:OpenWin('index.php?pop_graph1=yes','600','400')">{t}Last month, bytes transferred{/t}</a>
-		</td>
-	  </tr>
-	  <tr>
-		<td colspan=2 align=center>
-		  <a href="javascript:OpenWin('index.php?pop.graph2=yes','600','400')">{t}Last month, bytes transferred (pie){/t}</a>
-		</td>
-	  </tr>
 	</table>
   </div>
 	
@@ -59,7 +49,7 @@
 	  <img class="report" src="stats.php?server={$server}&amp;tipo_dato=69&amp;title=General%20report&amp;modo_graph=bars&amp;sizex=420&amp;sizey=250&amp;MBottom=20&amp;legend=1" alt="" />
 	{else}
 	  <img class="report" src="stats.php?server={$server}&amp;tipo_dato=3&amp;title={$server}&amp;modo_graph=bars" alt="" />
-	{/if}
+	{/if}  
   </div> <!-- end div box -->
 
 </div> <!-- end div main_right -->

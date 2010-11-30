@@ -18,7 +18,7 @@
 {include file=header.tpl}
 
 <div id="nav">
-  <a href="index.php">Dashboard</a> > Jobs list
+  <a href="index.php" title="Back to the dashboard">Dashboard</a> > Jobs list
 </div>
 
 <div id="main_center">
