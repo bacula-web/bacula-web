@@ -23,7 +23,9 @@
  	</td>
  </tr>
 </table>
- 
+
+</div> <!-- end div box --> 
+<!--
 {* {if $status != 0} *}
 <table>
 	<tr>
@@ -100,20 +102,13 @@
  	</tr>
 </table>	
  {* {/if} *}
-</div> <!-- end div box --> 
- 
+</div> 
+-->
 <div class="box">
 	<p class="title">Detailled report</p>
  
  <form method="get" action="report.php" target="_blank">
    <table width="100%" cellpadding="0" cellspacing="3" border="0">
-<!--
- 			<tr bgcolor=white>
-				<td colspan="3" style="text-align: center; background-image: url('style/images/bg1.png'); font-size: 12px; font-weight: bold;">
-				Detailed report
-				</td>
- 			</tr>
--->		
 	 <tr>
  	   <td class="label">{t}Select a job:{/t}</td>
  	   <td align=center>
@@ -130,6 +125,8 @@
      </tr>
    </table>
  </form>
+</div>
+<!--
 {* {else if #mode# == "Full" || $smarty.get.Full_popup == "yes"} *}
 <table>
 	<tr class="tbl_header1">
@@ -170,4 +167,6 @@
 {* {/if} *}
 
 </div>
+-->
+
 <!-- end last_run_report.tpl -->
