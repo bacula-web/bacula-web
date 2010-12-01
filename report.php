@@ -17,7 +17,7 @@
 session_start();
 require ("paths.php");
 require($smarty_path."Smarty.class.php");
-include "classes.inc.php";
+include "bweb.inc.php";
 
 $smarty = new Smarty;
 

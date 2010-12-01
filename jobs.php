@@ -2,7 +2,7 @@
   session_start();
   require_once ("paths.php");
   require_once ($smarty_path."Smarty.class.php");
-  require_once ("classes.inc.php");
+  require_once ("bweb.inc.php");
   require_once ("config.inc.php");  
 
   $smarty = new Smarty();     

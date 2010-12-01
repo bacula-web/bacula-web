@@ -1,7 +1,7 @@
 <?php
   require_once ("paths.php");
   require_once ($smarty_path."Smarty.class.php");
-  require_once ("classes.inc.php");
+  require_once ("bweb.inc.php");
 
   $smarty = new Smarty(); 
   
