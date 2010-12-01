@@ -97,10 +97,7 @@ class BGraph{
 		$legends = array();
 		foreach( $this->data as $key => $legend ) {
 			$this->plot->SetLegend( implode(': ',$legend) );
-			//array_push( $legends, $legend[0] );
 		}
-			
-		//$this->plot->SetLegend( $legends );
 
 		# Turn off X tick labels and ticks because they don't apply here:
 		$this->plot->SetXTickLabelPos('none');
