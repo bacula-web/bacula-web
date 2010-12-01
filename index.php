@@ -186,6 +186,19 @@ else if ($mode == "Full" || $_GET['Full_popup'] == "yes" ){
         $smarty->assign('clients',$tmp1);
 */
 }
+
+// A simple graphing test with the new PHP BGraph classe
+$data = array( array( 'Completed', 15 ), array( 'Failed', 2 )  );
+
+$graph = new BGraph( "toto.png" );
+$graph->SetData( $data, 'pie', 'text-data-single' );
+$graph->SetTitle("Overall jobs status");
+$graph->SetGraphSize( 350, 200 );
+$graph->SetColors( array('green', 'red') );
+
+$graph->Render();
+$smarty->assign('graph', $graph->Get_Image_file() );
+
 if ($_GET['Full_popup'] == "yes" || $_GET['pop_graph1'] == "yes" || $_GET['pop_graph2'] == "yes")
         $smarty->display('full_popup.tpl');
 else

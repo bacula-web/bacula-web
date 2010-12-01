@@ -118,11 +118,6 @@ a:hover { color: #736F6E }
  padding-bottom: 5px;
 }
 
-.box img.report {
- width: 410px;
- margin: 0px;
-}
-
 .box table
 {
  width: 100%;
@@ -170,8 +165,6 @@ table {
  text-align: center; 
  background-image: url('../style/images/bg5.png'); 
 }
-
-img {border: 0}
 
 td,input,select { 
  font-family: Verdana,Arial; 
