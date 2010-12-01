@@ -1,7 +1,16 @@
 <?php
-//Looking forward to the day when memory is so
-//plentiful to be able to set gigantic arrays,
-//we offer this taken from PHPLOT. 
+/* $Id: rgb.inc.php,v 1.2 2009/06/12 01:58:35 lbayuk Exp $ */
+/*
+ * This is a large color map which can be used by PHPlot via
+ *     $plot->SetRGBArray('large')
+ * For more information on PHPlot see http://sourceforge.net/projects/phplot/
+ *
+ * rgb.inc.php comes with PHPlot but is derived from the X11 rgb.txt color
+ * database file, which contains no specific copyright notice. It may be
+ * covered by X.Org, XFree86, or MIT/X11 copyright and license, all of which
+ * allow redistribution on terms which are less strict than the LGPL which
+ * covers PHPlot.
+ */
 $ColorArray = array(
 	"snow"			=> array(255, 250, 250),
 	"ghost white"	=> array(248, 248, 255),
@@ -741,4 +750,3 @@ $ColorArray = array(
 	"grey99"			=> array(252, 252, 252),
 	"gray100"			=> array(255, 255, 255)
 );
-?>
