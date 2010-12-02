@@ -330,17 +330,21 @@ class Bweb extends DB {
 							if( $debug ) {
 								var_dump( $media );
 							}
-
+							// If the pool is empty (no volumes in this pool)
 							if( $medias->numRows() == 0 ) {
 								if( $debug ) echo "No media in pool " . $pool['name'] . "<br />";
 							} else {
-									if( ($media['lastwritten'] != "0000-00-00 00:00:00") && $media['volstatus'] == 'Full' ) {
-										// Calculate expiration date
-										$expire_date     = strtotime($media['lastwritten']) + $media['volretention'];
-										$media['expire'] = strftime("%Y-%m-%d", $expire_date);
-										
-										// Media used size in a more readable format
+									if( $media['lastwritten'] != "0000-00-00 00:00:00" ) {
+										// Calculate expiration date if the volume is Full
+										if( $media['volstatus'] == 'Full' ) {
+											$expire_date     = strtotime($media['lastwritten']) + $media['volretention'];
+											$media['expire'] = strftime("%Y-%m-%d", $expire_date);
+										}else {
+											$media['expire'] = 'N/A';
+										}
+										// Media used bytes in a human format
 										$media['volbytes'] = $this->human_file_size( $media['volbytes'] );
+										//echo "volume " . $media['volumename'] . 'vol bytes' .$media['volbytes'] . '<br />';
 									} else {
 										$media['lastwritten'] = "N/A";
 										$media['expire']      = "N/A";
