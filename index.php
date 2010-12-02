@@ -187,7 +187,7 @@ else if ($mode == "Full" || $_GET['Full_popup'] == "yes" ){
 */
 }
 
-// Create a graph for last 24 hours job status
+// Last 24 hours Job status graph
 $data   = array();  
 $status = array( 'completed', 'completed_errors', 'failed', 'waiting', 'created', 'running', 'error' );
 
@@ -195,14 +195,32 @@ foreach( $status as $job_status ) {
 	array_push( $data, $dbSql->GetJobsStatistics( $job_status ) );
 }
 
-$graph = new BGraph( );
+$graph = new BGraph( "graph.png" );
 $graph->SetData( $data, 'pie', 'text-data-single' );
 //$graph->SetTitle("Overall jobs status");
 $graph->SetGraphSize( 400, 230 );
 //$graph->SetColors( array('green', 'yellow','red','blue','white','green','red') );
 
 $graph->Render();
-$smarty->assign('graph', $graph->Get_Image_file() );
+$smarty->assign('graph_jobs', $graph->Get_Image_file() );
+unset($graph);
+
+// Pool and volumes graph
+$data = array();
+$graph = new BGraph( "graph1.png" );
+
+$pools = $dbSql->Get_Pools_List();
+
+foreach( $pools as $pool ) {
+	array_push( $data, $dbSql->GetPoolsStatistics( $pool ) );
+}
+
+$graph->SetData( $data, 'pie', 'text-data-single' );
+$graph->SetGraphSize( 400, 230 );
+
+
+$graph->Render();
+$smarty->assign('graph_pools', $graph->Get_Image_file() );
 
 if ($_GET['Full_popup'] == "yes" || $_GET['pop_graph1'] == "yes" || $_GET['pop_graph2'] == "yes")
         $smarty->display('full_popup.tpl');

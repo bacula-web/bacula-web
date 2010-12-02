@@ -400,6 +400,26 @@ class Bweb extends DB {
 			} // end if else
 		} // end function GetLastErrorJobs
 		
+		// Return the list of Pools in a array
+		public function Get_Pools_List()
+		{
+			$pool_list = array();
+			$result    = "";
+			
+			$query = "SELECT Name, PoolId FROM Pool";
+			
+			$result = $this->db_link->query ( $query );
+	
+			if( PEAR::isError( $result ) ) {
+				die( "Unable to get the pool list from catalog" );				
+			}else {
+				while( $pool = $result->fetchRow(DB_FETCHMODE_ASSOC) ) {
+					array_push( $pool_list, array( $pool['Name'] => $pool['PoolId'] ) );
+				}
+				return $pool_list;
+			}
+		}
+		
 		public function Get_BackupJob_Names()
 		{
 			$query 		= "SELECT Name FROM Job GROUP BY Name";
@@ -522,8 +542,22 @@ class Bweb extends DB {
 			}
 		} // end function GetJobsStatistics()
 		
-		public function GetPoolsStatistics()
+		public function GetPoolsStatistics( $pools )
 		{
+			foreach( $pools as $pool_name => $pool ) {
+				//var_dump( $pool );
+				$query = "SELECT COUNT(*) AS nb_vol FROM Media WHERE PoolId = '$pool'";
+				//echo $query . '<br />';
+				//echo 'Pool name ' . $pool_name . '<br />';
+				$result = $this->db_link->query( $query );
+				
+				if( PEAR::isError( $result ) ) {
+					die("Unable to get volume number from catalog");
+				}else{
+					$nb_vol = $result->fetchRow();
+					return array( $pool_name, $nb_vol['nb_vol'] );
+				}
+			}
 		}
 		
 } // end class Bweb

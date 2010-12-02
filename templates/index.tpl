@@ -32,7 +32,13 @@
   <!-- Last job Status -->
   <div class="box">
 	<p class="title">Job Status Report (last 24 hours)</p>
-	  <img src="{$graph}" alt="" /> 
+	  <img src="{$graph_jobs}" alt="" />
+  </div> <!-- end div box -->
+  
+  <!-- Pools and Volumes Status -->
+  <div class="box">
+	<p class="title">Job Status Report (last 24 hours)</p>
+	  <img src="{$graph_pools}" alt="" />
   </div> <!-- end div box -->
   <!-- General information -->
   <div class="box">
