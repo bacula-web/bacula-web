@@ -187,14 +187,19 @@ else if ($mode == "Full" || $_GET['Full_popup'] == "yes" ){
 */
 }
 
-// A simple graphing test with the new PHP BGraph classe
-$data = array( array( 'Completed', 15 ), array( 'Failed', 2 )  );
+// Create a graph for last 24 hours job status
+$data   = array();  
+$status = array( 'completed', 'completed_errors', 'failed', 'waiting', 'created', 'running', 'error' );
 
-$graph = new BGraph( "toto.png" );
+foreach( $status as $job_status ) {
+	array_push( $data, $dbSql->GetJobsStatistics( $job_status ) );
+}
+
+$graph = new BGraph( );
 $graph->SetData( $data, 'pie', 'text-data-single' );
-$graph->SetTitle("Overall jobs status");
-$graph->SetGraphSize( 350, 200 );
-$graph->SetColors( array('green', 'red') );
+//$graph->SetTitle("Overall jobs status");
+$graph->SetGraphSize( 400, 230 );
+//$graph->SetColors( array('green', 'yellow','red','blue','white','green','red') );
 
 $graph->Render();
 $smarty->assign('graph', $graph->Get_Image_file() );

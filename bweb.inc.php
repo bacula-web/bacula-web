@@ -371,8 +371,6 @@ class Bweb extends DB {
 		public function GetLastErrorJobs( $delay = LAST_DAY )
 		{
 			$query 		= "";
-			$start_date = "";
-			$end_date 	= "";
 			
 			// Interval calculation
 			$end_date   = mktime();
@@ -455,7 +453,78 @@ class Bweb extends DB {
 				}
 			}
 		}
+		
+		// Return Jobs statistics for a specific interval such as
+		// - Completed jobs number
+		// - Failed jobs number
+		// - Waiting jobs number
+		// The returned values will be used by a Bgraph classe
+		public function GetJobsStatistics( $type = 'completed', $delay = LAST_DAY )
+		{
+			$query 	= "";
+			$where	= "";
+			$jobs	= "";
+			$label  = "";
+			$res    = "";
 			
+			// Interval calculation
+			$end_date   = mktime();
+			$start_date = $end_date - $delay;
+			
+			$start_date = date( "Y-m-d H:m:s", $start_date );
+			$end_date   = date( "Y-m-d H:m:s", $end_date );
+			
+			// Job status
+			switch( $type )
+			{
+				case 'completed':
+					$where = "AND JobStatus = 'T' ";
+					$label = "Completed";
+				break;
+				case 'completed_errors':
+					$where = "AND JobStatus = 'E' ";
+					$label = "Completed with errors";
+				break;
+				case 'failed':
+					$where = "AND JobStatus = 'f' ";
+					$label = "Failed";
+				break;
+				case 'waiting':
+					$where = "AND JobStatus IN ('F','S','M','m','s','j','c','d','t') ";
+					$label = "Waiting";
+				break;
+				case 'created':
+					$where = "AND JobStatus = 'C' ";
+					$label = "Created but not running";
+				break;
+				case 'running':
+					$where = "AND JobStatus = 'R' ";
+					$label = "Running";
+				break;
+				case 'error':
+					$where = "AND JobStatus IN ('e','f') ";
+					$label = "Errors";
+				break;
+			}
+			
+			$query  = 'SELECT COUNT(JobId) AS ' . $type . ' ';
+			$query .= 'FROM Job ';
+			$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date' ";
+			$query .= $where;
+		
+			$jobs = $this->db_link->query( $query );
+		
+			if (PEAR::isError( $jobs ) ) {
+				die( "Unable to get last $type jobs status from catalog<br />" . $status->getMessage() );
+			}else {
+				$res = $jobs->fetchRow();
+				return array( $label , current($res) );
+			}
+		} // end function GetJobsStatistics()
+		
+		public function GetPoolsStatistics()
+		{
+		}
 		
 } // end class Bweb
 ?>

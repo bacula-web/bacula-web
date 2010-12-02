@@ -21,7 +21,19 @@
 {include file=volumes.tpl}
 </div>
 
+<!-- To be removed -->
+{if $server==""} 
+  <!-- <img class="report" src="stats.php?server={$server}&amp;tipo_dato=69&amp;title=General%20report&amp;modo_graph=bars&amp;sizex=420&amp;sizey=250&amp;MBottom=20&amp;legend=1" alt="" /> -->
+{else}
+  <!-- <img class="report" src="stats.php?server={$server}&amp;tipo_dato=3&amp;title={$server}&amp;modo_graph=bars" alt="" /> -->
+{/if} 
+
 <div id="main_right">
+  <!-- Last job Status -->
+  <div class="box">
+	<p class="title">Job Status Report (last 24 hours)</p>
+	  <img src="{$graph}" alt="" /> 
+  </div> <!-- end div box -->
   <!-- General information -->
   <div class="box">
 	<p class="title">General informations</p>
@@ -42,16 +54,6 @@
   </div>
 	
   {include file="$last_report"} 	
-  
-  <div class="box">
-	<p class="title">General report</p>
-	{if $server==""} 
-	  <!-- <img class="report" src="stats.php?server={$server}&amp;tipo_dato=69&amp;title=General%20report&amp;modo_graph=bars&amp;sizex=420&amp;sizey=250&amp;MBottom=20&amp;legend=1" alt="" /> -->
-	{else}
-	  <!-- <img class="report" src="stats.php?server={$server}&amp;tipo_dato=3&amp;title={$server}&amp;modo_graph=bars" alt="" /> -->
-	{/if} 
-	  <img src="{$graph}" alt="" /> 
-  </div> <!-- end div box -->
 
 </div> <!-- end div main_right -->
 

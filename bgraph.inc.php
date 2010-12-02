@@ -84,8 +84,14 @@ class BGraph{
 		// Image border
 		$this->plot->SetImageBorderType( 'none' );
 
+		// Plot area (calculated regarding the width and height of the graph)
+		if( $this->type == 'pie' )
+			$this->plot->SetPlotAreaPixels( 10, 10, ($this->width / 2), $this->height-10 );
+		
+		// Legend position (calculated regarding the width and height of the graph)
+		$this->plot->SetLegendPixels( ($this->width / 2) + 10, 25 );
 
-		// Labels position
+		// Labels scale position
 		if( $this->type == 'pie' )
 			$this->plot->SetLabelScalePosition( 0.2 );
 		
