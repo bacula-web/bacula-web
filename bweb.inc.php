@@ -181,29 +181,6 @@ class Bweb extends DB {
                 
         }//end function
  
-        function GetDataVolumes() {
-
-                $volume = array();
-                $res = $this->db_link->query("SELECT Name FROM Pool");
-                while ( $tmp =& $res->fetchRow() ) {
-                        if ($this->driver == "mysql" )
-                                $result = $this->db_link->query("select Media.VolumeName, Media.VolBytes,Media.VolStatus,Pool.Name,Media.MediaType,Media.LastWritten,FROM_UNIXTIME(UNIX_TIMESTAMP(Media.LastWritten)+Media.VolRetention ) as expire from Pool LEFT JOIN Media ON Media.PoolId=Pool.PoolId where Name='$tmp[0]' order by Media.VolumeName");
-                        else if ($this->driver == "pgsql")
-				$result = $this->db_link->db_query("select Media.VolumeName, Media.VolBytes,Media.VolStatus,Pool.Name,Media.MediaType,Media.LastWritten, Media.LastWritten + Media.VolRetention * interval '1 second' as expire from Pool LEFT JOIN Media ON Media.PoolId=Pool.PoolId where Name='$tmp[0]' order by Media.VolumeName");
-                        while ( $tmp1 = $result->fetchRow() ) {
-                                $pos = array_key_exists($tmp[0],$volume);
-                                if ($pos != FALSE)
-                                        array_push($volume["$tmp[0]"],$tmp1);
-                                else
-                                        $volume += array($tmp[0]=>array($tmp1));
-                        }
-                }
-                
-                $res->free();
-                $result->free();
-                return $volume;
-        }
-        
 		function human_file_size( $size, $decimal = 2 )
 		{
 			$unit_id = 0;
