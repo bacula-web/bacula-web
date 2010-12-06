@@ -128,8 +128,8 @@ $smarty->assign( 'total_name_jobs', $dbSql->Get_BackupJob_Names() );
 $smarty->assign('pools',$dbSql->GetVolumeList() );
 
 // Last 24 hours completed jobs number (last_run_report.tpl)
-$failed_jobs = $dbSql->GetLastJobs();
-$smarty->assign( 'completed_jobs', $failed_jobs['completed_jobs'] );
+$completed_jobs = $dbSql->GetLastJobs();
+$smarty->assign( 'completed_jobs', $completed_jobs['completed_jobs'] );
 
 // Last 24 hours failed jobs number (last_run_report.tpl)
 $failed_jobs = $dbSql->GetLastErrorJobs();
