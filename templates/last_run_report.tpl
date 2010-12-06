@@ -103,7 +103,7 @@
 	 <tr> <td colspan="2">&nbsp;</td> </tr>
 	 <tr>
  	   <td class="label"><b>{t}Select a job:{/t}</b></td>
- 	   <td align=center>
+ 	   <td class="info">
 	     <input type=hidden name="default" value="1"> 				
 		   <select name=server>
  		     {if $smarty.get.server != ""}

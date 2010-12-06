@@ -20,19 +20,19 @@
 <div id="main_left">
   <!-- General information -->
   <div class="box">
-	<p class="title">General informations</p>
+	<p class="title">Overall status</p>
 	<table>
 	  <tr>
 	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clientes_totales}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Total bytes stored{/t}:</td> <td class="info">{$bytes_stored}</td>
+		<td class="label">{t}Total bytes stored{/t}</td> <td class="info">{$bytes_stored}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Total files:{/t}</td> <td class="info">{$files_totales} file(s)</td>
+		<td class="label">{t}Total files{/t}</td> <td class="info">{$files_totales} file(s)</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Database size{/t}:</td> <td class="info">{$database_size}</td>
+		<td class="label">{t}Database size{/t}</td> <td class="info">{$database_size}</td>
 	  </tr>
 	</table>
   </div>
@@ -60,16 +60,24 @@
 		{* {if $mode == "Lite" && $smarty.get.Full_popup != "yes"} *}
 		<table>
 			<tr>
-				<td class="label">Failed jobs</td> <td class="info">{$failed_jobs}</td>
+				<td class="label">Failed jobs</td> 
+				<td class="info">{$failed_jobs}</td>
+				<td class="info"> <a href="jobs.php" title="View last failed jobs">View</a> </td>
 			</tr>
 			<tr>
-				<td class="label">Completed jobs</td> <td class="info">{$completed_jobs}</td>
+				<td class="label">Completed jobs</td> 
+				<td class="info">{$completed_jobs}</td>
+				<td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td>
 			</tr> 
 			<tr>
-				<td class="label">Elapsed time</td> <td class="info">{$elapsed_jobs}</td>
+				<td class="label">Elapsed time</td> 
+				<td class="info">{$elapsed_jobs}</td>
+				<td class="info"> <a href="#" title="View report">View</a> </td>
 			</tr>
 			<tr>
-				<td class="label">Transferred Bytes</td> <td class="info">{$bytes_totales}</td>
+				<td class="label">Transferred Bytes</td> 
+				<td class="info">{$bytes_totales}</td>
+				<td class="info"> <a href="#" title="View report">View</a> </td>
 			</tr> 
 		</table>
 

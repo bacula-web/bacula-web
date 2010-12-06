@@ -111,16 +111,23 @@ a:hover { color: #736F6E }
  background-color: #888888;
  color: white;
  font-weight: bold;
- padding: 0px;
- margin-top: 0px;
- margin-bottom: 5px;
- padding-top: 5px;
- padding-bottom: 5px;
+ padding: 3px;
+ margin: 0px;
+ 
+ /*padding-top: 5px;
+ padding-bottom: 5px;*/
+}
+
+.box table.list
+{
+ border-collapse: collapse;
+ width: 100%;
+ margin: 0px;
 }
 
 .box table
 {
- width: 100%;
+ border-collapse: separate;
  margin: 0px;
 }
 
@@ -132,20 +139,26 @@ a:hover { color: #736F6E }
 .box table tr td
 {
  padding: 2px;
+ font-size: 8pt;
 }
+
 .box table tr td.label
 {
  /*font-weight: bold;*/
- width: 150px;
+ background-color: #E0E0E0;
+ /*width: 150px;*/
  text-align: left;
  padding-left: 15px;
  padding: 3px;
+ margin: 2px;
 }
+
 .box table tr td.info
 {
- text-align:right; 
- padding-right: 8em;
+ text-align: center; 
+ /* padding-right: 8em; */
  font-weight: bold;
+ background-color: #E0E0E0;
 }
 
 table {
