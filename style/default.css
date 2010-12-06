@@ -72,7 +72,7 @@ a:hover { color: #736F6E }
 #main_left {
  position: absolute; 
  left:10px; 
- width: 550px; 
+ width: 500px; 
  border:none; 
  margin-top: 1em; 
  background-color: #FFFFFF;
@@ -80,8 +80,8 @@ a:hover { color: #736F6E }
 
 #main_right {
  position: absolute; 
- left:570px; 
- width: 420px; 
+ left:520px; 
+ width: 500px; 
  border: none; 
  margin-top: 1em;
 }
@@ -135,10 +135,11 @@ a:hover { color: #736F6E }
 }
 .box table tr td.label
 {
- font-weight: bold;
+ /*font-weight: bold;*/
  width: 150px;
  text-align: left;
- padding-left: 3px;
+ padding-left: 15px;
+ padding: 3px;
 }
 .box table tr td.info
 {

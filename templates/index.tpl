@@ -18,32 +18,10 @@
 {include file=header.tpl}
 
 <div id="main_left">
-{include file=volumes.tpl}
-</div>
-
-<!-- To be removed -->
-{if $server==""} 
-  <!-- <img class="report" src="stats.php?server={$server}&amp;tipo_dato=69&amp;title=General%20report&amp;modo_graph=bars&amp;sizex=420&amp;sizey=250&amp;MBottom=20&amp;legend=1" alt="" /> -->
-{else}
-  <!-- <img class="report" src="stats.php?server={$server}&amp;tipo_dato=3&amp;title={$server}&amp;modo_graph=bars" alt="" /> -->
-{/if} 
-
-<div id="main_right">
-  <!-- Last job Status -->
-  <div class="box">
-	<p class="title">Job Status Report (last 24 hours)</p>
-	  <img src="{$graph_jobs}" alt="" />
-  </div> <!-- end div box -->
-  
-  <!-- Pools and Volumes Status -->
-  <div class="box">
-	<p class="title">Job Status Report (last 24 hours)</p>
-	  <img src="{$graph_pools}" alt="" />
-  </div> <!-- end div box -->
   <!-- General information -->
   <div class="box">
 	<p class="title">General informations</p>
-	<table width="90%">
+	<table>
 	  <tr>
 	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clientes_totales}</td>
 	  </tr>
@@ -58,7 +36,50 @@
 	  </tr>
 	</table>
   </div>
-	
+
+  <!-- Pools and Volumes Status -->
+  <div class="box">
+	<p class="title">Pools and volumes status</p>
+	  <img src="{$graph_pools}" alt="" />
+  </div> <!-- end div box -->
+
+  {include file=volumes.tpl}
+</div>
+
+<!-- To be removed -->
+{if $server==""} 
+  <!-- <img class="report" src="stats.php?server={$server}&amp;tipo_dato=69&amp;title=General%20report&amp;modo_graph=bars&amp;sizex=420&amp;sizey=250&amp;MBottom=20&amp;legend=1" alt="" /> -->
+{else}
+  <!-- <img class="report" src="stats.php?server={$server}&amp;tipo_dato=3&amp;title={$server}&amp;modo_graph=bars" alt="" /> -->
+{/if} 
+
+<div id="main_right">
+  <!-- Last job Status -->
+  <div class="box">
+	<p class="title">Last 24 hours status</p>
+		{* {if $mode == "Lite" && $smarty.get.Full_popup != "yes"} *}
+		<table>
+			<tr>
+				<td class="label">Failed jobs</td> <td class="info">{$failed_jobs}</td>
+			</tr>
+			<tr>
+				<td class="label">Completed jobs</td> <td class="info">{$completed_jobs}</td>
+			</tr> 
+			<tr>
+				<td class="label">Elapsed time</td> <td class="info">{$elapsed_jobs}</td>
+			</tr>
+			<tr>
+				<td class="label">Transferred Bytes</td> <td class="info">{$bytes_totales}</td>
+			</tr> 
+		</table>
+
+  </div> <!-- end div box --> 
+  
+  <div class="box">
+	<p class="title">Job Status Report (last 24 hours)</p>
+	  <img src="{$graph_jobs}" alt="" />
+  </div> <!-- end div box -->
+  
   {include file="$last_report"} 	
 
 </div> <!-- end div main_right -->

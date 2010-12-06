@@ -1,24 +1,5 @@
 <!-- last_run_report.tpl -->
 
-<div class="box">
-	<p class="title">Last 24 hours status</p>
-{* {if $mode == "Lite" && $smarty.get.Full_popup != "yes"} *}
-<table>
- <tr>
- 	<td class="label">Failed jobs</td> <td class="info">{$failed_jobs}</td>
- </tr>
- <tr>
- 	<td class="label">Completed jobs</td> <td class="info">{$completed_jobs}</td>
- </tr> 
- <tr>
- 	<td class="label">Elapsed time</td> <td class="info">{$elapsed_jobs}</td>
- </tr>
- <tr>
- 	<td class="label">Transferred Bytes</td> <td class="info">{$bytes_totales}</td>
- </tr> 
-</table>
-
-</div> <!-- end div box --> 
 <!--
 {* {if $status != 0} *}
 <table>
@@ -121,7 +102,7 @@
 	  </tr>
 	 <tr> <td colspan="2">&nbsp;</td> </tr>
 	 <tr>
- 	   <td class="label">{t}Select a job:{/t}</td>
+ 	   <td class="label"><b>{t}Select a job:{/t}</b></td>
  	   <td align=center>
 	     <input type=hidden name="default" value="1"> 				
 		   <select name=server>
