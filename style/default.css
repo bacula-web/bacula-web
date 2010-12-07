@@ -161,6 +161,7 @@ a:hover { color: #736F6E }
  background-color: #E0E0E0;
 }
 
+.box table tr td.info a { font-size: 8pt;}
 table {
  width: 100%;
  margin: 0px;

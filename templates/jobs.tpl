@@ -25,16 +25,16 @@
   <!-- Failed jobs -->  
   <div class="box">
 	<p class="title">Last failed jobs (limited to 10)</p>
-	<table>
+	<table class="list">
 	  <tr>
-		<th>Status</th>
-		<th>Job ID</th>
-		<th>BackupJob</th>
-		<th>Start Time</th>
-		<th>End Time</th>
-		<th>Elapsed time</th>
-		<th>Level</th>
-		<th>Pool</th>
+		<td class="info">Status</td>
+		<td class="info">Job ID</td>
+		<td class="info">BackupJob</td>
+		<td class="info">Start Time</td>
+		<td class="info">End Time</td>
+		<td class="info">Elapsed time</td>
+		<td class="info">Level</td>
+		<td class="info">Pool</td>
 	  </tr>
 	  {foreach from=$failed_jobs item=job}
 	  <tr>
@@ -53,16 +53,16 @@
   <!-- Completed jobs --> 
   <div class="box">
 	<p class="title">Last completed jobs</p>
-	<table>
+	<table class="list">
 	  <tr>
-		<th>Status</th>
-		<th>Job ID</th>
-		<th>BackupJob</th>
-		<th>Start Time</th>
-		<th>End Time</th>
-		<th>Elapsed time</th>
-		<th>Level</th>
-		<th>Pool</th>
+		<td class="info">Status</td>
+		<td class="info">Job ID</td>
+		<td class="info">BackupJob</td>
+		<td class="info">Start Time</td>
+		<td class="info">End Time</td>
+		<td class="info">Elapsed time</td>
+		<td class="info">Level</td>
+		<td class="info">Pool</td>
 	  </tr>
 	  {foreach from=$completed_jobs item=job}
 	  <tr>
