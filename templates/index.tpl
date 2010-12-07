@@ -43,7 +43,8 @@
 	  <img src="{$graph_pools}" alt="" />
   </div> <!-- end div box -->
 
-  {include file=volumes.tpl}
+{* {include file=volumes.tpl}*}
+
 </div>
 
 <!-- To be removed -->

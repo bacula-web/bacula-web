@@ -74,7 +74,7 @@ a:hover { color: #736F6E }
  left:10px; 
  width: 500px; 
  border:none; 
- margin-top: 1em; 
+ margin-top: 0px; 
  background-color: #FFFFFF;
 }
 
@@ -83,7 +83,7 @@ a:hover { color: #736F6E }
  left:520px; 
  width: 500px; 
  border: none; 
- margin-top: 1em;
+ margin-top: 0px;
 }
 
 #main_center {
@@ -91,7 +91,7 @@ a:hover { color: #736F6E }
  left:10px; 
  width: 900px; 
  /*border: 1px solid red; */
- margin-top: 1em;
+ margin-top: 0px;
 }
 
 .box {

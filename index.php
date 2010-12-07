@@ -125,7 +125,7 @@ $smarty->assign('clientes_totales',$nb_clients["nb_client"] );
 $smarty->assign( 'total_name_jobs', $dbSql->Get_BackupJob_Names() );
 
 // Get volumes list (volumes.tpl)
-$smarty->assign('pools',$dbSql->GetVolumeList() );
+$smarty->assign('pools', $dbSql->GetVolumeList() );
 
 // Last 24 hours completed jobs number (last_run_report.tpl)
 $completed_jobs = $dbSql->GetLastJobs();
