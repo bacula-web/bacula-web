@@ -364,7 +364,7 @@ class Bweb extends DB {
 			if (PEAR::isError( $jobs ) ) {
 				die( "Unable to get last completed jobs status from catalog<br />" . $status->getMessage() );
 			}else {
-				return $jobs->fetchRow();
+				return $jobs->fetchRow( DB_FETCHMODE_ASSOC );
 			}
 		} // end function GetLastJobStatus()
 		
