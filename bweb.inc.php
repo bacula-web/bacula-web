@@ -254,13 +254,13 @@ class Bweb extends DB {
 				// Get the list of pools id
 				$query = "SELECT Pool.poolid, Pool.name FROM Pool ORDER BY Pool.poolid";
 				
-				$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
+				//$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
 				$pools = $this->db_link->query( $query );
 				
 				if( PEAR::isError( $pools ) )
 					die("Error: Failed to get pool list <br />SQL Query: $query<br />" . $pools->getMessage() );
 				
-				while( $pool = $pools->fetchRow() ) {
+				while( $pool = $pools->fetchRow( DB_FETCHMODE_ASSOC ) ) {
 					switch( $this->driver )
 					{
 						case 'mysql':
@@ -290,7 +290,7 @@ class Bweb extends DB {
 						break;
 					} // end switch
 					
-					$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
+					//$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
 					$medias = $this->db_link->query( $query );
 
 					if( PEAR::isError( $medias ) ) {
@@ -303,7 +303,7 @@ class Bweb extends DB {
 						{
 							$volumes[ $pool['name'] ] = array();
 						}
-						while( $media = $medias->fetchRow() ) {
+						while( $media = $medias->fetchRow( DB_FETCHMODE_ASSOC ) ) {
 							if( $debug ) {
 								var_dump( $media );
 							}
@@ -554,7 +554,7 @@ class Bweb extends DB {
 				if( PEAR::isError( $result ) ) {
 					die("Unable to get volume number from catalog");
 				}else{
-					$nb_vol = $result->fetchRow();
+					$nb_vol = $result->fetchRow(DB_FETCHMODE_ASSOC);
 					return array( $pool_name, $nb_vol['nb_vol'] );
 				}
 			}
