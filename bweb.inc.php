@@ -560,5 +560,29 @@ class Bweb extends DB {
 			}
 		}
 		
+		public function GetStoredBytes( $delay = LAST_DAY )
+		{
+			$query = "SELECT SUM(JobBytes) as stored_bytes FROM Job ";
+			
+			// Interval calculation
+			$end_date   = mktime();
+			$start_date = $end_date - $delay;
+			
+			$start_date = date( "Y-m-d H:m:s", $start_date );
+			$end_date   = date( "Y-m-d H:m:s", $end_date );
+			
+			if( $delay != ALL ) {
+				$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date'";
+			}
+			
+			$result = $this->db_link->query( $query );
+			
+			if( PEAR::isError( $result ) ) {
+				die( "Unable to get Job Bytes from catalog" );
+			}else{
+				return $result->fetchRow( DB_FETCHMODE_ASSOC );
+			}
+		}
+		
 } // end class Bweb
 ?>

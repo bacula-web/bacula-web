@@ -26,7 +26,7 @@
 	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clientes_totales}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Total bytes stored{/t}</td> <td class="info">{$bytes_stored}</td>
+		<td class="label">{t}Total bytes stored{/t}</td> <td class="info">{$stored_bytes}</td>
 	  </tr>
 	  <tr>
 		<td class="label">{t}Total files{/t}</td> <td class="info">{$files_totales} file(s)</td>

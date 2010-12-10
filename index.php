@@ -82,6 +82,7 @@ $query = "";
   }
   $totalfiles->free();
   
+  /*
   switch( $dbSql->driver )
   {
 	case 'mysql':
@@ -108,14 +109,18 @@ $query = "";
 	$smarty->assign('total_jobs', $tmp[1]);
 
 	$last24bytes->free();		
-  }
+  }*/
 		
 // Database size
 $smarty->assign('database_size', $dbSql->GetDbSize());
 
-// Total bytes stored
-$bytes_stored = $dbSql->db_link->getOne("select SUM(VolBytes) from Media") or die ("Failed to get Total stored Bytes from catalog");
-$smarty->assign('bytes_stored', $dbSql->human_file_size($bytes_stored) );
+// Overall stored bytes
+$result = $dbSql->GetStoredBytes( ALL );
+$smarty->assign('stored_bytes', $dbSql->human_file_size($result['stored_bytes']) );
+
+// Total stored bytes since last 24 hours
+$result = $dbSql->GetStoredBytes( LAST_DAY );
+$smarty->assign('bytes_totales', $dbSql->human_file_size($result['stored_bytes']) );
 
 // Number of clients
 $nb_clients = $dbSql->Get_Nb_Clients();
@@ -217,7 +222,6 @@ foreach( $pools as $pool ) {
 
 $graph->SetData( $data, 'pie', 'text-data-single' );
 $graph->SetGraphSize( 400, 230 );
-
 
 $graph->Render();
 $smarty->assign('graph_pools', $graph->Get_Image_file() );
