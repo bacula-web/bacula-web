@@ -584,5 +584,18 @@ class Bweb extends DB {
 			}
 		}
 		
+		public function GetStoredBytesByInterval( $start_date, $end_date )
+		{
+			$query = "SELECT SUM(JobBytes) as stored_bytes, EndTime FROM Job WHERE EndTime BETWEEN '$start_date' AND '$end_date'";
+			
+			$result = $this->db_link->query( $query );
+			
+			if( PEAR::isError( $result ) ) {
+				die( "Unable to get Job Bytes from catalog" );
+			}else{
+				$tmp = $result->fetchRow( DB_FETCHMODE_ASSOC );
+				return array( $tmp['EndTime'], $tmp['stored_bytes'] );
+			}
+		}
 } // end class Bweb
 ?>

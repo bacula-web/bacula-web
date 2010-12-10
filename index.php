@@ -220,11 +220,46 @@ foreach( $pools as $pool ) {
 	array_push( $data, $dbSql->GetPoolsStatistics( $pool ) );
 }
 
+echo '<pre>';
+var_dump( $data );
+echo '</pre>';
+
 $graph->SetData( $data, 'pie', 'text-data-single' );
 $graph->SetGraphSize( 400, 230 );
 
 $graph->Render();
 $smarty->assign('graph_pools', $graph->Get_Image_file() );
+
+// Stored Bytes last 7 days
+$data  = array();
+$graph = new BGraph( "graph2.png" );
+$days  = array();
+
+// Get the last 7 days interval (start and end)
+for( $c = 0 ; $c < 7 ; $c++ ) {
+	$today = ( mktime() - ($c * 86400) );
+	array_push( $days, array( 'start' => date( "Y-m-d 00:00:00", $today ), 'end' => date( "Y-m-d 23:59:00", $today ) ) );
+}
+
+$days_stored_bytes = array();
+
+foreach( $days as $day ) {
+  array_push( $days_stored_bytes, $dbSql->GetStoredBytesByInterval( $day['start'], $day['end'] ) );
+}
+
+//echo '<pre>';
+//var_dump( $days );
+//echo '</pre>';
+
+echo '<pre>';
+var_dump( $days_stored_bytes );
+echo '</pre>';
+
+$graph->SetData( $days_stored_bytes, 'bars', 'text-data' );
+$graph->SetGraphSize( 400, 230 );
+
+$graph->Render();
+$smarty->assign('graph_stored_bytes', $graph->Get_Image_file() );
 
 if ($_GET['Full_popup'] == "yes" || $_GET['pop_graph1'] == "yes" || $_GET['pop_graph2'] == "yes")
         $smarty->display('full_popup.tpl');
