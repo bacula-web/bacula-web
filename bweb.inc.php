@@ -593,8 +593,15 @@ class Bweb extends DB {
 			if( PEAR::isError( $result ) ) {
 				die( "Unable to get Job Bytes from catalog" );
 			}else{
+				$stored_bytes = 0;
 				$tmp = $result->fetchRow( DB_FETCHMODE_ASSOC );
-				return array( $tmp['EndTime'], $tmp['stored_bytes'] );
+				
+				$day = date( "d/m", strtotime($end_date) );
+				
+				if( isset( $tmp['stored_bytes'] ) )
+					$stored_bytes = $tmp['stored_bytes'];
+				
+				return array( $day, $stored_bytes );
 			}
 		}
 } // end class Bweb

@@ -41,6 +41,9 @@
   <div class="box">
 	<p class="title">Pools and volumes status</p>
 	  <img src="{$graph_pools}" alt="" />
+	  <br />
+	  <a href="pools.php" title="Show pools and volumes status">Pools and Volumes status</a>
+	  <br /> <br />
   </div> <!-- end div box -->
   
   <div class="box">
@@ -92,6 +95,9 @@
   <div class="box">
 	<p class="title">Job Status Report (last 24 hours)</p>
 	  <img src="{$graph_jobs}" alt="" />
+	<br />
+	<a href="jobs.php" title="Show last 24 hours jobs status">Show last jobs status</a>
+	<br /> <br />
   </div> <!-- end div box -->
   
 

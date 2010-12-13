@@ -84,12 +84,15 @@
  
  <form method="get" action="report.php" target="_blank">
    <table width="100%" cellpadding="0" cellspacing="3" border="0">
-	  <tr>
+
+<!-- 
+<tr>
 		<td colspan=2 align=center>
-			<!-- <a href="javascript:OpenWin('index.php?Full_popup=yes','490','350')">{t}Show details{/t}</a> -->
+			<a href="javascript:OpenWin('index.php?Full_popup=yes','490','350')">{t}Show details{/t}</a> 
 			<a href="jobs.php" title="Show last jobs details">Show last jobs status</a>
 		</td>
 	  </tr>   
+-->
 	  <tr>
 		<td colspan=2 align=center>
 		  <a href="javascript:OpenWin('index.php?pop_graph1=yes','600','400')">{t}Last month, bytes transferred{/t}</a>

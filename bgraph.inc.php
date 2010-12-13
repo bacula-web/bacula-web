@@ -98,16 +98,19 @@ class BGraph{
 		// Graph title
 		$this->plot->SetTitle( $this->title );
 
-		//$this->plot->SetLegend(array('Engineering', 'Manufacturing', 'Administration'));
 		// Setting up legends
-		$legends = array();
-		foreach( $this->data as $key => $legend ) {
-			$this->plot->SetLegend( implode(': ',$legend) );
+		if( $this->type != 'bars' ) {
+			$legends = array();
+			foreach( $this->data as $key => $legend ) {
+				$this->plot->SetLegend( implode(': ',$legend) );
+			}
 		}
 
 		# Turn off X tick labels and ticks because they don't apply here:
 		$this->plot->SetXTickLabelPos('none');
 		$this->plot->SetXTickPos('none');
+		$this->plot->SetPlotAreaWorld(NULL, 0, NULL, NULL);
+
 
 		$this->plot->DrawGraph();
 	} // end function Render()
