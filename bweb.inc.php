@@ -598,8 +598,11 @@ class Bweb extends DB {
 				
 				$day = date( "d/m", strtotime($end_date) );
 				
-				if( isset( $tmp['stored_bytes'] ) )
-					$stored_bytes = $tmp['stored_bytes'];
+				if( isset( $tmp['stored_bytes'] ) ) {
+					$hbytes = $this->human_file_size( $tmp['stored_bytes'], 3);
+					$hbytes = explode( " ", $hbytes );
+					$stored_bytes = $hbytes[0];
+				}
 				
 				return array( $day, $stored_bytes );
 			}
