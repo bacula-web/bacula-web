@@ -19,9 +19,9 @@ class BGraph{
 	function __construct( $filename = "graph.png" )
 	{
 		if( !empty($filename) )
-			$this->output_file = $filename;
+			$this->output_file = 'templates_c/' . $filename;
 		else
-			$this->output_file = 'graph.png';
+			$this->output_file = 'templates_c/graph.png';
 	}
 	
 	public function SetData( $data_in, $type, $data_type, $shading = 5 )
