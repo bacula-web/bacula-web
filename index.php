@@ -106,55 +106,6 @@ $smarty->assign( 'failed_jobs', $failed_jobs['failed_jobs'] );
 // Last 24 hours elapsed time (last_run_report.tpl)
 $smarty->assign( 'elapsed_jobs', $dbSql->Get_ElapsedTime_Job() );
 
-// last_run_report.tpl
-if ( $mode == "Lite" && $_GET['Full_popup'] == "yes" ) {
-/*
-        // Total Elapsed Time. Only for single Job.
-        if ( $dbSql->driver == "mysql" )
-          $ret = $dbSql->db_link->query("select UNIX_TIMESTAMP(EndTime)-UNIX_TIMESTAMP(StartTime) as elapsed from Job where EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-84600")
-                or die ("Error at row 110");
-        if ( $dbSql->driver == "pgsql" )
-          $ret = $dbSql->db_link->query("select EndTime - StartTime as elapsed from Job where EndTime <= NOW() and EndTime > NOW() - 84600 * interval '1 second'")
-                or die ("Error at row 113");
-        while ( $res = $ret->fetchRow() ) {
-                if ( $TotalElapsed < 1000000000 )                                                                               // Temporal "workaround" ;) Fix later
-                        $TotalElapsed += $res[0];
-        }
-        if ($TotalElapsed > 86400)                                                                                                      // More than 1 day!
-                $TotalElapsed = gmstrftime("%d days %H:%M:%S", $TotalElapsed);
-        else
-                $TotalElapsed = gmstrftime("%H:%M:%S", $TotalElapsed);
-        $smarty->assign('TotalElapsed',$TotalElapsed);
-        $ret->free();
-*/		
-		
-}
-else if ($mode == "Full" || $_GET['Full_popup'] == "yes" ){
-/*
-        $tmp1 = array();
-        if ( $dbSql->driver == "mysql")
-                $query = "select SEC_TO_TIME( UNIX_TIMESTAMP(Job.EndTime)-UNIX_TIMESTAMP(Job.StartTime) )
-                                as elapsed,Job.Name,Job.StartTime,Job.EndTime,Job.Level,Pool.Name,Job.JobStatus from Job 
-                                LEFT JOIN Pool ON Job.PoolId=Pool.PoolId where EndTime <= NOW() and UNIX_TIMESTAMP(EndTime) >UNIX_TIMESTAMP(NOW())-86400 
-                                order by elapsed ";                                                                                                     // Full report array
-        if ( $dbSql->driver == "pgsql")
-                $query = "select (Job.EndTime - Job.StartTime )
-                                as elapsed,Job.Name,Job.StartTime,Job.EndTime,Job.Level,Pool.Name,Job.JobStatus from Job
-                                LEFT JOIN Pool ON Job.PoolId=Pool.PoolId where EndTime <= NOW() and EndTime > NOW() - 86400 * interval '1 second'
-                                order by elapsed ";
-        $status = $dbSql->db_link->query($query)
-                or die ("Error: query at row 138");
-        while ( $tmp = $status->fetchRow() ) {
-                $tdate = explode (":",$tmp[0]);
-                if ( $tdate[0] > 300000 )                                                                                               // Temporal "workaround" ;) Fix later
-                        $tmp[0] = "00:00:00";
-                array_push($tmp1,$tmp);
-        }
-        
-        $smarty->assign('clients',$tmp1);
-*/
-}
-
 // Last 24 hours Job status graph
 $data   = array();  
 $status = array( 'completed', 'completed_errors', 'failed', 'waiting', 'created', 'running', 'error' );
@@ -165,9 +116,7 @@ foreach( $status as $job_status ) {
 
 $graph = new BGraph( "graph.png" );
 $graph->SetData( $data, 'pie', 'text-data-single' );
-//$graph->SetTitle("Overall jobs status");
 $graph->SetGraphSize( 400, 230 );
-//$graph->SetColors( array('green', 'yellow','red','blue','white','green','red') );
 
 $graph->Render();
 $smarty->assign('graph_jobs', $graph->Get_Image_file() );
