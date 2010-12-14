@@ -624,7 +624,7 @@ class Bweb extends DB {
 				$stored_bytes = 0;
 				$tmp = $result->fetchRow( DB_FETCHMODE_ASSOC );
 				
-				$day = date( "d/m", strtotime($end_date) );
+				$day = date( "D d", strtotime($end_date) );
 				
 				if( isset( $tmp['stored_bytes'] ) ) {
 					$hbytes = $this->human_file_size( $tmp['stored_bytes'], 3, 'GB');
