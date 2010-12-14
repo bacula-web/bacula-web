@@ -180,26 +180,39 @@ class Bweb extends DB {
                 $this->EndDate=$EndDateYear."-".$EndDateMonth."-".$EndDateDay." 23:59:59";  // last day full
                 
         }//end function
- 
-		function human_file_size( $size, $decimal = 2 )
+		
+		// Return humanized size with default unit of GB
+		// if auto provide for unit argument, automaticaly decide which unit
+		function human_file_size( $size, $decimal = 2, $unit = 'auto' )
 		{
 			$unit_id = 0;
 			$lisible = false;
 			$units = array('B','KB','MB','GB','TB');
 			$hsize = $size;
+
+			switch( $unit )
+			{
+				case 'auto';
+					while( !$lisible ) {
+						if ( $hsize >= 1024 ) {
+							$hsize    = $hsize / 1024;
+							$unit_id += 1;
+						}	 
+						else {
+							$lisible = true;
+						} 
+					}
+				break;
 				
-			while( !$lisible ) {
-				if ( $hsize >= 1024 ) {
-					$hsize    = $hsize / 1024;
-					$unit_id += 1;
-				} 
-				else {
-					$lisible = true;
-				} 
-			} 
-			// Format human size
+				default:
+					$p = array_search( $unit, $units);
+					$hsize = $hsize / pow(1024,$p);
+				break;
+			} // end switch
+			
 			$hsize = sprintf("%." . $decimal . "f", $hsize);
-			return $hsize . ' ' . $units[$unit_id];
+			$hsize = $hsize . ' ' . $units[$unit_id];
+			return $hsize;
 		} // end function
 
 		
@@ -599,7 +612,7 @@ class Bweb extends DB {
 				$day = date( "d/m", strtotime($end_date) );
 				
 				if( isset( $tmp['stored_bytes'] ) ) {
-					$hbytes = $this->human_file_size( $tmp['stored_bytes'], 3);
+					$hbytes = $this->human_file_size( $tmp['stored_bytes'], 3, 'GB');
 					$hbytes = explode( " ", $hbytes );
 					$stored_bytes = $hbytes[0];
 				}
