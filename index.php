@@ -70,47 +70,10 @@ if ( count($dbSql->dbs) >1 ) {
 $last24bytes = "";
 $query = "";
 
-/*$client = $dbSql->db_link->query("select count(*) from Client")
-        or die ("Error query: 1");*/
-  $totalfiles = $dbSql->db_link->query("select count(FilenameId) from Filename") or die ("Error query: 2");
+// Stored files number 
+$totalfiles = $dbSql->GetStoredFiles();
+$smarty->assign('files_totales',$totalfiles);
   
-  if ( PEAR::isError( $totalfiles ) ) {
-	  die( "Unable to get Total Files information from catalog" . $totalfiles->getMessage() );
-  }else {
-	$tmp = $totalfiles->fetchRow();
-	$smarty->assign('files_totales',$tmp[0]);
-  }
-  $totalfiles->free();
-  
-  /*
-  switch( $dbSql->driver )
-  {
-	case 'mysql':
-		$query = "select sum(JobBytes),count(*) from Job where Endtime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-86400";
-	break;
-	case 'pgsql':
-		$query = "select sum(JobBytes),count(*) from Job where Endtime <= NOW() and EndTime > NOW() - 86400 * interval '1 second'";
-	break;
-	default:
-		$query = "select sum(JobBytes),count(*) from Job where Endtime <= NOW() and UNIX_TIMESTAMP(EndTime) > UNIX_TIMESTAMP(NOW())-86400";
-	break;
-  }
-  
-  $last24bytes = $dbSql->db_link->query( $query ) or die ("Failed to get Total Job Bytes from catalog");
-	
-  if ( PEAR::isError( $last24bytes ) ) {
-	die( "Unable to get Total Job Bytes from catalog" . $last24bytes->getMessage() );
-  }else {
-	$tmp = $last24bytes->fetchRow();
-	//var_dump( $tmp );
-	// Transfered bytes since last 24 hours
-	$smarty->assign('bytes_totales', $dbSql->human_file_size( $tmp[0] ) );
-
-	$smarty->assign('total_jobs', $tmp[1]);
-
-	$last24bytes->free();		
-  }*/
-		
 // Database size
 $smarty->assign('database_size', $dbSql->GetDbSize());
 

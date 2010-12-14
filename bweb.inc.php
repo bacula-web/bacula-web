@@ -573,6 +573,21 @@ class Bweb extends DB {
 			}
 		}
 		
+		public function GetStoredFiles()
+		{
+			$nbfiles = 0;
+			$query = "SELECT COUNT(FilenameId) AS nbfiles FROM Filename";
+			$result = $this->db_link->query( $query );
+			
+			if( !PEAR::isError($result) ) {
+				$nbfiles = $result->fetchRow(DB_FETCHMODE_ASSOC);
+				$nbfiles = $nbfiles['nbfiles'];
+			}else{
+				die("Unable to get protected files from catalog");
+			}
+			return $nbfiles;
+		}
+		
 		public function GetStoredBytes( $delay = LAST_DAY )
 		{
 			$query = "SELECT SUM(JobBytes) as stored_bytes FROM Job ";
