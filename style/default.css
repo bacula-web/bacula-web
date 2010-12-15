@@ -94,6 +94,17 @@ a:hover { color: #736F6E }
  margin-top: 0px;
 }
 
+.listbox {
+ /*border: 1px solid red;*/
+ width: 100%;
+ height: auto;
+ overflow: auto;
+ margin: 0px;
+ padding: 0px;
+ text-align: center;
+ max-height: 420px;
+}
+
 .box {
  border: 1px solid black;
  width: 100%;
