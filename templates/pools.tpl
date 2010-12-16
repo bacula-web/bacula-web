@@ -26,26 +26,26 @@
 {foreach from=$pools item=pool key=pool_name}
 <div class="box">
 	<p class="title">{$pool_name}</p>
-	<table class="list">
-		<tr style="text-align: center;">
-			<td class="info">Name</td>
-			<td class="info">{t}Bytes{/t}</td>
-			<td class="info">{t}Media Type{/t}</td>
-			<td class="info">{t}Expire{/t}</td>
-			<td class="info">{t}Last written{/t}</td>
+	<table class="list" border="0">
+		<tr>
+			<td class="info" width="120px">Name</td>
+			<td class="info" width="120px">{t}Bytes{/t}</td>
+			<td class="info" width="120px">{t}Media Type{/t}</td>
+			<td class="info" width="140px">{t}Expire{/t}</td>
+			<td class="info" width="140px">{t}Last written{/t}</td>
 			<td class="info">{t}Status{/t}</td>
 		</tr>
 	</table>
 	
 	<div class="listbox">
-		<table class="list">
+		<table class="list" border="0">
 			{foreach from=$pool item=volume}
-			<tr style="text-align: center;">
-				<td>{$volume.volumename}</td>
-				<td>{$volume.volbytes}</td>
-				<td>{$volume.mediatype}</td>
-				<td>{$volume.expire}</td>
-				<td>{$volume.lastwritten}</td>
+			<tr>
+				<td width="120px">{$volume.volumename}</td>
+				<td width="120px">{$volume.volbytes}</td>
+				<td width="120px">{$volume.mediatype}</td>
+				<td width="140px">{$volume.expire}</td>
+				<td width="140px">{$volume.lastwritten}</td>
 				<td>{$volume.volstatus}</td>
 			</tr>
 			{foreachelse}
