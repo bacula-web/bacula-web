@@ -66,8 +66,8 @@
   $end_date   = mktime();
   $start_date = $end_date - LAST_DAY;
 			
-  $start_date = date( "Y-m-d H:m:s", $start_date );
-  $end_date   = date( "Y-m-d H:m:s", $end_date );
+  $start_date = date( "Y-m-d H:i:s", $start_date );
+  $end_date   = date( "Y-m-d H:i:s", $end_date );
   
   switch( $dbSql->driver ) 
   {
@@ -89,6 +89,7 @@
 		$query .= "ORDER BY Job.EndTime DESC";
 	break;
   }
+
   $jobsresult = $dbSql->db_link->query( $query );
   
   if( PEAR::isError( $jobsresult ) ) {

@@ -359,8 +359,8 @@ class Bweb extends DB {
 			$end_date   = mktime();
 			$start_date = $end_date - $delay;
 			
-			$start_date = date( "Y-m-d H:m:s", $start_date );
-			$end_date   = date( "Y-m-d H:m:s", $end_date );
+			$start_date = date( "Y-m-d H:i:s", $start_date );
+			$end_date   = date( "Y-m-d H:i:s", $end_date );
 			
 			switch( $this->driver )
 			{
@@ -389,8 +389,8 @@ class Bweb extends DB {
 			$end_date   = mktime();
 			$start_date = $end_date - $delay;
 			
-			$start_date = date( "Y-m-d H:m:s", $start_date );
-			$end_date   = date( "Y-m-d H:m:s", $end_date );
+			$start_date = date( "Y-m-d H:i:s", $start_date );
+			$end_date   = date( "Y-m-d H:i:s", $end_date );
 			
 			//echo "start date: $start_date <br />";
 			//echo "end date: $end_date <br />";
@@ -459,8 +459,8 @@ class Bweb extends DB {
 			$end_date   = mktime();
 			$start_date = $end_date - $delay;
 			
-			$start_date = date( "Y-m-d H:m:s", $start_date );
-			$end_date   = date( "Y-m-d H:m:s", $end_date );
+			$start_date = date( "Y-m-d H:i:s", $start_date );
+			$end_date   = date( "Y-m-d H:i:s", $end_date );
 			
 			switch( $this->driver )
 			{
@@ -504,8 +504,8 @@ class Bweb extends DB {
 			$end_date   = mktime();
 			$start_date = $end_date - $delay;
 			
-			$start_date = date( "Y-m-d H:m:s", $start_date );
-			$end_date   = date( "Y-m-d H:m:s", $end_date );
+			$start_date = date( "Y-m-d H:i:s", $start_date );
+			$end_date   = date( "Y-m-d H:i:s", $end_date );
 			
 			// Job status
 			switch( $type )
@@ -596,8 +596,8 @@ class Bweb extends DB {
 			$end_date   = mktime();
 			$start_date = $end_date - $delay;
 			
-			$start_date = date( "Y-m-d H:m:s", $start_date );
-			$end_date   = date( "Y-m-d H:m:s", $end_date );
+			$start_date = date( "Y-m-d H:i:s", $start_date );
+			$end_date   = date( "Y-m-d H:i:s", $end_date );
 			
 			if( $delay != ALL ) {
 				$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date'";
