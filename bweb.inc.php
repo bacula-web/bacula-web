@@ -480,9 +480,9 @@ class Bweb extends DB {
 				}
 				// Verify if elapsed time is more than 1 day
 				if ( $total_elapsed > 86400 ) {
-					return gmstrftime("%d days %H:%M:%S", $total_elapsed );
+					return date("%d days H:i:s", $total_elapsed );
 				}else {
-					return gmstrftime("%H:%M:%S", $total_elapsed );
+					return date("H:i:s", $total_elapsed );
 				}
 			}
 		}
