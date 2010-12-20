@@ -96,12 +96,16 @@ $smarty->assign( 'total_name_jobs', $dbSql->Get_BackupJob_Names() );
 $smarty->assign('pools', $dbSql->GetVolumeList() );
 
 // Last 24 hours completed jobs number (last_run_report.tpl)
-$completed_jobs = $dbSql->GetLastJobs();
-$smarty->assign( 'completed_jobs', $completed_jobs['completed_jobs'] );
+//$completed_jobs = $dbSql->GetLastJobs();
+//$smarty->assign( 'completed_jobs', $completed_jobs['completed_jobs'] );
+
+// Last 24 hours completed jobs number (last_run_report.tpl)
+$completed_jobs = $dbSql->CountLastJobs( LAST_DAY, 'completed' );
+$smarty->assign( 'completed_jobs', $completed_jobs['job_nb'] );
 
 // Last 24 hours failed jobs number (last_run_report.tpl)
-$failed_jobs = $dbSql->GetLastErrorJobs();
-$smarty->assign( 'failed_jobs', $failed_jobs['failed_jobs'] );
+$failed_jobs = $dbSql->CountLastJobs( LAST_DAY, 'failed' );
+$smarty->assign( 'failed_jobs', $failed_jobs['job_nb'] );
 
 // Last 24 hours elapsed time (last_run_report.tpl)
 $smarty->assign( 'elapsed_jobs', $dbSql->Get_ElapsedTime_Job() );
