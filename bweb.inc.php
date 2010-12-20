@@ -349,69 +349,38 @@ class Bweb extends DB {
 				return $volumes;
         } // end function GetVolumeList()
 		
-		public function GetLastJobs( $delay = LAST_DAY )
+		public function CountLastJobs( $delay = LAST_DAY, $status )
 		{
-			$query 		= "";
-			$start_date = "";
-			$end_date 	= "";
+			$query = "SELECT COUNT(JobId) AS job_nb FROM Job ";
 			
-			// Interval calculation
-			$end_date   = mktime();
-			$start_date = $end_date - $delay;
+			// Interval condition for SQL query
+			$end_date    = mktime();
+			$start_date  = $end_date - $delay;
 			
-			$start_date = date( "Y-m-d H:i:s", $start_date );
-			$end_date   = date( "Y-m-d H:i:s", $end_date );
+			$start_date  = date( "Y-m-d H:i:s", $start_date );
+			$end_date    = date( "Y-m-d H:i:s", $end_date );
 			
-			switch( $this->driver )
+			$query      .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date' ";
+			
+			// Job Status for SQL query
+			switch( $status )
 			{
-				case 'mysql':
-					$query  = 'SELECT COUNT(JobId) AS completed_jobs ';
-					$query .= 'FROM Job ';
-					$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date' ";
-					$query .= "AND JobStatus = 'T'";
+				case 'completed':
+					$query .= "AND JobStatus = 'T' ";
 				break;
-			}
-		
+				case 'failed':
+					$query .= "AND JobStatus = 'f' ";
+				break;
+			} // end switch
+			
 			$jobs = $this->db_link->query( $query );
 		
 			if (PEAR::isError( $jobs ) ) {
-				die( "Unable to get last completed jobs status from catalog<br />" . $status->getMessage() );
+				die( "Unable to get last $status jobs number from catalog <br />" . $status->getMessage() );
 			}else {
 				return $jobs->fetchRow( DB_FETCHMODE_ASSOC );
 			}
-		} // end function GetLastJobStatus()
-		
-		public function GetLastErrorJobs( $delay = LAST_DAY )
-		{
-			$query 		= "";
-			
-			// Interval calculation
-			$end_date   = mktime();
-			$start_date = $end_date - $delay;
-			
-			$start_date = date( "Y-m-d H:i:s", $start_date );
-			$end_date   = date( "Y-m-d H:i:s", $end_date );
-			
-			//echo "start date: $start_date <br />";
-			//echo "end date: $end_date <br />";
-			
-			switch( $this->driver )
-			{
-				default:
-					$query  = 'SELECT COUNT(JobId) AS failed_jobs ';
-					$query .= 'FROM Job ';
-					$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date' ";
-					$query .= "AND JobStatus = 'f'";
-				break;
-			}				
-			$result = $this->db_link->query( $query );
-			
-			if (PEAR::isError( $result ) ) {
-				die( "Unable to get last failed jobs status from catalog<br />query = $query <br />" . $result->getMessage() );
-			}else {
-				return $result->fetchRow( DB_FETCHMODE_ASSOC );
-			} // end if else
-		} // end function GetLastErrorJobs
+		}
 		
 		// Return the list of Pools in a array
 		public function Get_Pools_List()
