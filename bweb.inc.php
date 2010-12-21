@@ -349,7 +349,7 @@ class Bweb extends DB {
 				return $volumes;
         } // end function GetVolumeList()
 		
-		public function CountLastJobs( $delay = LAST_DAY, $status )
+		public function CountJobs( $delay = LAST_DAY, $status )
 		{
 			$query = "SELECT COUNT(JobId) AS job_nb FROM Job ";
 			
