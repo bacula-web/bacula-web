@@ -114,7 +114,7 @@ a:hover { color: #736F6E }
 }
 
 .box p.title {
- height: auto;
+ /*height: 25px;*/
  text-align: center;
  vertical-align: middle;
  font-size: 11pt;
@@ -122,11 +122,16 @@ a:hover { color: #736F6E }
  background-color: #888888;
  color: white;
  font-weight: bold;
- padding: 3px;
+ padding: 5px;
  margin: 0px;
- 
- /*padding-top: 5px;
- padding-bottom: 5px;*/
+}
+
+.box p.title a {
+ color: #FFFFFF;
+ text-decoration: none;
+ font-size: 9pt;
+ float: right;
+ vertical-align: middle;
 }
 
 .box table.list

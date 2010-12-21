@@ -39,11 +39,11 @@
 
   <!-- Pools and Volumes Status -->
   <div class="box">
-	<p class="title">Pools and volumes status</p>
+	<p class="title">
+	Pools and volumes status
+	<a href="pools.php" title="Show pools and volumes report">View report</a>
+	</p>
 	  <img src="{$graph_pools}" alt="" />
-	  <br />
-	  <a href="pools.php" title="Show pools and volumes status">Pools and Volumes status</a>
-	  <br /> <br />
   </div> <!-- end div box -->
   
   <div class="box">
@@ -93,11 +93,11 @@
   </div> <!-- end div box --> 
   
   <div class="box">
-	<p class="title">Job Status Report (last 24 hours)</p>
+	<p class="title">
+	Job Status Report
+	<a href="jobs.php" title="Show last 24 hours jobs status">View report</a>
+	</p>
 	  <img src="{$graph_jobs}" alt="" />
-	<br />
-	<a href="jobs.php" title="Show last 24 hours jobs status">Show last jobs status</a>
-	<br /> <br />
   </div> <!-- end div box -->
   
 
