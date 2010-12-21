@@ -137,19 +137,8 @@ a:hover { color: #736F6E }
 .box table.list
 {
  border-collapse: collapse;
- /*width: 100%;*/
+ /width: 100%;
  margin: 0px;
-}
-
-.box table
-{
- border-collapse: separate;
- margin: 0px;
-}
-
-.box table th {
- font-size: 10pt;
- background-color: #CACACA;
 }
 
 .box table tr td

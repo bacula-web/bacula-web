@@ -72,6 +72,23 @@
   $query .= "FROM Job ";
   $query .= "LEFT JOIN Pool ON Job.PoolId=Pool.PoolId ";
   $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
+  
+  // Filter by status
+  if( isset( $_POST['status'] ) ) {
+	switch( $_POST['status'] )
+	{
+		case 'completed':
+			$query .= "WHERE Job.JobStatus = 'T' ";
+		break;
+		case 'failed':
+			$query .= "WHERE Job.JobStatus = 'f' ";
+		break;
+		case 'canceled':
+			$query .= "WHERE Job.JobStatus = 'A' ";
+		break;
+	}
+  }
+  
   $query .= "ORDER BY Job.EndTime DESC ";
   
   // Determine how many jobs to display
@@ -81,6 +98,8 @@
 	$query .= "LIMIT 20 ";
   
   $jobsresult = $dbSql->db_link->query( $query );
+  
+  //var_dump( $_POST );
   
   if( PEAR::isError( $jobsresult ) ) {
 	  echo "SQL query = $query <br />";

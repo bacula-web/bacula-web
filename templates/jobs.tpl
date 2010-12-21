@@ -78,19 +78,33 @@
 		<td width="50" class="{$job.Job_classe}">{$job.Level}</td>
 		<td width="80" class="{$job.Job_classe}">{$job.Pool_name}</td>
 	  </tr>
-	{/foreach}
+	  {/foreach}
 	</table>
 	</div> <!-- end div class=listbox -->
+	
 	<form action="jobs.php" method="post">
-	<table>
+	<table class="list" border="0">
 	  <tr>
-		<td class="info" colspan="8">
-			Limit to
+		<td class="info" colspan="5" style="text-align: right;">
+			Jobs / Page
 			<select name="limit">
 				<option value="20">20
 				<option value="40">40
 				<option value="60">60
+				<option value="80">80
+				<option value="100">100
 			</select>
+		</td>
+		<td class="info" width="200">
+			Job Status
+			<select name="status">
+				<option value="Any">Any
+				<option value="completed">Completed
+				<option value="failed">Failed
+				<option value="canceled">Canceled
+			</select>
+		</td>
+		<td class="info" width="120">
 			<input type="submit" value="Update" />
 		</td>
 	  </tr>
