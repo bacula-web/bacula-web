@@ -14,13 +14,6 @@
 | GNU General Public License for more details.                            |
 +-------------------------------------------------------------------------+ 
 */
-// Last Err: 11
-define('CONFIG_DIR', "configs");
-define('CONFIG_FILE', "bacula.conf");
-define('BACULA_TYPE_BYTES_FILES', 1);
-define('BACULA_TYPE_FILES_JOBID', 2);
-define('BACULA_TYPE_BYTES_ENDTIME_ALLJOBS', 69);
-
 require_once "paths.php";
 require_once "DB.php";                                                                                                                  // Pear DB
 require_once "config.inc.php";
