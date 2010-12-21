@@ -47,33 +47,55 @@
 		{/foreach}
 	</table>
   </div> <!-- end div box -->
-  <!-- Failed jobs -->  
+
+  <!-- Last jobs -->  
   <div class="box">
 	<p class="title">Last jobs</p>
-	<table class="list">
+	<table class="list" border="0">
 	  <tr>
-		<td class="info">Status</td>
-		<td class="info">Job ID</td>
-		<td class="info">BackupJob</td>
-		<td class="info">Start Time</td>
-		<td class="info">End Time</td>
-		<td class="info">Elapsed time</td>
-		<td class="info">Level</td>
-		<td class="info">Pool</td>
+		<td width="50" class="info">Status</td>
+		<td width="50" class="info">Job ID</td>
+		<td width="70" class="info">BackupJob</td>
+		<td width="80" class="info">Start Time</td>
+		<td width="80" class="info">End Time</td>
+		<td width="70" class="info">Elapsed time</td>
+		<td width="50" class="info">Level</td>
+		<td width="80" class="info">Pool</td>
 	  </tr>
+	</table>
+	<div class="listbox">
+	<table class="list" border="0">
 	  {foreach from=$last_jobs item=job}
 	  <tr>
-		<td> <img width="20" src="style/images/{$job.Job_icon}" alt="" title="{$job.JobStatusLong}" /> </td>
-		<td>{$job.JobId}</td>
-		<td>{$job.Job_name}</td>
-		<td>{$job.StartTime}</td>
-		<td>{$job.EndTime}</td>
-		<td>{$job.elapsed}</td>
-		<td align="center">{$job.Level}</td>
-		<td>{$job.Pool_name}</td>
+		<td width="50" class="{$job.Job_classe}">
+			<img width="20" src="style/images/{$job.Job_icon}" alt="" title="{$job.JobStatusLong}" />
+		</td>
+		<td width="50" class="{$job.Job_classe}">{$job.JobId}</td>
+		<td width="70" class="{$job.Job_classe}">{$job.Job_name}</td>
+		<td width="80" class="{$job.Job_classe}">{$job.StartTime}</td>
+		<td width="80" class="{$job.Job_classe}">{$job.EndTime}</td>
+		<td width="70" class="{$job.Job_classe}">{$job.elapsed}</td>
+		<td width="50" class="{$job.Job_classe}">{$job.Level}</td>
+		<td width="80" class="{$job.Job_classe}">{$job.Pool_name}</td>
 	  </tr>
-	  {/foreach}
+	{/foreach}
 	</table>
+	</div> <!-- end div class=listbox -->
+	<form action="jobs.php" method="post">
+	<table>
+	  <tr>
+		<td class="info" colspan="8">
+			Limit to
+			<select name="limit">
+				<option value="20">20
+				<option value="40">40
+				<option value="60">60
+			</select>
+			<input type="submit" value="Update" />
+		</td>
+	  </tr>
+	</table>
+	</form>
   </div>
 
 </div>

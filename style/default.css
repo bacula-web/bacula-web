@@ -89,7 +89,7 @@ a:hover { color: #736F6E }
 #main_center {
  position: absolute; 
  left:10px; 
- width: 900px; 
+ width: 1000px; 
  /*border: 1px solid red; */
  margin-top: 0px;
 }
@@ -137,7 +137,7 @@ a:hover { color: #736F6E }
 .box table.list
 {
  border-collapse: collapse;
- width: 100%;
+ /*width: 100%;*/
  margin: 0px;
 }
 
@@ -154,7 +154,7 @@ a:hover { color: #736F6E }
 
 .box table tr td
 {
- padding: 2px;
+ padding: 5px;
  font-size: 8pt;
  height: 20px;
 }
@@ -170,18 +170,22 @@ a:hover { color: #736F6E }
  margin: 2px;
 }
 
-.box table tr td.info
+.box table td.info
 {
  text-align: center; 
  vertical-align: middle;
- /* padding-right: 8em; */
+ padding-right: 8em;
  font-weight: bold;
  background-color: #E0E0E0;
  height: auto;
  padding: 5px;
+ margin:0px;
 }
 
 .box table tr td.info a { font-size: 8pt;}
+
+.odd { background-color: #DCDCDC; }
+
 table {
  width: 100%;
  margin: 0px;
@@ -291,9 +295,7 @@ td,input,select {
  font-size : 13px; 
  color: red;
 }
-.header { 
- font-size : 18px; 
-}
+
 .size_small { 
  font-size: 9px; 
 }

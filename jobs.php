@@ -73,7 +73,12 @@
   $query .= "LEFT JOIN Pool ON Job.PoolId=Pool.PoolId ";
   $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
   $query .= "ORDER BY Job.EndTime DESC ";
-  $query .= "LIMIT 20";
+  
+  // Determine how many jobs to display
+  if( isset($_POST['limit']) )
+	$query .= "LIMIT " . $_POST['limit'];
+  else
+	$query .= "LIMIT 20 ";
   
   $jobsresult = $dbSql->db_link->query( $query );
   
@@ -82,10 +87,15 @@
 	  die("Unable to get last failed jobs from catalog" . $jobsresult->getMessage() );
   }else {
 	  while( $job = $jobsresult->fetchRow( DB_FETCHMODE_ASSOC ) ) {
+		// Determine icon for job
 		if( $job['JobStatus'] == 'T' )
 			$job['Job_icon'] = "s_ok.gif";
 		else
 			$job['Job_icon'] = "s_error.gif";
+		
+		// Odd or even row
+		if( count($last_jobs) % 2)
+			$job['Job_classe'] = 'odd';
 			
 		array_push( $last_jobs, $job);
 	  }
