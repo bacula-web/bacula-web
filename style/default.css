@@ -156,6 +156,7 @@ a:hover { color: #736F6E }
 {
  padding: 2px;
  font-size: 8pt;
+ height: 20px;
 }
 
 .box table tr td.label
@@ -165,16 +166,19 @@ a:hover { color: #736F6E }
  /*width: 150px;*/
  text-align: left;
  padding-left: 15px;
- padding: 3px;
+ padding: 5px;
  margin: 2px;
 }
 
 .box table tr td.info
 {
  text-align: center; 
+ vertical-align: middle;
  /* padding-right: 8em; */
  font-weight: bold;
  background-color: #E0E0E0;
+ height: auto;
+ padding: 5px;
 }
 
 .box table tr td.info a { font-size: 8pt;}

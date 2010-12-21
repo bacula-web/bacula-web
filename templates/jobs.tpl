@@ -22,9 +22,34 @@
 </div>
 
 <div id="main_center">
+  <div class="box">
+	<p class="title">Running jobs</p>
+	<table class="list">
+		<tr>
+			<td class="info">Status</td>
+			<td class="info">Job ID</td>
+			<td class="info">BackupJob</td>
+			<td class="info">Start Time</td>
+			<td class="info">Elapsed time</td>
+			<td class="info">Level</td>
+			<td class="info">Pool</td>
+		</tr>
+		{foreach from=$running_jobs item=job}
+		<tr>
+			<td>{$job.JobStatusLong}</td>
+			<td>{$job.JobId}</td>
+			<td>{$job.Name}</td>
+			<td>{$job.StartTime}</td>
+			<td>{$job.elapsed_time}</td>
+			<td>{$job.Level}</td>
+			<td>{$job.Pool_name}</td>
+		</tr>
+		{/foreach}
+	</table>
+  </div> <!-- end div box -->
   <!-- Failed jobs -->  
   <div class="box">
-	<p class="title">Last failed jobs (limited to 10)</p>
+	<p class="title">Last jobs</p>
 	<table class="list">
 	  <tr>
 		<td class="info">Status</td>
@@ -36,48 +61,21 @@
 		<td class="info">Level</td>
 		<td class="info">Pool</td>
 	  </tr>
-	  {foreach from=$failed_jobs item=job}
+	  {foreach from=$last_jobs item=job}
 	  <tr>
-		<td> <img width="20" src="style/images/s_error.gif" alt=""/> </td>
+		<td> <img width="20" src="style/images/{$job.Job_icon}" alt="" title="{$job.JobStatusLong}" /> </td>
 		<td>{$job.JobId}</td>
-		<td>{$job.job_name}</td>
+		<td>{$job.Job_name}</td>
 		<td>{$job.StartTime}</td>
 		<td>{$job.EndTime}</td>
 		<td>{$job.elapsed}</td>
 		<td align="center">{$job.Level}</td>
-		<td>{$job.pool_name}</td>
+		<td>{$job.Pool_name}</td>
 	  </tr>
 	  {/foreach}
 	</table>
   </div>
-  <!-- Completed jobs --> 
-  <div class="box">
-	<p class="title">Last completed jobs</p>
-	<table class="list">
-	  <tr>
-		<td class="info">Status</td>
-		<td class="info">Job ID</td>
-		<td class="info">BackupJob</td>
-		<td class="info">Start Time</td>
-		<td class="info">End Time</td>
-		<td class="info">Elapsed time</td>
-		<td class="info">Level</td>
-		<td class="info">Pool</td>
-	  </tr>
-	  {foreach from=$completed_jobs item=job}
-	  <tr>
-		<td> <img width="20px" src="style/images/s_ok.gif" alt=""/> </td>
-		<td>{$job.JobId}</td>
-		<td>{$job.job_name}</td>
-		<td>{$job.StartTime}</td>
-		<td>{$job.EndTime}</td>
-		<td>{$job.elapsed}</td>
-		<td align="center">{$job.Level}</td>
-		<td>{$job.pool_name}</td>
-	  </tr>
-	  {/foreach}
-	</table>	
-  </div>
+
 </div>
 
 {include file="footer.tpl"}
