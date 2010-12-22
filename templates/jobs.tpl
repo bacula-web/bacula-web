@@ -85,6 +85,9 @@
 	<form action="jobs.php" method="post">
 	<table class="list" border="0">
 	  <tr>
+	    <td class="info" width="200">
+			{$total_jobs} jobs found
+		</td>
 		<td class="info" colspan="5" style="text-align: right;">
 			Jobs / Page
 			<select name="limit">

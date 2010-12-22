@@ -121,6 +121,13 @@
   }
   $smarty->assign( 'last_jobs', $last_jobs );
   
+  if( isset( $_POST['status'] ) )
+	$total_jobs = $dbSql->CountJobs( ALL, $_POST['status'] );
+  else
+	$total_jobs = $dbSql->CountJobs( ALL );
+  
+  $smarty->assign( 'total_jobs', $total_jobs );
+  
   // Process and display the template 
   $smarty->display('jobs.tpl');
 ?>

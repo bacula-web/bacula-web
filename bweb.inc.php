@@ -342,36 +342,52 @@ class Bweb extends DB {
 				return $volumes;
         } // end function GetVolumeList()
 		
-		public function CountJobs( $delay = LAST_DAY, $status )
+		public function CountJobs( $delay = LAST_DAY, $status = 'any' )
 		{
-			$query = "SELECT COUNT(JobId) AS job_nb FROM Job ";
+			$query 			= "SELECT COUNT(JobId) AS job_nb FROM Job ";
+			$where_delay 	= "";
+			$where_status	= "";
 			
 			// Interval condition for SQL query
-			$end_date    = mktime();
-			$start_date  = $end_date - $delay;
+			if( $delay != ALL ) {
+				$end_date    = mktime();
+				$start_date  = $end_date - $delay;
 			
-			$start_date  = date( "Y-m-d H:i:s", $start_date );
-			$end_date    = date( "Y-m-d H:i:s", $end_date );
+				$start_date  = date( "Y-m-d H:i:s", $start_date );
+				$end_date    = date( "Y-m-d H:i:s", $end_date );
 			
-			$query      .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date' ";
+				$where_delay = "WHERE EndTime BETWEEN '$start_date' AND '$end_date' ";
+			}
 			
-			// Job Status for SQL query
-			switch( $status )
-			{
-				case 'completed':
-					$query .= "AND JobStatus = 'T' ";
-				break;
-				case 'failed':
-					$query .= "AND JobStatus = 'f' ";
-				break;
-			} // end switch
+			if( $status != 'any' ) {
+				switch( $status )
+				{
+					case 'completed':
+						$where_status = "JobStatus = 'T' ";
+					break;
+					case 'failed':
+						$where_status = "JobStatus = 'f' ";
+					break;
+					case 'canceled':
+						$where_status = "JobStatus = 'A' ";
+					break;
+				} // end switch
+			}
 			
+			if( !empty($where_delay) )
+				$query = $query . $where_delay . 'AND ' . $where_status;
+			else {
+				if( !empty($where_status) )
+					$query = $query . 'WHERE ' . $where_status;
+			}
+				
 			$jobs = $this->db_link->query( $query );
 		
 			if (PEAR::isError( $jobs ) ) {
-				die( "Unable to get last $status jobs number from catalog <br />" . $status->getMessage() );
+				die( "Unable to get last $status jobs number from catalog <br />" . $jobs->getMessage() );
 			}else {
-				return $jobs->fetchRow( DB_FETCHMODE_ASSOC );
+				$jobs = $jobs->fetchRow( DB_FETCHMODE_ASSOC ); 
+				return $jobs['job_nb'];
 			}
 		}
 		
