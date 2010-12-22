@@ -51,6 +51,42 @@
   <!-- Last jobs -->  
   <div class="box">
 	<p class="title">Last jobs</p>
+	<!-- Filter jobs -->
+	<form action="jobs.php" method="post">
+	<table class="list" border="0">
+	  <tr>
+	    <td class="info" width="200">
+			{$total_jobs} jobs found
+		</td>
+		<td class="info" colspan="5" style="text-align: right;">
+			Jobs / Page
+			<select name="limit">
+				<option value="20">20
+				<option value="40">40
+				<option value="60">60
+				<option value="80">80
+				<option value="100">100
+			</select>
+		</td>
+		<td class="info" width="200">
+			Job Status
+			<select name="status">
+				<option value="Any">Any
+				<option value="completed">Completed
+				<option value="failed">Failed
+				<option value="canceled">Canceled
+			</select>
+		</td>
+		<td class="info" width="120">
+			<input type="submit" value="Update" />
+		</td>
+	  </tr>
+	  <tr>
+		<td colspan="8">&nbsp;</td>
+	  </tr>
+	</table>
+	</form>
+	
 	<table class="list" border="0">
 	  <tr>
 		<td width="50" class="info">Status</td>
@@ -81,38 +117,6 @@
 	  {/foreach}
 	</table>
 	</div> <!-- end div class=listbox -->
-	
-	<form action="jobs.php" method="post">
-	<table class="list" border="0">
-	  <tr>
-	    <td class="info" width="200">
-			{$total_jobs} jobs found
-		</td>
-		<td class="info" colspan="5" style="text-align: right;">
-			Jobs / Page
-			<select name="limit">
-				<option value="20">20
-				<option value="40">40
-				<option value="60">60
-				<option value="80">80
-				<option value="100">100
-			</select>
-		</td>
-		<td class="info" width="200">
-			Job Status
-			<select name="status">
-				<option value="Any">Any
-				<option value="completed">Completed
-				<option value="failed">Failed
-				<option value="canceled">Canceled
-			</select>
-		</td>
-		<td class="info" width="120">
-			<input type="submit" value="Update" />
-		</td>
-	  </tr>
-	</table>
-	</form>
   </div>
 
 </div>
