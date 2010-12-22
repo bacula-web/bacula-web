@@ -48,6 +48,10 @@
 		}
 		$job['elapsed_time'] = $elapsed;
 		
+		// Odd or even row
+		if( count($running_jobs) % 2)
+			$job['Job_classe'] = 'odd';
+		
 		array_push( $running_jobs, $job);
 	  }
   }

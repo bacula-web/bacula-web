@@ -36,13 +36,13 @@
 		</tr>
 		{foreach from=$running_jobs item=job}
 		<tr>
-			<td>{$job.JobStatusLong}</td>
-			<td>{$job.JobId}</td>
-			<td>{$job.Name}</td>
-			<td>{$job.StartTime}</td>
-			<td>{$job.elapsed_time}</td>
-			<td>{$job.Level}</td>
-			<td>{$job.Pool_name}</td>
+			<td class="{$job.Job_classe}">{$job.JobStatusLong}</td>
+			<td class="{$job.Job_classe}">{$job.JobId}</td>
+			<td class="{$job.Job_classe}">{$job.Name}</td>
+			<td class="{$job.Job_classe}">{$job.StartTime}</td>
+			<td class="{$job.Job_classe}">{$job.elapsed_time}</td>
+			<td class="{$job.Job_classe}">{$job.Level}</td>
+			<td class="{$job.Job_classe}">{$job.Pool_name}</td>
 		</tr>
 		{/foreach}
 	</table>
