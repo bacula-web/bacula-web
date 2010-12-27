@@ -27,6 +27,7 @@
   $query .= "JOIN Status ON Job.JobStatus = Status.JobStatus ";
   $query .= "LEFT JOIN Pool ON Job.PoolId = Pool.PoolId ";
   $query .= "WHERE Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','C','R')";
+  $query .= "ORDER BY JobId";
   
   $jobsresult = $dbSql->db_link->query( $query );
   
