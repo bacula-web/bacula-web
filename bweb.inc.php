@@ -492,9 +492,9 @@ class Bweb extends DB {
 					$where = "AND JobStatus = 'T' ";
 					$label = "Completed";
 				break;
-				case 'completed_errors':
-					$where = "AND JobStatus = 'E' ";
-					$label = "Completed with errors";
+				case 'terminated_errors':
+					$where = $interval_where . "JobStatus = 'E' ";
+					$label = "Terminated with errors";
 				break;
 				case 'failed':
 					$where = "AND JobStatus = 'f' ";

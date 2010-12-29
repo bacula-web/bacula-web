@@ -110,7 +110,7 @@ $smarty->assign( 'elapsed_jobs', $dbSql->Get_ElapsedTime_Job() );
 
 // Last 24 hours Job status graph
 $data   = array();  
-$status = array( 'completed', 'completed_errors', 'failed', 'waiting', 'created', 'running', 'error' );
+$status = array( 'completed', 'terminated_errors', 'failed', 'waiting', 'created', 'running', 'error' );
 
 foreach( $status as $job_status ) {
 	array_push( $data, $dbSql->GetJobsStatistics( $job_status ) );
