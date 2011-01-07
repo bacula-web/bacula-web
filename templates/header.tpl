@@ -5,14 +5,9 @@
 
 <div id="subheader">
  <ul>
-	<li> 
-		<a href="index.php">Refresh</a>
-	</li>
-	<li>
-		<a href="http://bacula-web.dflc.ch/bugs" target="_blank">Bugs</a
-	<li>
-		<a href="http://bacula-web.dflc.ch" target="_blank">About</a>
-	</li>
+	<li> <a href="http://bacula-web.dflc.ch/bugs" target="_blank">Bugs</a> </li>
+	<li><a href="http://bacula-web.dflc.ch" target="_blank">About</a> </li>
+
 	<!-- Condifitional catalog selection if more than 1 catalog is defined in the configuration -->
 	{if $dbs > 1}
 	<li>

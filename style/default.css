@@ -137,7 +137,7 @@ a:hover { color: #736F6E }
 .box table.list
 {
  border-collapse: collapse;
- /width: 100%;
+ width: 100%;
  margin: 0px;
 }
 
