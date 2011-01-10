@@ -110,7 +110,7 @@
 		<td width="70" class="{$job.Job_classe}">{$job.Job_name}</td>
 		<td width="80" class="{$job.Job_classe}">{$job.StartTime}</td>
 		<td width="80" class="{$job.Job_classe}">{$job.EndTime}</td>
-		<td width="70" class="{$job.Job_classe}">{$job.elapsed}</td>
+		<td width="70" class="{$job.Job_classe}">{$job.elapsed_time}</td>
 		<td width="50" class="{$job.Job_classe}">{$job.Level}</td>
 		<td width="80" class="{$job.Job_classe}">{$job.Pool_name}</td>
 	  </tr>

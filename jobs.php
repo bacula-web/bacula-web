@@ -22,7 +22,7 @@
   // Running jobs
   $running_jobs = array();
   
-  $query  = "SELECT Job.JobId, Job.JobStatus, Status.JobStatusLong, Job.Name, Job.StartTime, Job.Level, Pool.Name AS Pool_name ";
+  $query  = "SELECT Job.JobId, Job.JobStatus, Status.JobStatusLong, Job.Name, Job.StartTime, Job.EndTime, Job.Level, Pool.Name AS Pool_name ";
   $query .= "FROM Job ";
   $query .= "JOIN Status ON Job.JobStatus = Status.JobStatus ";
   $query .= "LEFT JOIN Pool ON Job.PoolId = Pool.PoolId ";
@@ -36,8 +36,10 @@
 	  die("Unable to get last failed jobs from catalog" . $jobsresult->getMessage() );
   }else {
 	  while( $job = $jobsresult->fetchRow( DB_FETCHMODE_ASSOC ) ) {
+	
 		$elapsed = 'N/A';
 		
+		/*
 		if( $job['JobStatus'] == 'R') {
 			$elapsed = mktime() - strtotime($job['StartTime']);
 			if( $elapsed > 3600 )
@@ -47,8 +49,13 @@
 			else
 				$elapsed = date( "i:s", $elapsed );
 		}
-		$job['elapsed_time'] = $elapsed;
-		
+		*/
+		// Elapsed time for this job
+		if( $job['JobStatus'] == 'R' )
+			$job['elapsed_time'] = $dbSql->Get_ElapsedTime( strtotime($job['StartTime']), time() );
+		else
+			$job['elapsed_time'] = 'N/A';
+			
 		// Odd or even row
 		if( count($running_jobs) % 2)
 			$job['Job_classe'] = 'odd';
@@ -63,17 +70,7 @@
   $query 	   = "";
   $last_jobs = array();
   
-  switch( $dbSql->driver ) 
-  {
-	case 'mysql':
-		$query  = "SELECT SEC_TO_TIME( UNIX_TIMESTAMP(Job.EndTime)-UNIX_TIMESTAMP(Job.StartTime) ) AS elapsed, ";
-	break;
-	case 'pgsql':
-		$query  = "SELECT (Job.EndTime - Job.StartTime ) AS elapsed, "; 
-	break;
-  }
-  
-  $query .= "Job.JobId, Job.Name AS Job_name, Job.StartTime, Job.EndTime, Job.Level, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
+  $query .= "SELECT Job.JobId, Job.Name AS Job_name, Job.StartTime, Job.EndTime, Job.Level, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
   $query .= "FROM Job ";
   $query .= "LEFT JOIN Pool ON Job.PoolId=Pool.PoolId ";
   $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
@@ -104,8 +101,6 @@
   
   $jobsresult = $dbSql->db_link->query( $query );
   
-  //var_dump( $_POST );
-  
   if( PEAR::isError( $jobsresult ) ) {
 	  echo "SQL query = $query <br />";
 	  die("Unable to get last failed jobs from catalog" . $jobsresult->getMessage() );
@@ -120,7 +115,9 @@
 		// Odd or even row
 		if( count($last_jobs) % 2)
 			$job['Job_classe'] = 'odd';
-			
+		
+		// Elapsed time for this job
+		$job['elapsed_time'] = $dbSql->Get_ElapsedTime( strtotime($job['StartTime']), strtotime($job['EndTime']) );
 		array_push( $last_jobs, $job);
 	  }
   }
