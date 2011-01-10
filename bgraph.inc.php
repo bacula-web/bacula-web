@@ -241,7 +241,7 @@ class BCreateGraph extends BGraph {
         
                 $this->StartDate = "1900-01-01";
                 $this->EndDate = "4000-01-01";
-                $this->elapsed = "86400";                   // 24 hours in seconds.
+                $this->elapsed = LAST_DAY;                   // 24 hours in seconds.
                 
          }              
          

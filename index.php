@@ -147,7 +147,7 @@ $days  = array();
 
 // Get the last 7 days interval (start and end)
 for( $c = 6 ; $c >= 0 ; $c-- ) {
-	$today = ( mktime() - ($c * 86400) );
+	$today = ( mktime() - ($c * LAST_DAY) );
 	array_push( $days, array( 'start' => date( "Y-m-d 00:00:00", $today ), 'end' => date( "Y-m-d 23:59:00", $today ) ) );
 }
 

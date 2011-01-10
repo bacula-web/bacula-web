@@ -457,7 +457,7 @@ class Bweb extends DB {
 					$total_elapsed += $time['elapsed'];
 				}
 				// Verify if elapsed time is more than 1 day
-				if ( $total_elapsed > 86400 ) {
+				if ( $total_elapsed > LAST_DAY ) {
 					return date("%d days H:i:s", $total_elapsed );
 				}else {
 					return date("H:i:s", $total_elapsed );
