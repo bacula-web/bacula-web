@@ -19,6 +19,9 @@
   $smarty->compile_dir = "./templates_c";
   $smarty->config_dir     = "./configs";
   
+  // Global variables
+  $job_status = array( 'D' => 'Diff', 'I' => 'Incr', 'F' => 'Full' );
+
   // Running jobs
   $running_jobs = array();
   
@@ -37,20 +40,8 @@
   }else {
 	  while( $job = $jobsresult->fetchRow( DB_FETCHMODE_ASSOC ) ) {
 	
-		$elapsed = 'N/A';
-		
-		/*
-		if( $job['JobStatus'] == 'R') {
-			$elapsed = mktime() - strtotime($job['StartTime']);
-			if( $elapsed > 3600 )
-				$elapsed = date( "H:i:s", $elapsed );
-			elseif( $elapsed > 86400 )
-				$elapsed = date( "d day(s) i:s", $elapsed );
-			else
-				$elapsed = date( "i:s", $elapsed );
-		}
-		*/
 		// Elapsed time for this job
+		$elapsed = 'N/A';
 		if( $job['JobStatus'] == 'R' )
 			$job['elapsed_time'] = $dbSql->Get_ElapsedTime( strtotime($job['StartTime']), time() );
 		else
@@ -59,6 +50,9 @@
 		// Odd or even row
 		if( count($running_jobs) % 2)
 			$job['Job_classe'] = 'odd';
+
+		// Job Status
+		$job['Level'] = $job_status[ $job['Level'] ];
 		
 		array_push( $running_jobs, $job);
 	  }
@@ -118,6 +112,10 @@
 		
 		// Elapsed time for this job
 		$job['elapsed_time'] = $dbSql->Get_ElapsedTime( strtotime($job['StartTime']), strtotime($job['EndTime']) );
+
+		// Job Status
+                $job['Level'] = $job_status[ $job['Level'] ];
+
 		array_push( $last_jobs, $job);
 	  }
   }
