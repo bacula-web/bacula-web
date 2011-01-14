@@ -17,43 +17,18 @@
 {popup_init src='./external_packages/js/overlib.js'}
 {include file=header.tpl}
 
-<div id="nav">
-  <a href="index.php" title="Back to the dashboard">Dashboard</a> > Jobs list
-</div>
+  <div id="nav">
+    <a href="index.php" title="Back to the dashboard">Dashboard</a> > Jobs list
+  </div>
 
-<div id="main_center">
-  <div class="box">
-	<p class="title">Running jobs</p>
-	<table class="list">
-		<tr>
-			<td class="info">Status</td>
-			<td class="info">Job ID</td>
-			<td class="info">BackupJob</td>
-			<td class="info">Start Time</td>
-			<td class="info">Elapsed time</td>
-			<td class="info">Level</td>
-			<td class="info">Pool</td>
-		</tr>
-		{foreach from=$running_jobs item=job}
-		<tr>
-			<td class="{$job.Job_classe}">{$job.JobStatusLong}</td>
-			<td class="{$job.Job_classe}">{$job.JobId}</td>
-			<td class="{$job.Job_classe}">{$job.Name}</td>
-			<td class="{$job.Job_classe}">{$job.StartTime}</td>
-			<td class="{$job.Job_classe}">{$job.elapsed_time}</td>
-			<td class="{$job.Job_classe}">{$job.Level}</td>
-			<td class="{$job.Job_classe}">{$job.Pool_name}</td>
-		</tr>
-		{/foreach}
-	</table>
-  </div> <!-- end div box -->
-
+  <div id="main_center">
+  
   <!-- Last jobs -->  
   <div class="box">
-	<p class="title">Last jobs</p>
+	<p class="title">Jobs report</p>
 	<!-- Filter jobs -->
 	<form action="jobs.php" method="post">
-	<table class="list" border="0">
+	<table border="0">
 	  <tr>
 	    <td class="info" width="200">
 			{$total_jobs} jobs found
@@ -71,10 +46,16 @@
 		<td class="info" width="200">
 			Job Status
 			<select name="status">
-				<option value="Any">Any
+				{foreach from=$job_status item=status_label}
+				<option value="{$status_label}" {if $smarty.post.status == $status_label}Selected{/if}>{$status_label}
+<!--
+				<option value="waiting">Waiting
+				<option value="running">Running
 				<option value="completed">Completed
 				<option value="failed">Failed
 				<option value="canceled">Canceled
+-->			
+				{/foreach}
 			</select>
 		</td>
 		<td class="info" width="120">
@@ -87,36 +68,36 @@
 	</table>
 	</form>
 	
-	<table class="list" border="0">
+	<table border="0">
 	  <tr>
-		<td width="50" class="info">Status</td>
-		<td width="50" class="info">Job ID</td>
-		<td width="70" class="info">BackupJob</td>
-		<td width="80" class="info">Start Time</td>
-		<td width="80" class="info">End Time</td>
-		<td width="70" class="info">Elapsed time</td>
-		<td width="50" class="info">Level</td>
-		<td width="80" class="info">Pool</td>
+		<td class="info">Status</td>
+		<td class="info">Job ID</td>
+		<td class="info">BackupJob</td>
+		<td class="info">Start Time</td>
+		<td class="info">End Time</td>
+		<td class="info">Elapsed time</td>
+		<td class="info">Level</td>
+		<td class="info">Bytes</td>
+		<td class="info">Pool</td>
 	  </tr>
-	</table>
-	<div class="listbox">
-	<table class="list" border="0">
+	<!-- <div class="listbox"> -->
 	  {foreach from=$last_jobs item=job}
 	  <tr>
 		<td width="50" class="{$job.Job_classe}">
 			<img width="20" src="style/images/{$job.Job_icon}" alt="" title="{$job.JobStatusLong}" />
 		</td>
-		<td width="50" class="{$job.Job_classe}">{$job.JobId}</td>
-		<td width="70" class="{$job.Job_classe}">{$job.Job_name}</td>
-		<td width="80" class="{$job.Job_classe}">{$job.StartTime}</td>
-		<td width="80" class="{$job.Job_classe}">{$job.EndTime}</td>
-		<td width="70" class="{$job.Job_classe}">{$job.elapsed_time}</td>
-		<td width="50" class="{$job.Job_classe}">{$job.Level}</td>
-		<td width="80" class="{$job.Job_classe}">{$job.Pool_name}</td>
+		<td class="{$job.Job_classe}">{$job.JobId}</td>
+		<td class="{$job.Job_classe}">{$job.Job_name}</td>
+		<td class="{$job.Job_classe}">{$job.StartTime}</td>
+		<td class="{$job.Job_classe}">{$job.EndTime}</td>
+		<td class="{$job.Job_classe}">{$job.elapsed_time}</td>
+		<td class="{$job.Job_classe}">{$job.Level}</td>
+		<td class="{$job.Job_classe}">{$job.JobBytes}</td>
+		<td class="{$job.Job_classe}">{$job.Pool_name}</td>
 	  </tr>
 	  {/foreach}
 	</table>
-	</div> <!-- end div class=listbox -->
+	<!-- </div> --> <!-- end div class=listbox -->
   </div>
 
 </div>
