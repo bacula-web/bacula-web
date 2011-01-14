@@ -78,6 +78,7 @@
 		<td class="info">Elapsed time</td>
 		<td class="info">Level</td>
 		<td class="info">Bytes</td>
+		<td class="info">Files</td>
 		<td class="info">Pool</td>
 	  </tr>
 	<!-- <div class="listbox"> -->
@@ -93,6 +94,7 @@
 		<td class="{$job.Job_classe}">{$job.elapsed_time}</td>
 		<td class="{$job.Job_classe}">{$job.Level}</td>
 		<td class="{$job.Job_classe}">{$job.JobBytes}</td>
+		<td class="{$job.Job_classe}">{$job.JobFiles}</td>
 		<td class="{$job.Job_classe}">{$job.Pool_name}</td>
 	  </tr>
 	  {/foreach}

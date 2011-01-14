@@ -30,7 +30,7 @@
   // Global variables
   $job_level = array( 'D' => 'Diff', 'I' => 'Incr', 'F' => 'Full' );
   
-  $query .= "SELECT Job.JobId, Job.Name AS Job_name, Job.StartTime, Job.EndTime, Job.Level, Job.JobBytes, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
+  $query .= "SELECT Job.JobId, Job.Name AS Job_name, Job.StartTime, Job.EndTime, Job.Level, Job.JobBytes, Job.JobFiles, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
   $query .= "FROM Job ";
   $query .= "LEFT JOIN Pool ON Job.PoolId=Pool.PoolId ";
   $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
