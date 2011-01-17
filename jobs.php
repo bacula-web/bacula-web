@@ -27,6 +27,10 @@
   $job_status = array( 'Any', 'Waiting', 'Running', 'Completed', 'Failed', 'Canceled' );
   $smarty->assign( 'job_status', $job_status );
   
+  // Jobs per page
+  $jobs_per_page = array( 25,50,75,100,150 );
+  $smarty->assign( 'jobs_per_page', $jobs_per_page );
+
   // Global variables
   $job_level = array( 'D' => 'Diff', 'I' => 'Incr', 'F' => 'Full' );
   
@@ -61,10 +65,10 @@
   $query .= "ORDER BY Job.JobId DESC ";
   
   // Determine how many jobs to display
-  if( isset($_POST['limit']) )
-	$query .= "LIMIT " . $_POST['limit'];
+  if( isset($_POST['jobs_per_page']) )
+	$query .= "LIMIT " . $_POST['jobs_per_page'];
   else
-	$query .= "LIMIT 20 ";
+	$query .= "LIMIT 25 ";
   
   //echo $query . '<br />';
   

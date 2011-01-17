@@ -35,26 +35,17 @@
 		</td>
 		<td class="info" colspan="5" style="text-align: right;">
 			Jobs / Page
-			<select name="limit">
-				<option value="20">20
-				<option value="40">40
-				<option value="60">60
-				<option value="80">80
-				<option value="100">100
+			<select name="jobs_per_page">
+			  {foreach from=$jobs_per_page item=nb_jobs}
+			    <option value="{$nb_jobs}" {if $smarty.post.jobs_per_page == $nb_jobs}Selected{/if} >{$nb_jobs}
+			  {/foreach}
 			</select>
 		</td>
 		<td class="info" width="200">
 			Job Status
 			<select name="status">
 				{foreach from=$job_status item=status_label}
-				<option value="{$status_label}" {if $smarty.post.status == $status_label}Selected{/if}>{$status_label}
-<!--
-				<option value="waiting">Waiting
-				<option value="running">Running
-				<option value="completed">Completed
-				<option value="failed">Failed
-				<option value="canceled">Canceled
--->			
+				  <option value="{$status_label}" {if $smarty.post.status == $status_label}Selected{/if} >{$status_label}
 				{/foreach}
 			</select>
 		</td>
