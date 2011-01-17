@@ -371,6 +371,9 @@ class Bweb extends DB {
 					case 'canceled':
 						$where_status = "JobStatus = 'A' ";
 					break;
+					case 'waiting':
+						$where_status = "JobStatus IN ('F','S','M','m','s','j','c','d','t') ";
+					break;
 				} // end switch
 			}
 			

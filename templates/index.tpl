@@ -78,6 +78,11 @@
 				<td class="info">{$completed_jobs}</td>
 				<td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td>
 			</tr> 
+			<tr>
+				<td class="label">Waiting jobs</td> 
+				<td class="info">{$waiting_jobs}</td>
+				<td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td>
+			</tr> 
 			<!--
 			<tr>
 				<td class="label">Elapsed time</td> 
