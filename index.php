@@ -162,8 +162,11 @@ $graph->SetGraphSize( 400, 230 );
 $graph->Render();
 $smarty->assign('graph_stored_bytes', $graph->Get_Image_file() );
 
-if ($_GET['Full_popup'] == "yes" || $_GET['pop_graph1'] == "yes" || $_GET['pop_graph2'] == "yes")
-        $smarty->display('full_popup.tpl');
-else
-        $smarty->display('index.tpl');
+
+//if ($_GET['Full_popup'] == "yes" || $_GET['pop_graph1'] == "yes" || $_GET['pop_graph2'] == "yes")
+//        $smarty->display('full_popup.tpl');
+//else
+
+// Render template
+$smarty->display('index.tpl');
 ?>
