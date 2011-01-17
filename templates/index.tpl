@@ -78,11 +78,13 @@
 				<td class="info">{$completed_jobs}</td>
 				<td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td>
 			</tr> 
+			<!--
 			<tr>
 				<td class="label">Elapsed time</td> 
 				<td class="info">{$elapsed_jobs}</td>
 				<td class="info"> <a href="#" title="View report">View</a> </td>
 			</tr>
+			-->
 			<tr>
 				<td class="label">Transferred Bytes</td> 
 				<td class="info">{$bytes_totales}</td>
