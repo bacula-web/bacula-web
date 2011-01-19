@@ -55,45 +55,32 @@
 
 </div>
 
-<!-- To be removed -->
-{if $server==""} 
-  <!-- <img class="report" src="stats.php?server={$server}&amp;tipo_dato=69&amp;title=General%20report&amp;modo_graph=bars&amp;sizex=420&amp;sizey=250&amp;MBottom=20&amp;legend=1" alt="" /> -->
-{else}
-  <!-- <img class="report" src="stats.php?server={$server}&amp;tipo_dato=3&amp;title={$server}&amp;modo_graph=bars" alt="" /> -->
-{/if} 
-
 <div id="main_right">
   <!-- Last job Status -->
   <div class="box">
-	<p class="title">Last 24 hours status</p>
-		{* {if $mode == "Lite" && $smarty.get.Full_popup != "yes"} *}
+	<p class="title">Last 24 hours status
+		<a href="jobs.php" title="Show last 24 hours jobs status">View report</a>
+	</p>
 		<table>
 			<tr>
 				<td class="label">Failed jobs</td> 
 				<td class="info">{$failed_jobs}</td>
-				<td class="info"> <a href="jobs.php" title="View last failed jobs">View</a> </td>
+				<!-- <td class="info"> <a href="jobs.php" title="View last failed jobs">View</a> </td> -->
 			</tr>
 			<tr>
 				<td class="label">Completed jobs</td> 
 				<td class="info">{$completed_jobs}</td>
-				<td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td>
+				<!-- <td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td> -->
 			</tr> 
 			<tr>
 				<td class="label">Waiting jobs</td> 
 				<td class="info">{$waiting_jobs}</td>
-				<td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td>
+				<!-- <td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td> -->
 			</tr> 
-			<!--
-			<tr>
-				<td class="label">Elapsed time</td> 
-				<td class="info">{$elapsed_jobs}</td>
-				<td class="info"> <a href="#" title="View report">View</a> </td>
-			</tr>
-			-->
 			<tr>
 				<td class="label">Transferred Bytes</td> 
 				<td class="info">{$bytes_totales}</td>
-				<td class="info"> <a href="#" title="View report">View</a> </td>
+				<!-- <td class="info"> <a href="#" title="View report">View</a> </td> -->
 			</tr> 
 		</table>
 
