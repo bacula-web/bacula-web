@@ -1,5 +1,5 @@
 This is the README file for PHPlot
-Last updated for PHPlot-5.2.0 on 2010-10-03
+Last updated for PHPlot-5.3.1 on 2011-01-15
 The project web site is http://sourceforge.net/projects/phplot/
 The project home page is http://phplot.sourceforge.net/
 -----------------------------------------------------------------------------
@@ -13,7 +13,8 @@ complete information, download the PHPlot Reference Manual from the
 Sourceforge project web site. You can also view the manual online at
 http://phplot.sourceforge.net
 
-For important changes in this release, see the NEWS.txt file.
+For information about changes in this release, including any possible
+incompatibilities, see the NEWS.txt file.
 
 
 CONTENTS:
@@ -30,8 +31,8 @@ CONTENTS:
 REQUIREMENTS:
 
 You need a recent version of PHP5, and you are advised to use the latest
-stable release.  This version of PHPlot has been tested with PHP-5.3.3 and
-PHP-5.2.14 on Linux, and with PHP-5.3.3 on Windows/XP.
+stable release.  This version of PHPlot has been tested with PHP-5.3.5 and
+PHP-5.2.17 on Linux, and with PHP-5.3.5 on Windows XP.
 
 Use of PHP-5.3.2 or PHP-5.2.13 is not recommended, if you are using
 TrueType Font (TTF) text. A bug with TTF rendering in those versions
@@ -71,6 +72,10 @@ KNOWN ISSUES:
 
 Here are some of the problems we know about in PHPlot. See the bug tracker
 on the PHPlot project web site for more information.
+
+#3142124 Clip plot elements to plot area
+  Plot elements are not currently clipped to the plot area, and may extend
+  beyond. PHP does not currently support the GD clipping control.
 
 #1795969 The automatic range calculation for Y values needs to be rewritten.  
   This is especially a problem with small offset ranges (e.g. Y=[999:1001]).
@@ -146,7 +151,7 @@ graph, check your web server error log for more information.
 
 COPYRIGHT and LICENSE:
 
-PHPlot is Copyright (C) 1998-2010 Afan Ottenheimer
+PHPlot is Copyright (C) 1998-2011 Afan Ottenheimer
 
 This is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public

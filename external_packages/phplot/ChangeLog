@@ -2,6 +2,125 @@ This is the Change Log for PHPlot.
 The project home page is http://sourceforge.net/projects/phplot/
 -----------------------------------------------------------------------------
 
+2011-01-15 (lbayuk)     ===== Released as 5.3.1 =====
+    * phplot.php: Updated version
+    * README.txt: Updated for new release
+    * NEWS.txt: Add text for new release
+
+2011-01-09
+    * Fixed some style / indent errors, and 1 redundant test.
+
+2011-01-03
+    * For bug 3143586 "Multiple plots per image - fixes & docs":
+      Make sure there is a documented way to reset PHPlot feature
+      settings, especially those for which the default settings result
+      in automatic calculated values. Where possible, calling a Set*()
+      function with no arguments should reset the feature to defaults.
+
+      + Changed SetLegendPixels() arguments to be optional with default
+        NULL meaning reset to automatic positioning.
+
+      + Fixed SetXAxisPosition() and SetYAxisPosition() to accept empty
+        string '' to mean reset to default automatic positioning.
+        Make arguments optional, defaulting to empty string.
+
+      + Changed SetNumXTicks() and SetNumYTicks() arguments to be
+        optional with default empty string '' meaning reset to
+        of automatic calculation.
+
+    * Changed SetPointShapes() to use CheckOptionArray(). This
+      simplifies the function with no change in operation.
+
+    * Extend copyright years to 2011.
+
+2010-12-30
+    * Fix for bug 3147397 "Data colors missing with multiple plots":
+      + Do not truncate the data_colors and related arrays, so the full
+        set of colors will be available for subsequent plots on the image.
+        (Color indexes are still allocated in the image only as needed.)
+      + New internal functions GetColorIndexArray() and
+        GetDarkColorIndexArray(), replacing previous use of array_map().
+      + Removed internal function truncate_array() - no longer used.
+      + Changed SetColorIndexes(), NeedDataDarkColors(), and
+        NeedErrorBarColors() to only allocate the color indexes that will
+        be needed (instead of allocating all colors in the truncated color
+        descriptor arrays).
+
+2010-12-28
+    * Instead of throwing an error, SetLegend(NULL) now clears the legend
+      array. This can be useful with multiple plots on an image. Before
+      this change, only SetLegend(array()) did that (possibly by accident).
+
+2010-12-27
+    * Do not have SetDefaultStyles() call deprecated SetLabelColor().
+
+    * Fixes for bug 3143586 "Multiple plots per image - fixes & docs":
+      + Fix DrawLegend so it doesn't forget that the legend position
+        was specified in world coordinates. This fixes the legend
+        position for plots after the first.
+      + Don't draw the image border more than once (although this would
+        probably have no impact on the resulting image). This parallels
+        the behavior for the main plot title and the image background.
+        Replaced member variables background_done and title_done with a new
+        member array done[] which will track when these elements were done.
+
+2010-12-06
+    * Fix comments above CalcPlotAreaWorld(). Deleted incorrect information
+      from before data-data-yx existed, and before DecodeDataType rewrite.
+
+2010-12-04 (lbayuk)     ===== Released as 5.3.0 =====
+    * phplot.php: Updated version
+    * README.txt: Updated for new release
+    * NEWS.txt: Add text for new release
+
+2010-12-03
+    * Feature request 3127005 "Ability to suppress X/Y axis lines":
+      Added SetDrawXAxis() and SetDrawYAxis() to control flags which
+      will suppress drawing the X or Y axis lines. (These lines were
+      probably the only PHPlot elements that could not be turned off.)
+      Changed DrawXAxis() and DrawYAxis() to conditionally draw the
+      axis lines.
+
+2010-11-28
+    * Feature request 3117873 "Data value labels in more plot types":
+      Implemented Data Value Labels for plot types points, lines,
+      linepoints, and squared.  Added 2 class variables which can be
+      set to control the distance and angle of the labels from points.
+      New internal function CheckDataValueLabels() calculates position
+      and text alignment for these labels.
+
+    * Updated comments for Set[XY]DataLabelPos to match the text in
+      the manual, which was rewritten to clarify label types.
+
+2010-11-23
+    * Code cleanup. Moved some functions around to group "plot drawing
+      helpers" separately from "plot drawing". No changes to operation.
+
+2010-11-21
+    * Feature request 3111166 "Control legend colorbox width":
+      Added a class variable legend_colorbox_width which can be changed
+      to make the colorboxes wider or narrower.
+
+2010-11-16
+    * Feature request 3093483 "Investing support chart types":
+      Added 3 new plot types: Basic OHLC (Open/High/Low/Close), Candlesticks,
+      and Filled Candlesticks. Implemented with one new function to handle the
+      3 new plot types: ohlc, candlesticks, and candlesticks2.
+
+2010-11-11
+    * Moved information about plot types into a new static member array
+      plots[]. (This is an internal change with no impact on usage, but will
+      make it easier to add new plot types.) SetPlotType() no longer needs a
+      list of plot types to check, FindDataLimits() does not need to check for
+      specific plot types to to process the data array, and DrawGraph() uses
+      data from the array rather than knowing about all the plot types.
+
+2010-10-31
+    * Changed internal CalcBarWidths() to take two arguments which indicate
+      how it should calculate bar widths, rather than having it check the
+      plot_type directly. (Taken from another, experimental change. This
+      minimizes places where plot_type is directly used.)
+
 2010-10-03 (lbayuk)     ===== Released as 5.2.0 =====
     * phplot.php: Updated version
     * README.txt: Updated for new release
