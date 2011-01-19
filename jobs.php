@@ -53,7 +53,7 @@
 			$query .= "WHERE Job.JobStatus = 'T' ";
 		break;
 		case 'failed':
-			$query .= "WHERE Job.JobStatus = 'f' ";
+			$query .= "WHERE Job.JobStatus IN ('f','E') ";
 		break;
 		case 'canceled':
 			$query .= "WHERE Job.JobStatus = 'A' ";

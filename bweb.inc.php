@@ -366,7 +366,7 @@ class Bweb extends DB {
 						$where_status = "JobStatus = 'T' ";
 					break;
 					case 'failed':
-						$where_status = "JobStatus = 'f' ";
+						$where_status = "JobStatus IN ('f','E') ";
 					break;
 					case 'canceled':
 						$where_status = "JobStatus = 'A' ";
