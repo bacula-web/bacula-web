@@ -51,8 +51,6 @@
 	  <img src="{$graph_stored_bytes}" alt="" />
   </div> <!-- end div box -->
 
-{* {include file=volumes.tpl}*}
-
 </div>
 
 <div id="main_right">
