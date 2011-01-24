@@ -41,7 +41,7 @@
 			break;
 		} 
 		if( $ok )
-			$result .= "<td width='300'>&nbsp;</td> <td> <img width='30' src='style/images/s_ok.gif' />";
+			$result .= "<td width='300'>&nbsp;</td> <td> <img width='25' src='style/images/s_ok.png' />";
 		else
 			$result .= "<td width='300'>$error_message</td> <td width='35'> <img width='30' src='style/images/s_error.gif' />";
 		
