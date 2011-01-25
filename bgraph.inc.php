@@ -18,10 +18,7 @@ class BGraph{
 	
 	function __construct( $filename = "graph.png" )
 	{
-		if( !empty($filename) )
-			$this->output_file = 'templates_c/' . $filename;
-		else
-			$this->output_file = 'templates_c/graph.png';
+		$this->output_file = 'templates_c/' . $filename;
 	}
 	
 	public function SetData( $data_in, $type, $data_type, $shading = 5 )
@@ -65,8 +62,10 @@ class BGraph{
 		$this->plot = new PHPlot( $this->width, $this->height );
 		
 		// Render to file instead of screen
-		$this->plot->SetIsInline( true );
 		$this->plot->SetOutputFile( $this->output_file );
+		$this->plot->SetFileFormat("png");
+		$this->plot->SetIsInline( true );
+		
 		
 		$this->plot->SetImageBorderType('plain');
 
@@ -114,7 +113,8 @@ class BGraph{
 
 		$this->plot->DrawGraph();
 	} // end function Render()
-}
+} // end BGraph classe
+
 /*
 class BGraph {
 
