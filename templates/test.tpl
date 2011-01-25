@@ -10,44 +10,34 @@
   <div id="nav">
     <a href="index.php" title="Back to the dashboard">Dashboard</a> > Test page
   </div>
-  <div id="main_center">
+<div id="main_center">
 	<div class="box">
-	  <p class="title">Testing required components</p>
-	  
-	  <table>
-	    <tr>
-	      <td width="300">
-		    {php}Check( "php-gettext", "PHP Gettext support", "If you want Bacula-web in your language, please compile PHP with Gettext support" );{/php}
-		  </td>
-		</tr>
-		<tr>
-		  <td>
-		    {php}Check("pear-db", "PEAR DB support", "PEAR DB support not found, please read the Bacula-web installation document");{/php}
-		  </td>
-	    </tr>
-		<tr>
-		  <td>
-		  {php}Check( "php-gd", "PHP GD support", "This is required by phplot, please compile php with GD support" );{/php}
-		  </td>
-		</tr>
-		<tr>
-		  <td>
-			{php}Check( "smarty-cache", "Smarty cache folder write permission", "Smarty template engine need write permissions to templates_c folder" );{/php}
-	</td>
-</tr>
+	  <p class="title">Required components</p>
+	<table>
+		{foreach from=$checks item=check}
+		  <tr>
+		    <td> <b>{$check.check_label}</b> </td>
+			<td>{$check.check_descr}</td>
+			<td> <img src='style/images/{$check.check_result}' width='20' alt=''/></td>
+		  </tr>
+		{/foreach}
+	</table>
+	</div> <!-- end div class=box -->
+	
+	<div class="box">
+	  <p class="title">Graph</p>
+	<table>
+	  <tr>
+	    <td>
+			<b>Graph system capabilities (Bacula-web only use PNG)</b>
+		</td>
+	    <td colspan="2">
+		  <img src="{$graph_test}" alt='' />
+	    </td>
+	  </tr>
+	</table>
+	</div> <!-- end div class=box -->
+</div> <!-- end div id=main_center -->
 
-<tr>
-	<td colspan="3">
-		<center>
-			Testing your graph system capabilities (Bacula-web only use PNG) <br />
-			<img src="simplegraph.php" /> 
-		</center>
-	</td>
-</tr>
-</table>
-
-	  
-	</div>
-  </div>
 </body>
 </html>
