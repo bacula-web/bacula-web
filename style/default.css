@@ -1,9 +1,10 @@
-body{
+body, td, input {
   background-color: #ffffff;
   padding: 3px;
   margin: 0px;
   font-family: Arial,Verdana;
   font-size: 10pt;
+  text-align: left;
 }
 
 a:link, a:visited {
@@ -182,11 +183,6 @@ table {
  color: black; 
 }
 
-.tbl_vol_header {
- text-align: center; 
- background-image: url('../style/images/bg5.png'); 
-}
-
 td,input,select { 
  font-family: Verdana,Arial; 
  font-size: 7.5pt; 
@@ -209,28 +205,6 @@ td,input,select {
  background-color: #FDFFBF;
 }
 
-.tbl_pool_inter_1 { 
- background-color: #D4D4D9; 
- border-style: solid; 
- border-left-width: 1px; 
- border-top-width: 1px; 
- border-right-width: 0px;
- background-image:url('../style/images/bg5.png');
-}
-.tbl_pool_inter_2 { 
- background-color: #D4D4D9; 
- border-style: solid; 
- border-left-width: 0px; 
- border-top-width: 1px; 
- border-right-width: 0px;
-}
-.tbl_pool_inter_3 { 
- background-color: #D4D4D9; 
- border-style: solid; 
- border-left-width: 0px; 
- border-top-width: 1px; 
- border-right-width: 1px
-}
 .titulo 	{ 
  font-size : 20px; 
  background-color: #FDFFBF; 
