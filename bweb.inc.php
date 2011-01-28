@@ -637,5 +637,33 @@ class Bweb extends DB {
 				return array( $day, $stored_bytes );
 			}
 		}
+		
+		public function GetStoredBytesByJob( $jobname, $start_date, $end_date )
+		{
+			$query  = "SELECT SUM(JobBytes) as stored_bytes, EndTime FROM Job ";
+			$query .= "WHERE EndTime BETWEEN ( '$start_date' AND '$end_date' ) AND ";
+			$query .= "Name = '$jobname'";
+			
+			echo 'query ' . $query . '<br />';
+			
+			$result = $this->db_link->query( $query );
+			
+			if( PEAR::isError( $result ) ) {
+				die( "Unable to get Job Bytes from catalog" );
+			}else{
+				$stored_bytes = 0;
+				$tmp = $result->fetchRow( DB_FETCHMODE_ASSOC );
+				
+				$day = date( "D d", strtotime($end_date) );
+				
+				if( isset( $tmp['stored_bytes'] ) ) {
+					$hbytes = $this->human_file_size( $tmp['stored_bytes'], 3, 'GB');
+					$hbytes = explode( " ", $hbytes );
+					$stored_bytes = $hbytes[0];
+				}
+				
+				return array( $day, $stored_bytes );
+			}			
+		}
 } // end class Bweb
 ?>
