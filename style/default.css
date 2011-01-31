@@ -73,7 +73,7 @@ a:hover { color: #736F6E }
 #main_left {
  position: absolute; 
  left:10px; 
- width: 500px; 
+ width: 400px; 
  border:none; 
  margin-top: 0px; 
  background-color: #FFFFFF;
@@ -81,8 +81,8 @@ a:hover { color: #736F6E }
 
 #main_right {
  position: absolute; 
- left:520px; 
- width: 500px; 
+ left:420px; 
+ width: 400px; 
  border: none; 
  margin-top: 0px;
 }
