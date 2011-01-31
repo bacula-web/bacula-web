@@ -162,6 +162,24 @@ $graph->SetGraphSize( 400, 230 );
 $graph->Render();
 $smarty->assign('graph_stored_bytes', $graph->Get_Image_file() );
 
+// Last 15 used volumes
+$vol_list = array();
+
+$query  = "SELECT DISTINCT Media.Volumename, Media.VolStatus, Job.JobId FROM Job ";
+$query .= "LEFT JOIN JobMedia ON Job.JobId = JobMedia.JobId ";
+$query .= "LEFT JOIN Media ON JobMedia.MediaId = Media.MediaId ";
+$query .= "ORDER BY Job.JobId DESC ";
+$query .= "LIMIT 15 ";
+
+$result = $dbSql->db_link->query( $query );
+
+if ( PEAR::isError( $result ) )
+	die( "Unable to get last used volumes from catalog \n " . $result->getMessage() );
+else {
+	while ( $vol = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) 
+		array_push( $vol_list, $vol );
+}
+$smarty->assign( 'volume_list', $vol_list );	
 
 //if ($_GET['Full_popup'] == "yes" || $_GET['pop_graph1'] == "yes" || $_GET['pop_graph2'] == "yes")
 //        $smarty->display('full_popup.tpl');

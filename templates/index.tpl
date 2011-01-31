@@ -92,6 +92,24 @@
 	  <img src="{$graph_jobs}" alt="" />
   </div> <!-- end div box -->
   
+  <div class="box">
+	<p class="title">Last used volumes</p>
+	  <table>
+		<tr>
+		  <td class="info">Volume</td>
+		  <td class="info">Status</td>
+		  <td class="info">Job Id</td>
+		</tr>
+		{foreach from=$volume_list item=vol}
+		<tr>
+		  <td>{$vol.Volumename}</td>
+		  <td>{$vol.VolStatus}</td>
+		  <td>{$vol.JobId}</td>
+		</tr>
+		{/foreach}
+	  </table>
+  </div> <!-- end div box -->
+  
 
   {include file="$last_report"} 	
 
