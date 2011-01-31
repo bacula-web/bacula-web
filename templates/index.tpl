@@ -98,12 +98,14 @@
 		<tr>
 		  <td class="tbl_header">Volume</td>
 		  <td class="tbl_header">Status</td>
+		  <td class="tbl_header">Last written</td>
 		  <td class="tbl_header">Job Id</td>
 		</tr>
 		{foreach from=$volume_list item=vol}
 		<tr>
 		  <td>{$vol.Volumename}</td>
 		  <td>{$vol.VolStatus}</td>
+		  <td>{$vol.Lastwritten}</td>
 		  <td>{$vol.JobId}</td>
 		</tr>
 		{/foreach}

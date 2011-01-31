@@ -165,11 +165,11 @@ $smarty->assign('graph_stored_bytes', $graph->Get_Image_file() );
 // Last 15 used volumes
 $vol_list = array();
 
-$query  = "SELECT DISTINCT Media.Volumename, Media.VolStatus, Job.JobId FROM Job ";
+$query  = "SELECT DISTINCT Media.Volumename, Media.Lastwritten, Media.VolStatus, Job.JobId FROM Job ";
 $query .= "LEFT JOIN JobMedia ON Job.JobId = JobMedia.JobId ";
 $query .= "LEFT JOIN Media ON JobMedia.MediaId = Media.MediaId ";
 $query .= "ORDER BY Job.JobId DESC ";
-$query .= "LIMIT 15 ";
+$query .= "LIMIT 10 ";
 
 $result = $dbSql->db_link->query( $query );
 
