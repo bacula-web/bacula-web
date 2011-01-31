@@ -327,12 +327,16 @@ class Bweb extends DB {
 										}
 										// Media used bytes in a human format
 										$media['volbytes'] = $this->human_file_size( $media['volbytes'] );
-										//echo "volume " . $media['volumename'] . 'vol bytes' .$media['volbytes'] . '<br />';
 									} else {
 										$media['lastwritten'] = "N/A";
 										$media['expire']      = "N/A";
 										$media['volbytes'] 	  = "0 KB";
 									}								
+								
+								// Odd or even row
+								if( count(  $volumes[ $pool['name'] ] ) % 2)
+							        	$media['class'] = 'odd';
+
 								// Add the media in pool array
 								array_push( $volumes[ $pool['name']], $media);
 							}

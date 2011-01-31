@@ -41,12 +41,12 @@
 		<table class="list" border="0">
 			{foreach from=$pool item=volume}
 			<tr>
-				<td width="120">{$volume.volumename}</td>
-				<td width="120">{$volume.volbytes}</td>
-				<td width="120">{$volume.mediatype}</td>
-				<td width="140">{$volume.expire}</td>
-				<td width="140">{$volume.lastwritten}</td>
-				<td>{$volume.volstatus}</td>
+				<td width="120" class="{$volume.class}">{$volume.volumename}</td>
+				<td width="120" class="{$volume.class}">{$volume.volbytes}</td>
+				<td width="120" class="{$volume.class}">{$volume.mediatype}</td>
+				<td width="140" class="{$volume.class}">{$volume.expire}</td>
+				<td width="140" class="{$volume.class}">{$volume.lastwritten}</td>
+				<td class="{$volume.class}">{$volume.volstatus}</td>
 			</tr>
 			{foreachelse}
 			<tr>
