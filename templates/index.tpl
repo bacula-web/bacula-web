@@ -96,9 +96,9 @@
 	<p class="title">Last used volumes</p>
 	  <table>
 		<tr>
-		  <td class="info">Volume</td>
-		  <td class="info">Status</td>
-		  <td class="info">Job Id</td>
+		  <td class="tbl_header">Volume</td>
+		  <td class="tbl_header">Status</td>
+		  <td class="tbl_header">Job Id</td>
 		</tr>
 		{foreach from=$volume_list item=vol}
 		<tr>

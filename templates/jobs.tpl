@@ -61,16 +61,16 @@
 	
 	<table border="0">
 	  <tr>
-		<td class="info">Status</td>
-		<td class="info">Job ID</td>
-		<td class="info">BackupJob</td>
-		<td class="info">Start Time</td>
-		<td class="info">End Time</td>
-		<td class="info">Elapsed time</td>
-		<td class="info">Level</td>
-		<td class="info">Bytes</td>
-		<td class="info">Files</td>
-		<td class="info">Pool</td>
+		<td class="tbl_header">Status</td>
+		<td class="tbl_header">Job ID</td>
+		<td class="tbl_header">BackupJob</td>
+		<td class="tbl_header">Start Time</td>
+		<td class="tbl_header">End Time</td>
+		<td class="tbl_header">Elapsed time</td>
+		<td class="tbl_header">Level</td>
+		<td class="tbl_header">Bytes</td>
+		<td class="tbl_header">Files</td>
+		<td class="tbl_header">Pool</td>
 	  </tr>
 	<!-- <div class="listbox"> -->
 	  {foreach from=$last_jobs item=job}

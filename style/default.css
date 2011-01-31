@@ -1,18 +1,17 @@
-body, td, input {
+body{
   background-color: #ffffff;
-  padding: 3px;
+  padding: 0px;
   margin: 0px;
   font-family: Arial,Verdana;
   font-size: 10pt;
   text-align: left;
+  vertical-align: middle;
 }
 
-a:link, a:visited {
+a:link, a:visited, a:hover, a:visited {
   color: #736F6E;
   font-size: 10pt;
 }
-
-a:hover { color: #736F6E }
 
 #nav
 {
@@ -109,7 +108,7 @@ a:hover { color: #736F6E }
 .box {
  border: 1px solid black;
  width: 100%;
- margin: 10px 0px 0px 0px;
+ margin: 10px 0px 10px 0px;
  padding: 0px;
  text-align: center;
 }
@@ -137,7 +136,7 @@ a:hover { color: #736F6E }
 
 .box table tr td
 {
- padding: 5px;
+ padding: 2px;
  font-size: 8pt;
  height: 20px;
 }
@@ -155,14 +154,13 @@ a:hover { color: #736F6E }
 
 .box table td.info
 {
- text-align: center; 
- vertical-align: middle;
- padding-right: 8em;
+ text-align: right;
  font-weight: bold;
  background-color: #E0E0E0;
  height: auto;
- padding: 5px;
- margin:0px;
+ padding: 2px;
+ padding-right: 10px;
+ margin: 0px;
 }
 
 .box table tr td.info a { font-size: 8pt;}
@@ -183,17 +181,16 @@ table {
  color: black; 
 }
 
-td,input,select { 
- font-family: Verdana,Arial; 
- font-size: 7.5pt; 
- color: #000000;
-}
 .back {
  background-color: #E6E6F5; 
 }
+
 .tbl_header	{
- background-color: #47A9E5; 
+ background-color: #E0E0E0; 
+ color: #000000;
+ font-weight: bold;
 }
+
 .genmed 	{ 
  font-size : 11px; 
 }

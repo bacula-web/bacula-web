@@ -28,12 +28,12 @@
 	<p class="title">{$pool_name}</p>
 	<table class="list" border="0">
 		<tr>
-			<td class="info" width="120">Name</td>
-			<td class="info" width="120">{t}Bytes{/t}</td>
-			<td class="info" width="120">{t}Media Type{/t}</td>
-			<td class="info" width="140">{t}Expire{/t}</td>
-			<td class="info" width="140">{t}Last written{/t}</td>
-			<td class="info">{t}Status{/t}</td>
+			<td class="tbl_header" width="120">Name</td>
+			<td class="tbl_header" width="120">{t}Bytes{/t}</td>
+			<td class="tbl_header" width="120">{t}Media Type{/t}</td>
+			<td class="tbl_header" width="140">{t}Expire{/t}</td>
+			<td class="tbl_header" width="140">{t}Last written{/t}</td>
+			<td class="tbl_header">{t}Status{/t}</td>
 		</tr>
 	</table>
 	
