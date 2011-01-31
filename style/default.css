@@ -78,9 +78,16 @@ a:link, a:visited, a:hover, a:visited {
  background-color: #FFFFFF;
 }
 
+#main_middle {
+ position: absolute;
+ left:420px;
+ width: 400px;
+ border: none;
+ margin-top: 0px;
+}
 #main_right {
  position: absolute; 
- left:420px; 
+ left: 830px; 
  width: 400px; 
  border: none; 
  margin-top: 0px;

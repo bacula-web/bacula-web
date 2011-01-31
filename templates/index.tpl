@@ -53,7 +53,7 @@
 
 </div>
 
-<div id="main_right">
+<div id="main_middle">
   <!-- Last job Status -->
   <div class="box">
 	<p class="title">Last 24 hours status
@@ -112,9 +112,10 @@
 	  </table>
   </div> <!-- end div box -->
   
+</div> <!-- end div main_middle -->
 
-  {include file="$last_report"} 	
-
+<div id="main_right">
+  {include file="$last_report"}
 </div> <!-- end div main_right -->
 
 {include file="footer.tpl"}
