@@ -648,8 +648,6 @@ class Bweb extends DB {
 			$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' ) AND ";
 			$query .= "Name = '$jobname'";
 			
-			echo 'query ' . $query . '<br />';
-			
 			$result = $this->db_link->query( $query );
 			
 			if( PEAR::isError( $result ) ) {

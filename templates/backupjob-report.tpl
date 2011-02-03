@@ -54,7 +54,7 @@
   
   <!-- Transfered Bytes graph -->
   <div class="box">
-	<p class="title">Transfered Bytes (last week)</p>
+	<p class="title">Transfered Bytes (last week in GB)</p>
 	<img src="{$graph_stored_bytes}" alt="" />
   </div> <!-- end div class=box -->
 
