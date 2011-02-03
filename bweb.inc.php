@@ -645,7 +645,7 @@ class Bweb extends DB {
 		public function GetStoredBytesByJob( $jobname, $start_date, $end_date )
 		{
 			$query  = "SELECT SUM(JobBytes) as stored_bytes, EndTime FROM Job ";
-			$query .= "WHERE EndTime BETWEEN ( '$start_date' AND '$end_date' ) AND ";
+			$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' ) AND ";
 			$query .= "Name = '$jobname'";
 			
 			echo 'query ' . $query . '<br />';
