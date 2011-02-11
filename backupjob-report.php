@@ -28,10 +28,7 @@
   else
 	die( "Please specify a backup job name " );
 	
-  $smarty->assign('backupjob_name', $backupjob_name );
-	
   // Last 7 days stored Bytes graph
-  $data  = array();
   $graph = new BGraph( "graph2.png" );
   $days  = array();
 
@@ -41,18 +38,25 @@
 	  array_push( $days, array( 'start' => date( "Y-m-d 00:00:00", $today ), 'end' => date( "Y-m-d 23:59:00", $today ) ) );
   }
 
-  $days_stored_bytes = array();
+  $days_stored_bytes 	= array();
+  $backupjob_bytes		= 0;
 
   foreach( $days as $day ) {
     array_push( $days_stored_bytes, $dbSql->GetStoredBytesByJob( $backupjob_name, $day['start'], $day['end'] ) );
   }
-
+ 
+  // Calculate total bytes for this period
+  foreach( $days_stored_bytes as $day )
+	$backupjob_bytes += $day[1];
+	
   $graph->SetData( $days_stored_bytes, 'bars', 'text-data' );
   $graph->SetGraphSize( 400, 230 );
 
   $graph->Render();
   $smarty->assign('graph_stored_bytes', $graph->Get_Image_file() );	
   
+  $smarty->assign('backupjob_name', $backupjob_name );
+  $smarty->assign('backupjob_bytes', $backupjob_bytes );
   
   // Process and display the template 
   $smarty->display('backupjob-report.tpl'); 

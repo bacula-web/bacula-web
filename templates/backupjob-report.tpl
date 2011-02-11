@@ -37,7 +37,7 @@
 		</tr>
 		<tr>
 			<td>Transfered Bytes</td>
-			<td>ppp{$backupjob_bytes}</td>
+			<td>{$backupjob_bytes} GB</td>
 		</tr>
 		<tr>
 			<td>Transfered Files</td>
