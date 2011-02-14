@@ -60,7 +60,8 @@
 
   <!-- Transfered Files graph -->
   <div class="box">
-	<p class="title">Transfered Files</p>
+	<p class="title">Transfered Files (last week in GB)</p>
+	<img src="{$graph_stored_files}" alt="" />
   </div> <!-- end div class=box -->
   
   </div> <!-- end div id=main_center -->
