@@ -676,25 +676,16 @@ class Bweb extends DB {
 			
 			$result = $this->db_link->query( $query );
 			
-			//echo $query . '<br />';
-			
 			if( PEAR::isError( $result ) ) {
 				die( "Unable to get Job Files from catalog" );
 			}else{
 				$stored_bytes = 0;
 				$tmp = $result->fetchRow( DB_FETCHMODE_ASSOC );
-				var_dump( $tmp );
-				$day = date( "D d", strtotime($end_date) );
 				
-				/*
-				if( isset( $tmp['stored_bytes'] ) ) {
-					$hbytes = $this->human_file_size( $tmp['stored_files'], 3, 'GB');
-					$hbytes = explode( " ", $hbytes );
-					$stored_bytes = $hbytes[0];
-				}
-				*/
+				$day 			= date( "D d", strtotime($end_date) );
+				$stored_files 	= $tmp['stored_files'];
 				
-				return array( $day, $stored_bytes );
+				return array( $day, $stored_files );
 			}			
 		}
 
