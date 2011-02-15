@@ -79,7 +79,9 @@
 			<img width="20" src="style/images/{$job.Job_icon}" alt="" title="{$job.JobStatusLong}" />
 		</td>
 		<td class="{$job.Job_classe}">{$job.JobId}</td>
-		<td class="{$job.Job_classe}">{$job.Job_name}</td>
+		<td class="{$job.Job_classe}">
+			<a href="backupjob-report.php?backupjob_name={$job.Job_name}">{$job.Job_name}</a>
+		</td>
 		<td class="{$job.Job_classe}">{$job.StartTime}</td>
 		<td class="{$job.Job_classe}">{$job.EndTime}</td>
 		<td class="{$job.Job_classe}">{$job.elapsed_time}</td>
