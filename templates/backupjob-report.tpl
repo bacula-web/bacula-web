@@ -33,7 +33,7 @@
 		</tr>
 		<tr>
 			<td>Period:</td>
-			<td>ppp{$backupjob_period}</td>
+			<td>{$backupjob_period}</td>
 		</tr>
 		<tr>
 			<td>Transfered Bytes</td>

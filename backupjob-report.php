@@ -35,7 +35,8 @@
 	  $today = ( mktime() - ($c * LAST_DAY) );
 	  array_push( $days, array( 'start' => date( "Y-m-d 00:00:00", $today ), 'end' => date( "Y-m-d 23:59:00", $today ) ) );
   }
-  
+  // Generate Backup Job report period string
+  $backupjob_period = "From " . date( "Y-m-d", mktime()-LAST_WEEK ) . " to " . date( "Y-m-d", mktime() );
   // Last 7 days stored Bytes graph
   $graph = new BGraph( "graph2.png" );
 
@@ -75,6 +76,7 @@
   $smarty->assign('graph_stored_files', $graph->Get_Image_file() );  
   
   $smarty->assign('backupjob_name', $backupjob_name );
+  $smarty->assign('backupjob_period', $backupjob_period );
   $smarty->assign('backupjob_bytes', $backupjob_bytes );
   $smarty->assign('backupjob_files', $backupjob_files );
   
