@@ -41,7 +41,7 @@
 		</tr>
 		<tr>
 			<td>Transfered Files</td>
-			<td>ppp{$backupjob_files}</td>
+			<td>{$backupjob_files}</td>
 		</tr>
 
 	</table>

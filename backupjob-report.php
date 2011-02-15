@@ -76,6 +76,7 @@
   
   $smarty->assign('backupjob_name', $backupjob_name );
   $smarty->assign('backupjob_bytes', $backupjob_bytes );
+  $smarty->assign('backupjob_files', $backupjob_files );
   
   // Process and display the template 
   $smarty->display('backupjob-report.tpl'); 
