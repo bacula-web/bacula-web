@@ -211,7 +211,38 @@ class Bweb extends DB {
 		
 		function GetDbSize() 
 		{
-			$database_size = 0;
+			$database_size 	= 0;
+			$query 			= "";
+			
+			switch( $this->driver )
+			{
+				case 'mysql':
+					$query  = "SELECT table_schema AS 'database', sum( data_length + index_length) AS 'dbsize' ";
+					$query .= "FROM information_schema.TABLES ";
+					$query .= "WHERE table_schema = 'bacula' ";
+					$query .= "GROUP BY table_schema";
+				break;
+				case 'pgsql':
+					$query  = "SELECT pg_database_size('bacula') AS dbsize";
+				break;
+				case 'sqlite':
+					// Not yet implemented
+					return "0 MB";
+				break;
+			}
+			
+			$result = $this->db_link->query( $query );
+			
+			if(! PEAR::isError( $result ) )
+			{
+				$db = $result->fetchRow( DB_FETCHMODE_ASSOC );
+				$database_size =+ $db['dbsize'];
+			}else
+				die( "Unable to get database size<br />" . $jobs->getMessage() );
+			
+			return $this->human_file_size( $database_size );  
+			
+			/*
 			if ( $this->driver == "mysql") {
 				$dbsize = $this->db_link->query("show table status") or die ("classes.inc: Error query: 3");
 				
@@ -237,8 +268,7 @@ class Bweb extends DB {
             } // end if       
 				
 			$dbsize->free();
-		
-			return $this->human_file_size( $database_size );  
+			*/
         } // end function GetDbSize()
 		
 		public function Get_Nb_Clients()
