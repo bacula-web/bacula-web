@@ -57,7 +57,7 @@
   <!-- Last job Status -->
   <div class="box">
 	<p class="title">Last 24 hours status
-		<a href="jobs.php" title="Show last 24 hours jobs status">View report</a>
+		<!-- <a href="jobs.php" title="Show last 24 hours jobs status">View report</a> -->
 	</p>
 		<table>
 			<tr>
