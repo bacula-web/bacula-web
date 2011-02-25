@@ -50,6 +50,25 @@
   <!-- Last jobs list -->
   <div class="box">
 	<p class="title">Last jobs</p>
+	
+	<table>
+		<tr>
+			<td class="tbl_header">Job Id</td>
+			<td class="tbl_header">Level</td>
+			<td class="tbl_header">Files</td>
+			<td class="tbl_header">Bytes</td>
+			<td class="tbl_header">End time</td>
+		</tr>
+		{foreach from=$jobs item=job}
+		<tr>
+			<td>{$job.JobId}</td>
+			<td>{$job.Level}</td>
+			<td>{$job.JobFiles}</td>
+			<td>{$job.JobBytes}</td>
+			<td>{$job.EndTime}</td>
+		</tr>
+		{/foreach}
+	</table>
   </div> <!-- end div class=box -->
   
   <!-- Transfered Bytes graph -->

@@ -73,7 +73,30 @@
   $graph->SetGraphSize( 400, 230 );
 
   $graph->Render();
-  $smarty->assign('graph_stored_files', $graph->Get_Image_file() );  
+  $smarty->assign('graph_stored_files', $graph->Get_Image_file() );
+
+  // Last 10 jobs
+  $query    = "SELECT JobId, Level, JobFiles, JobBytes, JobStatus, EndTime, Name ";  
+  $query   .= "FROM Job ";
+  $query   .= "WHERE Name = '$backupjob_name' ";
+  $query   .= "ORDER BY EndTime DESC ";
+  $query   .= "LIMIT 10 ";
+  
+  $jobs		= array();
+  $joblevel = array( 'I' => 'Incr', 'D' => 'Diff', 'F' => 'Full' );
+  $result 	= $dbSql->db_link->query( $query );
+  
+  if( ! PEAR::isError( $result ) )
+  {
+	while( $job = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) {
+		$job['Level'] = $joblevel[ $job['Level'] ];
+		array_push( $jobs, $job);
+	}
+		
+  }else
+	die( "Unable to get last jobs from catalog " . $result->getMessage() );
+    
+  $smarty->assign('jobs', $jobs );
   
   $smarty->assign('backupjob_name', $backupjob_name );
   $smarty->assign('backupjob_period', $backupjob_period );
