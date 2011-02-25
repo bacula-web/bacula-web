@@ -82,7 +82,7 @@
 <div class="box">
 	<p class="title">Reports</p>
  
- <form method="get" action="report.php" target="_blank">
+ <form method="post" action="backupjob-report.php">
    <table width="100%" cellpadding="0" cellspacing="3" border="0">
 
 <!-- 
@@ -108,7 +108,7 @@
  	   <td class="label"><b>{t}Select a job:{/t}</b></td>
  	   <td class="info">
 	     <input type=hidden name="default" value="1"> 				
-		   <select name=server>
+		   <select name=backupjob_name>
  		     {if $smarty.get.server != ""}
  				{html_options values=$smarty.get.server output=$smarty.get.server}
  			 {else}
