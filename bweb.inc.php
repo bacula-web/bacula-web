@@ -543,11 +543,13 @@ class Bweb extends DB {
 			$start_date = date( "Y-m-d H:i:s", $start_date );
 			$end_date   = date( "Y-m-d H:i:s", $end_date );
 			
+			$interval_where = "(EndTime BETWEEN '$start_date' AND '$end_date') AND ";
+			
 			// Job status
 			switch( $type )
 			{
 				case 'completed':
-					$where = "AND JobStatus = 'T' ";
+					$where = $interval_where . "JobStatus = 'T' ";
 					$label = "Completed";
 				break;
 				case 'terminated_errors':
@@ -555,32 +557,33 @@ class Bweb extends DB {
 					$label = "Terminated with errors";
 				break;
 				case 'failed':
-					$where = "AND JobStatus = 'f' ";
+					$where = $interval_where . "JobStatus = 'f' ";
 					$label = "Failed";
 				break;
 				case 'waiting':
-					$where = "AND JobStatus IN ('F','S','M','m','s','j','c','d','t') ";
+					$where = "JobStatus IN ('F','S','M','m','s','j','c','d','t') ";
 					$label = "Waiting";
 				break;
 				case 'created':
-					$where = "AND JobStatus = 'C' ";
+					$where = "JobStatus = 'C' ";
 					$label = "Created but not running";
 				break;
 				case 'running':
-					$where = "AND JobStatus = 'R' ";
+					$where = "JobStatus = 'R' ";
 					$label = "Running";
 				break;
 				case 'error':
-					$where = "AND JobStatus IN ('e','f') ";
+					$where = $interval_where . "JobStatus IN ('e','f') ";
 					$label = "Errors";
 				break;
 			}
 			
 			$query  = 'SELECT COUNT(JobId) AS ' . $type . ' ';
 			$query .= 'FROM Job ';
-			$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date' ";
-			$query .= $where;
+			$query .= "WHERE $where ";
 		
+			//echo 'query = ' . $query . '<br />';
+			
 			$jobs = $this->db_link->query( $query );
 		
 			if (PEAR::isError( $jobs ) ) {
