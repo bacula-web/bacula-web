@@ -18,24 +18,7 @@
 {include file=header.tpl}
 
 <div id="main_left">
-  <!-- General information -->
-  <div class="box">
-	<p class="title">Overall status</p>
-	<table>
-	  <tr>
-	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clientes_totales}</td>
-	  </tr>
-	  <tr>
-		<td class="label">{t}Total bytes stored{/t}</td> <td class="info">{$stored_bytes}</td>
-	  </tr>
-	  <tr>
-		<td class="label">{t}Total files{/t}</td> <td class="info">{$files_totales} file(s)</td>
-	  </tr>
-	  <tr>
-		<td class="label">{t}Database size{/t}</td> <td class="info">{$database_size}</td>
-	  </tr>
-	</table>
-  </div>
+
 
   <!-- Pools and Volumes Status -->
   <div class="box">
@@ -54,35 +37,6 @@
 </div>
 
 <div id="main_middle">
-  <!-- Last job Status -->
-  <div class="box">
-	<p class="title">Last 24 hours status
-		<!-- <a href="jobs.php" title="Show last 24 hours jobs status">View report</a> -->
-	</p>
-		<table>
-			<tr>
-				<td class="label">Failed jobs</td> 
-				<td class="info">{$failed_jobs}</td>
-				<!-- <td class="info"> <a href="jobs.php" title="View last failed jobs">View</a> </td> -->
-			</tr>
-			<tr>
-				<td class="label">Completed jobs</td> 
-				<td class="info">{$completed_jobs}</td>
-				<!-- <td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td> -->
-			</tr> 
-			<tr>
-				<td class="label">Waiting jobs</td> 
-				<td class="info">{$waiting_jobs}</td>
-				<!-- <td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td> -->
-			</tr> 
-			<tr>
-				<td class="label">Transferred Bytes</td> 
-				<td class="info">{$bytes_totales}</td>
-				<!-- <td class="info"> <a href="#" title="View report">View</a> </td> -->
-			</tr> 
-		</table>
-
-  </div> <!-- end div box --> 
   
   <div class="box">
 	<p class="title">
@@ -115,6 +69,54 @@
 </div> <!-- end div main_middle -->
 
 <div id="main_right">
+  <!-- General information -->
+  <div class="box">
+	<p class="title">Overall status</p>
+	<table>
+	  <tr>
+	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clientes_totales}</td>
+	  </tr>
+	  <tr>
+		<td class="label">{t}Total bytes stored{/t}</td> <td class="info">{$stored_bytes}</td>
+	  </tr>
+	  <tr>
+		<td class="label">{t}Total files{/t}</td> <td class="info">{$files_totales} file(s)</td>
+	  </tr>
+	  <tr>
+		<td class="label">{t}Database size{/t}</td> <td class="info">{$database_size}</td>
+	  </tr>
+	</table>
+  </div>
+
+  <!-- Last 24 hours job Status -->
+  <div class="box">
+	<p class="title">Last 24 hours status
+		<!-- <a href="jobs.php" title="Show last 24 hours jobs status">View report</a> -->
+	</p>
+		<table>
+			<tr>
+				<td class="label">Failed jobs</td> 
+				<td class="info">{$failed_jobs}</td>
+				<!-- <td class="info"> <a href="jobs.php" title="View last failed jobs">View</a> </td> -->
+			</tr>
+			<tr>
+				<td class="label">Completed jobs</td> 
+				<td class="info">{$completed_jobs}</td>
+				<!-- <td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td> -->
+			</tr> 
+			<tr>
+				<td class="label">Waiting jobs</td> 
+				<td class="info">{$waiting_jobs}</td>
+				<!-- <td class="info"> <a href="jobs.php" title="View last completed jobs">View</a> </td> -->
+			</tr> 
+			<tr>
+				<td class="label">Transferred Bytes</td> 
+				<td class="info">{$bytes_totales}</td>
+				<!-- <td class="info"> <a href="#" title="View report">View</a> </td> -->
+			</tr> 
+		</table>
+  </div> <!-- end div box -->   
+  
   {include file="$last_report"}
 </div> <!-- end div main_right -->
 
