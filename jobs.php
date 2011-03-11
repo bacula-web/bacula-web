@@ -47,7 +47,7 @@
 			$query .= "WHERE Job.JobStatus = 'R' ";
 		break;
 		case 'waiting':
-			$query .= "WHERE Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','C','R') ";
+			$query .= "WHERE Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','C') ";
 		break;
 		case 'completed':
 			$query .= "WHERE Job.JobStatus = 'T' ";
