@@ -72,7 +72,7 @@ $query = "";
 
 // Stored files number 
 $totalfiles = $dbSql->GetStoredFiles();
-$smarty->assign('files_totales',$totalfiles);
+$smarty->assign('stored_files',$totalfiles);
   
 // Database size
 $smarty->assign('database_size', $dbSql->GetDbSize());
