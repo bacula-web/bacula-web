@@ -71,7 +71,7 @@ $last24bytes = "";
 $query = "";
 
 // Stored files number 
-$totalfiles = $dbSql->GetStoredFiles();
+$totalfiles = $dbSql->GetStoredFiles( ALL );
 $smarty->assign('stored_files',$totalfiles);
   
 // Database size
@@ -83,7 +83,12 @@ $smarty->assign('stored_bytes', $dbSql->human_file_size($result['stored_bytes'])
 
 // Total stored bytes since last 24 hours
 $result = $dbSql->GetStoredBytes( LAST_DAY );
-$smarty->assign('bytes_totales', $dbSql->human_file_size($result['stored_bytes']) );
+$smarty->assign('bytes_last', $dbSql->human_file_size($result['stored_bytes']) );
+
+// Total stored files since last 24 hours
+$files_last = $dbSql->GetStoredFiles( LAST_DAY );
+$smarty->assign('files_last', $files_last );
+
 
 // Number of clients
 $nb_clients = $dbSql->Get_Nb_Clients();

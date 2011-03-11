@@ -109,7 +109,11 @@
 			</tr>
 			<tr>
 				<td class="label">Transferred Bytes</td> 
-				<td class="info">{$bytes_totales}</td>
+				<td class="info">{$bytes_last}</td>
+			</tr>
+			<tr>
+				<td class="label">Transferred Files</td> 
+				<td class="info">{$files_last}</td>
 			</tr>
 		</table>
   </div> <!-- end div box -->   
