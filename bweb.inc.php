@@ -612,19 +612,32 @@ class Bweb extends DB {
 			}
 		}
 		
-		public function GetStoredFiles()
+		public function GetStoredFiles( $delay = LAST_DAY )
 		{
-			$nbfiles = 0;
-			$query = "SELECT COUNT(FilenameId) AS nbfiles FROM Filename";
+			$totalfiles = 0;
+
+			$query = "SELECT SUM(JobFiles) AS stored_files FROM Job ";
+			
+			// Interval calculation
+			$end_date   = mktime();
+			$start_date = $end_date - $delay;
+			
+			$start_date = date( "Y-m-d H:i:s", $start_date );
+			$end_date   = date( "Y-m-d H:i:s", $end_date );			
+
+			if( $delay != ALL )
+				$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date'";
+				
 			$result = $this->db_link->query( $query );
 			
 			if( !PEAR::isError($result) ) {
-				$nbfiles = $result->fetchRow(DB_FETCHMODE_ASSOC);
-				$nbfiles = $nbfiles['nbfiles'];
+				$nbfiles 	= $result->fetchRow(DB_FETCHMODE_ASSOC);
+				$totalfiles = $totalfiles + $nbfiles['stored_files'];
 			}else{
-				die("Unable to get protected files from catalog");
+				die("Unable to get protected files from catalog <br />" . $result->getMessage() );
 			}
-			return $nbfiles;
+			
+			return $totalfiles;
 		}
 		
 		public function GetStoredBytes( $delay = LAST_DAY )
@@ -638,9 +651,8 @@ class Bweb extends DB {
 			$start_date = date( "Y-m-d H:i:s", $start_date );
 			$end_date   = date( "Y-m-d H:i:s", $end_date );
 			
-			if( $delay != ALL ) {
+			if( $delay != ALL )
 				$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date'";
-			}
 			
 			$result = $this->db_link->query( $query );
 			
