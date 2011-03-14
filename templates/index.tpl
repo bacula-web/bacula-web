@@ -125,7 +125,44 @@
 		</table>
   </div> <!-- end div box -->   
   
-  {include file="$last_report"}
-</div> <!-- end div main_right -->
+<div class="box">
+	<p class="title">Reports</p>
+ 
+ <form method="post" action="backupjob-report.php">
+   <table width="100%" cellpadding="0" cellspacing="3" border="0">
+	  <tr>
+		<td colspan=2 align=center>
+		  <a href="javascript:OpenWin('index.php?pop_graph1=yes','600','400')">{t}Last month, bytes transferred{/t}</a>
+		</td>
+	  </tr>
+	  <tr>
+		<td colspan=2 align=center>
+		  <a href="javascript:OpenWin('index.php?pop.graph2=yes','600','400')">{t}Last month, bytes transferred (pie){/t}</a>
+		</td>
+	  </tr>
+	 <tr> <td colspan="2">&nbsp;</td> </tr>
+	 <tr>
+ 	   <td class="label"><b>{t}Job report:{/t}</b></td>
+ 	   <td class="info">
+	     <input type=hidden name="default" value="1"> 				
+		   <select name=backupjob_name>
+ 		     {*
+			 {if $smarty.get.server != ""}
+ 				{html_options values=$smarty.get.server output=$smarty.get.server}
+ 			 {else}
+			 *}
+				{html_options values=$jobs_list output=$jobs_list}
+ 		     {* {/if} *}
+ 		   </select>
+ 	     <input type=submit value="{t}View{/t}">
+	   </td>
+     </tr>
+   </table>
+ </form>
+</div>
+
+{*  {include file="$last_report"}  *}
+
+  </div> <!-- end div main_right -->
 
 {include file="footer.tpl"}

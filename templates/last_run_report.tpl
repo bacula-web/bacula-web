@@ -79,48 +79,7 @@
  {* {/if} *}
 </div> 
 -->
-<div class="box">
-	<p class="title">Reports</p>
- 
- <form method="post" action="backupjob-report.php">
-   <table width="100%" cellpadding="0" cellspacing="3" border="0">
 
-<!-- 
-<tr>
-		<td colspan=2 align=center>
-			<a href="javascript:OpenWin('index.php?Full_popup=yes','490','350')">{t}Show details{/t}</a> 
-			<a href="jobs.php" title="Show last jobs details">Show last jobs status</a>
-		</td>
-	  </tr>   
--->
-	  <tr>
-		<td colspan=2 align=center>
-		  <a href="javascript:OpenWin('index.php?pop_graph1=yes','600','400')">{t}Last month, bytes transferred{/t}</a>
-		</td>
-	  </tr>
-	  <tr>
-		<td colspan=2 align=center>
-		  <a href="javascript:OpenWin('index.php?pop.graph2=yes','600','400')">{t}Last month, bytes transferred (pie){/t}</a>
-		</td>
-	  </tr>
-	 <tr> <td colspan="2">&nbsp;</td> </tr>
-	 <tr>
- 	   <td class="label"><b>{t}Select a job:{/t}</b></td>
- 	   <td class="info">
-	     <input type=hidden name="default" value="1"> 				
-		   <select name=backupjob_name>
- 		     {if $smarty.get.server != ""}
- 				{html_options values=$smarty.get.server output=$smarty.get.server}
- 			 {else}
- 		   	    {html_options values=$total_name_jobs output=$total_name_jobs}
- 		     {/if}
- 		   </select>
- 	     <input type=submit value="{t}go{/t}">
-	   </td>
-     </tr>
-   </table>
- </form>
-</div>
 <!--
 {* {else if #mode# == "Full" || $smarty.get.Full_popup == "yes"} *}
 <table>
