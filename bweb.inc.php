@@ -376,6 +376,29 @@ class Bweb extends DB {
 				return $volumes;
         } // end function GetVolumeList()
 		
+		public function CountJobsbyLevel( $delay = LAST_DAY, $level = 'F' )
+		{
+			$end_date    = mktime();
+			$start_date  = $end_date - $delay;
+			
+			$start_date  = date( "Y-m-d H:i:s", $start_date );
+			$end_date    = date( "Y-m-d H:i:s", $end_date );
+			
+			$query 	 = "SELECT COUNT(JobId) as jobs FROM Job ";
+			$query 	.= "WHERE (EndTime BETWEEN '$start_date' AND '$end_date') AND ";
+			$query 	.= "Level = '$level' ";
+			
+			$result  = $this->db_link->query( $query );
+			
+			if (PEAR::isError( $result ) ) {
+				die( "Unable to get number of jobs with $level status from catalog <br />" . $result->getMessage() );
+			}else {
+				$jobs = $result->fetchRow( DB_FETCHMODE_ASSOC ); 
+				return $jobs['jobs'];
+			}
+			
+		}
+		
 		public function CountJobs( $delay = LAST_DAY, $status = 'any' )
 		{
 			$query 			= "SELECT COUNT(JobId) AS job_nb FROM Job ";

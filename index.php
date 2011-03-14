@@ -30,12 +30,12 @@ $smarty->compile_check = true;
 $smarty->debugging = false;
 $smarty->force_compile = true;
 
-$smarty->template_dir = "./templates";
-$smarty->compile_dir = "./templates_c";
+$smarty->template_dir 	= "./templates";
+$smarty->compile_dir 	= "./templates_c";
 $smarty->config_dir     = "./configs";
 
 /*
-$smarty->config_load("bacula.conf");                                                                                    // Load config file
+$smarty->config_load("bacula.conf");                                        // Load config file
 $mode = $smarty->get_config_vars("mode");     
 */                                                                          // Lite o Extend?
 
@@ -111,6 +111,11 @@ $smarty->assign( 'waiting_jobs', $dbSql->CountJobs( LAST_DAY, 'waiting' ) );
 
 // Last 24 hours elapsed time (last_run_report.tpl)
 //$smarty->assign( 'elapsed_jobs', $dbSql->Get_ElapsedTime_Job() );
+
+// Last 24 hours Job Levels
+$smarty->assign( 'incr_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'I') );
+$smarty->assign( 'diff_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'D') );
+$smarty->assign( 'full_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'F') );
 
 // Last 24 hours Job status graph
 $data   = array();  

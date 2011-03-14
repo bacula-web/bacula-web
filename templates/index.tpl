@@ -108,6 +108,13 @@
 				<td colspan="2" class="label"><hr></td>
 			</tr>
 			<tr>
+				<td class="label">Job Level (Incr / Diff / Full)</td>
+				<td class="info">{$incr_jobs} / {$diff_jobs} / {$full_jobs}</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="label"><hr></td>
+			</tr>
+			<tr>
 				<td class="label">Transferred Bytes</td> 
 				<td class="info">{$bytes_last}</td>
 			</tr>
