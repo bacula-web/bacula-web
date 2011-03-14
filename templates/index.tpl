@@ -30,7 +30,7 @@
   </div> <!-- end div box -->
   
   <div class="box">
-	<p class="title">Stored Bytes (GB / Last 7 days)</p>
+	<p class="title" title="Stored bytes for last 7 days (GB)">Stored Bytes</p>
 	  <img src="{$graph_stored_bytes}" alt="" />
   </div> <!-- end div box -->
 
