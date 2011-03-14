@@ -95,7 +95,7 @@ $nb_clients = $dbSql->Get_Nb_Clients();
 $smarty->assign('clientes_totales',$nb_clients["nb_client"] );
 
 // Backup Job list for report.tpl and last_run_report.tpl
-$smarty->assign( 'total_name_jobs', $dbSql->Get_BackupJob_Names() );
+$smarty->assign( 'jobs_list', $dbSql->Get_BackupJob_Names() );
 
 // Get volumes list (volumes.tpl)
 $smarty->assign('pools', $dbSql->GetVolumeList() );
