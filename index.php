@@ -46,6 +46,7 @@ if( $mode == false )
 
 $smarty->assign( "mode", $mode );
 
+/*
 // Determine which template to show
 $indexreport = $dbSql->get_config_param( "IndexReport" );
 
@@ -54,6 +55,7 @@ if( $indexreport == 0 ) {
 }else {
 	$smarty->assign( "last_report", "report_select.tpl" );
 }
+*/
 
 // Assign to template catalogs number
 $smarty->assign( "dbs", $dbSql->Get_Nb_Catalogs() );
@@ -65,10 +67,6 @@ if ( count($dbSql->dbs) >1 ) {
   $smarty->assign("dbs_now", $_SESSION['DATABASE']);
 }
 */
-
-// generaldata.tpl & last_run_report.tpl ( Last 24 hours report )
-$last24bytes = "";
-$query = "";
 
 // Stored files number 
 $totalfiles = $dbSql->GetStoredFiles( ALL );
