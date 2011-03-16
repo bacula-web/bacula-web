@@ -13,12 +13,12 @@
 <div id="main_center">
 	<div class="box">
 	  <p class="title">Required components</p>
-	<table>
+	<table border="0">
 		{foreach from=$checks item=check}
 		  <tr>
-		    <td> <b>{$check.check_label}</b> </td>
-			<td>{$check.check_descr}</td>
-			<td> <img src='style/images/{$check.check_result}' width='20' alt=''/></td>
+		    <td width="250">{$check.check_label}</td>
+			<td width="450">{$check.check_descr}</td>
+			<td  style="text-align:center;"> <img src='style/images/{$check.check_result}' width='20' alt=''/></td>
 		  </tr>
 		{/foreach}
 	</table>
@@ -29,7 +29,7 @@
 	<table>
 	  <tr>
 	    <td>
-			<b>Graph system capabilities (Bacula-web only use PNG)</b>
+			Graph system capabilities (Bacula-web only use PNG image format)
 		</td>
 	    <td colspan="2">
 		  <img src="{$graph_test}" alt='' />
