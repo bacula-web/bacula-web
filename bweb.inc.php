@@ -15,6 +15,8 @@
 +-------------------------------------------------------------------------+ 
 */
 require_once "paths.php";
+require_once($smarty_path."Smarty.class.php");
+
 require_once "DB.php";                                                                                                                  // Pear DB
 require_once "config.inc.php";
 require_once "bgraph.inc.php";
@@ -27,6 +29,7 @@ class Bweb extends DB {
 	var $dbs;
 	var $dbs_name;
 	
+	public $tpl;
 	public $db_link;						// Database link
 	private $db_dsn;						// Data Source Name
 	
@@ -61,9 +64,51 @@ class Bweb extends DB {
             register_shutdown_function(array(&$this,'close'));
 			$this->dbs_name = $this->db_dsn['database'];
 		}
+		
+		// Initialize smarty template classe
+		$this->init_tpl();
+		// Initialize smarty gettext function
+		$this->init_gettext();
 	}
                 
-    function load_config()
+    // Initialize Smarty template classe
+	function init_tpl()
+	{
+		$this->tpl = new Smarty();
+		
+		$this->tpl->compile_check 	= true;
+		$this->tpl->debugging 		= false;
+		$this->tpl->force_compile 	= true;
+
+		$this->tpl->template_dir 	= "./templates";
+		$this->tpl->compile_dir 	= "./templates_c";
+		$this->tpl->config_dir     	= "./configs";
+	}
+	
+	function init_gettext()
+	{
+		global $smarty_gettext_path;
+		
+		if ( function_exists("gettext") ) {
+			require_once( $smarty_gettext_path."smarty_gettext.php" );     
+			$this->tpl->register_block('t','smarty_translate');
+        
+			$language = $this->get_config_param("lang");
+			$domain = "messages";   
+			putenv("LANG=$language"); 
+			setlocale(LC_ALL, $language);
+			bindtextdomain($domain,"./locale");
+			textdomain($domain);
+		}
+		else {
+			function smarty_translate($params, $text, &$smarty) {
+                return $text;
+			}
+			$smarty->register_block('t','smarty_translate');
+		}
+	}
+	
+	function load_config()
 	{
 		$this->config = parse_ini_file( $this->config_file, true );
 		

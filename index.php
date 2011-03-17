@@ -15,50 +15,26 @@
 +-------------------------------------------------------------------------+ 
 */
 session_start();
-require ("paths.php");
-require($smarty_path."Smarty.class.php");
-include "bweb.inc.php";
+require_once('paths.php');
+include_once( 'bweb.inc.php' );
 
-$smarty = new Smarty();     
 $dbSql = new Bweb();
 
-require("lang.php");
+//require("lang.php");
 
 $mode = "";				
 
-$smarty->compile_check = true;
-$smarty->debugging = false;
-$smarty->force_compile = true;
-
-$smarty->template_dir 	= "./templates";
-$smarty->compile_dir 	= "./templates_c";
-$smarty->config_dir     = "./configs";
-
 /*
-$smarty->config_load("bacula.conf");                                        // Load config file
-$mode = $smarty->get_config_vars("mode");     
-*/                                                                          // Lite o Extend?
-
 // Getting mode from config file
 $mode = $dbSql->get_config_param("mode");
 if( $mode == false )
 	$mode = "Lite";
 
 $smarty->assign( "mode", $mode );
-
-/*
-// Determine which template to show
-$indexreport = $dbSql->get_config_param( "IndexReport" );
-
-if( $indexreport == 0 ) {
-	$smarty->assign( "last_report", "last_run_report.tpl" );
-}else {
-	$smarty->assign( "last_report", "report_select.tpl" );
-}
 */
 
 // Assign to template catalogs number
-$smarty->assign( "dbs", $dbSql->Get_Nb_Catalogs() );
+$dbSql->tpl->assign( "dbs", $dbSql->Get_Nb_Catalogs() );
 
 //Assign dbs
 /*
@@ -70,50 +46,50 @@ if ( count($dbSql->dbs) >1 ) {
 
 // Stored files number 
 $totalfiles = $dbSql->GetStoredFiles( ALL );
-$smarty->assign('stored_files',$totalfiles);
+$dbSql->tpl->assign('stored_files',$totalfiles);
   
 // Database size
-$smarty->assign('database_size', $dbSql->GetDbSize());
+$dbSql->tpl->assign('database_size', $dbSql->GetDbSize());
 
 // Overall stored bytes
 $result = $dbSql->GetStoredBytes( ALL );
-$smarty->assign('stored_bytes', $dbSql->human_file_size($result['stored_bytes']) );
+$dbSql->tpl->assign('stored_bytes', $dbSql->human_file_size($result['stored_bytes']) );
 
 // Total stored bytes since last 24 hours
 $result = $dbSql->GetStoredBytes( LAST_DAY );
-$smarty->assign('bytes_last', $dbSql->human_file_size($result['stored_bytes']) );
+$dbSql->tpl->assign('bytes_last', $dbSql->human_file_size($result['stored_bytes']) );
 
 // Total stored files since last 24 hours
 $files_last = $dbSql->GetStoredFiles( LAST_DAY );
-$smarty->assign('files_last', $files_last );
+$dbSql->tpl->assign('files_last', $files_last );
 
 
 // Number of clients
 $nb_clients = $dbSql->Get_Nb_Clients();
-$smarty->assign('clientes_totales',$nb_clients["nb_client"] );
+$dbSql->tpl->assign('clientes_totales',$nb_clients["nb_client"] );
 
 // Backup Job list for report.tpl and last_run_report.tpl
-$smarty->assign( 'jobs_list', $dbSql->Get_BackupJob_Names() );
+$dbSql->tpl->assign( 'jobs_list', $dbSql->Get_BackupJob_Names() );
 
 // Get volumes list (volumes.tpl)
-$smarty->assign('pools', $dbSql->GetVolumeList() );
+$dbSql->tpl->assign('pools', $dbSql->GetVolumeList() );
 
 // Last 24 hours completed jobs number
-$smarty->assign( 'completed_jobs', $dbSql->CountJobs( LAST_DAY, 'completed' ) );
+$dbSql->tpl->assign( 'completed_jobs', $dbSql->CountJobs( LAST_DAY, 'completed' ) );
 
 // Last 24 hours failed jobs number
-$smarty->assign( 'failed_jobs', $dbSql->CountJobs( LAST_DAY, 'failed' ) );
+$dbSql->tpl->assign( 'failed_jobs', $dbSql->CountJobs( LAST_DAY, 'failed' ) );
 
 // Last 24 hours waiting jobs number
-$smarty->assign( 'waiting_jobs', $dbSql->CountJobs( LAST_DAY, 'waiting' ) );
+$dbSql->tpl->assign( 'waiting_jobs', $dbSql->CountJobs( LAST_DAY, 'waiting' ) );
 
 // Last 24 hours elapsed time (last_run_report.tpl)
 //$smarty->assign( 'elapsed_jobs', $dbSql->Get_ElapsedTime_Job() );
 
 // Last 24 hours Job Levels
-$smarty->assign( 'incr_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'I') );
-$smarty->assign( 'diff_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'D') );
-$smarty->assign( 'full_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'F') );
+$dbSql->tpl->assign( 'incr_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'I') );
+$dbSql->tpl->assign( 'diff_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'D') );
+$dbSql->tpl->assign( 'full_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'F') );
 
 // Last 24 hours Job status graph
 $data   = array();  
@@ -128,7 +104,7 @@ $graph->SetData( $data, 'pie', 'text-data-single' );
 $graph->SetGraphSize( 400, 230 );
 
 $graph->Render();
-$smarty->assign('graph_jobs', $graph->Get_Image_file() );
+$dbSql->tpl->assign('graph_jobs', $graph->Get_Image_file() );
 unset($graph);
 
 // Pool and volumes graph
@@ -145,7 +121,7 @@ $graph->SetData( $data, 'pie', 'text-data-single' );
 $graph->SetGraphSize( 400, 230 );
 
 $graph->Render();
-$smarty->assign('graph_pools', $graph->Get_Image_file() );
+$dbSql->tpl->assign('graph_pools', $graph->Get_Image_file() );
 
 // Last 7 days stored Bytes graph
 $data  = array();
@@ -168,7 +144,7 @@ $graph->SetData( $days_stored_bytes, 'bars', 'text-data' );
 $graph->SetGraphSize( 400, 230 );
 
 $graph->Render();
-$smarty->assign('graph_stored_bytes', $graph->Get_Image_file() );
+$dbSql->tpl->assign('graph_stored_bytes', $graph->Get_Image_file() );
 
 // Last 15 used volumes
 $vol_list = array();
@@ -187,12 +163,12 @@ else {
 	while ( $vol = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) 
 		array_push( $vol_list, $vol );
 }
-$smarty->assign( 'volume_list', $vol_list );	
+$dbSql->tpl->assign( 'volume_list', $vol_list );	
 
 //if ($_GET['Full_popup'] == "yes" || $_GET['pop_graph1'] == "yes" || $_GET['pop_graph2'] == "yes")
 //        $smarty->display('full_popup.tpl');
 //else
 
 // Render template
-$smarty->display('index.tpl');
+$dbSql->tpl->display('index.tpl');
 ?>
