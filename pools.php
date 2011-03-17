@@ -8,8 +8,6 @@
   $smarty = new Smarty();
   $dbSql = new Bweb();
 
-  require("lang.php");
-
   // Smarty configuration
   $smarty->compile_check = true;
   $smarty->debugging = false;

@@ -31,8 +31,6 @@ $smarty->config_load("bacula.conf");
 
 $dbSql = new Bweb();
 
-require("lang.php");
-
 if ( $_GET['default'] == 1) {                                                                                                   // Default params, 1 month
         $dbSql->StartDate = strftime("%Y-%m-%d %H:%M:%S",time()-2678400);
         $dbSql->EndDate = strftime("%Y-%m-%d %H:%M:%S",time());

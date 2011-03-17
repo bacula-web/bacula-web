@@ -5,8 +5,6 @@
 
 	$smarty = new Smarty(); 
 
-	//require_once ("lang.php");
-
 	// Smarty configuration
 	$smarty->compile_check 	= true;
 	$smarty->debugging 		= false;

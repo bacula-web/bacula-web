@@ -20,8 +20,6 @@ include_once( 'bweb.inc.php' );
 
 $dbSql = new Bweb();
 
-//require("lang.php");
-
 $mode = "";				
 
 /*
