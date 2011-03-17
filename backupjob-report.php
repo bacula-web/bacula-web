@@ -1,21 +1,9 @@
 <?php
   session_start();
-  require_once ("paths.php");
-  require_once ($smarty_path."Smarty.class.php");
-  require_once ("bweb.inc.php");
-  require_once ("config.inc.php");  
+  require_once('paths.php');
+  include_once( 'bweb.inc.php' );
 
-  $smarty = new Smarty();     
   $dbSql = new Bweb();
-
-  // Smarty configuration
-  $smarty->compile_check = true;
-  $smarty->debugging = false;
-  $smarty->force_compile = true;
-
-  $smarty->template_dir = "./templates";
-  $smarty->compile_dir = "./templates_c";
-  $smarty->config_dir     = "./configs";
 
   $backupjob_name = "";
   $days  = array();
@@ -52,7 +40,7 @@
   $graph->SetGraphSize( 400, 230 );
 
   $graph->Render();
-  $smarty->assign('graph_stored_bytes', $graph->Get_Image_file() );	
+  $dbSql->tpl->assign('graph_stored_bytes', $graph->Get_Image_file() );	
   
   // Getting last 7 days stored files graph
   $graph = new BGraph("graph3.png" );
@@ -71,7 +59,7 @@
   $graph->SetGraphSize( 400, 230 );
 
   $graph->Render();
-  $smarty->assign('graph_stored_files', $graph->Get_Image_file() );
+  $dbSql->tpl->assign('graph_stored_files', $graph->Get_Image_file() );
 
   // Last 10 jobs
   $query    = "SELECT JobId, Level, JobFiles, JobBytes, JobStatus, EndTime, Name ";  
@@ -94,14 +82,14 @@
   }else
 	die( "Unable to get last jobs from catalog " . $result->getMessage() );
     
-  $smarty->assign('jobs', $jobs );
+  $dbSql->tpl->assign('jobs', $jobs );
   
-  $smarty->assign('backupjob_name', $backupjob_name );
-  $smarty->assign('backupjob_period', $backupjob_period );
-  $smarty->assign('backupjob_bytes', $backupjob_bytes );
-  $smarty->assign('backupjob_files', $backupjob_files );
+  $dbSql->tpl->assign('backupjob_name', $backupjob_name );
+  $dbSql->tpl->assign('backupjob_period', $backupjob_period );
+  $dbSql->tpl->assign('backupjob_bytes', $backupjob_bytes );
+  $dbSql->tpl->assign('backupjob_files', $backupjob_files );
   
   // Process and display the template 
-  $smarty->display('backupjob-report.tpl'); 
+  $dbSql->tpl->display('backupjob-report.tpl'); 
   
 ?>

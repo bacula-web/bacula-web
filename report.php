@@ -15,19 +15,8 @@
 +-------------------------------------------------------------------------+ 
 */
 session_start();
-require ("paths.php");
-require($smarty_path."Smarty.class.php");
-include "bweb.inc.php";
-
-$smarty = new Smarty;
-
-//$smarty->compile_check = true;
-//$smarty->debugging = true;
-
-$smarty->template_dir   = "./templates";
-$smarty->compile_dir    = "./templates_c";
-$smarty->config_dir     = "./configs";
-$smarty->config_load("bacula.conf");
+require_once('paths.php');
+include_once( 'bweb.inc.php' );
 
 $dbSql = new Bweb();
 
@@ -74,5 +63,5 @@ $smarty->assign('time2',( (time())-2678400) );                                  
 
 
 
-$smarty->display('report.tpl');
+$dbSql->tpl->display('report.tpl');
 ?>

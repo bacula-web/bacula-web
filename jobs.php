@@ -1,33 +1,20 @@
 <?php
   session_start();
-  require_once ("paths.php");
-  require_once ($smarty_path."Smarty.class.php");
-  require_once ("bweb.inc.php");
-  require_once ("config.inc.php");  
+  require_once('paths.php');
+  include_once( 'bweb.inc.php' );
 
-  $smarty = new Smarty();     
   $dbSql = new Bweb();
-
-  // Smarty configuration
-  $smarty->compile_check = true;
-  $smarty->debugging = false;
-  $smarty->force_compile = true;
-
-  $smarty->template_dir = "./templates";
-  $smarty->compile_dir = "./templates_c";
-  $smarty->config_dir     = "./configs";
-  
   // Jobs list
   $query 	   = "";
   $last_jobs = array();
   
   // Job Status list
   $job_status = array( 'Any', 'Waiting', 'Running', 'Completed', 'Failed', 'Canceled' );
-  $smarty->assign( 'job_status', $job_status );
+  $dbSql->tpl->assign( 'job_status', $job_status );
   
   // Jobs per page
   $jobs_per_page = array( 25,50,75,100,150 );
-  $smarty->assign( 'jobs_per_page', $jobs_per_page );
+  $dbSql->tpl->assign( 'jobs_per_page', $jobs_per_page );
 
   // Global variables
   $job_level = array( 'D' => 'Diff', 'I' => 'Incr', 'F' => 'Full' );
@@ -126,7 +113,7 @@
 		array_push( $last_jobs, $job);
 	  }
   }
-  $smarty->assign( 'last_jobs', $last_jobs );
+  $dbSql->tpl->assign( 'last_jobs', $last_jobs );
   
   // Count jobs
   if( isset( $_POST['status'] ) )
@@ -134,8 +121,8 @@
   else
 	$total_jobs = $dbSql->CountJobs( ALL );
   
-  $smarty->assign( 'total_jobs', $total_jobs );
+  $dbSql->tpl->assign( 'total_jobs', $total_jobs );
   
   // Process and display the template 
-  $smarty->display('jobs.tpl');
+  $dbSql->tpl->display('jobs.tpl');
 ?>

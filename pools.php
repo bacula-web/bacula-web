@@ -1,24 +1,12 @@
 <?php
   session_start();
-  require_once ("paths.php");
-  require_once ($smarty_path."Smarty.class.php");
-  require_once ("bweb.inc.php");
-  require_once ("config.inc.php");
+  require_once('paths.php');
+  include_once( 'bweb.inc.php' );
 
-  $smarty = new Smarty();
   $dbSql = new Bweb();
 
-  // Smarty configuration
-  $smarty->compile_check = true;
-  $smarty->debugging = false;
-  $smarty->force_compile = true;
-
-  $smarty->template_dir = "./templates";
-  $smarty->compile_dir = "./templates_c";
-  $smarty->config_dir     = "./configs";
-
   // Get volumes list (pools.tpl)
-  $smarty->assign('pools',$dbSql->GetVolumeList() );
+  $dbSql->tpl->assign('pools',$dbSql->GetVolumeList() );
 
-  $smarty->display('pools.tpl');
+  $dbSql->tpl->display('pools.tpl');
 ?>
