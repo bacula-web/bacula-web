@@ -20,10 +20,6 @@ require_once "config.inc.php";
 require_once "bgraph.inc.php";
 require_once($smarty_path."Config_File.class.php");
 
-if (!function_exists('array_fill')) {                                                                                   // For PHP < 4.2.0 users 
-    require_once('array_fill.func.php');
-}
-
 class Bweb extends DB {
 
     var $StartDate;
