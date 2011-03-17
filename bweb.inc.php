@@ -18,7 +18,6 @@ require_once "paths.php";
 require_once "DB.php";                                                                                                                  // Pear DB
 require_once "config.inc.php";
 require_once "bgraph.inc.php";
-require_once($smarty_path."Config_File.class.php");
 
 class Bweb extends DB {
 
@@ -41,50 +40,10 @@ class Bweb extends DB {
 		
 		// Loading configuration
 		$this->config_file = getcwd() . '/configs/bacula.conf';
+		
 		if( !$this->load_config() )
 			die( "Unable to load configuration");
 			
-		//echo "Number of catalog defined " . count($this->catalogs) . "<br />";
-		
-		/*
-		$conf = new Config_File (CONFIG_DIR);
-		$this->dbs = array();
-
-		$i = 2;
-		$sections = $conf->get(CONFIG_FILE,"DATABASE","host");
-		array_push($this->dbs, "DATABASE");
-
-		while ( !empty($sections) ) {                
-			$sections = $conf->get(CONFIG_FILE,"DATABASE".$i,"host");
-			if ( !empty($sections) )
-				array_push($this->dbs,"DATABASE".$i);
-			$i++;
-		}
-
-		if ( $i < 4)
-			$sec = "DATABASE";
-		else {
-			if ( !empty($_POST['sel_database']) ) {
-				$_SESSION['DATABASE'] = $_POST['sel_database'];
-				$sec = $_POST['sel_database'];
-			} else {
-				if (isset($_SESSION['DATABASE']) )
-					$sec = $_SESSION['DATABASE'];
-				else
-					$sec = "DATABASE";
-			}
-		}
-
-        $this->dsn['hostspec'] = $conf->get(CONFIG_FILE,$sec,"host");
-        $this->dsn['username'] = $conf->get(CONFIG_FILE,$sec,"login");
-        $this->dsn['password'] = $conf->get(CONFIG_FILE,$sec,"pass");
-        $this->dsn['database'] = $conf->get(CONFIG_FILE,$sec,"db_name");
-        $this->dsn['phptype']  = $conf->get(CONFIG_FILE,$sec,"db_type");   // mysql, pgsql
-        
-		if (  $conf->get(CONFIG_FILE,$sec,"db_port") )
-			$this->dsn[port] = $conf->get(CONFIG_FILE,$sec,"db_port");
-		*/
-		
 		// Construct a valid dsn
         $this->db_dsn['hostspec'] = $this->catalogs[0]["host"];
         $this->db_dsn['username'] = $this->catalogs[0]["login"];
@@ -237,34 +196,6 @@ class Bweb extends DB {
 				die( "Unable to get database size<br />" . $jobs->getMessage() );
 			
 			return $this->human_file_size( $database_size );  
-			
-			/*
-			if ( $this->driver == "mysql") {
-				$dbsize = $this->db_link->query("show table status") or die ("classes.inc: Error query: 3");
-				
-				if ( $dbsize->numRows() ) {
-					while ( $res = $dbsize->fetchRow(DB_FETCHMODE_ASSOC) )
-						$database_size += $res["Data_length"];
-                } else {
-					return 0;
-				} // end if else
-            } // end if
-            else if ( $this->driver == "pgsql") {
-				$dbsize = $this->db_link->query("select pg_database_size('$this->dbs_name')") or die ("classes.inc: Error query: 4");
-				
-				if (PEAR::isError($dbsize))
-					die($dbsize->getMessage());
-                    
-				if ( $dbsize->numRows() ) {
-					while ( $res = $dbsize->fetchRow() )
-						$database_size += $res[0];
-                } else {
-					return 0;
-				}
-            } // end if       
-				
-			$dbsize->free();
-			*/
         } // end function GetDbSize()
 		
 		public function Get_Nb_Clients()
@@ -296,11 +227,6 @@ class Bweb extends DB {
 					switch( $this->driver )
 					{
 						case 'mysql':
-/*
-							$query  = "SELECT Media.VolumeName, Media.VolBytes, Media.VolStatus, Pool.Name, Media.MediaType,Media.LastWritten, FROM_UNIXTIME(UNIX_TIMESTAMP(Media.LastWritten)+Media.VolRetention ) AS expire 
-									   FROM Pool LEFT JOIN Media ON Media.PoolId=Pool.PoolId WHERE poolid='$pool[0]' 
-									   ORDER BY Media.VolumeName";
-*/
 							$query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention
 									   FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid
 								       WHERE Media.poolid = '". $pool['poolid'] . "' ORDER BY Media.volumename";
@@ -309,11 +235,6 @@ class Bweb extends DB {
 							$query  = "SELECT media.volumename, media.volbytes, media.volstatus, media.mediatype, media.lastwritten, media.volretention
 									   FROM media LEFT JOIN pool ON media.poolid = pool.poolid
 								       WHERE media.poolid = '". $pool['poolid'] . "' ORDER BY media.volumename";
-							/*
-							$query  = "SELECT Media.VolumeName, Media.VolBytes,Media.VolStatus,Pool.Name,Media.MediaType,Media.LastWritten, Media.LastWritten + Media.VolRetention * interval '1 second' AS expire 
-									   FROM Pool LEFT JOIN Media ON media.poolid=pool.poolid WHERE poolid='$pool[0]' 
-									   ORDER BY Media.VolumeName";
-							*/
 						break;
 						case 'sqlite':
 							$query  = "";		// not yet implemented
@@ -322,7 +243,6 @@ class Bweb extends DB {
 						break;
 					} // end switch
 					
-					//$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
 					$medias = $this->db_link->query( $query );
 
 					if( PEAR::isError( $medias ) ) {
@@ -752,6 +672,5 @@ class Bweb extends DB {
 				return array( $day, $stored_files );
 			}			
 		}
-
 } // end class Bweb
 ?>
