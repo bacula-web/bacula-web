@@ -128,8 +128,58 @@
 <div class="box">
 	<p class="title">Reports</p>
  
+ <!-- Last month backup report -->
+ <form method="post" action="report.php">
+	<table width="100%">
+		<tr>
+			<td class="label" colspan="2"><b>Custom Report</b></td>
+		</tr>
+		<tr>
+			<td class="label">Report type</td>
+			<td class="info">
+				<select>
+					<option>{t}Transfered Bytes{/t}
+					<option>{t}Transfered Files {/t}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">Client</td>
+			<td class="info">
+				Client list here + All
+			</td>
+		</tr>
+		<tr>
+			<td class="label">Graph type</td>
+			<td class="info">
+				<select>
+					<option>Bars
+					<option>Line
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="label">Interval</td>
+			<td class="info">
+				<select>
+					<option>Last day
+					<option>Last week
+					<option>Last month
+				</select>
+			</td>
+		</tr>		
+		<tr>
+			<td colspan="2" class="info">
+				<input type="submit" value="Run report"/>
+			</td>
+		</tr>
+	</table>
+ </form>
+ 
+ <!-- Backup job report form -->
  <form method="post" action="backupjob-report.php">
-   <table width="100%" cellpadding="0" cellspacing="3" border="0">
+   <table border="0">
+<!--
 	  <tr>
 		<td colspan=2 align=center>
 		  <a href="javascript:OpenWin('index.php?pop_graph1=yes','600','400')">{t}Last month, bytes transferred{/t}</a>
@@ -140,10 +190,14 @@
 		  <a href="javascript:OpenWin('index.php?pop.graph2=yes','600','400')">{t}Last month, bytes transferred (pie){/t}</a>
 		</td>
 	  </tr>
-	 <tr> <td colspan="2">&nbsp;</td> </tr>
+-->
+	 <tr> <td colspan="2" class="label">&nbsp;</td> </tr>
 	 <tr>
- 	   <td class="label"><b>{t}Job report:{/t}</b></td>
- 	   <td class="info">
+ 	   <td colspan="2" class="label"><b>{t}Backup Job report:{/t}</b></td>
+	 </tr>
+	 <tr>
+		<td class="label">Select a backup job</td>
+		<td class="info">
 	     <input type=hidden name="default" value="1"> 				
 		   <select name=backupjob_name>
  		     {*
@@ -154,12 +208,14 @@
 				{html_options values=$jobs_list output=$jobs_list}
  		     {* {/if} *}
  		   </select>
- 	     <input type=submit value="{t}View{/t}">
 	   </td>
-     </tr>
+	 </tr>
+	 <tr>
+	 <td colspan="2" class="info"> <input type=submit value="{t}View{/t}"> </td>
+	 </tr>
    </table>
  </form>
-</div>
+</div> <!-- end div class=box -->
 
 {*  {include file="$last_report"}  *}
 
