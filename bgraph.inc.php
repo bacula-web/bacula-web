@@ -1,5 +1,4 @@
 <?php
-require_once ("external_packages/phplot/phplot.php");
 
 class BGraph{
 	private $title;

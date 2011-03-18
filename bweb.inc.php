@@ -14,12 +14,7 @@
 | GNU General Public License for more details.                            |
 +-------------------------------------------------------------------------+ 
 */
-require_once "paths.php";
-require_once($smarty_path."Smarty.class.php");
-
-require_once "DB.php";                                                                                                                  // Pear DB
 require_once "config.inc.php";
-require_once "bgraph.inc.php";
 
 class Bweb extends DB {
 

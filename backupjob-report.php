@@ -1,6 +1,5 @@
 <?php
   session_start();
-  require_once('paths.php');
   include_once( 'bweb.inc.php' );
 
   $dbSql = new Bweb();

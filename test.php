@@ -1,19 +1,7 @@
 <?php
-	require_once ("paths.php");
-	require_once ($smarty_path."Smarty.class.php");
 	require_once ("bweb.inc.php");
-
-	$smarty = new Smarty(); 
-
-	// Smarty configuration
-	$smarty->compile_check 	= true;
-	$smarty->debugging 		= false;
-	$smarty->force_compile 	= true;
-
-	$smarty->template_dir 	= "./templates";
-	$smarty->compile_dir 	= "./templates_c";
-	$smarty->config_dir     = "./configs";  
-  
+	$bw = new Bweb();
+	
 	// Check result icon
     $check_result = array( true => 's_ok.png', false => 's_error.gif' );
 	
@@ -75,7 +63,7 @@
 	$graph->Render();
 
 	// Parse to template
-	$smarty->assign( 'checks', $check_list );
-	$smarty->assign('graph_test', $graph->Get_Image_file() );
-	$smarty->display('test.tpl');
+	$bw->tpl->assign( 'checks', $check_list );
+	$bw->tpl->assign('graph_test', $graph->Get_Image_file() );
+	$bw->tpl->display('test.tpl');
 ?>
