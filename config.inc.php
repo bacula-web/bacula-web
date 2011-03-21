@@ -1,5 +1,7 @@
 <?php
- define( 'BW_ROOT', getcwd() );														
+ define( 'BW_ROOT', getcwd() );	
+ define( 'BW_OBJ', BW_ROOT . '/classes/' ); 
+ 
  define( 'BW_PHPLOT', BW_ROOT . '/external_packages/phplot/'  );					
  define( 'BW_SMARTY', BW_ROOT . '/external_packages/smarty/libs/' );				
  define( 'BW_SMARTY_GETTEXT', BW_ROOT . '/external_packages/smarty_gettext-0.9/' );
@@ -11,7 +13,7 @@
  require_once "DB.php";   
  
  // Internal libs
- require_once "bgraph.inc.php";
+ require_once BW_OBJ . "graph/bgraph.inc.php";
  require_once "bweb.inc.php";
  
  // Global constants
