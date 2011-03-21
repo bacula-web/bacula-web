@@ -1,21 +1,18 @@
 <?php
- // PhPlot (version 5.3.1) 
- // http://www.phplot.com
- $phplot_path = "external_packages/phplot/";
-
- // Smarty (version 2.6.26)
- // http://smarty.php.net
- $smarty_path = "external_packages/smarty/libs/";
-
- // Smarty_gettext (version 0.9)
- // http://www.boom.org.il/smarty/gettext/
- $smarty_gettext_path = "external_packages/smarty_gettext-0.9/"; 
+ define( 'BW_ROOT', getcwd() );														
+ define( 'BW_PHPLOT', BW_ROOT . '/external_packages/phplot/'  );					
+ define( 'BW_SMARTY', BW_ROOT . '/external_packages/smarty/libs/' );				
+ define( 'BW_SMARTY_GETTEXT', BW_ROOT . '/external_packages/smarty_gettext-0.9/' );
  
- require_once( $smarty_path . "Smarty.class.php");
- require_once( $phplot_path . "phplot.php");
+ require_once( BW_SMARTY . "Smarty.class.php");			
+ require_once( BW_PHPLOT . "phplot.php");				
  
+ // PEAR-DB classe
  require_once "DB.php";   
+ 
+ // Internal libs
  require_once "bgraph.inc.php";
+ require_once "bweb.inc.php";
  
  // Global constants
  define('CONFIG_DIR', "configs");

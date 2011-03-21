@@ -85,7 +85,7 @@ class Bweb extends DB {
 		global $smarty_gettext_path;
 		
 		if ( function_exists("gettext") ) {
-			require_once( $smarty_gettext_path."smarty_gettext.php" );     
+			require_once( BW_SMARTY_GETTEXT . "smarty_gettext.php" );     
 			$this->tpl->register_block('t','smarty_translate');
         
 			$language = $this->get_config_param("lang");
