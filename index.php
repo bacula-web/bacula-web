@@ -21,19 +21,9 @@ $dbSql = new Bweb();
 
 $mode = "";				
 
-/*
-// Getting mode from config file
-$mode = $dbSql->get_config_param("mode");
-if( $mode == false )
-	$mode = "Lite";
-
-$smarty->assign( "mode", $mode );
-*/
-
 // Assign to template catalogs number
-$dbSql->tpl->assign( "dbs", $dbSql->Get_Nb_Catalogs() );
-
-//Assign dbs
+// $dbSql->tpl->assign( "dbs", $dbSql->Get_Nb_Catalogs() );
+// Assign dbs
 /*
 if ( count($dbSql->dbs) >1 ) {
   $smarty->assign("dbs", $dbSql->dbs);

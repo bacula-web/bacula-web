@@ -7,8 +7,7 @@
 	
 	function __construct()
 	{
-			if( !$this->Check_Config_file() )
-				return true;
+		
 	}
 	
 	public function Check_Config_file()
@@ -17,9 +16,9 @@
 		return is_readable( CONFIG_FILE );
 	}
 	
-	public function Get_Config()
+	public function Load_Config()
 	{
-		$this->config = parse_ini_file( $this->config_file, true );
+		$this->config = parse_ini_file( CONFIG_FILE, true );
 		
 		if( !$this->config == false ) {
 			// Loading database connection information
@@ -33,12 +32,10 @@
 			return false;		
 	}
 	
-	public function Get_Config_Params( $params = array() )
+	public function Get_Config_Param( $param )
 	{
 		if( isset( $this->config[$param] ) )
 			return $this->config[$param];
-		else
-			return false;
 	}
 	
 	public function Count_Catalogs()
@@ -48,7 +45,14 @@
 	
 	public function Get_Dsn( $catalog_id )
 	{
-		
+		// Construct a valid dsn
+		$dsn = array();
+        $dsn['hostspec'] = $this->catalogs[$catalog_id]["host"];
+        $dsn['username'] = $this->catalogs[$catalog_id]["login"];
+		$dsn['password'] = $this->catalogs[$catalog_id]["pass"];
+		$dsn['database'] = $this->catalogs[$catalog_id]["db_name"];
+		$dsn['phptype']  = $this->catalogs[$catalog_id]["db_type"];
+		return $dsn;
 	}
 		
 	function __destruct()
