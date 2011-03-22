@@ -1,10 +1,11 @@
 <?php
  define( 'BW_ROOT', getcwd() );	
  define( 'BW_OBJ', BW_ROOT . '/classes/' ); 
+ define( 'BW_EXTERNAL', BW_OBJ . 'external' );
  
- define( 'BW_PHPLOT', BW_ROOT . '/external_packages/phplot/'  );					
- define( 'BW_SMARTY', BW_ROOT . '/external_packages/smarty/libs/' );				
- define( 'BW_SMARTY_GETTEXT', BW_ROOT . '/external_packages/smarty_gettext-0.9/' );
+ define( 'BW_PHPLOT', BW_EXTERNAL . '/phplot/'  );					
+ define( 'BW_SMARTY', BW_EXTERNAL . '/smarty/libs/' );				
+ define( 'BW_SMARTY_GETTEXT', BW_EXTERNAL . '/smarty_gettext-0.9/' );
  
  require_once( BW_SMARTY . "Smarty.class.php");			
  require_once( BW_PHPLOT . "phplot.php");				
