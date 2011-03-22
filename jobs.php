@@ -1,6 +1,6 @@
 <?php
   session_start();
-  include_once( 'bweb.inc.php' );
+  include_once( 'config.inc.php' );
 
   $dbSql = new Bweb();
   // Jobs list

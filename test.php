@@ -1,5 +1,5 @@
 <?php
-	require_once ("bweb.inc.php");
+	require_once ("config.inc.php");
 	$bw = new Bweb();
 	
 	// Check result icon
