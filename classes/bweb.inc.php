@@ -25,7 +25,6 @@ class Bweb extends DB {
 	
 	public $tpl;
 	public $db_link;						// Database link
-	private $db_dsn;						// Data Source Name
 	
 	private $config_file;					// Config filename
 	private $config;						// Loaded config from bacula.conf
