@@ -18,12 +18,9 @@
  require_once "bweb.inc.php";
  
  // Global constants
- define('CONFIG_DIR', "configs");
- define('CONFIG_FILE', "bacula.conf");
- define('BACULA_TYPE_BYTES_FILES', 1);
- define('BACULA_TYPE_FILES_JOBID', 2);
- define('BACULA_TYPE_BYTES_ENDTIME_ALLJOBS', 69);
-
+ define('CONFIG_DIR', BW_ROOT . "/configs/");
+ define('CONFIG_FILE', CONFIG_DIR . "bacula.conf");
+ 
  // Time intervals in secondes
  define( 'LAST_DAY', 86400 );
  define( 'LAST_WEEK', 604800 );

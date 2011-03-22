@@ -37,7 +37,7 @@ class Bweb extends DB {
 		$this->catalogs = array();
 		
 		// Loading configuration
-		$this->config_file = getcwd() . '/configs/bacula.conf';
+		$this->config_file = CONFIG_FILE;
 		
 		if( !$this->load_config() )
 			die( "Unable to load configuration");
