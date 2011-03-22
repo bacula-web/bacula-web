@@ -19,7 +19,7 @@
  require_once BW_OBJ . "bweb.inc.php";
  
  // Global constants
- define('CONFIG_DIR', BW_ROOT . "/configs/");
+ define('CONFIG_DIR', BW_ROOT . "/config/");
  define('CONFIG_FILE', CONFIG_DIR . "bacula.conf");
  
  // Time intervals in secondes
