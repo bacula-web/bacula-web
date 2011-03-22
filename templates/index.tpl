@@ -4,17 +4,8 @@
 <head>
 <title>bacula-web</title>
 <link rel="stylesheet" type="text/css" href="style/default.css">
-{literal}
-<script type="text/javascript">
-	function OpenWin(URL,wid,hei) {
-		window.open(URL,"window1","width="+wid+",height="+hei+",scrollbars=yes,menubar=no,location=no,resizable=no")
-	}
-</script>
-{/literal}
-
 </head>
 <body>
-{popup_init src='./external_packages/js/overlib.js'}
 {include file=header.tpl}
 
 <div id="main_left">
@@ -179,19 +170,7 @@
  <!-- Backup job report form -->
  <form method="post" action="backupjob-report.php">
    <table border="0">
-<!--
-	  <tr>
-		<td colspan=2 align=center>
-		  <a href="javascript:OpenWin('index.php?pop_graph1=yes','600','400')">{t}Last month, bytes transferred{/t}</a>
-		</td>
-	  </tr>
-	  <tr>
-		<td colspan=2 align=center>
-		  <a href="javascript:OpenWin('index.php?pop.graph2=yes','600','400')">{t}Last month, bytes transferred (pie){/t}</a>
-		</td>
-	  </tr>
--->
-	 <tr> <td colspan="2" class="label">&nbsp;</td> </tr>
+     <tr> <td colspan="2" class="label">&nbsp;</td> </tr>
 	 <tr>
  	   <td colspan="2" class="label"><b>{t}Backup Job report:{/t}</b></td>
 	 </tr>

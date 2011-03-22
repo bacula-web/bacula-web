@@ -4,17 +4,8 @@
 <head>
 <title>bacula-web</title>
 <link rel="stylesheet" type="text/css" href="style/default.css">
-{literal}
-<script type="text/javascript">
-        function OpenWin(URL,wid,hei) {
-                window.open(URL,"window1","width="+wid+",height="+hei+",scrollbars=yes,menubar=no,location=no,resizable=no")
-        }
-</script>
-{/literal}
-
 </head>
 <body>
-{popup_init src='./external_packages/js/overlib.js'}
 {include file=header.tpl}
 
 <div id="nav">

@@ -8,8 +8,7 @@
 <link rel="stylesheet" type="text/css" href="style/default.css" />
 </head>
 <body>
-{popup_init src="./external_packages/js/overlib.js"}
-<table width=100% border=1 class=back>
+<table width="100%" border="1" class="back">
 <tr>
 	<td width=65% valign=top>
 		<table width=100% cellpadding=5>
@@ -75,10 +74,10 @@
 				{section name=job loop=$jobs}
 				<tr class={cycle values="table1,table2"}>
 					<td align=center>{$jobs[job].JobId}</td>
-				  	<td {popup caption="Sheduled time" text=$jobs[job].SchedTime}>{$jobs[job].StartTime}</td>
-				  	<td {popup autostatus=yes caption="EndTime" text=$jobs[job].EndTime}>{$jobs[job].elapsed}</td>
-					<td align=center>{$jobs[job].Level}</td>
-				  	<td align=right>{$jobs[job].JobBytes}</td>
+				  	<td>{$jobs[job].StartTime}</td>
+				  	<td>{$jobs[job].elapsed}</td>
+					<td>{$jobs[job].Level}</td>
+				  	<td>{$jobs[job].JobBytes}</td>
 				  	<td align=center width=1%>
 					  	{if $jobs[job].JobStatus eq "T"}
 						  	<img src=style/images/s_ok.gif>
