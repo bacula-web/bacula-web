@@ -22,7 +22,6 @@ class Bweb extends DB {
     var $EndDate;
 
     var $driver;
-	var $dbs_name;
 	
 	public $tpl;
 	public $db_link;						// Database link
@@ -58,7 +57,6 @@ class Bweb extends DB {
 		}else {
 			$this->driver = $dsn['phptype'];                            
             register_shutdown_function(array(&$this,'close') );
-			$this->dbs_name = $dsn['database'];
 		}
 		
 		// Initialize smarty template classe
