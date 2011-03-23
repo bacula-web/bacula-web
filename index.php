@@ -22,7 +22,7 @@ $dbSql = new Bweb();
 $mode = "";				
 
 // Assign to template catalogs number
-// $dbSql->tpl->assign( "dbs", $dbSql->Get_Nb_Catalogs() );
+//$dbSql->tpl->assign( "dbs", $dbSql->bwcfg->Count_Catalogs() );
 // Assign dbs
 /*
 if ( count($dbSql->dbs) >1 ) {

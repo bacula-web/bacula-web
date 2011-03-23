@@ -42,12 +42,12 @@ class Bweb extends DB {
 		else
 			$this->bwcfg->Load_Config();
         
-		// Select which catalog to connect
+		// Select which catalog to connect to
 		if( isset( $_POST['catalog_id'] ) )
 			$dsn = $this->bwcfg->Get_Dsn( $_POST['catalog_id'] );
 		else
 			$dsn = $this->bwcfg->Get_Dsn( 0 );
-			
+		
 		// Connect to the database
 		$this->db_link = $this->connect( $dsn );
         

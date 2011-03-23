@@ -2,12 +2,14 @@
 
  class BW_Config {
  
+	private $config_params;
 	private $config;
 	private $catalogs = array();
 	
 	function __construct()
 	{
-		
+		global $config;
+		$this->config = $config;
 	}
 	
 	public function Check_Config_file()
@@ -18,24 +20,25 @@
 	
 	public function Load_Config()
 	{
-		$this->config = parse_ini_file( CONFIG_FILE, true );
+		global $config;
 		
-		if( !$this->config == false ) {
+		if( is_array($config) && !empty($config) ) {
 			// Loading database connection information
-			foreach( $this->config as $parameter => $value )
+			foreach( $config as $parameter => $value )
 			{
 				if( is_array($value) )		// Parsing database section
 					array_push( $this->catalogs, $value );
 			}
 			return true;
-		}else
+		}else {
 			return false;		
+		}
 	}
 	
 	public function Get_Config_Param( $param )
 	{
-		if( isset( $this->config[$param] ) )
-			return $this->config[$param];
+		if( isset( $config[$param] ) )
+			return $config[$param];
 	}
 	
 	public function Count_Catalogs()
@@ -49,7 +52,7 @@
 		$dsn = array();
         $dsn['hostspec'] = $this->catalogs[$catalog_id]["host"];
         $dsn['username'] = $this->catalogs[$catalog_id]["login"];
-		$dsn['password'] = $this->catalogs[$catalog_id]["pass"];
+		$dsn['password'] = $this->catalogs[$catalog_id]["password"];
 		$dsn['database'] = $this->catalogs[$catalog_id]["db_name"];
 		$dsn['phptype']  = $this->catalogs[$catalog_id]["db_type"];
 		return $dsn;
