@@ -41,6 +41,15 @@
 			return $config[$param];
 	}
 	
+	public function Get_Catalogs()
+	{
+		$result = array();
+		foreach( $this->catalogs as $db )
+			array_push( $result, $db['label']);
+		
+		return $result;
+	}
+	
 	public function Count_Catalogs()
 	{
 		return count( $this->catalogs );
