@@ -121,33 +121,6 @@ class Bweb extends DB {
 		$this->db_link->disconnect();
     }      
          
-	function CalculateBytesPeriod($server,$StartDate,$EndPeriod) {   // Bytes transferred in a period.
-
-			$result =& $this->db_link->query("select SUM(JobBytes) from Job WHERE EndTime < '$EndPeriod' and EndTime > '$StartDate' and Name='$server'")
-					or die("classes.inc: Error query: 1");
-			$return =& $result->fetchRow(); 
-			return $return[0];
-	}//end function
-
-	
-	 
-	function CalculateFilesPeriod($server,$StartDate,$EndPeriod) {    // Number of files transferred in a period.
-
-			$result =& $this->db_link->query("select SUM(JobFiles) from Job WHERE EndTime < '$EndPeriod' and EndTime > '$StartDate' and Name='$server'")
-					or die("classes.inc: Error query: 2");
-			$return =& $result->fetchRow();
-			return $return[0];
-	}//end function 
-
-			 
-
-	function PrepareDate($StartDateMonth,$StartDateDay,$StartDateYear,$EndDateMonth,$EndDateDay,$EndDateYear) {  // Convert date for Smarty. Check if only works with Mysql.
-	
-			$this->StartDate=$StartDateYear."-".$StartDateMonth."-".$StartDateDay." 00:00:00";
-			$this->EndDate=$EndDateYear."-".$EndDateMonth."-".$EndDateDay." 23:59:59";  // last day full
-			
-	}//end function
-	
 	// Return humanized size with default unit of GB
 	// if auto provide for unit argument, automaticaly decide which unit
 	function human_file_size( $size, $decimal = 2, $unit = 'auto' )
@@ -165,10 +138,9 @@ class Bweb extends DB {
 						$hsize    = $hsize / 1024;
 						$unit_id += 1;
 					}	 
-					else {
+					else
 						$lisible = true;
-					} 
-				}
+				} // end while
 			break;
 			
 			default:
@@ -225,7 +197,7 @@ class Bweb extends DB {
 		else
 			return $clients->fetchRow( DB_FETCHMODE_ASSOC );
 	}
-
+  
 	// Return an array of volumes ordered by poolid and volume name
 	function GetVolumeList() {
 
