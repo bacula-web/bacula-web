@@ -23,12 +23,13 @@ class Bweb extends DB {
 
     var $driver;
 	
-	public $tpl;
-	public $db_link;						// Database link
+	public  $tpl;
+	public  $db_link;						// Database link
 	
 	private $config_file;					// Config filename
 	private $config;						// Loaded config from bacula.conf
 	private $catalogs = array();			// Catalog array
+	public  $catalog_nb;
 	private $bwcfg;
 
     function __construct()
@@ -39,9 +40,11 @@ class Bweb extends DB {
 		// Checking if config file exist and is readable
 		if( !$this->bwcfg->Check_Config_File() )
 			die( "Unable to load configuration file" );
-		else
+		else {
 			$this->bwcfg->Load_Config();
-        
+			$this->catalog_nb = $this->bwcfg->Count_Catalogs();
+		}
+		
 		// Select which catalog to connect to
 		if( isset( $_POST['catalog_id'] ) )
 			$dsn = $this->bwcfg->Get_Dsn( $_POST['catalog_id'] );
@@ -62,6 +65,18 @@ class Bweb extends DB {
 		$this->init_tpl();
 		// Initialize smarty gettext function
 		$this->init_gettext();
+		
+		// Catalog selection		
+		if( $this->catalog_nb > 1 ) {
+			// Set current catalog in header template
+			if(isset( $_POST['catalog_id'] ) )
+				$this->tpl->assign( 'catalog_current', $_POST['catalog_id'] );
+			
+			$this->tpl->assign( 'catalogs', $this->bwcfg->Get_Catalogs() );			
+		}else
+		{
+		
+		}
 	}
                 
     // Initialize Smarty template classe

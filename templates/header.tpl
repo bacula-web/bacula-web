@@ -6,13 +6,16 @@
 <div id="subheader">
  <ul>
 	<li> <a href="http://bacula-web.dflc.ch/bugs" target="_blank">Bugs</a> </li>
-	<li><a href="http://bacula-web.dflc.ch" target="_blank">About</a> </li>
+	<li> <a href="http://bacula-web.dflc.ch" target="_blank">About</a> </li>
 
 	<!-- Condifitional catalog selection if more than 1 catalog is defined in the configuration -->
-	{if $dbs > 1}
+	{if $catalog_nb > 1}
 	<li>
-		<form method=post action=index.php>
-			Catalog&nbsp; <select name=sel_database OnChange=submit()> {html_options values={$dbs} name=$selected_db=$dbs_now} </select>
+		<form method="post" action="index.php">
+			Catalog&nbsp;
+			<select name="catalog_id" OnChange="submit()">
+				{html_options options=$catalogs} 
+			</select>
 		</form>
 	</li>
 	{/if}

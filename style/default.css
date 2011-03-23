@@ -34,9 +34,10 @@ a:link, a:visited, a:hover, a:visited {
  width: 100%;
  padding: 0px;
  margin: 0px;
- margin-bottom: 15px;
+ margin-bottom: 0px;
  background-color: #736F6E;
 }
+
 #header p {
  margin: 0px;
  padding: 5px;
@@ -53,16 +54,21 @@ a:link, a:visited, a:hover, a:visited {
  margin: 0em;
  padding: 0px;
  border-bottom: 1px solid black;
+ height: 30px;
 }
+
 #subheader ul {
- height: 20px;
+ height: 30px;
  margin: 0px;
+ /* margin-top: 5px; */
 }
 
 #subheader li {
  display: inline;
  float: right;
  padding: 0px 10px 0px 10px;
+ margin-top: 5px;
+ vertical-align: middle;
 }
 
 #subheader li a {

@@ -11,7 +11,7 @@
  $config['language'] = 'en_EN';
 
  //MySQL bacula catalog
- $config[0]['label'] = 'Backup Server';
+ $config[0]['label'] = 'Backup/mysql';
  $config[0]['host'] = 'localhost';
  $config[0]['login'] = 'root';
  $config[0]['password'] = 'p@ssw0rd';
@@ -20,7 +20,7 @@
  $config[0]['db_port'] = '3306';
  
   //MySQL bacula catalog
- $config[1]['label'] = 'Backup Server';
+ $config[1]['label'] = 'Backup/pgsql';
  $config[1]['host'] = 'localhost';
  $config[1]['login'] = 'bacula';
  $config[1]['password'] = 'bacula';

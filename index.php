@@ -19,8 +19,6 @@ include_once( 'config.inc.php' );
 
 $dbSql = new Bweb();
 
-$mode = "";				
-
 // Assign to template catalogs number
 //$dbSql->tpl->assign( "dbs", $dbSql->bwcfg->Count_Catalogs() );
 // Assign dbs
@@ -30,6 +28,9 @@ if ( count($dbSql->dbs) >1 ) {
   $smarty->assign("dbs_now", $_SESSION['DATABASE']);
 }
 */
+// Catalog count
+$catalog_nb = $dbSql->catalog_nb;
+$dbSql->tpl->assign( 'catalog_nb', $catalog_nb );
 
 // Stored files number 
 $totalfiles = $dbSql->GetStoredFiles( ALL );
