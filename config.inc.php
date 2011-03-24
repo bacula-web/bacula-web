@@ -14,8 +14,8 @@
  require_once "DB.php";   
  
  // Internal libs
- require_once BW_OBJ . "cfg/config.classe.php";
- require_once BW_OBJ . "graph/bgraph.inc.php";
+ require_once BW_OBJ . "cfg/config.class.php";
+ require_once BW_OBJ . "graph/bgraph.class.php";
  require_once BW_OBJ . "bweb.inc.php";
  
  // Global constants
