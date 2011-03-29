@@ -1,6 +1,6 @@
 <?php
  define( 'BW_ROOT', getcwd() );	
- define( 'BW_OBJ', BW_ROOT . '/classes/' ); 
+ define( 'BW_OBJ', BW_ROOT . '/includes/' ); 
  define( 'BW_EXTERNAL', BW_OBJ . 'external' );
  
  define( 'BW_PHPLOT', BW_EXTERNAL . '/phplot/'  );					
