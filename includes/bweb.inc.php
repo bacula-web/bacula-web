@@ -1,20 +1,4 @@
 <?php
-/* 
-+-------------------------------------------------------------------------+
-| Copyright (C) 2004-2005 Juan Luis Frances Jiminez                       |
-|                                                                         |
-| This program is free software; you can redistribute it and/or           |
-| modify it under the terms of the GNU General Public License             |
-| as published by the Free Software Foundation; either version 2          |
-| of the License, or (at your option) any later version.                  |
-|                                                                         |
-| This program is distributed in the hope that it will be useful,         |
-| but WITHOUT ANY WARRANTY; without even the implied warranty of          |
-| MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           |
-| GNU General Public License for more details.                            |
-+-------------------------------------------------------------------------+ 
-*/
-require_once "config.inc.php";
 
 class Bweb extends DB {
 
@@ -73,9 +57,6 @@ class Bweb extends DB {
 				$this->tpl->assign( 'catalog_current', $_POST['catalog_id'] );
 			
 			$this->tpl->assign( 'catalogs', $this->bwcfg->Get_Catalogs() );			
-		}else
-		{
-		
 		}
 	}
                 
@@ -182,7 +163,7 @@ class Bweb extends DB {
 		if(! PEAR::isError( $result ) )
 		{
 			$db = $result->fetchRow( DB_FETCHMODE_ASSOC );
-			$database_size =+ $db['dbsize'];
+			$database_size = $db['dbsize'];
 		}else
 			die( "Unable to get database size<br />" . $result->getMessage() );
 		
