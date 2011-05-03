@@ -131,7 +131,6 @@ a:link, a:visited, a:hover, a:visited {
  text-align: center;
  vertical-align: middle;
  font-size: 11pt;
- /*background-color: #1E90FF;*/
  background-color: #888888;
  color: white;
  font-weight: bold;
@@ -139,41 +138,34 @@ a:link, a:visited, a:hover, a:visited {
  margin: 0px;
 }
 
-.box p.title a {
- color: #FFFFFF;
+.box div.footer { 
+ text-align: right; 
+ padding: 3px; 
+}
+
+.box div.footer a {
  text-decoration: none;
  font-size: 9pt;
- float: right;
  vertical-align: middle;
 }
 
-.box table tr td
-{
+.box table tr td {
  padding: 3px;
  font-size: 8pt;
  height: 20px;
 }
 
-.box table tr td.label
-{
- /*font-weight: bold;*/
- background-color: #E0E0E0;
- /*width: 150px;*/
+.box table tr td.label { 
+ background-color: #FFFFFF;
+ font-weight: bold;
  text-align: left;
- padding-left: 15px;
- padding: 5px;
- margin: 2px;
+ padding: 3px 3px 3px 15px;
 }
 
-.box table td.info
-{
+.box table td.info {
  text-align: right;
- font-weight: bold;
- background-color: #E0E0E0;
- height: auto;
- padding: 2px;
- padding-right: 10px;
- margin: 0px;
+ background-color: #FFFFFF;
+ padding: 3px 15px 3px 3px;
 }
 
 .box table tr td.info a { font-size: 8pt;}

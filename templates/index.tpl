@@ -10,16 +10,18 @@
 
 <div id="main_left">
 
-
   <!-- Pools and Volumes Status -->
   <div class="box">
 	<p class="title">
-	Pools and volumes status
-	<a href="pools.php" title="Show pools and volumes report">View report</a>
+	Pools and volumes status	
 	</p>
-	  <img src="{$graph_pools}" alt="" />
+	<img src="{$graph_pools}" alt="" />
+	<div class="footer">
+		<a href="pools.php" title="Show pools and volumes report">View report</a>
+	</div>
   </div> <!-- end div box -->
   
+  <!-- Stored Bytes for last 7 days -->
   <div class="box">
 	<p class="title" title="Stored bytes for last 7 days (GB)">Stored Bytes</p>
 	  <img src="{$graph_stored_bytes}" alt="" />
@@ -28,13 +30,13 @@
 </div>
 
 <div id="main_middle">
-  
+  <!-- Last 24 hours jobs status -->
   <div class="box">
-	<p class="title">
-	Job Status Report
-	<a href="jobs.php" title="Show last 24 hours jobs status">View report</a>
-	</p>
+	<p class="title" title="Last 24 hours jobs status">Job Status Report</p>
 	  <img src="{$graph_jobs}" alt="" />
+	<div class="footer">
+		<a href="jobs.php" title="Show last 24 hours jobs status">View report</a>
+	</div>
   </div> <!-- end div box -->
   
   <div class="box">
@@ -96,14 +98,8 @@
 				<td class="info">{$waiting_jobs}</td>
 			</tr> 
 			<tr>
-				<td colspan="2" class="label"><hr></td>
-			</tr>
-			<tr>
 				<td class="label">Job Level (Incr / Diff / Full)</td>
 				<td class="info">{$incr_jobs} / {$diff_jobs} / {$full_jobs}</td>
-			</tr>
-			<tr>
-				<td colspan="2" class="label"><hr></td>
 			</tr>
 			<tr>
 				<td class="label">Transferred Bytes</td> 
