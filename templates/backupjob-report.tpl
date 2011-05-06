@@ -62,15 +62,10 @@
 	</table>
   </div> <!-- end div class=box -->
   
-  <!-- Transfered Bytes graph -->
+  <!-- Transfered Bytes/Files graph -->
   <div class="box">
-	<p class="title">Transfered Bytes (last week in GB)</p>
+	<p class="title">Transfered Bytes / Files (last 7 days)</p>
 	<img src="{$graph_stored_bytes}" alt="" />
-  </div> <!-- end div class=box -->
-
-  <!-- Transfered Files graph -->
-  <div class="box">
-	<p class="title">Transfered Files (last week)</p>
 	<img src="{$graph_stored_files}" alt="" />
   </div> <!-- end div class=box -->
   
