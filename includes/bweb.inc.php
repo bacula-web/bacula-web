@@ -505,7 +505,7 @@ class Bweb extends DB {
 		}
 	} // end function GetJobsStatistics()
 	
-	public function GetPoolsStatistics( $pools )
+	public function CountVolumesByPool( $pools )
 	{
 		foreach( $pools as $pool_name => $pool ) {
 			//var_dump( $pool );

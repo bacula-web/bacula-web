@@ -102,7 +102,7 @@ $graph = new BGraph( "graph1.png" );
 $pools = $dbSql->Get_Pools_List();
 
 foreach( $pools as $pool ) {
-	array_push( $data, $dbSql->GetPoolsStatistics( $pool ) );
+	array_push( $data, $dbSql->CountVolumesByPool( $pool ) );
 }
 
 $graph->SetData( $data, 'pie', 'text-data-single' );
