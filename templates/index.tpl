@@ -17,13 +17,13 @@
 	</p>
 	<img src="{$graph_pools}" alt="" />
 	<div class="footer">
-		<a href="pools.php" title="Show pools and volumes report">View report</a>
+		<a href="pools.php" title="Show pools and volumes report">{t}View report{/t}</a>
 	</div>
   </div> <!-- end div box -->
   
   <!-- Stored Bytes for last 7 days -->
   <div class="box">
-	<p class="title" title="Stored bytes for last 7 days (GB)">Stored Bytes</p>
+	<p class="title" title="Stored bytes for last 7 days (GB)">Stored bytes</p>
 	  <img src="{$graph_stored_bytes}" alt="" />
   </div> <!-- end div box -->
 
@@ -32,7 +32,7 @@
 <div id="main_middle">
   <!-- Last 24 hours jobs status -->
   <div class="box">
-	<p class="title" title="Last 24 hours jobs status">Job Status Report</p>
+	<p class="title" title="Last 24 hours jobs status">Jobs status</p>
 	  <img src="{$graph_jobs}" alt="" />
 	<div class="footer">
 		<a href="jobs.php" title="Show last 24 hours jobs status">View report</a>
@@ -70,7 +70,7 @@
 	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clientes_totales}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Total bytes stored{/t}</td> <td class="info">{$stored_bytes}</td>
+		<td class="label">{t}Total bytes{/t}</td> <td class="info">{$stored_bytes}</td>
 	  </tr>
 	  <tr>
 		<td class="label">{t}Total files{/t}</td> <td class="info">{$stored_files} file(s)</td>
@@ -115,11 +115,11 @@
 <div class="box">
 	<p class="title">Reports</p>
  
- <!-- Last month backup report -->
+ <!-- Custom report -->
  <form method="post" action="report.php">
 	<table width="100%">
 		<tr>
-			<td class="label" colspan="2"><b>Custom Report</b></td>
+			<td class="tbl_header" colspan="2"><b>Custom report</b></td>
 		</tr>
 		<tr>
 			<td class="label">Report type</td>
@@ -157,7 +157,7 @@
 		</tr>		
 		<tr>
 			<td colspan="2" class="info">
-				<input type="submit" value="Run report"/>
+				<input type="submit" value="View report"/>
 			</td>
 		</tr>
 	</table>
@@ -168,7 +168,7 @@
    <table border="0">
      <tr> <td colspan="2" class="label">&nbsp;</td> </tr>
 	 <tr>
- 	   <td colspan="2" class="label"><b>{t}Backup Job report:{/t}</b></td>
+ 	   <td colspan="2" class="tbl_header"><b>{t}Backup Job report{/t}</b></td>
 	 </tr>
 	 <tr>
 		<td class="label">Select a backup job</td>
@@ -186,7 +186,7 @@
 	   </td>
 	 </tr>
 	 <tr>
-	 <td colspan="2" class="info"> <input type=submit value="{t}View{/t}"> </td>
+	 <td colspan="2" class="info"> <input type=submit value="{t}View report{/t}"> </td>
 	 </tr>
    </table>
  </form>
