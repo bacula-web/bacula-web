@@ -4,10 +4,17 @@
 
   $dbSql = new Bweb();
 
-  $backupjob_name = "";
-  $days  = array();
+  $backupjob_name 		= "";
+  $backupjob_bytes		= 0;
+  $backupjob_files		= 0;
 
+  $days  				= array();
+  $days_stored_bytes 	= array();
+  $days_stored_files	= array();
+
+  // ===============================================================
   // Get Backup Job name from GET or POST
+  // ===============================================================
   if( isset( $_POST["backupjob_name"] ) )
     $backupjob_name = $_POST["backupjob_name"];
   elseif( isset( $_GET["backupjob_name"] ) )
@@ -20,13 +27,14 @@
 	  $today = ( mktime() - ($c * LAST_DAY) );
 	  array_push( $days, array( 'start' => date( "Y-m-d 00:00:00", $today ), 'end' => date( "Y-m-d 23:59:00", $today ) ) );
   }
+  
   // Generate Backup Job report period string
   $backupjob_period = "From " . date( "Y-m-d", mktime()-LAST_WEEK ) . " to " . date( "Y-m-d", mktime() );
+  
+  // ===============================================================
   // Last 7 days stored Bytes graph
+  // ===============================================================  
   $graph = new BGraph( "graph2.png" );
-
-  $days_stored_bytes 	= array();
-  $backupjob_bytes		= 0;
 
   foreach( $days as $day )
     array_push( $days_stored_bytes, $dbSql->GetStoredBytesByJob( $backupjob_name, $day['start'], $day['end'] ) );
@@ -41,11 +49,10 @@
   $graph->Render();
   $dbSql->tpl->assign('graph_stored_bytes', $graph->Get_Image_file() );	
   
+  // ===============================================================
   // Getting last 7 days stored files graph
+  // ===============================================================
   $graph = new BGraph("graph3.png" );
-  
-  $days_stored_files	= array();
-  $backupjob_files		= 0;
   
   foreach( $days as $day )
     array_push( $days_stored_files, $dbSql->GetStoredFilesByJob( $backupjob_name, $day['start'], $day['end'] ) );
@@ -76,13 +83,11 @@
 	while( $job = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) {
 		$job['Level'] = $joblevel[ $job['Level'] ];
 		array_push( $jobs, $job);
-	}
-		
+	}		
   }else
 	die( "Unable to get last jobs from catalog " . $result->getMessage() );
     
   $dbSql->tpl->assign('jobs', $jobs );
-  
   $dbSql->tpl->assign('backupjob_name', $backupjob_name );
   $dbSql->tpl->assign('backupjob_period', $backupjob_period );
   $dbSql->tpl->assign('backupjob_bytes', $backupjob_bytes );
