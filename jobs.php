@@ -66,31 +66,31 @@
 		
 		// Determine icon for job status
 		switch( $job['JobStatus'] ) {
-			case 'R':
+			case J_RUNNING:
 				$job['Job_icon'] = "running.png";
 			break;
-			case 'T':
+			case J_COMPLETED:
 				$job['Job_icon'] = "ok.png";
 			break;
-			case 'A':
+			case J_CANCELED:
 				$job['Job_icon'] = "canceled.png";
 			break;
-			case 'E':
+			case J_COMPLETED_ERROR:
 				$job['Job_icon'] = "warning.png";
 			break;
-			case 'f':
+			case J_FATAL:
 				$job['Job_icon'] = "error.png";
 			break;
-			case 'F':
-			case 'S':
-			case 'M':
-			case 'm':
-			case 's':
-			case 'j':
-			case 'c':
-			case 'd':
-			case 't':
-			case 'C':
+			case J_WAITING_CLIENT:
+			case J_WAITING_SD:
+			case J_WAITING_MOUNT_MEDIA:
+			case J_WAITING_NEW_MEDIA:
+			case J_WAITING_STORAGE_RES:
+			case J_WAITING_JOB_RES:
+			case J_WAITING_CLIENT_RES:
+			case J_WAITING_MAX_JOBS:
+			case J_WAITING_START_TIME:
+			case J_NOT_RUNNING:
 				$job['Job_icon'] = "waiting.png";
 			break;
 		} // end switch
