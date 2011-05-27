@@ -31,13 +31,13 @@
 			$query .= "WHERE Job.JobStatus = 'R' ";
 		break;
 		case 'waiting':
-			$query .= "WHERE Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','C') ";
+			$query .= "WHERE Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
 		break;
 		case 'completed':
-			$query .= "WHERE Job.JobStatus = 'T' ";
+			$query .= "WHERE Job.JobStatus IN ('T', 'E') ";
 		break;
 		case 'failed':
-			$query .= "WHERE Job.JobStatus IN ('f','E') ";
+			$query .= "WHERE Job.JobStatus = 'f' ";
 		break;
 		case 'canceled':
 			$query .= "WHERE Job.JobStatus = 'A' ";
@@ -70,12 +70,16 @@
 				$job['Job_icon'] = "running.png";
 			break;
 			case 'T':
-				$job['Job_icon'] = "s_ok.png";
+				$job['Job_icon'] = "ok.png";
 			break;
 			case 'A':
-			case 'f':
+				$job['Job_icon'] = "canceled.png";
+			break;
 			case 'E':
-				$job['Job_icon'] = "s_error.gif";
+				$job['Job_icon'] = "warning.png";
+			break;
+			case 'f':
+				$job['Job_icon'] = "error.png";
 			break;
 			case 'F':
 			case 'S':
