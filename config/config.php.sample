@@ -10,24 +10,6 @@
  
  $config['language'] = 'en_EN';
 
- //MySQL bacula catalog
- $config[0]['label'] = 'Backup/mysql';
- $config[0]['host'] = 'localhost';
- $config[0]['login'] = 'root';
- $config[0]['password'] = 'p@ssw0rd';
- $config[0]['db_name'] = 'bacula';
- $config[0]['db_type'] = 'mysql';
- $config[0]['db_port'] = '3306';
- 
-  //MySQL bacula catalog
- $config[1]['label'] = 'Backup/pgsql';
- $config[1]['host'] = 'localhost';
- $config[1]['login'] = 'bacula';
- $config[1]['password'] = 'bacula';
- $config[1]['db_name'] = 'bacula';
- $config[1]['db_type'] = 'pgsql';
- $config[1]['db_port'] = '5432';
- 
  /* Catalog(s) connection parameters
  Just copy/paste and modify regarding your configuration
 

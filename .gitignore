@@ -1,2 +1,3 @@
-*.php
-*.png
+/templates_c/*.php
+/templates_c/*.png
+/config/config.php
