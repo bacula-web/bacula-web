@@ -3,7 +3,7 @@
 	$bw = new Bweb();
 	
 	// Check result icon
-    $check_result = array( true => 's_ok.png', false => 's_error.gif' );
+    $check_result = array( true => 'ok.png', false => 'error.png' );
 	
 	// Checks list
 	$check_list = array( array( 'check_cmd'   		=> 'php-gettext', 
