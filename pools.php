@@ -1,11 +1,26 @@
 <?php
-  session_start();
-  include_once( 'config.inc.php' );
+/* 
++-------------------------------------------------------------------------+
+| Copyright 2010-2011, Davide Franco			                          |
+|                                                                         |
+| This program is free software; you can redistribute it and/or           |
+| modify it under the terms of the GNU General Public License             |
+| as published by the Free Software Foundation; either version 2          |
+| of the License, or (at your option) any later version.                  |
+|                                                                         |
+| This program is distributed in the hope that it will be useful,         |
+| but WITHOUT ANY WARRANTY; without even the implied warranty of          |
+| MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           |
+| GNU General Public License for more details.                            |
++-------------------------------------------------------------------------+ 
+*/
+ session_start();
+ include_once( 'config.inc.php' );
 
-  $dbSql = new Bweb();
+ $dbSql = new Bweb();
 
-  // Get volumes list (pools.tpl)
-  $dbSql->tpl->assign('pools',$dbSql->GetVolumeList() );
+ // Get volumes list (pools.tpl)
+ $dbSql->tpl->assign('pools',$dbSql->GetVolumeList() );
 
-  $dbSql->tpl->display('pools.tpl');
+ $dbSql->tpl->display('pools.tpl');
 ?>
