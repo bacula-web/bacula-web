@@ -36,13 +36,9 @@ class Bweb extends DB {
 		$this->bwcfg = new BW_Config();
 		$dsn = array();
 		
-		// Checking if config file exist and is readable
-		if( !$this->bwcfg->Check_Config_File() )
-			die( "Unable to load configuration file" );
-		else {
-			$this->bwcfg->Load_Config();
-			$this->catalog_nb = $this->bwcfg->Count_Catalogs();
-		}
+		// Loading configuration from config file
+		$this->bwcfg->Load_Config();
+		$this->catalog_nb = $this->bwcfg->Count_Catalogs();
 		
 		// Select which catalog to connect to
 		if( isset( $_POST['catalog_id'] ) )

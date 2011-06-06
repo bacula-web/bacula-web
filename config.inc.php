@@ -36,7 +36,6 @@
  // Global constants
  define('CONFIG_DIR', BW_ROOT . "/config/");
  define('CONFIG_FILE', CONFIG_DIR . "config.php");
- require_once( CONFIG_FILE );
  
  // Time intervals in secondes
  define( 'LAST_DAY', 86400 );

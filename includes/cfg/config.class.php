@@ -36,6 +36,11 @@
 	{
 		global $config;
 		
+		if( $this->Check_Config_file() )
+			include_once( CONFIG_FILE );
+		else
+			die( "Configuration file not found" );
+		
 		if( is_array($config) && !empty($config) ) {
 			// Loading database connection information
 			foreach( $config as $parameter => $value )
