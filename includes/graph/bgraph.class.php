@@ -17,6 +17,7 @@
 
 class BGraph{
 	private $title;
+	private $ytitle;
 	
 	private $data;
 	private $data_type;
@@ -55,6 +56,14 @@ class BGraph{
 			$this->title = $title;
 		else
 			die( "Please provide a non empty title for the graph" );
+	}
+	
+	public function SetYTitle( $ytitle )
+	{
+		if( !empty($ytitle) )
+			$this->ytitle = $ytitle;
+		else
+			die( "Please provide a non empty title for the Y axis" );
 	}
 	
 	public function SetColors( $colors )
@@ -110,6 +119,7 @@ class BGraph{
 		
 		// Graph title
 		$this->plot->SetTitle( $this->title );
+		$this->plot->SetYTitle( $this->ytitle );
 
 		// Setting up legends
 		if( $this->type != 'bars' ) {
