@@ -374,43 +374,6 @@ class Bweb extends DB {
 			return $hrsDiff . ':' . $minsDiff . ':' . $secsDiff;
 	}
 	
-	public function Get_ElapsedTime_Job( $delay = LAST_DAY )
-	{
-		$query 			= "";
-		$total_elapsed	= 0;
-		
-		// Interval calculation
-		$end_date   = mktime();
-		$start_date = $end_date - $delay;
-		
-		$start_date = date( "Y-m-d H:i:s", $start_date );
-		$end_date   = date( "Y-m-d H:i:s", $end_date );
-		
-		switch( $this->driver )
-		{
-			case 'mysql':
-				$query  = "SELECT UNIX_TIMESTAMP(EndTime) - UNIX_TIMESTAMP(StartTime) AS elapsed from Job ";
-				$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date'";
-			break;
-		}
-		$result = $this->db_link->query( $query );
-		
-		if( PEAR::isError($result) ){
-			die( "Unable to get elapsed time for jobs from catalog<br />query = $query <br />" . $result->getMessage() );
-		}else {
-			while( $time = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) {
-				//echo 'elapsed = ' . $time['elapsed'] . '<br />';
-				$total_elapsed += $time['elapsed'];
-			}
-			// Verify if elapsed time is more than 1 day
-			if ( $total_elapsed > LAST_DAY ) {
-				return date("%d days H:i:s", $total_elapsed );
-			}else {
-				return date("H:i:s", $total_elapsed );
-			}
-		}
-	}
-	
 	// Return Jobs statistics for a specific interval such as
 	// - Completed jobs number
 	// - Failed jobs number

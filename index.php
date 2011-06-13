@@ -72,9 +72,6 @@ $dbSql->tpl->assign( 'failed_jobs', $dbSql->CountJobs( LAST_DAY, 'failed' ) );
 // Last 24 hours waiting jobs number
 $dbSql->tpl->assign( 'waiting_jobs', $dbSql->CountJobs( LAST_DAY, 'waiting' ) );
 
-// Last 24 hours elapsed time (last_run_report.tpl)
-//$smarty->assign( 'elapsed_jobs', $dbSql->Get_ElapsedTime_Job() );
-
 // Last 24 hours Job Levels
 $dbSql->tpl->assign( 'incr_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'I') );
 $dbSql->tpl->assign( 'diff_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'D') );
