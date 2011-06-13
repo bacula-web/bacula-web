@@ -126,7 +126,7 @@
         $job['Level'] = $job_level[ $job['Level'] ];
 		
 		// Job Size
-		$job['JobBytes'] = $dbSql->human_file_size( $job['JobBytes'] );
+		$job['JobBytes'] = Utils::Get_Human_Size( $job['JobBytes'] );
 
 		array_push( $last_jobs, $job);
 	  }

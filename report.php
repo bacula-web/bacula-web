@@ -31,7 +31,7 @@ $bytes = $dbSql->CalculateBytesPeriod($_GET['server'],$dbSql->StartDate,$dbSql->
 $files = $dbSql->CalculateFilesPeriod($_GET['server'],$dbSql->StartDate,$dbSql->EndDate);
 $smarty->assign('startperiod',$dbSql->StartDate);
 $smarty->assign('endperiod',$dbSql->EndDate); 
-$smarty->assign('bytesperiod',$dbSql->human_file_size( $bytes ) );
+$smarty->assign( 'bytesperiod', Utils::Get_Human_Size( $bytes ) );
 $smarty->assign('filesperiod',$files);
 
 // Array with jobs data
@@ -47,7 +47,7 @@ while ( $tmp = $res_jobs->fetchRow(DB_FETCHMODE_ASSOC) ) {
         $tdate = explode (":",$tmp['elapsed']);		// Temporal "workaround" ;) Fix later
         if ( $tdate[0] > 300000 )
                 $tmp['elapsed'] = "00:00:00";
-		$tmp['JobBytes'] = $dbSql->human_file_size( $tmp['JobBytes'] );
+		$tmp['JobBytes'] = Utils::Get_Human_Size( $tmp['JobBytes'] );
         array_push($a_jobs,$tmp);
 }
 $smarty->assign('jobs',$a_jobs);

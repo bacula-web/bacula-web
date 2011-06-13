@@ -178,7 +178,7 @@ class Bweb extends DB {
 		}else
 			die( "Unable to get database size<br />" . $result->getMessage() );
 		
-		return $this->human_file_size( $database_size );  
+		return Utils::Get_Human_Size( $database_size );
 	} // end function GetDbSize()
 	
 	public function Get_Nb_Clients()
@@ -255,7 +255,7 @@ class Bweb extends DB {
 										$media['expire'] = 'N/A';
 									}
 									// Media used bytes in a human format
-									$media['volbytes'] = $this->human_file_size( $media['volbytes'] );
+									$media['volbytes'] = Utils::Get_Human_Size( $media['volbytes'] );
 								} else {
 									$media['lastwritten'] = "N/A";
 									$media['expire']      = "N/A";
@@ -600,7 +600,7 @@ class Bweb extends DB {
 			$day = date( "D d", strtotime($end_date) );
 			
 			if( isset( $tmp['stored_bytes'] ) ) {
-				$hbytes = $this->human_file_size( $tmp['stored_bytes'], 3, 'GB');
+				$hbytes = Utils::Get_Human_Size( $tmp['stored_bytes'], 3, 'GB' );
 				$hbytes = explode( " ", $hbytes );
 				$stored_bytes = $hbytes[0];
 			}
@@ -626,7 +626,7 @@ class Bweb extends DB {
 			$day = date( "D d", strtotime($end_date) );
 			
 			if( isset( $tmp['stored_bytes'] ) ) {
-				$hbytes = $this->human_file_size( $tmp['stored_bytes'], 3, 'GB');
+				$hbytes = Utils::Get_Human_Size( $tmp['stored_bytes'], 3, 'GB' );
 				$hbytes = explode( " ", $hbytes );
 				$stored_bytes = $hbytes[0];
 			}
