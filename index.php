@@ -128,6 +128,7 @@ foreach( $days as $day ) {
 
 $graph->SetData( $days_stored_bytes, 'bars', 'text-data' );
 $graph->SetGraphSize( 400, 230 );
+$graph->SetYTitle( "GB" );
 
 $graph->Render();
 $dbSql->tpl->assign('graph_stored_bytes', $graph->Get_Image_file() );

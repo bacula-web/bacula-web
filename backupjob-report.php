@@ -60,6 +60,7 @@
 	
   $graph->SetData( $days_stored_bytes, 'bars', 'text-data' );
   $graph->SetGraphSize( 400, 230 );
+  $graph->SetYTitle( "GB" );
 
   $graph->Render();
   $dbSql->tpl->assign('graph_stored_bytes', $graph->Get_Image_file() );	
@@ -78,6 +79,7 @@
   
   $graph->SetData( $days_stored_files, 'bars', 'text-data' );
   $graph->SetGraphSize( 400, 230 );
+  $graph->SetYTitle( "Files" );
 
   $graph->Render();
   $dbSql->tpl->assign('graph_stored_files', $graph->Get_Image_file() );
