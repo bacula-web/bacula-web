@@ -28,10 +28,11 @@
  // PEAR-DB classe
  require_once "DB.php";   
  
- // Internal libs
+ // Internal libraries
  require_once BW_OBJ . "cfg/config.class.php";
  require_once BW_OBJ . "graph/bgraph.class.php";
  require_once BW_OBJ . "bweb.inc.php";
+ require_once BW_OBJ . "utils/utils.class.php";
  
  // Global constants
  define('CONFIG_DIR', BW_ROOT . "/config/");
