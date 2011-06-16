@@ -14,7 +14,7 @@
 | GNU General Public License for more details.                            |
 +-------------------------------------------------------------------------+ 
 */
- class BW_Config {
+ class Config {
  
 	private $config_params;
 	private $config;

@@ -33,7 +33,7 @@ class Bweb extends DB {
 
     function __construct()
 	{             
-		$this->bwcfg = new BW_Config();
+		$this->bwcfg = new Config();
 		$dsn = array();
 		
 		// Loading configuration from config file
