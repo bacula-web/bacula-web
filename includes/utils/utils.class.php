@@ -15,7 +15,7 @@
 +-------------------------------------------------------------------------+ 
 */
 class Utils {
-	public function Get_Human_Size( $size, $decimal = 2, $unit = 'auto' )
+	static public function Get_Human_Size( $size, $decimal = 2, $unit = 'auto' )
 	{
 		$unit_id = 0;
 		$lisible = false;
