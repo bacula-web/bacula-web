@@ -192,8 +192,6 @@
  </form>
 </div> <!-- end div class=box -->
 
-{*  {include file="$last_report"}  *}
-
-  </div> <!-- end div main_right -->
+</div> <!-- end div main_right -->
 
 {include file="footer.tpl"}
