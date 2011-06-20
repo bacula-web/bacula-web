@@ -85,7 +85,7 @@
   $dbSql->tpl->assign('graph_stored_files', $graph->Get_Image_file() );
 
   // Last 10 jobs
-  $query    = "SELECT JobId, Level, JobFiles, JobBytes, JobStatus, EndTime, Name ";  
+  $query    = "SELECT JobId, Level, JobFiles, JobBytes, JobStatus, StartTime, EndTime, Name ";  
   $query   .= "FROM Job ";
   $query   .= "WHERE Name = '$backupjob_name' ";
   $query   .= "ORDER BY EndTime DESC ";
