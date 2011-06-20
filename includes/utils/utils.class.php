@@ -46,4 +46,27 @@ class Utils {
 		return $hsize;
 	}
 }
+
+class TimeUtils {
+	static public function Get_Elapsed_Time( $start, $end)
+	{
+		$diff = $end_time - $start_time;
+
+        $daysDiff = sprintf("%02d", floor($diff/60/60/24) );
+        $diff -= $daysDiff*60*60*24;
+
+        $hrsDiff = sprintf("%02d", floor($diff/60/60) );
+        $diff -= $hrsDiff*60*60;
+
+        $minsDiff = sprintf("%02d", floor($diff/60) );
+        $diff -= $minsDiff*60;
+        $secsDiff = sprintf("%02d", $diff );
+
+        if( $daysDiff > 0 )
+			return $daysDiff . 'day(s) ' . $hrsDiff.':' . $minsDiff . ':' . $secsDiff;
+        else
+			return $hrsDiff . ':' . $minsDiff . ':' . $secsDiff;
+	}
+}
+
 ?>
