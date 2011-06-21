@@ -117,13 +117,8 @@
 		// Elapsed time for the job
 	 	$start = $job['StartTime'];
 		$end   = $job['EndTime'];
-
-		if( $start == '0000-00-00 00:00:00' )
-			$job['elapsed_time'] = 'N/A';
-		elseif( $end == '0000-00-00 00:00:00' )
-			$job['elapsed_time'] = TimeUtils::Get_Elapsed_Time( strtotime($start), mktime() ); 
-		else
-			$job['elapsed_time'] = TimeUtils::Get_Elapsed_Time( strtotime($start), strtotime($end) ); 
+		
+		$job['elapsed_time'] = TimeUtils::Get_Elapsed_Time( $start, $end);
 
 		// Job Level
         	$job['Level'] = $job_level[ $job['Level'] ];
