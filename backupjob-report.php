@@ -98,7 +98,8 @@
   if( ! PEAR::isError( $result ) )
   {
 	while( $job = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) {
-		$job['Level'] = $joblevel[ $job['Level'] ];
+		$job['Level']       = $joblevel[ $job['Level'] ];
+		$job['ElapsedTime'] = TimeUtils::Get_Elapsed_Time( $job['StartTime'], $job['EndTime'] );
 		array_push( $jobs, $job);
 	}		
   }else

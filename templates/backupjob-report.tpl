@@ -42,7 +42,7 @@
   <div class="box">
 	<p class="title">Last jobs</p>
 	
-	<table border="1">
+	<table>
 		<tr>
 			<td class="tbl_header" width="60">Job Id</td>
 			<td class="tbl_header" width="60">Level</td>
@@ -50,6 +50,7 @@
 			<td class="tbl_header" width="70">Bytes</td>
 			<td class="tbl_header" width="80">Start time</td>
 			<td class="tbl_header" width="80">End time</td>
+			<td class="tbl_header" width="80">Elapsed time</td>
 		</tr>
 		{foreach from=$jobs item=job}
 		<tr>
@@ -59,6 +60,7 @@
 			<td>{$job.JobBytes}</td>
 			<td>{$job.StartTime}</td>
 			<td>{$job.EndTime}</td>
+			<td>{$job.ElapsedTime}</td>
 		</tr>
 		{/foreach}
 	</table>
