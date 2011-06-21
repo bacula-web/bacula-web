@@ -115,15 +115,18 @@
 			$job['Job_classe'] = 'odd';
 		
 		// Elapsed time for the job
-		if( $job['StartTime'] == '0000-00-00 00:00:00' )
+	 	$start = $job['StartTime'];
+		$end   = $job['EndTime'];
+
+		if( $start == '0000-00-00 00:00:00' )
 			$job['elapsed_time'] = 'N/A';
-		elseif( $job['EndTime'] == '0000-00-00 00:00:00' )
-			$job['elapsed_time'] = $dbSql->Get_ElapsedTime( strtotime($job['StartTime']), mktime() );
+		elseif( $end == '0000-00-00 00:00:00' )
+			$job['elapsed_time'] = TimeUtils::Get_Elapsed_Time( strtotime($start), mktime() ); 
 		else
-			$job['elapsed_time'] = $dbSql->Get_ElapsedTime( strtotime($job['StartTime']), strtotime($job['EndTime']) );
+			$job['elapsed_time'] = TimeUtils::Get_Elapsed_Time( strtotime($start), strtotime($end) ); 
 
 		// Job Level
-        $job['Level'] = $job_level[ $job['Level'] ];
+        	$job['Level'] = $job_level[ $job['Level'] ];
 		
 		// Job Size
 		$job['JobBytes'] = Utils::Get_Human_Size( $job['JobBytes'] );
