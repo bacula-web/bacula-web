@@ -50,7 +50,20 @@ class Utils {
 class TimeUtils {
 	static public function Get_Elapsed_Time( $start_time, $end_time)
 	{
-		$diff = $end_time - $start_time;
+		$start = '';
+		$end   = '';
+		
+		if( $start_time == '0000-00-00 00:00:00' )
+			return 'N/A';
+		else
+			$start = strtotime( $start_time );					
+        
+		if( $end_time == '0000-00-00 00:00:00' )
+			$end = mktime();
+		else
+			$end   = strtotime( $end_time );
+		
+		$diff = $end - $start;
 
         $daysDiff = sprintf("%02d", floor($diff/60/60/24) );
         $diff -= $daysDiff*60*60*24;
