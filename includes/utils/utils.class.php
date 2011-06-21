@@ -48,7 +48,7 @@ class Utils {
 }
 
 class TimeUtils {
-	static public function Get_Elapsed_Time( $start, $end)
+	static public function Get_Elapsed_Time( $start_time, $end_time)
 	{
 		$diff = $end_time - $start_time;
 
