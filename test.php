@@ -39,7 +39,10 @@
 							 'check_descr'		=> 'PHP PostgreSQL support must be installed in order to run bacula-web with PostgreSQL bacula catalog'),								
 					  array( 'check_cmd'   		=> 'smarty-cache',
 							 'check_label' 		=> 'Smarty cache folder write permission',
-							 'check_descr'		=> 'Smarty template engine need write permissions to templates_c folder')
+							 'check_descr'		=> 'Smarty template engine need write permissions to templates_c folder'),
+				      array( 'check_cmd'   		=> 'php-version',
+							 'check_label' 		=> 'PHP version',
+							 'check_descr'		=> 'PHP version must be at least 5.0.0 (current = ' . PHP_VERSION . ')' )
 					);
 
  // Doing all checks
@@ -63,6 +66,11 @@
 		 break;
 		 case 'smarty-cache':
 			 $check['check_result'] = $check_result[ is_writable( "./templates_c" ) ];
+		 break;
+		 case 'php-version':
+			 $phpversion = explode( '.', PHP_VERSION );
+			 $phpversion = $phpversion[0];
+			 $check['check_result'] = $check_result[ $phpversion >= 5 ];
 		 break;
 	 }
  }
