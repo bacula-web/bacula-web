@@ -15,12 +15,9 @@
 | GNU General Public License for more details.                            |
 +-------------------------------------------------------------------------+ 
 */
-class Bweb extends DB {
-
-    var $StartDate;
-    var $EndDate;
-
-    var $driver;
+class Bweb extends DB 
+{
+    var 	$driver;
 	
 	public  $tpl;
 	public  $db_link;						// Database link
