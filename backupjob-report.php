@@ -97,9 +97,18 @@
   
   if( ! PEAR::isError( $result ) )
   {
-	while( $job = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) {
+	while( $job = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) 
+	{
+		// Job level description
 		$job['Level']       = $joblevel[ $job['Level'] ];
+
+		// Job execution execution time
 		$job['ElapsedTime'] = TimeUtils::Get_Elapsed_Time( $job['StartTime'], $job['EndTime'] );
+
+		// odd and even row
+		if( count($jobs) % 2)
+			$job['row_class'] = 'odd';
+
 		array_push( $jobs, $job);
 	}		
   }else
