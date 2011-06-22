@@ -118,11 +118,10 @@
 	 	$start = $job['StartTime'];
 		$end   = $job['EndTime'];
 		
+		// Job execution execution time
 		$job['elapsed_time'] = TimeUtils::Get_Elapsed_Time( $start, $end);
-
 		// Job Level
-        	$job['Level'] = $job_level[ $job['Level'] ];
-		
+        $job['Level'] = $job_level[ $job['Level'] ];
 		// Job Size
 		$job['JobBytes'] = Utils::Get_Human_Size( $job['JobBytes'] );
 
