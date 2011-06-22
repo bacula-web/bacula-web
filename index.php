@@ -20,22 +20,11 @@ include_once( 'config.inc.php' );
 
 $dbSql = new Bweb();
 
-// Assign to template catalogs number
-//$dbSql->tpl->assign( "dbs", $dbSql->bwcfg->Count_Catalogs() );
-// Assign dbs
-/*
-if ( count($dbSql->dbs) >1 ) {
-  $smarty->assign("dbs", $dbSql->dbs);
-  $smarty->assign("dbs_now", $_SESSION['DATABASE']);
-}
-*/
-// Catalog count
-$catalog_nb = $dbSql->catalog_nb;
-$dbSql->tpl->assign( 'catalog_nb', $catalog_nb );
+// How many catalog configured
+$dbSql->tpl->assign( 'catalog_nb', $dbSql->catalog_nb );
 
 // Stored files number 
-$totalfiles = $dbSql->GetStoredFiles( ALL );
-$dbSql->tpl->assign('stored_files',$totalfiles);
+$dbSql->tpl->assign('stored_files', $dbSql->GetStoredFiles( ALL ) );
   
 // Database size
 $dbSql->tpl->assign('database_size', $dbSql->GetDbSize());
@@ -151,10 +140,6 @@ else {
 		array_push( $vol_list, $vol );
 }
 $dbSql->tpl->assign( 'volume_list', $vol_list );	
-
-//if ($_GET['Full_popup'] == "yes" || $_GET['pop_graph1'] == "yes" || $_GET['pop_graph2'] == "yes")
-//        $smarty->display('full_popup.tpl');
-//else
 
 // Render template
 $dbSql->tpl->display('index.tpl');
