@@ -22,10 +22,21 @@ class CErrorHandler
 
         }
 
+	public function SetDebug( $debuglevel )
+	{
+		$this->debug_level = $debuglevel;
+	}	
+
+	public function TriggerError( $type, $string, $file = '', $line = '', $vars = '' )
+	{
+
+	}
+
         public function __destruct()
         {
 
         }
 }
+
 ?>
 
