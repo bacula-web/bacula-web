@@ -103,7 +103,7 @@
 		$job['Level']       = $joblevel[ $job['Level'] ];
 
 		// Job execution execution time
-		$job['ElapsedTime'] = TimeUtils::Get_Elapsed_Time( $job['StartTime'], $job['EndTime'] );
+		$job['ElapsedTime'] = CTimeUtils::Get_Elapsed_Time( $job['StartTime'], $job['EndTime'] );
 
 		// odd and even row
 		if( count($jobs) % 2)

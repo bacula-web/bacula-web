@@ -15,7 +15,7 @@
 +-------------------------------------------------------------------------+ 
 */
 
-class TimeUtils {
+class CTimeUtils {
 	static public function Get_Elapsed_Time( $start_time, $end_time)
 	{
 		$start = '';

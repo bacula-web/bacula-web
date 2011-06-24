@@ -33,7 +33,7 @@
  require_once BW_OBJ . "graph/bgraph.class.php";
  require_once BW_OBJ . "bweb.inc.php";
  require_once BW_OBJ . "utils/cutils.class.php";
- require_once BW_OBJ . "utils/timeutils.class.php";
+ require_once BW_OBJ . "utils/ctimeutils.class.php";
  
  // Global constants
  define('CONFIG_DIR', BW_ROOT . "/config/");
