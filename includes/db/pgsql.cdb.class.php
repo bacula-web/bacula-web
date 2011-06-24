@@ -15,4 +15,17 @@
 +-------------------------------------------------------------------------+ 
 */
 
+class CPGSQLDB 
+{	
+	public function __constructor()
+	{
+	
+	}
+	
+	public function __destructor()
+	{
+	
+	}
+}
+
 ?>

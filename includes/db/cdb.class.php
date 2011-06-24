@@ -15,4 +15,16 @@
 +-------------------------------------------------------------------------+ 
 */
 
+class CDB
+{	
+	public function __constructor()
+	{
+	
+	}
+	
+	public function __destructor()
+	{
+	
+	}
+}
 ?>

@@ -15,4 +15,17 @@
 +-------------------------------------------------------------------------+ 
 */
 
+class CMYSQLDB 
+{	
+	public function __constructor()
+	{
+	
+	}
+	
+	public function __destructor()
+	{
+	
+	}
+}
+
 ?>
