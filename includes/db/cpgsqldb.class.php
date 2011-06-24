@@ -15,7 +15,7 @@
 +-------------------------------------------------------------------------+ 
 */
 
-class CPGSQLDB 
+class CPGSQLDB extends CDB
 {	
 	public function __constructor()
 	{

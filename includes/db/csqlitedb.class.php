@@ -15,7 +15,7 @@
 +-------------------------------------------------------------------------+ 
 */
 
-class CSQLITEDB
+class CSQLITEDB extends CDB
 {	
 	public function __constructor()
 	{

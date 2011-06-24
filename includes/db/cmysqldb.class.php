@@ -15,7 +15,7 @@
 +-------------------------------------------------------------------------+ 
 */
 
-class CMYSQLDB 
+class CMYSQLDB extends CDB
 {	
 	public function __constructor()
 	{
