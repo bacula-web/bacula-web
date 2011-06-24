@@ -17,12 +17,12 @@
 
 class CErrorHandler
 {
-        public function __constructor()
+        public function __construct()
         {
 
         }
 
-        public function __destructor()
+        public function __destruct()
         {
 
         }
