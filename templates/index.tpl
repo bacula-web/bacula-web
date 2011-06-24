@@ -116,7 +116,7 @@
 	<p class="title">Reports</p>
  
  <!-- Custom report -->
- <form method="post" action="report.php">
+ <form method="post" action="client-report.php">
 	<table width="100%">
 		<tr>
 			<td class="tbl_header" colspan="2"><b>Custom report</b></td>
