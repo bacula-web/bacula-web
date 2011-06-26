@@ -328,7 +328,7 @@ class Bweb extends DB
 			die( "Unable to get the pool list from catalog" );				
 		}else {
 			while( $pool = $result->fetchRow(DB_FETCHMODE_ASSOC) ) {
-				array_push( $pool_list, array( $pool['Name'] => $pool['PoolId'] ) );
+				array_push( $pool_list, array( $pool['name'] => $pool['poolid'] ) );
 			}
 			return $pool_list;
 		}
@@ -424,12 +424,13 @@ class Bweb extends DB
 	
 	public function CountVolumesByPool( $pool_id )
 	{
-		foreach( $pools as $pool_name => $pool ) {
+		foreach( $pool_id as $pool_name => $pool ) {
 			$query = "SELECT COUNT(*) AS nb_vol FROM Media WHERE PoolId = '$pool_id'";
 			$result = $this->db_link->query( $query );
 			
 			if( PEAR::isError( $result ) ) {
-				die("Unable to get volume number from catalog");
+				$this->TriggerDBError( 'Unable to get volume number from catalog', $result );
+				//die("Unable to get volume number from catalog");
 			}else{
 				$nb_vol = $result->fetchRow(DB_FETCHMODE_ASSOC);
 				return array( $pool_name, $nb_vol['nb_vol'] );
@@ -557,6 +558,16 @@ class Bweb extends DB
 			
 			return array( $day, $stored_files );
 		}			
+	}
+	
+	private function TriggerDBError( $message, $db_error)
+	{
+		echo 'Error: ' . $message . '<br />';
+		echo 'Standard Message: ' . $db_error->getMessage() . "\n";
+		echo 'Standard Code: ' . $db_error->getCode() . "\n";
+		echo 'DBMS/User Message: ' . $db_error->getUserInfo() . "\n";
+		echo 'DBMS/Debug Message: ' . $db_error->getDebugInfo() . "\n";
+		exit;
 	}
 } // end class Bweb
 ?>
