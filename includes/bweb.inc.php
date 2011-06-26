@@ -44,7 +44,8 @@ class Bweb extends DB
 			$dsn = $this->bwcfg->Get_Dsn( 0 );
 		
 		// Connect to the database
-		$this->db_link = $this->connect( $dsn );
+		$options = array( 'portability' => DB_PORTABILITY_ALL );
+		$this->db_link = $this->connect( $dsn, $options );
         
 		if (DB::isError($this->db_link)) {
 			die( 'Unable to connect to catalog <br />' . $this->db_link->getMessage());
@@ -421,13 +422,10 @@ class Bweb extends DB
 		}
 	} // end function GetJobsStatistics()
 	
-	public function CountVolumesByPool( $pools )
+	public function CountVolumesByPool( $pool_id )
 	{
 		foreach( $pools as $pool_name => $pool ) {
-			//var_dump( $pool );
-			$query = "SELECT COUNT(*) AS nb_vol FROM Media WHERE PoolId = '$pool'";
-			//echo $query . '<br />';
-			//echo 'Pool name ' . $pool_name . '<br />';
+			$query = "SELECT COUNT(*) AS nb_vol FROM Media WHERE PoolId = '$pool_id'";
 			$result = $this->db_link->query( $query );
 			
 			if( PEAR::isError( $result ) ) {
