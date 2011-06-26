@@ -331,16 +331,16 @@ class Bweb extends DB
 	
 	public function Get_BackupJob_Names()
 	{
-		$query 		= "SELECT Name FROM Job GROUP BY Name";
+		$query 		= "SELECT job.name FROM job GROUP BY job.name";
 		$backupjobs = array();
 		
 		$result = $this->db_link->query( $query );
 		
 		if (PEAR::isError( $result ) ) {
-			die("Unable to get BackupJobs list from catalog" );
+			$this->TriggerDBError("Unable to get BackupJobs list from catalog", $result );
 		}else{
-			while( $backupjob = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) {
-				array_push( $backupjobs, $backupjob["Name"] );
+			while( $backupjob = $result->fetchRow() ) {
+				array_push( $backupjobs, $backupjob["name"] );
 			}
 			return $backupjobs;
 		}

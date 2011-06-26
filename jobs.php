@@ -80,7 +80,7 @@
 	  while( $job = $jobsresult->fetchRow( DB_FETCHMODE_ASSOC ) ) {
 		
 		// Determine icon for job status
-		switch( $job['JobStatus'] ) {
+		switch( $job['jobstatus'] ) {
 			case J_RUNNING:
 				$job['Job_icon'] = "running.png";
 			break;
@@ -115,15 +115,15 @@
 			$job['Job_classe'] = 'odd';
 		
 		// Elapsed time for the job
-	 	$start = $job['StartTime'];
-		$end   = $job['EndTime'];
+	 	$start = $job['starttime'];
+		$end   = $job['endtime'];
 		
 		// Job execution execution time
 		$job['elapsed_time'] = CTimeUtils::Get_Elapsed_Time( $start, $end);
 		// Job Level
-        $job['Level'] = $job_level[ $job['Level'] ];
+        $job['Level'] = $job_level[ $job['level'] ];
 		// Job Size
-		$job['JobBytes'] = CUtils::Get_Human_Size( $job['JobBytes'] );
+		$job['JobBytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
 
 		array_push( $last_jobs, $job);
 	  }

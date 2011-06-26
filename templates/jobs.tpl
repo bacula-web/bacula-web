@@ -69,17 +69,17 @@
 		<td width="50" class="{$job.Job_classe}">
 			<img width="20" src="style/images/{$job.Job_icon}" alt="" title="{$job.JobStatusLong}" />
 		</td>
-		<td class="{$job.Job_classe}">{$job.JobId}</td>
+		<td class="{$job.Job_classe}">{$job.jobid}</td>
 		<td class="{$job.Job_classe}">
-			<a href="backupjob-report.php?backupjob_name={$job.Job_name}">{$job.Job_name}</a>
+			<a href="backupjob-report.php?backupjob_name={$job.Job_name}">{$job.job_name}</a>
 		</td>
-		<td class="{$job.Job_classe}">{$job.StartTime}</td>
-		<td class="{$job.Job_classe}">{$job.EndTime}</td>
+		<td class="{$job.Job_classe}">{$job.starttime}</td>
+		<td class="{$job.Job_classe}">{$job.endtime}</td>
 		<td class="{$job.Job_classe}">{$job.elapsed_time}</td>
-		<td class="{$job.Job_classe}">{$job.Level}</td>
-		<td class="{$job.Job_classe}">{$job.JobBytes}</td>
-		<td class="{$job.Job_classe}">{$job.JobFiles}</td>
-		<td class="{$job.Job_classe}">{$job.Pool_name}</td>
+		<td class="{$job.Job_classe}">{$job.level}</td>
+		<td class="{$job.Job_classe}">{$job.jobbytes}</td>
+		<td class="{$job.Job_classe}">{$job.jobfiles}</td>
+		<td class="{$job.Job_classe}">{$job.pool_name}</td>
 	  </tr>
 	  {/foreach}
 	</table>
