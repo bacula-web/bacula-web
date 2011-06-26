@@ -87,10 +87,8 @@ $data = array();
 $graph = new BGraph( "graph1.png" );
 
 $pools = $dbSql->Get_Pools_List();
-
-foreach( $pools as $pool ) {
-	array_push( $data, $dbSql->CountVolumesByPool( $pool ) );
-}
+while( $pool = $pools->fetchRow( ) )
+	array_push( $data, $pool );
 
 $graph->SetData( $data, 'pie', 'text-data-single' );
 $graph->SetGraphSize( 400, 230 );

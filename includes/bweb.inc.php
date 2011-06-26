@@ -52,6 +52,7 @@ class Bweb extends DB
 		}else {
 			$this->driver = $dsn['phptype'];                            
             register_shutdown_function(array(&$this,'close') );
+			$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
 		}
 		
 		// Initialize smarty template classe
@@ -317,20 +318,14 @@ class Bweb extends DB
 	// Return the list of Pools in a array
 	public function Get_Pools_List()
 	{
-		$pool_list = array();
-		$result    = "";
-		
-		$query = "SELECT Name, PoolId FROM Pool";
-		
-		$result = $this->db_link->query ( $query );
+		$result    	= "";
+		$query 		= "SELECT Name, PoolId FROM Pool";
+		$result 	= $this->db_link->query ( $query );
 
 		if( PEAR::isError( $result ) ) {
-			die( "Unable to get the pool list from catalog" );				
+			$this->TriggerDBError( "Unable to get the pool list from catalog", $result );				
 		}else {
-			while( $pool = $result->fetchRow(DB_FETCHMODE_ASSOC) ) {
-				array_push( $pool_list, array( $pool['name'] => $pool['poolid'] ) );
-			}
-			return $pool_list;
+			return $result;
 		}
 	}
 	
@@ -424,18 +419,18 @@ class Bweb extends DB
 	
 	public function CountVolumesByPool( $pool_id )
 	{
-		foreach( $pool_id as $pool_name => $pool ) {
-			$query = "SELECT COUNT(*) AS nb_vol FROM Media WHERE PoolId = '$pool_id'";
-			$result = $this->db_link->query( $query );
-			
-			if( PEAR::isError( $result ) ) {
-				$this->TriggerDBError( 'Unable to get volume number from catalog', $result );
-				//die("Unable to get volume number from catalog");
-			}else{
-				$nb_vol = $result->fetchRow(DB_FETCHMODE_ASSOC);
-				return array( $pool_name, $nb_vol['nb_vol'] );
-			}
-		}
+		var_dump( $pool_id );
+		$res 	= null;
+		$nb_vol = null;
+		$query 	= "SELECT COUNT(*) as nb_vol FROM media WHERE poolid = $pool_id";
+		
+		$res = $this->db_link->query( $query );
+		if( PEAR::isError( $res ) )
+			$this->triggerDBError( 'Unable to get volume number from pool', $res );
+		else
+			$nb_vol = $res->fetchRow( );
+		
+		return array( $pool_name, $nb_vol['nb_vol'] );
 	}
 	
 	public function GetStoredFiles( $delay = LAST_DAY )
