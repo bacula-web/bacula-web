@@ -134,7 +134,7 @@ $result = $dbSql->db_link->query( $query );
 if ( PEAR::isError( $result ) )
 	die( "Unable to get last used volumes from catalog \n " . $result->getMessage() );
 else {
-	while ( $vol = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) 
+	while ( $vol = $result->fetchRow() ) 
 		array_push( $vol_list, $vol );
 }
 $dbSql->tpl->assign( 'volume_list', $vol_list );	

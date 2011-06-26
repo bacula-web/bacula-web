@@ -486,12 +486,22 @@ class Bweb extends DB
 	
 	public function GetStoredBytesByInterval( $start_date, $end_date )
 	{
-		$query = "SELECT SUM(JobBytes) as stored_bytes, EndTime FROM Job WHERE EndTime BETWEEN '$start_date' AND '$end_date'";
+		$query = '';
+		
+		switch($this->driver) {
+			case 'sqlite':
+			case 'mysql':
+				$query = "SELECT SUM(JobBytes) as stored_bytes FROM Job WHERE (EndTime BETWEEN '$start_date' AND '$end_date')";
+			break;
+			case 'pgsql':
+				$query = "SELECT SUM(JobBytes) as stored_bytes FROM Job WHERE (EndTime BETWEEN '$start_date' AND '$end_date')";
+			break;
+		}
 		
 		$result = $this->db_link->query( $query );
 		
 		if( PEAR::isError( $result ) ) {
-			die( "Unable to get Job Bytes from catalog" );
+			$this->TriggerDBError( "Unable to get Job Bytes from catalog", $result );
 		}else{
 			$stored_bytes = 0;
 			$tmp = $result->fetchRow( DB_FETCHMODE_ASSOC );
@@ -558,10 +568,10 @@ class Bweb extends DB
 	private function TriggerDBError( $message, $db_error)
 	{
 		echo 'Error: ' . $message . '<br />';
-		echo 'Standard Message: ' . $db_error->getMessage() . "\n";
-		echo 'Standard Code: ' . $db_error->getCode() . "\n";
-		echo 'DBMS/User Message: ' . $db_error->getUserInfo() . "\n";
-		echo 'DBMS/Debug Message: ' . $db_error->getDebugInfo() . "\n";
+		echo 'Standard Message: ' . $db_error->getMessage() . '<br />';
+		echo 'Standard Code: ' . $db_error->getCode() . '<br />';
+		echo 'DBMS/User Message: ' . $db_error->getUserInfo() . '<br />';
+		echo 'DBMS/Debug Message: ' . $db_error->getDebugInfo() . '<br />';
 		exit;
 	}
 } // end class Bweb
