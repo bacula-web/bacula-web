@@ -331,7 +331,19 @@ class Bweb extends DB
 	
 	public function Get_BackupJob_Names()
 	{
-		$query 		= "SELECT job.name FROM job GROUP BY job.name";
+		$query 	= '';
+		
+		switch( $this->driver )
+		{
+			case 'sqlite':
+			case 'mysql':
+				$query 		= "SELECT name FROM Job GROUP BY name ORDER BY name";
+			break;
+			case 'pgsql':
+				$query 		= "SELECT name FROM Job GROUP BY name ORDER BY name";
+			break;
+		}
+		
 		$backupjobs = array();
 		
 		$result = $this->db_link->query( $query );
