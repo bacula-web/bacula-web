@@ -442,18 +442,35 @@ class Bweb extends DB
 	
 	public function CountVolumesByPool( $pool_id )
 	{
-		var_dump( $pool_id );
 		$res 	= null;
 		$nb_vol = null;
-		$query 	= "SELECT COUNT(*) as nb_vol FROM media WHERE poolid = $pool_id";
+		$query  = '';
+
+		switch( $this->driver )
+		{
+			case 'sqlite':
+			case 'mysql':
+				$query 	= 'SELECT COUNT(*) as vols,Pool.name as pool_name ';
+				$query .= 'FROM Media ';
+				$query .= 'LEFT JOIN Pool ON (Media.PoolId = Pool.PoolId) ';
+				$query .= 'WHERE Media.poolid = ' . $pool_id;
+			break;
+			case 'pgsql':
+				$query 	= 'SELECT COUNT(*) as vols,Pool.name as pool_name ';
+				$query .= 'FROM Media ';
+				$query .= 'LEFT OUTER JOIN Pool ON (Media.PoolId = Pool.PoolId) ';
+				$query .= 'WHERE Media.poolid = ' . $pool_id;
+				$query .= 'GROUP BY pool.name';
+			break;
+		}
 		
 		$res = $this->db_link->query( $query );
 		if( PEAR::isError( $res ) )
 			$this->triggerDBError( 'Unable to get volume number from pool', $res );
 		else
-			$nb_vol = $res->fetchRow( );
+			$vols = $res->fetchRow( );
 		
-		return array( $pool_name, $nb_vol['nb_vol'] );
+		return array( $vols['pool_name'], $vols['vols'] );
 	}
 	
 	public function GetStoredFiles( $delay = LAST_DAY )
