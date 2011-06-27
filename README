@@ -1,12 +1,22 @@
-About bacula-web
+== Bacula-Web ==
 
-This is my little contribution to the bacula community and the best backup software (http://www.bacula.org).
+Bacula-Web is a web based tool written in PHP that provide you a summarized view of your bacula's backup infrastructure. 
+It obtain his information from your bacula catalog's database.
 
-Bacula-web was firstly developed by Juan-Luis Frances and I'm just looking forward to support and develop this project.
+For more informations on system requirements, installation and configuration, please the official project site
+http://bacula-web.dflc.ch
 
-You should find more informations on the project page at bacula-web.dflc.ch
+This is my little contribution to the bacula community and the best open source backup software Bacula (http://www.bacula.org).
 
-Thank you for using bacula-web
+== License ==
+
+Bacula-Web is released under the terms of the GPL license
 
 
-Bacula is a registered trademark of Kern Sibbald and John Walker
+== Contact ==
+
+Original developer: 
+Juan Luis Francés (bacula_list AT veloxia dot com)
+
+Official maintener:
+Davide Franco (bacula-dev AT dflc dot ch)
