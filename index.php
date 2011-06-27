@@ -117,6 +117,7 @@ $graph->SetYTitle( "GB" );
 $graph->Render();
 $dbSql->tpl->assign('graph_stored_bytes', $graph->Get_Image_file() );
 
+
 // Last 15 used volumes
 $vol_list = array();
 
@@ -129,7 +130,7 @@ $query .= "LIMIT 10 ";
 $result = $dbSql->db_link->query( $query );
 
 if ( PEAR::isError( $result ) )
-	die( "Unable to get last used volumes from catalog \n " . $result->getMessage() );
+	$this->TriggerDBError( 'Unable to get last used volumes from catalog' . $result );
 else {
 	while ( $vol = $result->fetchRow() ) 
 		array_push( $vol_list, $vol );

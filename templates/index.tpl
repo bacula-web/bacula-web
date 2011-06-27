@@ -50,10 +50,10 @@
 		</tr>
 		{foreach from=$volume_list item=vol}
 		<tr>
-		  <td>{$vol.Volumename}</td>
-		  <td>{$vol.VolStatus}</td>
-		  <td>{$vol.Lastwritten}</td>
-		  <td>{$vol.JobId}</td>
+		  <td>{$vol.volumename}</td>
+		  <td>{$vol.volstatus}</td>
+		  <td>{$vol.lastwritten}</td>
+		  <td>{$vol.jobid}</td>
 		</tr>
 		{/foreach}
 	  </table>
