@@ -424,19 +424,17 @@ class Bweb extends DB
 			break;
 		}
 		
-		$query  = 'SELECT COUNT(JobId) AS ' . $type . ' ';
+		$query  = 'SELECT COUNT(JobId) AS count ';
 		$query .= 'FROM Job ';
 		$query .= "WHERE $where ";
-	
-		//echo 'query = ' . $query . '<br />';
 		
-		$jobs = $this->db_link->query( $query );
+		$res = $this->db_link->query( $query );
 	
-		if (PEAR::isError( $jobs ) ) {
-			die( "Unable to get last $type jobs status from catalog<br />" . $status->getMessage() );
+		if (PEAR::isError( $res ) ) {
+			$this->TriggerDBError( 'Unable to get last' . $type . 'jobs status from catalog', $res);
 		}else {
-			$res = $jobs->fetchRow();
-			return array( $label , current($res) );
+			$result = $res->fetchRow();
+			return array( $label, $result['count'] );
 		}
 	} // end function GetJobsStatistics()
 	
