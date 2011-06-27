@@ -449,13 +449,13 @@ class Bweb extends DB
 			case 'mysql':
 				$query 	= 'SELECT COUNT(*) as vols,Pool.name as pool_name ';
 				$query .= 'FROM Media ';
-				$query .= 'LEFT JOIN Pool ON (Media.PoolId = Pool.PoolId) ';
+				$query .= 'RIGHT JOIN Pool ON (Media.PoolId = Pool.PoolId) ';
 				$query .= 'WHERE Media.poolid = ' . $pool_id;
 			break;
 			case 'pgsql':
 				$query 	= 'SELECT COUNT(*) as vols,Pool.name as pool_name ';
 				$query .= 'FROM Media ';
-				$query .= 'LEFT OUTER JOIN Pool ON (Media.PoolId = Pool.PoolId) ';
+				$query .= 'RIGHT JOIN Pool ON (Media.PoolId = Pool.PoolId) ';
 				$query .= 'WHERE Media.poolid = ' . $pool_id;
 				$query .= 'GROUP BY pool.name';
 			break;
@@ -464,8 +464,8 @@ class Bweb extends DB
 		$res = $this->db_link->query( $query );
 		if( PEAR::isError( $res ) )
 			$this->triggerDBError( 'Unable to get volume number from pool', $res );
-		else
-			$vols = $res->fetchRow( );
+		
+		$vols = $res->fetchRow( );
 		
 		return array( $vols['pool_name'], $vols['vols'] );
 	}
