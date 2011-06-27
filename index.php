@@ -46,9 +46,6 @@ $dbSql->tpl->assign('clientes_totales',$nb_clients["nb_client"] );
 // Backup Job list for report.tpl and last_run_report.tpl
 $dbSql->tpl->assign( 'jobs_list', $dbSql->Get_BackupJob_Names() );
 
-// Get volumes list (volumes.tpl)
-$dbSql->tpl->assign('pools', $dbSql->GetVolumeList() );
-
 // Last 24 hours completed jobs number
 $dbSql->tpl->assign( 'completed_jobs', $dbSql->CountJobs( LAST_DAY, 'completed' ) );
 
