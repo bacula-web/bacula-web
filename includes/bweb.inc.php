@@ -92,7 +92,6 @@ class Bweb extends DB
 
 		$this->tpl->template_dir 	= "./templates";
 		$this->tpl->compile_dir 	= "./templates_c";
-		$this->tpl->config_dir     	= "./configs";
 	}
 	
 	function init_gettext()
