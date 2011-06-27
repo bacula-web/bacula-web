@@ -15,7 +15,7 @@
 +-------------------------------------------------------------------------+ 
 */
 
-class BGraph{
+class CGraph{
 	private $title;
 	private $ytitle;
 	

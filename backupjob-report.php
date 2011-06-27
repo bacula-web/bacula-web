@@ -49,7 +49,7 @@
   // ===============================================================
   // Last 7 days stored Bytes graph
   // ===============================================================  
-  $graph = new BGraph( "graph2.png" );
+  $graph = new CGraph( "graph2.png" );
 
   foreach( $days as $day )
     array_push( $days_stored_bytes, $dbSql->GetStoredBytesByJob( $backupjob_name, $day['start'], $day['end'] ) );
@@ -68,7 +68,7 @@
   // ===============================================================
   // Getting last 7 days stored files graph
   // ===============================================================
-  $graph = new BGraph("graph3.png" );
+  $graph = new CGraph("graph3.png" );
   
   foreach( $days as $day )
     array_push( $days_stored_files, $dbSql->GetStoredFilesByJob( $backupjob_name, $day['start'], $day['end'] ) );

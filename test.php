@@ -77,7 +77,7 @@
  
  // Generate test graph
  $data = array( array('test', 100, 100, 200, 100), array('test1', 150, 100, 150, 100 ) );	
- $graph = new BGraph( "graph3.png" );
+ $graph = new CGraph( "graph3.png" );
  $graph->SetColors( array('green', 'red' ) );
 
  $graph->SetData( $data, 'pie', 'text-data-single' );
