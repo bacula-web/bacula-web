@@ -14,7 +14,7 @@
 		<form method="post" action="index.php">
 			Catalog&nbsp;
 			<select name="catalog_id" OnChange="submit()">
-				{html_options options=$catalogs} 
+				{html_options options=$catalogs selected=$smarty.post.catalog_id} 
 			</select>
 		</form>
 	</li>
