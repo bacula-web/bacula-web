@@ -67,7 +67,7 @@
 	  {foreach from=$last_jobs item=job}
 	  <tr>
 		<td width="50" class="{$job.Job_classe}">
-			<img width="20" src="style/images/{$job.Job_icon}" alt="" title="{$job.JobStatusLong}" />
+			<img width="20" src="style/images/{$job.Job_icon}" alt="" title="{$job.jobstatuslong}" />
 		</td>
 		<td class="{$job.Job_classe}">{$job.jobid}</td>
 		<td class="{$job.Job_classe}">
