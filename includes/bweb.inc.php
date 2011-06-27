@@ -266,9 +266,9 @@ class Bweb extends DB
 		$result  = $this->db_link->query( $query );
 		
 		if (PEAR::isError( $result ) ) {
-			die( "Unable to get number of jobs with $level status from catalog <br />" . $result->getMessage() );
+			$this->TriggerDBError( 'Unable to get number of jobs with ' . $level . ' status from catalog', $result);
 		}else {
-			$jobs = $result->fetchRow( DB_FETCHMODE_ASSOC ); 
+			$jobs = $result->fetchRow();
 			return $jobs['jobs'];
 		}
 		
