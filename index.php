@@ -20,9 +20,6 @@ include_once( 'config.inc.php' );
 
 $dbSql = new Bweb();
 
-// How many catalog configured
-$dbSql->tpl->assign( 'catalog_nb', $dbSql->catalog_nb );
-
 // Stored files number 
 $dbSql->tpl->assign('stored_files', $dbSql->GetStoredFiles( ALL ) );
   

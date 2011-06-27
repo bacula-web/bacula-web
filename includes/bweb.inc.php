@@ -26,6 +26,7 @@ class Bweb extends DB
 	private $config;						// Loaded config from bacula.conf
 	private $catalogs = array();			// Catalog array
 	public  $catalog_nb;
+	private	$catalog_current_id;
 	private $bwcfg;
 
     function __construct()
@@ -37,11 +38,27 @@ class Bweb extends DB
 		$this->bwcfg->Load_Config();
 		$this->catalog_nb = $this->bwcfg->Count_Catalogs();
 		
-		// Select which catalog to connect to
-		if( isset( $_POST['catalog_id'] ) )
-			$dsn = $this->bwcfg->Get_Dsn( $_POST['catalog_id'] );
-		else
-			$dsn = $this->bwcfg->Get_Dsn( 0 );
+		// Initialize smarty template classe
+		$this->init_tpl();
+		// Initialize smarty gettext function
+		$this->init_gettext();
+		
+		// Check catalog id
+		if( isset($_POST['catalog_id']) ) {
+			$this->catalog_current_id = $_POST['catalog_id'];
+			$_SESSION['catalog_id'] = $this->catalog_current_id;
+		}
+		elseif( isset( $_SESSION['catalog_id'] ) )
+			$this->catalog_current_id = $_SESSION['catalog_id'];
+		else {
+			$this->catalog_current_id = 0;
+			$_SESSION['catalog_id'] = $this->catalog_current_id;
+		}
+
+		$this->tpl->assign( 'catalog_current_id', $this->catalog_current_id );
+		
+		// Get DSN
+		$dsn = $this->bwcfg->Get_Dsn( $this->catalog_current_id );
 		
 		// Connect to the database
 		$options = array( 'portability' => DB_PORTABILITY_ALL );
@@ -55,18 +72,12 @@ class Bweb extends DB
 			$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
 		}
 		
-		// Initialize smarty template classe
-		$this->init_tpl();
-		// Initialize smarty gettext function
-		$this->init_gettext();
-		
 		// Catalog selection		
 		if( $this->catalog_nb > 1 ) {
-			// Set current catalog in header template
-			if(isset( $_POST['catalog_id'] ) )
-				$this->tpl->assign( 'catalog_current', $_POST['catalog_id'] );
-			
+			// Catalogs list
 			$this->tpl->assign( 'catalogs', $this->bwcfg->Get_Catalogs() );			
+			// Catalogs count
+			$this->tpl->assign( 'catalog_nb', $this->catalog_nb );
 		}
 	}
                 
