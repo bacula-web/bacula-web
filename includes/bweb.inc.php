@@ -149,10 +149,10 @@ class Bweb extends DB
 		
 		if(! PEAR::isError( $result ) )
 		{
-			$db = $result->fetchRow( DB_FETCHMODE_ASSOC );
+			$db = $result->fetchRow();
 			$database_size = $db['dbsize'];
 		}else
-			die( "Unable to get database size<br />" . $result->getMessage() );
+			$this->TriggerDBError( 'Unable to get database size', $result);
 		
 		return CUtils::Get_Human_Size( $database_size );
 	} // end function GetDbSize()
