@@ -95,6 +95,8 @@ class CGraph{
 		// Data, type and data type
 		$this->plot->SetPlotType( $this->type );
 		$this->plot->SetDataType( $this->data_type );
+		
+		// Set graph data
 		$this->plot->SetDataValues( $this->data );
 		
 		// Plot colors
