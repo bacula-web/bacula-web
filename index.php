@@ -68,7 +68,7 @@ foreach( $status as $job_status ) {
 	array_push( $data, $dbSql->GetJobsStatistics( $job_status ) );
 }
 
-$graph = new CGraph( "graph.png" );
+$graph = new BGraph( "graph.png" );
 $graph->SetData( $data, 'pie', 'text-data-single' );
 $graph->SetGraphSize( 400, 230 );
 
@@ -78,7 +78,7 @@ unset($graph);
 
 // Pool and volumes graph
 $data = array();
-$graph = new CGraph( "graph1.png" );
+$graph = new BGraph( "graph1.png" );
 
 $pools = $dbSql->Get_Pools_List();
 while( $pool = $pools->fetchRow( ) ) {
@@ -93,7 +93,7 @@ $dbSql->tpl->assign('graph_pools', $graph->Get_Image_file() );
 
 // Last 7 days stored Bytes graph
 $data  = array();
-$graph = new CGraph( "graph2.png" );
+$graph = new BGraph( "graph2.png" );
 $days  = array();
 
 // Get the last 7 days interval (start and end)
