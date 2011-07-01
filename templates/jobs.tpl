@@ -24,7 +24,7 @@
 	    <td class="info" width="200">
 			{$total_jobs} jobs found
 		</td>
-		<td class="info" colspan="5" style="text-align: right;">
+		<td class="info" colspan="5">
 			Jobs / Page
 			<select name="jobs_per_page">
 			  {foreach from=$jobs_per_page item=nb_jobs}
@@ -32,17 +32,15 @@
 			  {/foreach}
 			</select>
 		</td>
-		<td class="info" width="200">
-			Job Status
-			<select name="status">
-				{foreach from=$job_status item=status_label}
-				  <option value="{$status_label}" {if $smarty.post.status == $status_label}Selected{/if} >{$status_label}
-				{/foreach}
-			</select>
+		<td class="info" width="160">
+			Job status
+			{html_options name=status values=$job_status options=$job_status selected=$job_status_filter onChange="submit();"}
 		</td>
+		<!--
 		<td class="info" width="120">
 			<input type="submit" value="Update" />
 		</td>
+		-->
 	  </tr>
 	  <tr>
 		<td colspan="8">&nbsp;</td>

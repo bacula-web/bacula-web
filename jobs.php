@@ -19,11 +19,24 @@
 
   $dbSql = new Bweb();
   // Jobs list
-  $query 	   = "";
-  $last_jobs = array();
+  $query 	    = "";
+  $last_jobs 	= array();
   
   // Job Status list
-  $job_status = array( 'Any', 'Waiting', 'Running', 'Completed', 'Failed', 'Canceled' );
+  define( 'STATUS_ALL',		  0 );
+  define( 'STATUS_RUNNING',   1 );
+  define( 'STATUS_WAITING',   2 );
+  define( 'STATUS_COMPLETED', 3 );
+  define( 'STATUS_FAILED',	  4 );
+  define( 'STATUS_CANCELED',  5 );
+  
+  $job_status = array( STATUS_ALL       => 'All', 
+					   STATUS_RUNNING   => 'Running', 
+					   STATUS_WAITING   => 'Waiting',
+					   STATUS_COMPLETED => 'Completed',
+					   STATUS_FAILED	=> 'Failed',
+					   STATUS_CANCELED	=> 'Canceled' );
+					   
   $dbSql->tpl->assign( 'job_status', $job_status );
   
   // Jobs per page
@@ -40,24 +53,25 @@
   
   // Filter by status
   if( isset( $_POST['status'] ) ) {
-	switch( strtolower( $_POST['status'] ) )
+	switch( $_POST['status'] ) 
 	{
-		case 'running':
+		case STATUS_RUNNING:
 			$query .= "WHERE Job.JobStatus = 'R' ";
 		break;
-		case 'waiting':
+		case STATUS_WAITING:
 			$query .= "WHERE Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
 		break;
-		case 'completed':
+		case STATUS_COMPLETED:
 			$query .= "WHERE Job.JobStatus IN ('T', 'E') ";
 		break;
-		case 'failed':
+		case STATUS_FAILED:
 			$query .= "WHERE Job.JobStatus = 'f' ";
 		break;
-		case 'canceled':
+		case STATUS_CANCELED:
 			$query .= "WHERE Job.JobStatus = 'A' ";
 		break;
 	}
+    $dbSql->tpl->assign('job_status_filter', $_POST['status'] );
   }
   
   // order by
