@@ -175,13 +175,7 @@
 		<td class="info">
 	     <input type=hidden name="default" value="1"> 				
 		   <select name=backupjob_name>
- 		     {*
-			 {if $smarty.get.server != ""}
- 				{html_options values=$smarty.get.server output=$smarty.get.server}
- 			 {else}
-			 *}
-				{html_options values=$jobs_list output=$jobs_list}
- 		     {* {/if} *}
+		     {html_options values=$jobs_list output=$jobs_list}
  		   </select>
 	   </td>
 	 </tr>

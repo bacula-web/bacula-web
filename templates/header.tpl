@@ -12,10 +12,8 @@
 	{if $catalog_nb > 1}
 	<li>
 		<form method="post" action="index.php">
-			Catalog&nbsp;
-			<select name="catalog_id" OnChange="submit()">
-				{html_options options=$catalogs selected=$catalog_current_id}
-			</select>
+			Select catalog&nbsp;
+			{html_options name=catalog_id options=$catalogs selected=$catalog_current_id onchange="submit();"}
 		</form>
 	</li>
 	{/if}
