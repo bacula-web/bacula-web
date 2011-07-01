@@ -55,7 +55,7 @@
 		{foreach from=$jobs item=job}
 		<tr>
 			<td class="{$job.row_class}">{$job.jobid}</td>
-			<td class="{$job.row_class}">{$job.level}</td>
+			<td class="{$job.row_class}">{$job.joblevel}</td>
 			<td class="{$job.row_class}">{$job.jobfiles}</td>
 			<td class="{$job.row_class}">{$job.jobbytes}</td>
 			<td class="{$job.row_class}">{$job.starttime}</td>

@@ -97,13 +97,13 @@
   
   if( ! PEAR::isError( $result ) )
   {
-	while( $job = $result->fetchRow( DB_FETCHMODE_ASSOC ) ) 
+	while( $job = $result->fetchRow() )
 	{
 		// Job level description
-		$job['Level']       = $joblevel[ $job['Level'] ];
+		$job['joblevel']	= $joblevel[ $job['level'] ];
 
 		// Job execution execution time
-		$job['elapsedtime'] = CTimeUtils::Get_Elapsed_Time( $job['StartTime'], $job['EndTime'] );
+		$job['elapsedtime'] = CTimeUtils::Get_Elapsed_Time( $job['starttime'], $job['endtime'] );
 
 		// odd and even row
 		if( count($jobs) % 2)
