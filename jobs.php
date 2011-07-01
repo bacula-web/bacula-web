@@ -87,8 +87,7 @@
   $jobsresult = $dbSql->db_link->query( $query );
   
   if( PEAR::isError( $jobsresult ) ) {
-	  echo "SQL query = $query <br />";
-	  die("Unable to get last failed jobs from catalog" . $jobsresult->getMessage() );
+	  $dbSql->TriggerDBError( "Unable to get last failed jobs from catalog", $jobresult );
   }else {
 	  while( $job = $jobsresult->fetchRow( DB_FETCHMODE_ASSOC ) ) {
 		
