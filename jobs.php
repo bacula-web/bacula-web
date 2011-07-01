@@ -39,10 +39,6 @@
 					   
   $dbSql->tpl->assign( 'job_status', $job_status );
   
-  // Jobs per page
-  $jobs_per_page = array( 25,50,75,100,150 );
-  $dbSql->tpl->assign( 'jobs_per_page', $jobs_per_page );
-
   // Global variables
   $job_level = array( 'D' => 'Diff', 'I' => 'Incr', 'F' => 'Full' );
   
@@ -77,13 +73,16 @@
   // order by
   $query .= "ORDER BY Job.JobId DESC ";
   
+  // Jobs per page
+  $jobs_per_page = array( 25 => '25', 50 => '50', 75 => '75', 100 => '100', 150 => '150' );
+    
   // Determine how many jobs to display
-  if( isset($_POST['jobs_per_page']) )
+  if( isset($_POST['jobs_per_page']) ) {
 	$query .= "LIMIT " . $_POST['jobs_per_page'];
-  else
+    $dbSql->tpl->assign( 'jobs_per_page_selected', $_POST['jobs_per_page'] );
+  }else
 	$query .= "LIMIT 25 ";
-  
-  //echo $query . '<br />';
+  $dbSql->tpl->assign( 'jobs_per_page', $jobs_per_page );
   
   $jobsresult = $dbSql->db_link->query( $query );
   

@@ -24,23 +24,14 @@
 	    <td class="info" width="200">
 			{$total_jobs} jobs found
 		</td>
-		<td class="info" colspan="5">
+		<td class="info" colspan="5" width="160">
 			Jobs / Page
-			<select name="jobs_per_page">
-			  {foreach from=$jobs_per_page item=nb_jobs}
-			    <option value="{$nb_jobs}" {if $smarty.post.jobs_per_page == $nb_jobs}Selected{/if} >{$nb_jobs}
-			  {/foreach}
-			</select>
+			{html_options name=jobs_per_page options=$jobs_per_page selected=$jobs_per_page_selected onChange="submit();"}
 		</td>
 		<td class="info" width="160">
 			Job status
 			{html_options name=status values=$job_status options=$job_status selected=$job_status_filter onChange="submit();"}
 		</td>
-		<!--
-		<td class="info" width="120">
-			<input type="submit" value="Update" />
-		</td>
-		-->
 	  </tr>
 	  <tr>
 		<td colspan="8">&nbsp;</td>
