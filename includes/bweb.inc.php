@@ -65,7 +65,7 @@ class Bweb extends DB
 		$this->db_link = $this->connect( $dsn, $options );
         
 		if (DB::isError($this->db_link)) {
-			die( 'Unable to connect to catalog <br />' . $this->db_link->getMessage());
+			$this->TriggerDBError("Unable to connect to catalog', $this->db_link);
 		}else {
 			$this->driver = $dsn['phptype'];                            
             register_shutdown_function(array(&$this,'close') );
@@ -160,7 +160,7 @@ class Bweb extends DB
 	{
 		$clients = $this->db_link->query("SELECT COUNT(*) AS nb_client FROM Client");
 		if( PEAR::isError($clients) )
-			die( "Unable to get client number" );
+			$this->TriggerDBError("Unable to get client number", $clients );
 		else
 			return $clients->fetchRow( DB_FETCHMODE_ASSOC );
 	}
@@ -179,7 +179,7 @@ class Bweb extends DB
 			$pools = $this->db_link->query( $query );
 			
 			if( PEAR::isError( $pools ) )
-				die("Error: Failed to get pool list <br />SQL Query: $query<br />" . $pools->getMessage() );
+				$this->TriggerDBError("Failed to get pool list", $pools );
 			
 			while( $pool = $pools->fetchRow( DB_FETCHMODE_ASSOC ) ) {
 				switch( $this->driver )
@@ -204,7 +204,7 @@ class Bweb extends DB
 				$medias = $this->db_link->query( $query );
 
 				if( PEAR::isError( $medias ) ) {
-					die( "Failed to get media list for pool $volume[0] <br /> " . $medias->getMessage() );
+					$this->TriggerDBError("Failed to get media list for pool", $medias);
 				}else {
 					if( $debug ) echo "Found " . $medias->numRows() . " medias for pool " . $pool['name'] . " <br />";
 				
@@ -318,7 +318,7 @@ class Bweb extends DB
 		$jobs = $this->db_link->query( $query );
 	
 		if (PEAR::isError( $jobs ) ) {
-			die( "Unable to get last $status jobs number from catalog <br />" . $jobs->getMessage() );
+			$this->TriggerDBError("Unable to get last $status jobs number from catalog", $jobs);
 		}else {
 			$jobs = $jobs->fetchRow( DB_FETCHMODE_ASSOC ); 
 			return $jobs['job_nb'];
@@ -492,7 +492,7 @@ class Bweb extends DB
 			$nbfiles 	= $result->fetchRow(DB_FETCHMODE_ASSOC);
 			$totalfiles = $totalfiles + $nbfiles['stored_files'];
 		}else{
-			die("Unable to get protected files from catalog <br />" . $result->getMessage() );
+			$this->TriggerDBError("Unable to get protected files from catalog", $result);
 		}
 		
 		return $totalfiles;
@@ -515,7 +515,7 @@ class Bweb extends DB
 		$result = $this->db_link->query( $query );
 		
 		if( PEAR::isError( $result ) ) {
-			die( "Unable to get Job Bytes from catalog" );
+			$this->TriggerDBError("Unable to get Job Bytes from catalog", $result );
 		}else{
 			return $result->fetchRow( DB_FETCHMODE_ASSOC );
 		}
@@ -564,7 +564,7 @@ class Bweb extends DB
 		$result = $this->db_link->query( $query );
 		
 		if( PEAR::isError( $result ) ) {
-			die( "Unable to get Job Bytes from catalog" );
+			$this->TriggerDBError("Unable to get Job Bytes from catalog", $result );
 		}else{
 			$stored_bytes = 0;
 			$tmp = $result->fetchRow( DB_FETCHMODE_ASSOC );
@@ -590,7 +590,7 @@ class Bweb extends DB
 		$result = $this->db_link->query( $query );
 		
 		if( PEAR::isError( $result ) ) {
-			die( "Unable to get Job Files from catalog" );
+			$this->TriggerDBError("Unable to get Job Files from catalog", $result);
 		}else{
 			$stored_bytes = 0;
 			$tmp = $result->fetchRow( DB_FETCHMODE_ASSOC );
