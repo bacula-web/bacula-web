@@ -112,7 +112,7 @@
 		array_push( $jobs, $job);
 	}		
   }else
-	die( "Unable to get last jobs from catalog " . $result->getMessage() );
+	$dbSql->TriggerDBError("Unable to get last jobs from catalog", $result);
     
   $dbSql->tpl->assign('jobs', $jobs );
   $dbSql->tpl->assign('backupjob_name', $backupjob_name );
