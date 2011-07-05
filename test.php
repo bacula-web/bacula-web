@@ -19,7 +19,7 @@
  $bw = new Bweb();
 
  // Check result icon
- $check_result = array( true => 'ok.png', false => 'error.png' );
+ $icon_result = array( true => 'ok.png', false => 'error.png' );
 
  // Checks list
  $check_list = array( array( 'check_cmd'   		=> 'php-gettext', 
@@ -50,27 +50,25 @@
 	 switch( $check['check_cmd'] )
 	 {
 		 case 'php-gettext':
-			 $check['check_result'] = $check_result[ function_exists( 'gettext' ) ];					
+			 $check['check_result'] = $icon_result[ function_exists( 'gettext' ) ];					
 		 break;
 		 case 'php-gd':
-			 $check['check_result'] = $check_result[ function_exists( 'gd_info') ];
+			 $check['check_result'] = $icon_result[ function_exists( 'gd_info') ];
 		 break;
 		 case 'pear-db':
-			 $check['check_result'] = $check_result[ class_exists('DB') ];
+			 $check['check_result'] = $icon_result[ class_exists('DB') ];
 		 break;
 		 case 'php-mysql':
-			 $check['check_result'] = $check_result[ function_exists('mysql_connect') ];
+			 $check['check_result'] = $icon_result[ function_exists('mysql_connect') ];
 		 break;
 		 case 'php-postgres':
-			 $check['check_result'] = $check_result[ function_exists('pg_connect') ];
+			 $check['check_result'] = $icon_result[ function_exists('pg_connect') ];
 		 break;
 		 case 'smarty-cache':
-			 $check['check_result'] = $check_result[ is_writable( "./templates_c" ) ];
+			 $check['check_result'] = $icon_result[ is_writable( "./templates_c" ) ];
 		 break;
 		 case 'php-version':
-			 $phpversion = explode( '.', PHP_VERSION );
-			 $phpversion = $phpversion[0];
-			 $check['check_result'] = $check_result[ $phpversion >= 5 ];
+			 $check['check_result'] = $icon_result[ version_compare( PHP_VERSION, '5.0.0', '>=' ) ];
 		 break;
 	 }
  }
