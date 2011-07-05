@@ -65,10 +65,10 @@ class Bweb extends DB
 		$this->db_link = $this->connect( $dsn, $options );
         
 		if (DB::isError($this->db_link)) {
-			$this->TriggerDBError("Unable to connect to catalog', $this->db_link);
+			$this->TriggerDBError('Unable to connect to catalog', $this->db_link);
 		}else {
 			$this->driver = $dsn['phptype'];                            
-            register_shutdown_function(array(&$this,'close') );
+            		register_shutdown_function(array(&$this,'close') );
 			$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
 		}
 		
