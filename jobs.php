@@ -135,7 +135,7 @@
 		// Job Level
         $job['Level'] = $job_level[ $job['level'] ];
 		// Job Size
-		$job['JobBytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
+		$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
 
 		array_push( $last_jobs, $job);
 	  }
