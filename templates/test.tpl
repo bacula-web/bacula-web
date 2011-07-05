@@ -16,8 +16,8 @@
 	<table border="0">
 		{foreach from=$checks item=check}
 		  <tr>
-		    <td width="250">{$check.check_label}</td>
-			<td width="450">{$check.check_descr}</td>
+		    <td style="font-weight:bold;font-size:10pt;vertical-align:middle;text-align:left;padding:10px 5px 5px 30px;">{$check.check_label}</td>
+			<td style="text-align:left;vertical-align:middle;">{$check.check_descr}</td>
 			<td  style="text-align:center;"> <img src='style/images/{$check.check_result}' width='20' alt=''/></td>
 		  </tr>
 		{/foreach}
