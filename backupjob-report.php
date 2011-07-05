@@ -108,6 +108,8 @@
 		// odd and even row
 		if( count($jobs) % 2)
 			$job['row_class'] = 'odd';
+		// Job bytes in human format
+		$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
 
 		array_push( $jobs, $job);
 	}		
