@@ -557,10 +557,25 @@ class Bweb extends DB
 	
 	public function GetStoredBytesByJob( $jobname, $start_date, $end_date )
 	{
-		$query  = "SELECT SUM(JobBytes) as stored_bytes, EndTime FROM Job ";
-		$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' ) AND ";
-		$query .= "Name = '$jobname'";
+		$query = '';
 		
+		switch( $this->driver )
+		{
+			case 'sqlite':
+			case 'mysql':
+				$query  = "SELECT SUM(JobBytes),EndTime as stored_bytes FROM Job ";
+				$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' ) AND ";
+				$query .= "Name = '$jobname'";
+				$query .= "GROUP BY EndTime";
+				break;
+			case 'pgsql':
+				$query  = "SELECT SUM(jobbytes),endtime as stored_bytes FROM job ";
+				$query .= "WHERE ( endtime BETWEEN timestamp '$start_date' AND timestamp '$end_date' ) AND ";
+				$query .= "name = '$jobname'";
+				$query .= "GROUP BY EndTime";
+				break;
+		}
+
 		$result = $this->db_link->query( $query );
 		
 		if( PEAR::isError( $result ) ) {
@@ -583,9 +598,24 @@ class Bweb extends DB
 	
 	public function GetStoredFilesByJob( $jobname, $start_date, $end_date )
 	{
-		$query  = "SELECT SUM(JobFiles) as stored_files, EndTime FROM Job ";
-		$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' ) AND ";
-		$query .= "Name = '$jobname'";
+		$query = '';
+		
+		switch( $this->driver )
+		{
+			case 'sqlite':
+			case 'mysql':
+				$query  = "SELECT SUM(JobFiles),EndTime as stored_bytes FROM Job ";
+				$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' ) AND ";
+				$query .= "Name = '$jobname'";
+				$query .= "GROUP BY EndTime";
+				break;
+			case 'pgsql':
+				$query  = "SELECT SUM(jobfiles),endtime as stored_bytes FROM job ";
+				$query .= "WHERE ( endtime BETWEEN timestamp '$start_date' AND timestamp '$end_date' ) AND ";
+				$query .= "name = '$jobname'";
+				$query .= "GROUP BY EndTime";
+				break;
+		}
 		
 		$result = $this->db_link->query( $query );
 		
