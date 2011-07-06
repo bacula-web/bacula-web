@@ -48,6 +48,14 @@ class CTimeUtils {
         else
 			return $hrsDiff . ':' . $minsDiff . ':' . $secsDiff;
 	}
+	
+	static public function get_Day_Intervals( $day )
+	{
+		$start 			= strtotime( date( "Y-m-d 00:00:00", $day) );
+		$end   			= strtotime( date( "Y-m-d 23:59:59", $day) );
+		
+		return array( 'start' => $start, 'end' => $end);
+	}
 }
 
 ?>
