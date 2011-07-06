@@ -39,24 +39,26 @@
 
   // Get the last 7 days interval (start and end)
   for( $c = 6 ; $c >= 0 ; $c-- ) {
-	  $today = ( mktime() - ($c * LAST_DAY) );
-	  array_push( $days, array( 'start' => date( "Y-m-d 00:00:00", $today ), 'end' => date( "Y-m-d 23:59:00", $today ) ) );
+	  $today  = NOW - ($c * DAY);
+	  $days[] = CTimeUtils::get_Day_Intervals($today);
   }
   
   // Generate Backup Job report period string
-  $backupjob_period = "From " . date( "Y-m-d", mktime()-LAST_WEEK ) . " to " . date( "Y-m-d", mktime() );
+  $backupjob_period = "From " . date( "Y-m-d", (NOW-WEEK) ) . " to " . date( "Y-m-d", NOW );
   
   // ===============================================================
   // Last 7 days stored Bytes graph
   // ===============================================================  
   $graph = new CGraph( "graph2.png" );
 
-  foreach( $days as $day )
-    array_push( $days_stored_bytes, $dbSql->GetStoredBytesByJob( $backupjob_name, $day['start'], $day['end'] ) );
+  foreach( $days as $day ) {
+	$stored_bytes = CUtils::Get_Human_Size( $dbSql->getStoredBytes( $day['start'], $day['end'], $backupjob_name), 1, 'GB', false );
+	$days_stored_bytes[] = array( date("m-d", $day['start']), $stored_bytes );
+  }
  
   // Calculate total bytes for this period
-  foreach( $days_stored_bytes as $day )
-	$backupjob_bytes += $day[1];
+  $backupjob_bytes = $dbSql->getStoredBytes( LAST_WEEK, NOW, $backupjob_name );
+  $backupjob_bytes = CUtils::Get_Human_Size( $backupjob_bytes );
 	
   $graph->SetData( $days_stored_bytes, 'bars', 'text-data' );
   $graph->SetGraphSize( 400, 230 );
