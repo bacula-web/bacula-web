@@ -15,20 +15,20 @@
 +-------------------------------------------------------------------------+ 
 */
 class CUtils {
-	static public function Get_Human_Size( $size, $decimal = 2, $unit = 'auto' )
+	static public function Get_Human_Size( $size, $decimal = 2, $unit = 'auto', $display_unit = true )
 	{
-		$unit_id = 0;
-		$lisible = false;
-		$units = array('B','KB','MB','GB','TB');
-		$hsize = $size;
+		$unit_id 	= 0;
+		$lisible 	= false;
+		$units 		= array('B','KB','MB','GB','TB');
+		$hsize 		= $size;
 
 		switch( $unit )
 		{
 			case 'auto';
 				while( !$lisible ) {
 					if ( $hsize >= 1024 ) {
-						$hsize    = $hsize / 1024;
-						$unit_id += 1;
+						$hsize = $hsize / 1024;
+						$unit_id++;
 					}	 
 					else
 						$lisible = true;
@@ -36,13 +36,18 @@ class CUtils {
 			break;
 			
 			default:
-				$p = array_search( $unit, $units);
-				$hsize = $hsize / pow(1024,$p);
+				$exp     = array_keys( $units, $unit);
+				$unit_id = current($exp);
+				$hsize   = $hsize / pow( 1024, $unit_id );
 			break;
 		} // end switch
 		
 		$hsize = sprintf("%." . $decimal . "f", $hsize);
-		$hsize = $hsize . ' ' . $units[$unit_id];
+		
+		// Display unit or not
+		if( $display_unit == true )
+			$hsize = $hsize . ' ' . $units[$unit_id];
+			
 		return $hsize;
 	}
 }
