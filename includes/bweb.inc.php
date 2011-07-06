@@ -541,7 +541,7 @@ class Bweb extends DB
 			$this->TriggerDBError( "Unable to get Job Bytes from catalog", $result );
 		}else{
 			$stored_bytes = 0;
-			$tmp = $result->fetchRow( DB_FETCHMODE_ASSOC );
+			$tmp = $result->fetchRow();
 			
 			$day = date( "D d", strtotime($end_date) );
 			
@@ -582,7 +582,7 @@ class Bweb extends DB
 			$this->TriggerDBError("Unable to get Job Bytes from catalog", $result );
 		}else{
 			$stored_bytes = 0;
-			$tmp = $result->fetchRow( DB_FETCHMODE_ASSOC );
+			$tmp = $result->fetchRow();
 			
 			$day = date( "D d", strtotime($end_date) );
 			
@@ -604,13 +604,13 @@ class Bweb extends DB
 		{
 			case 'sqlite':
 			case 'mysql':
-				$query  = "SELECT SUM(JobFiles),EndTime as stored_bytes FROM Job ";
+				$query  = "SELECT SUM(JobFiles),EndTime as stored_files FROM Job ";
 				$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' ) AND ";
 				$query .= "Name = '$jobname'";
 				$query .= "GROUP BY EndTime";
 				break;
 			case 'pgsql':
-				$query  = "SELECT SUM(jobfiles),endtime as stored_bytes FROM job ";
+				$query  = "SELECT SUM(jobfiles),endtime as stored_files FROM job ";
 				$query .= "WHERE ( endtime BETWEEN timestamp '$start_date' AND timestamp '$end_date' ) AND ";
 				$query .= "name = '$jobname'";
 				$query .= "GROUP BY EndTime";
@@ -623,7 +623,7 @@ class Bweb extends DB
 			$this->TriggerDBError("Unable to get Job Files from catalog", $result);
 		}else{
 			$stored_bytes = 0;
-			$tmp = $result->fetchRow( DB_FETCHMODE_ASSOC );
+			$tmp = $result->fetchRow();
 			
 			$day 			= date( "D d", strtotime($end_date) );
 			$stored_files 	= $tmp['stored_files'];
