@@ -498,29 +498,6 @@ class Bweb extends DB
 		return $totalfiles;
 	}
 	
-	public function GetStoredBytes( $delay = LAST_DAY )
-	{
-		$query = "SELECT SUM(JobBytes) as stored_bytes FROM Job ";
-		
-		// Interval calculation
-		$end_date   = mktime();
-		$start_date = $end_date - $delay;
-		
-		$start_date = date( "Y-m-d H:i:s", $start_date );
-		$end_date   = date( "Y-m-d H:i:s", $end_date );
-		
-		if( $delay != ALL )
-			$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date'";
-		
-		$result = $this->db_link->query( $query );
-		
-		if( PEAR::isError( $result ) ) {
-			$this->TriggerDBError("Unable to get Job Bytes from catalog", $result );
-		}else{
-			return $result->fetchRow( DB_FETCHMODE_ASSOC );
-		}
-	}
-	
 	public function GetStoredBytesByInterval( $start_date, $end_date )
 	{
 		$query = '';
@@ -594,6 +571,51 @@ class Bweb extends DB
 			
 			return array( $day, $stored_bytes );
 		}			
+	}
+	
+	// Function: getStoredBytes
+	// Parameters:
+	// 		$start_timestamp: 	start date in unix timestamp format
+	// 		$end_timestamp: 	end date in unix timestamp format
+	//		$job_name:			optional job name
+	
+	public function getStoredBytes( $start_timestamp, $end_timestamp, $job_name = 'ALL' )
+	{
+		$query    		= '';
+		$start_date		= date( "Y-m-d H:i:s", $start_timestamp);	
+		$end_date		= date( "Y-m-d H:i:s", $end_timestamp);	
+		
+		switch( $this->driver )
+		{
+			case 'sqlite':
+			case 'mysql':
+				$query  = "SELECT SUM(JobBytes) as stored_bytes FROM Job ";
+				$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' )";
+			break;
+			case 'pgsql':
+				$query  = "SELECT SUM(jobbytes) as stored_bytes FROM job ";
+				$query .= "WHERE ( endtime BETWEEN timestamp '$start_date' AND timestamp '$end_date' )";
+			break;
+		}
+
+		if( $job_name != 'ALL' ) 
+			$query .= " AND name = '$job_name'";
+		
+		// Execute the query
+		$result = $this->db_link->query( $query );
+		
+		// Testing query result
+		if( PEAR::isError( $result ) ) {
+			$this->TriggerDBError("Unable to get Job Bytes from catalog", $result );
+		}else{
+			$result = $result->fetchRow();
+			
+			if( !PEAR::isError($result) )
+				return $result['stored_bytes'];
+			else
+				$this->TriggerDBError( "Error fetching query result", $result);
+		}
+		
 	}
 	
 	public function GetStoredFilesByJob( $jobname, $start_date, $end_date )
