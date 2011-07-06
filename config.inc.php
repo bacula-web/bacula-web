@@ -40,10 +40,15 @@
  define('CONFIG_FILE', CONFIG_DIR . "config.php");
  
  // Time intervals in secondes
- define( 'LAST_DAY', 86400 );
- define( 'LAST_WEEK', 604800 );
- define( 'LAST_MONTH', 2678400 );
- define( 'ALL', -1 );
+ define( 'FIRST_DAY', 	mktime( 0, 0, 0, 1, 1, 1970) );
+ define( 'NOW', 		time() );
+ define( 'LAST_DAY', 	NOW - 86400 );
+ define( 'LAST_WEEK', 	NOW - 604800 );
+ define( 'LAST_MONTH', 	NOW - 2678400 );
+ define( 'DAY',			86400 );
+ define( 'WEEK',		604800 );
+ define( 'MONTH',		2678400 );
+ define( 'ALL', 		-1 );
  
  // Job status code
  define( 'J_NOT_RUNNING', 		  'C' );
