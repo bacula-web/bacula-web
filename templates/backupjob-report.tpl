@@ -28,7 +28,7 @@
 		</tr>
 		<tr>
 			<td>Transfered Bytes</td>
-			<td>{$backupjob_bytes} GB</td>
+			<td>{$backupjob_bytes}</td>
 		</tr>
 		<tr>
 			<td>Transfered Files</td>
@@ -68,7 +68,7 @@
   
   <!-- Transfered Bytes/Files graph -->
   <div class="box">
-	<p class="title">Transfered Bytes / Files (last 7 days)</p>
+	<p class="title">Transfered Bytes / Files</p>
 	<img src="{$graph_stored_bytes}" alt="" />
 	<img src="{$graph_stored_files}" alt="" />
   </div> <!-- end div class=box -->
