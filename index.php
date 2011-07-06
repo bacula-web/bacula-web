@@ -27,12 +27,10 @@ $dbSql->tpl->assign('stored_files', $dbSql->GetStoredFiles( ALL ) );
 $dbSql->tpl->assign('database_size', $dbSql->GetDbSize());
 
 // Overall stored bytes
-$result = $dbSql->GetStoredBytes( ALL );
-$dbSql->tpl->assign('stored_bytes', CUtils::Get_Human_Size( $result['stored_bytes'] ) );
+$dbSql->tpl->assign('stored_bytes', $dbSql->getStoredBytes( FIRST_DAY, NOW ) );
 
 // Total stored bytes since last 24 hours
-$result = $dbSql->GetStoredBytes( LAST_DAY );
-$dbSql->tpl->assign('bytes_last', CUtils::Get_Human_Size( $result['stored_bytes'] ) );
+$dbSql->tpl->assign('bytes_last', $dbSql->getStoredBytes( LAST_DAY, NOW ) );
 
 // Total stored files since last 24 hours
 $files_last = $dbSql->GetStoredFiles( LAST_DAY );
