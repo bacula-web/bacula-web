@@ -618,9 +618,11 @@ class Bweb extends DB
 		
 	}
 	
-	public function GetStoredFilesByJob( $jobname, $start_date, $end_date )
+	public function GetStoredFilesByJob( $jobname, $start_timestamp, $end_timestamp )
 	{
-		$query = '';
+		$query 		= '';
+		$start_date = date( "Y-m-d H:i:s", $start_timestamp);
+		$end_date	= date( "Y-m-d H:i:s", $end_timestamp);
 		
 		switch( $this->driver )
 		{
