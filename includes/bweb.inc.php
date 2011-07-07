@@ -610,9 +610,12 @@ class Bweb extends DB
 		}else{
 			$result = $result->fetchRow();
 			
-			if( !PEAR::isError($result) )
-				return $result['stored_bytes'];
-			else
+			if( !PEAR::isError($result) ) {
+				if( isset($result['stored_bytes']) and !empty($result['stored_bytes']) )
+					return $result['stored_bytes'];
+				else
+					return 0;
+			}else
 				$this->TriggerDBError( "Error fetching query result", $result);
 		}
 		
