@@ -407,47 +407,6 @@ class Bweb extends DB
 		return $totalfiles;
 	}
 	
-	public function GetStoredBytesByJob( $jobname, $start_date, $end_date )
-	{
-		$query = '';
-		
-		switch( $this->driver )
-		{
-			case 'sqlite':
-			case 'mysql':
-				$query  = "SELECT SUM(JobBytes),EndTime as stored_bytes FROM Job ";
-				$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' ) AND ";
-				$query .= "Name = '$jobname'";
-				$query .= "GROUP BY EndTime";
-				break;
-			case 'pgsql':
-				$query  = "SELECT SUM(jobbytes),endtime as stored_bytes FROM job ";
-				$query .= "WHERE ( endtime BETWEEN timestamp '$start_date' AND timestamp '$end_date' ) AND ";
-				$query .= "name = '$jobname'";
-				$query .= "GROUP BY EndTime";
-				break;
-		}
-
-		$result = $this->db_link->query( $query );
-		
-		if( PEAR::isError( $result ) ) {
-			$this->TriggerDBError("Unable to get Job Bytes from catalog", $result );
-		}else{
-			$stored_bytes = 0;
-			$tmp = $result->fetchRow();
-			
-			$day = date( "D d", strtotime($end_date) );
-			
-			if( isset( $tmp['stored_bytes'] ) ) {
-				$hbytes = CUtils::Get_Human_Size( $tmp['stored_bytes'], 3, 'GB' );
-				$hbytes = explode( " ", $hbytes );
-				$stored_bytes = $hbytes[0];
-			}
-			
-			return array( $day, $stored_bytes );
-		}			
-	}
-	
 	// Function: getStoredBytes
 	// Parameters:
 	// 		$start_timestamp: 	start date in unix timestamp format
