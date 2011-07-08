@@ -498,40 +498,6 @@ class Bweb extends DB
 		return $totalfiles;
 	}
 	
-	public function GetStoredBytesByInterval( $start_date, $end_date )
-	{
-		$query = '';
-		
-		switch($this->driver) {
-			case 'sqlite':
-			case 'mysql':
-				$query = "SELECT SUM(JobBytes) as stored_bytes FROM Job WHERE (EndTime BETWEEN '$start_date' AND '$end_date')";
-			break;
-			case 'pgsql':
-				$query = "SELECT SUM(JobBytes) as stored_bytes FROM Job WHERE (EndTime BETWEEN '$start_date' AND '$end_date')";
-			break;
-		}
-		
-		$result = $this->db_link->query( $query );
-		
-		if( PEAR::isError( $result ) ) {
-			$this->TriggerDBError( "Unable to get Job Bytes from catalog", $result );
-		}else{
-			$stored_bytes = 0;
-			$tmp = $result->fetchRow();
-			
-			$day = date( "D d", strtotime($end_date) );
-			
-			if( isset( $tmp['stored_bytes'] ) ) {
-				$hbytes = CUtils::Get_Human_Size( $tmp['stored_bytes'], 3, 'GB' );
-				$hbytes = explode( " ", $hbytes );
-				$stored_bytes = $hbytes[0];
-			}
-			
-			return array( $day, $stored_bytes );
-		}
-	}
-	
 	public function GetStoredBytesByJob( $jobname, $start_date, $end_date )
 	{
 		$query = '';
