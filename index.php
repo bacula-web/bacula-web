@@ -58,15 +58,14 @@ $dbSql->tpl->assign( 'diff_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'ALL', J_DIFF
 $dbSql->tpl->assign( 'full_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'ALL', J_FULL) );
 
 // Last 24 hours Job status graph
-$data   = array();  
-$status = array( 'completed', 'terminated_errors', 'failed', 'waiting', 'created', 'running', 'error' );
+$jobs_status_data = array();
+$jobs_status 	  = array( 'completed', 'failed', 'canceled', 'waiting' );
 
-foreach( $status as $job_status ) {
-	array_push( $data, $dbSql->GetJobsStatistics( $job_status ) );
-}
+foreach( $jobs_status as $status )
+	$jobs_status_data[] = array( $status, $dbSql->countJobs(NOW-DAY, NOW, $status) );
 
 $graph = new CGraph( "graph.png" );
-$graph->SetData( $data, 'pie', 'text-data-single' );
+$graph->SetData( $jobs_status_data, 'pie', 'text-data-single' );
 $graph->SetGraphSize( 400, 230 );
 
 $graph->Render();
