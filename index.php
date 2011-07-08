@@ -18,7 +18,8 @@
 session_start();
 include_once( 'config.inc.php' );
 
-$dbSql = new Bweb();
+$dbSql 				= new Bweb();
+$days_stored_bytes 	= array();
 
 // Stored files number 
 $dbSql->tpl->assign('stored_files', $dbSql->GetStoredFiles( ALL ) );
@@ -92,22 +93,20 @@ $graph->Render();
 $dbSql->tpl->assign('graph_pools', $graph->Get_Image_file() );
 
 // Last 7 days stored Bytes graph
-$data  = array();
-$graph = new CGraph( "graph2.png" );
-$days  = array();
+$days	= array();
 
-// Get the last 7 days interval (start and end)
 for( $c = 6 ; $c >= 0 ; $c-- ) {
-	$today = ( mktime() - ($c * LAST_DAY) );
-	array_push( $days, array( 'start' => date( "Y-m-d 00:00:00", $today ), 'end' => date( "Y-m-d 23:59:00", $today ) ) );
+	$today  = NOW - ($c * DAY);
+	$days[] = CTimeUtils::get_Day_Intervals($today);
 }
-
-$days_stored_bytes = array();
 
 foreach( $days as $day ) {
-  array_push( $days_stored_bytes, $dbSql->GetStoredBytesByInterval( $day['start'], $day['end'] ) );
+	$stored_bytes 		 = $dbSql->getStoredBytes( $day['start'], $day['end']);
+	$stored_bytes 		 = CUtils::Get_Human_Size( $stored_bytes, 1, 'GB', false );
+	$days_stored_bytes[] = array( date("m-d", $day['start']), $stored_bytes );  
 }
 
+$graph = new CGraph( "graph2.png" );
 $graph->SetData( $days_stored_bytes, 'bars', 'text-data' );
 $graph->SetGraphSize( 400, 230 );
 $graph->SetYTitle( "GB" );
