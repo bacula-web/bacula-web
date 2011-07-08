@@ -411,7 +411,11 @@ class Bweb extends DB
 			$this->TriggerDBError( 'Unable to get last' . $type . 'jobs status from catalog', $res);
 		}else {
 			$result = $res->fetchRow();
-			return array( $label, $result['count'] );
+			
+			if( isset($result['count']) and !empty($result['count']) )
+					return $result['count'];
+				else
+					return 0;
 		}
 	} // end function GetJobsStatistics()
 	
