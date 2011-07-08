@@ -125,8 +125,8 @@
 			<td class="label">Report type</td>
 			<td class="info">
 				<select>
-					<option>{t}Transfered Bytes{/t}
-					<option>{t}Transfered Files {/t}
+					<option>{t}Transferred Bytes{/t}
+					<option>{t}Transferred Files {/t}
 				</select>
 			</td>
 		</tr>
