@@ -273,54 +273,55 @@ class Bweb extends DB
 		
 	}
 	
-	public function CountJobs( $delay = LAST_DAY, $status = 'any' )
+	public function countJobs( $start_timestamp, $end_timestamp, $status = 'ALL', $level = 'ALL', $jobname = 'ALL', $client = 'ALL' )
 	{
 		$query 			= "SELECT COUNT(JobId) AS job_nb FROM Job ";
 		$where_delay 	= "";
-		$where_status	= "";
 		
-		// Interval condition for SQL query
-		if( $delay != ALL ) {
-			$end_date    = mktime();
-			$start_date  = $end_date - $delay;
-		
-			$start_date  = date( "Y-m-d H:i:s", $start_date );
-			$end_date    = date( "Y-m-d H:i:s", $end_date );
-		
-			$where_delay = "WHERE EndTime BETWEEN '$start_date' AND '$end_date' ";
+		// Calculate sql query interval
+		$start_date		= date( "Y-m-d H:i:s", $start_timestamp);	
+		$end_date		= date( "Y-m-d H:i:s", $end_timestamp);
+
+		switch( $this->driver )
+		{
+			case 'sqlite':
+			case 'mysql':
+				$query .= "WHERE (EndTime BETWEEN '$start_date' AND '$end_date') ";
+			break;
+			case 'pgsql':
+				$query .= "WHERE (EndTime BETWEEN timestamp '$start_date' AND timestamp '$end_date') ";
+			break;
 		}
 		
-		if( $status != 'any' ) {
+		if( $status != 'ALL' ) {
 			switch( $status )
 			{
 				case 'completed':
-					$where_status = "JobStatus = 'T' ";
+					$query .= " AND JobStatus = 'T' ";
 				break;
 				case 'failed':
-					$where_status = "JobStatus IN ('f','E') ";
+					$query .= " AND  JobStatus IN ('f','E') ";
 				break;
 				case 'canceled':
-					$where_status = "JobStatus = 'A' ";
+					$query .= " AND JobStatus = 'A' ";
 				break;
 				case 'waiting':
-					$where_status = "JobStatus IN ('F','S','M','m','s','j','c','d','t') ";
+					$query .= " AND JobStatus IN ('F','S','M','m','s','j','c','d','t') ";
 				break;
 			} // end switch
 		}
 		
-		if( !empty($where_delay) )
-			$query = $query . $where_delay . 'AND ' . $where_status;
-		else {
-			if( !empty($where_status) )
-				$query = $query . 'WHERE ' . $where_status;
+		if( $level != 'ALL' ) {
+			$query .= " AND Level = '$level'";
 		}
-			
+
+		// Execute the query
 		$jobs = $this->db_link->query( $query );
 	
 		if (PEAR::isError( $jobs ) ) {
 			$this->TriggerDBError("Unable to get last $status jobs number from catalog", $jobs);
 		}else {
-			$jobs = $jobs->fetchRow( DB_FETCHMODE_ASSOC ); 
+			$jobs = $jobs->fetchRow(); 
 			return $jobs['job_nb'];
 		}
 	}

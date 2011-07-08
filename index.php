@@ -47,19 +47,15 @@ $dbSql->tpl->assign('clientes_totales',$nb_clients["nb_client"] );
 // Backup Job list for report.tpl and last_run_report.tpl
 $dbSql->tpl->assign( 'jobs_list', $dbSql->Get_BackupJob_Names() );
 
-// Last 24 hours completed jobs number
-$dbSql->tpl->assign( 'completed_jobs', $dbSql->CountJobs( LAST_DAY, 'completed' ) );
+// Last 24 hours status (completed, failed and waiting jobs)
+$dbSql->tpl->assign( 'completed_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'completed' ) );
+$dbSql->tpl->assign( 'failed_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'failed' ) );
+$dbSql->tpl->assign( 'waiting_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'waiting' ) );
 
-// Last 24 hours failed jobs number
-$dbSql->tpl->assign( 'failed_jobs', $dbSql->CountJobs( LAST_DAY, 'failed' ) );
-
-// Last 24 hours waiting jobs number
-$dbSql->tpl->assign( 'waiting_jobs', $dbSql->CountJobs( LAST_DAY, 'waiting' ) );
-
-// Last 24 hours Job Levels
-$dbSql->tpl->assign( 'incr_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'I') );
-$dbSql->tpl->assign( 'diff_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'D') );
-$dbSql->tpl->assign( 'full_jobs', $dbSql->CountJobsbyLevel( LAST_DAY, 'F') );
+// Last 24 hours jobs Level
+$dbSql->tpl->assign( 'incr_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'ALL', J_INCR) );
+$dbSql->tpl->assign( 'diff_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'ALL', J_DIFF) );
+$dbSql->tpl->assign( 'full_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'ALL', J_FULL) );
 
 // Last 24 hours Job status graph
 $data   = array();  

@@ -144,9 +144,9 @@
   
   // Count jobs
   if( isset( $_POST['status'] ) )
-	$total_jobs = $dbSql->CountJobs( ALL, $_POST['status'] );
+	$total_jobs = $dbSql->countJobs( FIRST_DAY, NOW, $_POST['status'] );
   else
-	$total_jobs = $dbSql->CountJobs( ALL );
+	$total_jobs = $dbSql->countJobs( FIRST_DAY, NOW );
   
   $dbSql->tpl->assign( 'total_jobs', $total_jobs );
   
