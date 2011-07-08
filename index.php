@@ -31,14 +31,9 @@ $dbSql->tpl->assign('database_size', $dbSql->GetDbSize());
 $stored_bytes = CUtils::Get_Human_Size( $dbSql->getStoredBytes( FIRST_DAY, NOW ) );
 $dbSql->tpl->assign('stored_bytes', $stored_bytes);
 
-// Total stored bytes since last 24 hours
-$bytes_last = CUtils::Get_Human_Size( $dbSql->getStoredBytes( LAST_DAY, NOW ) );
-$dbSql->tpl->assign('bytes_last', $bytes_last );
-
-// Total stored files since last 24 hours
-$files_last = $dbSql->GetStoredFiles( LAST_DAY );
-$dbSql->tpl->assign('files_last', $files_last );
-
+// Total bytes and files for last 24 hours
+$dbSql->tpl->assign('bytes_last', CUtils::Get_Human_Size( $dbSql->getStoredBytes( LAST_DAY, NOW ) ) );
+$dbSql->tpl->assign('files_last', $dbSql->GetStoredFiles( LAST_DAY ) );
 
 // Number of clients
 $nb_clients = $dbSql->Get_Nb_Clients();
@@ -48,21 +43,21 @@ $dbSql->tpl->assign('clientes_totales',$nb_clients["nb_client"] );
 $dbSql->tpl->assign( 'jobs_list', $dbSql->Get_BackupJob_Names() );
 
 // Last 24 hours status (completed, failed and waiting jobs)
-$dbSql->tpl->assign( 'completed_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'completed' ) );
-$dbSql->tpl->assign( 'failed_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'failed' ) );
-$dbSql->tpl->assign( 'waiting_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'waiting' ) );
+$dbSql->tpl->assign( 'completed_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'completed' ) );
+$dbSql->tpl->assign( 'failed_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'failed' ) );
+$dbSql->tpl->assign( 'waiting_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'waiting' ) );
 
 // Last 24 hours jobs Level
-$dbSql->tpl->assign( 'incr_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'ALL', J_INCR) );
-$dbSql->tpl->assign( 'diff_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'ALL', J_DIFF) );
-$dbSql->tpl->assign( 'full_jobs', $dbSql->countJobs( NOW-DAY, NOW, 'ALL', J_FULL) );
+$dbSql->tpl->assign( 'incr_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'ALL', J_INCR) );
+$dbSql->tpl->assign( 'diff_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'ALL', J_DIFF) );
+$dbSql->tpl->assign( 'full_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'ALL', J_FULL) );
 
 // Last 24 hours Job status graph
 $jobs_status_data = array();
 $jobs_status 	  = array( 'completed', 'failed', 'canceled', 'waiting' );
 
 foreach( $jobs_status as $status )
-	$jobs_status_data[] = array( $status, $dbSql->countJobs(NOW-DAY, NOW, $status) );
+	$jobs_status_data[] = array( $status, $dbSql->countJobs(LAST_DAY, NOW, $status) );
 
 $graph = new CGraph( "graph.png" );
 $graph->SetData( $jobs_status_data, 'pie', 'text-data-single' );
