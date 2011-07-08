@@ -69,4 +69,9 @@
  define( 'J_WAITING_MAX_JOBS',    'd' );
  define( 'J_WAITING_START_TIME',  't' );
  define( 'J_WAITING_HIGH_PR_JOB', 'p' );
+ 
+ // Job levels
+ define( 'J_FULL',	'F' );
+ define( 'J_DIFF',	'D' );
+ define( 'J_INCR',	'I' );
 ?>
