@@ -250,29 +250,6 @@ class Bweb extends DB
 			return $volumes;
 	} // end function GetVolumeList()
 	
-	public function CountJobsbyLevel( $delay = LAST_DAY, $level = 'F' )
-	{
-		$end_date    = mktime();
-		$start_date  = $end_date - $delay;
-		
-		$start_date  = date( "Y-m-d H:i:s", $start_date );
-		$end_date    = date( "Y-m-d H:i:s", $end_date );
-		
-		$query 	 = "SELECT COUNT(JobId) as jobs FROM Job ";
-		$query 	.= "WHERE (EndTime BETWEEN '$start_date' AND '$end_date') AND ";
-		$query 	.= "Level = '$level' ";
-		
-		$result  = $this->db_link->query( $query );
-		
-		if (PEAR::isError( $result ) ) {
-			$this->TriggerDBError( 'Unable to get number of jobs with ' . $level . ' status from catalog', $result);
-		}else {
-			$jobs = $result->fetchRow();
-			return $jobs['jobs'];
-		}
-		
-	}
-	
 	public function countJobs( $start_timestamp, $end_timestamp, $status = 'ALL', $level = 'ALL', $jobname = 'ALL', $client = 'ALL' )
 	{
 		$query 			= "SELECT COUNT(JobId) AS job_nb FROM Job ";
