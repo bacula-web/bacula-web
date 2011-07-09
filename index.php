@@ -22,7 +22,7 @@ $dbSql 				= new Bweb();
 $days_stored_bytes 	= array();
 
 // Stored files number 
-$dbSql->tpl->assign('stored_files', $dbSql->GetStoredFiles( ALL ) );
+$dbSql->tpl->assign('stored_files', $dbSql->getStoredFiles( FIRST_DAY, NOW ) );
   
 // Database size
 $dbSql->tpl->assign('database_size', $dbSql->GetDbSize());
@@ -33,7 +33,7 @@ $dbSql->tpl->assign('stored_bytes', $stored_bytes);
 
 // Total bytes and files for last 24 hours
 $dbSql->tpl->assign('bytes_last', CUtils::Get_Human_Size( $dbSql->getStoredBytes( LAST_DAY, NOW ) ) );
-$dbSql->tpl->assign('files_last', $dbSql->GetStoredFiles( LAST_DAY ) );
+$dbSql->tpl->assign('files_last', $dbSql->getStoredFiles( LAST_DAY, NOW ) );
 
 // Number of clients
 $nb_clients = $dbSql->Get_Nb_Clients();
