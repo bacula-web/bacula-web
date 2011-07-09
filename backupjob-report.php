@@ -43,7 +43,9 @@
   // Calculate total bytes for this period
   $backupjob_bytes = $dbSql->getStoredBytes( LAST_WEEK, NOW, $backupjob_name );
   $backupjob_bytes = CUtils::Get_Human_Size( $backupjob_bytes );
-	
+  
+  $backupjob_files = $dbSql->getStoredFiles( LAST_WEEK, NOW, $backupjob_name );
+  
   // Get the last 7 days interval (start and end)
   for( $c = 6 ; $c >= 0 ; $c-- ) {
 	  $today  = NOW - ($c * DAY);
@@ -73,13 +75,11 @@
   // ===============================================================
   $graph = new CGraph("graph3.png" );
   
-  foreach( $days as $day )
-    array_push( $days_stored_files, $dbSql->GetStoredFilesByJob( $backupjob_name, $day['start'], $day['end'] ) );
+  foreach( $days as $day ) {
+	$stored_files		 = $dbSql->getStoredFiles( $day['start'], $day['end'], $backupjob_name);
+	$days_stored_files[] = array( date("m-d", $day['start']), $stored_files );
+  }
 
-  // Calculate total files for this period	
-  foreach( $days_stored_files as $day )
-	$backupjob_files += $day[1];
-  
   $graph->SetData( $days_stored_files, 'bars', 'text-data' );
   $graph->SetGraphSize( 400, 230 );
   $graph->SetYTitle( "Files" );
