@@ -379,32 +379,41 @@ class Bweb extends DB
 		return array( $vols['pool_name'], $vols['vols'] );
 	}
 	
-	public function GetStoredFiles( $delay = LAST_DAY )
+	public function getStoredFiles( $start_timestamp, $end_timestamp, $job_name = 'ALL' )
 	{
-		$totalfiles = 0;
-
-		$query = "SELECT SUM(JobFiles) AS stored_files FROM Job ";
+		$query = "";
+		$start_date = date( "Y-m-d H:i:s", $start_timestamp);	
+		$end_date   = date( "Y-m-d H:i:s", $end_timestamp);	
 		
-		// Interval calculation
-		$end_date   = mktime();
-		$start_date = $end_date - $delay;
+		switch( $this->driver )
+		{
+			case 'sqlite':
+			case 'mysql':
+					$query = "SELECT SUM(JobFiles) AS stored_files FROM Job ";
+					$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' )";
+			break;
+			case 'pgsql':
+					$query = "SELECT SUM(JobFiles) AS stored_files FROM job ";
+					$query .= "WHERE ( endtime BETWEEN timestamp '$start_date' AND timestamp '$end_date' )";
+			break;
+		}
 		
-		$start_date = date( "Y-m-d H:i:s", $start_date );
-		$end_date   = date( "Y-m-d H:i:s", $end_date );			
-
-		if( $delay != ALL )
-			$query .= "WHERE EndTime BETWEEN '$start_date' AND '$end_date'";
-			
+		if( $job_name != 'ALL' ) 
+			$query .= " AND name = '$job_name'";
+		
+		// Execute query
 		$result = $this->db_link->query( $query );
 		
 		if( !PEAR::isError($result) ) {
-			$nbfiles 	= $result->fetchRow(DB_FETCHMODE_ASSOC);
-			$totalfiles = $totalfiles + $nbfiles['stored_files'];
+			$result = $result->fetchRow();
+			
+			if( isset($result['stored_files']) and !empty($result['stored_files']) )
+				return $result['stored_files'];
+			else
+				return 0;
 		}else{
 			$this->TriggerDBError("Unable to get protected files from catalog", $result);
 		}
-		
-		return $totalfiles;
 	}
 	
 	// Function: getStoredBytes
