@@ -67,16 +67,14 @@ $graph->Render();
 $dbSql->tpl->assign('graph_jobs', $graph->Get_Image_file() );
 unset($graph);
 
-// Pool and volumes graph
-$data = array();
-$graph = new CGraph( "graph1.png" );
+// Volumes by pools graph
+$vols_by_pool = array();
+$graph 	      = new CGraph( "graph1.png" );
 
-$pools = $dbSql->Get_Pools_List();
-while( $pool = $pools->fetchRow( ) ) {
-	array_push( $data, $dbSql->CountVolumesByPool( $pool['poolid']) );
-}
+foreach( $dbSql->get_Pools() as $pool )
+	$vols_by_pool[] = array( $pool['name'], $dbSql->countVolumes( $pool['poolid'] ) );
 
-$graph->SetData( $data, 'pie', 'text-data-single' );
+$graph->SetData( $vols_by_pool, 'pie', 'text-data-single' );
 $graph->SetGraphSize( 400, 230 );
 
 $graph->Render();

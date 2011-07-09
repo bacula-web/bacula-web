@@ -304,17 +304,18 @@ class Bweb extends DB
 	}
 	
 	// Return the list of Pools in a array
-	public function Get_Pools_List()
+	public function get_Pools()
 	{
-		$result    	= "";
-		$query 		= "SELECT Name, PoolId FROM Pool";
+		$pools		= array();
+		$query 		= "SELECT name, poolid FROM pool";
 		$result 	= $this->db_link->query ( $query );
 
-		if( PEAR::isError( $result ) ) {
-			$this->TriggerDBError( "Unable to get the pool list from catalog", $result );				
-		}else {
-			return $result;
+		if( !PEAR::isError( $result ) ) {
+			while( $pool = $result->fetchRow() )
+				$pools[] = $pool;
+			return $pools;
 		}
+		$this->TriggerDBError( "Unable to get the pool list from catalog", $result );				
 	}
 	
 	public function Get_BackupJob_Names()
@@ -346,7 +347,7 @@ class Bweb extends DB
 		}
 	}
 	
-	public function CountVolumesByPool( $pool_id )
+	public function countVolumes( $pool_id = 'ALL' )
 	{
 		$res 	= null;
 		$nb_vol = null;
@@ -356,27 +357,26 @@ class Bweb extends DB
 		{
 			case 'sqlite':
 			case 'mysql':
-				$query 	= 'SELECT COUNT(*) as vols,Pool.name as pool_name ';
+				$query 	= 'SELECT COUNT(*) as vols_count ';
 				$query .= 'FROM Media ';
-				$query .= 'RIGHT JOIN Pool ON (Media.PoolId = Pool.PoolId) ';
-				$query .= 'WHERE Media.poolid = ' . $pool_id;
 			break;
 			case 'pgsql':
-				$query 	= 'SELECT COUNT(*) as vols,Pool.name as pool_name ';
+				$query 	= 'SELECT COUNT(*) as vols_count ';
 				$query .= 'FROM Media ';
-				$query .= 'RIGHT JOIN Pool ON (Media.PoolId = Pool.PoolId) ';
-				$query .= 'WHERE Media.poolid = ' . $pool_id;
-				$query .= 'GROUP BY pool.name';
 			break;
 		}
 		
+		if( $pool_id != 'ALL' )
+			$query .= 'WHERE media.poolid = ' . $pool_id;
+		
 		$res = $this->db_link->query( $query );
-		if( PEAR::isError( $res ) )
-			$this->triggerDBError( 'Unable to get volume number from pool', $res );
 		
-		$vols = $res->fetchRow( );
-		
-		return array( $vols['pool_name'], $vols['vols'] );
+		if( !PEAR::isError( $res ) ) {
+			$vols = $res->fetchRow( );
+			return $vols['vols_count'];
+		}
+			
+		$this->triggerDBError( 'Unable to get volume number from pool', $res );
 	}
 	
 	public function getStoredFiles( $start_timestamp, $end_timestamp, $job_name = 'ALL' )
