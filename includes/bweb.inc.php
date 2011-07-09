@@ -464,44 +464,6 @@ class Bweb extends DB
 		
 	}
 	
-	public function GetStoredFilesByJob( $jobname, $start_timestamp, $end_timestamp )
-	{
-		$query 		= '';
-		$start_date = date( "Y-m-d H:i:s", $start_timestamp);
-		$end_date	= date( "Y-m-d H:i:s", $end_timestamp);
-		
-		switch( $this->driver )
-		{
-			case 'sqlite':
-			case 'mysql':
-				$query  = "SELECT SUM(JobFiles),EndTime as stored_files FROM Job ";
-				$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' ) AND ";
-				$query .= "Name = '$jobname'";
-				$query .= "GROUP BY EndTime";
-				break;
-			case 'pgsql':
-				$query  = "SELECT SUM(jobfiles),endtime as stored_files FROM job ";
-				$query .= "WHERE ( endtime BETWEEN timestamp '$start_date' AND timestamp '$end_date' ) AND ";
-				$query .= "name = '$jobname'";
-				$query .= "GROUP BY EndTime";
-				break;
-		}
-		
-		$result = $this->db_link->query( $query );
-		
-		if( PEAR::isError( $result ) ) {
-			$this->TriggerDBError("Unable to get Job Files from catalog", $result);
-		}else{
-			$stored_bytes = 0;
-			$tmp = $result->fetchRow();
-			
-			$day 			= date( "D d", strtotime($end_date) );
-			$stored_files 	= $tmp['stored_files'];
-			
-			return array( $day, $stored_files );
-		}			
-	}
-	
 	private function TriggerDBError( $message, $db_error)
 	{
 		echo 'Error: ' . $message . '<br />';
