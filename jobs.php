@@ -133,7 +133,7 @@
 		// Job execution execution time
 		$job['elapsed_time'] = CTimeUtils::Get_Elapsed_Time( $start, $end);
 		// Job Level
-        $job['Level'] = $job_level[ $job['level'] ];
+        $job['level'] = $job_level[ $job['level'] ];
 		// Job Size
 		$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
 
