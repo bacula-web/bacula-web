@@ -47,10 +47,7 @@
   $backupjob_files = $dbSql->getStoredFiles( LAST_WEEK, NOW, $backupjob_name );
   
   // Get the last 7 days interval (start and end)
-  for( $c = 6 ; $c >= 0 ; $c-- ) {
-	  $today  = NOW - ($c * DAY);
-	  $days[] = CTimeUtils::get_Day_Intervals($today);
-  }
+  $days = CTimeUtils::getLastDaysIntervals( 7 );
   
   // ===============================================================
   // Last 7 days stored Bytes graph

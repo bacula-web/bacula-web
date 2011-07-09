@@ -81,13 +81,7 @@ $graph->Render();
 $dbSql->tpl->assign('graph_pools', $graph->Get_Image_file() );
 
 // Last 7 days stored Bytes graph
-$days	= array();
-
-for( $c = 6 ; $c >= 0 ; $c-- ) {
-	$today  = NOW - ($c * DAY);
-	$days[] = CTimeUtils::get_Day_Intervals($today);
-}
-
+$days = CTimeUtils::getLastDaysIntervals( 7 );
 foreach( $days as $day ) {
 	$stored_bytes 		 = $dbSql->getStoredBytes( $day['start'], $day['end']);
 	$stored_bytes 		 = CUtils::Get_Human_Size( $stored_bytes, 1, 'GB', false );
