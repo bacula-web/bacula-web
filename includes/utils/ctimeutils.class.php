@@ -56,6 +56,17 @@ class CTimeUtils {
 		
 		return array( 'start' => $start, 'end' => $end);
 	}
+	
+	static public function getLastDaysIntervals( $nb_days )
+	{
+		$days = array();
+		
+		for( $d = $nb_days ; $d >= 0 ; $d-- ) {
+			$today  = NOW - ($d * DAY);
+			$days[] = self::get_Day_Intervals($today);
+		}
+		return $days;
+	}
 }
 
 ?>
