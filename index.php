@@ -71,7 +71,7 @@ unset($graph);
 $vols_by_pool = array();
 $graph 	      = new CGraph( "graph1.png" );
 
-foreach( $dbSql->get_Pools() as $pool )
+foreach( $dbSql->getPools() as $pool )
 	$vols_by_pool[] = array( $pool['name'], $dbSql->countVolumes( $pool['poolid'] ) );
 
 $graph->SetData( $vols_by_pool, 'pie', 'text-data-single' );

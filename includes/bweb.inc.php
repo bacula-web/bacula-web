@@ -61,8 +61,8 @@ class Bweb extends DB
 		$dsn = $this->bwcfg->Get_Dsn( $this->catalog_current_id );
 		
 		// Connect to the database
-		$options = array( 'portability' => DB_PORTABILITY_ALL );
-		$this->db_link = $this->connect( $dsn, $options );
+		$options 		= array( 'portability' => DB_PORTABILITY_ALL );
+		$this->db_link 	= $this->connect( $dsn, $options );
         
 		if (DB::isError($this->db_link)) {
 			$this->TriggerDBError('Unable to connect to catalog', $this->db_link);
@@ -304,7 +304,7 @@ class Bweb extends DB
 	}
 	
 	// Return the list of Pools in a array
-	public function get_Pools()
+	public function getPools()
 	{
 		$pools		= array();
 		$query 		= "SELECT name, poolid FROM pool";
