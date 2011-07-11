@@ -252,55 +252,71 @@ class Bweb extends DB
 	
 	public function countJobs( $start_timestamp, $end_timestamp, $status = 'ALL', $level = 'ALL', $jobname = 'ALL', $client = 'ALL' )
 	{
-		$query 			= "SELECT COUNT(JobId) AS job_nb FROM Job ";
-		$where_delay 	= "";
+		$query 			  = "";
+		$where_interval	  = "";
+		$where_conditions = array();
 		
 		// Calculate sql query interval
 		$start_date		= date( "Y-m-d H:i:s", $start_timestamp);	
 		$end_date		= date( "Y-m-d H:i:s", $end_timestamp);
-
+		
 		switch( $this->driver )
 		{
 			case 'sqlite':
 			case 'mysql':
-				$query .= "WHERE (EndTime BETWEEN '$start_date' AND '$end_date') ";
+				$query 		       .= "SELECT COUNT(*) AS job_nb FROM Job ";
+				$where_conditions[] = "(EndTime BETWEEN '$start_date' AND '$end_date')";
 			break;
 			case 'pgsql':
-				$query .= "WHERE (EndTime BETWEEN timestamp '$start_date' AND timestamp '$end_date') ";
+				$query             .= "SELECT COUNT(*) AS job_nb FROM job ";
+				$where_conditions[] = "(EndTime BETWEEN timestamp '$start_date' AND timestamp '$end_date')";
 			break;
 		}
 		
 		if( $status != 'ALL' ) {
-			switch( $status )
+			switch( strtolower($status) )
 			{
+				case 'running':
+					array_pop( $where_conditions );
+					$where_conditions[] = "JobStatus = 'R' ";
+				break;
 				case 'completed':
-					$query .= " AND JobStatus = 'T' ";
+					$where_conditions[] = "JobStatus = 'T' ";
 				break;
 				case 'failed':
-					$query .= " AND  JobStatus IN ('f','E') ";
+					$where_conditions[] = "JobStatus IN ('f','E') ";
 				break;
 				case 'canceled':
-					$query .= " AND JobStatus = 'A' ";
+					$where_conditions[] = "JobStatus = 'A' ";
 				break;
 				case 'waiting':
-					$query .= " AND JobStatus IN ('F','S','M','m','s','j','c','d','t') ";
+					array_pop( $where_conditions );
+					$where_conditions[] = "Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
 				break;
 			} // end switch
 		}
 		
-		if( $level != 'ALL' ) {
-			$query .= " AND Level = '$level'";
+		// Filter by status
+		if( $level != 'ALL' )
+			$where_conditions[] = "Level = '$level' ";
+		
+		// Construct SQL query
+		foreach( $where_conditions as $k => $condition ) {
+			if( $k == 0) {
+				$query .= "WHERE $condition ";
+			}else
+				$query .= "AND $condition ";
 		}
-
+		
 		// Execute the query
 		$jobs = $this->db_link->query( $query );
 	
-		if (PEAR::isError( $jobs ) ) {
-			$this->TriggerDBError("Unable to get last $status jobs number from catalog", $jobs);
-		}else {
+		if (!PEAR::isError( $jobs ) ) {
 			$jobs = $jobs->fetchRow(); 
 			return $jobs['job_nb'];
 		}
+		
+		$this->TriggerDBError("Unable to get last $status jobs number from catalog", $jobs);
 	}
 	
 	// Return the list of Pools in a array
