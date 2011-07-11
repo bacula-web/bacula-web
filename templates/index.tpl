@@ -73,7 +73,7 @@
 		<td class="label">{t}Total bytes{/t}</td> <td class="info">{$stored_bytes}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Total files{/t}</td> <td class="info">{$stored_files} file(s)</td>
+		<td class="label">{t}Total files{/t}</td> <td class="info">{$stored_files}</td>
 	  </tr>
 	  <tr>
 		<td class="label">{t}Database size{/t}</td> <td class="info">{$database_size}</td>
