@@ -54,7 +54,7 @@ $dbSql->tpl->assign( 'full_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'ALL', J_FUL
 
 // Last 24 hours Job status graph
 $jobs_status_data = array();
-$jobs_status 	  = array( 'completed', 'failed', 'canceled', 'waiting' );
+$jobs_status 	  = array( 'Running', 'Completed', 'Failed', 'Canceled', 'Waiting' );
 
 foreach( $jobs_status as $status )
 	$jobs_status_data[] = array( $status, $dbSql->countJobs(LAST_DAY, NOW, $status) );
