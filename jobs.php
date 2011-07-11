@@ -58,10 +58,10 @@
 			$query .= "WHERE Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
 		break;
 		case STATUS_COMPLETED:
-			$query .= "WHERE Job.JobStatus IN ('T', 'E') ";
+			$query .= "WHERE Job.JobStatus = 'T' ";
 		break;
 		case STATUS_FAILED:
-			$query .= "WHERE Job.JobStatus = 'f' ";
+			$query .= "WHERE Job.JobStatus = 'f', 'E' ";
 		break;
 		case STATUS_CANCELED:
 			$query .= "WHERE Job.JobStatus = 'A' ";
