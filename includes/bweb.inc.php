@@ -307,7 +307,17 @@ class Bweb extends DB
 	public function getPools()
 	{
 		$pools		= array();
-		$query 		= "SELECT name, poolid FROM pool";
+		switch( $this->driver )
+		{
+			case 'sqlite':
+			case 'mysql':
+				$query 		= "SELECT name, poolid FROM Pool";
+			break;
+			case 'pgsql':
+				$query 		= "SELECT name, poolid FROM pool";
+			break;
+		}
+		
 		$result 	= $this->db_link->query ( $query );
 
 		if( !PEAR::isError( $result ) ) {
@@ -359,16 +369,18 @@ class Bweb extends DB
 			case 'mysql':
 				$query 	= 'SELECT COUNT(*) as vols_count ';
 				$query .= 'FROM Media ';
+				if( $pool_id != 'ALL' )
+					$query .= ' WHERE Media.poolid = ' . $pool_id;
 			break;
 			case 'pgsql':
 				$query 	= 'SELECT COUNT(*) as vols_count ';
 				$query .= 'FROM Media ';
+				if( $pool_id != 'ALL' )
+					$query .= ' WHERE media.poolid = ' . $pool_id;
 			break;
 		}
 		
-		if( $pool_id != 'ALL' )
-			$query .= 'WHERE media.poolid = ' . $pool_id;
-		
+		// Execute sql query
 		$res = $this->db_link->query( $query );
 		
 		if( !PEAR::isError( $res ) ) {
