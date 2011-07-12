@@ -15,7 +15,7 @@
 | GNU General Public License for more details.                            |
 +-------------------------------------------------------------------------+ 
 */
- require_once ("config.inc.php");
+ require_once ("config/global.inc.php");
  $bw = new Bweb();
 
  // Check result icon

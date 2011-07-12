@@ -15,7 +15,7 @@
 +-------------------------------------------------------------------------+
 */
   session_start();
-  include_once( 'config.inc.php' );
+  include_once( 'config/global.inc.php' );
 
   $dbSql = new Bweb();
 
