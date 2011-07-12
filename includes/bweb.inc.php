@@ -492,7 +492,7 @@ class Bweb extends DB
 		
 	}
 	
-	private function TriggerDBError( $message, $db_error)
+	public function TriggerDBError( $message, $db_error)
 	{
 		echo 'Error: ' . $message . '<br />';
 		echo 'Standard Message: ' . $db_error->getMessage() . '<br />';
