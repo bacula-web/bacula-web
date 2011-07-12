@@ -1,5 +1,5 @@
 This is the README file for PHPlot
-Last updated for PHPlot-5.3.1 on 2011-01-15
+Last updated for PHPlot-5.4.0 on 2011-05-27
 The project web site is http://sourceforge.net/projects/phplot/
 The project home page is http://phplot.sourceforge.net/
 -----------------------------------------------------------------------------
@@ -31,12 +31,11 @@ CONTENTS:
 REQUIREMENTS:
 
 You need a recent version of PHP5, and you are advised to use the latest
-stable release.  This version of PHPlot has been tested with PHP-5.3.5 and
-PHP-5.2.17 on Linux, and with PHP-5.3.5 on Windows XP.
-
-Use of PHP-5.3.2 or PHP-5.2.13 is not recommended, if you are using
-TrueType Font (TTF) text. A bug with TTF rendering in those versions
-affects PHPlot images. This was fixed in PHP-5.3.3 and PHP-5.2.14.
+stable release.  This version of PHPlot has been tested with PHP-5.3.6 and
+PHP-5.2.17 on Linux, and with PHP-5.3.6 on Windows XP. Note that the PHP
+Group has dropped support for PHP-5.2.x. If you are still using PHP-5.2.x,
+you should plan to upgrade as soon as you can. PHPlot testing with PHP-5.2.x
+might not continue past this release.
 
 You need the GD extension to PHP either built in to PHP or loaded as a
 module. Refer to the PHP documentation for more information - see the
@@ -68,6 +67,14 @@ and on your PHP include path. You can add to the include path in the PHP
 configuration file; consult the PHP manual for details.
 
 
+UPGRADING:
+
+To upgrade PHPlot, follow the same instructions as for installing. There
+are some changes in this release which can alter the appearance of plots
+when compared to previous releases. Please review the top section in
+NEWS.txt for details.
+
+
 KNOWN ISSUES:
 
 Here are some of the problems we know about in PHPlot. See the bug tracker
@@ -88,22 +95,30 @@ on the PHPlot project web site for more information.
   Tick interval calculations should try for intervals of 1, 2, or 5 times
   a power of 10.
 
+
 PHP Issues:
 
   PHP has many build-time and configuration options, and these can affect
 the operation of PHPlot (as well as any other application or library). Here
 are some known issues:
+
   + Slackware Linux includes a version of PHP built with --enable-gd-jis-conv
 (JIS-mapped Japanese font support). This prevents the usual UTF-8 encoding
 of characters from working in TrueType Font (TTF) text strings.
+
   + The Ubuntu Linux PHP GD package (php5-gd) was built to use the external
 shared GD library, not the one bundled with PHP. This can result in small
 differences in images, and some unsupported features (such as advanced
 truecolor image operations). Also, although this Ubuntu GD library was
 built with fontconfig support, PHP does not use it, so you still need to
 specify TrueType fonts with their actual file names.
+
   + Some PHP installations may have a memory limit set too low to support
 large images, especially truecolor images.
+
+  + PHP-5.3.2 and PHP-5.2.13 have a bug in rendering TrueType fonts (TTF).
+Avoid using these versions if you use TTF text in PHPlot.
+
 
 
 If you think you found a problem with PHPlot, or want to ask questions or

@@ -4,6 +4,104 @@ The project home page is http://phplot.sourceforge.net/
 Refer the the ChangeLog file for detailed source changes.
 -----------------------------------------------------------------------------
 
+2011-05-27 Release 5.4.0
+
+Overview
+
+This is the current stable release of PHPlot. This release includes some
+bug fixes and new features.  New features include new legend positioning
+modes, legends using point shapes instead of color boxes, and the ability
+to 'anchor' tick marks at a specific value. PHPlot now includes a class
+constant containing the release version as PHPlot::version.
+
+The PHPlot reference manual has been updated to match this release.
+
+
+Cautions, Important Notes, and Compatibility Issues:
+
+This release changes legend text positioning. Legend text is now vertically
+centered rather than bottom aligned. This can change the appearance of some
+plots, but the difference is usually not significant.  See "Center vertical
+alignment for legend text" below.
+
+This release changes how stackedbars plots handle segments of size zero.
+This will change the appearance of some plots, especially if the axis is
+moved from 0. See "Undefined variables with stackedbars" below.
+
+
+Bugs Fixed in 5.4.0:
+
+#3292529 Legend doesn't use data color callback:
+  This was determined to be the correct behavior, but undocumented. It has
+  now been documented in the reference manual.
+
+#3294604 Center vertical alignment for legend text:
+  Legend text lines are now centered vertically to the color boxes (or
+  point shapes) rather than being bottom aligned. The difference is not
+  noticeable with the default font size and line spacing, because there was
+  no extra vertical space anyway. But with bigger fonts, and especially with
+  additional line spacing, the text now looks better because of the center
+  alignment.
+
+#3296884 Undefined variable with stackedbars:
+  PHPlot will no longer report an undefined variable warning if a stackedbars
+  plot starts with a stack containing all zero segments. (This was actually
+  fixed in PHPlot-5.3.2.) Furthermore, PHPlot now handles zero segments in
+  stackedbars plots differently.  Zero values are no longer ignored. An
+  initial zero segment will be drawn as a bar segment if the axis is moved in
+  the opposite direction to the bar stack direction. A zero at the end will be
+  drawn as a cap with the data color, if shading is on.
+
+
+New features in 5.4.0:
+
+#3303654 Force tick mark at specific value:
+  New functions SetXTickAnchor() and SetYTickAnchor() were added. These tell
+  PHPlot to adjust the first tick mark value so that the specified anchor
+  position will coincide with a tick mark and grid position (or it would, if
+  the data range were extended to include it). Documentation has been
+  updated, including new examples.
+
+#3292825 Use point shape markers in legend box:
+  New function SetLegendUseShapes() will enable use of point shapes in the
+  legend, rather than color boxes. The default is color boxes, so existing
+  plots will not change. This only works for points and linepoints plots.
+  Documentation has been updated.
+
+#3291155 More flexible legend positioning:
+  New function SetLegendPosition() allows new ways to position the legend:
+  relative to the image, plot area, title, or using world coordinates, with
+  an optional pixel offset. There is another new function GetLegendSize() to
+  get the legend box size; this can be used to adjust the plot margins if you
+  want the legend outside the plot area and inside the margins. Documentation
+  has been updated.
+
+-----------------------------------------------------------------------------
+
+2011-05-06 Release 5.3.2
+
+Overview
+
+This is the current stable release of PHPlot. This release was produced to
+address a single bug (see below), using a branch off of PHPlot-5.3.1.
+(This is because the current development version, which will become
+PHPlot-5.4.0, already has half of a big two-part change to legend
+processing committed.  So the bug fix was released without waiting for the
+new work to be completed.)
+
+
+Bugs Fixed in 5.3.2:
+
+#3296884 "Undefined variable with stackedbars":
+  A temporary fix was made against phplot-5.3.1 to avoid an undefined
+  variable error when the first stack in a stackedbars plot has all zero
+  values. The fix avoids the error message, and the plots are OK in most
+  cases. There are still issues with label position, and if the axis
+  is moved. These will be addressed in a future fix.
+
+
+-----------------------------------------------------------------------------
+
 2011-01-15 Release 5.3.1
 
 Overview:

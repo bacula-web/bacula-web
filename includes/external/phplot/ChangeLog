@@ -1,6 +1,98 @@
 This is the Change Log for PHPlot.
 The project home page is http://sourceforge.net/projects/phplot/
 -----------------------------------------------------------------------------
+2011-05-27 (lbayuk)     ===== Released as 5.4.0 =====
+    * phplot.php: Updated version comment and version constant
+    * README.txt: Updated for new release
+    * NEWS.txt: Add text for new release
+
+2011-05-25
+    * Added class constant PHPlot::version with the PHPlot release version.
+
+2011-05-23
+    * Fix bug 3296884 "Undefined variable with stackedbars":
+      This is part 2 of the fix. (Part 1 fixed the undefined variable error
+      when the first stack was all zeros, but did not fix related problems.)
+
+      Changed DrawStackedBars() and DrawHorizStackedBars():
+      + Do not ignore zero values. A leading zero value is significant if the
+        axis is moved in the direction opposite to the stack direction.  Now
+        PHPlot will draw a bar segment from the axis to zero in this case.
+        Also a trailing zero value will produce a color cap on shaded bars.
+      + Determine each stack direction before drawing it.  This is necessary
+        to be able to draw the leading 0 segment case correctly.
+
+2011-05-21
+    * Feature request #3303654 "Force tick mark at specific value":
+      + New functions SetXTickAnchor and SetYTickAnchor.
+      + CalcTicks() adjusts the starting tick point so that an anchor
+        point, if set, will coincide with a tick mark (or would, if the
+        data range were extended).
+
+2011-05-15
+    * Feature request #3291155 "More flexible legend positioning":
+      You can now position the legend by specifying that any point on the
+      legend box be placed at any point on the image, plot area, or relative
+      to the main title.  You can get the legend box size from PHPlot, and
+      use it (for example) to adjust the plot area margins.
+      + Added new public function SetLegendPosition() which provides
+        much move flexible control over the legend position.
+      + Re-implemented SetLegendPixels() and SetLegendWorld() by
+        just having them call SetLegendPosition().
+      + Added new public function GetLegendSize() which returns the
+        height and width of the legend box.
+      + New internal function GetLegendSizeParams() with code split
+        off from DrawLegend() and used by GetLegendSize() too.
+      + New internal function GetLegendPosition() calculates the legend
+        position. This implements all the new position modes.
+      + Removed internal class variables legend_x_pos, legend_y_pos,
+        and legend_xy_world. Replaced with an array: legend_pos, which
+        holds the legend position parameters set by SetLegendPosition().
+
+2011-05-08
+    * Merged 5.3.2 release changes. (The two entries below this, 2011-05-01
+      and 2011-04-26, came before 5.3.2, but 5.3.2 was a single patch applied
+      against 5.3.1 and not against current CVS.)
+
+2011-05-01
+    * Feature request #3292825 "Use point shape markers in legend box":
+      + Implement optional use of point shapes instead of color boxes in the
+        legend, for use with points and linepoints plots.
+      + Add new function SetLegendUseShapes() to enable use of point shapes
+        in the legend.
+      + New internal class variable legend_use_shapes.
+      + Removed optional never-used 3rd argument to SetLegendStyle().
+      + Add new internal function DrawShape() which now implements DrawDot()
+        but takes device coordinates, for use by DrawLegend().
+
+    * Fix bug #3294604 "Center vertical alignment for legend text":
+      + Legend text lines are now vertically centered on the middle of
+        the color box or marker shape, rather than using bottom alignment.
+
+2011-04-26
+    * Moved legend functions together into one section, and removed
+      commented-out public variable declarations for legend variables.
+      No functionality changes are introduced.
+      (This is being done in anticipation of two upcoming changes to
+      legend code. I dislike moving functions around because it makes it
+      hard to use 'diff' to check changes, but it is helpful to have
+      functions that work together placed together in the script. As
+      a compromise, do the re-arrangement in its own change.)
+
+2011-05-06 (lbayuk)     ===== Released as 5.3.2 =====
+    * phplot.php: Updated version
+    * README.txt: Updated for new release
+    * NEWS.txt: Add text for new release
+   Note: This release was built off of the CVS branch tagged
+   rel5_3_1_patches, not HEAD.
+
+2011-05-06
+    * For bug 3296884 "Undefined variable with stackedbars":
+      A temporary fix was made against phplot-5.3.1 to avoid an undefined
+      variable error when the first stack in a stackedbars plot has all zero
+      values. The fix avoids the error message, and the plots are OK in most
+      cases. There are still issues with label position, and if the axis
+      is moved. These will be addressed in a future fix.
 
 2011-01-15 (lbayuk)     ===== Released as 5.3.1 =====
     * phplot.php: Updated version
