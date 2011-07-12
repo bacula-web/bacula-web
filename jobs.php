@@ -61,7 +61,7 @@
 			$query .= "WHERE Job.JobStatus = 'T' ";
 		break;
 		case STATUS_FAILED:
-			$query .= "WHERE Job.JobStatus = 'f', 'E' ";
+			$query .= "WHERE Job.JobStatus IN ('f', 'E') ";
 		break;
 		case STATUS_CANCELED:
 			$query .= "WHERE Job.JobStatus = 'A' ";
@@ -87,7 +87,7 @@
   $jobsresult = $dbSql->db_link->query( $query );
   
   if( PEAR::isError( $jobsresult ) ) {
-	  $dbSql->TriggerDBError( "Unable to get last failed jobs from catalog", $jobresult );
+	  $dbSql->TriggerDBError( "Unable to get last failed jobs from catalog", $jobsresult );
   }else {
 	  while( $job = $jobsresult->fetchRow( DB_FETCHMODE_ASSOC ) ) {
 		
