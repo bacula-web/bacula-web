@@ -45,6 +45,7 @@
   $backupjob_bytes = CUtils::Get_Human_Size( $backupjob_bytes );
   
   $backupjob_files = $dbSql->getStoredFiles( LAST_WEEK, NOW, $backupjob_name );
+  $backupjob_files = number_format( $backupjob_files, 0, '.', "'");
   
   // Get the last 7 days interval (start and end)
   $days = CTimeUtils::getLastDaysIntervals( 7 );
@@ -108,10 +109,12 @@
 		// odd and even row
 		if( count($jobs) % 2)
 			$job['row_class'] = 'odd';
-		// Job bytes in human format
-		$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
 
-		array_push( $jobs, $job);
+		// Job bytes more easy to read
+		$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
+		$job['jobfiles'] = number_format($job['jobfiles'], 0 , '.', "'");
+
+		$jobs[] = $job;
 	}		
   }else
 	$dbSql->TriggerDBError("Unable to get last jobs from catalog", $result);
