@@ -60,7 +60,7 @@
 		</td>
 		<td class="{$job.Job_classe}">{$job.jobid}</td>
 		<td class="{$job.Job_classe}">
-			<a href="backupjob-report.php?backupjob_name={$job.Job_name}">{$job.job_name}</a>
+			<a href="backupjob-report.php?backupjob_name={$job.job_name}">{$job.job_name}</a>
 		</td>
 		<td class="{$job.Job_classe}">{$job.starttime}</td>
 		<td class="{$job.Job_classe}">{$job.endtime}</td>
