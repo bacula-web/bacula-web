@@ -25,18 +25,18 @@
  $check_list = array( array( 'check_cmd'   		=> 'php-gettext', 
  	 						 'check_label' 		=> 'PHP - Gettext support', 
 							 'check_descr' 		=> 'If you want Bacula-web in your language, please compile PHP with Gettext support' ),
-					  array( 'check_cmd'   		=> 'pear-db', 
-							 'check_label' 		=> 'PEAR DB module', 
-							 'check_descr' 		=> 'PEAR DB support not found, please read the Bacula-web installation document'),
-					  array( 'check_cmd'   		=> 'php-gd',
+  					  array( 'check_cmd'   		=> 'php-gd',
 					 		 'check_label' 		=> 'PHP - GD support',
-				 			 'check_descr' 		=> 'This is required by phplot, please compile php with GD support'),
+				 			 'check_descr' 		=> 'This is required by phplot, please compile PHP with GD support'),
 					  array( 'check_cmd'   		=> 'php-mysql',
 							 'check_label' 		=> 'PHP - MySQL support',
 							 'check_descr'		=> 'PHP MySQL support must be installed in order to run bacula-web with MySQL bacula catalog'),
 					  array( 'check_cmd'   		=> 'php-postgres',
 							 'check_label' 		=> 'PHP - PostgreSQL support',
 							 'check_descr'		=> 'PHP PostgreSQL support must be installed in order to run bacula-web with PostgreSQL bacula catalog'),								
+					  array( 'check_cmd'   		=> 'php-pdo',
+							 'check_label' 		=> 'PHP - PDO support',
+							 'check_descr'		=> 'PHP PDO support is required, please compile PHP with this option'),
 					  array( 'check_cmd'   		=> 'smarty-cache',
 							 'check_label' 		=> 'Smarty cache folder write permission',
 							 'check_descr'		=> 'Smarty template engine need write permissions to templates_c folder'),
@@ -63,6 +63,9 @@
 		 break;
 		 case 'php-postgres':
 			 $check['check_result'] = $icon_result[ function_exists('pg_connect') ];
+		 break;
+		 case 'php-pdo':
+			 $check['check_result'] = $icon_result[ class_exists('PDO') ];
 		 break;
 		 case 'smarty-cache':
 			 $check['check_result'] = $icon_result[ is_writable( "./templates_c" ) ];
