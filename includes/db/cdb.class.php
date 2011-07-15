@@ -17,14 +17,76 @@
 
 class CDB
 {	
-	public function __construct()
-	{
+	private $username;
+	private $password;
+	private $dsn;
+	private $connection;
+	private $options;
 	
+	private $result;
+	private $result_nb;
+	
+	public function __construct( $dsn, $user, $password )
+	{
+		$this->dsn      = $dsn;
+		$this->user     = $user;
+		$this->password = $password;
+		
+		$this->options  = array( 	PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+									PDO::ATTR_CASE => PDO::CASE_LOWER,
+									PDO::ATTR_STATEMENT_CLASS => array('CDBResult', array($this) ) );
 	}
 	
-	public function __destruct()
+	public function makeConnection()
 	{
+		if( !isset( $this->connection ) )
+			$this->connection = new PDO( $this->dsn, $this->user, $this->password );
+		
+		if( !is_a( $this->connection, 'PDO' ) )
+			throw new CDBError("Failed to make database connection");
+		
+		$this->setOptions(); 		
+	}
 	
+	private function setOptions()
+	{
+		foreach( $this->options as $option => $value )
+			$this->connection->setAttribute( $option, $value);
+	}
+	
+	public function runQuery( $query) 
+	{
+		$this->result =& $this->connection->prepare( $query );
+				
+		if(!$this->result)
+			throw new CDBError("Failed to execute query <br />$query");
+		
+		if( !$this->result->execute() )
+			throw new CDBError("Failed to execute query <br />$query");
+			
+		if( !PEAR::isError($this->result) )		
+			return true;
+	}
+	
+	public function getResult()
+	{
+		$result = $this->result->fetchAll();
+		$this->result_nb = count( $result );
+		return $result;
+	}
+	
+	public function countResult()
+	{
+		return $this->result_nb;
+	}
+	
+	public function triggerError( $message, $db_error)
+	{
+		echo 'Error: ' . $message . '<br />';
+		echo 'Standard Message: ' . $db_error->getMessage() . '<br />';
+		echo 'Standard Code: ' . $db_error->getCode() . '<br />';
+		echo 'DBMS/User Message: ' . $db_error->getUserInfo() . '<br />';
+		echo 'DBMS/Debug Message: ' . $db_error->getDebugInfo() . '<br />';
 	}
 }
 ?>
