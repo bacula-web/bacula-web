@@ -85,6 +85,26 @@
 		$dsn['phptype']  = $this->catalogs[$catalog_id]["db_type"];
 		return $dsn;
 	}
+	
+	public function getDSN( $catalog_id ) 
+	{
+		$dsn = '';
+		
+		switch( $this->catalogs[$catalog_id]['db_type'] )
+		{
+			case 'mysql':
+			case 'pgsql':
+				$dsn  = $this->catalogs[$catalog_id]['db_type'] . ':';
+				$dsn .= 'dbname=' . $this->catalogs[$catalog_id]['db_name'] . ';';
+				$dsn .= 'host=' . $this->catalogs[$catalog_id]['host'];
+			break;
+			case 'sqlite':
+				$dsn  = $this->catalogs[$catalog_id]['db_type'] . ':' . $this->catalogs[$catalog_id]['db_name'];
+			break;
+		}
+		
+		return $dsn;		
+	}
 		
 	function __destruct()
 	{
