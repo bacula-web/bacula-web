@@ -54,6 +54,11 @@ class CDB
 			$this->connection->setAttribute( $option, $value);
 	}
 	
+	public function getDriver()
+	{
+		return $this->connection->getAttribute( PDO::ATTR_DRIVER_NAME );
+	}
+	
 	public function runQuery( $query) 
 	{
 		$this->result =& $this->connection->prepare( $query );
