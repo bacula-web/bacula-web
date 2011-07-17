@@ -74,18 +74,6 @@
 		return count( $this->catalogs );
 	}
 	
-	public function Get_Dsn( $catalog_id )
-	{
-		// Construct a valid dsn
-		$dsn = array();
-        $dsn['hostspec'] = $this->catalogs[$catalog_id]["host"];
-        $dsn['username'] = $this->catalogs[$catalog_id]["login"];
-		$dsn['password'] = $this->catalogs[$catalog_id]["password"];
-		$dsn['database'] = $this->catalogs[$catalog_id]["db_name"];
-		$dsn['phptype']  = $this->catalogs[$catalog_id]["db_type"];
-		return $dsn;
-	}
-	
 	public function getDSN( $catalog_id ) 
 	{
 		$dsn = '';
