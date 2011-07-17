@@ -61,37 +61,20 @@ class CDB
 	
 	public function runQuery( $query) 
 	{
-		$this->result =& $this->connection->prepare( $query );
+		$this->result = $this->connection->prepare( $query );
 				
-		if(!$this->result)
-			throw new CDBError("Failed to execute query <br />$query");
+		if( !is_a( $this->result, 'CDBResult') )
+			throw new PDOException("Failed to execute query <br />$query");
 		
 		if( !$this->result->execute() )
-			throw new CDBError("Failed to execute query <br />$query");
-			
-		if( !PEAR::isError($this->result) )		
-			return true;
-	}
-	
-	public function getResult()
-	{
-		$result = $this->result->fetchAll();
-		$this->result_nb = count( $result );
-		return $result;
+			throw new PDOException("Failed to execute query <br />$query");
+		
+		return $this->result;
 	}
 	
 	public function countResult()
 	{
 		return $this->result_nb;
-	}
-	
-	public function triggerError( $message, $db_error)
-	{
-		echo 'Error: ' . $message . '<br />';
-		echo 'Standard Message: ' . $db_error->getMessage() . '<br />';
-		echo 'Standard Code: ' . $db_error->getCode() . '<br />';
-		echo 'DBMS/User Message: ' . $db_error->getUserInfo() . '<br />';
-		echo 'DBMS/Debug Message: ' . $db_error->getDebugInfo() . '<br />';
 	}
 }
 ?>
