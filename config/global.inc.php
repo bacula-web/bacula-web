@@ -35,6 +35,10 @@
  require_once BW_OBJ . "utils/cutils.class.php";
  require_once BW_OBJ . "utils/ctimeutils.class.php";
  
+ require_once BW_OBJ . "db/cdb.class.php";
+ require_once BW_OBJ . "db/cdbresult.class.php";
+ require_once BW_OBJ . "db/cdberror.class.php";
+ 
  // Global constants
  define('CONFIG_DIR', BW_ROOT . "/config/");
  define('CONFIG_FILE', CONFIG_DIR . "config.php");
