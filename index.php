@@ -113,17 +113,6 @@
 	}catch(PDOException $e) {
 		CDBError::raiseError($e);
 	}
-	
-	/*
-	$result = $dbSql->db_link->query( $query );
-
-	if ( PEAR::isError( $result ) )
-		$this->TriggerDBError( 'Unable to get last used volumes from catalog' . $result );
-	else {
-		while ( $vol = $result->fetchRow() ) 
-			array_push( $vol_list, $vol );
-	}
-	*/
 
 	$dbSql->tpl->assign( 'volume_list', $vol_list );	
 
