@@ -59,11 +59,22 @@ class Bweb extends DB
 		
 		// Get DSN
 		$dsn = $this->bwcfg->Get_Dsn( $this->catalog_current_id );
-		
+/*		
 		// Connect to the database
 		$options 		= array( 'portability' => DB_PORTABILITY_ALL );
 		$this->db_link 	= $this->connect( $dsn, $options );
-        
+*/
+		// Database connection
+		try {
+			$this->db_link = new CDB( 	$this->bwcfg->getDSN($this->catalog_current_id), 
+										$this->bwcfg->getUser($this->catalog_current_id), 
+										$this->bwcfg->getPwd($this->catalog_current_id)  );
+			$this->db_link->makeConnection();
+			
+        }catch( PDOException $e ) {
+			CDBError::raiseError( $e );
+		}		
+/*		
 		if (DB::isError($this->db_link)) {
 			$this->TriggerDBError('Unable to connect to catalog', $this->db_link);
 		}else {
@@ -71,7 +82,7 @@ class Bweb extends DB
             		register_shutdown_function(array(&$this,'close') );
 			$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
 		}
-		
+*/
 		// Catalog selection		
 		if( $this->catalog_nb > 1 ) {
 			// Catalogs list
@@ -124,10 +135,11 @@ class Bweb extends DB
        
 	function GetDbSize() 
 	{
-		$database_size 	= 0;
-		$query 			= "";
+		$db_size = 0;
+		$query 	 = '';
+		$result	 = '';
 		
-		switch( $this->driver )
+		switch( $this->db_link->getDriver() )
 		{
 			case 'mysql':
 				$query  = "SELECT table_schema AS 'database', sum( data_length + index_length) AS 'dbsize' ";
@@ -144,6 +156,16 @@ class Bweb extends DB
 			break;
 		}
 		
+		// Execute SQL statment
+		try {
+			$result  = $this->db_link->runQuery( $query );
+			$db_size = $result->fetch();
+			$db_size = CUtils::Get_Human_Size( $db_size['dbsize'] );
+		}catch( PDOException $e) {
+			CDBError::raiseError($e);
+		}
+		return $db_size;
+		/*
 		$result = $this->db_link->query( $query );
 		
 		if(! PEAR::isError( $result ) )
@@ -154,35 +176,108 @@ class Bweb extends DB
 			$this->TriggerDBError( 'Unable to get database size', $result);
 		
 		return CUtils::Get_Human_Size( $database_size );
+		*/
 	} // end function GetDbSize()
 	
 	public function Get_Nb_Clients()
 	{
+		$result    = '';
+		$clients_nb = 0;
+		$query     = "SELECT COUNT(*) AS nb_client FROM Client";
+		
+		try {
+			$clients    = $this->db_link->runQuery( $query );
+			$clients_nb = $clients->fetch();
+		}catch( PDOException $e ) {
+			CDBError::raiseError( $e );
+		}
+		
+		return $clients_nb;
+		/*
 		$clients = $this->db_link->query("SELECT COUNT(*) AS nb_client FROM Client");
 		if( PEAR::isError($clients) )
 			$this->TriggerDBError("Unable to get client number", $clients );
 		else
 			return $clients->fetchRow( DB_FETCHMODE_ASSOC );
+		*/
 	}
   
 	// Return an array of volumes ordered by poolid and volume name
-	function GetVolumeList() {
-
-			$volumes   = array();
-			$query     = "";
-			$debug	   = false;
+	function GetVolumeList() 
+	{
+			$pools        = '';
+			$volumes      = '';
+			$volumes_list = array();
+			$query        = "";
+			$debug	      = false;
 			
 			// Get the list of pools id
 			$query = "SELECT Pool.poolid, Pool.name FROM Pool ORDER BY Pool.poolid";
 			
-			//$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
+			try {
+				foreach( $this->getPools() as $pool ) {
+					switch( $this->db_link->getDriver() )
+					{
+						case 'sqlite':
+						case 'mysql':
+							$query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention
+									FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid
+									WHERE Media.poolid = '". $pool['poolid'] . "' ORDER BY Media.volumename";
+						break;
+						case 'pgsql':
+							$query  = "SELECT media.volumename, media.volbytes, media.volstatus, media.mediatype, media.lastwritten, media.volretention
+									FROM media LEFT JOIN pool ON media.poolid = pool.poolid
+								    WHERE media.poolid = '". $pool['poolid'] . "' ORDER BY media.volumename";
+						break;
+					} // end switch
+					
+					$volumes = $this->db_link->runQuery($query);
+				
+					if( !array_key_exists( $pool['name'], $volumes_list) )
+						$volumes_list[ $pool['name'] ] = array();
+					
+					foreach( $volumes->fetchAll() as $volume ) {
+						if( $volume['lastwritten'] != "0000-00-00 00:00:00" ) {
+							
+							// Calculate expiration date if the volume is Full
+							if( $volume['volstatus'] == 'Full' ) {
+								$expire_date     = strtotime($volume['lastwritten']) + $volume['volretention'];
+								$volume['expire'] = strftime("%Y-%m-%d", $expire_date);
+							}else {
+								$volume['expire'] = 'N/A';
+							}
+							
+							// Media used bytes in a human format
+							$volume['volbytes'] = CUtils::Get_Human_Size( $volume['volbytes'] );
+						} else {
+							$volume['lastwritten'] = "N/A";
+							$volume['expire']      = "N/A";
+							$volume['volbytes'] 	  = "0 KB";
+						}
+						
+						// Odd or even row
+						if( count(  $volumes_list[ $pool['name'] ] ) % 2)
+							$volume['class'] = 'odd';
+
+						// Add the media in pool array
+						array_push( $volumes_list[ $pool['name']], $volume);
+					} // end foreach volumes
+				} // end foreach pools
+				
+			}catch(PDOException $e) {
+				CDBError::raiseError($e);
+			}
+			
+			return $volumes_list;
+			/*
 			$pools = $this->db_link->query( $query );
 			
 			if( PEAR::isError( $pools ) )
 				$this->TriggerDBError("Failed to get pool list", $pools );
+
 			
 			while( $pool = $pools->fetchRow( DB_FETCHMODE_ASSOC ) ) {
-				switch( $this->driver )
+				switch( $this->db_link->getDriver() )
 				{
 					case 'mysql':
 						$query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention
@@ -247,7 +342,9 @@ class Bweb extends DB
 					} // end while
 				} // end if else
 			} // end while
-			return $volumes;
+			
+			*/
+
 	} // end function GetVolumeList()
 	
 	public function countJobs( $start_timestamp, $end_timestamp, $status = 'ALL', $level = 'ALL', $jobname = 'ALL', $client = 'ALL' )
@@ -255,12 +352,13 @@ class Bweb extends DB
 		$query 			  = "";
 		$where_interval	  = "";
 		$where_conditions = array();
+		$result			  = '';
 		
 		// Calculate sql query interval
 		$start_date		= date( "Y-m-d H:i:s", $start_timestamp);	
 		$end_date		= date( "Y-m-d H:i:s", $end_timestamp);
 		
-		switch( $this->driver )
+		switch( $this->db_link->getDriver() )
 		{
 			case 'sqlite':
 			case 'mysql':
@@ -309,6 +407,15 @@ class Bweb extends DB
 		}
 		
 		// Execute the query
+		try{
+			$jobs   = $this->db_link->runQuery($query);
+			$result = $jobs->fetch(); 
+		}catch(PDOException $e) {
+			CDBError::raiseError($e);
+		}
+		
+		return $result['job_nb'];
+		/*
 		$jobs = $this->db_link->query( $query );
 	
 		if (!PEAR::isError( $jobs ) ) {
@@ -317,13 +424,16 @@ class Bweb extends DB
 		}
 		
 		$this->TriggerDBError("Unable to get last $status jobs number from catalog", $jobs);
+		*/
 	}
 	
 	// Return the list of Pools in a array
 	public function getPools()
 	{
-		$pools		= array();
-		switch( $this->driver )
+		$pools  = array();
+		$result = '';
+		
+		switch( $this->db_link->getDriver() )
 		{
 			case 'sqlite':
 			case 'mysql':
@@ -333,7 +443,16 @@ class Bweb extends DB
 				$query 		= "SELECT name, poolid FROM pool";
 			break;
 		}
-		
+		try{
+			$result = $this->db_link->runQuery($query);
+			foreach( $result->fetchAll() as $pool )
+				$pools[] = $pool;
+		}catch(PDOException $e) {
+			CDBError::raiseError($e);
+		}
+
+		return $pools;
+		/*
 		$result 	= $this->db_link->query ( $query );
 
 		if( !PEAR::isError( $result ) ) {
@@ -341,14 +460,17 @@ class Bweb extends DB
 				$pools[] = $pool;
 			return $pools;
 		}
-		$this->TriggerDBError( "Unable to get the pool list from catalog", $result );				
+		$this->TriggerDBError( "Unable to get the pool list from catalog", $result );		
+		*/
 	}
 	
 	public function Get_BackupJob_Names()
 	{
-		$query 	= '';
+		$query 		= '';
+		$result 	= '';
+		$backupjobs = array();
 		
-		switch( $this->driver )
+		switch( $this->db_link->getDriver() )
 		{
 			case 'sqlite':
 			case 'mysql':
@@ -358,9 +480,16 @@ class Bweb extends DB
 				$query 		= "SELECT name FROM Job GROUP BY name ORDER BY name";
 			break;
 		}
-		
-		$backupjobs = array();
-		
+		try {
+			$result = $this->db_link->runQuery($query);
+			foreach( $result->fetchAll() as $jobname )
+				$backupjobs[] = $jobname['name'];
+		}catch(PDOException $e) {
+			CDBError::raiseError($e);
+		}
+
+		return $backupjobs;
+		/*
 		$result = $this->db_link->query( $query );
 		
 		if (PEAR::isError( $result ) ) {
@@ -371,15 +500,16 @@ class Bweb extends DB
 			}
 			return $backupjobs;
 		}
+		*/
 	}
 	
 	public function countVolumes( $pool_id = 'ALL' )
 	{
-		$res 	= null;
+		$result = null;
 		$nb_vol = null;
 		$query  = '';
 
-		switch( $this->driver )
+		switch( $this->db_link->getDriver() )
 		{
 			case 'sqlite':
 			case 'mysql':
@@ -397,14 +527,23 @@ class Bweb extends DB
 		}
 		
 		// Execute sql query
+		try {
+			$result = $this->db_link->runQuery($query);
+			$vols = $result->fetch();
+		}catch( PDOException $e) {
+			CDBError::raiseError($e);
+		}
+		
+		return $vols['vols_count'];
+		/*
 		$res = $this->db_link->query( $query );
 		
 		if( !PEAR::isError( $res ) ) {
 			$vols = $res->fetchRow( );
 			return $vols['vols_count'];
-		}
-			
+		}	
 		$this->triggerDBError( 'Unable to get volume number from pool', $res );
+		*/
 	}
 	
 	public function getStoredFiles( $start_timestamp, $end_timestamp, $job_name = 'ALL' )
@@ -413,7 +552,7 @@ class Bweb extends DB
 		$start_date = date( "Y-m-d H:i:s", $start_timestamp);	
 		$end_date   = date( "Y-m-d H:i:s", $end_timestamp);	
 		
-		switch( $this->driver )
+		switch( $this->db_link->getDriver() )
 		{
 			case 'sqlite':
 			case 'mysql':
@@ -430,6 +569,18 @@ class Bweb extends DB
 			$query .= " AND name = '$job_name'";
 		
 		// Execute query
+		try {
+			$result = $this->db_link->runQuery( $query );
+			$result = $result->fetch();
+		}catch( PDOException $e) {
+			CDBError::raiseError($e);
+		}
+		
+		if( isset($result['stored_files']) and !empty($result['stored_files']) )
+			return $result['stored_files'];
+		else
+			return 0;
+		/*
 		$result = $this->db_link->query( $query );
 		
 		if( !PEAR::isError($result) ) {
@@ -442,6 +593,7 @@ class Bweb extends DB
 		}else{
 			$this->TriggerDBError("Unable to get protected files from catalog", $result);
 		}
+		*/
 	}
 	
 	// Function: getStoredBytes
@@ -453,10 +605,11 @@ class Bweb extends DB
 	public function getStoredBytes( $start_timestamp, $end_timestamp, $job_name = 'ALL' )
 	{
 		$query    		= '';
+		$result			= '';
 		$start_date		= date( "Y-m-d H:i:s", $start_timestamp);	
 		$end_date		= date( "Y-m-d H:i:s", $end_timestamp);	
 		
-		switch( $this->driver )
+		switch( $this->db_link->getDriver() )
 		{
 			case 'sqlite':
 			case 'mysql':
@@ -472,7 +625,19 @@ class Bweb extends DB
 		if( $job_name != 'ALL' ) 
 			$query .= " AND name = '$job_name'";
 		
-		// Execute the query
+		// Execute SQL statment
+		try {
+			$result = $this->db_link->runQuery( $query );
+			$result = $result->fetch();
+		}catch(PDOException $e) {
+			CDBError::raiseError( $e );
+		}
+		
+		if( isset($result['stored_bytes']) and !empty($result['stored_bytes']) )
+			return $result['stored_bytes'];
+		else
+			return 0;
+		/*
 		$result = $this->db_link->query( $query );
 		
 		// Testing query result
@@ -489,7 +654,7 @@ class Bweb extends DB
 			}else
 				$this->TriggerDBError( "Error fetching query result", $result);
 		}
-		
+		*/
 	}
 	
 	public function TriggerDBError( $message, $db_error)

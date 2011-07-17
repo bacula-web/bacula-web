@@ -105,7 +105,16 @@
 	$query .= "LEFT JOIN Media ON JobMedia.MediaId = Media.MediaId ";
 	$query .= "ORDER BY Job.JobId DESC ";
 	$query .= "LIMIT 10 ";
-
+	
+	try {
+		$result = $dbSql->db_link->runQuery($query);
+		foreach($result->fetchall() as $vol)
+			$vol_list[] = $vol;
+	}catch(PDOException $e) {
+		CDBError::raiseError($e);
+	}
+	
+	/*
 	$result = $dbSql->db_link->query( $query );
 
 	if ( PEAR::isError( $result ) )
@@ -114,6 +123,8 @@
 		while ( $vol = $result->fetchRow() ) 
 			array_push( $vol_list, $vol );
 	}
+	*/
+
 	$dbSql->tpl->assign( 'volume_list', $vol_list );	
 
 	// Render template
