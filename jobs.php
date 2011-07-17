@@ -84,62 +84,68 @@
 	$query .= "LIMIT 25 ";
   $dbSql->tpl->assign( 'jobs_per_page', $jobs_per_page );
   
-  $jobsresult = $dbSql->db_link->query( $query );
+  try {
+	$jobsresult = $dbSql->db_link->runQuery( $query );
   
-  if( PEAR::isError( $jobsresult ) ) {
-	  $dbSql->TriggerDBError( "Unable to get last failed jobs from catalog", $jobsresult );
-  }else {
-	  while( $job = $jobsresult->fetchRow( DB_FETCHMODE_ASSOC ) ) {
+	if( !is_a($jobsresult,'CDBResult') ) {
+		throw new PDOException("Unable to get jobs list from catalog");
+	}else {
+		foreach( $jobsresult->fetchAll() as $job ) {
 		
-		// Determine icon for job status
-		switch( $job['jobstatus'] ) {
-			case J_RUNNING:
-				$job['Job_icon'] = "running.png";
-			break;
-			case J_COMPLETED:
-				$job['Job_icon'] = "ok.png";
-			break;
-			case J_CANCELED:
-				$job['Job_icon'] = "canceled.png";
-			break;
-			case J_COMPLETED_ERROR:
-				$job['Job_icon'] = "warning.png";
-			break;
-			case J_FATAL:
-				$job['Job_icon'] = "error.png";
-			break;
-			case J_WAITING_CLIENT:
-			case J_WAITING_SD:
-			case J_WAITING_MOUNT_MEDIA:
-			case J_WAITING_NEW_MEDIA:
-			case J_WAITING_STORAGE_RES:
-			case J_WAITING_JOB_RES:
-			case J_WAITING_CLIENT_RES:
-			case J_WAITING_MAX_JOBS:
-			case J_WAITING_START_TIME:
-			case J_NOT_RUNNING:
-				$job['Job_icon'] = "waiting.png";
-			break;
-		} // end switch
+			// Determine icon for job status
+			switch( $job['jobstatus'] ) {
+				case J_RUNNING:
+					$job['Job_icon'] = "running.png";
+				break;
+				case J_COMPLETED:
+					$job['Job_icon'] = "ok.png";
+				break;
+				case J_CANCELED:
+					$job['Job_icon'] = "canceled.png";
+				break;
+				case J_COMPLETED_ERROR:
+					$job['Job_icon'] = "warning.png";
+				break;
+				case J_FATAL:
+					$job['Job_icon'] = "error.png";
+				break;
+				case J_WAITING_CLIENT:
+				case J_WAITING_SD:
+				case J_WAITING_MOUNT_MEDIA:
+				case J_WAITING_NEW_MEDIA:
+				case J_WAITING_STORAGE_RES:
+				case J_WAITING_JOB_RES:
+				case J_WAITING_CLIENT_RES:
+				case J_WAITING_MAX_JOBS:
+				case J_WAITING_START_TIME:
+				case J_NOT_RUNNING:
+					$job['Job_icon'] = "waiting.png";
+				break;
+			} // end switch
 		
-		// Odd or even row
-		if( count($last_jobs) % 2)
-			$job['Job_classe'] = 'odd';
-		
-		// Elapsed time for the job
-	 	$start = $job['starttime'];
-		$end   = $job['endtime'];
-		
-		// Job execution execution time
-		$job['elapsed_time'] = CTimeUtils::Get_Elapsed_Time( $start, $end);
-		// Job Level
-        $job['level'] = $job_level[ $job['level'] ];
-		// Job Size
-		$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
+			// Odd or even row
+			if( count($last_jobs) % 2)
+				$job['Job_classe'] = 'odd';
+			
+			// Elapsed time for the job
+			$start = $job['starttime'];
+			$end   = $job['endtime'];
+			
+			// Job execution execution time
+			$job['elapsed_time'] = CTimeUtils::Get_Elapsed_Time( $start, $end);
+			// Job Level
+			$job['level'] = $job_level[ $job['level'] ];
+			// Job Size
+			$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
 
-		array_push( $last_jobs, $job);
-	  }
+			array_push( $last_jobs, $job);
+		} // end foreach
+	} // end if/else
+  
+  }catch(PDOException $e) {
+	CDBError::raiseError($e);
   }
+  
   $dbSql->tpl->assign( 'last_jobs', $last_jobs );
   
   // Count jobs
