@@ -105,7 +105,17 @@
 		
 		return $dsn;		
 	}
-		
+	
+	public function getUser( $catalog_id )
+	{
+		return $this->catalogs[$catalog_id]['login'];
+	}
+	
+	public function getPwd( $catalog_id )
+	{
+		return $this->catalogs[$catalog_id]['password'];
+	}
+	
 	function __destruct()
 	{
 		
