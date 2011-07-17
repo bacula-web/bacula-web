@@ -17,8 +17,6 @@
 */
 class Bweb extends DB 
 {
-    var 	$driver;
-	
 	public  $tpl;
 	public  $db_link;						// Database link
 	
@@ -32,7 +30,6 @@ class Bweb extends DB
     function __construct()
 	{             
 		$this->bwcfg = new Config();
-		$dsn = array();
 		
 		// Loading configuration from config file
 		$this->bwcfg->Load_Config();
@@ -57,32 +54,16 @@ class Bweb extends DB
 
 		$this->tpl->assign( 'catalog_current_id', $this->catalog_current_id );
 		
-		// Get DSN
-		$dsn = $this->bwcfg->Get_Dsn( $this->catalog_current_id );
-/*		
-		// Connect to the database
-		$options 		= array( 'portability' => DB_PORTABILITY_ALL );
-		$this->db_link 	= $this->connect( $dsn, $options );
-*/
 		// Database connection
 		try {
 			$this->db_link = new CDB( 	$this->bwcfg->getDSN($this->catalog_current_id), 
 										$this->bwcfg->getUser($this->catalog_current_id), 
 										$this->bwcfg->getPwd($this->catalog_current_id)  );
-			$this->db_link->makeConnection();
-			
+			$this->db_link->makeConnection();	
         }catch( PDOException $e ) {
 			CDBError::raiseError( $e );
 		}		
-/*		
-		if (DB::isError($this->db_link)) {
-			$this->TriggerDBError('Unable to connect to catalog', $this->db_link);
-		}else {
-			$this->driver = $dsn['phptype'];                            
-            		register_shutdown_function(array(&$this,'close') );
-			$this->db_link->setFetchMode(DB_FETCHMODE_ASSOC);
-		}
-*/
+
 		// Catalog selection		
 		if( $this->catalog_nb > 1 ) {
 			// Catalogs list
@@ -128,11 +109,6 @@ class Bweb extends DB
 		}
 	}
 	
-	function close() 
-	{
-		$this->db_link->disconnect();
-    }      
-       
 	function GetDbSize() 
 	{
 		$db_size = 0;
@@ -165,18 +141,6 @@ class Bweb extends DB
 			CDBError::raiseError($e);
 		}
 		return $db_size;
-		/*
-		$result = $this->db_link->query( $query );
-		
-		if(! PEAR::isError( $result ) )
-		{
-			$db = $result->fetchRow();
-			$database_size = $db['dbsize'];
-		}else
-			$this->TriggerDBError( 'Unable to get database size', $result);
-		
-		return CUtils::Get_Human_Size( $database_size );
-		*/
 	} // end function GetDbSize()
 	
 	public function Get_Nb_Clients()
@@ -193,13 +157,6 @@ class Bweb extends DB
 		}
 		
 		return $clients_nb;
-		/*
-		$clients = $this->db_link->query("SELECT COUNT(*) AS nb_client FROM Client");
-		if( PEAR::isError($clients) )
-			$this->TriggerDBError("Unable to get client number", $clients );
-		else
-			return $clients->fetchRow( DB_FETCHMODE_ASSOC );
-		*/
 	}
   
 	// Return an array of volumes ordered by poolid and volume name
@@ -269,82 +226,6 @@ class Bweb extends DB
 			}
 			
 			return $volumes_list;
-			/*
-			$pools = $this->db_link->query( $query );
-			
-			if( PEAR::isError( $pools ) )
-				$this->TriggerDBError("Failed to get pool list", $pools );
-
-			
-			while( $pool = $pools->fetchRow( DB_FETCHMODE_ASSOC ) ) {
-				switch( $this->db_link->getDriver() )
-				{
-					case 'mysql':
-						$query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention
-								   FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid
-								   WHERE Media.poolid = '". $pool['poolid'] . "' ORDER BY Media.volumename";
-					break;
-					case 'pgsql':
-						$query  = "SELECT media.volumename, media.volbytes, media.volstatus, media.mediatype, media.lastwritten, media.volretention
-								   FROM media LEFT JOIN pool ON media.poolid = pool.poolid
-								   WHERE media.poolid = '". $pool['poolid'] . "' ORDER BY media.volumename";
-					break;
-					case 'sqlite':
-						$query  = "";		// not yet implemented
-					break;
-					default:
-					break;
-				} // end switch
-				
-				$medias = $this->db_link->query( $query );
-
-				if( PEAR::isError( $medias ) ) {
-					$this->TriggerDBError("Failed to get media list for pool", $medias);
-				}else {
-					if( $debug ) echo "Found " . $medias->numRows() . " medias for pool " . $pool['name'] . " <br />";
-				
-					// Create array key for each pool
-					if( !array_key_exists( $pool['name'], $volumes) )
-					{
-						$volumes[ $pool['name'] ] = array();
-					}
-					while( $media = $medias->fetchRow( DB_FETCHMODE_ASSOC ) ) {
-						if( $debug ) {
-							var_dump( $media );
-						}
-						// If the pool is empty (no volumes in this pool)
-						if( $medias->numRows() == 0 ) {
-							if( $debug ) echo "No media in pool " . $pool['name'] . "<br />";
-						} else {
-								if( $media['lastwritten'] != "0000-00-00 00:00:00" ) {
-									// Calculate expiration date if the volume is Full
-									if( $media['volstatus'] == 'Full' ) {
-										$expire_date     = strtotime($media['lastwritten']) + $media['volretention'];
-										$media['expire'] = strftime("%Y-%m-%d", $expire_date);
-									}else {
-										$media['expire'] = 'N/A';
-									}
-									// Media used bytes in a human format
-									$media['volbytes'] = CUtils::Get_Human_Size( $media['volbytes'] );
-								} else {
-									$media['lastwritten'] = "N/A";
-									$media['expire']      = "N/A";
-									$media['volbytes'] 	  = "0 KB";
-								}								
-							
-							// Odd or even row
-							if( count(  $volumes[ $pool['name'] ] ) % 2)
-									$media['class'] = 'odd';
-
-							// Add the media in pool array
-							array_push( $volumes[ $pool['name']], $media);
-						}
-					} // end while
-				} // end if else
-			} // end while
-			
-			*/
-
 	} // end function GetVolumeList()
 	
 	public function countJobs( $start_timestamp, $end_timestamp, $status = 'ALL', $level = 'ALL', $jobname = 'ALL', $client = 'ALL' )
@@ -415,16 +296,6 @@ class Bweb extends DB
 		}
 		
 		return $result['job_nb'];
-		/*
-		$jobs = $this->db_link->query( $query );
-	
-		if (!PEAR::isError( $jobs ) ) {
-			$jobs = $jobs->fetchRow(); 
-			return $jobs['job_nb'];
-		}
-		
-		$this->TriggerDBError("Unable to get last $status jobs number from catalog", $jobs);
-		*/
 	}
 	
 	// Return the list of Pools in a array
@@ -452,16 +323,6 @@ class Bweb extends DB
 		}
 
 		return $pools;
-		/*
-		$result 	= $this->db_link->query ( $query );
-
-		if( !PEAR::isError( $result ) ) {
-			while( $pool = $result->fetchRow() )
-				$pools[] = $pool;
-			return $pools;
-		}
-		$this->TriggerDBError( "Unable to get the pool list from catalog", $result );		
-		*/
 	}
 	
 	public function Get_BackupJob_Names()
@@ -489,18 +350,6 @@ class Bweb extends DB
 		}
 
 		return $backupjobs;
-		/*
-		$result = $this->db_link->query( $query );
-		
-		if (PEAR::isError( $result ) ) {
-			$this->TriggerDBError("Unable to get BackupJobs list from catalog", $result );
-		}else{
-			while( $backupjob = $result->fetchRow() ) {
-				array_push( $backupjobs, $backupjob["name"] );
-			}
-			return $backupjobs;
-		}
-		*/
 	}
 	
 	public function countVolumes( $pool_id = 'ALL' )
@@ -535,15 +384,6 @@ class Bweb extends DB
 		}
 		
 		return $vols['vols_count'];
-		/*
-		$res = $this->db_link->query( $query );
-		
-		if( !PEAR::isError( $res ) ) {
-			$vols = $res->fetchRow( );
-			return $vols['vols_count'];
-		}	
-		$this->triggerDBError( 'Unable to get volume number from pool', $res );
-		*/
 	}
 	
 	public function getStoredFiles( $start_timestamp, $end_timestamp, $job_name = 'ALL' )
@@ -580,20 +420,6 @@ class Bweb extends DB
 			return $result['stored_files'];
 		else
 			return 0;
-		/*
-		$result = $this->db_link->query( $query );
-		
-		if( !PEAR::isError($result) ) {
-			$result = $result->fetchRow();
-			
-			if( isset($result['stored_files']) and !empty($result['stored_files']) )
-				return $result['stored_files'];
-			else
-				return 0;
-		}else{
-			$this->TriggerDBError("Unable to get protected files from catalog", $result);
-		}
-		*/
 	}
 	
 	// Function: getStoredBytes
@@ -637,34 +463,6 @@ class Bweb extends DB
 			return $result['stored_bytes'];
 		else
 			return 0;
-		/*
-		$result = $this->db_link->query( $query );
-		
-		// Testing query result
-		if( PEAR::isError( $result ) ) {
-			$this->TriggerDBError("Unable to get Job Bytes from catalog", $result );
-		}else{
-			$result = $result->fetchRow();
-			
-			if( !PEAR::isError($result) ) {
-				if( isset($result['stored_bytes']) and !empty($result['stored_bytes']) )
-					return $result['stored_bytes'];
-				else
-					return 0;
-			}else
-				$this->TriggerDBError( "Error fetching query result", $result);
-		}
-		*/
-	}
-	
-	public function TriggerDBError( $message, $db_error)
-	{
-		echo 'Error: ' . $message . '<br />';
-		echo 'Standard Message: ' . $db_error->getMessage() . '<br />';
-		echo 'Standard Code: ' . $db_error->getCode() . '<br />';
-		echo 'DBMS/User Message: ' . $db_error->getUserInfo() . '<br />';
-		echo 'DBMS/Debug Message: ' . $db_error->getDebugInfo() . '<br />';
-		exit;
 	}
 } // end class Bweb
 ?>
