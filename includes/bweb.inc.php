@@ -15,7 +15,7 @@
 | GNU General Public License for more details.                            |
 +-------------------------------------------------------------------------+ 
 */
-class Bweb extends DB 
+class Bweb
 {
 	public  $tpl;
 	public  $db_link;						// Database link
