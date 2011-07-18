@@ -34,8 +34,7 @@ class CDB
 		
 		$this->options  = array( 	PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 									PDO::ATTR_CASE => PDO::CASE_LOWER,
-									PDO::ATTR_STATEMENT_CLASS => array('CDBResult', array($this) ),
-									PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true );
+									PDO::ATTR_STATEMENT_CLASS => array('CDBResult', array($this) ) );
 	}
 	
 	public function makeConnection()
@@ -53,6 +52,9 @@ class CDB
 	{
 		foreach( $this->options as $option => $value )
 			$this->connection->setAttribute( $option, $value);
+		
+		if( $this->getDriver() == 'mysql' )
+			$this->connection->setAttribute( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true );
 	}
 	
 	public function getDriver()
