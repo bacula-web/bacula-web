@@ -35,7 +35,7 @@
  
  require_once BW_OBJ . "utils/cutils.class.php";
  require_once BW_OBJ . "utils/ctimeutils.class.php";
- require_once BW_OBJ . "utils/chttp.class.php";
+ require_once BW_OBJ . "utils/chttprequest.class.php";
  
  require_once BW_OBJ . "db/cdb.class.php";
  require_once BW_OBJ . "db/cdbresult.class.php";
