@@ -14,7 +14,7 @@
 | GNU General Public License for more details. |
 +-------------------------------------------------------------------------+
 */
-	class CHttp
+	class CHttpRequest
 	{
 		// Return a strip taged value
 		private static function getSafeValue( $value )
