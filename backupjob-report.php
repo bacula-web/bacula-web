@@ -30,10 +30,13 @@
 	// ===============================================================
 	// Get Backup Job name from GET or POST
 	// ===============================================================
-	if( isset( $_POST["backupjob_name"] ) )
-		$backupjob_name = $_POST["backupjob_name"];
-	elseif( isset( $_GET["backupjob_name"] ) )
-		$backupjob_name = $_GET["backupjob_name"];
+	$http_post = CHttp::getRequestVars( $_POST );
+	$http_get  = CHttp::getRequestVars( $_GET );
+	
+	if( isset( $http_post['backupjob_name'] ) )
+		$backupjob_name = $http_post['backupjob_name'];
+	elseif( isset( $http_get['backupjob_name'] ) )
+		$backupjob_name = $http_get['backupjob_name'];
 	else
 		die( "Please specify a backup job name " );
 
