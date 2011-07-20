@@ -32,8 +32,10 @@
  require_once BW_OBJ . "cfg/config.class.php";
  require_once BW_OBJ . "graph/cgraph.class.php";
  require_once BW_OBJ . "bweb.inc.php";
+ 
  require_once BW_OBJ . "utils/cutils.class.php";
  require_once BW_OBJ . "utils/ctimeutils.class.php";
+ require_once BW_OBJ . "utils/chttp.class.php";
  
  require_once BW_OBJ . "db/cdb.class.php";
  require_once BW_OBJ . "db/cdbresult.class.php";
