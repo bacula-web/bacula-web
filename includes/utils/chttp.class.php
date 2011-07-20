@@ -16,29 +16,30 @@
 */
 	class CHttp
 	{
-		private function getSafeValue( $value )
+		// Return a strip taged value
+		private static function getSafeValue( $value )
 		{
-			return $safe_value;
+				return strip_tags($value);
 		}
 
-	// Return an array of $_POST or $_GET values
-	// If the value doesn't exist, the return value is FALSE
-	public static function getRequestVars( $type = 'POST', $vars = array() )
-	{
-		$values = array();
-
-		if( count($vars) > 0 )
-
-		switch( $type )
+		// Return an array of $_POST or $_GET values
+		// If $_POST or $_GET are empty, the return value is FALSE
+		public static function getRequestVars( &$value )
 		{
-			case 'GET':
+			$value_list = array();
+			
+			if( is_array( $value ) and count($value) > 0 ) {
+					foreach( $value as $key => $var ) {
+						if( isset($value[$key] ) )
+							$value_list[$key] = self::getSafeValue( $var );
+						else
+							$value_list[$key] = false;
+					}
+			}else {
+				return false;
+			}
 
-			break;
-			case 'POST':
-
-			break;
-		}
-		return false;
+			return $value_list;
 	}
 } // end class
 
