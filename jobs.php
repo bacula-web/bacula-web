@@ -46,10 +46,11 @@
   $query .= "FROM Job ";
   $query .= "LEFT JOIN Pool ON Job.PoolId=Pool.PoolId ";
   $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
-  
-  // Filter by status
-  if( isset( $_POST['status'] ) ) {
-	switch( $_POST['status'] ) 
+ 
+  $posts = CHttp::getRequestVars( $_POST );
+   
+  if( $posts != false ) {
+	switch( $posts['status'] ) 
 	{
 		case STATUS_RUNNING:
 			$query .= "WHERE Job.JobStatus = 'R' ";
@@ -67,7 +68,7 @@
 			$query .= "WHERE Job.JobStatus = 'A' ";
 		break;
 	}
-    $dbSql->tpl->assign('job_status_filter', $_POST['status'] );
+	$dbSql->tpl->assign('job_status_filter', $posts['status'] );
   }
   
   // order by
@@ -77,9 +78,9 @@
   $jobs_per_page = array( 25 => '25', 50 => '50', 75 => '75', 100 => '100', 150 => '150' );
     
   // Determine how many jobs to display
-  if( isset($_POST['jobs_per_page']) ) {
-	$query .= "LIMIT " . $_POST['jobs_per_page'];
-    $dbSql->tpl->assign( 'jobs_per_page_selected', $_POST['jobs_per_page'] );
+  if( isset($posts['jobs_per_page']) ) {
+	$query .= "LIMIT " . $posts['jobs_per_page'];
+    $dbSql->tpl->assign( 'jobs_per_page_selected', $posts['jobs_per_page'] );
   }else
 	$query .= "LIMIT 25 ";
   $dbSql->tpl->assign( 'jobs_per_page', $jobs_per_page );
@@ -149,8 +150,8 @@
   $dbSql->tpl->assign( 'last_jobs', $last_jobs );
   
   // Count jobs
-  if( isset( $_POST['status'] ) )
-	$total_jobs = $dbSql->countJobs( FIRST_DAY, NOW, $_POST['status'] );
+  if( isset( $posts['status'] ) )
+	$total_jobs = $dbSql->countJobs( FIRST_DAY, NOW, $posts['status'] );
   else
 	$total_jobs = $dbSql->countJobs( FIRST_DAY, NOW );
   
