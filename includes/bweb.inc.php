@@ -41,7 +41,7 @@ class Bweb
 		$this->init_gettext();
 		
 		// Check catalog id
-		$http_post = CHttp::getRequestVars($_POST);
+		$http_post = CHttpRequest::getRequestVars($_POST);
 		if( isset( $http_post['catalog_id'] ) ) {
 			$this->catalog_current_id = $http_post['catalog_id'];
 			$_SESSION['catalog_id'] = $this->catalog_current_id;

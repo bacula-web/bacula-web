@@ -47,7 +47,7 @@
   $query .= "LEFT JOIN Pool ON Job.PoolId=Pool.PoolId ";
   $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
  
-  $posts = CHttp::getRequestVars( $_POST );
+  $posts = CHttpRequest::getRequestVars( $_POST );
    
   if( $posts != false ) {
 	switch( $posts['status'] ) 

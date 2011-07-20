@@ -30,8 +30,8 @@
 	// ===============================================================
 	// Get Backup Job name from GET or POST
 	// ===============================================================
-	$http_post = CHttp::getRequestVars( $_POST );
-	$http_get  = CHttp::getRequestVars( $_GET );
+	$http_post = CHttpRequest::getRequestVars( $_POST );
+	$http_get  = CHttpRequest::getRequestVars( $_GET );
 	
 	if( isset( $http_post['backupjob_name'] ) )
 		$backupjob_name = $http_post['backupjob_name'];
