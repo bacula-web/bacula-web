@@ -43,7 +43,8 @@
 	  <tr>
 		<td class="tbl_header">Status</td>
 		<td class="tbl_header">Job ID</td>
-		<td class="tbl_header">BackupJob</td>
+		<td class="tbl_header">Name</td>
+		<td class="tbl_header">Type</td>
 		<td class="tbl_header">Start Time</td>
 		<td class="tbl_header">End Time</td>
 		<td class="tbl_header">Elapsed time</td>
@@ -62,6 +63,7 @@
 		<td class="{$job.Job_classe}">
 			<a href="backupjob-report.php?backupjob_name={$job.job_name}">{$job.job_name}</a>
 		</td>
+		<td class="{$job.Job_classe}">{$job.type}</td>
 		<td class="{$job.Job_classe}">{$job.starttime}</td>
 		<td class="{$job.Job_classe}">{$job.endtime}</td>
 		<td class="{$job.Job_classe}">{$job.elapsed_time}</td>
