@@ -117,7 +117,7 @@
  
  <!-- Custom report -->
  <form method="post" action="client-report.php">
-	<table width="100%">
+	<table>
 		<tr>
 			<td class="tbl_header" colspan="2"><b>Custom report</b></td>
 		</tr>
@@ -133,7 +133,6 @@
 		<tr>
 			<td class="label">Client</td>
 			<td class="info">
-				{* {html_options values=$clients_list output=$clients_list} *}
 				{html_options name=client_id options=$clients_list"}
 			</td>
 		</tr>
@@ -158,7 +157,7 @@
 		</tr>		
 		<tr>
 			<td colspan="2" class="info">
-				<input type="submit" value="View report"/>
+				<input type="submit" value="View report" />
 			</td>
 		</tr>
 	</table>
@@ -166,8 +165,7 @@
  
  <!-- Backup job report form -->
  <form method="post" action="backupjob-report.php">
-   <table border="0">
-     <tr> <td colspan="2" class="label">&nbsp;</td> </tr>
+   <table>
 	 <tr>
  	   <td colspan="2" class="tbl_header"><b>{t}Backup Job report{/t}</b></td>
 	 </tr>

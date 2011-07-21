@@ -159,13 +159,13 @@ a:link, a:visited, a:hover, a:visited {
  background-color: #FFFFFF;
  font-weight: bold;
  text-align: left;
- padding: 3px 3px 3px 15px;
+ padding: 3px;
 }
 
 .box table td.info {
  text-align: right;
  background-color: #FFFFFF;
- padding: 3px 15px 3px 3px;
+ padding: 3px;
 }
 
 .box table tr td.info a { font-size: 8pt;}
@@ -181,7 +181,7 @@ table {
  text-align: left; 
  font-weight: bold;
  font-size: 9pt;
- padding: 2px;
+ /*padding: 2px;*/
  background-color: #E0C8E5; 
  color: black; 
 }
