@@ -122,18 +122,18 @@
 			<td class="tbl_header" colspan="2"><b>Custom report</b></td>
 		</tr>
 		<tr>
+			<td class="label">Client</td>
+			<td class="info">
+				{html_options name=client_id options=$clients_list"}
+			</td>
+		</tr>
+		<tr>
 			<td class="label">Report type</td>
 			<td class="info">
 				<select>
 					<option>{t}Transferred Bytes{/t}
 					<option>{t}Transferred Files {/t}
 				</select>
-			</td>
-		</tr>
-		<tr>
-			<td class="label">Client</td>
-			<td class="info">
-				{html_options name=client_id options=$clients_list"}
 			</td>
 		</tr>
 		<tr>
@@ -157,7 +157,7 @@
 		</tr>		
 		<tr>
 			<td colspan="2" class="info">
-				<input type="submit" value="View report" />
+				<input class="submit" type="submit" value="View report" />
 			</td>
 		</tr>
 	</table>
@@ -179,7 +179,9 @@
 	   </td>
 	 </tr>
 	 <tr>
-	 <td colspan="2" class="info"> <input type=submit value="{t}View report{/t}"> </td>
+	   <td colspan="2" class="info"> 
+		 <input class="submit" type=submit value="{t}View report{/t}"> 
+	   </td>
 	 </tr>
    </table>
  </form>

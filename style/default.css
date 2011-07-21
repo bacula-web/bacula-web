@@ -8,6 +8,19 @@ body{
   vertical-align: middle;
 }
 
+form{
+  margin: 0px;
+  padding: 0px;
+}
+
+form input {
+  padding: 3px;  
+}
+
+form input.submit {
+	margin-bottom: 10px;
+}
+
 a:link, a:visited, a:hover, a:visited {
   color: #736F6E;
   font-size: 10pt;
@@ -165,7 +178,7 @@ a:link, a:visited, a:hover, a:visited {
 .box table td.info {
  text-align: right;
  background-color: #FFFFFF;
- padding: 3px;
+ padding: 3px 10px;
 }
 
 .box table tr td.info a { font-size: 8pt;}
