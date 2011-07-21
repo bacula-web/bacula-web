@@ -87,7 +87,7 @@ class Bweb
 		$this->tpl->compile_dir 	= "./templates_c";
 	}
 	
-	function init_gettext()
+	private function init_gettext()
 	{
 		global $smarty_gettext_path;
 		
@@ -110,7 +110,7 @@ class Bweb
 		}
 	}
 	
-	function GetDbSize() 
+	public function GetDbSize() 
 	{
 		$db_size = 0;
 		$query 	 = '';
@@ -161,7 +161,7 @@ class Bweb
 	}
   
 	// Return an array of volumes ordered by poolid and volume name
-	function GetVolumeList() 
+	public function GetVolumeList() 
 	{
 			$pools        = '';
 			$volumes      = '';
@@ -351,6 +351,34 @@ class Bweb
 		}
 
 		return $backupjobs;
+	}
+	
+	// Return an array with clients list
+	public function getClients() 
+	{
+		$query   = '';
+		$result  = '';
+		$clients = array();
+
+		switch( $this->db_link->getDriver() )
+		{
+			case 'sqlite':
+			case 'mysql':
+			case 'pgsql':
+				$query 		= "SELECT Client.ClientId, Client.Name FROM Client;";
+			break;
+		}
+		try {
+			$result = $this->db_link->runQuery($query);
+			
+			foreach( $result->fetchAll() as $client )
+				$clients[ $client['clientid'] ] = $client['name'];
+				
+		}catch(PDOException $e) {
+			CDBError::raiseError($e);
+		}
+
+		return $clients;		
 	}
 	
 	public function countVolumes( $pool_id = 'ALL' )
