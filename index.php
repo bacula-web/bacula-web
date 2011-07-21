@@ -39,8 +39,12 @@
 	$nb_clients = $dbSql->Get_Nb_Clients();
 	$dbSql->tpl->assign('clientes_totales',$nb_clients["nb_client"] );
 
-	// Backup Job list for report.tpl and last_run_report.tpl
+	// Backup Job list
 	$dbSql->tpl->assign( 'jobs_list', $dbSql->Get_BackupJob_Names() );
+	
+	// Clients list
+
+	$dbSql->tpl->assign( 'clients_list', $dbSql->getClients() );
 
 	// Last 24 hours status (completed, failed and waiting jobs)
 	$dbSql->tpl->assign( 'completed_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'completed' ) );

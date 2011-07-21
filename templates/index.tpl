@@ -133,7 +133,8 @@
 		<tr>
 			<td class="label">Client</td>
 			<td class="info">
-				Client list here + All
+				{* {html_options values=$clients_list output=$clients_list} *}
+				{html_options name=client_id options=$clients_list"}
 			</td>
 		</tr>
 		<tr>
