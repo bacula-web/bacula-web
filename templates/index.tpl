@@ -43,10 +43,10 @@
 	<p class="title">Last used volumes</p>
 	  <table>
 		<tr>
-		  <td class="tbl_header">Volume</td>
-		  <td class="tbl_header">Status</td>
-		  <td class="tbl_header">Last written</td>
-		  <td class="tbl_header">Job Id</td>
+		  <td class="tbl_header" title="Volume name">Volume</td>
+		  <td class="tbl_header" title="Volume status">Status</td>
+		  <td class="tbl_header" title="Last written date for this volume">Last written</td>
+		  <td class="tbl_header" title="Number of jobs">Jobs</td>
 		</tr>
 		{foreach from=$volumes_list item=vol}
 		<tr>
