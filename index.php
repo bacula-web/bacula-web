@@ -102,23 +102,23 @@
 
 
 	// Last 15 used volumes
-	$vol_list = array();
-
-	$query  = "SELECT DISTINCT Media.Volumename, Media.Lastwritten, Media.VolStatus, Job.JobId FROM Job ";
-	$query .= "LEFT JOIN JobMedia ON Job.JobId = JobMedia.JobId ";
-	$query .= "LEFT JOIN Media ON JobMedia.MediaId = Media.MediaId ";
-	$query .= "ORDER BY Job.JobId DESC ";
-	$query .= "LIMIT 10 ";
+	$last_volumes = array();
 	
-	try {
-		$result = $dbSql->db_link->runQuery($query);
-		foreach($result->fetchall() as $vol)
-			$vol_list[] = $vol;
+	try{
+		$result = $dbSql->db_link->runQuery( "SELECT Media.MediaId,Media.Volumename, Media.Lastwritten, Media.VolStatus FROM Media ORDER BY Media.Lastwritten DESC LIMIT 10" );
+			
+		foreach( $result->fetchAll() as $volume ) {
+			$query 				  = "SELECT COUNT(*) as jobs_count FROM JobMedia WHERE JobMedia.MediaId = '" . $volume['mediaid'] . "'";
+			$jobs_by_vol 		  = $dbSql->db_link->runQuery($query);
+			$jobs_by_vol 		  = $jobs_by_vol->fetchAll();
+			$volume['jobs_count'] = $jobs_by_vol[0]['jobs_count'];
+			$last_volumes[] 	  = $volume;
+		}
 	}catch(PDOException $e) {
 		CDBError::raiseError($e);
 	}
 
-	$dbSql->tpl->assign( 'volume_list', $vol_list );	
+	$dbSql->tpl->assign( 'volumes_list', $last_volumes );	
 
 	// Render template
 	$dbSql->tpl->display('index.tpl');

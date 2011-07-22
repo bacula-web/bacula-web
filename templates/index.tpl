@@ -39,7 +39,7 @@
 	</div>
   </div> <!-- end div box -->
   
-  <div class="box">
+  <div class="box" border=1>
 	<p class="title">Last used volumes</p>
 	  <table>
 		<tr>
@@ -48,12 +48,12 @@
 		  <td class="tbl_header">Last written</td>
 		  <td class="tbl_header">Job Id</td>
 		</tr>
-		{foreach from=$volume_list item=vol}
+		{foreach from=$volumes_list item=vol}
 		<tr>
 		  <td>{$vol.volumename}</td>
 		  <td>{$vol.volstatus}</td>
 		  <td>{$vol.lastwritten}</td>
-		  <td>{$vol.jobid}</td>
+		  <td><b>{$vol.jobs_count}</b></td>
 		</tr>
 		{/foreach}
 	  </table>
