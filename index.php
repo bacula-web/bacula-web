@@ -25,7 +25,7 @@
 	$dbSql->tpl->assign('stored_files', number_format($dbSql->getStoredFiles( FIRST_DAY, NOW ), 0, '.', "'" ) );
 	  
 	// Database size
-	$dbSql->tpl->assign('database_size', $dbSql->GetDbSize());
+	$dbSql->tpl->assign('database_size', $dbSql->getDatabaseSize());
 
 	// Overall stored bytes
 	$stored_bytes = CUtils::Get_Human_Size( $dbSql->getStoredBytes( FIRST_DAY, NOW ) );

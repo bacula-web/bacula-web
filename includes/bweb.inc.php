@@ -110,7 +110,7 @@ class Bweb
 		}
 	}
 	
-	public function GetDbSize() 
+	public function getDatabaseSize() 
 	{
 		$db_size = 0;
 		$query 	 = '';
