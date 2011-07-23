@@ -381,6 +381,30 @@ class Bweb
 		return $clients;		
 	}
 	
+	public function getClientInfos( $client_id )
+    {
+		$client = array();
+		$result = '';
+		$query  = "SELECT name,uname FROM Client WHERE clientid = '$client_id'";
+		
+		try {
+			$result = $this->db_link->runQuery($query);
+			
+			foreach( $result->fetchAll() as $client ) {
+				$uname			   = split( ' ', $client['uname'] );
+				$client['version'] = $uname[0];
+				
+				$uname			   = split( ',', $uname[2] );
+				$client['arch']    = $uname[0];
+				$client['os']      = $uname[1];
+			}
+		}catch(PDOException $e) {
+			CDBError::raiseError($e);
+		}
+		
+		return $client;
+	}
+	
 	public function countVolumes( $pool_id = 'ALL' )
 	{
 		$result = null;
