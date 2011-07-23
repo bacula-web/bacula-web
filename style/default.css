@@ -139,6 +139,11 @@ a:link, a:visited, a:hover, a:visited {
  text-align: center;
 }
 
+.box h3, .box h4 {
+ text-align:left;
+ margin-left: 10px;
+}
+
 .box p.title {
  /*height: 25px;*/
  text-align: center;
@@ -160,6 +165,10 @@ a:link, a:visited, a:hover, a:visited {
  text-decoration: none;
  font-size: 9pt;
  vertical-align: middle;
+}
+
+.box table {
+
 }
 
 .box table tr td {

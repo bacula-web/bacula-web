@@ -16,10 +16,25 @@
   
   <div class="box">
 	<p class="title">Client(s) Report</p>
+
+  <h4>Client informations</h4>	
+  <table width="300px">
+	<tr>
+		<td width="100px" class="label"><b>Client name:</b></td> <td>{$client_name}</td>
+	</tr>
+	<tr>
+		<td class="label"><b>Client version:</b></td> <td>{$client_version}</td>
+	</tr>
+	<tr>
+		<td class="label"><b>Client os:</b></td> <td>{$client_os}</td>
+	</tr>
+	<tr>
+		<td class="label"><b>Client arch:</b></td> <td>{$client_arch}</td>
+	</tr>
+  </table>
 	
   </div> <!-- end div class=box -->
   
-  <div id="main_center"> 
   </div> <!-- end div id=main_center -->
 
 {include file="footer.tpl"}
