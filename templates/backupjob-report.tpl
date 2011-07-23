@@ -69,8 +69,8 @@
   <!-- Transfered Bytes/Files graph -->
   <div class="box">
 	<p class="title">Transfered Bytes / Files</p>
-	<img src="{$graph_stored_bytes}" alt="" />
-	<img src="{$graph_stored_files}" alt="" />
+	<img class="graph" src="{$graph_stored_bytes}" alt="" />
+	<img class="graph" src="{$graph_stored_files}" alt="" />
   </div> <!-- end div class=box -->
   
   </div> <!-- end div id=main_center -->

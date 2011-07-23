@@ -18,6 +18,7 @@
   <div class="box">
 	<p class="title">Jobs report</p>
 	<!-- Filter jobs -->
+	<h4>Filter jobs</h4>
 	<form action="jobs.php" method="post">
 	<table border="0">
 	  <tr>
@@ -33,12 +34,10 @@
 			{html_options name=status values=$job_status options=$job_status selected=$job_status_filter onChange="submit();"}
 		</td>
 	  </tr>
-	  <tr>
-		<td colspan="8">&nbsp;</td>
-	  </tr>
 	</table>
 	</form>
 	
+	<h4>Jobs result</h4>
 	<table border="0">
 	  <tr>
 		<td class="tbl_header">Status</td>

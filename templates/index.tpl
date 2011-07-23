@@ -15,7 +15,7 @@
 	<p class="title">
 	Pools and volumes status	
 	</p>
-	<img src="{$graph_pools}" alt="" />
+	<img class="graph" src="{$graph_pools}" alt="" />
 	<div class="footer">
 		<a href="pools.php" title="Show pools and volumes report">{t}View report{/t}</a>
 	</div>
@@ -24,7 +24,7 @@
   <!-- Stored Bytes for last 7 days -->
   <div class="box">
 	<p class="title" title="Stored bytes for last 7 days (GB)">Stored bytes</p>
-	  <img src="{$graph_stored_bytes}" alt="" />
+	  <img class="graph" src="{$graph_stored_bytes}" alt="" />
   </div> <!-- end div box -->
 
 </div>
@@ -33,7 +33,7 @@
   <!-- Last 24 hours jobs status -->
   <div class="box">
 	<p class="title" title="Last 24 hours jobs status">Jobs status</p>
-	  <img src="{$graph_jobs}" alt="" />
+	  <img class="graph" src="{$graph_jobs}" alt="" />
 	<div class="footer">
 		<a href="jobs.php" title="Show last 24 hours jobs status">View report</a>
 	</div>
@@ -114,13 +114,9 @@
   
 <div class="box">
 	<p class="title">Reports</p>
- 
  <!-- Custom report -->
  <form method="post" action="client-report.php">
 	<table>
-		<tr>
-			<td class="tbl_header" colspan="2"><b>Custom report</b></td>
-		</tr>
 		<tr>
 			<td class="label">Client</td>
 			<td class="info">
@@ -163,12 +159,10 @@
 	</table>
  </form>
  
+ <h5>{t}Backup Job report{/t}</h5>
  <!-- Backup job report form -->
  <form method="post" action="backupjob-report.php">
    <table>
-	 <tr>
- 	   <td colspan="2" class="tbl_header"><b>{t}Backup Job report{/t}</b></td>
-	 </tr>
 	 <tr>
 		<td class="label">Select a backup job</td>
 		<td class="info">
