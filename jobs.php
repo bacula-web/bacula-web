@@ -131,13 +131,21 @@
 			// Elapsed time for the job
 			$start = $job['starttime'];
 			$end   = $job['endtime'];
-			
-			// Job execution execution time
+
+			if( $start == '0000-00-00 00:00:00' or is_null($start) )
+				$job['starttime'] = 'N/A';
+				
+			if( $end == '0000-00-00 00:00:00' or is_null($end) )
+				$job['endtime'] = 'N/A';
+
 			$job['elapsed_time'] = CTimeUtils::Get_Elapsed_Time( $start, $end);
+
 			// Job Level
 			$job['level'] = $job_levels[ $job['level'] ];
+
 			// Job files
 			$job['jobfiles'] = number_format( $job['jobfiles'], 0, '.', "'");
+
 			// Job size
 			$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
 
