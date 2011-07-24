@@ -439,7 +439,7 @@ class Bweb
 		return $vols['vols_count'];
 	}
 	
-	public function getStoredFiles( $start_timestamp, $end_timestamp, $job_name = 'ALL' )
+	public function getStoredFiles( $start_timestamp, $end_timestamp, $job_name = 'ALL', $client = 'ALL' )
 	{
 		$query = "";
 		$start_date = date( "Y-m-d H:i:s", $start_timestamp);	
@@ -460,6 +460,9 @@ class Bweb
 		
 		if( $job_name != 'ALL' ) 
 			$query .= " AND name = '$job_name'";
+		
+		if( $client != 'ALL' )
+			$query .= " AND clientid = '$client'";
 		
 		// Execute query
 		try {
