@@ -40,7 +40,7 @@
   $dbSql->tpl->assign( 'job_status', $job_status );
   
   // Global variables
-  $job_level = array( 'D' => 'Diff', 'I' => 'Incr', 'F' => 'Full' );
+  $job_levels = array( 'D' => 'Diff', 'I' => 'Incr', 'F' => 'Full' );
   
   $query .= "SELECT Job.JobId, Job.Name AS Job_name, Job.Type, Job.StartTime, Job.EndTime, Job.Level, Job.JobBytes, Job.JobFiles, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
   $query .= "FROM Job ";
@@ -135,8 +135,10 @@
 			// Job execution execution time
 			$job['elapsed_time'] = CTimeUtils::Get_Elapsed_Time( $start, $end);
 			// Job Level
-			$job['level'] = $job_level[ $job['level'] ];
-			// Job Size
+			$job['level'] = $job_levels[ $job['level'] ];
+			// Job files
+			$job['jobfiles'] = number_format( $job['jobfiles'], 0, '.', "'");
+			// Job size
 			$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
 
 			array_push( $last_jobs, $job);
