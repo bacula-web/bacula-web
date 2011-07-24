@@ -54,6 +54,15 @@
 		{/foreach}
 	</table>
 	
+	<h4>Statistics - last {$period} days(s)</h4>
+	
+	<table>
+		<tr>
+			<td> <img class="graph" src="{$graph_stored_bytes}" alt="" /> </td>
+			<td> <img class="graph" src="{$graph_stored_files}" alt="" /> </td>
+		</tr>
+	</table>
+	
   </div> <!-- end div class=box -->
   
   </div> <!-- end div id=main_center -->
