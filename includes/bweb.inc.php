@@ -484,7 +484,7 @@ class Bweb
 	// 		$end_timestamp: 	end date in unix timestamp format
 	//		$job_name:			optional job name
 	
-	public function getStoredBytes( $start_timestamp, $end_timestamp, $job_name = 'ALL' )
+	public function getStoredBytes( $start_timestamp, $end_timestamp, $job_name = 'ALL', $client = 'ALL' )
 	{
 		$query    		= '';
 		$result			= '';
@@ -506,6 +506,9 @@ class Bweb
 
 		if( $job_name != 'ALL' ) 
 			$query .= " AND name = '$job_name'";
+		
+		if( $client != 'ALL' )
+			$query .= " AND clientid = '$client'";		
 		
 		// Execute SQL statment
 		try {
