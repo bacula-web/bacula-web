@@ -123,6 +123,7 @@
 				{html_options name=client_id options=$clients_list"}
 			</td>
 		</tr>
+		<!--
 		<tr>
 			<td class="label">Report type</td>
 			<td class="info">
@@ -141,6 +142,7 @@
 				</select>
 			</td>
 		</tr>
+		-->
 		<tr>
 			<td class="label">Interval</td>
 			<td class="info">
@@ -164,7 +166,7 @@
  <form method="post" action="backupjob-report.php">
    <table>
 	 <tr>
-		<td class="label">Select a backup job</td>
+		<td class="label">Job name</td>
 		<td class="info">
 	     <input type=hidden name="default" value="1"> 				
 		   <select name=backupjob_name>
