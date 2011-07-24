@@ -106,28 +106,27 @@ class CGraph{
 		// Image border
 		$this->plot->SetImageBorderType( 'none' );
 
-		// Plot area (calculated regarding the width and height of the graph)
-		if( $this->type == 'pie' )
-			$this->plot->SetPlotAreaPixels( 10, 10, ($this->width / 2), $this->height-10 );
+		switch( $this->type )
+		{
+			case 'pie':
+				$this->plot->SetPlotAreaPixels( 10, 10, ($this->width / 2), $this->height-10 );
+				$this->plot->SetLabelScalePosition( 0.2 );
+				
+				$legends = array();
+				foreach( $this->data as $key => $legend )
+					$this->plot->SetLegend( implode(': ',$legend) );
+			break;
+			case 'bars':
+				$this->plot->SetXLabelAngle(90);
+			break;
+		}
 		
 		// Legend position (calculated regarding the width and height of the graph)
 		$this->plot->SetLegendPixels( ($this->width / 2) + 10, 25 );
-
-		// Labels scale position
-		if( $this->type == 'pie' )
-			$this->plot->SetLabelScalePosition( 0.2 );
 		
 		// Graph title
 		$this->plot->SetTitle( $this->title );
 		$this->plot->SetYTitle( $this->ytitle );
-
-		// Setting up legends
-		if( $this->type != 'bars' ) {
-			$legends = array();
-			foreach( $this->data as $key => $legend ) {
-				$this->plot->SetLegend( implode(': ',$legend) );
-			}
-		}
 
 		# Turn off X tick labels and ticks because they don't apply here:
 		$this->plot->SetXTickLabelPos('none');
@@ -138,5 +137,4 @@ class CGraph{
 		$this->plot->DrawGraph();
 	} // end function Render()
 } // end BGraph classe
-
 ?>
