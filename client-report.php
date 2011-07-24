@@ -49,7 +49,7 @@
 	$client	= $dbSql->getClientInfos($clientid);
 	
 	// Client's backup jobs
-	$query  = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
+	$query  = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
 	$query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
 	$query .= "WHERE Job.ClientId = '$clientid' AND Job.JobStatus = 'T' ";
     $query .= 'ORDER BY Job.EndTime DESC ';

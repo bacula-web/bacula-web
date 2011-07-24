@@ -38,6 +38,7 @@
 			<td class="tbl_header">Name</td>
 			<td class="tbl_header">Jod Id</td>
 			<td class="tbl_header">Level</td>
+			<td class="tbl_header">End time</td>
 			<td class="tbl_header">Bytes</td>
 			<td class="tbl_header">Files</td>
 			<td class="tbl_header">Status</td>
@@ -47,6 +48,7 @@
 			<td class="{$job.Job_classe}">{$job.name}</td>
 			<td class="{$job.Job_classe}">{$job.jobid}</td>
 			<td class="{$job.Job_classe}">{$job.level}</td>
+			<td class="{$job.Job_classe}">{$job.endtime}</td>
 			<td class="{$job.Job_classe}">{$job.jobbytes}</td>
 			<td class="{$job.Job_classe}">{$job.jobfiles}</td>
 			<td class="{$job.Job_classe}">{$job.jobstatuslong}</td>
