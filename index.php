@@ -19,7 +19,7 @@
 	include_once( 'config/global.inc.php' );
 
 	$dbSql 				= new Bweb();
-	$days_stored_bytes 	= array();
+	
 
 	// Stored files number 
 	$dbSql->tpl->assign('stored_files', number_format($dbSql->getStoredFiles( FIRST_DAY, NOW ), 0, '.', "'" ) );
@@ -85,7 +85,9 @@
 	$dbSql->tpl->assign('graph_pools', $graph->Get_Image_file() );
 
 	// Last 7 days stored Bytes graph
+	$days_stored_bytes 	= array();
 	$days = CTimeUtils::getLastDaysIntervals( 7 );
+	
 	foreach( $days as $day ) {
 		$stored_bytes 		 = $dbSql->getStoredBytes( $day['start'], $day['end']);
 		$stored_bytes 		 = CUtils::Get_Human_Size( $stored_bytes, 1, 'GB', false );
@@ -105,7 +107,11 @@
 	$last_volumes = array();
 	
 	try{
-		$result = $dbSql->db_link->runQuery( "SELECT Media.MediaId,Media.Volumename, Media.Lastwritten, Media.VolStatus FROM Media ORDER BY Media.Lastwritten DESC LIMIT 10" );
+		$query  = "SELECT Media.MediaId, Media.Volumename, Media.Lastwritten, Media.VolStatus FROM Media ";
+		$query .= "WHERE Media.Volstatus != 'Disabled' ";
+		$query .= "ORDER BY Media.Lastwritten DESC ";		
+		$query .= "LIMIT 10";
+		$result = $dbSql->db_link->runQuery( $query );
 			
 		foreach( $result->fetchAll() as $volume ) {
 			$query 				  = "SELECT COUNT(*) as jobs_count FROM JobMedia WHERE JobMedia.MediaId = '" . $volume['mediaid'] . "'";
