@@ -146,10 +146,10 @@
 		<tr>
 			<td class="label">Interval</td>
 			<td class="info">
-				<select>
-					<option>Last day
-					<option>Last week
-					<option>Last month
+				<select name="period">
+					<option value="7">Last week
+					<option value="14">Last 2 week
+					<option value="28">Last month
 				</select>
 			</td>
 		</tr>		
