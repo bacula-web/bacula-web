@@ -1,0 +1,58 @@
+== Bacula-Web 5.1.0 ==
+
+This document explain in very short way how to install and configuration Bacula-Web
+
+== Requirements ==
+
+ - Apache web server > version 2.x
+ - PHP > version 5.x
+ - PHP support for
+	- PDO
+	- MySQL, postgreSQL or SQLite (depending on your bacula bacula)
+	- Gettext (optional, used for translations)
+    - TrueType (optional, used for graph)
+    - GD (required for graphs)	
+ 
+!!! PEAR DB is not required anymore !!!
+
+Install all these required packages following your distro documentation
+
+== Download and setup ==
+
+The latest version Bacula-Web is available through the project site's download page
+
+ http://bacula-web.dflc.ch/index.php/download.html
+
+Go to your Apache root's folder and
+ # cd /var/www/html
+
+Create the bacula-web folder
+ # mkdir -v bacula-web
+
+Uncompress bacula-web tarball (assuming that you downloaded in /tmp)
+ # tar -xzvf /tmp/bacula-web.tar.gz -C /var/www/html/bacula-web
+
+Change owner and permissions
+ # chown -Rv apache: /var/www/html/bacula-web 
+
+Give right permissions to template cache folder
+ # chmod -Rv ug+w /var/www/html/bacula-web/templates_c
+ 
+== Configure ==
+
+In the config folder, you'll find a configuration file example (config.php.sample).
+
+ - Open it and adapt the settings to your current database setup
+ - Save this file as config.php and make it readable by the httpd process
+
+== Test the installation ==
+
+Open your favorite browser and go to the address below
+
+ http://youserver/bacula-web/test.php
+
+== Support ==
+
+More help would be available in the project site's support page
+
+ http://bacula-web.dflc.ch/index.php/support.html
