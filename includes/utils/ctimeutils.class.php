@@ -21,15 +21,15 @@ class CTimeUtils {
 		$start = '';
 		$end   = '';
 		
-		if( $start_time == '0000-00-00 00:00:00' )
+		if( $start_time == '0000-00-00 00:00:00' or is_null($start_time) )
 			return 'N/A';
 		else
 			$start = strtotime( $start_time );					
         
-		if( $end_time == '0000-00-00 00:00:00' )
+		if( $end_time == '0000-00-00 00:00:00' or is_null($end_time) )
 			$end = mktime();
 		else
-			$end   = strtotime( $end_time );
+			$end = strtotime( $end_time );
 		
 		$diff = $end - $start;
 
