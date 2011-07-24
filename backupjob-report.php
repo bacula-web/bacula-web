@@ -33,13 +33,14 @@
 	$http_post = CHttpRequest::getRequestVars( $_POST );
 	$http_get  = CHttpRequest::getRequestVars( $_GET );
 	
+	// Backup job name
 	if( isset( $http_post['backupjob_name'] ) )
 		$backupjob_name = $http_post['backupjob_name'];
 	elseif( isset( $http_get['backupjob_name'] ) )
 		$backupjob_name = $http_get['backupjob_name'];
 	else
-		die( "Please specify a backup job name " );
-
+		die( "Please specify a backup job name " );		
+		
 	// Generate Backup Job report period string
 	$backupjob_period = "From " . date( "Y-m-d", (NOW-WEEK) ) . " to " . date( "Y-m-d", NOW );
 
@@ -56,7 +57,7 @@
 	// ===============================================================
 	// Last 7 days stored Bytes graph
 	// ===============================================================  
-	$graph = new CGraph( "graph2.png" );
+	$graph = new CGraph( "graph8.png" );
 
 	foreach( $days as $day ) {
 		$stored_bytes 		 = $dbSql->getStoredBytes( $day['start'], $day['end'], $backupjob_name);
@@ -74,7 +75,7 @@
 	// ===============================================================
 	// Getting last 7 days stored files graph
 	// ===============================================================
-	$graph = new CGraph("graph3.png" );
+	$graph = new CGraph("graph9.png" );
 
 	foreach( $days as $day ) {
 		$stored_files		 = $dbSql->getStoredFiles( $day['start'], $day['end'], $backupjob_name);
@@ -93,7 +94,7 @@
 	$query   .= "FROM Job ";
 	$query   .= "WHERE Name = '$backupjob_name' ";
 	$query   .= "ORDER BY EndTime DESC ";
-	$query   .= "LIMIT 10 ";
+	$query   .= "LIMIT 7 ";
 
 	$jobs		= array();
 	$joblevel = array( 'I' => 'Incr', 'D' => 'Diff', 'F' => 'Full' );
