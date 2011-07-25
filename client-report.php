@@ -48,23 +48,27 @@
 	// Client informations
 	$client	= $dbSql->getClientInfos($clientid);
 	
-	// Client's backup jobs
-	$query  = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
-	$query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
-	$query .= "WHERE Job.ClientId = '$clientid' AND Job.JobStatus = 'T' ";
-    $query .= 'ORDER BY Job.EndTime DESC ';
-	$query .= 'LIMIT 1';
-	
 	try{
-		$jobs_result = $dbSql->db_link->runQuery($query);
-		
-		foreach( $jobs_result->fetchAll() as $job ) {
-			$job['level']    = $job_levels[ $job['level'] ];
-			$job['jobfiles'] = number_format( $job['jobfiles'], 0, '.', "'");
-			$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
+	    $job_names = $dbSql->getJobsName( $clientid );
+	
+		foreach( $job_names as $jobname ) {
+			//Client's backup jobs
+			$query  = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
+			$query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
+			$query .= "WHERE Job.Name = '$jobname' AND Job.JobStatus = 'T' ";
+			$query .= 'ORDER BY Job.EndTime DESC ';
+			$query .= 'LIMIT 1';
 			
-			$backup_jobs[] = $job;
-		}
+			$jobs_result = $dbSql->db_link->runQuery($query);
+
+			foreach( $jobs_result->fetchAll() as $job ) {
+				$job['level']    = $job_levels[ $job['level'] ];
+				$job['jobfiles'] = number_format( $job['jobfiles'], 0, '.', "'");
+				$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
+			
+				$backup_jobs[] = $job;
+			}
+		}		
 	}catch(PDOException $e) {
 		CDBError::raiseError($e);
 	}

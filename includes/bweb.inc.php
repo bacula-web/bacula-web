@@ -326,9 +326,10 @@ class Bweb
 		return $pools;
 	}
 	
-	public function getJobsName()
+	public function getJobsName( $client_id = null )
 	{
 		$query 		= '';
+		
 		$result 	= '';
 		$backupjobs = array();
 		
@@ -336,12 +337,18 @@ class Bweb
 		{
 			case 'sqlite':
 			case 'mysql':
-				$query 		= "SELECT name FROM Job GROUP BY name ORDER BY name";
+				$query 		= "SELECT name FROM Job ";
 			break;
 			case 'pgsql':
-				$query 		= "SELECT name FROM Job GROUP BY name ORDER BY name";
+				$query 		= "SELECT name FROM Job ";
 			break;
 		}
+		
+		if( !is_null($client_id) )
+			$query .= "WHERE clientid = '$client_id' ";
+		
+		$query .= 'GROUP BY name ORDER BY name';
+		
 		try {
 			$result = $this->db_link->runQuery($query);
 			foreach( $result->fetchAll() as $jobname )
