@@ -326,7 +326,7 @@ class Bweb
 		return $pools;
 	}
 	
-	public function Get_BackupJob_Names()
+	public function getJobsName()
 	{
 		$query 		= '';
 		$result 	= '';
