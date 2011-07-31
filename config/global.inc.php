@@ -25,9 +25,6 @@
  require_once( BW_SMARTY . "Smarty.class.php");			
  require_once( BW_PHPLOT . "phplot.php");				
  
- // PEAR-DB classe
- require_once "DB.php";   
- 
  // Internal libraries
  require_once BW_OBJ . "cfg/config.class.php";
  require_once BW_OBJ . "graph/cgraph.class.php";
