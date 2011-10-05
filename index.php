@@ -107,9 +107,11 @@
 	$last_volumes = array();
 	
 	try{
-		$query  = "SELECT Media.MediaId, Media.Volumename, Media.Lastwritten, Media.VolStatus FROM Media ";
+		$query  = "SELECT Media.MediaId, Media.Volumename, Media.Lastwritten, Media.VolStatus, Pool.Name as poolname FROM Media ";
+		$query .= "LEFT JOIN Pool ON Media.PoolId = Pool.poolid ";
 		$query .= "WHERE Media.Volstatus != 'Disabled' ";
-		$query .= "ORDER BY Media.Lastwritten DESC ";		
+		$query .= "AND Media.VolJobs > 0 ";
+		$query .= "ORDER BY Media.Lastwritten ASC ";		
 		$query .= "LIMIT 10";
 		$result = $dbSql->db_link->runQuery( $query );
 			

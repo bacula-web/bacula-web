@@ -45,6 +45,7 @@
 		<tr>
 		  <td class="tbl_header" title="Volume name">Volume</td>
 		  <td class="tbl_header" title="Volume status">Status</td>
+		  <td class="tbl_header" title="Volume pool">Pool</td>
 		  <td class="tbl_header" title="Last written date for this volume">Last written</td>
 		  <td class="tbl_header" title="Number of jobs">Jobs</td>
 		</tr>
@@ -52,6 +53,7 @@
 		<tr>
 		  <td>{$vol.volumename}</td>
 		  <td>{$vol.volstatus}</td>
+		  <td>{$vol.poolname}</td>
 		  <td>{$vol.lastwritten}</td>
 		  <td><b>{$vol.jobs_count}</b></td>
 		</tr>
