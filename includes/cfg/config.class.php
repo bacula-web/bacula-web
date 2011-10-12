@@ -26,23 +26,17 @@
 		$this->config = $config;
 	}
 	
-	public function Check_Config_file()
-	{
-		// Check if config file exist and is readable
-		return is_readable( CONFIG_FILE );
-	}
-	
-	public function Load_Config()
+	public function loadConfig()
 	{
 		global $config;
 		
-		if( $this->Check_Config_file() )
+		if( is_readable( CONFIG_FILE ) )
 			include_once( CONFIG_FILE );
 		else
-			die( "Configuration file not found" );
-		
+			throw new CErrorHandler( "Config file not found or wrong file permissions" );
+			
+		// Loading config file parameters
 		if( is_array($config) && !empty($config) ) {
-			// Loading database connection information
 			foreach( $config as $parameter => $value )
 			{
 				if( is_array($value) )		// Parsing database section
@@ -50,6 +44,7 @@
 			}
 			return true;
 		}else {
+			throw new CErrorHandler( "Missing parameters in the config file" );
 			return false;		
 		}
 	}
