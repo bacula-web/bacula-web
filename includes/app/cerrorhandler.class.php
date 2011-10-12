@@ -15,27 +15,53 @@
 +-------------------------------------------------------------------------+
 */
 
-class CErrorHandler
+class CErrorHandler extends Exception
 {
-        public function __construct()
-        {
-
-        }
-
-	public function SetDebug( $debuglevel )
+	private $header;
+	private $debug;
+	
+	// Define Header
+	public function setHeader( $header )
 	{
-		$this->debug_level = $debuglevel;
-	}	
-
-	public function TriggerError( $type, $string, $file = '', $line = '', $vars = '' )
-	{
-
+		$this->header = $header;
 	}
-
-        public function __destruct()
-        {
-
-        }
+	
+	// Enable debug mode
+	public function setDebug( $debug = true )
+	{
+		$this->debug = $debug;
+	}
+	
+	public function raiseError()
+	{
+		// Display error
+		echo '<h3 style="background-color: #F0F0F0; width: 550px; padding: 5px; font-family: Arial,Verdana;">';
+		
+		if( !empty( $this->header ) )
+			echo $this->header;
+		else
+			echo 'Application error';
+		
+		echo '</h3>';
+		
+		// Show more information if debug mode is enabled
+		echo '<p style="width: 550px; padding: 5px; font-family: Arial,Verdana; font-size: 10pt;">';
+		echo 'Message: ' . $this->getMessage() . '<br />';
+		if( $this->debug ) {
+			echo 'Code: ' . $this->getCode()  . '<br />';	
+			echo 'Line: ' . $this->getLine()  . '<br />';
+			echo 'File: ' . $this->getFile() . '</p>';
+		}
+		
+		// Display footer
+		$footer  = '<p style="font-size: 10pt; background-color: #F0F0F0; width: 550px; padding: 5px; font-family: Arial,Verdana;">';
+		$footer .= 'Tried to run the <a href="test.php">test page</a> ?<br />';
+		$footer .= 'Read the documentation on the <a href="http://bacula-web.dflc.ch" target="_blank">Bacula-Web project site</a> <br />';
+		$footer .= 'Rebort a bug or suggest a new feature in the <a href="http://bacula-web.dflc.ch/bugs" target="_blank">Bacula-Web\'s bugtracking tool</a> <br /> </p>';
+		echo $footer;
+		
+		die();
+	}
 }
 
 ?>
