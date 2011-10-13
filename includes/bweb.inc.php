@@ -29,17 +29,29 @@ class Bweb
 
     function __construct()
 	{             
-		$this->bwcfg = new Config();
-		
 		// Loading configuration from config file
-		$this->bwcfg->Load_Config();
+		try {
+			$this->bwcfg = new Config();
+			
+			if( !$this->bwcfg->loadConfig() ) {
+				throw new CErrorHandler(); 
+			}
+		}catch( CErrorHandler $e ) {
+			$e->raiseError();
+		}
+			
 		$this->catalog_nb = $this->bwcfg->Count_Catalogs();
 		
 		// Initialize smarty template classe
 		$this->init_tpl();
+		
 		// Initialize smarty gettext function
 		$this->init_gettext();
 		
+		// Check if smarty template cache folder is writable by Apache
+		if( !is_writable( "./templates_c" ) )
+			throw new CErrorHandler("The template cache folder must be writable by Apache user");
+			
 		// Check catalog id
 		$http_post = CHttpRequest::getRequestVars($_POST);
 		if( isset( $http_post['catalog_id'] ) ) {
