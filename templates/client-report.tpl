@@ -9,39 +9,39 @@
 {include file=header.tpl}
 
   <div id="nav">
-    <a href="index.php" title="Back to the dashboard">Dashboard</a> > Client report
+    <a href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a> > Client report
   </div>
 
   <div id="main_center">
   
   <div class="box">
-	<p class="title">Client Report</p>
-    <h4>Client informations</h4>	
+	<p class="title">{t}Client Report{/t}</p>
+    <h4>{t}Client informations{/t}</h4>	
     <table width="300px">
 	  <tr>
-		<td width="100px" class="label">Client name:</td> <td>{$client_name}</td>
+		<td width="100px" class="label">{t}Client name{/t}:</td> <td>{$client_name}</td>
 	  </tr>
 	  <tr>
-		<td class="label">Client version:</td> <td>{$client_version}</td>
+		<td class="label">{t}Client version{/t}:</td> <td>{$client_version}</td>
 	  </tr>
 	  <tr>
-		<td class="label">Client os:</td> <td>{$client_os}</td>
+		<td class="label">{t}Client os{/t}:</td> <td>{$client_os}</td>
 	  </tr>
 	  <tr>
-		<td class="label">Client arch:</td> <td>{$client_arch}</td>
+		<td class="label">{t}Client arch{/t}:</td> <td>{$client_arch}</td>
 	  </tr>
     </table>
 	
 	<h4>Last good backup job</h4>
 	<table>
 		<tr>
-			<td class="tbl_header">Name</td>
-			<td class="tbl_header">Jod Id</td>
-			<td class="tbl_header">Level</td>
-			<td class="tbl_header">End time</td>
-			<td class="tbl_header">Bytes</td>
-			<td class="tbl_header">Files</td>
-			<td class="tbl_header">Status</td>
+			<td class="tbl_header">{t}Name{/t}</td>
+			<td class="tbl_header">{t}Jod Id{/t}</td>
+			<td class="tbl_header">{t}Level{/t}</td>
+			<td class="tbl_header">{t}End time{/t}</td>
+			<td class="tbl_header">{t}Bytes{/t}</td>
+			<td class="tbl_header">{t}Files{/t}</td>
+			<td class="tbl_header">{t}Status{/t}</td>
 		</tr>
 		{foreach from=$backup_jobs item=job}
 		<tr>

@@ -13,17 +13,17 @@
   <!-- Pools and Volumes Status -->
   <div class="box">
 	<p class="title">
-	Pools and volumes status	
+	{t}Pools and volumes status{/t}
 	</p>
 	<img class="graph" src="{$graph_pools}" alt="" />
 	<div class="footer">
-		<a href="pools.php" title="Show pools and volumes report">{t}View report{/t}</a>
+		<a href="pools.php" title="{t}Show pools and volumes report{/t}">{t}View report{/t}</a>
 	</div>
   </div> <!-- end div box -->
   
   <!-- Stored Bytes for last 7 days -->
   <div class="box">
-	<p class="title" title="Stored bytes for last 7 days (GB)">Stored bytes</p>
+	<p class="title" title="{t}Stored bytes for last 7 days (GB){/t}">{t}Stored bytes{/t}</p>
 	  <img class="graph" src="{$graph_stored_bytes}" alt="" />
   </div> <!-- end div box -->
 
@@ -32,15 +32,15 @@
 <div id="main_middle">
   <!-- Last 24 hours jobs status -->
   <div class="box">
-	<p class="title" title="Last 24 hours jobs status">Jobs status</p>
+	<p class="title" title="{t}Last 24 hours jobs status{/t}">Jobs status</p>
 	  <img class="graph" src="{$graph_jobs}" alt="" />
 	<div class="footer">
-		<a href="jobs.php" title="Show last 24 hours jobs status">View report</a>
+		<a href="jobs.php" title="{t}Show last 24 hours jobs status{/t}">{t}View report{/t}</a>
 	</div>
   </div> <!-- end div box -->
   
   <div class="box" border=1>
-	<p class="title">Last used volumes</p>
+	<p class="title">{t}Last used volumes{/t}</p>
 	  <table>
 		<tr>
 		  <td class="tbl_header" title="Volume name">Volume</td>
@@ -66,7 +66,7 @@
 <div id="main_right">
   <!-- General information -->
   <div class="box">
-	<p class="title">Overall status</p>
+	<p class="title">{t}Overall status{/t}</p>
 	<table>
 	  <tr>
 	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clientes_totales}</td>
@@ -85,18 +85,18 @@
 
   <!-- Last 24 hours job Status -->
   <div class="box">
-	<p class="title">Last 24 hours status</p>
+	<p class="title">{t}Last 24 hours status{/t}</p>
 		<table>
 			<tr>
-				<td class="label">Failed jobs</td> 
+				<td class="label">{t}Failed jobs{/t}</td> 
 				<td class="info">{$failed_jobs}</td>
 			</tr>
 			<tr>
-				<td class="label">Completed jobs</td> 
+				<td class="label">{t}Completed jobs{/t}</td> 
 				<td class="info">{$completed_jobs}</td>
 			</tr> 
 			<tr>
-				<td class="label">Waiting jobs</td> 
+				<td class="label">{t}Waiting jobs{/t}</td> 
 				<td class="info">{$waiting_jobs}</td>
 			</tr> 
 			<tr>
@@ -104,23 +104,23 @@
 				<td class="info">{$incr_jobs} / {$diff_jobs} / {$full_jobs}</td>
 			</tr>
 			<tr>
-				<td class="label">Transferred Bytes</td> 
+				<td class="label">{t}Transferred Bytes{/t}</td> 
 				<td class="info">{$bytes_last}</td>
 			</tr>
 			<tr>
-				<td class="label">Transferred Files</td> 
+				<td class="label">{t}Transferred Files{/t}</td> 
 				<td class="info">{$files_last}</td>
 			</tr>
 		</table>
   </div> <!-- end div box -->   
   
 <div class="box">
-	<p class="title">Reports</p>
+	<p class="title">{t}Reports{/t}</p>
  <!-- Custom report -->
  <form method="post" action="client-report.php">
 	<table>
 		<tr>
-			<td class="label">Client</td>
+			<td class="label">{t}Client{/t}</td>
 			<td class="info">
 				{html_options name=client_id options=$clients_list"}
 			</td>
@@ -146,12 +146,12 @@
 		</tr>
 		-->
 		<tr>
-			<td class="label">Interval</td>
+			<td class="label">{t}Interval{/t}</td>
 			<td class="info">
 				<select name="period">
-					<option value="7">Last week
-					<option value="14">Last 2 week
-					<option value="28">Last month
+					<option value="7">{t}Last week{/t}
+					<option value="14">{t}Last 2 week{/t}
+					<option value="28">{t}Last month{/t}
 				</select>
 			</td>
 		</tr>		
@@ -168,7 +168,7 @@
  <form method="post" action="backupjob-report.php">
    <table>
 	 <tr>
-		<td class="label">Job name</td>
+		<td class="label">{t}Backup job name{/t}</td>
 		<td class="info">
 	     <input type=hidden name="default" value="1"> 				
 		   <select name=backupjob_name>

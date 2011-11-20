@@ -19,7 +19,7 @@
 	<p class="title">{$pool_name}</p>
 	<table class="list" border="0">
 		<tr>
-			<td class="tbl_header" width="120">Name</td>
+			<td class="tbl_header" width="120">{t}Volume name{/t}</td>
 			<td class="tbl_header" width="120">{t}Bytes{/t}</td>
 			<td class="tbl_header" width="120">{t}Media Type{/t}</td>
 			<td class="tbl_header" width="140">{t}Expire{/t}</td>
@@ -42,7 +42,7 @@
 			{foreachelse}
 			<tr>
 				<td colspan="6" style="text-align: center; font-weight: bold; font-size: 8pt; padding: 1em;">
-					No volume(s) in this pool
+					{t}No volume(s) in this pool{/t}
 				</td>
 			</tr>
 			{/foreach}

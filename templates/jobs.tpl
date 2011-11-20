@@ -9,14 +9,14 @@
 {include file=header.tpl}
 
   <div id="nav">
-    <a href="index.php" title="Back to the dashboard">Dashboard</a> > Jobs list
+    <a href="index.php" title="{t}Back to the dashboard{/t}">Dashboard</a> > Jobs list
   </div>
 
   <div id="main_center">
   
   <!-- Last jobs -->  
   <div class="box">
-	<p class="title">Jobs report</p>
+	<p class="title">{t}Jobs report{/t}</p>
 	<!-- Filter jobs -->
 	<h4>Filter jobs</h4>
 	<form action="jobs.php" method="post">
@@ -26,11 +26,11 @@
 			{$total_jobs} jobs found
 		</td>
 		<td class="info" colspan="5" width="160">
-			Jobs / Page
+			{t}Jobs / Page{/t}
 			{html_options name=jobs_per_page options=$jobs_per_page selected=$jobs_per_page_selected onChange="submit();"}
 		</td>
 		<td class="info" width="160">
-			Job status
+			{t}Job status{/t}
 			{html_options name=status values=$job_status options=$job_status selected=$job_status_filter onChange="submit();"}
 		</td>
 	  </tr>
@@ -40,17 +40,17 @@
 	<h4>Jobs result</h4>
 	<table border="0">
 	  <tr>
-		<td class="tbl_header">Status</td>
-		<td class="tbl_header">Job ID</td>
-		<td class="tbl_header">Name</td>
-		<td class="tbl_header">Type</td>
-		<td class="tbl_header">Start Time</td>
-		<td class="tbl_header">End Time</td>
-		<td class="tbl_header">Elapsed time</td>
-		<td class="tbl_header">Level</td>
-		<td class="tbl_header">Bytes</td>
-		<td class="tbl_header">Files</td>
-		<td class="tbl_header">Pool</td>
+		<td class="tbl_header">{t}Status{/t}</td>
+		<td class="tbl_header">{t}Job ID{/t}</td>
+		<td class="tbl_header">{t}Name{/t}</td>
+		<td class="tbl_header">{t}Type{/t}</td>
+		<td class="tbl_header">{t}Start Time{/t}</td>
+		<td class="tbl_header">{t}End Time{/t}</td>
+		<td class="tbl_header">{t}Elapsed time{/t}</td>
+		<td class="tbl_header">{t}Level{/t}</td>
+		<td class="tbl_header">{t}Bytes{/t}</td>
+		<td class="tbl_header">{t}Files{/t}</td>
+		<td class="tbl_header">{t}Pool{/t}</td>
 	  </tr>
 	<!-- <div class="listbox"> -->
 	  {foreach from=$last_jobs item=job}

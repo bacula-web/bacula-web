@@ -9,29 +9,29 @@
 {include file=header.tpl}
 
   <div id="nav">
-    <a href="index.php" title="Back to the dashboard">Dashboard</a> > Backup Job Report
+    <a href="index.php" title="{t}Back to the dashboard{/t}">Dashboard</a> > Backup Job Report
   </div>
 
   <div id="main_center">
   
   <div class="box">
-	<p class="title">Backup Job Report</p>
+	<p class="title">{t}Backup Job Report{/t}</p>
 	
 	<table>
 		<tr>
-			<td width="150">Backup Job name:</td>
+			<td width="150">{t}Backup Job name{/t}:</td>
 			<td>{$backupjob_name}</td>
 		</tr>
 		<tr>
-			<td>Period:</td>
+			<td>{t}Period{/t}:</td>
 			<td>{$backupjob_period}</td>
 		</tr>
 		<tr>
-			<td>Transfered Bytes</td>
+			<td>{t}Transfered Bytes{/t}</td>
 			<td>{$backupjob_bytes}</td>
 		</tr>
 		<tr>
-			<td>Transfered Files</td>
+			<td>{t}Transfered Files{/t}</td>
 			<td>{$backupjob_files}</td>
 		</tr>
 
@@ -40,17 +40,17 @@
   
   <!-- Last jobs list -->
   <div class="box">
-	<p class="title">Last jobs</p>
+	<p class="title">{t}Last jobs{/t}</p>
 	
 	<table>
 		<tr>
-			<td class="tbl_header" width="60">Job Id</td>
-			<td class="tbl_header" width="60">Level</td>
-			<td class="tbl_header" width="70">Files</td>
-			<td class="tbl_header" width="70">Bytes</td>
-			<td class="tbl_header" width="80">Start time</td>
-			<td class="tbl_header" width="80">End time</td>
-			<td class="tbl_header" width="80">Elapsed time</td>
+			<td class="tbl_header" width="60">{t}Job Id{/t}</td>
+			<td class="tbl_header" width="60">{t}Level{/t}</td>
+			<td class="tbl_header" width="70">{t}Files{/t}</td>
+			<td class="tbl_header" width="70">{t}Bytes{/t}</td>
+			<td class="tbl_header" width="80">{t}Start time{/t}</td>
+			<td class="tbl_header" width="80">{t}End time{/t}</td>
+			<td class="tbl_header" width="80">{t}Elapsed time{/t}</td>
 		</tr>
 		{foreach from=$jobs item=job}
 		<tr>
@@ -68,7 +68,7 @@
   
   <!-- Transfered Bytes/Files graph -->
   <div class="box">
-	<p class="title">Transfered Bytes / Files</p>
+	<p class="title">{t}Transfered Bytes / Files{/t}</p>
 	<img class="graph" src="{$graph_stored_bytes}" alt="" />
 	<img class="graph" src="{$graph_stored_files}" alt="" />
   </div> <!-- end div class=box -->
