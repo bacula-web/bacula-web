@@ -51,8 +51,12 @@
 	
 	public function Get_Config_Param( $param )
 	{
+		global $config;
+				
 		if( isset( $config[$param] ) )
 			return $config[$param];
+		else
+			return false;
 	}
 	
 	public function Get_Catalogs()
