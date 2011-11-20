@@ -1,18 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Bacula-Web translation file
+# Copyright (C) 2010-2011 - Davide Franco 
+# This file is distributed under the same license as the Bacula-Web package.
+# Davide Franco <bacula-dev@dflc.ch>, 2011.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Bacula-Web 5.2\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-06-11 13:02+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2011-11-20 13:02+ZONE\n"
+"Last-Translator: Davide Franco <bacula-dev@dflc.ch>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: lang.c:1 lang.c:2
 msgid "Bytes transferred last 30 days from ALL clients"
