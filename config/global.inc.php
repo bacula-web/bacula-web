@@ -25,19 +25,32 @@
  require_once( BW_SMARTY . "Smarty.class.php");			
  require_once( BW_PHPLOT . "phplot.php");				
  
- // Internal libraries
- require_once BW_OBJ . "cfg/config.class.php";
- require_once BW_OBJ . "graph/cgraph.class.php";
+ // Main application
  require_once BW_OBJ . "bweb.inc.php";
  
+ // Configuration 
+ require_once BW_OBJ . "cfg/config.class.php";
+ 
+ // Graph
+ require_once BW_OBJ . "graph/cgraph.class.php";
+  
+ // Utils
  require_once BW_OBJ . "utils/cutils.class.php";
  require_once BW_OBJ . "utils/ctimeutils.class.php";
+ 
+ // Http request controler
  require_once BW_OBJ . "utils/chttprequest.class.php";
  
+ // Exception handler
  require_once BW_OBJ . "app/cerrorhandler.class.php";
+ 
+ // Database abstraction
  require_once BW_OBJ . "db/cdb.class.php";
  require_once BW_OBJ . "db/cdbresult.class.php";
  require_once BW_OBJ . "db/cdberror.class.php";
+ 
+ // I18n (Internationalization)
+ require_once BW_OBJ . "i18n/ctranslation.class.php";
  
  // Global constants
  define('CONFIG_DIR', BW_ROOT . "/config/");
