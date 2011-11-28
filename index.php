@@ -111,8 +111,10 @@
 		$query .= "LEFT JOIN Pool ON Media.PoolId = Pool.poolid ";
 		$query .= "WHERE Media.Volstatus != 'Disabled' ";
 		$query .= "AND Media.VolJobs > 0 ";
-		$query .= "ORDER BY Media.Lastwritten ASC ";		
+		$query .= "ORDER BY Media.Lastwritten DESC ";		
 		$query .= "LIMIT 10";
+		
+		// Run the query
 		$result = $dbSql->db_link->runQuery( $query );
 			
 		foreach( $result->fetchAll() as $volume ) {
