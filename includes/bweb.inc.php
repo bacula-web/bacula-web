@@ -107,7 +107,11 @@ class Bweb
 			require_once( BW_SMARTY_GETTEXT . "smarty_gettext.php" );     
 			$this->tpl->register_block('t','smarty_translate');
         
-			$language = $this->bwcfg->Get_Config_Param("lang");
+			// Get configured language in config file
+			$language = $this->bwcfg->Get_Config_Param("language");
+			if( !$language )
+				throw new CErrorHandler("Configured language not found, please check config file");
+
 			$domain = "messages";   
 			putenv("LANG=$language"); 
 			setlocale(LC_ALL, $language);
