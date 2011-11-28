@@ -18,7 +18,11 @@
 	session_start();
 	include_once( 'config/global.inc.php' );
 
-	$dbSql 				= new Bweb();
+	try{
+		$dbSql = new Bweb();
+	}catch( CErrorHandler $e  ) {
+		$e->raiseError();
+    }
 	
 
 	// Stored files number 
