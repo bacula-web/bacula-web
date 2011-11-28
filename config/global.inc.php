@@ -22,16 +22,19 @@
  define( 'BW_SMARTY', BW_EXTERNAL . '/smarty/libs/' );				
  define( 'BW_SMARTY_GETTEXT', BW_EXTERNAL . '/smarty_gettext-0.9/' );
  
- require_once( BW_SMARTY . "Smarty.class.php");			
- require_once( BW_PHPLOT . "phplot.php");				
  
  // Main application
  require_once BW_OBJ . "bweb.inc.php";
+ 
+ // Template engine
+ require_once( BW_SMARTY . "Smarty.class.php");			
+ require_once( BW_SMARTY_GETTEXT . "smarty_gettext.php" );		
  
  // Configuration 
  require_once BW_OBJ . "cfg/config.class.php";
  
  // Graph
+ require_once( BW_PHPLOT . "phplot.php");
  require_once BW_OBJ . "graph/cgraph.class.php";
   
  // Utils
