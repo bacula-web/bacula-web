@@ -20,9 +20,27 @@ class CTranslation {
 	private $charset;
 	private $locale_path;
 	private $lang_file;
-	
-	function __construct() {
-	
+	private $domaine;
+
+	function __construct( $lang = 'en_EN') {
+		$this->language = $lang;
+		$this->charset = 'UTF-8';
+		$this->domaine = 'messages';
+		$this->locale_path = BW_ROOT . '/locale';
+	}
+
+	function set_Language( &$template ) {
+		// Template engine block registration
+		$template->register_block('t','smarty_translate');
+
+		// Setting up language
+		putenv("LANGUAGE=" . $this->language . '.' . $this->charset );
+		putenv("LANG=" . $this->language . '.' . $this->charset );
+		setlocale(LC_ALL, $this->language . '.' . $this->charset );
+
+		bindtextdomain( $this->domaine, $this->locale_path );
+		bind_textdomain_codeset( $this->domaine, $this->charset );
+		textdomain( $this->domaine );
 	}
 }
 ?>
