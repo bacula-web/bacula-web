@@ -17,7 +17,9 @@
 */
 class Bweb
 {
-	public  $tpl;
+	public  $tpl;							// Template class
+	private	$translate;						// Translation class instance
+	
 	public  $db_link;						// Database link
 	
 	private $config_file;					// Config filename
@@ -42,16 +44,21 @@ class Bweb
 			
 		$this->catalog_nb = $this->bwcfg->Count_Catalogs();
 		
-		// Initialize smarty template classe
+		// Template engine initalization
 		$this->init_tpl();
 		
-		// Initialize smarty gettext function
-		$this->init_gettext();
-		
-		// Check if smarty template cache folder is writable by Apache
+		// Checking template cache permissions
 		if( !is_writable( "./templates_c" ) )
 			throw new CErrorHandler("The template cache folder must be writable by Apache user");
 			
+		// Initialize smarty gettext function
+		$language  = $this->bwcfg->Get_Config_Param( 'language' );
+		if( !$language )
+			throw new CErrorHandler("Language translation problem");
+			
+		$translate = new CTranslation( $language );
+		$translate->set_Language( $this->tpl );
+		
 		// Check catalog id
 		$http_post = CHttpRequest::getRequestVars($_POST);
 		if( isset( $http_post['catalog_id'] ) ) {
@@ -97,33 +104,6 @@ class Bweb
 
 		$this->tpl->template_dir 	= "./templates";
 		$this->tpl->compile_dir 	= "./templates_c";
-	}
-	
-	private function init_gettext()
-	{
-		global $smarty_gettext_path;
-		
-		if ( function_exists("gettext") ) {
-			require_once( BW_SMARTY_GETTEXT . "smarty_gettext.php" );     
-			$this->tpl->register_block('t','smarty_translate');
-        
-			// Get configured language in config file
-			$language = $this->bwcfg->Get_Config_Param("language");
-			if( !$language )
-				throw new CErrorHandler("Configured language not found, please check config file");
-
-			$domain = "messages";   
-			putenv("LANG=$language"); 
-			setlocale(LC_ALL, $language);
-			bindtextdomain($domain,"./locale");
-			textdomain($domain);
-		}
-		else {
-			function smarty_translate($params, $text, &$smarty) {
-                return $text;
-			}
-			$smarty->register_block('t','smarty_translate');
-		}
 	}
 	
 	public function getDatabaseSize() 
