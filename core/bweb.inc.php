@@ -29,13 +29,10 @@ class Bweb
 
     function __construct()
 	{             
-		// Loading configuration from config file
+		// Loading configuration file parameters
 		try {
 			$this->bwcfg = new Config();
-			
-			if( !$this->bwcfg->loadConfig() ) {
-				throw new CErrorHandler(); 
-			}
+			$this->bwcfg->loadConfig();
 		}catch( CErrorHandler $e ) {
 			$e->raiseError();
 		}

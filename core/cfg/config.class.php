@@ -32,20 +32,27 @@
 		
 		if( is_readable( CONFIG_FILE ) )
 			include_once( CONFIG_FILE );
-		else
-			throw new CErrorHandler( "Config file not found or wrong file permissions" );
+		else {
+			throw new CErrorHandler( "Config file not found or bad file permissions" );
+			return;
+		}
+		
+		// Checking options and database parameters
+		if( !array_key_exists('0', $config ) ) {
+			throw new CErrorHandler( "At least one catalog should be defined in the configuration" );
+			return;
+		}
 			
-		// Loading config file parameters
+		// Loading catalog(s) parameter(s)
 		if( is_array($config) && !empty($config) ) {
 			foreach( $config as $parameter => $value )
 			{
 				if( is_array($value) )		// Parsing database section
 					array_push( $this->catalogs, $value );
 			}
-			return true;
 		}else {
 			throw new CErrorHandler( "Missing parameters in the config file" );
-			return false;		
+			return;
 		}
 	}
 	
@@ -101,13 +108,7 @@
 	public function getPwd( $catalog_id )
 	{
 		return $this->catalogs[$catalog_id]['password'];
-	}
-	
-	function __destruct()
-	{
-		
-	}
-	
- } // end classe BW_Config
+	}	
+ } // end class Config
  
 ?>
