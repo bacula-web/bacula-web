@@ -49,7 +49,7 @@
 		}
 	}
 	
-	public function Get_Config_Param( $param )
+	public function get_Config_param( $param )
 	{
 		global $config;
 				

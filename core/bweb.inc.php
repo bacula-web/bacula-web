@@ -50,7 +50,7 @@ class Bweb
 			throw new CErrorHandler("The template cache folder must be writable by Apache user");
 			
 		// Initialize smarty gettext function
-		$language  = $this->bwcfg->Get_Config_Param( 'language' );
+		$language  = $this->bwcfg->get_Config_param( 'language' );
 		if( !$language )
 			throw new CErrorHandler("Language translation problem");
 			
