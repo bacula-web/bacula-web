@@ -3,251 +3,391 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Bacula-Web 1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 16:30+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2011-11-16 21:46+0100\n"
+"PO-Revision-Date: 2011-11-29 HO:MI+ZONE\n"
 "Last-Translator: Daniele Eccher <daniele.eccher@sociale.it>\n"
 "Language-Team: ITALIAN <IT@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lang.c:1 lang.c:2
-msgid "Bytes transferred last 30 days from ALL clients"
-msgstr "Bytes trasferiti negli ultimi 30 giorni da tutti i client"
+#: lang.c:1 lang.c:35 lang.c:50 lang.c:65
+msgid "Back to the dashboard"
+msgstr ""
+
+#: lang.c:2
+msgid "Required components"
+msgstr ""
 
 #: lang.c:3
-msgid "GENERAL DATA"
-msgstr "DATI GENERALI"
+msgid "Graph system capabilities (Bacula-web only use PNG image format)"
+msgstr ""
 
 #: lang.c:4
-msgid "Total clients:"
-msgstr "Numero dei Client Totali"
+msgid "Pools and volumes status"
+msgstr ""
 
 #: lang.c:5
-msgid "Total bytes stored"
-msgstr "Totale dei bytes salvati"
+msgid "Show pools and volumes report"
+msgstr ""
 
-#: lang.c:6
-msgid "Total files:"
-msgstr "Numero dei File Totali"
+#: lang.c:6 lang.c:11 lang.c:34
+msgid "View report"
+msgstr "Report dettagliato"
 
 #: lang.c:7
+msgid "Stored bytes for last 7 days (GB)"
+msgstr ""
+
+#: lang.c:8
+msgid "Stored bytes"
+msgstr "Bytes trasferiti"
+
+#: lang.c:9
+msgid "Last 24 hours jobs status"
+msgstr ""
+
+#: lang.c:10
+msgid "Show last 24 hours jobs status"
+msgstr ""
+
+#: lang.c:12
+msgid "Last used volumes"
+msgstr ""
+
+#: lang.c:13
+msgid "Overall status"
+msgstr ""
+
+#: lang.c:14
+msgid "Clients"
+msgstr ""
+
+#: lang.c:15
+msgid "Total bytes"
+msgstr "Totale dei bytes salvati"
+
+#: lang.c:16
+msgid "Total files"
+msgstr "Files totali"
+
+#: lang.c:17
 msgid "Database size"
 msgstr "Dimensione Database"
 
-#: lang.c:8
-msgid "Last month, bytes transferred"
-msgstr "Bytes trasferiti nell'ultimo mese"
-
-#: lang.c:9
-msgid "Last month, bytes transferred (pie)"
-msgstr "Bytes trasferiti nell'ultimo mese (pie)"
-
-#: lang.c:10
-msgid "Select"
-msgstr "Seleziona"
-
-#: lang.c:11
-msgid "General%20report"
-msgstr "Report%20Generali"
-
-#: lang.c:12
-msgid "Status from last 24h"
-msgstr "Stato delle ultime 24 ore"
-
-#: lang.c:13
-msgid "Errors:"
-msgstr "Errori"
-
-#: lang.c:14
-msgid "Terminated Jobs:"
-msgstr "Lavori Terminati"
-
-#: lang.c:15
-msgid "Total time spent to do backup:"
-msgstr "Tempo totale di backup"
-
-#: lang.c:16
-msgid "Bytes transferred last 24h"
-msgstr "Bytes trasferiti nelle ultime 24 ore"
-
-#: lang.c:17
-msgid "Show details"
-msgstr "Mostra dettagli"
-
 #: lang.c:18
-msgid "Jobs with errors"
-msgstr "Jobs con errori"
+msgid "Last 24 hours status"
+msgstr ""
 
 #: lang.c:19
-msgid "Name"
-msgstr "Nome"
+msgid "Failed jobs"
+msgstr ""
 
 #: lang.c:20
-msgid "EndTime"
-msgstr "Terminato"
+msgid "Completed jobs"
+msgstr ""
 
 #: lang.c:21
-msgid "JobStatus"
-msgstr "Stato Job"
+msgid "Waiting jobs"
+msgstr ""
 
-#: lang.c:22
-msgid "Detailed report"
-msgstr "Report dettagliato"
+#: lang.c:22 lang.c:26
+msgid "Transferred Bytes"
+msgstr "Bytes trasferiti"
 
-#: lang.c:23 lang.c:45
-msgid "Select a job:"
-msgstr "Seleziona un Job"
+#: lang.c:23
+msgid "Transferred Files"
+msgstr "Bytes trasferiti"
 
 #: lang.c:24
-msgid "go"
-msgstr "vai"
+msgid "Reports"
+msgstr "Rapporti"
 
 #: lang.c:25
-msgid "Elapsed time"
-msgstr "Tempo trascorso"
-
-#: lang.c:26
 msgid "Client"
 msgstr "Client"
 
 #: lang.c:27
-msgid "Start Time"
-msgstr "Avviato"
+msgid "Transferred Files "
+msgstr "Bytes trasferiti"
 
 #: lang.c:28
-msgid "End Time"
-msgstr "Terminato"
+msgid "Interval"
+msgstr ""
 
 #: lang.c:29
-msgid "Type"
-msgstr "Tipo"
+msgid "Last week"
+msgstr ""
 
 #: lang.c:30
-msgid "Pool"
-msgstr "Pool"
+msgid "Last 2 week"
+msgstr ""
 
-#: lang.c:31 lang.c:43
-msgid "Status"
-msgstr "Stato"
+#: lang.c:31
+msgid "Last month"
+msgstr ""
 
 #: lang.c:32
-msgid "Stats Bacula: Job"
-msgstr "Statistiche Bacula : Job"
+msgid "Backup Job report"
+msgstr ""
 
 #: lang.c:33
-msgid "Job:"
-msgstr "Job:"
-
-#: lang.c:34
-msgid "Period: From"
-msgstr "Periodo : Da"
-
-#: lang.c:35
-msgid "to"
-msgstr "a"
+msgid "Backup job name"
+msgstr ""
 
 #: lang.c:36
-msgid "Bytes transferred in the period:"
-msgstr "Bytes transferiti nel periodo:"
+msgid "Backup Job Report"
+msgstr ""
 
 #: lang.c:37
-msgid "Files transferred in the period:"
-msgstr "File trasferiti nel periodo"
+msgid "Backup Job name"
+msgstr ""
 
 #: lang.c:38
-msgid "JobID"
-msgstr "JobID"
+msgid "Period"
+msgstr "Periodo"
 
 #: lang.c:39
-msgid "Date"
-msgstr "Data"
+msgid "Transfered Bytes"
+msgstr "Bytes trasferiti"
 
 #: lang.c:40
-msgid "Elapsed"
-msgstr "Trascorso"
+msgid "Transfered Files"
+msgstr "Bytes trasferiti"
 
 #: lang.c:41
+msgid "Last jobs"
+msgstr ""
+
+#: lang.c:42
+msgid "Job Id"
+msgstr ""
+
+#: lang.c:43 lang.c:60 lang.c:76
 msgid "Level"
 msgstr "Livello"
 
-#: lang.c:42
+#: lang.c:44 lang.c:63 lang.c:78
+msgid "Files"
+msgstr "Linee"
+
+#: lang.c:45 lang.c:62 lang.c:77 lang.c:81
 msgid "Bytes"
 msgstr "Bytes"
 
-#: lang.c:44
-msgid "SELECT NEW REPORT"
-msgstr "SELEZIONA UN NUOVO REPORT"
-
 #: lang.c:46
-msgid "Graph mode:"
-msgstr "Modalita grafico:"
+msgid "Start time"
+msgstr "Avviato"
 
-#: lang.c:47
-msgid "lines"
-msgstr "Linee"
+#: lang.c:47 lang.c:61
+msgid "End time"
+msgstr "Terminato"
 
-#: lang.c:48
-msgid "linepoints"
-msgstr "punti linea"
+#: lang.c:48 lang.c:75
+msgid "Elapsed time"
+msgstr "Tempo trascorso"
 
 #: lang.c:49
-msgid "points"
-msgstr "punti"
-
-#: lang.c:50
-msgid "bars"
-msgstr "barre"
-
-#: lang.c:51
-msgid "area"
-msgstr "area"
-
-#: lang.c:52
-msgid "Data to show:"
-msgstr "Data da mostrare:"
-
-#: lang.c:53
-msgid "Transferred bytes"
+msgid "Transfered Bytes / Files"
 msgstr "Bytes trasferiti"
 
-#: lang.c:54
-msgid "Start period:"
-msgstr "Avviato il:"
+#: lang.c:51
+msgid "Dashboard"
+msgstr ""
 
-#: lang.c:55
-msgid "End period:"
-msgstr "Terminato il:"
-
-#: lang.c:56
-msgid "Create report"
+#: lang.c:52
+msgid "Client Report"
 msgstr "Crea report"
 
-#: lang.c:57
-msgid "Volume Name"
-msgstr "Nome Volume"
+#: lang.c:53
+msgid "Client informations"
+msgstr ""
 
-#: lang.c:58
-msgid "Volume Bytes"
-msgstr "Quantita Bytes "
+#: lang.c:54
+msgid "Client name"
+msgstr "Nome del cliente"
+
+#: lang.c:55
+msgid "Client version"
+msgstr "Versione del cliente"
+
+#: lang.c:56
+msgid "Client os"
+msgstr "Systema del cliente"
+
+#: lang.c:57
+msgid "Client arch"
+msgstr ""
+
+#: lang.c:58 lang.c:71
+msgid "Name"
+msgstr "Nome"
 
 #: lang.c:59
+msgid "Jod Id"
+msgstr ""
+
+#: lang.c:64 lang.c:69 lang.c:85
+msgid "Status"
+msgstr "Stato"
+
+#: lang.c:66
+msgid "Jobs report"
+msgstr ""
+
+#: lang.c:67
+msgid "Jobs / Page"
+msgstr ""
+
+#: lang.c:68
+msgid "Job status"
+msgstr "Stato Job"
+
+#: lang.c:70
+msgid "Job ID"
+msgstr "JobID"
+
+#: lang.c:72
+msgid "Type"
+msgstr "Tipo"
+
+#: lang.c:73
+msgid "Start Time"
+msgstr "Avviato"
+
+#: lang.c:74
+msgid "End Time"
+msgstr "Terminato"
+
+#: lang.c:79
+msgid "Pool"
+msgstr "Pool"
+
+#: lang.c:80
+msgid "Volume name"
+msgstr "Nome volume"
+
+#: lang.c:82
 msgid "Media Type"
 msgstr "Tipo di supporto"
 
-#: lang.c:60
-msgid "When expire?"
-msgstr "Quando scade?"
+#: lang.c:83
+msgid "Expire"
+msgstr ""
 
-#: lang.c:61
-msgid "Last Written"
+#: lang.c:84
+msgid "Last written"
 msgstr "Ultima modifica"
 
-#: lang.c:62
-msgid "Volume Status"
-msgstr "Stato del Volume"
+#: lang.c:86
+msgid "No volume(s) in this pool"
+msgstr ""
+
+#~ msgid "Bytes transferred last 30 days from ALL clients"
+#~ msgstr "Bytes trasferiti negli ultimi 30 giorni da tutti i client"
+
+#~ msgid "GENERAL DATA"
+#~ msgstr "DATI GENERALI"
+
+#~ msgid "Total clients:"
+#~ msgstr "Numero dei Client Totali"
+
+#~ msgid "Last month, bytes transferred"
+#~ msgstr "Bytes trasferiti nell'ultimo mese"
+
+#~ msgid "Last month, bytes transferred (pie)"
+#~ msgstr "Bytes trasferiti nell'ultimo mese (pie)"
+
+#~ msgid "Select"
+#~ msgstr "Seleziona"
+
+#~ msgid "General%20report"
+#~ msgstr "Report%20Generali"
+
+#~ msgid "Status from last 24h"
+#~ msgstr "Stato delle ultime 24 ore"
+
+#~ msgid "Errors:"
+#~ msgstr "Errori"
+
+#~ msgid "Terminated Jobs:"
+#~ msgstr "Lavori Terminati"
+
+#~ msgid "Total time spent to do backup:"
+#~ msgstr "Tempo totale di backup"
+
+#~ msgid "Bytes transferred last 24h"
+#~ msgstr "Bytes trasferiti nelle ultime 24 ore"
+
+#~ msgid "Show details"
+#~ msgstr "Mostra dettagli"
+
+#~ msgid "Jobs with errors"
+#~ msgstr "Jobs con errori"
+
+#~ msgid "EndTime"
+#~ msgstr "Terminato"
+
+#~ msgid "Select a job:"
+#~ msgstr "Seleziona un Job"
+
+#~ msgid "go"
+#~ msgstr "vai"
+
+#~ msgid "Stats Bacula: Job"
+#~ msgstr "Statistiche Bacula : Job"
+
+#~ msgid "Job:"
+#~ msgstr "Job:"
+
+#~ msgid "to"
+#~ msgstr "a"
+
+#~ msgid "Bytes transferred in the period:"
+#~ msgstr "Bytes transferiti nel periodo:"
+
+#~ msgid "Files transferred in the period:"
+#~ msgstr "File trasferiti nel periodo"
+
+#~ msgid "Date"
+#~ msgstr "Data"
+
+#~ msgid "Elapsed"
+#~ msgstr "Trascorso"
+
+#~ msgid "SELECT NEW REPORT"
+#~ msgstr "SELEZIONA UN NUOVO REPORT"
+
+#~ msgid "Graph mode:"
+#~ msgstr "Modalita grafico:"
+
+#~ msgid "linepoints"
+#~ msgstr "punti linea"
+
+#~ msgid "bars"
+#~ msgstr "barre"
+
+#~ msgid "area"
+#~ msgstr "area"
+
+#~ msgid "Data to show:"
+#~ msgstr "Data da mostrare:"
+
+#~ msgid "Start period:"
+#~ msgstr "Avviato il:"
+
+#~ msgid "End period:"
+#~ msgstr "Terminato il:"
+
+#~ msgid "Volume Bytes"
+#~ msgstr "Quantita Bytes "
+
+#~ msgid "When expire?"
+#~ msgstr "Quando scade?"
+
+#~ msgid "Volume Status"
+#~ msgstr "Stato del Volume"
