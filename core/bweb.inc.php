@@ -17,17 +17,15 @@
 */
 class Bweb
 {
-	public  $tpl;							// Template class
 	private	$translate;						// Translation class instance
+	private $bwcfg;							// Config class
+	private $catalogs = array();			// Catalog array
 	
+	public  $tpl;							// Template class
 	public  $db_link;						// Database link
 	
-	private $config_file;					// Config filename
-	private $config;						// Loaded config from bacula.conf
-	private $catalogs = array();			// Catalog array
-	public  $catalog_nb;
-	private	$catalog_current_id;
-	private $bwcfg;
+	public  $catalog_nb;					// Catalog count
+	private	$catalog_current_id;			// Current catalog
 
     function __construct()
 	{             
