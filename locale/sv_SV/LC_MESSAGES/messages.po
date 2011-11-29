@@ -5,238 +5,382 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bacula-web\n"
-"POT-Creation-Date: 2004-06-11 13:02+0200\n"
-"PO-Revision-Date: 2007-06-07 17:08+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-16 21:46+0100\n"
+"PO-Revision-Date: 2011-11-29 17:08+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
-"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"Language-Team: SWEDISH <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lang.c:1
+#: lang.c:1 lang.c:35 lang.c:50 lang.c:65
+msgid "Back to the dashboard"
+msgstr "Tillbaka till instrumentpanelen"
+
 #: lang.c:2
-msgid "Bytes transferred last 30 days from ALL clients"
-msgstr "Byte överförda senaste 30 dagarna från ALLA klienter"
+msgid "Required components"
+msgstr ""
 
 #: lang.c:3
-msgid "GENERAL DATA"
-msgstr "ALLMÄN DATA"
+msgid "Graph system capabilities (Bacula-web only use PNG image format)"
+msgstr ""
 
 #: lang.c:4
-msgid "Total clients:"
-msgstr "Totalt antal klienter:"
+msgid "Pools and volumes status"
+msgstr ""
 
 #: lang.c:5
-msgid "Total bytes stored"
-msgstr "Totalt antal byte lagrade"
+msgid "Show pools and volumes report"
+msgstr ""
 
-#: lang.c:6
-msgid "Total files:"
-msgstr "Totalt antal filer:"
-
-#: lang.c:7
-msgid "Last month, bytes transferred"
-msgstr "Senast månaden, överförda byte"
-
-#: lang.c:8
-msgid "Last month, bytes transferred (pie)"
-msgstr "Senast månaden, överförda byte (diagram)"
-
-#: lang.c:9
-msgid "General%20report"
-msgstr "Allmän%20rapport"
-
-#: lang.c:10
-msgid "Status from last 24h"
-msgstr "Status senaste 24h"
-
-#: lang.c:11
-msgid "Errors:"
-msgstr "Fel:"
-
-#: lang.c:12
-msgid "Terminated Jobs:"
-msgstr "Avbrutna jobb:"
-
-#: lang.c:13
-msgid "Total time spent to do backup:"
-msgstr "Total tid använd på att göra säkerhetskopior:"
-
-#: lang.c:14
-msgid "Bytes transferred last 24h"
-msgstr "Byte överförda senaste 24h"
-
-#: lang.c:15
-msgid "Show details"
-msgstr "Visa detaljer"
-
-#: lang.c:16
-msgid "Jobs with errors"
-msgstr "Jobb med fel"
-
-#: lang.c:17
-msgid "Name"
-msgstr "Namn"
-
-#: lang.c:18
-msgid "EndTime"
-msgstr "Sluttid"
-
-#: lang.c:19
-msgid "JobStatus"
-msgstr "Jobbstatus"
-
-#: lang.c:20
-msgid "Detailed report"
+#: lang.c:6 lang.c:11 lang.c:34
+msgid "View report"
 msgstr "Detaljerad rapport"
 
-#: lang.c:21
-#: lang.c:42
-msgid "Select a job:"
-msgstr "Välj ett jobb:"
+#: lang.c:7
+msgid "Stored bytes for last 7 days (GB)"
+msgstr ""
 
-#: lang.c:22
-msgid "go"
-msgstr "kör"
+#: lang.c:8
+msgid "Stored bytes"
+msgstr "Överförda bytes"
+
+#: lang.c:9
+msgid "Last 24 hours jobs status"
+msgstr ""
+
+#: lang.c:10
+msgid "Show last 24 hours jobs status"
+msgstr ""
+
+#: lang.c:12
+msgid "Last used volumes"
+msgstr ""
+
+#: lang.c:13
+msgid "Overall status"
+msgstr ""
+
+#: lang.c:14
+msgid "Clients"
+msgstr "Klient"
+
+#: lang.c:15
+msgid "Total bytes"
+msgstr "Totalt antal byte lagrade"
+
+#: lang.c:16
+msgid "Total files"
+msgstr "Totalt antal filer:"
+
+#: lang.c:17
+msgid "Database size"
+msgstr ""
+
+#: lang.c:18
+msgid "Last 24 hours status"
+msgstr ""
+
+#: lang.c:19
+msgid "Failed jobs"
+msgstr ""
+
+#: lang.c:20
+msgid "Completed jobs"
+msgstr ""
+
+#: lang.c:21
+msgid "Waiting jobs"
+msgstr ""
+
+#: lang.c:22 lang.c:26
+msgid "Transferred Bytes"
+msgstr "Överförda bytes"
 
 #: lang.c:23
-msgid "Elapsed time"
-msgstr "Återgången tid"
+msgid "Transferred Files"
+msgstr "Överförda bytes"
 
 #: lang.c:24
-msgid "Job"
-msgstr "Jobb"
+msgid "Reports"
+msgstr "Punkter"
 
 #: lang.c:25
-msgid "Start Time"
-msgstr "Starttid"
-
-#: lang.c:26
-msgid "End Time"
-msgstr "Sluttid"
+msgid "Client"
+msgstr "Klient"
 
 #: lang.c:27
-msgid "Type"
-msgstr "Typ"
+msgid "Transferred Files "
+msgstr "Överförda bytes"
 
 #: lang.c:28
-msgid "Pool"
-msgstr "Pool"
+msgid "Interval"
+msgstr ""
 
 #: lang.c:29
-#: lang.c:40
-msgid "Status"
-msgstr "Status"
+msgid "Last week"
+msgstr ""
 
 #: lang.c:30
-msgid "Stats Bacula: Job"
-msgstr "Statistik Bacula: Jobb"
+msgid "Last 2 week"
+msgstr ""
 
 #: lang.c:31
-msgid "Client:"
-msgstr "Klient:"
+msgid "Last month"
+msgstr ""
 
 #: lang.c:32
-msgid "Period: From"
-msgstr "Period: Från"
+msgid "Backup Job report"
+msgstr ""
 
 #: lang.c:33
-msgid "to"
-msgstr "till"
-
-#: lang.c:34
-msgid "Bytes transferred in the period:"
-msgstr "Byte överförda under perioden:"
-
-#: lang.c:35
-msgid "Files transferred in the period:"
-msgstr "Filer överförda under perioden:"
+msgid "Backup job name"
+msgstr ""
 
 #: lang.c:36
-msgid "Date"
-msgstr "Datum"
+msgid "Backup Job Report"
+msgstr ""
 
 #: lang.c:37
-msgid "Elapsed"
-msgstr "Återgången"
+msgid "Backup Job name"
+msgstr ""
 
 #: lang.c:38
+msgid "Period"
+msgstr "Period"
+
+#: lang.c:39
+msgid "Transfered Bytes"
+msgstr "Överförda bytes"
+
+#: lang.c:40
+msgid "Transfered Files"
+msgstr "Överförda bytes"
+
+#: lang.c:41
+msgid "Last jobs"
+msgstr ""
+
+#: lang.c:42
+msgid "Job Id"
+msgstr "Jobb"
+
+#: lang.c:43 lang.c:60 lang.c:76
 msgid "Level"
 msgstr "Nivå"
 
-#: lang.c:39
+#: lang.c:44 lang.c:63 lang.c:78
+msgid "Files"
+msgstr "Linjer"
+
+#: lang.c:45 lang.c:62 lang.c:77 lang.c:81
 msgid "Bytes"
 msgstr "Byte"
 
-#: lang.c:41
-msgid "SELECT NEW REPORT"
-msgstr "VÄLJ NY RAPPORT"
-
-#: lang.c:43
-msgid "Graph mode:"
-msgstr "Diagramläge:"
-
-#: lang.c:44
-msgid "lines"
-msgstr "linjer"
-
-#: lang.c:45
-msgid "linepoints"
-msgstr "linjepunkter"
-
 #: lang.c:46
-msgid "points"
-msgstr "punkter"
+msgid "Start time"
+msgstr "Starttid"
 
-#: lang.c:47
-msgid "bars"
-msgstr "staplar"
+#: lang.c:47 lang.c:61
+msgid "End time"
+msgstr "Sluttid"
 
-#: lang.c:48
-msgid "area"
-msgstr "område"
+#: lang.c:48 lang.c:75
+msgid "Elapsed time"
+msgstr "Återgången tid"
 
 #: lang.c:49
-msgid "Data to show:"
-msgstr "Data att visa:"
-
-#: lang.c:50
-msgid "Transferred bytes"
-msgstr "Överförda bytes"
+msgid "Transfered Bytes / Files"
+msgstr "Överförda Bytes / Files"
 
 #: lang.c:51
-msgid "Start period:"
-msgstr "Startperiod:"
+msgid "Dashboard"
+msgstr ""
 
 #: lang.c:52
-msgid "End period:"
-msgstr "Slutperiod:"
-
-#: lang.c:53
-msgid "Create report"
+msgid "Client Report"
 msgstr "Skapa rapport"
 
+#: lang.c:53
+msgid "Client informations"
+msgstr ""
+
 #: lang.c:54
-msgid "Volume Name"
-msgstr "Volymnamn"
+msgid "Client name"
+msgstr "Klient"
 
 #: lang.c:55
-msgid "Volume Bytes"
-msgstr "Volymbyte"
+msgid "Client version"
+msgstr ""
 
 #: lang.c:56
+msgid "Client os"
+msgstr ""
+
+#: lang.c:57
+msgid "Client arch"
+msgstr ""
+
+#: lang.c:58 lang.c:71
+msgid "Name"
+msgstr "Namn"
+
+#: lang.c:59
+msgid "Jod Id"
+msgstr ""
+
+#: lang.c:64 lang.c:69 lang.c:85
+msgid "Status"
+msgstr "Status"
+
+#: lang.c:66
+msgid "Jobs report"
+msgstr ""
+
+#: lang.c:67
+msgid "Jobs / Page"
+msgstr ""
+
+#: lang.c:68
+msgid "Job status"
+msgstr "Jobbstatus"
+
+#: lang.c:70
+msgid "Job ID"
+msgstr "Jobb"
+
+#: lang.c:72
+msgid "Type"
+msgstr "Typ"
+
+#: lang.c:73
+msgid "Start Time"
+msgstr "Starttid"
+
+#: lang.c:74
+msgid "End Time"
+msgstr "Sluttid"
+
+#: lang.c:79
+msgid "Pool"
+msgstr "Pool"
+
+#: lang.c:80
+msgid "Volume name"
+msgstr "Volymnamn"
+
+#: lang.c:82
 msgid "Media Type"
 msgstr "Mediatyp"
 
-#: lang.c:57
-msgid "When expire?"
-msgstr "Förfaller?"
+#: lang.c:83
+msgid "Expire"
+msgstr ""
 
-#: lang.c:58
-msgid "Last Written"
+#: lang.c:84
+msgid "Last written"
 msgstr "Senast skriven"
 
-#: lang.c:59
-msgid "Volume Status"
-msgstr "Volymstatus"
+#: lang.c:86
+msgid "No volume(s) in this pool"
+msgstr ""
 
+#~ msgid "Bytes transferred last 30 days from ALL clients"
+#~ msgstr "Byte överförda senaste 30 dagarna från ALLA klienter"
+
+#~ msgid "GENERAL DATA"
+#~ msgstr "ALLMÄN DATA"
+
+#~ msgid "Total clients:"
+#~ msgstr "Totalt antal klienter:"
+
+#~ msgid "Last month, bytes transferred"
+#~ msgstr "Senast månaden, överförda byte"
+
+#~ msgid "Last month, bytes transferred (pie)"
+#~ msgstr "Senast månaden, överförda byte (diagram)"
+
+#~ msgid "General%20report"
+#~ msgstr "Allmän%20rapport"
+
+#~ msgid "Status from last 24h"
+#~ msgstr "Status senaste 24h"
+
+#~ msgid "Errors:"
+#~ msgstr "Fel:"
+
+#~ msgid "Terminated Jobs:"
+#~ msgstr "Avbrutna jobb:"
+
+#~ msgid "Total time spent to do backup:"
+#~ msgstr "Total tid använd på att göra säkerhetskopior:"
+
+#~ msgid "Bytes transferred last 24h"
+#~ msgstr "Byte överförda senaste 24h"
+
+#~ msgid "Show details"
+#~ msgstr "Visa detaljer"
+
+#~ msgid "Jobs with errors"
+#~ msgstr "Jobb med fel"
+
+#~ msgid "EndTime"
+#~ msgstr "Sluttid"
+
+#~ msgid "Select a job:"
+#~ msgstr "Välj ett jobb:"
+
+#~ msgid "go"
+#~ msgstr "kör"
+
+#~ msgid "Stats Bacula: Job"
+#~ msgstr "Statistik Bacula: Jobb"
+
+#~ msgid "to"
+#~ msgstr "till"
+
+#~ msgid "Bytes transferred in the period:"
+#~ msgstr "Byte överförda under perioden:"
+
+#~ msgid "Files transferred in the period:"
+#~ msgstr "Filer överförda under perioden:"
+
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#~ msgid "Elapsed"
+#~ msgstr "Återgången"
+
+#~ msgid "SELECT NEW REPORT"
+#~ msgstr "VÄLJ NY RAPPORT"
+
+#~ msgid "Graph mode:"
+#~ msgstr "Diagramläge:"
+
+#~ msgid "linepoints"
+#~ msgstr "linjepunkter"
+
+#~ msgid "bars"
+#~ msgstr "staplar"
+
+#~ msgid "area"
+#~ msgstr "område"
+
+#~ msgid "Data to show:"
+#~ msgstr "Data att visa:"
+
+#~ msgid "Start period:"
+#~ msgstr "Startperiod:"
+
+#~ msgid "End period:"
+#~ msgstr "Slutperiod:"
+
+#~ msgid "Volume Bytes"
+#~ msgstr "Volymbyte"
+
+#~ msgid "When expire?"
+#~ msgstr "Förfaller?"
+
+#~ msgid "Volume Status"
+#~ msgstr "Volymstatus"
