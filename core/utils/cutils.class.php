@@ -42,11 +42,12 @@ class CUtils {
 			break;
 		} // end switch
 		
-		$hsize = sprintf("%." . $decimal . "f", $hsize);
+		// Format human readable value (with dot for decimal separator)
+		$hsize = number_format( $hsize, $decimal, '.', '' );
 		
-		// Display unit or not
-		if( $display_unit == true )
-			$hsize = $hsize . ' ' . $units[$unit_id];
+		// Append unit or not
+		if( $display_unit )
+			$hsize = $hsize . ' ' . $units[$unit_id];	
 			
 		return $hsize;
 	}
