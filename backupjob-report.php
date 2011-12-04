@@ -120,9 +120,9 @@
 
 			$jobs[] = $job;
 		} // end while		
-	}catch(PDOExceptin $e) {
-		CDBError::raiseError($e);
-	}  
+	}catch( CErrorHandler $e  ) {
+		$e->raiseError();
+	} 
 
 	$dbSql->tpl->assign('jobs', $jobs );
 	$dbSql->tpl->assign('backupjob_name', $backupjob_name );
