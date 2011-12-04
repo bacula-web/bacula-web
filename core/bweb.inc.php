@@ -75,8 +75,8 @@ class Bweb
 										$this->bwcfg->getUser($this->catalog_current_id), 
 										$this->bwcfg->getPwd($this->catalog_current_id)  );
 			$this->db_link->makeConnection();	
-        }catch( PDOException $e ) {
-			CDBError::raiseError( $e );
+        }catch( CErrorHandler $e ) {
+			$e->raiseError();
 		}		
 
 		// Catalog selection		
@@ -129,8 +129,8 @@ class Bweb
 			$result  = $this->db_link->runQuery( $query );
 			$db_size = $result->fetch();
 			$db_size = CUtils::Get_Human_Size( $db_size['dbsize'] );
-		}catch( PDOException $e) {
-			CDBError::raiseError($e);
+		}catch( CErrorHandler $e ) {
+			$e->raiseError();
 		}
 		return $db_size;
 	} // end function GetDbSize()
@@ -144,8 +144,8 @@ class Bweb
 		try {
 			$clients    = $this->db_link->runQuery( $query );
 			$clients_nb = $clients->fetch();
-		}catch( PDOException $e ) {
-			CDBError::raiseError( $e );
+		}catch( CErrorHandler $e ) {
+			$e->raiseError();
 		}
 		
 		return $clients_nb;
@@ -213,8 +213,8 @@ class Bweb
 					} // end foreach volumes
 				} // end foreach pools
 				
-			}catch(PDOException $e) {
-				CDBError::raiseError($e);
+			}catch( CErrorHandler $e ) {
+				$e->raiseError();
 			}
 			
 			return $volumes_list;
@@ -283,8 +283,8 @@ class Bweb
 		try{
 			$jobs   = $this->db_link->runQuery($query);
 			$result = $jobs->fetch(); 
-		}catch(PDOException $e) {
-			CDBError::raiseError($e);
+		}catch( CErrorHandler $e ) {
+			$e->raiseError();
 		}
 		
 		return $result['job_nb'];
@@ -310,8 +310,8 @@ class Bweb
 			$result = $this->db_link->runQuery($query);
 			foreach( $result->fetchAll() as $pool )
 				$pools[] = $pool;
-		}catch(PDOException $e) {
-			CDBError::raiseError($e);
+		}catch( CErrorHandler $e ) {
+			$e->raiseError();
 		}
 
 		return $pools;
@@ -344,8 +344,8 @@ class Bweb
 			$result = $this->db_link->runQuery($query);
 			foreach( $result->fetchAll() as $jobname )
 				$backupjobs[] = $jobname['name'];
-		}catch(PDOException $e) {
-			CDBError::raiseError($e);
+		}catch( CErrorHandler $e ) {
+			$e->raiseError();
 		}
 
 		return $backupjobs;
@@ -372,8 +372,8 @@ class Bweb
 			foreach( $result->fetchAll() as $client )
 				$clients[ $client['clientid'] ] = $client['name'];
 				
-		}catch(PDOException $e) {
-			CDBError::raiseError($e);
+		}catch( CErrorHandler $e ) {
+			$e->raiseError();
 		}
 
 		return $clients;		
@@ -396,8 +396,8 @@ class Bweb
 				$client['arch']    = $uname[0];
 				$client['os']      = $uname[1];
 			}
-		}catch(PDOException $e) {
-			CDBError::raiseError($e);
+		}catch( CErrorHandler $e ) {
+			$e->raiseError();
 		}
 		
 		return $client;
@@ -430,8 +430,8 @@ class Bweb
 		try {
 			$result = $this->db_link->runQuery($query);
 			$vols = $result->fetch();
-		}catch( PDOException $e) {
-			CDBError::raiseError($e);
+		}catch( CErrorHandler $e ) {
+			$e->raiseError();
 		}
 		
 		return $vols['vols_count'];
@@ -466,8 +466,8 @@ class Bweb
 		try {
 			$result = $this->db_link->runQuery( $query );
 			$result = $result->fetch();
-		}catch( PDOException $e) {
-			CDBError::raiseError($e);
+		}catch( CErrorHandler $e ) {
+			$e->raiseError();
 		}
 		
 		if( isset($result['stored_files']) and !empty($result['stored_files']) )
@@ -512,8 +512,8 @@ class Bweb
 		try {
 			$result = $this->db_link->runQuery( $query );
 			$result = $result->fetch();
-		}catch(PDOException $e) {
-			CDBError::raiseError( $e );
+		}catch( CErrorHandler $e ) {
+			$e->raiseError();
 		}
 		
 		if( isset($result['stored_bytes']) and !empty($result['stored_bytes']) )
