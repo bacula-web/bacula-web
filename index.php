@@ -128,8 +128,8 @@
 			$volume['jobs_count'] = $jobs_by_vol[0]['jobs_count'];
 			$last_volumes[] 	  = $volume;
 		}
-	}catch(PDOException $e) {
-		CDBError::raiseError($e);
+	}catch( CErrorHandler $e  ) {
+		$e->raiseError();
 	}
 
 	$dbSql->tpl->assign( 'volumes_list', $last_volumes );	
