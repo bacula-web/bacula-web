@@ -50,7 +50,6 @@
  // Database abstraction
  require_once BW_OBJ . "db/cdb.class.php";
  require_once BW_OBJ . "db/cdbresult.class.php";
- require_once BW_OBJ . "db/cdberror.class.php";
  
  // I18n (Internationalization)
  require_once BW_OBJ . "i18n/ctranslation.class.php";
