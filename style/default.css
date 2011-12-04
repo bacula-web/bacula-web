@@ -180,10 +180,6 @@ a:link, a:visited, a:hover, a:visited {
  vertical-align: middle;
 }
 
-.box table {
-
-}
-
 .box table tr td {
  padding: 3px;
  font-size: 8pt;
@@ -226,66 +222,3 @@ table {
  color: #000000;
  font-weight: bold;
 }
-
-.genmed 	{ 
- font-size : 11px; 
-}
-.tbl_medium	{ 
- border-bottom: black solid 1px;
- border-left: black solid 1px;
- border-right: black solid 1px;
- border-top: black solid 1px;
- background-color: #FDFFBF;
-}
-
-.titulo 	{ 
- font-size : 20px; 
- background-color: #FDFFBF; 
- border: #D1D7DC; 
- border-style: solid;
- border-left-width: 1px; 
- border-top-width: 1px; 
- border-right-width: 1px; 
- border-bottom-width: 1px;
-}
-.tbl_header1    {
- font-size : 14px;
- background-color: #FDFFBF; 
- border: #D1D7DC; 
- border-style: solid;
- border-left-width: 1px; 
- border-top-width: 1px; 
- border-right-width: 1px; 
- border-bottom-width: 1px
-}
-.tbl_header2	{
- font-size: 14px;
- background-color: #FDFFBF;
-}
-.titulo2	{ font-size : 13px; font-weight: bold; }
-.table1		{ background-color: #D1D7DC; }
-.table2 	{ background-color: #A7D7D1; }
-.table3		{ background-color: #D1D7DC; }
-.table4		{ background-color: #A7D7D1; }
-
-.code {
- font-family: Courier, 'Courier New', sans-serif; 
- font-size: 11px; 
- color: #10738F;
- background-color: #FAFAFA; 
- border: #D1D7DC; 
- border-style: solid;
- border-left-width: 1px; 
- border-top-width: 1px; 
- border-right-width: 1px; 
- border-bottom-width: 1px
-}
-.notas { 
- font-size : 13px; 
- color: red;
-}
-
-.size_small { 
- font-size: 9px; 
-}
-
