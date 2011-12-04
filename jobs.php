@@ -153,8 +153,8 @@
 		} // end foreach
 	} // end if/else
   
-  }catch(PDOException $e) {
-	CDBError::raiseError($e);
+  }catch( CErrorHandler $e  ) {
+		$e->raiseError();
   }
   
   $dbSql->tpl->assign( 'last_jobs', $last_jobs );
