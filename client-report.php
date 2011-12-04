@@ -69,8 +69,8 @@
 				$backup_jobs[] = $job;
 			}
 		}		
-	}catch(PDOException $e) {
-		CDBError::raiseError($e);
+	}catch( CErrorHandler $e  ) {
+		$e->raiseError();
 	}
 	
 	$dbSql->tpl->assign( 'backup_jobs', $backup_jobs);
