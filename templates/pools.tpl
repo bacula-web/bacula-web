@@ -12,11 +12,11 @@
   <a href="index.php" title="Back to the dashboard">Dashboard</a> > Pools and Volumes list
 </div>
 
-<div id="main_center">
+<!-- <div id="main_center"> -->
 
 {foreach from=$pools item=pool key=pool_name}
-<div class="box">
-	<p class="title">{$pool_name}</p>
+<div class="main_center">
+	<p class="header">{$pool_name}</p>
 	<table class="list" border="0">
 		<tr>
 			<td class="tbl_header" width="120">{t}Volume name{/t}</td>
@@ -41,7 +41,7 @@
 			</tr>
 			{foreachelse}
 			<tr>
-				<td colspan="6" style="text-align: center; font-weight: bold; font-size: 8pt; padding: 1em;">
+				<td colspan="6" style="text-align: center; font-weight: bold; font-size: 8pt; padding: 1em; width: 100%;">
 					{t}No volume(s) in this pool{/t}
 				</td>
 			</tr>
@@ -51,7 +51,7 @@
 </div> <!-- end div box-->
 {/foreach}
 
-</div> <!-- end div main_center -->
+<!-- </div> <!-- end div main_center -->
 
 <!-- End volumes.tpl -->
 
