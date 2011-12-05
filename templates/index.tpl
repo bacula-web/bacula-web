@@ -8,17 +8,80 @@
 <body>
 {include file=header.tpl}
 
-<div id="main_left">
+<div class="main_center">
+	<p class="header">{t}Overall status{/t}</p>
+  
+  <!-- General information -->
+  <div class="box">
+	<p class="title">{t}Catalog statistics{/t}</p>
+	<table>
+	  <tr>
+	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clientes_totales}</td>
+	  </tr>
+	  <tr>
+		<td class="label">{t}Total bytes{/t}</td> <td class="info">{$stored_bytes}</td>
+	  </tr>
+	  <tr>
+		<td class="label">{t}Total files{/t}</td> <td class="info">{$stored_files}</td>
+	  </tr>
+	  <tr>
+		<td class="label">{t}Database size{/t}</td> <td class="info">{$database_size}</td>
+	  </tr>
+	</table>
+  </div>
+  
+<!-- Last 24 hours job Status -->
+  <div class="box">
+	<p class="title">{t}Last 24 hours status{/t}</p>
+		<table>
+			<tr>
+				<td class="label">{t}Failed jobs{/t}</td> 
+				<td class="failed_jobs">{$failed_jobs}</td>
+			</tr>
+			<tr>
+				<td class="label">{t}Completed jobs{/t}</td> 
+				<td class="completed_jobs">{$completed_jobs}</td>
+			</tr> 
+			<tr>
+				<td class="label">{t}Waiting jobs{/t}</td> 
+				<td class="waiting_jobs">{$waiting_jobs}</td>
+			</tr> 
+			<tr>
+				<td class="label">Job Level (Incr / Diff / Full)</td>
+				<td class="info">{$incr_jobs} / {$diff_jobs} / {$full_jobs}</td>
+			</tr>
+			<tr>
+				<td class="label">{t}Transferred Bytes{/t}</td> 
+				<td class="info">{$bytes_last}</td>
+			</tr>
+			<tr>
+				<td class="label">{t}Transferred Files{/t}</td> 
+				<td class="info">{$files_last}</td>
+			</tr>
+		</table>
+  </div> <!-- end div box -->  
+  
+<!-- Last 24 hours jobs status -->
+  <div class="box">
+	<p class="title" title="{t}Last 24 hours jobs status{/t}">Jobs status</p>
+	  <a href="jobs.php" title="{t}Show last 24 hours jobs status{/t}">
+	    <img class="graph" src="{$graph_jobs}" alt="" />
+	  </a>
+  </div> <!-- end div box -->
+  
+</div>
+
+<div class="main_center">
+  <p class="header">{t}Pools and volumes status{/t}</p>
 
   <!-- Pools and Volumes Status -->
   <div class="box">
 	<p class="title">
 	{t}Pools and volumes status{/t}
 	</p>
-	<img class="graph" src="{$graph_pools}" alt="" />
-	<div class="footer">
-		<a href="pools.php" title="{t}Show pools and volumes report{/t}">{t}View report{/t}</a>
-	</div>
+    <a href="pools.php" title="{t}Show pools and volumes report{/t}">
+	   <img class="graph" src="{$graph_pools}" alt="" />
+	</a>
   </div> <!-- end div box -->
   
   <!-- Stored Bytes for last 7 days -->
@@ -27,19 +90,8 @@
 	  <img class="graph" src="{$graph_stored_bytes}" alt="" />
   </div> <!-- end div box -->
 
-</div>
-
-<div id="main_middle">
-  <!-- Last 24 hours jobs status -->
+  <!-- Last used volumes -->
   <div class="box">
-	<p class="title" title="{t}Last 24 hours jobs status{/t}">Jobs status</p>
-	  <img class="graph" src="{$graph_jobs}" alt="" />
-	<div class="footer">
-		<a href="jobs.php" title="{t}Show last 24 hours jobs status{/t}">{t}View report{/t}</a>
-	</div>
-  </div> <!-- end div box -->
-  
-  <div class="box" border=1>
 	<p class="title">{t}Last used volumes{/t}</p>
 	  <table>
 		<tr>
@@ -60,63 +112,14 @@
 		{/foreach}
 	  </table>
   </div> <!-- end div box -->
-  
-</div> <!-- end div main_middle -->
+</div>
 
-<div id="main_right">
-  <!-- General information -->
-  <div class="box">
-	<p class="title">{t}Overall status{/t}</p>
-	<table>
-	  <tr>
-	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clientes_totales}</td>
-	  </tr>
-	  <tr>
-		<td class="label">{t}Total bytes{/t}</td> <td class="info">{$stored_bytes}</td>
-	  </tr>
-	  <tr>
-		<td class="label">{t}Total files{/t}</td> <td class="info">{$stored_files}</td>
-	  </tr>
-	  <tr>
-		<td class="label">{t}Database size{/t}</td> <td class="info">{$database_size}</td>
-	  </tr>
-	</table>
-  </div>
+<div class="main_center">
+ <p class="header">{t}Reports{/t}</p>
 
-  <!-- Last 24 hours job Status -->
-  <div class="box">
-	<p class="title">{t}Last 24 hours status{/t}</p>
-		<table>
-			<tr>
-				<td class="label">{t}Failed jobs{/t}</td> 
-				<td class="info">{$failed_jobs}</td>
-			</tr>
-			<tr>
-				<td class="label">{t}Completed jobs{/t}</td> 
-				<td class="info">{$completed_jobs}</td>
-			</tr> 
-			<tr>
-				<td class="label">{t}Waiting jobs{/t}</td> 
-				<td class="info">{$waiting_jobs}</td>
-			</tr> 
-			<tr>
-				<td class="label">Job Level (Incr / Diff / Full)</td>
-				<td class="info">{$incr_jobs} / {$diff_jobs} / {$full_jobs}</td>
-			</tr>
-			<tr>
-				<td class="label">{t}Transferred Bytes{/t}</td> 
-				<td class="info">{$bytes_last}</td>
-			</tr>
-			<tr>
-				<td class="label">{t}Transferred Files{/t}</td> 
-				<td class="info">{$files_last}</td>
-			</tr>
-		</table>
-  </div> <!-- end div box -->   
-  
 <div class="box">
-	<p class="title">{t}Reports{/t}</p>
- <!-- Custom report -->
+ <p class="title">{t}Client report{/t}</p>
+ <!-- Client report -->
  <form method="post" action="client-report.php">
 	<table>
 		<tr>
@@ -162,10 +165,12 @@
 		</tr>
 	</table>
  </form>
+ </div> <!-- end div class=box -->
  
- <h5>{t}Backup Job report{/t}</h5>
- <!-- Backup job report form -->
- <form method="post" action="backupjob-report.php">
+ <!-- Backup job report -->
+ <div class="box">
+   <p class="title">{t}Backup Job report{/t}</p>
+   <form method="post" action="backupjob-report.php">
    <table>
 	 <tr>
 		<td class="label">{t}Backup job name{/t}</td>
@@ -185,6 +190,6 @@
  </form>
 </div> <!-- end div class=box -->
 
-</div> <!-- end div main_right -->
+</div> <!-- end div main_center -->
 
 {include file="footer.tpl"}

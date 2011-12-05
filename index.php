@@ -69,7 +69,7 @@
 
 	$graph = new CGraph( "graph.png" );
 	$graph->SetData( $jobs_status_data, 'pie', 'text-data-single' );
-	$graph->SetGraphSize( 400, 230 );
+	$graph->SetGraphSize( 260, 180 );
 
 	$graph->Render();
 	$dbSql->tpl->assign('graph_jobs', $graph->Get_Image_file() );
@@ -83,7 +83,7 @@
 		$vols_by_pool[] = array( $pool['name'], $dbSql->countVolumes( $pool['poolid'] ) );
 
 	$graph->SetData( $vols_by_pool, 'pie', 'text-data-single' );
-	$graph->SetGraphSize( 400, 230 );
+	$graph->SetGraphSize( 260, 180 );
 
 	$graph->Render();
 	$dbSql->tpl->assign('graph_pools', $graph->Get_Image_file() );
@@ -100,7 +100,7 @@
 
 	$graph = new CGraph( "graph2.png" );
 	$graph->SetData( $days_stored_bytes, 'bars', 'text-data' );
-	$graph->SetGraphSize( 400, 230 );
+	$graph->SetGraphSize( 260, 180 );
 	$graph->SetYTitle( "GB" );
 
 	$graph->Render();

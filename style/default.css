@@ -92,9 +92,13 @@ a:link, a:visited, a:hover, a:visited {
  position: absolute; 
  left:10px; 
  width: 380px; 
- border:none; 
- margin-top: 0px; 
  background-color: #FFFFFF;
+ border: 1px solid #C0C0C0;
+ font-size: 10pt;
+ margin: 0 5px 15px;
+ min-height: 180px;
+ padding: 5px 15px;
+ vertical-align: middle;
 }
 
 #main_middle {
@@ -112,17 +116,29 @@ a:link, a:visited, a:hover, a:visited {
  margin-top: 0px;
 }
 
-#main_center {
- position: absolute; 
- left:10px; 
- min-width: 800px;
- width: auto; 
- margin-top: 0px;
+.main_center {
+ width: 1000px;
+ margin: 5px;
+ padding: 0px;
+ float: left;
+ border: 1px solid #C8C8C8;
 }
 
-.listbox {
+.main_center .header {
+ background-color: #B0B0B0;
+ border: 1px solid #C0C0C0;
+ color: #FFFFFF;
+ font-size: 11pt;
+ font-weight: bold;
+ margin: 0px;
+ padding: 5px;
+ vertical-align: middle;
+ text-align: center;
+}
+
+.list {
  /*border: 1px solid red;*/
- width: 100%;
+ width: auto;
  height: auto;
  overflow: auto;
  margin: 0px;
@@ -132,13 +148,23 @@ a:link, a:visited, a:hover, a:visited {
 }
 
 .box {
- border: 1px solid #c8c8c8;
- width: auto;
+ /*border: 1px solid #B0B0B0;*/
+ float: left;
  min-height: 100px;
- margin-top: 10px;
- margin-bottom: 10px;
+ min-width: 290px;
  padding: 0px;
+ margin: 10px 15px 5px 5px;
  text-align: center;
+}
+
+.box p.title {
+ text-align: center;
+ vertical-align: middle;
+ font-size: 11pt;
+ background-color: #C8C8C8;
+ color: #000000;
+ padding: 2px;
+ margin: 0px;
 }
 
 .box h4, .box h5 {
@@ -151,19 +177,8 @@ a:link, a:visited, a:hover, a:visited {
 }
 
 .box img.graph {
- width: 350px;
- margin: 5px 0px;
-}
-
-.box p.title {
- text-align: center;
- vertical-align: middle;
- font-size: 11pt;
- background-color: #888888;
- color: white;
- font-weight: bold;
- padding: 5px;
- margin: 0px;
+ margin: auto;
+ border: none;
 }
 
 .box div.footer { 
@@ -182,17 +197,43 @@ a:link, a:visited, a:hover, a:visited {
 
 .box table tr td {
  padding: 3px;
- font-size: 8pt;
+ font-size: 9pt;
  height: 20px;
+ text-align: center;
+ min-width: 40px;
 }
 
 .box table tr td.label { 
- font-weight: bold;
+ /*font-weight: bold;*/
  text-align: left;
 }
 
 .box table td.info {
- text-align: right;
+ text-align: center;
+}
+
+.box table td.completed_jobs {
+ width: 60px;
+ color: #00FF00;
+ font-weight: bolder;
+ font-size: 10pt;
+ border: 1px solid #C8C8C8;
+}
+
+.box table td.failed_jobs {
+ width: 60px;
+ color: #FF0000;
+ font-weight: bolder;
+ font-size: 10pt;
+ border: 1px solid #C8C8C8;
+}
+
+.box table td.waiting_jobs {
+ width: 60px;
+ color: #FF6600;
+ font-weight: bolder;
+ font-size: 10pt;
+ border: 1px solid #C8C8C8;
 }
 
 .box table tr td.info a { font-size: 8pt;}
@@ -202,7 +243,7 @@ a:link, a:visited, a:hover, a:visited {
 table {
  width: 100%;
  margin: 0px;
- border-collapse: collapse;
+ /*border-collapse: collapse;*/
 }
 .pool_name {
  text-align: left; 
