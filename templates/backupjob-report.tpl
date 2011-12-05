@@ -12,11 +12,10 @@
     <a href="index.php" title="{t}Back to the dashboard{/t}">Dashboard</a> > Backup Job Report
   </div>
 
-  <div id="main_center">
-  
-  <div class="box">
-	<p class="title">{t}Backup Job Report{/t}</p>
-	
+  <div class="main_center">
+  <!-- Backup job informations -->
+  <p class="header">{t}Backup Job Report{/t}</p>
+  <div class="box">	
 	<table>
 		<tr>
 			<td width="150">{t}Backup Job name{/t}:</td>
@@ -37,11 +36,12 @@
 
 	</table>
   </div> <!-- end div class=box -->
+  </div> <!-- end div class=main_center -->
   
+  <div class="main_center">
   <!-- Last jobs list -->
-  <div class="box">
-	<p class="title">{t}Last jobs{/t}</p>
-	
+  <p class="header">{t}Last jobs{/t}</p>
+  <div class="box">	
 	<table>
 		<tr>
 			<td class="tbl_header" width="60">{t}Job Id{/t}</td>
@@ -66,13 +66,15 @@
 	</table>
   </div> <!-- end div class=box -->
   
-  <!-- Transfered Bytes/Files graph -->
-  <div class="box">
-	<p class="title">{t}Transfered Bytes / Files{/t}</p>
-	<img class="graph" src="{$graph_stored_bytes}" alt="" />
-	<img class="graph" src="{$graph_stored_files}" alt="" />
-  </div> <!-- end div class=box -->
+  </div> <!-- end div=main_center -->
   
+  <div class="main_center">
+    <!-- Transfered Bytes/Files graph -->
+	<p class="header">{t}Transfered Bytes / Files{/t}</p>
+    <div class="box">
+	  <img class="graph" src="{$graph_stored_bytes}" alt="" />
+	  <img class="graph" src="{$graph_stored_files}" alt="" />
+    </div> <!-- end div class=box -->
   </div> <!-- end div id=main_center -->
 
 {include file="footer.tpl"}
