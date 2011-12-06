@@ -1,5 +1,5 @@
 This is the README file for PHPlot
-Last updated for PHPlot-5.4.0 on 2011-05-27
+Last updated for PHPlot-5.5.0 on 2011-07-30
 The project web site is http://sourceforge.net/projects/phplot/
 The project home page is http://phplot.sourceforge.net/
 -----------------------------------------------------------------------------
@@ -39,16 +39,17 @@ might not continue past this release.
 
 You need the GD extension to PHP either built in to PHP or loaded as a
 module. Refer to the PHP documentation for more information - see the
-Image Functions chapter in the PHP Manual. We test PHPlot only with the
+Image Functions chapter in the PHP Manual. We test PHPlot mostly with the
 PHP-supported, bundled GD library.
 
 If you want to display PHPlot charts on a web site, you need a PHP-enabled
 web server. You can also use the PHP CLI interface without a web server.
 
-PHPlot supports TrueType fonts, but does not include any TrueType font
-files.  If you want to use TrueType fonts on your charts, you need to have
-TrueType support in GD, and some TrueType font files.  By default, PHPlot
-uses a simple font which is built in to the GD library.
+PHPlot supports TrueType fonts, but does not include any TrueType font files.
+If you want to use TrueType fonts on your plots, you need to have TrueType
+support in GD, and some TrueType font files. (Your operating system most
+likely includes TrueType fonts.) By default, PHPlot uses a simple font which
+is built in to the GD library.
 
 
 INSTALLATION:
@@ -70,9 +71,8 @@ configuration file; consult the PHP manual for details.
 UPGRADING:
 
 To upgrade PHPlot, follow the same instructions as for installing. There
-are some changes in this release which can alter the appearance of plots
-when compared to previous releases. Please review the top section in
-NEWS.txt for details.
+may be changes between releases which can alter the appearance of your plots.
+Please check the top section in NEWS.txt for details.
 
 
 KNOWN ISSUES:

@@ -1,7 +1,7 @@
 <?php
-/* $Id: phplot.php,v 1.224 2011/05/27 18:05:16 lbayuk Exp $ */
+/* $Id: phplot.php 993 2011-07-30 21:12:03Z lbayuk $ */
 /*
- * PHPLOT Version 5.4.0
+ * PHPLOT Version 5.5.0
  *
  * A PHP class for creating scientific and business charts
  * Visit http://sourceforge.net/projects/phplot/
@@ -30,12 +30,12 @@
  * Maintainer (2006-present)
  * <lbayuk AT users DOT sourceforge DOT net>
  *
- * Requires PHP 5.2.x or later. (PHP 4 is unsupported as of Jan 2008)
+ * Requires PHP 5.2.x or later.
  */
 
 class PHPlot
 {
-    const version = '5.4.0';
+    const version = '5.5.0';
 
     /* Declare class variables which are initialized to static values. Many more class variables
      * are used, defined as needed, but are unset by default.
@@ -214,6 +214,9 @@ class PHPlot
         ),
         'bars' => array(
             'draw_method' => 'DrawBars',
+        ),
+        'bubbles' => array(
+            'draw_method' => 'DrawBubbles',
         ),
         'candlesticks' => array(
             'draw_method' => 'DrawOHLC',
@@ -1570,18 +1573,10 @@ class PHPlot
     }
 
     /*
-     * Performs the actual outputting of the generated graph.
+     * Get the MIME type and GD output function name for the current file type.
      */
-    function PrintImage()
+    protected function GetImageType(&$mime_type, &$output_f)
     {
-        // Browser cache stuff submitted by Thiemo Nagel
-        if ( (! $this->browser_cache) && (! $this->is_inline)) {
-            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-            header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . 'GMT');
-            header('Cache-Control: no-cache, must-revalidate');
-            header('Pragma: no-cache');
-        }
-
         switch ($this->file_format) {
         case 'png':
             $mime_type = 'image/png';
@@ -1600,8 +1595,28 @@ class PHPlot
             $output_f = 'imagewbmp';
             break;
         default:
+            // Report the error on PrintImage, because that is where this code used to be.
             return $this->PrintError('PrintImage(): Please select an image type!');
         }
+        return TRUE;
+    }
+
+    /*
+     * Output the generated image to standard output or to a file.
+     */
+    function PrintImage()
+    {
+        // Browser cache stuff submitted by Thiemo Nagel
+        if ( (! $this->browser_cache) && (! $this->is_inline)) {
+            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . 'GMT');
+            header('Cache-Control: no-cache, must-revalidate');
+            header('Pragma: no-cache');
+        }
+
+        // Get MIME type and GD output function name:
+        if (!$this->GetImageType($mime_type, $output_f)) return FALSE;
+
         if (!$this->is_inline) {
             Header("Content-type: $mime_type");
         }
@@ -1614,17 +1629,38 @@ class PHPlot
     }
 
     /*
+     * Return the image data, as raw data, base64 encoded, or data URL (see RFC2397).
+     */
+    function EncodeImage($encoding = 'dataurl')
+    {
+        $enc = $this->CheckOption($encoding, 'dataurl, raw, base64', __FUNCTION__);
+        if (!$enc || !$this->GetImageType($mime_type, $output_f)) return FALSE;
+        ob_start();
+        $output_f($this->img);
+        switch ($enc) {
+        case 'raw':
+            return ob_get_clean();
+        case 'base64':
+            return base64_encode(ob_get_clean());
+        default:  // 'dataurl', checked above.
+            return "data:$mime_type;base64,\n" . chunk_split(base64_encode(ob_get_clean()));
+        }
+    }
+
+    /*
      *  Error handling for 'fatal' errors:
      *   $error_message       Text of the error message
-     *  Standard output from PHPlot is expected to be an image file, such as
-     *  when handling an <img> tag browser request. So it is not permitted to
+     *  Output from PHPlot is expected to be an image file, such as when
+     *  handling an <img> tag browser request. So it is not permitted to
      *  output text to standard output. (You should have display_errors=off)
      *  Here is how PHPlot handles fatal errors:
-     *    + Write the error message into an image, and output the image.
-     *    + If no image can be output, write nothing and produce an HTTP
-     *      error header.
+     *    + Draw the error message into an image, and output the image (to
+     *      standard output, or a file, as directed).
+     *      The error image is suppressed if suppress_error_image is True.
+     *    + If there is no GD image in the PHPlot object (early failure),
+     *      output no image, and produce an HTTP error header instead.
      *    + Trigger a user-level error containing the error message.
-     *      If no error handler was set up, the script will log the
+     *      If no error handler was set up, the PHP will log the
      *      error and exit with non-zero status.
      *
      *  PrintError() and DrawError() are now equivalent. Both are provided for
@@ -1633,7 +1669,7 @@ class PHPlot
      *
      *  This function does not return, unless the calling script has set up
      *  an error handler which does not exit. In that case, PrintError will
-     *  return False. But not all of PHPlot will handle this correctly, so
+     *  return False. But not all of PHPlot may handle this correctly, so
      *  it is probably a bad idea for an error handler to return.
      */
     protected function PrintError($error_message)
@@ -1643,22 +1679,24 @@ class PHPlot
         $this->in_error = TRUE;
 
         // Output an image containing the error message:
-        if (!empty($this->img)) {
-            $ypos = $this->image_height/2;
-            $xpos = $this->image_width/2;
-            $bgcolor = ImageColorResolve($this->img, 255, 255, 255);
-            $fgcolor = ImageColorResolve($this->img, 0, 0, 0);
-            ImageFilledRectangle($this->img, 0, 0, $this->image_width, $this->image_height, $bgcolor);
+        if (empty($this->suppress_error_image)) {
+            if (!empty($this->img)) {
+                $ypos = $this->image_height/2;
+                $xpos = $this->image_width/2;
+                $bgcolor = ImageColorResolve($this->img, 255, 255, 255);
+                $fgcolor = ImageColorResolve($this->img, 0, 0, 0);
+                ImageFilledRectangle($this->img, 0, 0, $this->image_width, $this->image_height, $bgcolor);
 
-            // Switch to built-in fonts, in case of error with TrueType fonts:
-            $this->SetUseTTF(FALSE);
+                // Switch to built-in fonts, in case of error with TrueType fonts:
+                $this->SetUseTTF(FALSE);
 
-            $this->DrawText($this->fonts['generic'], 0, $xpos, $ypos, $fgcolor,
-                            wordwrap($error_message), 'center', 'center');
+                $this->DrawText($this->fonts['generic'], 0, $xpos, $ypos, $fgcolor,
+                                wordwrap($error_message), 'center', 'center');
 
-            $this->PrintImage();
-        } elseif (! $this->is_inline) {
-            Header('HTTP/1.0 500 Internal Server Error');
+                $this->PrintImage();
+            } elseif (!$this->is_inline) {
+                Header('HTTP/1.0 500 Internal Server Error');
+            }
         }
         trigger_error($error_message, E_USER_ERROR);
         unset($this->in_error);
@@ -1674,6 +1712,14 @@ class PHPlot
     protected function DrawError($error_message, $where_x = NULL, $where_y = NULL)
     {
         return $this->PrintError($error_message);
+    }
+
+    /*
+     * Set error behavior. On failure, PHPlot normally creates an error image.
+     */
+    function SetFailureImage($error_image)
+    {
+        $this->suppress_error_image = !$error_image;
     }
 
 /////////////////////////////////////////////
@@ -1996,6 +2042,7 @@ class PHPlot
      *   datatype_swapped_xy : Swapped X/Y (horizontal plot)
      *   datatype_error_bars : Data array has error bar data
      *   datatype_pie_single : Data array is for a pie chart with one row per slice
+     *   datatype_yz : Data array contains pairs of Y and Z for each X.
      */
     protected function DecodeDataType()
     {
@@ -2006,6 +2053,7 @@ class PHPlot
         $this->datatype_swapped_xy = ($dt == 'text-data-yx' || $dt == 'data-data-yx');
         $this->datatype_error_bars = ($dt == 'data-data-error');
         $this->datatype_pie_single = ($dt == 'text-data-single');
+        $this->datatype_yz = ($dt == 'data-data-xyz');
     }
 
     /*
@@ -2037,14 +2085,36 @@ class PHPlot
         $this->DecodeDataType();
 
         // Calculate the maximum number of dependent values per independent value
-        // (e.g. Y for each X), or the number of pie slices.
-        if ($this->datatype_pie_single) {
-            $this->data_columns = $this->num_data_rows; // Special case for 1 type of pie chart.
+        // (e.g. Y for each X), or the number of pie slices. Also validate the rows.
+        $skip = $this->datatype_implied ? 1 : 2; // Skip factor for data label and independent variable
+        if ($this->datatype_error_bars) {
+            $this->data_columns = (int)(($this->records_per_group - $skip) / 3);
+            // Validate the data array for error plots: (label, X, then groups of Y, +err, -err):
+            for ($i = 0; $i < $this->num_data_rows; $i++) {
+                if ($this->num_recs[$i] < $skip || ($this->num_recs[$i] - $skip) % 3 != 0)
+                    return $this->PrintError("DrawGraph(): Invalid $this->data_type data array (row $i)");
+            }
+        } elseif ($this->datatype_pie_single) {
+            $this->data_columns = $this->num_data_rows; // Special case for this type of pie chart.
+            // Validate the data array for text-data-single pie charts. Requires 1 value per row.
+            for ($i = 0; $i < $this->num_data_rows; $i++) {
+                if ($this->num_recs[$i] != 2)
+                    return $this->PrintError("DrawGraph(): Invalid $this->data_type data array (row $i)");
+            }
+        } elseif ($this->datatype_yz) {
+            $this->data_columns = (int)(($this->records_per_group - $skip) / 2); //  (y, z) pairs
+            // Validate the data array for plots using X, Y, Z: (label, X, then pairs of Y, Z)
+            for ($i = 0; $i < $this->num_data_rows; $i++) {
+                if ($this->num_recs[$i] < $skip || ($this->num_recs[$i] - $skip) % 2 != 0)
+                    return $this->PrintError("DrawGraph(): Invalid $this->data_type data array (row $i)");
+            }
         } else {
-            $skip = $this->datatype_implied ? 1 : 2; // Skip data label and independent variable if used
             $this->data_columns = $this->records_per_group - $skip;
-            if ($this->datatype_error_bars) // Each Y has +err and -err along with it
-                $this->data_columns = (int)($this->data_columns / 3);
+            // Validate the data array for non-error plots:
+            for ($i = 0; $i < $this->num_data_rows; $i++) {
+                if ($this->num_recs[$i] < $skip)
+                    return $this->PrintError("DrawGraph(): Invalid $this->data_type data array (row $i)");
+            }
         }
         return TRUE;
     }
@@ -2399,6 +2469,7 @@ class PHPlot
      *  data-data-error: ('label', x1, y1, e1+, e2-, y2, e2+, e2-, y3, e3+, e3-, ...)
      *  data-data-yx: ('label', y, x1, x2, x3, ..)
      *  text-data-yx: ('label', x1, x2, x3, ...)
+     *  data-data-xyz: ('label', x, y1, z1, ...)
      */
     function SetDataType($which_dt)
     {
@@ -2410,15 +2481,15 @@ class PHPlot
 
         $this->data_type = $this->CheckOption($which_dt, 'text-data, text-data-single, '.
                                                          'data-data, data-data-error, '.
-                                                         'data-data-yx, text-data-yx',
+                                                         'data-data-yx, text-data-yx, data-data-xyz',
                                                          __FUNCTION__);
         return (boolean)$this->data_type;
     }
 
     /*
-     * Copy the array passed as data values. We convert to numerical indexes, for its
-     * use for (or while) loops, which sometimes are faster. Performance improvements
-     * vary from 28% in DrawLines() to 49% in DrawArea() for plot drawing functions.
+     * Copy the array of data values, converting rows to numerical indexes.
+     * Also validates that the array uses 0-based sequential integer indexes, and that each
+     * array value (row) is another array. Other validation is deferred to CheckDataArray().
      */
     function SetDataValues($which_dv)
     {
@@ -2427,16 +2498,17 @@ class PHPlot
         $this->data = array();
         $this->num_recs = array();
         for ($i = 0; $i < $this->num_data_rows; $i++) {
+            if (!isset($which_dv[$i]) || !is_array($which_dv[$i])) {
+                return $this->PrintError("SetDataValues(): Invalid data array (row $i)");
+            }
             $this->data[$i] = array_values($which_dv[$i]);   // convert to numerical indices.
 
             // Count size of each row, and total for the array.
-            $recs = count($this->data[$i]);
-            $this->total_records += $recs;
-            $this->num_recs[$i] = $recs;
+            $this->total_records += $this->num_recs[$i] = count($this->data[$i]);
         }
         // This is the size of the widest row in the data array
         // Note records_per_group isn't used much anymore. See data_columns in CheckDataArray()
-        $this->records_per_group = max($this->num_recs);
+        $this->records_per_group = empty($this->num_recs) ? 0 : max($this->num_recs);
         return TRUE;
     }
 
@@ -2486,13 +2558,13 @@ class PHPlot
      */
     protected function number_format($number, $decimals=0)
     {
-        if (!isset($this->decimal_point) || !isset($this->thousands_sep)) {
+        if (!isset($this->decimal_point, $this->thousands_sep)) {
             // Load locale-specific values from environment, unless disabled:
             if (empty($this->locale_override))
                 @setlocale(LC_ALL, '');
             // Fetch locale settings:
             $locale = @localeconv();
-            if (isset($locale['decimal_point']) && isset($locale['thousands_sep'])) {
+            if (isset($locale['decimal_point'], $locale['thousands_sep'])) {
                 $this->decimal_point = $locale['decimal_point'];
                 $this->thousands_sep = $locale['thousands_sep'];
             } else {
@@ -2714,6 +2786,7 @@ class PHPlot
      * data_min[] and data_max[] with per-row min and max values. These are used for
      * data label lines. For normal (unswapped) data, these are the Y range for each X.
      * For swapped X/Y data, they are the X range for each Y.
+     * For X/Y/Z plots, it also calculates min_z and max_z.
      */
     protected function FindDataLimits()
     {
@@ -2730,6 +2803,11 @@ class PHPlot
             $all_iv = array(0, $this->num_data_rows - 1);
         } else {
             $all_iv = array();
+        }
+        // For X/Y/Z plots, make sure these are not left over from a previous plot.
+        if ($this->datatype_yz) {
+            unset($this->min_z);
+            unset($this->max_z);
         }
 
         // Process all rows of data:
@@ -2762,10 +2840,16 @@ class PHPlot
                         } else {
                             $all_dv[] = $val; // List of all values
                         }
+                        if ($this->datatype_yz) {
+                            $z = $this->data[$i][$j++]; // Note Z is required if Y is present.
+                            if (!isset($this->min_z) || $z < $this->min_z) $this->min_z = $z;
+                            if (!isset($this->max_z) || $z > $this->max_z) $this->max_z = $z;
+                        }
                     }
                 } else {    // Missing DV value
                   $j++;
                   if ($this->datatype_error_bars) $j += 2;
+                  elseif ($this->datatype_yz) $j++;
                 }
             }
             if (!empty($all_dv)) {
@@ -2797,11 +2881,18 @@ class PHPlot
                 $this->max_y = max($this->data_max);
             }
         }
+        // For X/Y/Z plots, make sure these are set. If there are no valid data values,
+        // they will be unset, so set them here to prevent undefined property warnings.
+        if ($this->datatype_yz && !isset($this->min_z)) {   // Means max_z is also unset
+            $this->max_z = $this->min_z = 0; // Actual values do not matter.
+        }
 
         if ($this->GetCallback('debug_scale')) {
             $this->DoCallback('debug_scale', __FUNCTION__, array(
                 'min_x' => $this->min_x, 'min_y' => $this->min_y,
-                'max_x' => $this->max_x, 'max_y' => $this->max_y));
+                'max_x' => $this->max_x, 'max_y' => $this->max_y, 
+                'min_z' => isset($this->min_z) ? $this->min_z : '',
+                'max_z' => isset($this->max_z) ? $this->max_z : ''));
         }
         return TRUE;
     }
@@ -4709,6 +4800,16 @@ class PHPlot
     }
 
     /*
+     * Reverse the order of legend lines. This is useful with stackedbars and stackedarea
+     * plots, so the legend entries are ordered the same way as the plot sections.
+     */
+    function SetLegendReverse($reversal = False)
+    {
+        $this->legend_reverse_order = (bool)$reversal;
+        return TRUE;
+    }
+
+    /*
      * Get legend sizing parameters.
      * This is used internally by DrawLegend(), and also by the public GetLegendSize().
      * It returns information based on any SetLegend*() calls already made. It does not use
@@ -4870,7 +4971,14 @@ class PHPlot
 
         // $y_pos is the bottom of each color box. $yc is the vertical center of the color box or
         // the point shape (if drawn). The text is centered vertically on $yc.
-        $y_pos = $box_start_y + $v_margin + $dot_height;
+        // For normal order (top-down), $y_pos starts at the top. For reversed order, at the bottom.
+        if (empty($this->legend_reverse_order)) {
+            $y_pos = $box_start_y + $v_margin + $dot_height;
+            $delta_y = $dot_height;
+        } else {
+            $y_pos = $box_end_y - $v_margin;
+            $delta_y = -$dot_height;
+        }
         $yc = (int)($y_pos - $dot_height / 2);
         $xc = (int)($dot_left_x + $colorbox_width / 2);   // Horizontal center for point shape if drawn
         $shape_index = 0;  // Shape number index, if drawing point shapes
@@ -4902,8 +5010,8 @@ class PHPlot
                    ImageRectangle($this->img, $dot_left_x, $y1, $dot_right_x, $y2, $this->ndx_text_color);
                 }
             }
-            $y_pos += $dot_height;
-            $yc += $dot_height;
+            $y_pos += $delta_y;
+            $yc += $delta_y;
             if (++$color_index > $max_color_index)
                 $color_index = 0;
         }
@@ -5350,7 +5458,7 @@ class PHPlot
         // Special flag for data color callback to indicate the 'points' part of 'linepoints':
         $alt_flag = $paired ? 1 : 0;
 
-        for ($row = 0, $cnt = 0; $row < $this->num_data_rows; $row++) {
+        for ($row = 0; $row < $this->num_data_rows; $row++) {
             $record = 1;                                // Skip record #0 (title)
 
             $x_now = $this->data[$row][$record++];  // Read it, advance record index
@@ -5410,11 +5518,11 @@ class PHPlot
         $do_dvls = !$paired && $this->CheckDataValueLabels($this->y_data_label_pos,
                       $dvl_x_off, $dvl_y_off, $dvl_h_align, $dvl_v_align);
 
-        for ($row = 0, $cnt = 0; $row < $this->num_data_rows; $row++) {
+        for ($row = 0; $row < $this->num_data_rows; $row++) {
             $rec = 1;                    // Skip record #0 (data label)
 
             if ($this->datatype_implied)                    // Implied X values?
-                $x_now = 0.5 + $cnt++;                      // Place text-data at X = 0.5, 1.5, 2.5, etc...
+                $x_now = 0.5 + $row;                        // Place text-data at X = 0.5, 1.5, 2.5, etc...
             else
                 $x_now = $this->data[$row][$rec++];         // Read it, advance record index
 
@@ -5463,11 +5571,11 @@ class PHPlot
 
         $gcvars = array(); // For GetDataColor, which initializes and uses this.
 
-        for ($row = 0, $cnt = 0; $row < $this->num_data_rows; $row++) {
+        for ($row = 0; $row < $this->num_data_rows; $row++) {
             $rec = 1;                    // Skip record #0 (data label)
 
             if ($this->datatype_implied)                    // Implied independent variable values?
-                $iv_now = 0.5 + $cnt++;                     // Place text-data at 0.5, 1.5, 2.5, etc...
+                $iv_now = 0.5 + $row;                       // Place text-data at 0.5, 1.5, 2.5, etc...
             else
                 $iv_now = $this->data[$row][$rec++];        // Read it, advance record index
 
@@ -5527,6 +5635,7 @@ class PHPlot
             return FALSE;
 
         $n = $this->num_data_rows;  // Number of X values
+        if ($n < 2) return TRUE;    // Require at least 2 rows, for imagefilledpolygon().
 
         // These arrays store the device X and Y coordinates for all lines:
         $xd = array();
@@ -5617,6 +5726,7 @@ class PHPlot
 
         // Flag array telling if the current point is valid, one element per plot line.
         // If start_lines[i] is true, then (lastx[i], lasty[i]) is the previous point.
+        if ($this->data_columns == 0) return TRUE; // No data to plot; prevent array_fill error.
         $start_lines = array_fill(0, $this->data_columns, FALSE);
 
         $gcvars = array(); // For GetDataColor, which initializes and uses this.
@@ -5625,11 +5735,11 @@ class PHPlot
         $do_dvls = $this->CheckDataValueLabels($this->y_data_label_pos,
                       $dvl_x_off, $dvl_y_off, $dvl_h_align, $dvl_v_align);
 
-        for ($row = 0, $cnt = 0; $row < $this->num_data_rows; $row++) {
+        for ($row = 0; $row < $this->num_data_rows; $row++) {
             $record = 1;                                    // Skip record #0 (data label)
 
             if ($this->datatype_implied)                    // Implied X values?
-                $x_now = 0.5 + $cnt++;                      // Place text-data at X = 0.5, 1.5, 2.5, etc...
+                $x_now = 0.5 + $row;                        // Place text-data at X = 0.5, 1.5, 2.5, etc...
             else
                 $x_now = $this->data[$row][$record++];      // Read it, advance record index
 
@@ -5690,11 +5800,12 @@ class PHPlot
      */
     protected function DrawLinesError($paired = FALSE)
     {
+        if ($this->data_columns == 0) return TRUE; // No data to plot; prevent array_fill error.
         $start_lines = array_fill(0, $this->data_columns, FALSE);
 
         $gcvars = array(); // For GetDataErrorColors, which initializes and uses this.
 
-        for ($row = 0, $cnt = 0; $row < $this->num_data_rows; $row++) {
+        for ($row = 0; $row < $this->num_data_rows; $row++) {
             $record = 1;                                    // Skip record #0 (data label)
 
             $x_now = $this->data[$row][$record++];          // Read X value, advance record index
@@ -5783,6 +5894,7 @@ class PHPlot
         if (!$this->CheckDataType('text-data, data-data'))
             return FALSE;
 
+        if ($this->data_columns == 0) return TRUE; // No data to plot; prevent array_fill error.
         // Flag array telling if the current point is valid, one element per plot line.
         // If start_lines[i] is true, then (lastx[i], lasty[i]) is the previous point.
         $start_lines = array_fill(0, $this->data_columns, FALSE);
@@ -5793,11 +5905,11 @@ class PHPlot
         $do_dvls = $this->CheckDataValueLabels($this->y_data_label_pos,
                       $dvl_x_off, $dvl_y_off, $dvl_h_align, $dvl_v_align);
 
-        for ($row = 0, $cnt = 0; $row < $this->num_data_rows; $row++) {
+        for ($row = 0; $row < $this->num_data_rows; $row++) {
             $record = 1;                                    // Skip record #0 (data label)
 
             if ($this->datatype_implied)                    // Implied X values?
-                $x_now = 0.5 + $cnt++;                      // Place text-data at X = 0.5, 1.5, 2.5, etc...
+                $x_now = 0.5 + $row;                        // Place text-data at X = 0.5, 1.5, 2.5, etc...
             else
                 $x_now = $this->data[$row][$record++];      // Read it, advance record index
 
@@ -6184,7 +6296,7 @@ class PHPlot
      * Draw a financial "Open/High/Low/Close" (OHLC) plot, including candlestick plots.
      * Data format can be text-data (label, Yo, Yh, Yl, Yc) or data-data (label, X, Yo, Yh, Yl, Yc).
      * Yo="Opening price", Yc="Closing price", Yl="Low price", Yh="High price".
-     * Each row must have exactly 4 Y values. No multiple data sets, no missing values.
+     * Each row must have exactly 4 Y values. Indicate a missing point using empty strings for each Yx.
      * There are 3 subtypes, selected by $draw_candles and $always_fill.
      *   $draw_candles  $always_fill  Description:
      *    FALSE          N/A          A basic OHLC chart with a vertical line for price range, horizontal
@@ -6205,6 +6317,8 @@ class PHPlot
     {
         if (!$this->CheckDataType('text-data, data-data'))
             return FALSE;
+        if ($this->data_columns != 4) // early error check (more inside the loop)
+            return $this->PrintError("DrawOHLC(): rows must have 4 values.");
 
         // Assign name of GD function to draw candlestick bodies for stocks that close up.
         $draw_body_close_up = $always_fill ? 'imagefilledrectangle' : 'imagerectangle';
@@ -6222,11 +6336,11 @@ class PHPlot
 
         $gcvars = array(); // For GetDataColor, which initializes and uses this.
 
-        for ($row = 0, $cnt = 0; $row < $this->num_data_rows; $row++) {
+        for ($row = 0; $row < $this->num_data_rows; $row++) {
             $record = 1;                                    // Skip record #0 (data label)
 
             if ($this->datatype_implied)                    // Implied X values?
-                $x_now = 0.5 + $cnt++;                      // Place text-data at X = 0.5, 1.5, 2.5, etc...
+                $x_now = 0.5 + $row;                        // Place text-data at X = 0.5, 1.5, 2.5, etc...
             else
                 $x_now = $this->data[$row][$record++];      // Read it, advance record index
 
@@ -6237,13 +6351,15 @@ class PHPlot
             if ($this->x_data_label_pos != 'none')          // Draw X Data labels?
                 $this->DrawXDataLabel($this->data[$row][0], $x_now_pixels, $row);
 
-            // Require and use 4 numeric values in each row.
-            if ($this->num_recs[$row] - $record != 4
-                    || !is_numeric($yo = $this->data[$row][$record++])
-                    || !is_numeric($yh = $this->data[$row][$record++])
-                    || !is_numeric($yl = $this->data[$row][$record++])
-                    || !is_numeric($yc = $this->data[$row][$record++])) {
-                return $this->PrintError("DrawOHLC: row $row must have 4 values.");
+            // Each row must have 4 values, but skip rows with non-numeric entries.
+            if ($this->num_recs[$row] - $record != 4) {
+                return $this->PrintError("DrawOHLC(): row $row must have 4 values.");
+            }
+            if (!is_numeric($yo = $this->data[$row][$record++])
+             || !is_numeric($yh = $this->data[$row][$record++])
+             || !is_numeric($yl = $this->data[$row][$record++])
+             || !is_numeric($yc = $this->data[$row][$record++])) {
+                continue;
             }
 
             // Set device coordinates for each value and direction flag:
@@ -6298,6 +6414,63 @@ class PHPlot
                 imageline($this->img, $x_right, $yc_pixels, $x_now_pixels, $yc_pixels, $ext_color);
             }
             imagesetthickness($this->img, 1);
+        }
+        return TRUE;
+    }
+
+    /*
+     * Draw a bubble chart, which is a scatter plot with bubble size showing the Z value.
+     * Supported data type is data-data-xyz with rows of (label, X, Y1, Z1, ...)
+     * with multiple data sets (Y, Z pairs) supported.
+     * Bubble sizes are scaled per the min_z and max_z calculated in FindDataLimits.
+     */
+    protected function DrawBubbles()
+    {
+        if (!$this->CheckDataType('data-data-xyz'))
+            return FALSE;
+        if ($this->data_columns == 0) return TRUE; // No data to plot; prevents error on min_z/max_z.
+
+        $gcvars = array(); // For GetDataColor, which initializes and uses this.
+
+        // Bubble size limits can be set with class variables or calculated.
+        $min_bubble_size = isset($this->bubbles_min_size) ? $this->bubbles_min_size : 6;
+        if (isset($this->bubbles_max_size)) {
+            $max_bubble_size = $this->bubbles_max_size;
+        } else {
+            $max_bubble_size = min($this->plot_area_width, $this->plot_area_height) / 12;
+        }
+
+        // Calculate bubble scale parameters. Bubble_size(z) = $f_size * $z + $b_size
+        if ($this->max_z <= $this->min_z) {   // Regressive case, no Z range.
+            $f_size = 0;
+            $b_size = ($max_bubble_size + $min_bubble_size) / 2; // Use average size of all bubbles
+        } else {
+            $f_size = ($max_bubble_size - $min_bubble_size) / ($this->max_z - $this->min_z);
+            $b_size = $max_bubble_size - $f_size * $this->max_z;
+        }
+
+        for ($row = 0; $row < $this->num_data_rows; $row++) {
+            $rec = 1;                    // Skip record #0 (data label)
+            $x = $this->xtr($this->data[$row][$rec++]); // Get X value from data array.
+
+            // Draw X Data labels?
+            if ($this->x_data_label_pos != 'none')
+                $this->DrawXDataLabel($this->data[$row][0], $x, $row);
+
+            // Proceed with Y,Z values
+            for ($idx = 0; $rec < $this->num_recs[$row]; $rec += 2, $idx++) {
+                if (is_numeric($this->data[$row][$rec])) {              // Allow for missing Y data
+                    $y = $this->ytr((double)$this->data[$row][$rec]);
+                    $z = (double)$this->data[$row][$rec+1]; // Z is required if Y is present.
+                    $size = (int)($f_size * $z + $b_size);  // Calculate bubble size
+
+                    // Select the color:
+                    $this->GetDataColor($row, $idx, $gcvars, $data_color);
+
+                    // Draw the bubble:
+                    ImageFilledEllipse($this->img, $x, $y, $size, $size, $data_color);
+                }
+            }
         }
         return TRUE;
     }

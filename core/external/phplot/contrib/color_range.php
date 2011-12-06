@@ -1,7 +1,7 @@
 <?php
 /*
    PHPlot / contrib / color_range
-   $Id: color_range.php,v 1.2 2010/10/03 21:57:15 lbayuk Exp $
+   $Id: color_range.php 974 2011-07-26 17:20:50Z lbayuk $
    PHPlot contrib code - public domain - no copyright - use as you wish
 
    Original contribution from: Josep Sanz <josep dot sans at w3 dot es>

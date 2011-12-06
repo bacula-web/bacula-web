@@ -1,5 +1,5 @@
 <?php
-/* $Id: rgb.inc.php,v 1.2 2009/06/12 01:58:35 lbayuk Exp $ */
+/* $Id: rgb.inc.php 393 2009-06-12 01:58:35Z lbayuk $ */
 /*
  * This is a large color map which can be used by PHPlot via
  *     $plot->SetRGBArray('large')

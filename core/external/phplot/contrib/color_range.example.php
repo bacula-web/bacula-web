@@ -1,6 +1,6 @@
 <?php
 # PHPlot / contrib / color_range : Example
-# $Id: color_range.example.php,v 1.1 2009/12/09 03:45:45 lbayuk Exp $
+# $Id: color_range.example.php 449 2009-12-09 03:45:45Z lbayuk $
 # This is a bar chart with a color gradient for the bars in each group.
 
 require_once 'phplot.php';

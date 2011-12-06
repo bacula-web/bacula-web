@@ -1,6 +1,82 @@
 This is the Change Log for PHPlot.
 The project home page is http://sourceforge.net/projects/phplot/
 -----------------------------------------------------------------------------
+
+2011-07-30 (lbayuk)     ===== Released as 5.5.0 =====
+    * phplot.php: Updated version comment and version constant
+    * README.txt: Updated for new release
+    * NEWS.txt: Add text for new release
+
+2011-07-28
+    * Fixed problem found in testing with bubbles plot: data array
+      with no Y,Z values at all got undefined property warnings.
+
+    * Feature request #3352301 "Bubble plots":
+      + Added new data type 'data-data-xyz', which includes a Z value
+        for each Y.
+      + Extended CheckDataArray(), DecodeDataType() and
+        FindDataLimits() to understand new data type.
+      + Added new plot type 'bubbles' for bubble plots, using data
+        type 'data-data-xyz'. The Z value controls the bubble size.
+      + New internal function DrawBubbles() to draw bubble plot.
+      + New tunable parameters bubbles_min_size and bubbles_max_size.
+
+2011-07-25
+    * Feature request #3374495 "Data URL encoding":
+      + New function EncodeImage() returns the plot image as a string,
+        with 3 available encodings: raw, base64, and dataurl. The dataurl
+        encoding implements RFC2397 embedding of image data in a URL,
+        and allows a single PHP script to produce an HTML page with the
+        plot image embedded within.
+      + New internal function GetImageType() for code shared between
+        PrintImage() and EncodeImage().
+      + New function SetFailureImage() disables the normal behavior
+        where PHPlot produces an image containing an error message in
+        case of a fatal error. Suppressing this is necessary when using
+        the new EncodeImage(), to avoid unexpected image data on stdout.
+      + New member variable suppress_error_image, set by
+        SetFailureImage(), checked by PrintError() to not make an image.
+
+2011-07-22
+    Preparing for move from CVS to Subversion.
+    * Makefile: Remove 'tag' target. This was unused (and CVS-specific).
+    * phplot.php: Remove reference to CVS in comment and version const.
+
+2011-07-21
+    * Fixed bug #3370548 "Reverse legend line order for stackedbars":
+      New function SetLegendReverse(True) to draw lines in the legend
+      in order from the bottom up, rather than top down. This is
+      mostly intended for stackedbars and stackedarea plots.
+
+2011-07-04
+    * Code cleanup: Removed extra loop variable $cnt from plot drawing
+      functions, where it was either unused or redundant.
+
+2011-06-12
+    * Fixed bug 3312064 "PHP errors with invalid data arrays":
+      PHPlot now checks the data array more carefully, to reject invalid
+      arrays and prevent PHP warning or notice errors with bad data arrays.
+      + SetDataValues() checks the data array argument to make sure it uses
+        0-based, sequential integer indexes, and that each element is an array.
+      + CheckDataArray() (called early by DrawGraph()) uses the data type for
+        more specific checking.  It makes sure each row has the right number of
+        entries. (E.g. text-data >=1, data-data >=2, data-data-error =2+3N.)
+      + DrawArea() ('area' and 'stackedarea' plots) returns without drawing
+        anything if there are < 2 rows, to avoid a PHP warning from
+        ImageFilledPolygon(). The 2-row minimum requirement is now documented.
+      + DrawLines(), DrawLinesError(), and DrawSquared() return without
+        drawing anything if there are no data values at all, to avoid a PHP
+        warning from array_fill().
+      + DrawOHLC() ('ohlc', 'candlesticks', and 'candlesticks2' plots) now
+        checks early that there are 4 data columns, and fails if not.  This
+        is to avoid a PHP warning when assigning line thicknesses.
+
+2011-06-05
+    * Fixed bug 3312134 "Allow missing points in OHLC plots":
+      You can now skip points in the 3 OHLC plot types by using empty strings
+      ('') for the 4 values in the row. All rows must still have 4 values, but
+      if any is non-numeric the row will be skipped.
+
 2011-05-27 (lbayuk)     ===== Released as 5.4.0 =====
     * phplot.php: Updated version comment and version constant
     * README.txt: Updated for new release

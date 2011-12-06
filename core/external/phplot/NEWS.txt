@@ -4,6 +4,79 @@ The project home page is http://phplot.sourceforge.net/
 Refer the the ChangeLog file for detailed source changes.
 -----------------------------------------------------------------------------
 
+2011-07-30 Release 5.5.0
+
+Overview:
+
+This is the current stable release of PHPlot. This release includes some
+bug fixes and new features. A significant new feature is the ability to
+embed a plot image inside an HTML file. Using this new feature, you can now
+write a single script which produces an HTML page with a PHPlot plot image,
+and avoid having to write separate scripts for the page and plot image.
+
+There is also a new 'bubbles' plot type.
+
+The PHPlot reference manual has been updated to match this release.
+
+
+Cautions, Important Notes, and Compatibility Issues:
+
+Starting in this release, PHPlot more thoroughly checks data arrays for
+validity. Your data array must conform to the requirements in the PHPlot
+Reference Manual, including: the outer array must use only 0-based sequential
+integer indexes, the array values for rows must be arrays, and each row
+array must have a number of elements which is compatible with the data type
+and plot type. PHPlot will now produce an error image if given an invalid
+data array. In previous releases, PHPlot sometimes produced an error image,
+sometimes ignored the invalid entries, but most often it would produce PHP
+warnings or notices about invalid indexes or variable types.
+
+Read the notes and warnings in the PHPlot Reference Manual page documenting
+EncodeImage() before using the new 'data URL' feature for embedding PHPlot
+images in HTML files.
+
+
+Bugs Fixed in 5.5.0:
+
+#3312134 Allow missing points in OHLC plots:
+  Like other plot types, the three OHLC plot types (ohlc, candlesticks, and
+  candlesticks2) now allow missing points. Specify all 4 values in the array
+  (open, high, low, close) as an empty string (for example) and that point
+  will not be plotted.
+
+#3312064 PHP errors with invalid data arrays:
+  See Compatibility Issues above.  PHPlot now checks the data array more
+  carefully and rejects invalid arrays without PHP warnings or notices.
+
+#3370548 Reverse legend line order for stackedbars:
+  A new function SetLegendReverse() was added to control the order of
+  text lines (and color boxes) in the legend: top-down (by default),
+  or bottom-up. The bottom-up order is more appropriate for stackedbars
+  and stackedarea plots, so the legend line order matches the plot.
+
+
+New features in 5.5.0:
+
+#3374495 Data URL encoding:
+  A New function EncodeImage() was added. It returns the plot image as a
+  string, with 3 available encodings: raw, base64, and dataurl.
+  The dataurl encoding implements RFC2397 embedding of image data in a URL,
+  and allows a single PHP script to produce an HTML page with the plot image
+  embedded within. See the PHPlot Reference Manual for details and examples.
+
+  Also, a new function SetFailureImage() was added. This allows you to
+  prevent PHPlot from creating an image with an error message if a fatal
+  error occurs. This is meant for use when EncodeImage (rather than
+  PrintImage) will be used to produce the plot, but it may be useful in
+  other cases too.
+
+#3352301 Bubble plots:
+  A new plot type 'bubbles' was added, along with a new data type
+  'data-data-xyz' for use with this type. A bubble plot is a scatter-plot
+  with a Z value at each point controlling the bubble diameter.
+
+-----------------------------------------------------------------------------
+
 2011-05-27 Release 5.4.0
 
 Overview
