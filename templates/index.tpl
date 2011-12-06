@@ -35,16 +35,20 @@
 	<p class="title">{t}Last 24 hours status{/t}</p>
 		<table>
 			<tr>
-				<td class="label">{t}Failed jobs{/t}</td> 
-				<td class="failed_jobs">{$failed_jobs}</td>
-			</tr>
-			<tr>
 				<td class="label">{t}Completed jobs{/t}</td> 
 				<td class="completed_jobs">{$completed_jobs}</td>
 			</tr> 
 			<tr>
 				<td class="label">{t}Waiting jobs{/t}</td> 
 				<td class="waiting_jobs">{$waiting_jobs}</td>
+			</tr>
+			<tr>
+				<td class="label">{t}Failed jobs{/t}</td> 
+				<td class="failed_jobs">{$failed_jobs}</td>
+			</tr>
+			<tr>
+				<td class="label">{t}Canceled jobs{/t}</td> 
+				<td class="failed_jobs">{$canceled_jobs}</td>
 			</tr> 
 			<tr>
 				<td class="label">Job Level (Incr / Diff / Full)</td>

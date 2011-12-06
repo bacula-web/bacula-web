@@ -54,6 +54,7 @@
 	$dbSql->tpl->assign( 'completed_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'completed' ) );
 	$dbSql->tpl->assign( 'failed_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'failed' ) );
 	$dbSql->tpl->assign( 'waiting_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'waiting' ) );
+	$dbSql->tpl->assign( 'canceled_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'canceled' ) );
 
 	// Last 24 hours jobs Level
 	$dbSql->tpl->assign( 'incr_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'ALL', J_INCR) );
