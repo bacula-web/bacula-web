@@ -76,10 +76,15 @@
 	 }
  }
  
- // Generate test graph
- $data = array( array('test', 100, 100, 200, 100), array('test1', 150, 100, 150, 100 ) );	
+ // Testing graph capabilities
+ $data = array( 
+			    array('test',  100 ), 
+				array('test1', 150 ),
+				array('test1', 180 ),
+				array('test1', 456 )
+			   );
+			   
  $graph = new CGraph( "graph3.png" );
- $graph->SetColors( array('green', 'red' ) );
 
  $graph->SetData( $data, 'pie', 'text-data-single' );
  $graph->SetGraphSize( 400, 230 );
