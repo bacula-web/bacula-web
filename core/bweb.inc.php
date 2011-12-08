@@ -70,14 +70,10 @@ class Bweb
 		$this->tpl->assign( 'catalog_current_id', $this->catalog_current_id );
 		
 		// Database connection
-		try {
 			$this->db_link = new CDB( 	$this->bwcfg->getDSN($this->catalog_current_id), 
 										$this->bwcfg->getUser($this->catalog_current_id), 
 										$this->bwcfg->getPwd($this->catalog_current_id)  );
 			$this->db_link->makeConnection();	
-        }catch( CErrorHandler $e ) {
-			$e->raiseError();
-		}		
 
 		// Catalog selection		
 		if( $this->catalog_nb > 1 ) {

@@ -39,13 +39,22 @@ class CDB
 	
 	public function makeConnection()
 	{
-		if( !isset( $this->connection ) )
-			$this->connection = new PDO( $this->dsn, $this->user, $this->password );
+		try{
+			if( !isset( $this->connection ) )
+				$this->connection = new PDO( $this->dsn, $this->user, $this->password );
 		
-		if( !is_a( $this->connection, 'PDO' ) )
-			throw new CErrorHandler("Failed to make database connection");
+			if( !is_a( $this->connection, 'PDO' ) )
+				throw new CErrorHandler("Failed to make database connection");
 		
-		$this->setOptions(); 		
+			$this->setOptions();
+		} catch (PDOException $e) {
+			echo '<h3 style="background-color: #F0F0F0; width: 550px; padding: 5px; font-family: Arial,Verdana;">';
+			echo 'Database connection error </h3>';
+			
+			echo '<p style="width: 550px; padding: 5px; font-family: Arial,Verdana; font-size: 10pt;">';
+			echo '<b>Message:</b> ' . $e->getMessage() . '<br />';
+			die();
+		}		
 	}
 	
 	private function setOptions()
