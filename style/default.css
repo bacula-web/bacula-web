@@ -148,12 +148,11 @@ a:link, a:visited, a:hover, a:visited {
 }
 
 .box {
- /*border: 1px solid #B0B0B0;*/
  float: left;
  min-height: 100px;
- min-width: 290px;
+ min-width: 300px;
  padding: 0px;
- margin: 10px 15px 5px 5px;
+ margin: 10px 5px;
  text-align: center;
 }
 
@@ -181,18 +180,12 @@ a:link, a:visited, a:hover, a:visited {
  border: none;
 }
 
-.box div.footer { 
- text-align: right; 
- padding: 0px;
- margin: 3px;
- margin-right: 20px;
-}
-
-.box div.footer a {
- text-decoration: none;
+.box p.box_footer {
+ font-style: italic;
  font-size: 9pt;
- font-weight: bold;
- vertical-align: middle;
+ color: #736F6E;
+ /*color: #000000;*/
+ margin: 0px;
 }
 
 .box table tr td {
@@ -243,7 +236,7 @@ a:link, a:visited, a:hover, a:visited {
 table {
  width: 100%;
  margin: 0px;
- /*border-collapse: collapse;*/
+ border-collapse: collapse;
 }
 .pool_name {
  text-align: left; 

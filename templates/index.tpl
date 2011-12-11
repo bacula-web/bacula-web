@@ -33,7 +33,7 @@
 <!-- Last 24 hours job Status -->
   <div class="box">
 	<p class="title">{t}Last 24 hours status{/t}</p>
-		<table>
+		<table style="border-collapse: separate;">
 			<tr>
 				<td class="label">{t}Completed jobs{/t}</td> 
 				<td class="completed_jobs">{$completed_jobs}</td>
@@ -71,6 +71,7 @@
 	  <a href="jobs.php" title="{t}Show last 24 hours jobs status{/t}">
 	    <img class="graph" src="{$graph_jobs}" alt="" />
 	  </a>
+	  <p class="box_footer">Click on graph to see the report</p>
   </div> <!-- end div box -->
   
 </div>
@@ -86,6 +87,7 @@
     <a href="pools.php" title="{t}Show pools and volumes report{/t}">
 	   <img class="graph" src="{$graph_pools}" alt="" />
 	</a>
+	<p class="box_footer">Click on graph to see the report</p>
   </div> <!-- end div box -->
   
   <!-- Stored Bytes for last 7 days -->
