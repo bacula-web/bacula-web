@@ -51,8 +51,6 @@
 </div> <!-- end div box-->
 {/foreach}
 
-<!-- </div> <!-- end div main_center -->
-
-<!-- End volumes.tpl -->
+<!-- End pools.tpl -->
 
 {include file="footer.tpl"}
