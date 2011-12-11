@@ -108,7 +108,7 @@
 	$dbSql->tpl->assign('graph_stored_bytes', $graph->Get_Image_file() );
 
 
-	// Last 15 used volumes
+	// Last used volumes
 	$last_volumes = array();
 	
 	try{
@@ -126,7 +126,14 @@
 			$query 				  = "SELECT COUNT(*) as jobs_count FROM JobMedia WHERE JobMedia.MediaId = '" . $volume['mediaid'] . "'";
 			$jobs_by_vol 		  = $dbSql->db_link->runQuery($query);
 			$jobs_by_vol 		  = $jobs_by_vol->fetchAll();
+			
+			// Volumes details
 			$volume['jobs_count'] = $jobs_by_vol[0]['jobs_count'];
+			
+			// odd or even row
+			if( (count($last_volumes) % 2) > 0 )
+				$volume['odd_even'] = "odd";
+			
 			$last_volumes[] 	  = $volume;
 		}
 	}catch( CErrorHandler $e  ) {

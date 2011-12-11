@@ -109,11 +109,11 @@
 		</tr>
 		{foreach from=$volumes_list item=vol}
 		<tr>
-		  <td>{$vol.volumename}</td>
-		  <td>{$vol.volstatus}</td>
-		  <td>{$vol.poolname}</td>
-		  <td>{$vol.lastwritten}</td>
-		  <td><b>{$vol.jobs_count}</b></td>
+		  <td class="{$vol.odd_even}">{$vol.volumename}</td>
+		  <td class="{$vol.odd_even}">{$vol.volstatus}</td>
+		  <td class="{$vol.odd_even}">{$vol.poolname}</td>
+		  <td class="{$vol.odd_even}">{$vol.lastwritten}</td>
+		  <td class="{$vol.odd_even}"><b>{$vol.jobs_count}</b></td>
 		</tr>
 		{/foreach}
 	  </table>
