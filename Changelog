@@ -1,0 +1,164 @@
+=== Bacula-Web 5.2.2 ===
+
+ Version: 5.2.2
+ Released on: December 11th 2011 
+
+ - New layout for dashboard
+ - Updated last day status with canceled jobs (dashboard)
+ - Pool column in last used volumes widget
+ - Improved database support (fixed bugs and better exception handling)
+ - Updated translations for all languages
+ - Exception handling when config file contain bad parameters or missing database connection
+ - Database and application exception handling
+ - Upgraded PHPLot to latest version (version 5.5.0)
+
+ Fixed bugs
+
+ - (0000010) [bug] Improve postgreSQL (bacula-dev) - resolved.
+
+== Bacula-Web 5.1.0 ==
+
+ Version: 5.1.0
+ Released on: 25th July 2010
+
+ - Improved dashboard statistics
+ - Improved database support
+ - Multi-catalog support enhancements
+ - Support for PHP version 4 removed
+ - Cleaned up HTML and CSS code (more W3C compliant)
+ - New elements checked in test page such as PHP version, template cache folder permissions, PHP PDO support, etc.
+ - New Client backup report page
+ - New Pools and volumes page
+ - Fixed security issue reported by Leonardo Rota Botelho
+
+ Fixed bugs
+
+ - (0000023) [design] Problem with graph in the General report with more than 12 Backup jobs (bacula-dev) - resolved
+ - (0000034) [bug-php] Useless PEAR:DB include in global.inc.php file (bacula-dev) - resolved
+ - (0000030) [bug-html] Error.gif instead of Images (bacula-dev) - resolved
+ - (0000029) [bug-pgsql] Unable to get volume number from catalog (bacula-dev) - resolved
+ - (0000031) [bug-php] Big Red X in right side when Full mode is enabled (bacula-dev) - resolved
+ - (0000004) [bug] Make w3c standard html code (bacula-dev) - resolved
+ - (0000027) [bug-php] PHP Errors (bacula-dev) - resolved
+ - (0000026) [bug-pgsql] PostgreSQL error (bacula-dev) - resolved
+ - (0000025) [bug] Images not appearing correctly in latest version (bacula-dev) - resolved
+ - (0000024) [design] Improve design of Bacula-Web when there's a lot of volumes (bacula-dev) - resolved
+ - (0000019) [bug] Unreadable dates in graph (bacula-dev) - resolved
+ - (0000012) [bug] Wrong spelling in popup (bacula-dev) - resolved
+ - (0000011) [bug] Wrong size of database with postgreSQL (bacula-dev) - resolved
+ - (0000006) [feature] Scale Down bytes backed up to Kbytes, Mbytes or Gbytes (bacula-dev) - resolved
+ - (0000022) [bug-php] List of jobs are no more display as expected (bacula-dev) - resolved
+ - (0000007) [feature] Use JPgraph instead of phplot (bacula-dev) - closed
+
+== Bacula-web 5.0.3  ==
+
+ Version: 5.0.3
+ Released on: 2nd November 2010
+
+ - Changed content of README file
+ - Added new email address in CONTACT file
+ - Removed TODO file
+ - Removed changeLog file
+ - Moved images folder into style directory
+ - Removed var_dump used for debug from report.php
+ - Removed fsize_format tag from report.tpl
+ - Improved volumes list
+ - Changed css classes for header and boxes
+ - Removed fzise_format and new function in classes.inc
+ - New function ByteToSize() in classe Bweb classe
+ - Adapted path for Smarty lib in paths.php
+ - Upgraded Smarty to latest version (Smarty 2.6.26)
+ - Fixed html and css issue in report page - Fixed in report.tpl and report_select.tpl
+ - Fixed html issue in index.tpl - Replaced all & by &amp; in phplot graph
+ - Improved css code in volumes.tpl
+ - Improved html code in volumes.tpl
+ - Fixed Smarty typo in volumes.tpl
+ - Fixed Overlib bug in index.tpl
+ - Fixed typo in graph in classes.inc
+ - Improved design and fixed html/css issue
+ - Changed header.tpl design and links
+ - Changed CSS file declaration in full_popup.tpl
+ - Fixed typo in Javascript declaration
+ - Improved test page
+ - Fixed all php short tag
+ - Fixed some html and css issue
+ - Changed header.tpl content
+ - Changed css file location in report.tpl
+ - Changed css file location in style/default.css
+ - Removed title variable from config file
+ - New style folder
+ - Ignore Smarty cache files
+
+== Bacula-web 1.3  ==
+
+ Version: 1.3
+ Released on: 26th January 2006
+
+ - (0000019,0000021) Fixed psql querys.
+ - Fixed XTicks (Graphs).
+
+ Fixed bugs
+
+ - (0000019,0000021) Fixed psql querys.
+
+== Bacula web 1.2 (06-10-2005) ==
+
+ Version: 1.2
+ Released on: 6th October 2005
+
+ - Human redable Y-axis of graphs
+ - Updated French translation
+ - Initial support for PostgreSQL (thanks to Dan Langille)
+ - Upgrade Phplot to 5.0rc2 version.
+ - Added templates_c to cvs repository.
+ - Added German translation
+ - Fix mysql database size (reported by Roland Arendes)
+ - Added JobID column in report template. (thanks to Stephan Ebeit)
+ - Upgraded Smarty to 2.6.10 version.
+ - Added multicatalog support
+
+== Bacula web 1.1 ==
+
+ Version: 1.1
+ Released on: 25th October 2004
+
+ - Add array_fill function (as Mikael suggested)
+ - Fix url encode of links. (reported by Phil Stracchino)
+ - Upgraded Smarty to 2.6.6 version.
+ - Add French translation
+
+== Bacula web 1.0 ==
+
+ Version:  1.0
+ Released on: 4th August 2004
+
+ - Add Italian translation
+ - Change some colors of graphs. More clear now (I hope).
+
+ Fixed bugs
+
+ - (0000012) Fix, don't load config in report.php
+ - (0000015) Fix, error date in When expire? field.
+
+== Bacula web 1.0 Beta2 ==
+
+ Version: 1.0 Beta2
+ Released on: 14th June 2004
+
+ Fixed bugs
+
+ - (0000009) Fix incorrect date of â€œselect report.
+ - (0000010) Fix incorrect symbolic link (Add paths.php).
+ - (0000008) Fix elapsed time of execution of jobs more than 24h in Lite mode.
+
+== Bacula-web 1.0 Beta1 ==
+
+ Version: 1.0 Beta1
+ Released on: 11th June 2004
+
+ - Check connection error (reported by Thomas Contamine)
+ - Register_globals on/off compatible (reported by Thomas Contamine)
+ - Fix bug in graph type=69. The data now is correct.
+ - Fix config system.
+ - Very internal fixes.
+ - Unordered List ItemAdd at last report.
