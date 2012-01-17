@@ -348,7 +348,7 @@ class Bweb
 	}
 	
 	// Return an array with clients list
-	public function getClients() 
+	public function get_Clients() 
 	{
 		$query   = '';
 		$result  = '';
@@ -359,7 +359,7 @@ class Bweb
 			case 'sqlite':
 			case 'mysql':
 			case 'pgsql':
-				$query 		= "SELECT Client.ClientId, Client.Name FROM Client;";
+				$query 		= "SELECT Client.ClientId, Client.Name FROM Client ORDER BY Client.Name;";
 			break;
 		}
 		try {

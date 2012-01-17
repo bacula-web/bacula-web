@@ -48,7 +48,7 @@
 	
 	// Clients list
 
-	$dbSql->tpl->assign( 'clients_list', $dbSql->getClients() );
+	$dbSql->tpl->assign( 'clients_list', $dbSql->get_Clients() );
 
 	// Last 24 hours status (completed, failed and waiting jobs)
 	$dbSql->tpl->assign( 'completed_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'completed' ) );
