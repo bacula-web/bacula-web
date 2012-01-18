@@ -1,7 +1,7 @@
 {include file=header.tpl}
 
 <div id="nav">
-  <a href="index.php" title="Back to the dashboard">Dashboard</a> > Pools and Volumes list
+  <a href="index.php" title="Back to the dashboard">{t}Dashboard{/t}</a> > Pools and Volumes list
 </div>
 
 <!-- <div id="main_center"> -->
