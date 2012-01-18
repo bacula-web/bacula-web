@@ -1,22 +1,14 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-  "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-<title>bacula-web</title>
-<link rel="stylesheet" type="text/css" href="style/default.css">
-</head>
-<body>
 {include file=header.tpl}
 
-  <div id="nav">
-    <a href="index.php" title="{t}Back to the dashboard{/t}">Dashboard</a> > Backup Job Report
-  </div>
+<div id="nav">
+  <a href="index.php" title="{t}Back to the dashboard{/t}">Dashboard</a> > Backup Job Report
+</div>
 
-  <div class="main_center">
+<div class="main_center">
   <!-- Backup job informations -->
   <p class="header">{t}Backup Job Report{/t}</p>
-  <div class="box">	
-	<table>
+    <div class="box">
+      <table>
 		<tr>
 			<td width="150">{t}Backup Job name{/t}:</td>
 			<td>{$backupjob_name}</td>
@@ -33,8 +25,7 @@
 			<td>{t}Transfered Files{/t}</td>
 			<td>{$backupjob_files}</td>
 		</tr>
-
-	</table>
+      </table>
   </div> <!-- end div class=box -->
   </div> <!-- end div class=main_center -->
   

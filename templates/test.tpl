@@ -1,15 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-  "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-<title>bacula-web</title>
-<link rel="stylesheet" type="text/css" href="style/default.css">
-</head>
-<body>
 {include file=header.tpl}
-  <div id="nav">
+
+<div id="nav">
     <a href="index.php" title="{t}Back to the dashboard{/t}">Dashboard</a> > Test page
-  </div>
+</div>
+
 <div id="main_center">
 	<div class="box">
 	  <p class="title">{t}Required components{/t}</p>
