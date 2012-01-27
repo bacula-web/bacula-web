@@ -70,7 +70,7 @@ class Bweb
 		$this->tpl->assign( 'catalog_current_id', $this->catalog_current_id );
 		
 		// Database connection
-			$this->db_link = new CDB( 	$this->bwcfg->getDSN($this->catalog_current_id), 
+			$this->db_link = new CDB( 	$this->bwcfg->get_DSN($this->catalog_current_id), 
 										$this->bwcfg->getUser($this->catalog_current_id), 
 										$this->bwcfg->getPwd($this->catalog_current_id)  );
 			$this->db_link->makeConnection();	

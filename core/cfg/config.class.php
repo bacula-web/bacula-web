@@ -80,20 +80,23 @@
 		return count( $this->catalogs );
 	}
 	
-	public function getDSN( $catalog_id ) 
+	public function get_DSN( $catalog_id ) 
 	{
 		$dsn = '';
+		$current_catalog = $this->catalogs[$catalog_id];
 		
-		switch( $this->catalogs[$catalog_id]['db_type'] )
+		switch( $current_catalog['db_type'] )
 		{
 			case 'mysql':
 			case 'pgsql':
-				$dsn  = $this->catalogs[$catalog_id]['db_type'] . ':';
-				$dsn .= 'dbname=' . $this->catalogs[$catalog_id]['db_name'] . ';';
-				$dsn .= 'host=' . $this->catalogs[$catalog_id]['host'];
+				$dsn  = $current_catalog['db_type'] . ':';
+				$dsn .= 'dbname=' . $current_catalog['db_name'] . ';';
+				$dsn .= 'host=' . $current_catalog['host'] . ';';
+				if(isset($current_catalog['db_port']) and !empty($current_catalog['db_port']))
+					$dsn .= 'port=' . $current_catalog['db_port'] . ';';
 			break;
 			case 'sqlite':
-				$dsn  = $this->catalogs[$catalog_id]['db_type'] . ':' . $this->catalogs[$catalog_id]['db_name'];
+				$dsn  = $current_catalog['db_type'] . ':' . $current_catalog['db_name'];
 			break;
 		}
 		
