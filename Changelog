@@ -1,3 +1,19 @@
+=== Bacula-Web 5.2.5 ===
+
+ Version: 5.2.5
+ Released on: January dd 2012
+
+ - Updated french translation (thanks to Guillaume Delacour)
+ - Fixed client sort order in Client report form (dashboard)
+ - Updated links in header to point to the new website (About and Bugs)
+ - Fixed charset (utf8) in template header
+
+ Fixed bugs
+
+ - (0000049) [bug] Port setting for database not picked up
+ - (0000048) [translation] Updated French translation
+ - (0000045) [feature] Backup job - ability to see logs
+
 === Bacula-Web 5.2.2 ===
 
  Version: 5.2.2
@@ -14,6 +30,7 @@
 
  Fixed bugs
 
+ - (0000036) [bug] No localisation (bacula-dev) - resolved.
  - (0000010) [bug] Improve postgreSQL (bacula-dev) - resolved.
 
 == Bacula-Web 5.1.0 ==
