@@ -10,7 +10,7 @@
 
 <!-- Header -->
 <div id="header">
- <p>bacula-web</p>
+ <div id=appname>bacula-web</div>
 </div> <!-- end div header -->
 
 <div id="subheader">

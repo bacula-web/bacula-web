@@ -44,16 +44,14 @@ a:link, a:visited, a:hover, a:visited {
 }
 
 #header{
- width: 100%;
- padding: 0px;
+ padding: 5px;
  margin: 0px;
  margin-bottom: 0px;
  background-color: #736F6E;
 }
 
-#header p {
+#header div#appname {
  margin: 0px;
- padding: 5px;
  color: #FFFFFF;
  vertical-align: middle;
  font-size: 18pt;
