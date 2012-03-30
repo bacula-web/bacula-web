@@ -15,12 +15,12 @@
 +-------------------------------------------------------------------------+
 */
 	session_start();
-	include_once( 'config/global.inc.php' );
+	include_once( 'core/global.inc.php' );
 
 	$dbSql = new Bweb();
 	
 	$clientid 			= '';
-    $client				= '';
+    	$client				= '';
 	$period				= '';
 	$client_jobs		= array();
 	$backup_jobs		= array();

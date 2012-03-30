@@ -15,7 +15,7 @@
 +-------------------------------------------------------------------------+ 
 */
   session_start();
-  include_once( 'config/global.inc.php' );
+  include_once( 'core/global.inc.php' );
 
   $dbSql = new Bweb();
   // Jobs list
