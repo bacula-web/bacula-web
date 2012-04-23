@@ -133,7 +133,6 @@ class Bweb
 	
 	public function Get_Nb_Clients()
 	{
-		$result    = '';
 		$clients_nb = 0;
 		$query     = "SELECT COUNT(*) AS nb_client FROM Client";
 		
