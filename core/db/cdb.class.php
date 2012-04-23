@@ -43,9 +43,6 @@ class CDB
 			if( !isset( $this->connection ) )
 				$this->connection = new PDO( $this->dsn, $this->user, $this->password );
 		
-			if( !is_a( $this->connection, 'PDO' ) )
-				throw new CErrorHandler("Failed to establish database connection");
-		
 			$this->setOptions();
 		} catch (PDOException $e) {
 			echo '<h3 style="background-color: #F0F0F0; width: 550px; padding: 5px; font-family: Arial,Verdana;">';
