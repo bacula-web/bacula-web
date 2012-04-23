@@ -24,7 +24,6 @@
 		$e->raiseError();
     }
 	
-
 	// Stored files number 
 	$dbSql->tpl->assign('stored_files', number_format($dbSql->getStoredFiles( FIRST_DAY, NOW ), 0, '.', "'" ) );
 	  
@@ -111,16 +110,14 @@
 	// Last used volumes
 	$last_volumes = array();
 	
-	try{
-		$query  = "SELECT Media.MediaId, Media.Volumename, Media.Lastwritten, Media.VolStatus, Pool.Name as poolname FROM Media ";
-		$query .= "LEFT JOIN Pool ON Media.PoolId = Pool.poolid ";
-		$query .= "WHERE Media.Volstatus != 'Disabled' ";
-		$query .= "AND Media.VolJobs > 0 ";
-		$query .= "ORDER BY Media.Lastwritten DESC ";		
-		$query .= "LIMIT 10";
-		
+	try{		
+		// Construct the query
+		$query = array( 'table' => 'Media', 'fields' => array( 'Media.MediaId', 'Media.Volumename','Media.Lastwritten','Media.VolStatus','Pool.Name'),
+						'join' => array( 'table'=>'Pool', 'condition'=>'Media.PoolId = Pool.poolid'),
+						'where' => "Media.Volstatus != 'Disabled'", 'orderby' => 'Media.Lastwritten DESC', 'limit'=>'10' );
+
 		// Run the query
-		$result = $dbSql->db_link->runQuery( $query );
+		$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
 			
 		foreach( $result->fetchAll() as $volume ) {
 			$query 				  = "SELECT COUNT(*) as jobs_count FROM JobMedia WHERE JobMedia.MediaId = '" . $volume['mediaid'] . "'";
