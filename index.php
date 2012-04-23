@@ -40,7 +40,7 @@
 
 	// Number of clients
 	$nb_clients = $dbSql->Get_Nb_Clients();
-	$dbSql->tpl->assign('clientes_totales',$nb_clients["nb_client"] );
+	$dbSql->tpl->assign('clients', $nb_clients["nb_client"] );
 
 	// Backup Job list
 	$dbSql->tpl->assign( 'jobs_list', $dbSql->getJobsName() );

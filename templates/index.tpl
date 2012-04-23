@@ -8,7 +8,7 @@
 	<p class="title">{t}Catalog statistics{/t}</p>
 	<table>
 	  <tr>
-	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clientes_totales}</td>
+	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clients}</td>
 	  </tr>
 	  <tr>
 		<td class="label">{t}Total bytes{/t}</td> <td class="info">{$stored_bytes}</td>
