@@ -44,7 +44,7 @@ class CDB
 				$this->connection = new PDO( $this->dsn, $this->user, $this->password );
 		
 			if( !is_a( $this->connection, 'PDO' ) )
-				throw new CErrorHandler("Failed to make database connection");
+				throw new CErrorHandler("Failed to establish database connection");
 		
 			$this->setOptions();
 		} catch (PDOException $e) {
