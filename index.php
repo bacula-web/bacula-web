@@ -120,7 +120,8 @@
 		$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
 			
 		foreach( $result->fetchAll() as $volume ) {
-			$query 				  = "SELECT COUNT(*) as jobs_count FROM JobMedia WHERE JobMedia.MediaId = '" . $volume['mediaid'] . "'";
+			$query			      = CDBQuery::getQuery( array( 'table'=>'JobMedia', 'fields' => array( 'COUNT(*) as jobs_count'), 
+								                               'where' => "JobMedia.MediaId = '".$volume['mediaid']."'" ) );
 			$jobs_by_vol 		  = $dbSql->db_link->runQuery($query);
 			$jobs_by_vol 		  = $jobs_by_vol->fetchAll();
 			
