@@ -7,6 +7,7 @@
  - Fixed client sort order in Client report form (dashboard)
  - Updated links in header to point to the new website (About and Bugs)
  - Fixed charset (utf8) in template header
+ - Added PHP session support check in test page
 
  Fixed bugs
 
