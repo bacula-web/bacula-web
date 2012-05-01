@@ -28,10 +28,10 @@
 	  <p class="title">Graph</p>
 	<table>
 	  <tr>
-	    <td>
+	    <td style="font-weight:bold;font-size:10pt;vertical-align:middle;text-align:left;padding:10px 5px 5px 30px;">
 			{t}Graph system capabilities (Bacula-web only use PNG image format){/t}
 		</td>
-	    <td colspan="2">
+	    <td>
 		  <img src="{$graph_test}" alt='' />
 	    </td>
 	  </tr>
