@@ -25,6 +25,9 @@
  $check_list = array( array( 'check_cmd'   		=> 'php-gettext', 
  	 						 'check_label' 		=> 'PHP - Gettext support', 
 							 'check_descr' 		=> 'If you want Bacula-web in your language, please compile PHP with Gettext support' ),
+					  array( 'check_cmd' 		=> 'php-session',
+							 'check_label'	    => 'PHP - Session support',
+							 'check_descr'	    => 'PHP session support is required'),
   					  array( 'check_cmd'   		=> 'php-gd',
 					 		 'check_label' 		=> 'PHP - GD support',
 				 			 'check_descr' 		=> 'This is required by phplot, please compile PHP with GD support'),
@@ -49,6 +52,9 @@
  foreach( $check_list as &$check ) {
 	 switch( $check['check_cmd'] )
 	 {
+		 case 'php-session':
+			 $check['check_result'] = $icon_result[ function_exists( 'session_start' ) ];
+		 break;
 		 case 'php-gettext':
 			 $check['check_result'] = $icon_result[ function_exists( 'gettext' ) ];					
 		 break;
