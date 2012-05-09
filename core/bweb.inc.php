@@ -360,8 +360,9 @@ class Bweb
 				$uname			   = split( ' ', $client['uname'] );
 				$client['version'] = $uname[0];
 				
-				$uname			   = split( ',', $uname[2] );
-				$client['arch']    = $uname[0];
+				$uname			   = split(',', $uname[2] );
+				$temp    		   = split('-', $uname[0]);
+				$client['arch']	   = $temp[0];
 				$client['os']      = $uname[1];
 			}
 		}catch( CErrorHandler $e ) {
