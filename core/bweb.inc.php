@@ -33,8 +33,8 @@ class Bweb
 		try {
 			$this->bwcfg = new Config();
 			$this->bwcfg->loadConfig();
-		}catch( CErrorHandler $e ) {
-			$e->raiseError();
+		}catch( Exception $e ) {
+			CErrorHandler::displayError($e);
 		}
 			
 		$this->catalog_nb = $this->bwcfg->Count_Catalogs();
@@ -44,12 +44,12 @@ class Bweb
 		
 		// Checking template cache permissions
 		if( !is_writable( "./templates_c" ) )
-			throw new CErrorHandler("The template cache folder must be writable by Apache user");
+			throw new Exception("The template cache folder must be writable by Apache user");
 			
 		// Initialize smarty gettext function
 		$language  = $this->bwcfg->get_Config_param( 'language' );
 		if( !$language )
-			throw new CErrorHandler("Language translation problem");
+			throw new Exception("Language translation problem");
 			
 		$translate = new CTranslation( $language );
 		$translate->set_Language( $this->tpl );
@@ -121,13 +121,10 @@ class Bweb
 		}
 		
 		// Execute SQL statment
-		try {
-			$result  = $this->db_link->runQuery( $query );
-			$db_size = $result->fetch();
-			$db_size = CUtils::Get_Human_Size( $db_size['dbsize'] );
-		}catch( CErrorHandler $e ) {
-			$e->raiseError();
-		}
+		$result  = $this->db_link->runQuery( $query );
+		$db_size = $result->fetch();
+		$db_size = CUtils::Get_Human_Size( $db_size['dbsize'] );
+
 		return $db_size;
 	} // end function GetDbSize()
 	
@@ -136,12 +133,8 @@ class Bweb
 		$clients_nb = 0;
 		$query     = "SELECT COUNT(*) AS nb_client FROM Client";
 		
-		try {
-			$clients    = $this->db_link->runQuery( $query );
-			$clients_nb = $clients->fetch();
-		}catch( CErrorHandler $e ) {
-			$e->raiseError();
-		}
+		$clients    = $this->db_link->runQuery( $query );
+		$clients_nb = $clients->fetch();
 		
 		return $clients_nb;
 	}
@@ -158,59 +151,54 @@ class Bweb
 			// Get the list of pools id
 			$query = "SELECT Pool.poolid, Pool.name FROM Pool ORDER BY Pool.poolid";
 			
-			try {
-				foreach( $this->getPools() as $pool ) {
-					switch( $this->db_link->getDriver() )
-					{
-						case 'sqlite':
-						case 'mysql':
-							$query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention
-									FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid
-									WHERE Media.poolid = '". $pool['poolid'] . "' ORDER BY Media.volumename";
-						break;
-						case 'pgsql':
-							$query  = "SELECT media.volumename, media.volbytes, media.volstatus, media.mediatype, media.lastwritten, media.volretention
-									FROM media LEFT JOIN pool ON media.poolid = pool.poolid
-								    WHERE media.poolid = '". $pool['poolid'] . "' ORDER BY media.volumename";
-						break;
-					} // end switch
-					
-					$volumes = $this->db_link->runQuery($query);
+			foreach( $this->getPools() as $pool ) {
+				switch( $this->db_link->getDriver() )
+				{
+					case 'sqlite':
+					case 'mysql':
+						$query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention
+								FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid
+								WHERE Media.poolid = '". $pool['poolid'] . "' ORDER BY Media.volumename";
+					break;
+					case 'pgsql':
+						$query  = "SELECT media.volumename, media.volbytes, media.volstatus, media.mediatype, media.lastwritten, media.volretention
+								FROM media LEFT JOIN pool ON media.poolid = pool.poolid
+								WHERE media.poolid = '". $pool['poolid'] . "' ORDER BY media.volumename";
+					break;
+				} // end switch
 				
-					if( !array_key_exists( $pool['name'], $volumes_list) )
-						$volumes_list[ $pool['name'] ] = array();
-					
-					foreach( $volumes->fetchAll() as $volume ) {
-						if( $volume['lastwritten'] != "0000-00-00 00:00:00" ) {
-							
-							// Calculate expiration date if the volume is Full
-							if( $volume['volstatus'] == 'Full' ) {
-								$expire_date     = strtotime($volume['lastwritten']) + $volume['volretention'];
-								$volume['expire'] = strftime("%Y-%m-%d", $expire_date);
-							}else {
-								$volume['expire'] = 'N/A';
-							}
-							
-							// Media used bytes in a human format
-							$volume['volbytes'] = CUtils::Get_Human_Size( $volume['volbytes'] );
-						} else {
-							$volume['lastwritten'] = "N/A";
-							$volume['expire']      = "N/A";
-							$volume['volbytes'] 	  = "0 KB";
+				$volumes = $this->db_link->runQuery($query);
+			
+				if( !array_key_exists( $pool['name'], $volumes_list) )
+					$volumes_list[ $pool['name'] ] = array();
+				
+				foreach( $volumes->fetchAll() as $volume ) {
+					if( $volume['lastwritten'] != "0000-00-00 00:00:00" ) {
+						
+						// Calculate expiration date if the volume is Full
+						if( $volume['volstatus'] == 'Full' ) {
+							$expire_date     = strtotime($volume['lastwritten']) + $volume['volretention'];
+							$volume['expire'] = strftime("%Y-%m-%d", $expire_date);
+						}else {
+							$volume['expire'] = 'N/A';
 						}
 						
-						// Odd or even row
-						if( count(  $volumes_list[ $pool['name'] ] ) % 2)
-							$volume['class'] = 'odd';
+						// Media used bytes in a human format
+						$volume['volbytes'] = CUtils::Get_Human_Size( $volume['volbytes'] );
+					} else {
+						$volume['lastwritten'] = "N/A";
+						$volume['expire']      = "N/A";
+						$volume['volbytes'] 	  = "0 KB";
+					}
+					
+					// Odd or even row
+					if( count(  $volumes_list[ $pool['name'] ] ) % 2)
+						$volume['class'] = 'odd';
 
-						// Add the media in pool array
-						array_push( $volumes_list[ $pool['name']], $volume);
-					} // end foreach volumes
-				} // end foreach pools
-				
-			}catch( CErrorHandler $e ) {
-				$e->raiseError();
-			}
+					// Add the media in pool array
+					array_push( $volumes_list[ $pool['name']], $volume);
+				} // end foreach volumes
+			} // end foreach pools
 			
 			return $volumes_list;
 	} // end function GetVolumeList()
@@ -275,13 +263,9 @@ class Bweb
 		}
 		
 		// Execute the query
-		try{
-			$jobs   = $this->db_link->runQuery($query);
-			$result = $jobs->fetch(); 
-		}catch( CErrorHandler $e ) {
-			$e->raiseError();
-		}
-		
+		$jobs   = $this->db_link->runQuery($query);
+		$result = $jobs->fetch(); 
+
 		return $result['job_nb'];
 	}
 	
@@ -301,13 +285,10 @@ class Bweb
 				$query 		= "SELECT name, poolid FROM pool";
 			break;
 		}
-		try{
-			$result = $this->db_link->runQuery($query);
-			foreach( $result->fetchAll() as $pool )
-				$pools[] = $pool;
-		}catch( CErrorHandler $e ) {
-			$e->raiseError();
-		}
+
+		$result = $this->db_link->runQuery($query);
+		foreach( $result->fetchAll() as $pool )
+			$pools[] = $pool;
 
 		return $pools;
 	}
@@ -335,14 +316,10 @@ class Bweb
 		
 		$query .= 'GROUP BY name ORDER BY name';
 		
-		try {
-			$result = $this->db_link->runQuery($query);
-			foreach( $result->fetchAll() as $jobname )
-				$backupjobs[] = $jobname['name'];
-		}catch( CErrorHandler $e ) {
-			$e->raiseError();
-		}
-
+		$result = $this->db_link->runQuery($query);
+		foreach( $result->fetchAll() as $jobname )
+			$backupjobs[] = $jobname['name'];
+		
 		return $backupjobs;
 	}
 	
@@ -361,16 +338,12 @@ class Bweb
 				$query 		= "SELECT Client.ClientId, Client.Name FROM Client ORDER BY Client.Name;";
 			break;
 		}
-		try {
-			$result = $this->db_link->runQuery($query);
-			
-			foreach( $result->fetchAll() as $client )
-				$clients[ $client['clientid'] ] = $client['name'];
-				
-		}catch( CErrorHandler $e ) {
-			$e->raiseError();
-		}
 
+		$result = $this->db_link->runQuery($query);
+			
+		foreach( $result->fetchAll() as $client )
+			$clients[ $client['clientid'] ] = $client['name'];
+				
 		return $clients;		
 	}
 	
@@ -422,12 +395,8 @@ class Bweb
 		}
 		
 		// Execute sql query
-		try {
-			$result = $this->db_link->runQuery($query);
-			$vols = $result->fetch();
-		}catch( CErrorHandler $e ) {
-			$e->raiseError();
-		}
+		$result = $this->db_link->runQuery($query);
+		$vols = $result->fetch();
 		
 		return $vols['vols_count'];
 	}
@@ -458,13 +427,9 @@ class Bweb
 			$query .= " AND clientid = '$client'";
 		
 		// Execute query
-		try {
-			$result = $this->db_link->runQuery( $query );
-			$result = $result->fetch();
-		}catch( CErrorHandler $e ) {
-			$e->raiseError();
-		}
-		
+		$result = $this->db_link->runQuery( $query );
+		$result = $result->fetch();
+
 		if( isset($result['stored_files']) and !empty($result['stored_files']) )
 			return $result['stored_files'];
 		else
@@ -504,13 +469,9 @@ class Bweb
 			$query .= " AND clientid = '$client'";		
 		
 		// Execute SQL statment
-		try {
-			$result = $this->db_link->runQuery( $query );
-			$result = $result->fetch();
-		}catch( CErrorHandler $e ) {
-			$e->raiseError();
-		}
-		
+		$result = $this->db_link->runQuery( $query );
+		$result = $result->fetch();
+
 		if( isset($result['stored_bytes']) and !empty($result['stored_bytes']) )
 			return $result['stored_bytes'];
 		else
