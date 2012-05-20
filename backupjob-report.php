@@ -99,30 +99,26 @@
 	$jobs		= array();
 	$joblevel = array( 'I' => 'Incr', 'D' => 'Diff', 'F' => 'Full' );
 
-	try {
-		$result = $dbSql->db_link->runQuery( $query );
-	  
-		foreach( $result->fetchAll() as $job )
-		{
-			// Job level description
-			$job['joblevel']	= $joblevel[ $job['level'] ];
+	$result = $dbSql->db_link->runQuery( $query );
+  
+	foreach( $result->fetchAll() as $job )
+	{
+		// Job level description
+		$job['joblevel']	= $joblevel[ $job['level'] ];
 
-			// Job execution execution time
-			$job['elapsedtime'] = CTimeUtils::Get_Elapsed_Time( $job['starttime'], $job['endtime'] );
+		// Job execution execution time
+		$job['elapsedtime'] = CTimeUtils::Get_Elapsed_Time( $job['starttime'], $job['endtime'] );
 
-			// odd and even row
-			if( count($jobs) % 2)
-				$job['row_class'] = 'odd';
+		// odd and even row
+		if( count($jobs) % 2)
+			$job['row_class'] = 'odd';
 
-			// Job bytes more easy to read
-			$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
-			$job['jobfiles'] = number_format($job['jobfiles'], 0 , '.', "'");
+		// Job bytes more easy to read
+		$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
+		$job['jobfiles'] = number_format($job['jobfiles'], 0 , '.', "'");
 
-			$jobs[] = $job;
-		} // end while		
-	}catch( CErrorHandler $e  ) {
-		$e->raiseError();
-	} 
+		$jobs[] = $job;
+	} // end while		
 
 	$dbSql->tpl->assign('jobs', $jobs );
 	$dbSql->tpl->assign('backupjob_name', $backupjob_name );

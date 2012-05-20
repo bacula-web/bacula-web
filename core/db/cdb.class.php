@@ -45,12 +45,7 @@ class CDB
 		
 			$this->setOptions();
 		} catch (PDOException $e) {
-			echo '<h3 style="background-color: #F0F0F0; width: 550px; padding: 5px; font-family: Arial,Verdana;">';
-			echo 'Database connection error </h3>';
-			
-			echo '<p style="width: 550px; padding: 5px; font-family: Arial,Verdana; font-size: 10pt;">';
-			echo '<b>Message:</b> ' . $e->getMessage() . '<br />';
-			die();
+			CErrorHandler::displayError( $e );
 		}		
 	}
 	
@@ -70,6 +65,7 @@ class CDB
 	
 	public function runQuery( $query) 
 	{
+		try{
 		$this->result = $this->connection->prepare( $query );
 				
 		if( !is_a( $this->result, 'CDBResult') )
@@ -78,6 +74,10 @@ class CDB
 		if( !$this->result->execute() )
 			throw new PDOException("Failed to execute query <br />$query");
 		
+		}catch(PDOException $e) {
+			CErrorHandler::displayError( $e );
+		}
+			
 		return $this->result;
 	}
 	

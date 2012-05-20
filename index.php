@@ -20,8 +20,8 @@
 
 	try{
 		$dbSql = new Bweb();
-	}catch( CErrorHandler $e  ) {
-		$e->raiseError();
+	}catch( Exception $e  ) {
+		CErrorHandler::displayError($e);
     }
 	
 	// Stored files number 
@@ -110,32 +110,28 @@
 	// Last used volumes
 	$last_volumes = array();
 	
-	try{		
-		// Construct the query
-		$query = array( 'table' => 'Media', 'fields' => array( 'Media.MediaId', 'Media.Volumename','Media.Lastwritten','Media.VolStatus','Pool.Name'),
-						'join' => array( 'table'=>'Pool', 'condition'=>'Media.PoolId = Pool.poolid'),
-						'where' => "Media.Volstatus != 'Disabled'", 'orderby' => 'Media.Lastwritten DESC', 'limit'=>'10' );
+	// Construct the query
+	$query = array( 'table' => 'Media', 'fields' => array( 'Media.MediaId', 'Media.Volumename','Media.Lastwritten','Media.VolStatus','Pool.Name'),
+					'join' => array( 'table'=>'Pool', 'condition'=>'Media.PoolId = Pool.poolid'),
+					'where' => "Media.Volstatus != 'Disabled'", 'orderby' => 'Media.Lastwritten DESC', 'limit'=>'10' );
 
-		// Run the query
-		$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
+	// Run the query
+	$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
 			
-		foreach( $result->fetchAll() as $volume ) {
-			$query			      = CDBQuery::getQuery( array( 'table'=>'JobMedia', 'fields' => array( 'COUNT(*) as jobs_count'), 
-								                               'where' => "JobMedia.MediaId = '".$volume['mediaid']."'" ) );
-			$jobs_by_vol 		  = $dbSql->db_link->runQuery($query);
-			$jobs_by_vol 		  = $jobs_by_vol->fetchAll();
+	foreach( $result->fetchAll() as $volume ) {
+		$query			      = CDBQuery::getQuery( array( 'table'=>'JobMedia', 'fields' => array( 'COUNT(*) as jobs_count'), 
+								                           'where' => "JobMedia.MediaId = '".$volume['mediaid']."'" ) );
+		$jobs_by_vol 		  = $dbSql->db_link->runQuery($query);
+		$jobs_by_vol 		  = $jobs_by_vol->fetchAll();
 			
-			// Volumes details
-			$volume['jobs_count'] = $jobs_by_vol[0]['jobs_count'];
+		// Volumes details
+		$volume['jobs_count'] = $jobs_by_vol[0]['jobs_count'];
 			
-			// odd or even row
-			if( (count($last_volumes) % 2) > 0 )
-				$volume['odd_even'] = "odd";
+		// odd or even row
+		if( (count($last_volumes) % 2) > 0 )
+			$volume['odd_even'] = "odd";
 			
-			$last_volumes[] 	  = $volume;
-		}
-	}catch( CErrorHandler $e  ) {
-		$e->raiseError();
+		$last_volumes[] 	  = $volume;
 	}
 
 	$dbSql->tpl->assign( 'volumes_list', $last_volumes );	

@@ -33,13 +33,13 @@
 		if( is_readable( CONFIG_FILE ) )
 			include_once( CONFIG_FILE );
 		else {
-			throw new CErrorHandler( "Config file not found or bad file permissions" );
+			throw new Exception( "Config file not found or bad file permissions" );
 			return;
 		}
 		
 		// Checking options and database parameters
 		if( !array_key_exists('0', $config ) ) {
-			throw new CErrorHandler( "At least one catalog should be defined in the configuration" );
+			throw new Exception( "At least one catalog should be defined in the configuration" );
 			return;
 		}
 			
@@ -51,7 +51,7 @@
 					array_push( $this->catalogs, $value );
 			}
 		}else {
-			throw new CErrorHandler( "Missing parameters in the config file" );
+			throw new Exception( "Missing parameters in the config file" );
 			return;
 		}
 	}

@@ -48,31 +48,27 @@
 	// Client informations
 	$client	= $dbSql->getClientInfos($clientid);
 	
-	try{
-	    $job_names = $dbSql->getJobsName( $clientid );
+    $job_names = $dbSql->getJobsName( $clientid );
 	
-		foreach( $job_names as $jobname ) {
-			//Client's backup jobs
-			$query  = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
-			$query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
-			$query .= "WHERE Job.Name = '$jobname' AND Job.JobStatus = 'T' ";
-			$query .= 'ORDER BY Job.EndTime DESC ';
-			$query .= 'LIMIT 1';
+	foreach( $job_names as $jobname ) {
+		//Client's backup jobs
+		$query  = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
+		$query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
+		$query .= "WHERE Job.Name = '$jobname' AND Job.JobStatus = 'T' ";
+		$query .= 'ORDER BY Job.EndTime DESC ';
+		$query .= 'LIMIT 1';
 			
-			$jobs_result = $dbSql->db_link->runQuery($query);
+		$jobs_result = $dbSql->db_link->runQuery($query);
 
-			foreach( $jobs_result->fetchAll() as $job ) {
-				$job['level']    = $job_levels[ $job['level'] ];
-				$job['jobfiles'] = number_format( $job['jobfiles'], 0, '.', "'");
-				$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
+		foreach( $jobs_result->fetchAll() as $job ) {
+			$job['level']    = $job_levels[ $job['level'] ];
+			$job['jobfiles'] = number_format( $job['jobfiles'], 0, '.', "'");
+			$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
 			
-				$backup_jobs[] = $job;
-			}
-		}		
-	}catch( CErrorHandler $e  ) {
-		$e->raiseError();
-	}
-	
+			$backup_jobs[] = $job;
+		}
+	}		
+
 	$dbSql->tpl->assign( 'backup_jobs', $backup_jobs);
 	
 	// Get the last 7 days interval (start and end)
