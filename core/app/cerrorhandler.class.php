@@ -15,21 +15,21 @@
 +-------------------------------------------------------------------------+
 */
 
-class CErrorHandler extends Exception
+class CErrorHandler
 {
-	private $header;
-	private $debug;
+	private static $header;
+	private static $debug;
 	
 	// Define Header
 	public function setHeader( $header )
 	{
-		$this->header = $header;
+		self::$header = $header;
 	}
 	
 	// Enable debug mode
 	public function setDebug( $debug = true )
 	{
-		$this->debug = $debug;
+		self::$debug = $debug;
 	}
 	
 	public function raiseError()
@@ -37,8 +37,8 @@ class CErrorHandler extends Exception
 		// Display error
 		echo '<h3 style="background-color: #F0F0F0; width: 550px; padding: 5px; font-family: Arial,Verdana;">';
 		
-		if( !empty( $this->header ) )
-			echo $this->header;
+		if( !empty( self::$header ) )
+			echo self::$header;
 		else
 			echo 'Application error';
 		
@@ -47,7 +47,7 @@ class CErrorHandler extends Exception
 		// Show more information if debug mode is enabled
 		echo '<p style="width: 550px; padding: 5px; font-family: Arial,Verdana; font-size: 10pt;">';
 		echo 'Message: ' . $this->getMessage() . '<br />';
-		if( $this->debug ) {
+		if( self::$debug ) {
 			echo 'Code: ' . $this->getCode()  . '<br />';	
 			echo 'Line: ' . $this->getLine()  . '<br />';
 			echo 'File: ' . $this->getFile() . '</p>';
@@ -59,6 +59,40 @@ class CErrorHandler extends Exception
 		$footer .= 'Read the documentation on the <a href="http://bacula-web.dflc.ch" target="_blank">Bacula-Web project site</a> <br />';
 		$footer .= 'Rebort a bug or suggest a new feature in the <a href="http://bacula-web.dflc.ch/bugs" target="_blank">Bacula-Web\'s bugtracking tool</a> <br /> </p>';
 		echo $footer;
+		
+		//die();
+	}
+	
+	public static function displayError( $exception )
+	{
+		switch( get_class($exception) )
+		{
+			case 'PDOException':
+				self::setHeader('Database error');
+			break;
+			case 'Exception':
+			default:		
+				self::setHeader('Application error');
+			break;
+		} // end switch
+		
+		echo '<h3>'.self::$header.'</h3>';
+		echo '<p style="width: 550px; padding: 5px; font-family: Arial,Verdana; font-size: 10pt;">';
+		echo 'Message: ' . $exception->getMessage() . '<br />';
+		
+		// Show more information is debug mode is enabled
+		if( self::$debug ) {
+			echo 'Code: ' . $exception->getCode()  . '<br />';	
+			echo 'Line: ' . $exception->getLine()  . '<br />';
+			echo 'File: ' . $exception->getFile() . '</p>';
+		}
+
+		// Display footer
+		$footer  = '<p style="font-size: 10pt; background-color: #F0F0F0; width: 550px; padding: 5px; font-family: Arial,Verdana;">';
+		$footer .= 'Tried to run the <a href="test.php">test page</a> ?<br />';
+		$footer .= 'Read the documentation on the <a href="http://bacula-web.dflc.ch" target="_blank">Bacula-Web project site</a> <br />';
+		$footer .= 'Rebort a bug or suggest a new feature in the <a href="http://bacula-web.dflc.ch/bugs" target="_blank">Bacula-Web\'s bugtracking tool</a> <br /> </p>';
+		echo $footer;		
 		
 		die();
 	}
