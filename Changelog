@@ -9,6 +9,7 @@
  - Fixed charset (utf8) in template header
  - Added PHP session support check in test page
  - Fixed client architecture field in Client report page
+ - Improved exceptions and error handling
 
  Fixed bugs
 
