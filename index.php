@@ -113,7 +113,7 @@
 	// Construct the query
 	$query = array( 'table' => 'Media', 'fields' => array( 'Media.MediaId', 'Media.Volumename','Media.Lastwritten','Media.VolStatus','Pool.Name'),
 					'join' => array( 'table'=>'Pool', 'condition'=>'Media.PoolId = Pool.poolid'),
-					'where' => "Media.Volstatus != 'Disabled'", 'orderby' => 'Media.Lastwritten DESC', 'limit'=>'10' );
+					'where' => "Media.Volstatus != 'Disabled' AND Media.LastWritten IS NOT NULL", 'orderby' => 'Media.Lastwritten DESC', 'limit'=>'10' );
 
 	// Run the query
 	$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
