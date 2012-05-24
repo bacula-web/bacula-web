@@ -11,12 +11,12 @@
  - Fixed client architecture field in Client report page
  - Improved exceptions and error handling
  - Fixed buf with last used volume in dashboard (don't display not used volumes)
+ - PHP code improvment
 
  Fixed bugs
 
  - (0000049) [bug] Port setting for database not picked up
  - (0000048) [translation] Updated French translation
- - (0000045) [feature] Backup job - ability to see logs
 
 === Bacula-Web 5.2.2 ===
 
