@@ -10,7 +10,7 @@
  - Added PHP session support check in test page
  - Fixed client architecture field in Client report page
  - Improved exceptions and error handling
- - Fixed buf with last used volume in dashboard (don't display not used volumes)
+ - Fixed bug with last used volume in dashboard (not used volumes not displayed)
  - PHP code improvment
 
  Fixed bugs
