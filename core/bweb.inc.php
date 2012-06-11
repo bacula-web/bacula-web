@@ -357,11 +357,11 @@ class Bweb
 			$result = $this->db_link->runQuery($query);
 			
 			foreach( $result->fetchAll() as $client ) {
-				$uname			   = split( ' ', $client['uname'] );
+				$uname			   = explode( ' ', $client['uname'] );
 				$client['version'] = $uname[0];
 				
-				$uname			   = split(',', $uname[2] );
-				$temp    		   = split('-', $uname[0]);
+				$uname			   = explode(',', $uname[2] );
+				$temp    		   = explode('-', $uname[0]);
 				$client['arch']	   = $temp[0];
 				$client['os']      = $uname[1];
 			}
