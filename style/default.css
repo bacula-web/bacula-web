@@ -44,9 +44,10 @@ a:link, a:visited, a:hover, a:visited {
 }
 
 #header{
+ height: 35px;
  padding: 5px;
  margin: 0px;
- margin-bottom: 0px;
+ margin-bottom: 3px;
  background-color: #736F6E;
 }
 
@@ -60,21 +61,21 @@ a:link, a:visited, a:hover, a:visited {
  text-align: right;
 }
 
-#subheader {
+#toplinks {
  font-size: 10pt;
  margin: 0em;
  padding: 0px;
  border-bottom: 1px solid black;
- height: 30px;
+ height: 25px;
 }
 
-#subheader ul {
+#toplinks ul {
  height: 30px;
  margin: 0px;
  /* margin-top: 5px; */
 }
 
-#subheader li {
+#toplinks li {
  display: inline;
  float: right;
  padding: 0px 10px 0px 10px;
@@ -82,7 +83,7 @@ a:link, a:visited, a:hover, a:visited {
  vertical-align: middle;
 }
 
-#subheader li a {
+#toplinks li a {
  text-decoration: none;
 }
 

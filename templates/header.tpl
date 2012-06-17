@@ -8,12 +8,7 @@
 </head>
 <body>
 
-<!-- Header -->
-<div id="header">
- <div id=appname>bacula-web</div>
-</div> <!-- end div header -->
-
-<div id="subheader">
+<div id="toplinks">
  <ul>
 	<li> <a href="http://www.bacula-web.org/bugs" target="_blank">Bugs</a> </li>
 	<li> <a href="http://www.bacula-web.org" target="_blank">About</a> </li>
@@ -28,6 +23,11 @@
 	</li>
 	{/if}
  </ul>
-</div> <!-- end div subheader -->
+</div> <!-- end div toplinks -->
+
+<!-- Header -->
+<div id="header">
+ <div id=appname>bacula-web</div>
+</div> <!-- end div header -->
 
 <!-- End Header -->
