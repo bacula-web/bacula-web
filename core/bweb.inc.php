@@ -17,7 +17,7 @@
 */
 class Bweb
 {
-	private	$translate;						// Translation class instance
+	public	$translate;						// Translation class instance
 	private $bwcfg;							// Config class
 	private $catalogs = array();			// Catalog array
 	
@@ -51,8 +51,8 @@ class Bweb
 		if( !$language )
 			throw new Exception("Language translation problem");
 			
-		$translate = new CTranslation( $language );
-		$translate->set_Language( $this->tpl );
+		$this->translate = new CTranslation( $language );
+		$this->translate->set_Language( $this->tpl );
 		
 		// Check catalog id
 		$http_post = CHttpRequest::getRequestVars($_POST);
