@@ -1,4 +1,6 @@
 <?php
+ // Show inactive clients (false by default)
+ $config['show_inactive_clients'] = true;
 
  // Translations
  $config['language'] = 'en_EN';		

@@ -335,7 +335,10 @@ class Bweb
 			case 'sqlite':
 			case 'mysql':
 			case 'pgsql':
-				$query 		= "SELECT Client.ClientId, Client.Name FROM Client ORDER BY Client.Name;";
+				$query  = "SELECT Client.ClientId, Client.Name FROM Client ";
+				if( $this->bwcfg->get_Config_param( 'show_inactive_clients' ) )
+					$query .= "WHERE FileRetention > '0' AND JobRetention > '0' "; 
+				$query .= "ORDER BY Client.Name;";
 			break;
 		}
 
