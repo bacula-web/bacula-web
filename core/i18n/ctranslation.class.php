@@ -42,5 +42,15 @@ class CTranslation {
 		bind_textdomain_codeset( $this->domaine, $this->charset );
 		textdomain( $this->domaine );
 	}
+
+	// Return formated number depending on current locale
+	function get_Number_Format( $number, $decimal ) {
+		// Getting localized numeric formating information
+		$locale = localeconv();
+		
+		// Return formated number
+		return number_format( $number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
+	}
+	
 }
 ?>
