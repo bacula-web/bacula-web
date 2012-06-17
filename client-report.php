@@ -54,7 +54,7 @@
 		//Client's backup jobs
 		$query  = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
 		$query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
-		$query .= "WHERE Job.Name = '$jobname' AND Job.JobStatus = 'T' ";
+		$query .= "WHERE Job.Name = '$jobname' AND Job.JobStatus = 'T' AND Job.Type = 'B' ";
 		$query .= 'ORDER BY Job.EndTime DESC ';
 		$query .= 'LIMIT 1';
 			
