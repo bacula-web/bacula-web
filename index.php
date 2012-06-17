@@ -25,7 +25,7 @@
     }
 	
 	// Stored files number 
-	$dbSql->tpl->assign('stored_files', number_format($dbSql->getStoredFiles( FIRST_DAY, NOW ), 0, '.', "'" ) );
+	$dbSql->tpl->assign('stored_files', $dbSql->translate->get_Number_Format($dbSql->getStoredFiles( FIRST_DAY, NOW ) ) );
 	  
 	// Database size
 	$dbSql->tpl->assign('database_size', $dbSql->getDatabaseSize());
@@ -36,7 +36,7 @@
 
 	// Total bytes and files for last 24 hours
 	$dbSql->tpl->assign('bytes_last', CUtils::Get_Human_Size( $dbSql->getStoredBytes( LAST_DAY, NOW ) ) );
-	$dbSql->tpl->assign('files_last', number_format($dbSql->getStoredFiles( LAST_DAY, NOW ), 0, '.', "'" ) );
+	$dbSql->tpl->assign('files_last', $dbSql->translate->get_Number_Format($dbSql->getStoredFiles( LAST_DAY, NOW ) ) );
 
 	// Number of clients
 	$nb_clients = $dbSql->Get_Nb_Clients();

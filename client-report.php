@@ -62,7 +62,7 @@
 
 		foreach( $jobs_result->fetchAll() as $job ) {
 			$job['level']    = $job_levels[ $job['level'] ];
-			$job['jobfiles'] = number_format( $job['jobfiles'], 0, '.', "'");
+			$job['jobfiles'] = $dbSql->translate->get_Number_Format( $job['jobfiles'] );
 			$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
 			
 			$backup_jobs[] = $job;

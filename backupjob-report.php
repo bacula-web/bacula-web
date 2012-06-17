@@ -49,7 +49,7 @@
 	$backupjob_bytes = CUtils::Get_Human_Size( $backupjob_bytes );
 
 	$backupjob_files = $dbSql->getStoredFiles( LAST_WEEK, NOW, $backupjob_name );
-	$backupjob_files = number_format( $backupjob_files, 0, '.', "'");
+	$backupjob_files = $dbSql->translate->get_Number_Format( $backupjob_files );
 
 	// Get the last 7 days interval (start and end)
 	$days = CTimeUtils::getLastDaysIntervals( 7 );
@@ -115,7 +115,7 @@
 
 		// Job bytes more easy to read
 		$job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
-		$job['jobfiles'] = number_format($job['jobfiles'], 0 , '.', "'");
+		$job['jobfiles'] = $dbSql->translate->get_Number_Format( $job['jobfiles'] );
 
 		$jobs[] = $job;
 	} // end while		

@@ -141,7 +141,7 @@
 	  $job['level'] = $job_levels[ $job['level'] ];
 
 	  // Job files
-	  $job['jobfiles'] = number_format( $job['jobfiles'], 0, '.', "'");
+	  $job['jobfiles'] = $dbSql->translate->get_Number_Format( $job['jobfiles'] );
 
 	  // Job size
 	  $job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
