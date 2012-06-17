@@ -44,7 +44,7 @@ class CTranslation {
 	}
 
 	// Return formated number depending on current locale
-	function get_Number_Format( $number, $decimal ) {
+	function get_Number_Format( $number, $decimal = 0 ) {
 		// Getting localized numeric formating information
 		$locale = localeconv();
 		
