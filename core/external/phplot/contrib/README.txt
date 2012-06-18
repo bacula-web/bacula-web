@@ -1,6 +1,6 @@
 This is the README for PHPlot Contributed Code
 The project web site is http://sourceforge.net/projects/phplot/
-Last updated on 2009-12-08
+Last updated on 2011-08-05
 -----------------------------------------------------------------------------
 
 The PHPlot Contributed Code directory contains code you might find useful
@@ -27,5 +27,11 @@ color_range: Create a gradient color map for data colors
     color_range.example.php  . . . . . . . . Example
     color_range.test1.php  . . . . . . . . . Image creation test
     color_range.test2.php  . . . . . . . . . Unit test
+
+data_table: Draw a table of data values on the plot
+    data_table.php . . . . . . . . . . . . . Code
+    data_table.example1.php  . . . . . . . . Example: Stand-alone tables
+    data_table.example2.php  . . . . . . . . Example: Line plot with table
+    data_table.example3.php  . . . . . . . . Example: Pie chart with table
 
 -----------------------------------------------------------------------------

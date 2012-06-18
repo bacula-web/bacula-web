@@ -1,0 +1,718 @@
+phplot/ImageMaps.txt - Documentation for an experimental feature
+Last updated for PHPlot-5.7.0 on 2012-02-20
+The project home page is http://sourceforge.net/projects/phplot/
+-----------------------------------------------------------------------------
+Overview:
+
+This file documents a new, experimental callback which allows scripts using
+PHPlot to generate image maps with linked areas covering the plotted data.
+This is planned for release in PHPlot-5.7.0 as a experimental feature.
+
+    NOTICE:
+
+    The callback documented in this file is experimental. This means
+    anything about it may change in future releases, in ways that might
+    be incompatible with the current implementation, or the feature might
+    even be removed completely. The new feature is not yet documented in
+    the PHPlot Reference Manual. This text file is the only documentation.
+
+Feedback on this feature is welcome. Please use the "Help & Discussion"
+forum at http://sourceforge.net/projects/phplot/
+
+-----------------------------------------------------------------------------
+Overview:
+
+A new callback is introduced to make the device coordinates of plotted data
+available to a calling script. (See the PHPlot Reference Manual for more on
+callbacks, and device coordinates.) If a script registers a function as a
+handler for the 'data_points' callback name, the function will be called
+repeatedly when the plot is being generated. Each call will contain
+parameters describing the graphics for the corresponding data point. These
+parameters can be used to generate an image map.
+
+This feature is most likely only useful when generating embedded image data
+with PHPlot. Refer to the function reference for EncodeImage() in the
+PHPlot Reference Manual for details on embedded image data. (See the Notes
+at the end of this document for use with non-embedded images.)
+
+The data_points callback works with the following plot types:
+  + bars and stackedbars (both horizontal and vertical)
+  + points and linepoints (both standard and error bar plots)
+  + pie
+  + bubbles
+  + ohlc, candlesticks, and candlesticks2
+No other plot type is supported. This includes lines, squared, thinbarline,
+area, and stackedarea. (These plot types do not have well-defined areas
+which could map to data points.)
+
+The rest of this document contains details on the callback, usage with
+each plot type, and examples.
+
+-----------------------------------------------------------------------------
+General Usage:
+
+To register a callback function to handle 'data_points', use:
+    $plot->SetCallback('data_points', 'my_handler', $my_arg);
+where my_handler is the name of your function, $my_arg is an optional
+additional argument to pass to your function ('my_handler').
+
+The data_points callback function (my_handler above) will be called with 5
+fixed-purpose arguments followed by variable arguments. The number and
+purpose of the variable arguments depends on the plot type.  If your
+handler only needs to work with one specific plot type, you can declare
+these arguments in your function definition.
+
+If your handler must handle multiple plot types, define your function
+without arguments and use func_get_arg() or func_get_args() to access the
+arguments.  You can use the value of the 3rd argument, $shape, to determine
+the number and usage of the variable arguments, since there is one specific
+function argument set for each value of $shape. See "Summary of data_points
+callback parameters..." for details.
+
+Here are the fixed arguments to the data_points callback:
+
+  function my_handler($img, $passthru, $shape, $row, $column, ...)
+
+    $img : The image resource (standard for all callbacks). Not typically
+           used with a data_points callback.
+    $passthru : Pass-through argument, supplied in the SetCallback() call
+           (standard for all callbacks, referred to above as $my_arg). You
+           can use this however you want, or ignore it.
+    $shape : A word describing the shape of the area being described. Note:
+           this does not always correspond to an HTML image map <area> shape.
+           Each plot type passes a specific $shape value, and the $shape
+           value defines the usage of the variable arguments.
+    $row : The number of the data row being plotted. This typically corresponds
+           to the ordinal of the X axis values, starting with 0 for the first
+           point, 1 for the second point, etc.
+    $column : The column, or data set index, starting with 0 for the first data
+           set. This indicates which Y value for a given X, for example, or
+           which bar within a bar group, or segment within a stacked bar.
+           Always 0 for pie charts and OHLC plots, which only have a single
+           data set.
+
+For the variable arguments, refer to the sections below which describe each
+plot type.
+
+-----------------------------------------------------------------------------
+Usage with bar and stackedbar plots:
+
+With plot types 'bars' and 'stackedbars', an image map can be produced which
+indicates the area of each bar or stacked bar segment. This works with
+both vertical and horizontal plots.
+
+
+Arguments to the 'data_points' callback for bar and stackedbar plots:
+
+  function my_handler($img, $passthru, $shape, $row, $column,
+                      $x1, $y1, $x2, $y2)
+     The first 5 arguments are as described above for all plot types.
+     $shape : is always 'rect'
+     $row : This is the bar group index.
+     $column : This is the bar index within a group. For vertical plot type
+         'bars', index 0 is the left-most in the group. For vertical plot type
+         'stackedbars', index 0 is the bar segment closest to the X axis.
+     $x1, $y1 : Device coordinates of the upper left corner of a bar/segment.
+     $x2, $y2 : Device coordinates of the lower right corner of a bar/segment.
+
+
+Generating an image map for bar and stackedbar plots:
+
+The provided $shape and coordinates are compatible with HTML <area> markup.
+
+Here is an example of generating one area in an image map from a bar or
+stackedbar plot. You must provide the URL, alternate text, and optionally
+a title (tooltip text).  This appends the image map line to a string.
+sprintf() is used to convert the coordinates to integers for cleaner HTML.
+
+  $coords = sprintf("%d,%d,%d,%d", $x1, $y1, $x2, $y2);
+  $image_map .= "  <area shape=\"rect\" coords=\"$coords\""
+             .. " title=\"$title_text\" alt=\"$alt_text\" href=\"$url\">\n";
+
+The $url, $title_text, and $alt_text would typically depend on the passed
+$row and $column.
+
+Refer to Example 1 in this document for a complete example.
+
+-----------------------------------------------------------------------------
+Usage with points and linepoints plots:
+
+With plot types 'points' and 'linepoints', an image map can be produced
+which indicates the area around each point. (The lines in a linepoints plot
+are not part of the image map areas.) This also works with error plots that
+use these plot types, however the error bars are not part of the image map
+areas.
+
+Arguments to the 'data_points' callback for points and linepoints plots:
+
+  function my_handler($img, $passthru, $shape, $row, $column,
+                      $x, $y)
+     The first 5 arguments are as described above for all plot types.
+     $shape : is always 'dot'
+     $row : Row - the index for the independent variable (usually X)
+     $column : Column - the index for the dependent variable (usually Y)
+     $x, $y : Device coordinates of the center of the point marker.
+
+
+Generating an image map for points and linepoints plots:
+
+PHPlot provides only the center coordinates for each point marker. It
+does not indicate the shape or size of the marker, nor the coordinates of
+any line segments or error bars. To generate an image map, you should use a
+fixed radius size and define the image map areas as circles with that
+radius centered around each data point. You need to choose a radius. A
+larger radius provides a larger clickable area, but the area of adjacent
+points may overlap.
+
+Here is an example of generating one area in an image map from a points
+or linepoints plot. You must provide the URL, alternate text, and
+optionally a title (tooltip text).  This appends the image map line to a
+string.  sprintf() is used to convert the coordinates to integers for
+cleaner HTML.  This example uses a 20 pixel radius for the areas around
+each data point.
+
+  define('MAP_RADIUS', 20); // Capture area circle radii
+  $coords = sprintf("%d,%d,%d", $x, $y, MAP_RADIUS);
+  $image_map .= "  <area shape=\"circle\" coords=\"$coords\""
+             .. " title=\"$title_text\" alt=\"$alt_text\" href=\"$url\">\n";
+
+The $url, $title_text, and $alt_text would typically depend on the passed
+$row and $column.
+
+Other than the above code, a script to generate an image map for a points or
+linepoints plot would be similar to Example 1 in this document, which
+produces a bar chart.
+
+-----------------------------------------------------------------------------
+Usage with pie charts:
+
+With plot type 'pie', an image map can be produced which indicates the
+area of each pie segment. However, PHPlot only supplies the values which
+identify the outline of the pie segment, and HTML maps do not support areas
+of this shape.  Therefore, the callback handler function needs to generate
+one or more polygons which approximate the pie segment area.
+
+Note: PHPlot does not attempt to draw pie segments that are too small (due to
+the implementation of the PHP/GD drawing function). If a segment's calculated
+start angle and end angle are equal (after converting to integers), the
+segment will not be drawn, and the data_points callback will not be called for
+that segment.
+
+
+Arguments to the 'data_points' callback for pie charts:
+
+  function my_handler($img, $passthru, $shape, $row, $column,
+                      $x, $y, $pie_width, $pie_height,
+                      $start_angle, $end_angle)
+     The first 5 arguments are as described above for all plot types.
+     $shape : is always 'pie'
+     $row : The pie segment index, starting at 0 for the first segment,
+            1 for the next segment (counter-clockwise), etc.
+     $column : Always 0 (not used).
+     $x, $y : Center of the pie, in device coordinates.
+     $pie_width : Horizontal diameter of the pie, in pixels.
+     $pie_height : Vertical diameter of the pie, in pixels.
+     $start_angle : Starting angle for the segment, in clockwise degrees.
+     $end_angle : Ending angle for the segment, in clockwise degrees.
+          Note: "clockwise degrees" means 360-A where A is an angle measured
+          in the conventional sense, from the X axis counter-clockwise.
+          For example, a pie segment that starts at the top of the pie
+          ("North") and ends at the bottom point ("South") would have
+          start_angle=270 and end_angle=90. The start_angle is always
+          greater than the end angle. Pie segments are drawn in order,
+          counter-clockwise starting at the "East" position.
+
+
+Generating an image map for pie charts:
+
+The pie segment is defined by the ellipse center point ($x, $y), the two
+diameter values ($pie_width, $pie_height), and the start and end angles.
+Due to the PHP/GD implementation, PHPlot uses clockwise angles (360-A), so
+the start_angle is greater than the end_angle, and the segment is drawn
+clockwise from the end_angle to the start_angle.
+
+HTML image maps do not support this shape directly. Instead, your callback
+function can approximate the area using one or more polygons.
+
+The method shown in Example 2 in this document approximates the pie segment
+area using a polygon with one point at the pie center, one point at each
+end of the arc, and zero or more points along the arc , such that the
+maximum separation of points along the circumference is no more than 20
+degrees. This has been found to produce a good fit for image maps.  More
+details on the method can be found in the example below.
+
+Once you have your points (converted to integers, in an array $points with X
+and Y values alternating), you can generate a line in the image map as follows:
+
+  $coords = implode(',', $points);
+  $image_map .= "  <area shape=\"poly\" coords=\"$coords\""
+             .  " title=\"$title_text\" alt=\"$alt_text\" href=\"$url\">\n";
+
+The $url, $title_text, and $alt_text would typically depend on the passed $row.
+
+Refer to Example 2 in this document for a complete example.
+
+-----------------------------------------------------------------------------
+Usage with bubble plots:
+
+With plot type 'bubbles', an image map can be produced which indicates the
+area of each bubble.
+
+
+Arguments to the 'data_points' callback for bubble plots:
+
+  function my_handler($img, $passthru, $shape, $row, $column,
+                      $x, $y, $diam)
+     The first 5 arguments are as described above for all plot types.
+     $shape : is always 'circle'
+     $row : The index of the data row, starting with 0 for the first X value,
+            1 for the second X value, etc.
+     $column : The data set index. This is 0 for the first Y value for a given
+            X, 1 for the second Y value for that same X, etc.
+     $x, $y : Center of the bubble, in device coordinates.
+     $diam : Diameter of the bubble, in pixels.
+
+
+Generating an image map for bubble plots:
+
+The $shape and parameters are almost compatible with HTML image map markup,
+except that PHPlot provides a diameter, and the radius is needed.
+
+Here is an example of generating one area in an image map from a bubble
+plot.  You must provide the URL, alternate text, and optionally a title
+(tooltip text).  This appends the image map line to a string.  sprintf() is
+used to convert the coordinates to integers for cleaner HTML.
+
+  $coords = sprintf("%d,%d,%d", $x, $y, $diam / 2);
+  $image_map .= "  <area shape=\"circle\" coords=\"$coords\""
+             .. " title=\"$title_text\" alt=\"$alt_text\" href=\"$url\">\n";
+
+The $url, $title_text, and $alt_text would typically depend on the passed
+$row and $column.
+
+Other than the above code, a script to generate an image map for a bubbles
+plot would be similar to Example 1 in this document, which produces a bar
+chart.
+
+-----------------------------------------------------------------------------
+Usage with OHLC plots:
+
+With plot types 'ohlc', 'candlesticks', and 'candlesticks2', an image map can
+be produced which indicates the area of each data point. For candlesticks
+and candlesticks2 plots, this area is the bounding box containing the
+candlestick and its wicks.  For ohlc plots, this area is the bounding box
+formed by the vertical line and horizontal ticks.
+
+Arguments to the 'data_points' callback for OHLC plots:
+
+  function my_handler($img, $passthru, $shape, $row, $column,
+                      $x1, $y1, $x2, $y2)
+     The first 5 arguments are as described above for all plot types.
+     $shape : is always 'rect'
+     $row : The index of the data row, starting with 0 for the first X value,
+            1 for the second X value, etc.
+     $column : Always 0 (not used).
+     $x1, $y1 : Device coordinates of the upper left corner
+     $x2, $y2 : Device coordinates of the lower right corner
+
+
+Generating an image map for OHLC plots:
+
+The provided $shape and coordinates are compatible with HTML <area> markup.
+
+Here is an example of generating one area in an image map from an OHLC plot.
+You must provide the URL, alternate text, and optionally a title (tooltip
+text).  This appends the image map line to a string.  sprintf() is used to
+convert the coordinates to integers for cleaner HTML.
+
+  $coords = sprintf("%d,%d,%d,%d", $x1, $y1, $x2, $y2);
+  $image_map .= "  <area shape=\"rect\" coords=\"$coords\""
+             .. " title=\"$title_text\" alt=\"$alt_text\" href=\"$url\">\n";
+
+The $url, $title_text, and $alt_text would typically depend on the passed $row.
+
+Example 1 in this document contains a complete example for bar charts, and
+the parameters and usage for OHLC plots is the same.
+
+-----------------------------------------------------------------------------
+Summary of data_points callback parameters:
+
+  Points, Linepoints :
+      $img, $passthru, $shape='dot', $row, $column, $x, $y
+      Note: x,y is center. You must supply a radius for <area shape=circle>.
+
+  Bars, Stackedbars:
+      $img, $passthru, $shape='rect', $row, $column, $x1, $y1, $x2, $y2
+
+  Pie:
+      $img, $passthru, $shape='pie', $row, 0, $x, $y, $width, $height,
+          $start_angle, $end_angle
+      Note: You must fit a polygon to the arc segment for an image map.
+
+  Bubbles:
+      $img, $passthru, $shape='circle', $row, $column, $x, $y, $diam
+      Note: x,y is center; use diam/2 for radius in <area shape=circle>.
+
+  OHLC, Candlesticks, Candlesticks2:
+      $img, $passthru, $shape='rect', $row, 0, $x1, $y1, $x2, $y2
+
+
+-----------------------------------------------------------------------------
+Example 1: Embedded image bar chart with image map
+
+This produces an HTML page with an embedded image containing a bar chart,
+with an image map. "Tool tip" float-over text identifies the bars and
+groups, and clicking on a bar provides a popup alert window with the same
+information.
+
+<?php
+# PHPlot example: Bar chart, embedded image with image map
+require_once 'phplot.php';
+
+# This global string accumulates the image map AREA tags.
+$image_map = "";
+
+# Data for bar chart:
+$data = array(
+    array('1950', 40, 95, 20),
+    array('1960', 45, 85, 30),
+    array('1970', 50, 80, 40),
+    array('1980', 48, 77, 50),
+    array('1990', 38, 72, 60),
+    array('2000', 35, 68, 70),
+    array('2010', 30, 67, 80),
+);
+
+# Callback for 'data_points': Generate 1 <area> line in the image map:
+function store_map($im, $passthru, $shape, $row, $column, $x1, $y1, $x2, $y2)
+{
+    global $image_map;
+
+    $title = "Group $row, Bar $column";  // Title, also tool-tip text
+    $alt = "Region for group $row, bar $column"; // Required alt-text
+    $href = "javascript:alert('($row, $column)')"; // Demo URL
+    $coords = sprintf("%d,%d,%d,%d", $x1, $y1, $x2, $y2); // Convert to integers
+
+    $image_map .= "  <area shape=\"rect\" coords=\"$coords\""
+               .  " title=\"$title\" alt=\"$alt\" href=\"$href\">\n";
+}
+
+
+$plot = new PHPlot(640, 480);
+$plot->SetFailureImage(False); // No error images
+$plot->SetPrintImage(False); // No automatic output
+$plot->SetTitle("PHPlot Example: Bar Chart with Image Map");
+$plot->SetImageBorderType('plain');
+$plot->SetDataValues($data);
+$plot->SetDataType('text-data');
+$plot->SetPlotType('bars');
+$plot->SetCallback('data_points', 'store_map');
+$plot->SetPlotAreaWorld(NULL, 0, NULL, 100);
+$plot->DrawGraph();
+
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>PHPlot Example: Bar Chart with Image Map</title>
+</head>
+<body>
+<h1>PHPlot Example: Bar Chart with Image Map</h1>
+<map name="map1">
+<?php echo $image_map; ?>
+</map>
+<p>This is a plot with image map and tooltip text.</p>
+<img src="<?php echo $plot->EncodeImage();?>" alt="Plot Image" usemap="#map1">
+</body>
+</html>
+
+-----------------------------------------------------------------------------
+Example 2: Embedded image pie chart with image map
+
+This produces an HTML page with an embedded image containing a pie chart,
+with an image map. The pie segment shapes are interpolated with polygon
+points. The image map provides tool-tip text and a clickable area producing
+an alert box for each segment. This example also shows use of the data
+values. The callback handler accesses the data array to get the current
+segment value and uses that in the tool-top text and alert box. This is
+dependent on the data type of the array, and the code shown here only works
+with data type text-data-single
+
+<?php
+# PHPlot example: Pie chart, embedded image with image map
+require_once 'phplot.php';
+
+# This global string accumulates the image map AREA tags.
+$image_map = "";
+
+# Data for pie chart:
+$data = array(
+  array('',  20),
+  array('',  30),
+  array('',  10),
+  array('',  40),
+  array('',  10),
+);
+
+/*
+Callback handler for generating an image map for a pie chart.
+
+  NOTE: The code in this function is excluded from the license terms for
+  PHPlot, the PHPlot Reference Manual, and the PHPlot Test Suite. You may
+  freely copy, use, modify, and redistribute the code in this function.
+  Attribution is not necessary.  Or, to put it another way, I am placing
+  this function in the public domain.
+
+Arguments:
+  $im, $passthru : standard arguments for all callbacks.
+  $shape : always 'pie'
+  $segment : 0 for the first pie segment, 1 for the next, etc.
+  $xc, $yc : Center of the pie, in device coordinates
+  $wd, $ht : Pie diameters - width (horizontal), height (vertical)
+  $start_angle, $end_angle : Segment arc angles, in degrees, offset from
+    360. That is, the values are (360-A) for angle A. This is the way
+    PHPlot processes the angles for the GD function imagefilledarc().
+    Note that sin(360-A) = -sin(A); and cos(360-A) = cos(A).
+    Since the Y axis  (sin) is reversed in device, or image, coordinates
+    with Y=0 at the top, this works out correctly.
+
+Method used:
+    Approximate a pie segment using a polygon. Note the pie is not necessarily
+circular, but is an ellipse.
+    +  The 1st point is the pie center.
+    +  The 2nd point is on the circumference*, at the start angle.
+    +  The last point is on the circumference*, at the end angle.
+    +  In between the 2nd and last point are N>=0 additional points on the
+circumference*, spaced no more than 20 degrees apart. (20 is chosen by
+trial and error for a reasonable fit.) So small segments will be approximated
+by a single triangle. Larger segments will have more vertices.
+
+    *Note: These points are actually slightly outside the circumference.
+This is done by increasing the two radius values by a small amount (2 pixels).
+This produces a better fit, for the case where we want to make sure all the
+interior is covered, even if some of the exterior is also included.  (Using
+the actual radii would result in the area omitting a small part of the pie
+interior. For an image map, this would result in dead spaces.)
+
+    The segment subdivisions are made to have about equal angles. This results
+in a closer fit. For example, with a maximum sub-segment arc of 20 degrees,
+and a segment of 24 degrees, we make two 12 degree sub-segments rather than a
+20 degree and a 4 degree.
+
+    Note: Web image map coordinates have 0,0 in upper left, so Y is reversed.
+
+The pass-through argument gets the data array. This is used to include the
+pie segment value in the URL and/or tooltip. This will only work with data
+type text-data-single, where array values map 1:1 to segment values.
+*/
+function store_map($im, $data, $shape, $segment, $unused,
+                   $xc, $yc, $wd, $ht, $start_angle, $end_angle)
+{
+    global $image_map;
+
+    // Choose the largest step_angle <= 20 degrees that divides the segment
+    // into equal parts. (20 degrees is chosen as a threshold.)
+    // Note start_angle > end_angle due to reversal (360-A) of arguments.
+    $arc_angle = $start_angle - $end_angle;
+    $n_steps = (int)ceil($arc_angle / 20);
+    $step_angle = $arc_angle / $n_steps;
+
+    // Radius along horizontal and vertical, plus a tiny adjustment factor.
+    $rx = $wd / 2 + 2;
+    $ry = $ht / 2 + 2;
+    // Push the initial point into the array: the center of the pie.
+    $points = array($xc, $yc);
+
+    // Loop by step_angle from end_angle to start_angle.
+    // Don't use "$theta += $step_angle" because of cumulative error.
+    // Note $theta and $done_angle are in radians; $step_angle and $end_angle
+    // are in degrees.
+    $done_angle = deg2rad($start_angle);
+
+    for ($i = 0; ; $i++) {
+      // Advance to next step, but not past the end:
+      $theta = min($done_angle, deg2rad($end_angle + $i * $step_angle));
+
+      // Generate a point at the current angle:
+      $points[] = (int)($xc + $rx * cos($theta));
+      $points[] = (int)($yc + $ry * sin($theta));
+
+      // All done after generating a point at done_angle.
+      if ($theta >= $done_angle) break;
+    }
+
+    // Demonstration data: Title (and tool-tip text), alt text, URL:
+    // Fetch segment value from data arrayL
+    $value = $data[$segment][1];
+    $title = "Segment $segment = $value";
+    $alt = "Region for segment $segment";
+    $href = "javascript:alert('Segment $segment = $value')";
+    $coords = implode(',', $points);
+
+    // Generate the image map area:
+    $image_map .= "  <area shape=\"poly\" coords=\"$coords\""
+               .  " title=\"$title\" alt=\"$alt\" href=\"$href\">\n";
+}
+
+$plot = new PHPlot(640, 480);
+// Disable error images, since this script produces HTML:
+$plot->SetFailureImage(False);
+// Disable automatic output of the image:
+$plot->SetPrintImage(False);
+// Set up the rest of the plot:
+$plot->SetTitle("PHPlot Example: Pie Chart with Image Map");
+$plot->SetImageBorderType('plain');
+$plot->SetDataValues($data);
+$plot->SetDataType('text-data-single');
+$plot->SetPlotType('pie');
+// Set the data_points callback which will generate the image map.
+// Include the data array as the pass-through argument, for tooltip text:
+$plot->SetCallback('data_points', 'store_map', $data);
+// Produce the graph; this also creates the image map via callback:
+$plot->DrawGraph();
+
+// Now output the HTML page, with image map and embedded image:
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>PHPlot Example: Pie Chart with Image Map</title>
+</head>
+<body>
+<h1>PHPlot Example: Pie Chart with Image Map</h1>
+<map name="map1">
+<?php echo $image_map; ?>
+</map>
+<p>This is a plot with image map and tooltip text.</p>
+<img src="<?php echo $plot->EncodeImage();?>" alt="Plot Image" usemap="#map1">
+</body>
+</html>
+
+
+-----------------------------------------------------------------------------
+Implementation Notes and Limitations:
+
+Since most PHPlot scripts will not produce image maps, the burden of
+converting data points into a format for HTML image maps was left to the
+implementation in the callback function. This is why PHPlot passes the
+diameter values it already calculated (instead of radius values), and why
+pie chart segments must be interpolated by the callback function.
+
+You can generate image maps for error plots (data type data-data-error)
+with points and linepoints plot types, but the image map areas will not
+include the error bars. For these plot types, the only the coordinates of
+the data points are provided.
+
+For OHLC plots (candlesticks, candlesticks2, and ohlc plot types) there is
+no way to get the coordinates of individual features (such as the
+candlestick body rather than the high point wick). PHPlot only provides the
+bounding box rectangle for the overall data point graphic.
+
+PHPlot does not provide the data values from the data array that go with
+the points. If you need these values, for example in tooltips, your callback
+function needs to get them from the data array, using the $row and $column
+index values. This may be complex for pie charts (for example, if you want
+tooltip text to show the percentage value of the pie segment). Example 2
+above shows access to data values for the simple case of data type
+'text-data-single'.
+
+-----------------------------------------------------------------------------
+Image maps with non-embedded image data:
+
+It is also possible to generate an image map when your PHPlot script
+produces an image in the normal way (not embedded) and returns it to the
+browser as image data.  But your script will need to run twice: once to to
+generate the PHPlot image, and once to generate the containing HTML page
+with the image map.  (You can use two separate scripts instead, but this is
+not recommended, since both operations must create identical plots so the
+image map areas correspond to the plot areas.)
+
+In this example, the script normally generates an HTML page. The page
+contains an image map, generated with PHPlot, and also an <img> image tag
+which points back to the same script to have it generate the plot image.
+When requesting the image, the script adds a parameter 'mode=plot' to the
+URL. This tells the second execution of the script to generate the image
+data instead of the HTML page.
+
+The obvious drawback to this method is that you are processing a complete
+plot twice each time a plot is needed. The first time, only the image map
+is needed, and the plot itself is discarded. This is inefficient, especially
+if your plotting script needs to query a database or perform extensive
+calculations.
+
+Another concern is if your script queries a database, the data could change
+between the two uses of the script, resulting in an image map and plot
+which do not correlate.
+
+The rest of this section contains annotated code from an example.
+
+Start by checking for the mode parameter:
+    # Check the URL parameter to determine the mode:
+    $do_html = empty($_GET['mode']) || $_GET['mode'] != 'plot';
+
+The callback handler is the same as the example above, in that it appends
+to the global string $image_map one line from the image map.
+    # Callback for 'data_points' : Generate 1 line in the image map.
+    function store_map($im, $unused, $shape, $row, $column, ...) // Pseudo-code
+    { .... }
+
+The generate_html() function creates the containing HTML page. Only parts
+of the code are shown.
+    function generate_html()
+    {
+        global $image_map;
+
+Create a self-referencing URL with mode=plot parameter for the <img> tag:
+        # Pick separator depending on if the URL already has parameters:
+        $sep = empty($_SERVER['QUERY_STRING']) ? '?' : '&';
+        # URL to ourself, with parameter:
+        $url = htmlspecialchars($_SERVER['REQUEST_URI'] . $sep .  'mode=plot');
+
+Now you generate the HTML page:
+        echo "<html>\n<head>\n...";
+To create the image map:
+        echo "<map name=\"map1\">\n$image_map\n</map>\n";
+To include the plot image:
+        echo "<img src=\"$url\" usemap=\"#map1\">
+Produce the rest of the HTMl page as needed.
+This ends the generate_html function.
+
+In the main body of your script, create a PHPlot object and configure the
+plot as usual.  Set the data_points callback (you need only do this in
+the case of generating HTML, not the image case). There are two other places
+where the operation differs for the HTML or image generation, based on the
+$do_html flag: disabling automatic output with SetPrintImage, and calling
+the generate_html function at the end.
+    $plot = new PHPlot(800, 600);
+    if ($do_html) {
+        // Do not output the image in this mode:
+        $plot->SetPrintImage(False);
+        // Set the callback for image map generation:
+        $plot->SetCallback('data_points', 'store_map');
+    }
+    ... // Set up the plot, data values, plot type, etc.
+    // Output the image (in plot mode), or build the image map (in html mode):
+    $plot->DrawGraph();
+    if ($do_html) generate_html();
+
+That's all. If $do_html is true, no image will be produced (due to
+SetPrintImage(False)), and generate_html() will be called. If $do_html is
+false, DrawGraph() will output the plot image, and the map data will be
+not be produced or output.
+
+-----------------------------------------------------------------------------
+History:
+
+2012-02-19 First version of data_points callback committed, for next
+           release PHPlot-5.7.0 as an experimental feature.
+
+2011-11-25 Feature request #2442041 was written requesting data for image
+           maps. As the feature request author pointed out, PHPlot was
+           now able to produce image data embedded in an HTML file, so it
+           was now practical to also generate image map data.
+
+2007-07-07 Feature request #1749683 was written requesting data for image
+           maps. The request was closed as rejected, because there was no
+           good way at the time for a script to generate the image file
+           and the map and make them both available at the same time.
+

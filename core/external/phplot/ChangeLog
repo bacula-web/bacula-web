@@ -1,6 +1,233 @@
 This is the Change Log for PHPlot.
 The project home page is http://sourceforge.net/projects/phplot/
 -----------------------------------------------------------------------------
+2012-04-06       ===== Released as 5.8.0 =====
+    * Feature request #3515519 "Support object serialize/unserialize":
+      Add __sleep() and __wakeup() magic methods to support serialize
+      and unserialize.
+
+    * phplot.php: Updated version comment and version constant
+    * README.txt: Updated for new release
+    * NEWS.txt: Add text for new release
+
+2012-03-31
+    * Feature request #3501500 "Looping plot section":
+      Implemented streaming plots (motion-JPEG).
+      + New public functions StartStream(), EndStream(), PrintImageFrame().
+      + New protected function DisableCaching(), code from PrintImage().
+
+2012-03-26
+    * Code cleanup: Don't format tick labels unless they are on.
+      + Pass the actual tick value, not an already-formatted label, from
+        Draw[XY]Ticks() to Draw[XY]Tick(), so they can format it if needed.
+      + Clean up loop in DrawXTicks(), DrawYTicks(). No functional changes.
+
+2012-03-24
+    * Feature request #3488042 "Display only some data value labels":
+      A custom formatting callback function for Data Value Labels will now
+      receive 2 extra arguments: the data array row and column indexes for the
+      point. A custom formatting callback function for Axis Data Labels will
+      now receive 1 extra argument: the data array row index. This allows
+      selective formatting (or skipping) of labels based on their position
+      in the data array. For example, you can skip data value labels
+      for some data sets, and label others.
+      + Changed usage of internal CheckDataValueLabels() to combine 4
+        arguments into an array. This is to correspond to the new usage of
+        DrawDataValueLabel().
+      + In CalcMaxDataLabelSize(), when calculating the maximum axis data
+        label size, pass the row to the formatting function.
+      + Changed internal FormatLabel() to pass any additional arguments to a
+        custom label formatting function.
+      + Changed usage of internal DrawDataValueLabel(). Added arguments for
+        row and column, and combined 6 arguments into an array (because the
+        argument list was already too long). Pass the row and column to
+        FormatLabel() so they are available for custom label formatting.
+      + Changed usage of internal DrawXDataLabel(). The row argument is now
+        required, and used for custom label formatting and data label lines.
+        There is a new argument $do_lines to control drawing of data label
+        lines. (Previously, one argument served both purposes.)
+      + Changed usage of internal DrawYDataLabel(). Add a row argument to
+        pass to FormatLabel() for use in custom label formatting.
+      + Changed all plotting functions that call DrawXDataLabel() or
+        DrawYDataLabel() to include the new row argument.
+      + Changed all functions that call CheckDataValueLabels() and
+        DrawDataValueLabel() per new usage.
+
+2012-03-16
+    * Mark as unreleased version, and change minimum requirement to PHP-5.3.
+      (Since PHP-5.4 is released, PHP-5.2.x will no longer be tested.)
+
+    * Fixed bug #3506408 "Data Label Lines vs new plot types":
+      Bubble plots do work with data label lines. No code change.
+      OHLC plots do not work well with data label lines, so don't draw them.
+
+2012-02-25       ===== Released as 5.7.0 =====
+    * phplot.php: Updated version comment and version constant
+    * README.txt: Updated for new release
+    * NEWS.txt: Add text for new release
+
+2012-02-19
+    * Feature request #3442041 "Provide data for generating image maps":
+      Note: This is being added as an experimental feature, subject to change
+      or removal. It will not be documented in the PHPlot Reference Manual
+      unless and until this becomes an accepted part of PHPlot.
+
+      + Added a new callback 'data_points', called after each data point is
+        plotted (for supported plot types). It passes information to a handler
+        which can generate an <area> tag in an HTML image map.
+
+      + Changed usage of internal function DrawDot(). Added 2 arguments, $row
+        and $column, to support the data_points callback. However, the
+        existing $record arg was the same as $column, so it was removed.
+            Old usage: DrawDot($x_word, $y_world, $record, $color)
+            Now usage: DrawDot($row, $col, $x_world, $y_world, $color)
+
+      + Change usage of internal function DrawBar(). Added 2 arguments, $row
+        and $column, to support the data_points callback.
+            Old usage: DrawBar($x1, $y1, $x2, $y2, ...)
+            New usage: DrawBar($row, $col, $x1, $y1, $x2, $y2, ...)
+
+      + Changed the logic in DrawPieChart() to accommodate the data_points
+        callback, which needs to happen on the last (or only) pass.
+
+      + Changed internal functions DrawDot(), DrawBar(), DrawPieChart(),
+        DrawBubbles(), and DrawOHLC() to call the data_points callback,
+        sending it the coordinates it needs for each plotted point or shape.
+
+    * New file: Imagemaps.txt - documentation for new feature
+
+2012-02-18
+    * Fixed bug #3486834 "Wrong color for data value labels":
+      Use 'text' color, not 'title' color, for data value labels.
+      Compatibility warning: This will change the appearance of plots that
+      use SetTitleColor or SetTextColor and data value labels.
+
+      Also includes changes for feature request #3077554 "Finer control
+      over plot element colors":
+      Add new controls to independently set label color types.
+
+      + New public function: SetDataLabelColor()
+      + New public function: SetDataValueLabelColor()
+      + New public function: SetTickLabelColor()
+      + New public function: SetPieLabelColor()
+      + Add default_color_index argument to internal GetColorIndex()
+      + Add code to SetColorIndexes() to default the tick label color
+        and data label color to the text color, default the data value
+        label color to the data label color, and default the pie label
+        color to the grid color. This is backwards-compatible, except that
+        the data value labels used to use the title color.
+      + Use separate color index values for ticks, axis data labels, 
+        data value labels, and pie labels. Use title color only for titles.
+
+2012-02-17
+    * Fixed bug #3488064 "Pie label failures in locales with comma decimal":
+      This contains 2 work-arounds which together should avoid the problem.
+      + Changed internal method number_format() to restore the previous
+        locale settings that were in place after it gets the decimal and
+        thousands separators. Also, use LC_NUMERIC rather than LC_ALL to
+        limit the scope of locale loading.
+      + Changed internal method FormatPieLabel() to avoid a number-to-string
+        conversion if there is a single label source (the most common case).
+        This conversion was resulting in use of a locale-specific decimal
+        point, which PHP then fails to convert back to a number when it
+        tries to format it.
+
+2012-02-05
+    * Feature request #3481195 "Custom message image":
+      + New public function DrawMessage() to create an image with a message.
+      + Changed protected function PrintError() to now use DrawMessage().
+      + New protected function SetBgColorIndexes(), split off from
+        SetColorIndexes() so that DrawMessage() can set just the colors it
+        needs.
+      + Added optional argument $overwrite to protected functions
+        DrawBackground() and DrawImageBorder(), to force drawing even if it
+        seems it was already done. This is needed for DrawMessage().
+      + Moved protected function DrawError() to deprecated section.
+
+2012-01-16
+    * Added missing 'return TRUE' in SetFailureImage() and 2 internal
+      functions. Return values are unused, but fixed to be more consistent.
+
+    * Fixed bug #3396931 "Top dropshadow of stacked bars is always the
+      same color":
+      This is a follow-on to the fix for bug #3296884, which resulted in
+      drawing (not skipping) segments of size 0 in stacked bar plots. A
+      side-effect of the change was that a color 'cap' was drawn at the top of
+      a stack if the last value in the row was 0.  This was considered to be
+      the correct behavior at the time. But based on this new bug report, and
+      looking at how LibreOffice handles this case, it was decided to change
+      the way PHPlot handles this.
+
+      + Changed DrawStackedBars() and DrawHorizStackedBars() to ignore
+        segments that do not increase the stack's current size. (This is
+        not the same as ignoring segments of size 0, because a row can have
+        both positive and negative values. Also, if the axis was moved, an
+        initial 0 value will be drawn from the axis to 0.)
+
+        Resulting changes:
+        + A trailing zero value in a row will no longer result in a color cap
+          on shaded bar charts (that is, the top color of the stack would
+          differ from the last segment color).
+        + A row with all zero values will not be drawn at all (if the axis
+          remains at 0).
+
+2012-01-15
+    * Mark as unreleased version.
+    * Code cleanup: combine an assign and a test when processing data array
+      (11 cases), and remove 5 cases of casting the data value to double.
+      (The cast was in 4 of the plot drawing functions and FindDataLimits.
+      The other plot drawing functions did not do this, so it was removed for
+      consistency. Removal should have no impact, although there is an odd
+      case (hex value in a string) where the explicit cast would not work,
+      but the new code without casting will work.)
+
+2012-01-02       ===== Released as 5.6.0 =====
+    * phplot.php: Updated version comment and version constant
+    * README.txt: Updated for new release
+    * NEWS.txt: Add text for new release; new file.
+    * NEWS_part1.txt: Moved text for prior releases from NEWS.txt
+
+2012-01-01
+    * Extend copyright years to 2012.
+
+2011-12-30
+    * Fixed bug #3403297 "Pie chart sizing and label issues":
+      Most of the pie chart label and sizing code has been rewritten.
+      (Note: This documents changes in the code.  See other documentation
+      for a higher-level view and user-visible changes.)
+
+      Compatibility warning: This changes the appearance of pie charts.
+      See the NEWS file with the release for more information.
+
+    + $label_format['p'] is now used for pie label formatting
+    + Removed $plot_border_type static initialization
+    + New public SetPieLabelType() controls pie label source and formatting
+    + $label_scale_position = 0 or False now means no pie labels
+    + New internal GetTextAlignment() moves code from CheckDataValueLabels()
+    + New public SetPieAutoSize() to control use of labels in sizing pies
+    + CalcMargins() changed to not calculate unused title sizes for pies
+    + Added arg to  internal DrawPlotBorder(), now handles pie charts too
+    + New internal FormatPieLabel() to format pie chart labels
+    + New internal DrawPieLabel() to draw each pie chart label
+    + New internal CheckPieLabels() to apply dynamic default values
+    + Rewrote much of internal DrawPieChart() to:
+    ++ Can suppress labels using SetLabelScalePosition
+    ++ Fix use of label_scale_position, remove 1.2x factor
+    ++ Use new $pie_diam_factor controls aspect ratio of shaded pies
+    ++ Fix pie size calculation, use actual aspect ratio
+    ++ Pre-calculate label strings to get their sizes, if needed
+    ++ Use new $pie_full_size from SetPieAutoSize() to control autosizing
+    ++ Pie size accounts for largest label (if labels are outside the pie) 
+    ++ Leave safe_margin between labels and pie/plot area edges
+    + Changed DrawGraph() to:
+    ++ Skip irrelevant data and scale calculations for pie charts
+    ++ Call DrawPlotBorder() even for pie charts
+
+2011-12-10
+    * Comment typo fixes (found during work on upcoming change).
+
+2011-11-13
+    * Moved duplicated code from the 2 constructors into a new function.
 
 2011-07-30 (lbayuk)     ===== Released as 5.5.0 =====
     * phplot.php: Updated version comment and version constant
