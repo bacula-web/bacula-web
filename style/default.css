@@ -1,4 +1,4 @@
-body{
+body, form{
   background-color: #ffffff;
   padding: 0px;
   margin: 0px;
@@ -6,11 +6,6 @@ body{
   font-size: 10pt;
   text-align: left;
   vertical-align: middle;
-}
-
-form{
-  margin: 0px;
-  padding: 0px;
 }
 
 form input {
@@ -41,50 +36,6 @@ a:link, a:visited, a:hover, a:visited {
 #nav a:visited{
  font-size: 11pt;
  font-weight: bold;
-}
-
-#header{
- height: 35px;
- padding: 5px;
- margin: 0px;
- margin-bottom: 3px;
- background-color: #736F6E;
-}
-
-#header div#appname {
- margin: 0px;
- color: #FFFFFF;
- vertical-align: middle;
- font-size: 18pt;
- font-variant: small-caps;
- font-weight: bold;
- text-align: right;
-}
-
-#toplinks {
- font-size: 10pt;
- margin: 0em;
- padding: 0px;
- border-bottom: 1px solid black;
- height: 30px;
-}
-
-#toplinks ul {
- height: 30px;
- margin: 0px;
- /* margin-top: 5px; */
-}
-
-#toplinks li {
- display: inline;
- float: right;
- padding: 0px 10px 0px 10px;
- margin-top: 5px;
- vertical-align: middle;
-}
-
-#toplinks li a {
- text-decoration: none;
 }
 
 #main_left {
