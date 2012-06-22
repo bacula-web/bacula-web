@@ -39,7 +39,6 @@
 #toplinks ul {
  height: 30px;
  margin: 0px;
- /* margin-top: 5px; */
 }
 
 #toplinks li {
@@ -52,4 +51,10 @@
 
 #toplinks li a {
  text-decoration: none;
+ color: #000000;
+}
+
+#toplinks form {
+ color: #000000;
+ vertical-align: middle;
 }

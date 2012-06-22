@@ -1,7 +1,7 @@
 {include file=header.tpl}
 
 <div class="main_center">
-	<p class="header">{t}Overall status{/t}</p>
+	<div class="header">{t}Overall status{/t}</div>
   
   <!-- General information -->
   <div class="box">

@@ -4,6 +4,7 @@
 <head>
 <title>bacula-web</title>
 <link rel="stylesheet" type="text/css" href="style/default.css">
+<link rel="stylesheet" type="text/css" href="style/header.css">
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
 <body>
@@ -27,7 +28,7 @@
 
 <!-- Header -->
 <div id="header">
- <div id=appname>bacula-web</div>
+ <div id=header_appname>bacula-web</div>
 </div> <!-- end div header -->
 
 <!-- End Header -->

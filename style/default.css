@@ -1,5 +1,5 @@
 body, form{
-  background-color: #ffffff;
+  background-color: #f0f0f0;
   padding: 0px;
   margin: 0px;
   font-family: Arial,Verdana;
@@ -28,70 +28,41 @@ a:link, a:visited, a:hover, a:visited {
  font-size: 11pt;
 }
 
-#nav a:link{
+#nav a:link {
  font-size: 11pt;
  font-weight: bold;
 }
 
-#nav a:visited{
+#nav a:visited {
  font-size: 11pt;
  font-weight: bold;
-}
-
-#main_left {
- position: absolute; 
- left:10px; 
- width: 380px; 
- background-color: #FFFFFF;
- border: 1px solid #C0C0C0;
- font-size: 10pt;
- margin: 0 5px 15px;
- min-height: 180px;
- padding: 5px 15px;
- vertical-align: middle;
-}
-
-#main_middle {
- position: absolute;
- left:400px;
- width: 380px;
- border: none;
- margin-top: 0px;
-}
-#main_right {
- position: absolute; 
- left: 790px; 
- width: 300px; 
- border: none; 
- margin-top: 0px;
 }
 
 .main_center {
  width: 1000px;
- margin: 5px;
- padding: 0px;
+ margin: 10px;
+ padding: 10px;
  float: left;
  border: 1px solid #C8C8C8;
+ background-color: #ffffff;
 }
 
 .main_center .header {
- background-color: #B0B0B0;
- border: 1px solid #C0C0C0;
- color: #FFFFFF;
+ border-bottom: 1px solid #000000;
+ color: #000000;
  font-size: 11pt;
  font-weight: bold;
- margin: 0px;
- padding: 5px;
+ margin: 5px 0px;
+ padding: 0px;
  vertical-align: middle;
- text-align: center;
+ text-align: left;
 }
 
 .list {
- /*border: 1px solid red;*/
  width: auto;
  height: auto;
  overflow: auto;
- margin: 0px;
+ margin: 5px 0px;
  padding: 0px;
  text-align: center;
  max-height: 420px;
@@ -104,6 +75,7 @@ a:link, a:visited, a:hover, a:visited {
  padding: 0px;
  margin: 10px 5px;
  text-align: center;
+ background-color: #ffffff;
 }
 
 .box p.title {
@@ -195,10 +167,6 @@ table {
  /*padding: 2px;*/
  background-color: #E0C8E5; 
  color: black; 
-}
-
-.back {
- background-color: #E6E6F5; 
 }
 
 .tbl_header	{
