@@ -1,5 +1,5 @@
 body, form{
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   padding: 0px;
   margin: 0px;
   font-family: Arial,Verdana;
@@ -39,7 +39,7 @@ a:link, a:visited, a:hover, a:visited {
 }
 
 .main_center {
- width: 1000px;
+ width: 80%;
  margin: 10px;
  padding: 10px;
  float: left;
@@ -106,7 +106,6 @@ a:link, a:visited, a:hover, a:visited {
  font-style: italic;
  font-size: 9pt;
  color: #736F6E;
- /*color: #000000;*/
  margin: 0px;
 }
 
@@ -159,14 +158,6 @@ table {
  width: 100%;
  margin: 0px;
  border-collapse: collapse;
-}
-.pool_name {
- text-align: left; 
- font-weight: bold;
- font-size: 9pt;
- /*padding: 2px;*/
- background-color: #E0C8E5; 
- color: black; 
 }
 
 .tbl_header	{

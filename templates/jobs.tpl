@@ -4,12 +4,11 @@
   <a href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a> > Jobs list
 </div>
 
-<div id="main_center">
-  
-  <!-- Last jobs -->  
+<div class="main_center">
+  <div class="header">{t}Jobs report{/t}</div>
+
+  <!-- Filter jobs -->
   <div class="box">
-	<p class="title">{t}Jobs report{/t}</p>
-	<!-- Filter jobs -->
 	<h4>Filter jobs</h4>
 	<form action="jobs.php" method="post">
 	<table border="0">
@@ -28,11 +27,10 @@
 	  </tr>
 	</table>
 	</form>
-	
-	<h4>Jobs result</h4>
+
 	<table border="0">
 	  <tr>
-		<td class="tbl_header">{t}Status{/t}</td>
+		<td class="tbl_header">{t}Status{/t}</td> 
 		<td class="tbl_header">{t}Job ID{/t}</td>
 		<td class="tbl_header">{t}Name{/t}</td>
 		<td class="tbl_header">{t}Type{/t}</td>
