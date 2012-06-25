@@ -111,7 +111,7 @@
 	$last_volumes = array();
 	
 	// Construct the query
-	$query = array( 'table' => 'Media', 'fields' => array( 'Media.MediaId', 'Media.Volumename','Media.Lastwritten','Media.VolStatus','Pool.Name'),
+	$query = array( 'table' => 'Media', 'fields' => array( 'Media.MediaId', 'Media.Volumename','Media.Lastwritten','Media.VolStatus','Pool.Name as poolname'),
 					'join' => array( 'table'=>'Pool', 'condition'=>'Media.PoolId = Pool.poolid'),
 					'where' => "Media.Volstatus != 'Disabled' AND Media.LastWritten IS NOT NULL", 'orderby' => 'Media.Lastwritten DESC', 'limit'=>'10' );
 
@@ -136,6 +136,7 @@
 
 	$dbSql->tpl->assign( 'volumes_list', $last_volumes );	
 
+        var_dump($last_volumes);
 	// Render template
 	$dbSql->tpl->display('index.tpl');
 ?>
