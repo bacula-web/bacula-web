@@ -1,4 +1,6 @@
-body, form{
+a, body, div, em, input, label, legend, li, ol, p, select, span, strong, td, th, textarea, u, ul, a:link, a:visited, a:hover, a:visited {
+  font-size: 10pt;
+  color: #404040;
   background-color: #ffffff;
   padding: 0px;
   margin: 0px;
@@ -8,23 +10,13 @@ body, form{
   vertical-align: middle;
 }
 
-form input {
-  padding: 3px;  
-}
-
-form input.submit {
-	margin-bottom: 10px;
-}
-
-a:link, a:visited, a:hover, a:visited {
-  color: #736F6E;
-  font-size: 10pt;
+td, select, input {
+ color: #000000;
 }
 
 #nav
 {
  margin: 10px;
- /*border: 1px solid green;*/
  font-size: 11pt;
 }
 
@@ -40,16 +32,17 @@ a:link, a:visited, a:hover, a:visited {
 
 .main_center {
  width: 80%;
+ min-width: 1000px;
  margin: 10px;
  padding: 10px;
  float: left;
- border: 1px solid #C8C8C8;
+ border: 1px solid #c8c8c8;
  background-color: #ffffff;
 }
 
 .main_center .header {
- border-bottom: 1px solid #000000;
- color: #000000;
+ border-bottom: 1px solid #c8c8c8;
+ color: #404040;
  font-size: 11pt;
  font-weight: bold;
  margin: 5px 0px;
@@ -75,7 +68,7 @@ a:link, a:visited, a:hover, a:visited {
  padding: 0px;
  margin: 10px 5px;
  text-align: center;
- background-color: #ffffff;
+ background-color: #FFFFFF;
 }
 
 .box p.title {
@@ -105,8 +98,9 @@ a:link, a:visited, a:hover, a:visited {
 .box p.box_footer {
  font-style: italic;
  font-size: 9pt;
- color: #736F6E;
+ color: #404040;
  margin: 0px;
+ text-align: center;
 }
 
 .box table tr td {
@@ -118,7 +112,6 @@ a:link, a:visited, a:hover, a:visited {
 }
 
 .box table tr td.label { 
- /*font-weight: bold;*/
  text-align: left;
 }
 
@@ -150,18 +143,26 @@ a:link, a:visited, a:hover, a:visited {
  border: 1px solid #C8C8C8;
 }
 
-.box table tr td.info a { font-size: 8pt;}
+.box table tr td.info a { 
+ font-size: 8pt;
+}
 
-.odd { background-color: #C8C8C8; }
+.box table tr td.odd { 
+ background-color: #C8C8C8; 
+}
+
+.box table tr td.odd a { 
+ background-color: #C8C8C8; 
+}
 
 table {
  width: 100%;
- margin: 0px;
+ margin: 5px 0px;
  border-collapse: collapse;
 }
 
 .tbl_header	{
- background-color: #E0E0E0; 
+ background-color: #c8c8c8; 
  color: #000000;
  font-weight: bold;
 }

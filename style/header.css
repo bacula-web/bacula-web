@@ -1,8 +1,8 @@
 #header{
  width: 100%;
  padding: 0px;
- margin: 0px;
- background-color: #736F6E;
+ margin: 5px 0px;
+ background-color: #404040;
  display: table;
 }
 
@@ -10,29 +10,15 @@
  display: table-cell;
  float: right;
  color: #FFFFFF;
+ background-color: #404040;
  vertical-align: middle;
  font: normal small-caps bold 18pt Arial,Verdana;
  padding: 10px;
 }
 
-.header_navigation { 
- color: white; 
- font-size: 12pt; 
- display: table-cell; 
- vertical-align: middle;
- padding: 10px;
-}
-
-.header_navigation a { 
- color: #FFFFFF;
- font: normal normal bold 12pt Arial,Verdana;
- text-decoration: none;
-}
-
 #toplinks {
  font-size: 10pt;
  padding: 0px;
- border-bottom: 1px solid black;
  height: 30px;
 }
 
@@ -51,10 +37,8 @@
 
 #toplinks li a {
  text-decoration: none;
- color: #000000;
 }
 
-#toplinks form {
- color: #000000;
+#toplinks form, #toplinks select {
  vertical-align: middle;
 }
