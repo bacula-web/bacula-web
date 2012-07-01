@@ -10,6 +10,18 @@ a, body, div, em, input, label, legend, li, ol, p, select, span, strong, td, th,
   vertical-align: middle;
 }
 
+table {
+ min-width: 300px;
+ margin: 5px 0px;
+ border-collapse: collapse;
+}
+
+.tbl_header	{
+ background-color: #c8c8c8; 
+ color: #000000;
+ font-weight: bold;
+}
+
 td, select, input {
  color: #000000;
 }
@@ -61,17 +73,83 @@ td, select, input {
  max-height: 420px;
 }
 
+.widget {
+ float: left;
+ min-height: 100px;
+ min-width: 320px;
+ max-width: 370px;
+ padding: 0px;
+ margin: 10px 5px;
+ background-color: #FFFFFF;
+}
+
+.widget table {
+ width: 100%;
+}
+
+.widget img.graph {
+ margin: auto;
+ border: none;
+}
+
+.widget p.box_footer {
+ font-style: italic;
+ font-size: 9pt;
+ color: #404040;
+ margin: 0px;
+ text-align: center;
+}
+
+.widget td, .box td {
+ padding: 3px;
+ font-size: 9pt;
+ height: 20px;
+ text-align: center;
+ min-width: 40px;
+}
+
+.widget table tr td.label {
+ text-align: left;
+}
+
+.widget table td.info {
+ text-align: center;
+}
+
+td.waiting_jobs {
+ width: 60px;
+ color: #FF6600;
+ font-weight: bolder;
+ font-size: 10pt;
+ border: 1px solid #C8C8C8;
+}
+
+td.completed_jobs {
+ width: 60px;
+ color: #00FF00;
+ font-weight: bolder;
+ font-size: 10pt;
+ border: 1px solid #C8C8C8;
+}
+
+td.failed_jobs {
+ width: 60px;
+ color: #FF0000;
+ font-weight: bolder;
+ font-size: 10pt;
+ border: 1px solid #C8C8C8;
+}
+
 .box {
  float: left;
  min-height: 100px;
  min-width: 300px;
  padding: 0px;
  margin: 10px 5px;
- text-align: center;
  background-color: #FFFFFF;
 }
 
-.box p.title {
+.box p.title, .widget p.title {
  text-align: center;
  vertical-align: middle;
  font-size: 11pt;
@@ -90,79 +168,14 @@ td, select, input {
  margin: 5px 0px 10px 0px;
 }
 
-.box img.graph {
- margin: auto;
- border: none;
-}
-
-.box p.box_footer {
- font-style: italic;
- font-size: 9pt;
- color: #404040;
- margin: 0px;
- text-align: center;
-}
-
-.box table tr td {
- padding: 3px;
- font-size: 9pt;
- height: 20px;
- text-align: center;
- min-width: 40px;
-}
-
-.box table tr td.label { 
- text-align: left;
-}
-
-.box table td.info {
- text-align: center;
-}
-
-.box table td.completed_jobs {
- width: 60px;
- color: #00FF00;
- font-weight: bolder;
- font-size: 10pt;
- border: 1px solid #C8C8C8;
-}
-
-.box table td.failed_jobs {
- width: 60px;
- color: #FF0000;
- font-weight: bolder;
- font-size: 10pt;
- border: 1px solid #C8C8C8;
-}
-
-.box table td.waiting_jobs {
- width: 60px;
- color: #FF6600;
- font-weight: bolder;
- font-size: 10pt;
- border: 1px solid #C8C8C8;
-}
-
-.box table tr td.info a { 
+table tr td.info a { 
  font-size: 8pt;
 }
 
-.box table tr td.odd { 
+td.odd, td.odd a { 
  background-color: #C8C8C8; 
 }
 
-.box table tr td.odd a { 
- background-color: #C8C8C8; 
-}
-
-table {
- width: 100%;
- margin: 5px 0px;
- border-collapse: collapse;
-}
-
-.tbl_header	{
- background-color: #c8c8c8; 
- color: #000000;
- font-weight: bold;
+td.form_submit {
+ text-align: right;
 }

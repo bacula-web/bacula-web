@@ -136,7 +136,6 @@
 
 	$dbSql->tpl->assign( 'volumes_list', $last_volumes );	
 
-        var_dump($last_volumes);
 	// Render template
 	$dbSql->tpl->display('index.tpl');
 ?>

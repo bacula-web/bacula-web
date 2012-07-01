@@ -4,7 +4,7 @@
 	<div class="header">{t}Overall status{/t}</div>
   
   <!-- General information -->
-  <div class="box">
+  <div class="widget">
 	<p class="title">{t}Catalog statistics{/t}</p>
 	<table>
 	  <tr>
@@ -23,7 +23,7 @@
   </div>
   
 <!-- Last 24 hours job Status -->
-  <div class="box">
+  <div class="widget">
 	<p class="title">{t}Last 24 hours status{/t}</p>
 		<table style="border-collapse: separate;">
 			<tr>
@@ -58,7 +58,7 @@
   </div> <!-- end div box -->  
   
 <!-- Last 24 hours jobs status -->
-  <div class="box">
+  <div class="widget">
 	<p class="title" title="{t}Last 24 hours jobs status{/t}">Jobs status</p>
 	  <a href="jobs.php" title="{t}Show last 24 hours jobs status{/t}">
 	    <img class="graph" src="{$graph_jobs}" alt="" />
@@ -72,7 +72,7 @@
   <p class="header">{t}Pools and volumes status{/t}</p>
 
   <!-- Pools and Volumes Status -->
-  <div class="box">
+  <div class="widget">
 	<p class="title">
 	{t}Pools and volumes status{/t}
 	</p>
@@ -83,13 +83,13 @@
   </div> <!-- end div box -->
   
   <!-- Stored Bytes for last 7 days -->
-  <div class="box">
+  <div class="widget">
 	<p class="title" title="{t}Stored bytes for last 7 days (GB){/t}">{t}Stored bytes{/t}</p>
 	  <img class="graph" src="{$graph_stored_bytes}" alt="" />
   </div> <!-- end div box -->
 
   <!-- Last used volumes -->
-  <div class="box">
+  <div class="widget">
 	<p class="title">{t}Last used volumes{/t}</p>
 	  <table>
 		<tr>
@@ -115,7 +115,7 @@
 <div class="main_center">
  <p class="header">{t}Reports{/t}</p>
 
-<div class="box">
+<div class="widget">
  <p class="title">{t}Client report{/t}</p>
  <!-- Client report -->
  <form method="post" action="client-report.php">
@@ -157,8 +157,8 @@
 			</td>
 		</tr>		
 		<tr>
-			<td colspan="2" class="info">
-				<input class="submit" type="submit" value="View report" />
+			<td colspan="2" class="form_submit">
+				<input type="submit" value="View report" />
 			</td>
 		</tr>
 	</table>
@@ -166,7 +166,7 @@
  </div> <!-- end div class=box -->
  
  <!-- Backup job report -->
- <div class="box">
+ <div class="widget">
    <p class="title">{t}Backup Job report{/t}</p>
    <form method="post" action="backupjob-report.php">
    <table>
@@ -180,8 +180,8 @@
 	   </td>
 	 </tr>
 	 <tr>
-	   <td colspan="2" class="info"> 
-		 <input class="submit" type=submit value="{t}View report{/t}"> 
+	   <td colspan="2" class="form_submit"> 
+		 <input type=submit value="{t}View report{/t}"> 
 	   </td>
 	 </tr>
    </table>
