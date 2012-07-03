@@ -146,6 +146,10 @@
 	  // Job size
 	  $job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes'] );
 
+      // Job Pool
+      if( is_null($job['pool_name']) )
+	    $job['pool_name'] = 'N/A';
+
 	  array_push( $last_jobs, $job);
   } // end foreach
 
