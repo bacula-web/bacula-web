@@ -26,19 +26,18 @@ td, select, input {
  color: #000000;
 }
 
-#nav
+#nav, #nav a
 {
  margin: 10px;
- font-size: 11pt;
+ font-size: 12pt;
+ text-decoration: none;
 }
 
 #nav a:link {
- font-size: 11pt;
  font-weight: bold;
 }
 
 #nav a:visited {
- font-size: 11pt;
  font-weight: bold;
 }
 
@@ -55,7 +54,7 @@ td, select, input {
 .main_center .header {
  border-bottom: 1px solid #c8c8c8;
  color: #404040;
- font-size: 11pt;
+ font-size: 12pt;
  font-weight: bold;
  margin: 5px 0px;
  padding: 0px;
@@ -153,10 +152,13 @@ td.failed_jobs {
  text-align: center;
  vertical-align: middle;
  font-size: 11pt;
- background-color: #C8C8C8;
- color: #000000;
- padding: 2px;
+ background-color: #404040;
+ color: #FFFFFF;
+ /*background-color: #C8C8C8;
+ color: #000000;*/
+ padding: 3px;
  margin: 0px;
+ font-weight: bold;
 }
 
 .box h4, .box h5 {
