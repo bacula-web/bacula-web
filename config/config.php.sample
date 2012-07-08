@@ -39,6 +39,7 @@
  
  // SQLite bacula catalog
  // $config[0]['label'] = 'Dev backup server';
+ // $config[0]['db_type'] = 'sqlite';
  // $config[0]['db_name'] = '/path/to/database/db.sdb';
 
  // Copy the section below only if you have at least two Bacula catalog
