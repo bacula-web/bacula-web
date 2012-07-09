@@ -109,7 +109,7 @@ class CGraph{
 		switch( $this->type )
 		{
 			case 'pie':
-				$this->plot->SetPlotAreaPixels( 10, 10, ($this->width / 2), $this->height-10 );
+				$this->plot->SetPlotAreaPixels( 5, 5, ($this->width / 2), $this->height-5 );
 				$this->plot->SetLabelScalePosition( 0.2 );
 				
 				$legends = array();
@@ -120,9 +120,10 @@ class CGraph{
 				$this->plot->SetXLabelAngle(90);
 			break;
 		}
-		
+
 		// Legend position (calculated regarding the width and height of the graph)
-		$this->plot->SetLegendPixels( ($this->width / 2) + 10, 25 );
+		list($legend_width, $legend_height) = $this->plot->GetLegendSize();
+		$this->plot->SetLegendPixels( $this->width - ($legend_width+5) , 10);
 		
 		// Graph title
 		$this->plot->SetTitle( $this->title );
@@ -133,8 +134,9 @@ class CGraph{
 		$this->plot->SetXTickPos('none');
 		$this->plot->SetPlotAreaWorld(NULL, 0, NULL, NULL);
 
-
+		// Render the graph
 		$this->plot->DrawGraph();
+		
 	} // end function Render()
 } // end BGraph classe
 ?>
