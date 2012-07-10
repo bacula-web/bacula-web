@@ -56,13 +56,17 @@
 	
 	public function get_Param( $param )
 	{
-		//global $config;
-				
 		if( isset( $this->cfg[$param] ) )
 			return $this->cfg[$param];
 		else
 			return false;
 	}
+	
+	public function get_Catalog_Param( $catalog_id, $param )
+	{
+		return $this->catalogs[$catalog_id][$param];
+	}
+	
 	
 	public function get_Catalogs()
 	{
