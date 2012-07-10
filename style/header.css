@@ -1,7 +1,7 @@
 #header{
  width: 100%;
  padding: 0px;
- margin: 5px 0px;
+ margin: 0px 0px;
  background-color: #404040;
  display: table;
 }
@@ -22,17 +22,13 @@
  height: 30px;
 }
 
-#toplinks ul {
- height: 30px;
- margin: 0px;
-}
-
 #toplinks li {
+ height: 30px;
  display: inline;
  float: right;
- padding: 0px 10px 0px 10px;
- margin-top: 5px;
+ padding: 0px 10px;
  vertical-align: middle;
+ line-height: 30px;
 }
 
 #toplinks li a {
