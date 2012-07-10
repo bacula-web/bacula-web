@@ -16,20 +16,16 @@
 */
  class Config {
  
-	private $config_params;
-	private $config;
+	private $cfg;
 	private $catalogs = array();
 	
-	function __construct()
+	function __construct( )
 	{
-		global $config;
-		$this->config = $config;
 	}
 	
-	public function loadConfig()
+	public function load()
 	{
-		global $config;
-		
+		// Check if config file exist and is readable, then include it
 		if( is_readable( CONFIG_FILE ) )
 			include_once( CONFIG_FILE );
 		else {
@@ -37,15 +33,17 @@
 			return;
 		}
 		
+		$this->cfg = $config;
+		
 		// Checking options and database parameters
-		if( !array_key_exists('0', $config ) ) {
+		if( !array_key_exists('0', $this->cfg ) ) {
 			throw new Exception( "At least one catalog should be defined in the configuration" );
 			return;
 		}
 			
 		// Loading catalog(s) parameter(s)
-		if( is_array($config) && !empty($config) ) {
-			foreach( $config as $parameter => $value )
+		if( is_array($this->cfg) && !empty($this->cfg) ) {
+			foreach( $this->cfg as $parameter => $value )
 			{
 				if( is_array($value) )		// Parsing database section
 					array_push( $this->catalogs, $value );
@@ -56,21 +54,22 @@
 		}
 	}
 	
-	public function get_Config_param( $param )
+	public function get_Param( $param )
 	{
-		global $config;
+		//global $config;
 				
-		if( isset( $config[$param] ) )
-			return $config[$param];
+		if( isset( $this->cfg[$param] ) )
+			return $this->cfg[$param];
 		else
 			return false;
 	}
 	
-	public function Get_Catalogs()
+	public function get_Catalogs()
 	{
 		$result = array();
+		
 		foreach( $this->catalogs as $db )
-			array_push( $result, $db['label']);
+			$result[] = $db['label'];
 		
 		return $result;
 	}

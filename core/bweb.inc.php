@@ -32,7 +32,7 @@ class Bweb
 		// Loading configuration file parameters
 		try {
 			$this->bwcfg = new Config();
-			$this->bwcfg->loadConfig();
+			$this->bwcfg->load();
 		}catch( Exception $e ) {
 			CErrorHandler::displayError($e);
 		}
@@ -47,7 +47,7 @@ class Bweb
 			throw new Exception("The template cache folder must be writable by Apache user");
 			
 		// Initialize smarty gettext function
-		$language  = $this->bwcfg->get_Config_param( 'language' );
+		$language  = $this->bwcfg->get_Param( 'language' );
 		if( !$language )
 			throw new Exception("Language translation problem");
 			
@@ -58,7 +58,7 @@ class Bweb
 		$http_post = CHttpRequest::getRequestVars($_POST);
 		if( isset( $http_post['catalog_id'] ) ) {
 			$this->catalog_current_id = $http_post['catalog_id'];
-			$_SESSION['catalog_id'] = $this->catalog_current_id;
+			$_SESSION['ca228talog_id'] = $this->catalog_current_id;
 		}
 		elseif( isset( $_SESSION['catalog_id'] ) )
 			$this->catalog_current_id = $_SESSION['catalog_id'];
@@ -78,7 +78,7 @@ class Bweb
 		// Catalog selection		
 		if( $this->catalog_nb > 1 ) {
 			// Catalogs list
-			$this->tpl->assign( 'catalogs', $this->bwcfg->Get_Catalogs() );			
+			$this->tpl->assign( 'catalogs', $this->bwcfg->get_Catalogs() );			
 			// Catalogs count
 			$this->tpl->assign( 'catalog_nb', $this->catalog_nb );
 		}
@@ -336,7 +336,7 @@ class Bweb
 			case 'mysql':
 			case 'pgsql':
 				$query  = "SELECT Client.ClientId, Client.Name FROM Client ";
-				if( $this->bwcfg->get_Config_param( 'show_inactive_clients' ) )
+				if( $this->bwcfg->get_Param( 'show_inactive_clients' ) )
 					$query .= "WHERE FileRetention > '0' AND JobRetention > '0' "; 
 				$query .= "ORDER BY Client.Name;";
 			break;
