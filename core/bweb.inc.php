@@ -70,11 +70,19 @@ class Bweb
 		$this->tpl->assign( 'catalog_current_id', $this->catalog_current_id );
 		
 		// Database connection
-			$this->db_link = new CDB( 	$this->bwcfg->get_DSN($this->catalog_current_id), 
-										$this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'login'),
-										$this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'password') );
+		switch( $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'db_type') ) {
+			case 'mysql':
+			case 'postgres':
+				$this->db_link = new CDB( $this->bwcfg->get_DSN($this->catalog_current_id), 
+										  $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'login'),
+										  $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'password') );
+			break;
+			case 'sqlite':
+				$this->db_link = new CDB( $this->bwcfg->get_DSN($this->catalog_current_id) );
+			break;
+		}
 										
-			$this->db_link->makeConnection();	
+		$this->db_link->makeConnection();	
 
 		// Catalog selection		
 		if( $this->catalog_nb > 1 ) {

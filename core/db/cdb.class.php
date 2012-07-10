@@ -26,7 +26,7 @@ class CDB
 	private $result;
 	private $result_nb;
 	
-	public function __construct( $dsn, $user, $password )
+	public function __construct( $dsn, $user = null, $password = null )
 	{
 		$this->dsn      = $dsn;
 		$this->user     = $user;
