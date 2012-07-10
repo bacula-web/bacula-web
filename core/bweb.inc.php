@@ -58,7 +58,7 @@ class Bweb
 		$http_post = CHttpRequest::getRequestVars($_POST);
 		if( isset( $http_post['catalog_id'] ) ) {
 			$this->catalog_current_id = $http_post['catalog_id'];
-			$_SESSION['ca228talog_id'] = $this->catalog_current_id;
+			$_SESSION['catalog_id'] = $this->catalog_current_id;
 		}
 		elseif( isset( $_SESSION['catalog_id'] ) )
 			$this->catalog_current_id = $_SESSION['catalog_id'];
@@ -71,8 +71,9 @@ class Bweb
 		
 		// Database connection
 			$this->db_link = new CDB( 	$this->bwcfg->get_DSN($this->catalog_current_id), 
-										$this->bwcfg->getUser($this->catalog_current_id), 
-										$this->bwcfg->getPwd($this->catalog_current_id) );
+										$this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'login'),
+										$this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'password') );
+										
 			$this->db_link->makeConnection();	
 
 		// Catalog selection		
