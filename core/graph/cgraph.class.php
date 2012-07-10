@@ -112,19 +112,20 @@ class CGraph{
 				$this->plot->SetPlotAreaPixels( 5, 5, ($this->width / 2), $this->height-5 );
 				$this->plot->SetLabelScalePosition( 0.2 );
 				
+				// Set legend data
 				$legends = array();
 				foreach( $this->data as $key => $legend )
 					$this->plot->SetLegend( implode(': ',$legend) );
+				
+				// Legend position (calculated regarding the width and height of the graph)
+				list($legend_width, $legend_height) = $this->plot->GetLegendSize();
+				$this->plot->SetLegendPixels( $this->width - ($legend_width+5) , 10);
 			break;
 			case 'bars':
 				$this->plot->SetXLabelAngle(90);
 			break;
 		}
 
-		// Legend position (calculated regarding the width and height of the graph)
-		list($legend_width, $legend_height) = $this->plot->GetLegendSize();
-		$this->plot->SetLegendPixels( $this->width - ($legend_width+5) , 10);
-		
 		// Graph title
 		$this->plot->SetTitle( $this->title );
 		$this->plot->SetYTitle( $this->ytitle );
