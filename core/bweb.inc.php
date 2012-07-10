@@ -72,7 +72,7 @@ class Bweb
 		// Database connection
 			$this->db_link = new CDB( 	$this->bwcfg->get_DSN($this->catalog_current_id), 
 										$this->bwcfg->getUser($this->catalog_current_id), 
-										$this->bwcfg->getPwd($this->catalog_current_id)  );
+										$this->bwcfg->getPwd($this->catalog_current_id) );
 			$this->db_link->makeConnection();	
 
 		// Catalog selection		
@@ -115,8 +115,8 @@ class Bweb
 				$query  = "SELECT pg_database_size('bacula') AS dbsize";
 			break;
 			case 'sqlite':
-				// Not yet implemented
-				return "0 MB";
+				$db_size = filesize($this->bwcfg->get_Catalog_Param($this->catalog_current_id, 'db_name') );
+				return CUtils::Get_Human_Size($db_size);
 			break;
 		}
 		
