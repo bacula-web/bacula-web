@@ -72,7 +72,7 @@ class Bweb
 		// Database connection
 		switch( $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'db_type') ) {
 			case 'mysql':
-			case 'postgres':
+			case 'pgsql':
 				$this->db_link = new CDB( $this->bwcfg->get_DSN($this->catalog_current_id), 
 										  $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'login'),
 										  $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'password') );
