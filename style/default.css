@@ -44,8 +44,8 @@ td, select, input {
 .main_center {
  width: 80%;
  min-width: 1000px;
- margin: 10px;
- padding: 10px;
+ margin: 5px;
+ padding: 5px 10px;
  float: left;
  border: 1px solid #c8c8c8;
  background-color: #ffffff;
@@ -75,7 +75,7 @@ td, select, input {
 .widget {
  float: left;
  min-height: 100px;
- min-width: 320px;
+ min-width: 260px;
  max-width: 370px;
  padding: 0px;
  margin: 10px 5px;

@@ -4,7 +4,7 @@
     <a href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a> > Test page
 </div>
 
-<div id="main_center">
+<div class="main_center">
 	<div class="box">
 	  <p class="title">{t}Required components{/t}</p>
 	<table border="0">
