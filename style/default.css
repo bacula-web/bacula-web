@@ -109,34 +109,26 @@ td, select, input {
 
 .widget table tr td.label {
  text-align: left;
+ font-size: 11pt;
 }
 
 .widget table td.info {
  text-align: center;
+ font-size: 12pt;
+ font-weight: bold;
+ border: 1px solid #C8C8C8;
 }
 
 td.waiting_jobs {
- width: 60px;
  color: #FF6600;
- font-weight: bolder;
- font-size: 10pt;
- border: 1px solid #C8C8C8;
 }
 
 td.completed_jobs {
- width: 60px;
  color: #00FF00;
- font-weight: bolder;
- font-size: 10pt;
- border: 1px solid #C8C8C8;
 }
 
 td.failed_jobs {
- width: 60px;
  color: #FF0000;
- font-weight: bolder;
- font-size: 10pt;
- border: 1px solid #C8C8C8;
 }
 
 .box {
