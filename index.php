@@ -79,8 +79,9 @@
 	$vols_by_pool = array();
 	$graph 	      = new CGraph( "graph1.png" );
 
-	foreach( $dbSql->getPools() as $pool )
-		$vols_by_pool[] = array( $pool['name'], $dbSql->countVolumes( $pool['poolid'] ) );
+	foreach( $dbSql->getPools() as $pool ) {
+		$vols_by_pool[] = array( $pool['name'], $pool['numvols'] );
+	}
 
 	$graph->SetData( $vols_by_pool, 'pie', 'text-data-single' );
 	$graph->SetGraphSize( 310, 200 );
@@ -113,7 +114,9 @@
 	// Construct the query
 	$query = array( 'table' => 'Media', 'fields' => array( 'Media.MediaId', 'Media.Volumename','Media.Lastwritten','Media.VolStatus','Pool.Name as poolname'),
 					'join' => array( 'table'=>'Pool', 'condition'=>'Media.PoolId = Pool.poolid'),
-					'where' => "Media.Volstatus != 'Disabled' AND Media.LastWritten IS NOT NULL", 'orderby' => 'Media.Lastwritten DESC', 'limit'=>'10' );
+					'where' => "(Media.Volstatus != 'Disabled') OR (Media.LastWritten IS NOT NULL) OR (Media.Lastwritten != 0)", 
+					'orderby' => 'Media.Lastwritten DESC', 
+					'limit'=>'10' );
 
 	// Run the query
 	$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );

@@ -102,7 +102,7 @@ class Bweb
 		$this->tpl->debugging 		= false;
 		$this->tpl->force_compile 	= true;
 
-		$this->tpl->template_dir 	= "./templates";
+		$this->tpl->template_dir 	= VIEW_DIR;
 		$this->tpl->compile_dir 	= "./templates_c";
 	}
 	
@@ -288,10 +288,10 @@ class Bweb
 		{
 			case 'sqlite':
 			case 'mysql':
-				$query 		= "SELECT name, poolid FROM Pool";
+				$query 		= "SELECT name, numvols, poolid FROM Pool";
 			break;
 			case 'pgsql':
-				$query 		= "SELECT name, poolid FROM pool";
+				$query 		= "SELECT name, numvols, poolid FROM pool";
 			break;
 		}
 
@@ -382,36 +382,6 @@ class Bweb
 		}
 		
 		return $client;
-	}
-	
-	public function countVolumes( $pool_id = 'ALL' )
-	{
-		$result = null;
-		$nb_vol = null;
-		$query  = '';
-
-		switch( $this->db_link->getDriver() )
-		{
-			case 'sqlite':
-			case 'mysql':
-				$query 	= 'SELECT COUNT(*) as vols_count ';
-				$query .= 'FROM Media ';
-				if( $pool_id != 'ALL' )
-					$query .= ' WHERE Media.poolid = ' . $pool_id;
-			break;
-			case 'pgsql':
-				$query 	= 'SELECT COUNT(*) as vols_count ';
-				$query .= 'FROM Media ';
-				if( $pool_id != 'ALL' )
-					$query .= ' WHERE media.poolid = ' . $pool_id;
-			break;
-		}
-		
-		// Execute sql query
-		$result = $this->db_link->runQuery($query);
-		$vols = $result->fetch();
-		
-		return $vols['vols_count'];
 	}
 	
 	public function getStoredFiles( $start_timestamp, $end_timestamp, $job_name = 'ALL', $client = 'ALL' )
