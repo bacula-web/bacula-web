@@ -53,10 +53,15 @@ class CDBQuery {
 		// Order by
 		if(isset($param['orderby']) && !is_null($param['orderby']) )
 			$query .= 'ORDER BY ' . $param['orderby'] . ' ';
+		
+		// Group by
+		if(isset($param['groupby']) && !is_null($param['groupby']) )
+			$query .= 'GROUP BY ' . $param['groupby'] . ' ';
 			
 		// Limit to
 		if(isset($param['limit']) && !is_null($param['limit']) )
 			$query .= 'LIMIT ' . $param['limit'];
+		
 		return $query;
 	}
 }
