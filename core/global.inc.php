@@ -59,6 +59,10 @@
  define('CONFIG_DIR', BW_ROOT . "/config/");
  define('CONFIG_FILE', CONFIG_DIR . "config.php");
  
+ // Views
+ define('VIEW_DIR', BW_ROOT . "/application/view/");
+ define('VIEW_CACHE_DIR', BW_ROOT . "./templates_c");
+ 
  // Time intervals in secondes
  define( 'FIRST_DAY', 	mktime( 0, 0, 0, 1, 1, 1970) );
  define( 'NOW', 		time() );
