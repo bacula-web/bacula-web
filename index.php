@@ -78,10 +78,29 @@
 	// Volumes by pools graph
 	$vols_by_pool = array();
 	$graph 	      = new CGraph( "graph1.png" );
+	$max_pools	  = '9';
 
-	foreach( $dbSql->getPools() as $pool ) {
+	// count pools
+	$query = array('table'=>'pool', 'fields'=>array('count(*) as pools_count') );
+	$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
+	$pools_count = $result->fetch();
+	
+	// Sum volumes for rest of pool (not 9 biggers pools)
+	$query = array( 'table'=>'pool', 
+	                'fields'=>array('SUM(numvols) AS sum_vols'), 
+					'limit' => $max_pools.','.($pools_count['pools_count']-$max_pools),
+					'groupby' => 'name');
+	$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
+	$sum_vols = $result->fetch();
+	
+	$query = array('table'=>'pool', 'fields'=>array('poolid,name,numvols'), 'orderby'=>'numvols DESC', 'limit'=>$max_pools );
+	$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
+	
+	foreach( $result->fetchall() as $pool ) {
 		$vols_by_pool[] = array( $pool['name'], $pool['numvols'] );
 	}
+	
+	$vols_by_pool[] = array( 'Others', $sum_vols['sum_vols']);
 
 	$graph->SetData( $vols_by_pool, 'pie', 'text-data-single' );
 	$graph->SetGraphSize( 310, 200 );
@@ -123,7 +142,8 @@
 	  break;
 	}
 	
-	$query = array( 'table' => 'Media', 'fields' => array( 'Media.MediaId', 'Media.Volumename','Media.Lastwritten','Media.VolStatus','Pool.Name as poolname'),
+	$query = array( 'table' => 'Media', 
+					'fields' => array( 'Media.MediaId', 'Media.Volumename','Media.Lastwritten','Media.VolStatus','Pool.Name as poolname'),
 					'join' => array( 'table'=>'Pool', 'condition'=>'Media.PoolId = Pool.poolid'),
 					'where' => $where, 
 					'orderby' => 'Media.Lastwritten DESC', 
