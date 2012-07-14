@@ -107,14 +107,25 @@
 	$graph->Render();
 	$dbSql->tpl->assign('graph_stored_bytes', $graph->Get_Image_file() );
 
-
-	// Last used volumes
+    // Last used volumes
 	$last_volumes = array();
 	
-	// Construct the query
+	// Building SQL statment
+	$where = '';
+	
+	switch( $dbSql->db_link->getDriver() ) {
+	  case 'mysql':
+	  case 'pgsql':
+	    $where = "(Media.Volstatus != 'Disabled') OR (Media.LastWritten IS NOT NULL)";
+	  break;
+	  case 'sqlite':
+	    $where = "(Media.Lastwritten != 0)";
+	  break;
+	}
+	
 	$query = array( 'table' => 'Media', 'fields' => array( 'Media.MediaId', 'Media.Volumename','Media.Lastwritten','Media.VolStatus','Pool.Name as poolname'),
 					'join' => array( 'table'=>'Pool', 'condition'=>'Media.PoolId = Pool.poolid'),
-					'where' => "(Media.Volstatus != 'Disabled') OR (Media.LastWritten IS NOT NULL) OR (Media.Lastwritten != 0)", 
+					'where' => $where, 
 					'orderby' => 'Media.Lastwritten DESC', 
 					'limit'=>'10' );
 
