@@ -6,7 +6,7 @@
   <!-- General information -->
   <div class="widget">
 	<p class="title">{t}Catalog statistics{/t}</p>
-	<table>
+	<table style="border-collapse: separate;">
 	  <tr>
 	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clients}</td>
 	  </tr>
