@@ -365,20 +365,16 @@ class Bweb
 		$result = '';
 		$query  = "SELECT name,uname FROM Client WHERE clientid = '$client_id'";
 		
-		try {
-			$result = $this->db_link->runQuery($query);
+		$result = $this->db_link->runQuery($query);
 			
-			foreach( $result->fetchAll() as $client ) {
-				$uname			   = explode( ' ', $client['uname'] );
-				$client['version'] = $uname[0];
+		foreach( $result->fetchAll() as $client ) {
+			$uname			   = explode( ' ', $client['uname'] );
+			$client['version'] = $uname[0];
 				
-				$uname			   = explode(',', $uname[2] );
-				$temp    		   = explode('-', $uname[0]);
-				$client['arch']	   = $temp[0];
-				$client['os']      = $uname[1];
-			}
-		}catch( CErrorHandler $e ) {
-			$e->raiseError();
+			$uname			   = explode(',', $uname[2] );
+			$temp    		   = explode('-', $uname[0]);
+			$client['arch']	   = $temp[0];
+			$client['os']      = $uname[1];
 		}
 		
 		return $client;
