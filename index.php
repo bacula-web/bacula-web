@@ -46,7 +46,6 @@
 	$dbSql->tpl->assign( 'jobs_list', $dbSql->getJobsName() );
 	
 	// Clients list
-
 	$dbSql->tpl->assign( 'clients_list', $dbSql->get_Clients() );
 
 	// Last 24 hours status (completed, failed and waiting jobs)
@@ -76,32 +75,47 @@
 	unset($graph);
 
 	// Volumes by pools graph
-	$vols_by_pool = array();
-	$graph 	      = new CGraph( "graph1.png" );
-	$max_pools	  = '9';
-
-	// count pools
-	$query = array('table'=>'pool', 'fields'=>array('count(*) as pools_count') );
+	$vols_by_pool 	= array();
+	$graph 	      	= new CGraph( "graph1.png" );
+	$max_pools		= '9';
+	$table_pool 	= '';
+	$limit 			= '';
+	$sum_vols 		= '';
+	
+	// Count pools
+    if($dbSql->db_link->getDriver() == 'mysql') {
+		$table_pool = 'Pool';
+	}else {
+		$table_pool = 'pool';
+	}
+	
+	$query = array('table'=>$table_pool, 'fields'=>array('count(*) as pools_count') );
 	$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
 	$pools_count = $result->fetch();
 	
-	// Sum volumes for rest of pool (not 9 biggers pools)
-	$query = array( 'table'=>'pool', 
-	                'fields'=>array('SUM(numvols) AS sum_vols'), 
-					'limit' => $max_pools.','.($pools_count['pools_count']-$max_pools),
-					'groupby' => 'name');
-	$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
-	$sum_vols = $result->fetch();
-	
-	$query = array('table'=>'pool', 'fields'=>array('poolid,name,numvols'), 'orderby'=>'numvols DESC', 'limit'=>$max_pools );
+	// Display 9 biggest pools and rest of volumes in 10th one display as Other
+	if($pools_count['pools_count'] > $max_pools) {
+	  $limit = $max_pools.','.($pools_count['pools_count']-$max_pools);
+	  
+	  $query = array( 'table'=> $table_pool, 
+	                  'fields'=> array('SUM(numvols) AS sum_vols'), 
+					  'limit' => $limit,
+					  'groupby' => 'name');
+	  $result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
+	  $sum_vols = $result->fetch();
+	  
+	  $vols_by_pool[] = array( 'Others', $sum_vols['sum_vols']);
+	}else {
+	  $limit = $pools_count['pools_count'];
+	}
+
+	$query  = array('table'=>$table_pool, 'fields'=>array('poolid,name,numvols'), 'orderby'=>'numvols DESC', 'limit'=>$max_pools );
 	$result = $dbSql->db_link->runQuery( CDBQuery::getQuery($query) );
 	
 	foreach( $result->fetchall() as $pool ) {
 		$vols_by_pool[] = array( $pool['name'], $pool['numvols'] );
 	}
 	
-	$vols_by_pool[] = array( 'Others', $sum_vols['sum_vols']);
-
 	$graph->SetData( $vols_by_pool, 'pie', 'text-data-single' );
 	$graph->SetGraphSize( 310, 200 );
 
