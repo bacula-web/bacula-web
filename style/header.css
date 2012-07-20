@@ -6,7 +6,7 @@
  display: table;
 }
 
-#header_appname {
+#header .app_name {
  display: table-cell;
  float: right;
  color: #FFFFFF;
@@ -14,6 +14,13 @@
  vertical-align: middle;
  font: normal small-caps bold 18pt Arial,Verdana;
  padding: 10px;
+}
+
+.app_version {
+ float: right;
+ color: #404040;
+ font: normal normal bold 9pt Arial,Verdana;
+ margin: 2px 5px;
 }
 
 #toplinks {

@@ -28,7 +28,8 @@
 
 <!-- Header -->
 <div id="header">
- <div id=header_appname>bacula-web</div>
+   <div class="app_name">Bacula-Web</div>
 </div> <!-- end div header -->
 
+<div class="app_version">Version 5.2.10</div>
 <!-- End Header -->
