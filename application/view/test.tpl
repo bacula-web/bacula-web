@@ -17,7 +17,7 @@
 				{$check.check_descr}
 			</td>
 			<td  style="text-align:center;width=60px;">
-				<img src='style/images/{$check.check_result}' width='25' alt=''/>
+				<img src='application/view/style/images/{$check.check_result}' width='25' alt=''/>
 			</td>
 		  </tr>
 		{/foreach}

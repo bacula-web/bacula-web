@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
 <title>bacula-web</title>
-<link rel="stylesheet" type="text/css" href="style/default.css">
-<link rel="stylesheet" type="text/css" href="style/header.css">
+<link rel="stylesheet" type="text/css" href="application/view/style/default.css">
+<link rel="stylesheet" type="text/css" href="application/view/style/header.css">
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
 <body>
