@@ -26,7 +26,7 @@ class CTranslation {
 		$this->language = $lang;
 		$this->charset = 'UTF-8';
 		$this->domaine = 'messages';
-		$this->locale_path = BW_ROOT . '/application/locale';
+		$this->locale_path = LOCALE_DIR;
 	}
 
 	function set_Language( &$template ) {
