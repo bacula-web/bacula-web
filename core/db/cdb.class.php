@@ -37,7 +37,7 @@ class CDB
 									PDO::ATTR_STATEMENT_CLASS => array('CDBResult', array($this) ) );
 	}
 	
-	public function makeConnection()
+	public function connect()
 	{
 		try{
 			if( !isset( $this->connection ) )
