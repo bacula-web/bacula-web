@@ -47,6 +47,9 @@
  // Exception handler
  require_once BW_OBJ . "app/cerrorhandler.class.php";
  
+ // MVC
+ require_once BW_OBJ . "app/cview.class.php";
+ 
  // Database abstraction
  require_once BW_OBJ . "db/cdb.class.php";
  require_once BW_OBJ . "db/cdbresult.class.php";
@@ -61,7 +64,7 @@
  
  // Views
  define('VIEW_DIR', BW_ROOT . "/application/view/");
- define('VIEW_CACHE_DIR', BW_ROOT . "./templates_c");
+ define('VIEW_CACHE_DIR', BW_ROOT . "/templates_c");
  
  // Locale
  define('LOCALE_DIR', BW_ROOT . '/application/locale');
