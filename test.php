@@ -15,8 +15,12 @@
 | GNU General Public License for more details.                            |
 +-------------------------------------------------------------------------+ 
 */
+ session_start();
  require_once ("core/global.inc.php");
- $bw = new Bweb();
+ 
+ // Initialise model and view
+ $view = new CView();
+ $bw   = new Bweb( $view );
 
  // Check result icon
  $icon_result = array( true => 'ok.png', false => 'error.png' );
@@ -98,7 +102,7 @@
  $graph->Render();
 
  // Parse to template
- $bw->tpl->assign( 'checks', $check_list );
- $bw->tpl->assign('graph_test', $graph->Get_Image_file() );
- $bw->tpl->display('test.tpl');
+ $view->assign( 'checks', $check_list );
+ $view->assign( 'graph_test', $graph->Get_Image_file() );
+ $view->display( 'test.tpl' );
 ?>

@@ -17,10 +17,12 @@
  session_start();
  include_once( 'core/global.inc.php' );
 
- $dbSql = new Bweb();
+ // Initialise view and model
+ $view = new CView();
+ $dbSql = new Bweb( $view );
 
  // Get volumes list (pools.tpl)
- $dbSql->tpl->assign('pools',$dbSql->GetVolumeList() );
+ $view->assign('pools',$dbSql->GetVolumeList() );
 
- $dbSql->tpl->display('pools.tpl');
+ $view->display('pools.tpl');
 ?>

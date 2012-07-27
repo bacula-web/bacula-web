@@ -17,7 +17,8 @@
   session_start();
   include_once( 'core/global.inc.php' );
 
-  $dbSql = new Bweb();
+  $view = new CView();
+  $dbSql = new Bweb($view);
   // Jobs list
   $query 	    = "";
   $last_jobs 	= array();
@@ -37,7 +38,7 @@
 					   STATUS_FAILED	=> 'Failed',
 					   STATUS_CANCELED	=> 'Canceled' );
 					   
-  $dbSql->tpl->assign( 'job_status', $job_status );
+  $view->assign( 'job_status', $job_status );
   
   // Global variables
   $job_levels = array( 'D' => 'Diff', 'I' => 'Incr', 'F' => 'Full' );
@@ -68,7 +69,7 @@
 			$query .= "WHERE Job.JobStatus = 'A' ";
 		break;
 	}
-	$dbSql->tpl->assign('job_status_filter', $posts['status'] );
+	$view->assign('job_status_filter', $posts['status'] );
   }
   
   // order by
@@ -83,7 +84,8 @@
     $dbSql->tpl->assign( 'jobs_per_page_selected', $posts['jobs_per_page'] );
   }else
 	$query .= "LIMIT 25 ";
-  $dbSql->tpl->assign( 'jobs_per_page', $jobs_per_page );
+	
+  $view->assign( 'jobs_per_page', $jobs_per_page );
   
   
   $jobsresult = $dbSql->db_link->runQuery( $query );
@@ -153,7 +155,7 @@
 	  array_push( $last_jobs, $job);
   } // end foreach
 
-  $dbSql->tpl->assign( 'last_jobs', $last_jobs );
+  $view->assign( 'last_jobs', $last_jobs );
   
   // Count jobs
   if( isset( $posts['status'] ) )
@@ -161,8 +163,8 @@
   else
 	$total_jobs = $dbSql->countJobs( FIRST_DAY, NOW );
   
-  $dbSql->tpl->assign( 'total_jobs', $total_jobs );
+  $view->assign( 'total_jobs', $total_jobs );
   
   // Process and display the template 
-  $dbSql->tpl->display('jobs.tpl');
+  $view->render('jobs.tpl');
 ?>

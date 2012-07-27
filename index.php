@@ -18,46 +18,49 @@
 	session_start();
 	include_once( 'core/global.inc.php' );
 
+	// Initialise view and model
+	$view = new CView();
+	
 	try{
-		$dbSql = new Bweb();
+		$dbSql = new Bweb($view);
 	}catch( Exception $e  ) {
 		CErrorHandler::displayError($e);
     }
 	
 	// Stored files number 
-	$dbSql->tpl->assign('stored_files', $dbSql->translate->get_Number_Format($dbSql->getStoredFiles( FIRST_DAY, NOW ) ) );
+	$view->assign('stored_files', $dbSql->translate->get_Number_Format($dbSql->getStoredFiles( FIRST_DAY, NOW ) ) );
 	  
 	// Database size
-	$dbSql->tpl->assign('database_size', $dbSql->getDatabaseSize());
+	$view->assign('database_size', $dbSql->getDatabaseSize());
 
 	// Overall stored bytes
 	$stored_bytes = CUtils::Get_Human_Size( $dbSql->getStoredBytes( FIRST_DAY, NOW ) );
-	$dbSql->tpl->assign('stored_bytes', $stored_bytes);
+	$view->assign('stored_bytes', $stored_bytes);
 
 	// Total bytes and files for last 24 hours
-	$dbSql->tpl->assign('bytes_last', CUtils::Get_Human_Size( $dbSql->getStoredBytes( LAST_DAY, NOW ) ) );
-	$dbSql->tpl->assign('files_last', $dbSql->translate->get_Number_Format($dbSql->getStoredFiles( LAST_DAY, NOW ) ) );
+	$view->assign('bytes_last', CUtils::Get_Human_Size( $dbSql->getStoredBytes( LAST_DAY, NOW ) ) );
+	$view->assign('files_last', $dbSql->translate->get_Number_Format($dbSql->getStoredFiles( LAST_DAY, NOW ) ) );
 
 	// Number of clients
 	$nb_clients = $dbSql->Get_Nb_Clients();
-	$dbSql->tpl->assign('clients', $nb_clients["nb_client"] );
+	$view->assign('clients', $nb_clients["nb_client"] );
 
 	// Backup Job list
-	$dbSql->tpl->assign( 'jobs_list', $dbSql->getJobsName() );
+	$view->assign( 'jobs_list', $dbSql->getJobsName() );
 	
 	// Clients list
-	$dbSql->tpl->assign( 'clients_list', $dbSql->get_Clients() );
+	$view->assign( 'clients_list', $dbSql->get_Clients() );
 
 	// Last 24 hours status (completed, failed and waiting jobs)
-	$dbSql->tpl->assign( 'completed_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'completed' ) );
-	$dbSql->tpl->assign( 'failed_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'failed' ) );
-	$dbSql->tpl->assign( 'waiting_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'waiting' ) );
-	$dbSql->tpl->assign( 'canceled_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'canceled' ) );
+	$view->assign( 'completed_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'completed' ) );
+	$view->assign( 'failed_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'failed' ) );
+	$view->assign( 'waiting_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'waiting' ) );
+	$view->assign( 'canceled_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'canceled' ) );
 
 	// Last 24 hours jobs Level
-	$dbSql->tpl->assign( 'incr_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'ALL', J_INCR) );
-	$dbSql->tpl->assign( 'diff_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'ALL', J_DIFF) );
-	$dbSql->tpl->assign( 'full_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'ALL', J_FULL) );
+	$view->assign( 'incr_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'ALL', J_INCR) );
+	$view->assign( 'diff_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'ALL', J_DIFF) );
+	$view->assign( 'full_jobs', $dbSql->countJobs( LAST_DAY, NOW, 'ALL', J_FULL) );
 
 	// Last 24 hours Job status graph
 	$jobs_status_data = array();
@@ -71,7 +74,7 @@
 	$graph->SetGraphSize( 310, 200 );
 
 	$graph->Render();
-	$dbSql->tpl->assign('graph_jobs', $graph->Get_Image_file() );
+	$view->assign('graph_jobs', $graph->Get_Image_file() );
 	unset($graph);
 
 	// Volumes by pools graph
@@ -120,7 +123,7 @@
 	$graph->SetGraphSize( 310, 200 );
 
 	$graph->Render();
-	$dbSql->tpl->assign('graph_pools', $graph->Get_Image_file() );
+	$view->assign('graph_pools', $graph->Get_Image_file() );
 
 	// Last 7 days stored Bytes graph
 	$days_stored_bytes 	= array();
@@ -138,7 +141,7 @@
 	$graph->SetYTitle( "GB" );
 
 	$graph->Render();
-	$dbSql->tpl->assign('graph_stored_bytes', $graph->Get_Image_file() );
+	$view->assign('graph_stored_bytes', $graph->Get_Image_file() );
 
     // Last used volumes
 	$last_volumes = array();
@@ -182,8 +185,8 @@
 		$last_volumes[] 	  = $volume;
 	}
 
-	$dbSql->tpl->assign( 'volumes_list', $last_volumes );	
+	$view->assign( 'volumes_list', $last_volumes );	
 
 	// Render template
-	$dbSql->tpl->display('index.tpl');
+	$view->render('index.tpl');
 ?>

@@ -17,7 +17,9 @@
 	session_start();
 	include_once( 'core/global.inc.php' );
 
-	$dbSql = new Bweb();
+	// Initialise model and view
+	$view  = new CView();
+	$dbSql = new Bweb( $view );
 	
 	$clientid 			= '';
     	$client				= '';
@@ -69,7 +71,7 @@
 		}
 	}		
 
-	$dbSql->tpl->assign( 'backup_jobs', $backup_jobs);
+	$view->assign( 'backup_jobs', $backup_jobs);
 	
 	// Get the last 7 days interval (start and end)
 	$days = CTimeUtils::getLastDaysIntervals( $period );
@@ -90,7 +92,7 @@
 	$graph->SetYTitle( "GB" );
 
 	$graph->Render();
-	$dbSql->tpl->assign('graph_stored_bytes', $graph->Get_Image_file() );	
+	$view->assign('graph_stored_bytes', $graph->Get_Image_file() );	
 
 	// ===============================================================
 	// Getting last 7 days stored files graph
@@ -107,14 +109,14 @@
 	$graph->SetYTitle( "Files" );
 
 	$graph->Render();
-	$dbSql->tpl->assign('graph_stored_files', $graph->Get_Image_file() );
+	$view->assign('graph_stored_files', $graph->Get_Image_file() );
 	
-	$dbSql->tpl->assign( 'period', $period);
-	$dbSql->tpl->assign( 'client_name', $client['name']);
-	$dbSql->tpl->assign( 'client_os', $client['os']);
-	$dbSql->tpl->assign( 'client_arch', $client['arch']);
-	$dbSql->tpl->assign( 'client_version', $client['version']);
+	$view->assign( 'period', $period);
+	$view->assign( 'client_name', $client['name']);
+	$view->assign( 'client_os', $client['os']);
+	$view->assign( 'client_arch', $client['arch']);
+	$view->assign( 'client_version', $client['version']);
 	
 	// Process and display the template
-	$dbSql->tpl->display('client-report.tpl');
+	$view->render('client-report.tpl');
 ?>

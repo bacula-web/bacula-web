@@ -21,13 +21,13 @@ class Bweb
 	private $bwcfg;							// Config class
 	private $catalogs = array();			// Catalog array
 	
-	public  $tpl;							// Template class
+	private $view;							// Template class
 	public  $db_link;						// Database link
 	
 	public  $catalog_nb;					// Catalog count
 	private	$catalog_current_id;			// Current catalog
 
-    function __construct()
+    function __construct( &$view )
 	{             
 		// Loading configuration file parameters
 		try {
@@ -40,10 +40,10 @@ class Bweb
 		$this->catalog_nb = $this->bwcfg->Count_Catalogs();
 		
 		// Template engine initalization
-		$this->init_tpl();
+		$this->view = $view;
 		
 		// Checking template cache permissions
-		if( !is_writable( "./templates_c" ) )
+		if( !is_writable( VIEW_CACHE_DIR ) )
 			throw new Exception("The template cache folder must be writable by Apache user");
 			
 		// Initialize smarty gettext function
@@ -52,7 +52,7 @@ class Bweb
 			throw new Exception("Language translation problem");
 			
 		$this->translate = new CTranslation( $language );
-		$this->translate->set_Language( $this->tpl );
+		$this->translate->set_Language( $this->view );
 		
 		// Check catalog id
 		$http_post = CHttpRequest::getRequestVars($_POST);
@@ -67,7 +67,7 @@ class Bweb
 			$_SESSION['catalog_id'] = $this->catalog_current_id;
 		}
 
-		$this->tpl->assign( 'catalog_current_id', $this->catalog_current_id );
+		$this->view->assign( 'catalog_current_id', $this->catalog_current_id );
 		
 		// Database connection
 		switch( $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'db_type') ) {
@@ -82,30 +82,17 @@ class Bweb
 			break;
 		}
 										
-		$this->db_link->makeConnection();	
+		$this->db_link->connect();	
 
 		// Catalog selection		
 		if( $this->catalog_nb > 1 ) {
 			// Catalogs list
-			$this->tpl->assign( 'catalogs', $this->bwcfg->get_Catalogs() );			
+			$this->view->assign( 'catalogs', $this->bwcfg->get_Catalogs() );			
 			// Catalogs count
-			$this->tpl->assign( 'catalog_nb', $this->catalog_nb );
+			$this->view->assign( 'catalog_nb', $this->catalog_nb );
 		}
 	}
                 
-    // Initialize Smarty template classe
-	function init_tpl()
-	{
-		$this->tpl = new Smarty();
-		
-		$this->tpl->compile_check 	= true;
-		$this->tpl->debugging 		= false;
-		$this->tpl->force_compile 	= true;
-
-		$this->tpl->template_dir 	= VIEW_DIR;
-		$this->tpl->compile_dir 	= "./templates_c";
-	}
-	
 	public function getDatabaseSize() 
 	{
 		$db_size = 0;

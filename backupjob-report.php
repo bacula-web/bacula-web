@@ -17,7 +17,9 @@
 	session_start();
 	include_once( 'core/global.inc.php' );
 
-	$dbSql = new Bweb();
+	// Initialise view and model
+	$view = new CView();
+	$dbSql = new Bweb($view);
 
 	$backupjob_name 		= "";
 	$backupjob_bytes		= 0;
@@ -70,7 +72,7 @@
 	$graph->SetYTitle( "GB" );
 
 	$graph->Render();
-	$dbSql->tpl->assign('graph_stored_bytes', $graph->Get_Image_file() );	
+	$view->assign('graph_stored_bytes', $graph->Get_Image_file() );	
 
 	// ===============================================================
 	// Getting last 7 days stored files graph
@@ -87,7 +89,7 @@
 	$graph->SetYTitle( "Files" );
 
 	$graph->Render();
-	$dbSql->tpl->assign('graph_stored_files', $graph->Get_Image_file() );
+	$view->assign('graph_stored_files', $graph->Get_Image_file() );
 
 	// Last 10 jobs
 	$query    = "SELECT JobId, Level, JobFiles, JobBytes, JobStatus, StartTime, EndTime, Name ";  
@@ -120,13 +122,13 @@
 		$jobs[] = $job;
 	} // end while		
 
-	$dbSql->tpl->assign('jobs', $jobs );
-	$dbSql->tpl->assign('backupjob_name', $backupjob_name );
-	$dbSql->tpl->assign('backupjob_period', $backupjob_period );
-	$dbSql->tpl->assign('backupjob_bytes', $backupjob_bytes );
-	$dbSql->tpl->assign('backupjob_files', $backupjob_files );
+	$view->assign('jobs', $jobs );
+	$view->assign('backupjob_name', $backupjob_name );
+	$view->assign('backupjob_period', $backupjob_period );
+	$view->assign('backupjob_bytes', $backupjob_bytes );
+	$view->assign('backupjob_files', $backupjob_files );
 
 	// Process and display the template 
-	$dbSql->tpl->display('backupjob-report.tpl'); 
+	$view->display('backupjob-report.tpl'); 
 
 ?>

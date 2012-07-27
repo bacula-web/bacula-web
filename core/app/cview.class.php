@@ -15,7 +15,27 @@
 +-------------------------------------------------------------------------+ 
 */
 
-CView extends Smarty() {
+class CView extends Smarty {
+
+  public function __construct() 
+  {
+    $this->init();
+  }
+  
+  private function init() 
+  {
+	$this->compile_check 	= true;
+	$this->debugging 		= false;
+	$this->force_compile 	= true;
+
+	$this->template_dir 	= VIEW_DIR;
+	$this->compile_dir 		= VIEW_CACHE_DIR;
+  }
+  
+  public function render( $view = 'index.tpl' ) 
+  {
+    $this->display($view);
+  }
 
 }
 
