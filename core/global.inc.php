@@ -56,7 +56,7 @@
  require_once BW_OBJ . "i18n/ctranslation.class.php";
  
  // Global constants
- define('CONFIG_DIR', BW_ROOT . "/config/");
+ define('CONFIG_DIR', BW_ROOT . "/application/config/");
  define('CONFIG_FILE', CONFIG_DIR . "config.php");
  
  // Views
