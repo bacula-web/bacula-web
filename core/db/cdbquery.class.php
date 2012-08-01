@@ -29,7 +29,7 @@ class CDBQuery {
 		$query = 'SELECT ';
 	    
 		// Fields
-		if( is_array($param['fields'] ) ) {
+		if( isset($param['fields'] ) ) {
 			foreach($param['fields'] as $field) {
 				$query .= $field . ' ';
 				if( end($param['fields']) != $field)
