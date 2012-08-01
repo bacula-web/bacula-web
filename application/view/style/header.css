@@ -40,6 +40,7 @@
 
 #toplinks li a {
  text-decoration: none;
+ font-size: 12pt;
 }
 
 #toplinks form, #toplinks select {

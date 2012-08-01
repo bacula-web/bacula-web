@@ -1,10 +1,13 @@
 {include file=header.tpl}
 
 <div id="nav">
-  <a href="index.php" title="Back to the dashboard">{t}Dashboard{/t}</a> > Pools and Volumes list
+  <ul>
+    <li>
+      <a class="home" href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a>
+    </li>
+    <li>{t}Pools and Volumes list{/t}</li>
+  </ul>
 </div>
-
-<!-- <div id="main_center"> -->
 
 {foreach from=$pools item=pool key=pool_name}
 <div class="main_center">

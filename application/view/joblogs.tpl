@@ -1,13 +1,17 @@
 {include file=header.tpl}
 
 <div id="nav">
-  <a href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a> > Jobs list
+  <ul>
+    <li>
+      <a class="home" href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a>
+    </li>
+    <li>{t}Job logs{/t}</li>
+  </ul>
 </div>
 
 <div class="main_center">
-  <div class="header">{t}Logs{/t}</div>
-
   <h4>{t}Job id{/t} <b>{$jobid}</b></h4>
+  
   <div class="box">
 	<table>
 	  <tr>

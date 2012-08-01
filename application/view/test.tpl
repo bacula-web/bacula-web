@@ -1,7 +1,12 @@
 {include file=header.tpl}
 
 <div id="nav">
-    <a href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a> > Test page
+  <ul>
+    <li>
+      <a class="home" href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a>
+    </li>
+    <li>{t}Test page{/t}</li>
+  </ul>
 </div>
 
 <div class="main_center">

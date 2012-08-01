@@ -26,25 +26,34 @@ td, select, input {
  color: #000000;
 }
 
-#nav, #nav a
+#nav
 {
  margin: 10px;
+ padding: 5px;
+ vertical-align: middle;
+ border: 1px solid #C8C8C8;
+}
+
+#nav li {
+ display: inline;
  font-size: 12pt;
- text-decoration: none;
+ padding: 0px 10px 0px 5px;
 }
 
-#nav a:link {
+#nav li a {  
+ font-size: 12pt;
  font-weight: bold;
+ vertical-align: middle;
 }
 
-#nav a:visited {
- font-weight: bold;
+#nav li a.home { 
+ /*text-decoration: none; */
 }
 
 .main_center {
  width: 80%;
  min-width: 1000px;
- margin: 5px;
+ margin: 5px 10px;
  padding: 5px 10px;
  float: left;
  border: 1px solid #c8c8c8;
@@ -136,7 +145,7 @@ td.failed_jobs {
  min-height: 100px;
  min-width: 300px;
  padding: 0px;
- margin: 10px 5px;
+ margin: 5px;
  background-color: #FFFFFF;
 }
 

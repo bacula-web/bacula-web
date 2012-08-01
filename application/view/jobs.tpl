@@ -1,11 +1,15 @@
 {include file=header.tpl}
 
 <div id="nav">
-  <a href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a> > Jobs list
+  <ul>
+    <li>
+      <a class="home" href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a>
+    </li>
+    <li>{t}Jobs report{/t}</li>
+  </ul>
 </div>
 
 <div class="main_center">
-  <div class="header">{t}Jobs report{/t}</div>
 
   <!-- Filter jobs -->
   <div class="box">
@@ -62,7 +66,7 @@
 		<td class="{$job.Job_classe}">{$job.jobfiles}</td>
 		<td class="{$job.Job_classe}">{$job.pool_name}</td>
 		<td class="{$job.Job_classe}">
-		  <a href='joblogs.php?jobid={$job.jobid}' title='{t}Show job logs{/t}'> <img src='application/view/style/images/search.png' width='20px' /> </a>
+		  <a href='joblogs.php?jobid={$job.jobid}' title='{t}Show job logs{/t}'> <img src='application/view/style/images/search.png' width='20' /> </a>
 		</td>
 	  </tr>
 	  {/foreach}

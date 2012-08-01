@@ -1,16 +1,20 @@
 {include file=header.tpl}
 
 <div id="nav">
-  <a href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a> > Backup Job Report
+  <ul>
+    <li>
+      <a class="home" href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a>
+    </li>
+    <li>{t}Backup Job Report{/t}</li>
+  </ul>
 </div>
 
 <div class="main_center">
   <!-- Backup job informations -->
-  <p class="header">{t}Backup Job Report{/t}</p>
-    <div class="box">
-      <table>
-		<tr>
-			<td width="150">{t}Backup Job name{/t}:</td>
+  <div class="box">
+    <table>
+	  <tr>
+		<td width="150">{t}Backup Job name{/t}:</td>
 			<td>{$backupjob_name}</td>
 		</tr>
 		<tr>
@@ -27,9 +31,9 @@
 		</tr>
       </table>
   </div> <!-- end div class=box -->
-  </div> <!-- end div class=main_center -->
+</div> <!-- end div class=main_center -->
   
-  <div class="main_center">
+<div class="main_center">
   <!-- Last jobs list -->
   <p class="header">{t}Last jobs{/t}</p>
   <div class="box">	
@@ -66,6 +70,6 @@
 	  <img class="graph" src="{$graph_stored_bytes}" alt="" />
 	  <img class="graph" src="{$graph_stored_files}" alt="" />
     </div> <!-- end div class=box -->
-  </div> <!-- end div id=main_center -->
+</div> <!-- end div id=main_center -->
 
 {include file="footer.tpl"}
