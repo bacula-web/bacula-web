@@ -16,11 +16,13 @@
  padding: 10px;
 }
 
-.app_version {
- float: right;
+div.app_version {
+ /*float: right;*/
  color: #404040;
  font: normal normal bold 9pt Arial,Verdana;
- margin: 2px 5px;
+ text-align: right;
+ margin: 0px 10px;
+ padding: 2px;
 }
 
 #toplinks {
