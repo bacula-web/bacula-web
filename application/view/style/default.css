@@ -57,7 +57,7 @@ select, input {
 }
 
 .main_center {
- min-width: 1000px;
+ min-width: 1100px;
  margin: 10px;
  padding: 5px 10px;
  float: left;
@@ -88,12 +88,12 @@ select, input {
 
 .widget {
  float: left;
- min-height: 100px;
- min-width: 260px;
- max-width: 370px;
+ width: 360px;
+ height: 250px;
  padding: 0px;
  margin: 10px 5px;
  background-color: #FFFFFF;
+ border: 1px solid #c8c8c8;
 }
 
 .widget table {
@@ -116,7 +116,6 @@ select, input {
 .widget td, .box td {
  padding: 3px;
  font-size: 9pt;
- height: 20px;
  text-align: center;
  min-width: 40px;
 }
