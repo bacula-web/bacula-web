@@ -81,7 +81,7 @@
   // Determine how many jobs to display
   if( isset($posts['jobs_per_page']) ) {
 	$query .= "LIMIT " . $posts['jobs_per_page'];
-    $dbSql->tpl->assign( 'jobs_per_page_selected', $posts['jobs_per_page'] );
+    $view->assign( 'jobs_per_page_selected', $posts['jobs_per_page'] );
   }else
 	$query .= "LIMIT 25 ";
 	
