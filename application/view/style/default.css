@@ -22,7 +22,12 @@ table {
  font-weight: bold;
 }
 
-td, select, input {
+td {
+ color: #000000;
+ padding: 5px;
+}
+
+select, input {
  color: #000000;
 }
 
@@ -66,7 +71,7 @@ td, select, input {
  font-size: 12pt;
  font-weight: bold;
  margin: 5px 0px;
- padding: 0px;
+ padding: 2px;
  vertical-align: middle;
  text-align: left;
 }
@@ -181,4 +186,26 @@ td.odd, td.odd a {
 
 td.form_submit {
  text-align: right;
+}
+
+table.test {
+ border: 1px solid #c8c8c8;
+ margin: 5px 0px;
+}
+
+table.test td {
+ border-top: 1px solid #c8c8c8; 
+ text-align: left;
+}
+
+table.test td.comment {
+ text-align: left;
+ font-style: italic;
+ border-top: 0px solid #c8c8c8;
+ border-bottom: 1px solid #c8c8c8;
+}
+
+table.test td img {
+ vertical-align: middle;
+ margin: 10px;
 }
