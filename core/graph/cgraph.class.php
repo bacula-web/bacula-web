@@ -33,8 +33,7 @@ class CGraph{
 	
 	function __construct( $filename = "graph.png" )
 	{
-		$this->output_file = VIEW_CACHE_DIR . '/' . $filename;
-		echo $this->output_file . '<br/>';
+		$this->output_file =  VIEW_CACHE_DIR . '/' . $filename;
 	}
 	
 	public function SetData( $data_in, $type, $data_type, $shading = 5 )
