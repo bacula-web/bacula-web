@@ -88,9 +88,9 @@ select, input {
 
 .widget {
  float: left;
- width: 360px;
- height: 250px;
- padding: 0px;
+ width: 340px;
+ min-height: 150px;
+ padding: 0px; 
  margin: 10px 5px;
  background-color: #FFFFFF;
  border: 1px solid #c8c8c8;
