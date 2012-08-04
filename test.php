@@ -52,7 +52,7 @@
 							 'check_descr'		=> 'PHP PDO support is required, please compile PHP with this option'),
 					  array( 'check_cmd'   		=> 'smarty-cache',
 							 'check_label' 		=> 'Smarty cache folder write permission',
-							 'check_descr'		=> 'Smarty template engine need write permissions to templates_c folder'),
+							 'check_descr'		=> 'Cache folder ' . VIEW_CACHE_DIR . ' must be writable by Apache'),
 				      array( 'check_cmd'   		=> 'php-version',
 							 'check_label' 		=> 'PHP version',
 							 'check_descr'		=> 'PHP version must be at least 5.0.0 (current = ' . PHP_VERSION . ')' )
@@ -84,7 +84,7 @@
 			 $check['check_result'] = $icon_result[ class_exists('PDO') ];
 		 break;
 		 case 'smarty-cache':
-			 $check['check_result'] = $icon_result[ is_writable( "./templates_c" ) ];
+			 $check['check_result'] = $icon_result[ is_writable( VIEW_CACHE_DIR ) ];
 		 break;
 		 case 'php-version':
 			 $check['check_result'] = $icon_result[ version_compare( PHP_VERSION, '5.0.0', '>=' ) ];
