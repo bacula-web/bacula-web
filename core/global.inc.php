@@ -64,7 +64,7 @@
  
  // Views
  define('VIEW_DIR', BW_ROOT . "/application/view/");
- define('VIEW_CACHE_DIR', BW_ROOT . "/templates_c");
+ define('VIEW_CACHE_DIR', BW_ROOT . "/application/view/cache");
  
  // Locale
  define('LOCALE_DIR', BW_ROOT . '/application/locale');

@@ -44,7 +44,7 @@ class Bweb
 		
 		// Checking template cache permissions
 		if( !is_writable( VIEW_CACHE_DIR ) )
-			throw new Exception("The template cache folder must be writable by Apache user");
+			throw new Exception("The template cache folder <b>" . VIEW_CACHE_DIR . "</b> must be writable by Apache user");
 			
 		// Initialize smarty gettext function
 		$language  = $this->bwcfg->get_Param( 'language' );
