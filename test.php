@@ -19,9 +19,15 @@
  require_once ("core/global.inc.php");
  
  // Initialise model and view
+ $dSql = null;
  $view = new CView();
- $bw   = new Bweb( $view );
 
+ try{
+   $dbSql = new Bweb($view);
+ }catch( Exception $e  ) {
+   CErrorHandler::displayError($e);
+ }
+ 
  // Check result icon
  $icon_result = array( true => 'ok.png', false => 'error.png' );
 
