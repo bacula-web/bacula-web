@@ -91,7 +91,7 @@
 		 break;
 		 case 'php-pdo':
 			 $check['check_result'] = $icon_result[ class_exists('PDO') ];
-		 break;git
+		 break;
 		 case 'smarty-cache':
 			 $check['check_result'] = $icon_result[ is_writable( VIEW_CACHE_DIR ) ];
 		 break;
@@ -112,7 +112,7 @@
  $graph = new CGraph( "graph3.png" );
 
  $graph->SetData( $data, 'pie', 'text-data-single' );
- $graph->SetGraphSize( 400, 230 );
+ $graph->SetGraphSize( 300, 230 );
 
  $graph->Render();
 
