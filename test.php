@@ -19,14 +19,17 @@
  require_once ("core/global.inc.php");
  
  // Initialise model and view
- $dSql = null;
- $view = new CView();
-
+ $dSql 			= null;
+ $view 			= new CView();
+ 
  try{
    $dbSql = new Bweb($view);
  }catch( Exception $e  ) {
    CErrorHandler::displayError($e);
  }
+
+ // Installed PDO drivers
+ $pdo_drivers 	= PDO::getAvailableDrivers();
  
  // Check result icon
  $icon_result = array( true => 'ok.png', false => 'error.png' );
@@ -47,12 +50,15 @@
 					  array( 'check_cmd'   		=> 'php-postgres',
 							 'check_label' 		=> 'PHP - PostgreSQL support',
 							 'check_descr'		=> 'PHP PostgreSQL support must be installed in order to run bacula-web with PostgreSQL bacula catalog'),								
+					  array( 'check_cmd'		=> 'php-sqlite',
+							 'check_label'		=> 'PHP - SQLite support',
+							 'check_descr'		=> 'PHP SQLite support musts be installed in order to run bacula-web with SQLite bacula catalog'),
 					  array( 'check_cmd'   		=> 'php-pdo',
 							 'check_label' 		=> 'PHP - PDO support',
 							 'check_descr'		=> 'PHP PDO support is required, please compile PHP with this option'),
 					  array( 'check_cmd'   		=> 'smarty-cache',
 							 'check_label' 		=> 'Smarty cache folder write permission',
-							 'check_descr'		=> 'Cache folder ' . VIEW_CACHE_DIR . ' must be writable by Apache'),
+							 'check_descr'		=> realpath(VIEW_CACHE_DIR) . ' must be writable by Apache'),
 				      array( 'check_cmd'   		=> 'php-version',
 							 'check_label' 		=> 'PHP version',
 							 'check_descr'		=> 'PHP version must be at least 5.0.0 (current = ' . PHP_VERSION . ')' )
@@ -75,14 +81,17 @@
 			 $check['check_result'] = $icon_result[ class_exists('DB') ];
 		 break;
 		 case 'php-mysql':
-			 $check['check_result'] = $icon_result[ function_exists('mysql_connect') ];
+			 $check['check_result'] = $icon_result[ in_array( 'mysql', $pdo_drivers ) ];
 		 break;
 		 case 'php-postgres':
-			 $check['check_result'] = $icon_result[ function_exists('pg_connect') ];
+			 $check['check_result'] = $icon_result[ in_array( 'pgsql', $pdo_drivers ) ];
+		 break;
+		 case 'php-sqlite':
+			 $check['check_result'] = $icon_result[ in_array( 'sqlite', $pdo_drivers ) ];
 		 break;
 		 case 'php-pdo':
 			 $check['check_result'] = $icon_result[ class_exists('PDO') ];
-		 break;
+		 break;git
 		 case 'smarty-cache':
 			 $check['check_result'] = $icon_result[ is_writable( VIEW_CACHE_DIR ) ];
 		 break;
