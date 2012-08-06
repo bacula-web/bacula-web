@@ -1,58 +1,67 @@
-== Installation note ==
+== Bacula-Web ==
+
+Bacula-Web provide you with a lot of informations about your last backup jobs, restore jobs, volumes, pools and so on ...
 
 This document explain in a very short way how to install and configuration Bacula-Web
 
-== Requirements ==
+== REQUIREMENTS ==
 
  - Apache web server > version 2.x
  - PHP > version 5.x
  - PHP support for
    - PDO
-   - MySQL, postgreSQL or SQLite (depending on your bacula bacula)
+   - MySQL, postgreSQL or SQLite (depending on your bacula catalog)
    - Gettext (optional, used for translations)
    - TrueType (optional, used for graph)
    - GD (required for graphs)	
  
-!!! PEAR DB is not required anymore !!!
-
 Install all these required packages following your distro documentation
 
-== Download and setup ==
+== DOWNLOAD ==
 
-The latest version Bacula-Web is available through the project site's download page
+The latest version Bacula-Web is available through the project site download page
 
  http://www.bacula-web.org/download.html
 
-Go to your Apache root's folder and
+== SETUP ==
+
+Go to your Apache root's folder
  # cd /var/www/html
 
 Create the bacula-web folder
  # mkdir -v bacula-web
 
-Uncompress bacula-web tarball (assuming that you downloaded in /tmp)
+Uncompress bacula-web tarball (assuming that you've downloaded the archive in /tmp)
  # tar -xzvf /tmp/bacula-web.tar.gz -C /var/www/html/bacula-web
 
 Change owner and permissions
  # chown -Rv apache: /var/www/html/bacula-web 
 
 Give right permissions to template cache folder
- # chmod -Rv ug+w /var/www/html/bacula-web/templates_c
+ # chmod -Rv ug+w /var/www/html/bacula-web/application/view/cache
  
-== Configure ==
+== CONFIGURE ==
 
-In the config folder, you'll find a configuration file example (config.php.sample).
+From the installation folder, go to the folder mentioned below
+ application/config/
 
- - Open it and adapt the settings to your current database setup
- - Save this file as config.php and make it readable by the httpd process
+ - Open the file config.php.sample and modify the settings regarding your installation
+ - Save this file as config.php in the same folder
 
-== Test the installation ==
+== TEST ==
 
-Open your favorite browser and go to the address below
+Open your web browser and go to the address below
 
  http://youserver/bacula-web/test.php
 
-== Support ==
+== GET SUPPORT ==
 
-More help would be available in the project site's support page
+More help is available from the project site support page
 
  http://www.bacula-web.org/support.html
+ 
+
+Davide
+http://www.bacula-web.org
+ 
+
