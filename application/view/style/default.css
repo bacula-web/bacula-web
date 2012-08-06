@@ -117,7 +117,6 @@ select, input {
  padding: 3px;
  font-size: 9pt;
  text-align: center;
- min-width: 40px;
 }
 
 .widget table tr td.label {
