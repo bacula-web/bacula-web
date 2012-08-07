@@ -94,6 +94,7 @@ select, input {
  margin: 10px 5px;
  background-color: #FFFFFF;
  border: 1px solid #c8c8c8;
+ text-align: center;
 }
 
 .widget table {
@@ -101,8 +102,9 @@ select, input {
 }
 
 .widget img.graph {
- margin: auto;
+ margin: 2px 0px;
  border: none;
+ vertical-align: middle;
 }
 
 .widget p.box_footer {
