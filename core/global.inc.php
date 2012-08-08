@@ -21,7 +21,7 @@ define('BW_EXTERNAL', BW_OBJ . 'external');
 
 define('BW_PHPLOT', BW_EXTERNAL . '/phplot/');
 define('BW_SMARTY', BW_EXTERNAL . '/smarty/libs/');
-define('BW_SMARTY_GETTEXT', BW_EXTERNAL . '/smarty_gettext-0.9/');
+define('BW_SMARTY_GETTEXT', BW_EXTERNAL . '/smarty-gettext/');
 
 
 // Main application
