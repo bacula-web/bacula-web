@@ -1,9 +1,9 @@
 Gettext support for Smarty
 --------------------------
+$Id: README,v 1.2 2004/04/30 11:39:53 sagi Exp $
 
 Author: Sagi Bashari <sagi@boom.org.il>
-URL: http://www.boom.org.il/smarty/gettext/
-Support URL: http://www.phpinsider.com/smarty-forum/viewtopic.php?t=84
+URL: http://smarty-gettext.sf.net/
 
 This file assumes that you already know what is gettext and how to use it with PHP. 
 If you don't, please visit the following websites before trying to use this package:
@@ -11,7 +11,7 @@ If you don't, please visit the following websites before trying to use this pack
   - http://www.onlamp.com/pub/a/php/2002/06/13/php.html
 
 This package has two parts:
-  1. smarty_gettext.php - The smarty plugin
+  1. smarty-gettext.php - The smarty plugin
   2. tsmarty2c.php - command line utility that rips gettext strings from smarty source files and converts them to C format
 
 The Smarty plugin
@@ -19,13 +19,13 @@ The Smarty plugin
 
 Installation:
 
-1. Copy the smarty_gettext.php file to your include directory. 
+1. Copy the smarty-gettext.php file to your include directory. 
 2. After initializing the smarty object in your script, register the plugin as a block function.
 
 Example:
 $smarty = new Smarty [...];
-require('smarty_gettext.php');
-$smarty->register_block('t', 'smarty_translate');
+require('smarty-gettext.php');
+$smarty->register_block('t', 'smarty-translate');
 
 This example will register the function as a block function named 't'.
 

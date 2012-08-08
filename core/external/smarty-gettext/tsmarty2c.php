@@ -27,9 +27,9 @@
  *
  * If a parameter is a directory, the template files within will be parsed.
  *
- * @package	smarty_gettext
- * @version	0.9
- * @link	http://www.boom.org.il/smarty/gettext/
+ * @package	smarty-gettext
+ * @version	$Id: tsmarty2c.php,v 1.2 2004/04/30 11:40:22 sagi Exp $
+ * @link	http://smarty-gettext.sf.net/
  * @author	Sagi Bashari <sagi@boom.org.il>
  * @copyright 2004 Sagi Bashari
  */
@@ -94,7 +94,7 @@ function do_dir($dir)
 		} else { // if file, parse only if extension is matched
 			$pi = pathinfo($entry);
 			
-			if (in_array($pi['extension'], $GLOBALS['extensions'])) {
+			if (isset($pi['extension']) && in_array($pi['extension'], $GLOBALS['extensions'])) {
 				do_file($entry);
 			}
 		}
