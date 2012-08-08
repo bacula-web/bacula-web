@@ -1,50 +1,50 @@
 #header{
- width: 100%;
- padding: 0px;
- margin: 0px 0px;
- background-color: #404040;
- display: table;
+    width: 100%;
+    padding: 0px;
+    margin: 0px 0px;
+    background-color: #404040;
+    display: table;
 }
 
 #header .app_name {
- display: table-cell;
- float: right;
- color: #FFFFFF;
- background-color: #404040;
- vertical-align: middle;
- font: normal small-caps bold 18pt Arial,Verdana;
- padding: 10px;
+    display: table-cell;
+    float: right;
+    color: #FFFFFF;
+    background-color: #404040;
+    vertical-align: middle;
+    font: normal small-caps bold 18pt Arial,Verdana;
+    padding: 10px;
 }
 
 div.app_version {
- /*float: right;*/
- color: #404040;
- font: normal normal bold 9pt Arial,Verdana;
- text-align: right;
- margin: 0px 10px;
- padding: 2px;
+    /*float: right;*/
+    color: #404040;
+    font: normal normal bold 9pt Arial,Verdana;
+    text-align: right;
+    margin: 0px 10px;
+    padding: 2px;
 }
 
 #toplinks {
- font-size: 10pt;
- padding: 0px;
- height: 30px;
+    font-size: 10pt;
+    padding: 0px;
+    height: 30px;
 }
 
 #toplinks li {
- height: 30px;
- display: inline;
- float: right;
- padding: 0px 10px;
- vertical-align: middle;
- line-height: 30px;
+    height: 30px;
+    display: inline;
+    float: right;
+    padding: 0px 10px;
+    vertical-align: middle;
+    line-height: 30px;
 }
 
 #toplinks li a {
- text-decoration: none;
- font-size: 10pt;
+    text-decoration: none;
+    font-size: 10pt;
 }
 
 #toplinks form, #toplinks select {
- vertical-align: middle;
+    vertical-align: middle;
 }

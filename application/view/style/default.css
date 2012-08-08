@@ -1,211 +1,213 @@
 a, body, div, em, input, label, legend, li, ol, p, select, span, strong, td, th, textarea, u, ul, a:link, a:visited, a:hover, a:visited {
-  font-size: 10pt;
-  color: #404040;
-  background-color: #ffffff;
-  padding: 0px;
-  margin: 0px;
-  font-family: Arial,Verdana;
-  font-size: 10pt;
-  text-align: left;
-  vertical-align: middle;
+    font-size: 10pt;
+    color: #404040;
+    background-color: #ffffff;
+    padding: 0px;
+    margin: 0px;
+    font-family: Arial,Verdana;
+    font-size: 10pt;
+    text-align: left;
+    vertical-align: middle;
 }
 
 table {
- min-width: 300px;
- margin: 5px 0px;
- border-collapse: collapse;
+    min-width: 300px;
+    margin: 5px 0px;
+    border-collapse: collapse;
 }
 
 .tbl_header	{
- background-color: #c8c8c8; 
- color: #000000;
- font-weight: bold;
+    background-color: #c8c8c8; 
+    color: #000000;
+    font-weight: bold;
 }
 
 td {
- color: #000000;
- padding: 5px;
+    color: #000000;
+    padding: 5px;
 }
 
 select, input {
- color: #000000;
+    color: #000000;
 }
+
+img a { border: none;}
 
 #nav
 {
- margin: 0px 10px;
- padding: 5px;
- vertical-align: middle;
- border: 1px solid #C8C8C8;
+    margin: 0px 10px;
+    padding: 5px;
+    vertical-align: middle;
+    border: 1px solid #C8C8C8;
 }
 
 #nav li {
- display: inline;
- font-size: 12pt;
- padding: 0px 10px 0px 5px;
- margin: 0px;
+    display: inline;
+    font-size: 12pt;
+    padding: 0px 10px 0px 5px;
+    margin: 0px;
 }
 
 #nav li a {  
- font-size: 12pt;
- font-weight: bold;
- vertical-align: middle;
+    font-size: 12pt;
+    font-weight: bold;
+    vertical-align: middle;
 }
 
 #nav li a.home { 
- /*text-decoration: none; */
+    /*text-decoration: none; */
 }
 
 .main_center {
- min-width: 1100px;
- margin: 10px;
- padding: 5px 10px;
- float: left;
- border: 1px solid #c8c8c8;
- background-color: #ffffff;
+    min-width: 1100px;
+    margin: 10px;
+    padding: 5px 10px;
+    float: left;
+    border: 1px solid #c8c8c8;
+    background-color: #ffffff;
 }
 
 .main_center .header {
- border-bottom: 1px solid #c8c8c8;
- color: #404040;
- font-size: 12pt;
- font-weight: bold;
- margin: 5px 0px;
- padding: 2px;
- vertical-align: middle;
- text-align: left;
+    border-bottom: 1px solid #c8c8c8;
+    color: #404040;
+    font-size: 12pt;
+    font-weight: bold;
+    margin: 5px 0px;
+    padding: 2px;
+    vertical-align: middle;
+    text-align: left;
 }
 
 .list {
- width: auto;
- height: auto;
- overflow: auto;
- margin: 5px 0px;
- padding: 0px;
- text-align: center;
- max-height: 420px;
+    width: auto;
+    height: auto;
+    overflow: auto;
+    margin: 5px 0px;
+    padding: 0px;
+    text-align: center;
+    max-height: 420px;
 }
 
 .widget {
- float: left;
- width: 340px;
- min-height: 150px;
- padding: 0px; 
- margin: 10px 5px;
- background-color: #FFFFFF;
- border: 1px solid #c8c8c8;
- text-align: center;
+    float: left;
+    width: 340px;
+    min-height: 150px;
+    padding: 0px; 
+    margin: 10px 5px;
+    background-color: #FFFFFF;
+    border: 1px solid #c8c8c8;
+    text-align: center;
 }
 
 .widget table {
- width: 100%;
+    width: 100%;
 }
 
 .widget img.graph {
- margin: 2px 0px;
- border: none;
- vertical-align: middle;
+    margin: 2px 0px;
+    border: none;
+    vertical-align: middle;
 }
 
 .widget p.box_footer {
- font-style: italic;
- font-size: 9pt;
- color: #404040;
- margin: 0px;
- text-align: center;
+    font-style: italic;
+    font-size: 9pt;
+    color: #404040;
+    margin: 0px;
+    text-align: center;
 }
 
 .widget td, .box td {
- padding: 3px;
- font-size: 9pt;
- text-align: center;
+    padding: 3px;
+    font-size: 9pt;
+    text-align: center;
 }
 
 .widget table tr td.label {
- text-align: left;
- font-size: 11pt;
+    text-align: left;
+    font-size: 11pt;
 }
 
 .widget table td.info {
- text-align: center;
- font-size: 11pt;
- font-weight: bold;
- border: 1px solid #C8C8C8;
+    text-align: center;
+    font-size: 11pt;
+    font-weight: bold;
+    border: 1px solid #C8C8C8;
 }
 
 td.waiting_jobs {
- color: #FF6600;
+    color: #FF6600;
 }
 
 td.completed_jobs {
- color: #00FF00;
+    color: #00FF00;
 }
 
 td.failed_jobs {
- color: #FF0000;
+    color: #FF0000;
 }
 
 .box {
- float: left;
- min-height: 100px;
- min-width: 300px;
- padding: 0px;
- margin: 5px;
- background-color: #FFFFFF;
+    float: left;
+    min-height: 100px;
+    min-width: 300px;
+    padding: 0px;
+    margin: 5px;
+    background-color: #FFFFFF;
 }
 
 .box p.title, .widget p.title {
- text-align: center;
- vertical-align: middle;
- font-size: 11pt;
- background-color: #404040;
- color: #FFFFFF;
- /*background-color: #C8C8C8;
- color: #000000;*/
- padding: 3px;
- margin: 0px;
- font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 11pt;
+    background-color: #404040;
+    color: #FFFFFF;
+    /*background-color: #C8C8C8;
+    color: #000000;*/
+    padding: 3px;
+    margin: 0px;
+    font-weight: bold;
 }
 
 .box h4, .box h5 {
- background-color: #eeeeee;
- width: auto;
- text-align: center;
- font-weight: bold;
- padding: 3px;
- margin: 5px 0px 10px 0px;
+    background-color: #eeeeee;
+    width: auto;
+    text-align: center;
+    font-weight: bold;
+    padding: 3px;
+    margin: 5px 0px 10px 0px;
 }
 
 table tr td.info a { 
- font-size: 8pt;
+    font-size: 8pt;
 }
 
 td.odd, td.odd a { 
- background-color: #C8C8C8; 
+    background-color: #C8C8C8; 
 }
 
 td.form_submit {
- text-align: right;
+    text-align: right;
 }
 
 table.test {
- border: 1px solid #c8c8c8;
- margin: 5px 0px;
+    border: 1px solid #c8c8c8;
+    margin: 5px 0px;
 }
 
 table.test td {
- border-top: 1px solid #c8c8c8; 
- text-align: left;
+    border-top: 1px solid #c8c8c8; 
+    text-align: left;
 }
 
 table.test td.comment {
- text-align: left;
- font-style: italic;
- border-top: 0px solid #c8c8c8;
- border-bottom: 1px solid #c8c8c8;
+    text-align: left;
+    font-style: italic;
+    border-top: 0px solid #c8c8c8;
+    border-bottom: 1px solid #c8c8c8;
 }
 
 table.test td img {
- vertical-align: middle;
- margin: 10px;
+    vertical-align: middle;
+    margin: 10px;
 }
