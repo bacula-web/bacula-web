@@ -31,8 +31,6 @@ select, input {
     color: #000000;
 }
 
-img a { border: none;}
-
 #nav
 {
     margin: 0px 10px;
@@ -211,3 +209,5 @@ table.test td img {
     vertical-align: middle;
     margin: 10px;
 }
+
+a img { border: none;}
