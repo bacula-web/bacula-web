@@ -1,7 +1,43 @@
+=== Bacula-Web 5.2.10 ===
+
+ Version: 5.2.10
+ Released on: August 9th 2012
+
+ - upgraded Smarty gettext plugin to version 0.9.1
+ - many CSS code improvments
+ - SQLite database support improvments
+ - fixed database size with SQLite in dashboard
+ - added SQLite PDO support in test page
+ - test page display template cache full path
+ - files structure have been improved and cleaned up
+ - many internal code improvments
+ - fixed bugy CSS with Internet Explorer
+ - improved design of dashboard
+ - in job reports page, restore jobs were displaying empty value for pool, replaced now by N/A
+ - upgraded PHPLot to version 5.8.0
+ - portugal brazil translation have been added 
+ - new option in configuration file [show_inactive_clients]
+ - numbers are now formated regarding choosen language in the configuration
+ - documentation have been moved into /docs folder
+ 
+ 
+ Fixed bugs
+ 
+ - (0000045) Backup job - ability to see logs
+ - (0000057) Bacula-web does not display a version string in the web interface
+ - (0000042) Dashboard can not show all graph legends
+ - (0000062) SQLite connection issue - invalid data source name
+ - (0000061) Design issue with Internet explorer 8
+ - (0000055) Upgraded pt_BR translation
+ - (0000038) With multiple catalogs every client is shown in Reports drop down
+ - (0000033) Client report stops at RestoreJob
+ - (0000059) Large numbers showing apostrophes instead of commas for thousands separator
+ - (0000058) client-report.php is reporting deprecated notice errors about split()
+ 
 === Bacula-Web 5.2.6 ===
 
  Version: 5.2.6
- Released on: March 30 2012
+ Released on: March 30th 2012
 
  - Updated french translation (thanks to Guillaume Delacour)
  - Fixed client sort order in Client report form (dashboard)
@@ -37,10 +73,10 @@
  - (0000036) [bug] No localisation (bacula-dev) - resolved.
  - (0000010) [bug] Improve postgreSQL (bacula-dev) - resolved.
 
-== Bacula-Web 5.1.0 ==
+=== Bacula-Web 5.1.0 ===
 
  Version: 5.1.0
- Released on: 25th July 2010
+ Released on: July 25th 2010
 
  - Improved dashboard statistics
  - Improved database support
@@ -74,7 +110,7 @@
 == Bacula-web 5.0.3  ==
 
  Version: 5.0.3
- Released on: 2nd November 2010
+ Released on: November 2nd 2010
 
  - Changed content of README file
  - Added new email address in CONTACT file
@@ -110,10 +146,10 @@
  - New style folder
  - Ignore Smarty cache files
 
-== Bacula-web 1.3  ==
+=== Bacula-web 1.3  ===
 
  Version: 1.3
- Released on: 26th January 2006
+ Released on: January 26th 2006
 
  - (0000019,0000021) Fixed psql querys.
  - Fixed XTicks (Graphs).
@@ -122,10 +158,10 @@
 
  - (0000019,0000021) Fixed psql querys.
 
-== Bacula web 1.2 (06-10-2005) ==
+=== Bacula web 1.2 ===
 
  Version: 1.2
- Released on: 6th October 2005
+ Released on: October 6th 2005
 
  - Human redable Y-axis of graphs
  - Updated French translation
@@ -138,20 +174,20 @@
  - Upgraded Smarty to 2.6.10 version.
  - Added multicatalog support
 
-== Bacula web 1.1 ==
+=== Bacula web 1.1 ===
 
  Version: 1.1
- Released on: 25th October 2004
+ Released on: October 25th 2004
 
  - Add array_fill function (as Mikael suggested)
  - Fix url encode of links. (reported by Phil Stracchino)
  - Upgraded Smarty to 2.6.6 version.
  - Add French translation
 
-== Bacula web 1.0 ==
+=== Bacula web 1.0 ===
 
  Version:  1.0
- Released on: 4th August 2004
+ Released on: August 4th 2004
 
  - Add Italian translation
  - Change some colors of graphs. More clear now (I hope).
@@ -161,10 +197,10 @@
  - (0000012) Fix, don't load config in report.php
  - (0000015) Fix, error date in When expire? field.
 
-== Bacula web 1.0 Beta2 ==
+=== Bacula web 1.0 ===
 
  Version: 1.0 Beta2
- Released on: 14th June 2004
+ Released on: June 14th 2004
 
  Fixed bugs
 
@@ -172,10 +208,10 @@
  - (0000010) Fix incorrect symbolic link (Add paths.php).
  - (0000008) Fix elapsed time of execution of jobs more than 24h in Lite mode.
 
-== Bacula-web 1.0 Beta1 ==
+=== Bacula-web 1.0 ===
 
  Version: 1.0 Beta1
- Released on: 11th June 2004
+ Released on: June 11th 2004
 
  - Check connection error (reported by Thomas Contamine)
  - Register_globals on/off compatible (reported by Thomas Contamine)
