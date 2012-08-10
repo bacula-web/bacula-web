@@ -15,7 +15,7 @@
  - improved design of dashboard
  - in job reports page, restore jobs were displaying empty value for pool, replaced now by N/A
  - upgraded PHPLot to version 5.8.0
- - portugal brazil translation have been added 
+ - portuguese brazil translation have been added (Thanks to Brivaldo Junior)
  - new option in configuration file [show_inactive_clients]
  - numbers are now formated regarding choosen language in the configuration
  - documentation have been moved into /docs folder
