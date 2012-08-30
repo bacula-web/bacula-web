@@ -56,8 +56,8 @@ class CErrorHandler {
         // Display footer
         $footer = '<p style="font-size: 10pt; background-color: #F0F0F0; width: 550px; padding: 5px; font-family: Arial,Verdana;">';
         $footer .= 'Tried to run the <a href="test.php">test page</a> ?<br />';
-        $footer .= 'Read the documentation on the <a href="http://bacula-web.dflc.ch" target="_blank">Bacula-Web project site</a> <br />';
-        $footer .= 'Rebort a bug or suggest a new feature in the <a href="http://bacula-web.dflc.ch/bugs" target="_blank">Bacula-Web\'s bugtracking tool</a> <br /> </p>';
+        $footer .= 'Read the documentation on the <a href="http://www.bacula-web.org" target="_blank">Bacula-Web project site</a> <br />';
+        $footer .= 'Rebort a bug or suggest a new feature in the <a href="http://www.bacula-web.org/bugs" target="_blank">Bacula-Web\'s bugtracking tool</a> <br /> </p>';
         echo $footer;
 
         die();
