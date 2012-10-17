@@ -19,7 +19,10 @@
 	  <tr>
 		<td class="label">{t}Database size{/t}</td> <td class="info">{$database_size}</td>
 	  </tr>
-	</table>
+  	  <tr>
+		<td class="label">{t}Pool(s){/t}</td> <td class="info">{$pools_nb}</td>
+	  </tr>
+    </table>
   </div>
   
 <!-- Last 24 hours job Status -->

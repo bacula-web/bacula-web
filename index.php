@@ -52,6 +52,9 @@ $view->assign('jobs_list', $dbSql->getJobsName());
 // Clients list
 $view->assign('clients_list', $dbSql->get_Clients());
 
+// Count pools
+$view->assign('pools_nb', $dbSql->countPools() );
+
 // Last 24 hours status (completed, failed and waiting jobs)
 $view->assign('completed_jobs', $dbSql->countJobs(LAST_DAY, NOW, 'completed'));
 $view->assign('failed_jobs', $dbSql->countJobs(LAST_DAY, NOW, 'failed'));
@@ -82,24 +85,16 @@ unset($graph);
 $vols_by_pool = array();
 $graph = new CGraph("graph1.png");
 $max_pools = '9';
-$table_pool = '';
+$table_pool = 'Pool';
 $limit = '';
 $sum_vols = '';
 
-// Count pools
-if ($dbSql->db_link->getDriver() == 'mysql') {
-    $table_pool = 'Pool';
-} else {
-    $table_pool = 'pool';
-}
-
-$query = array('table' => $table_pool, 'fields' => array('count(*) as pools_count'));
-$result = $dbSql->db_link->runQuery(CDBQuery::getQuery($query));
-$pools_count = $result->fetch();
+// Count defined pools in catalog
+$pools_count = $dbSql->countPools();
 
 // Display 9 biggest pools and rest of volumes in 10th one display as Other
-if ($pools_count['pools_count'] > $max_pools) {
-    $limit = $max_pools . ',' . ($pools_count['pools_count'] - $max_pools);
+if ($pools_count > $max_pools) {
+    $limit = $max_pools . ',' . ($pools_count - $max_pools);
 
     $query = array('table' => $table_pool,
         'fields' => array('SUM(numvols) AS sum_vols'),
@@ -110,7 +105,12 @@ if ($pools_count['pools_count'] > $max_pools) {
 
     $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
 } else {
-    $limit = $pools_count['pools_count'];
+    $limit = $pools_count;
+}
+
+// Check database driver for pool table name
+if ($dbSql->db_link->getDriver() == 'pgsql') {
+	$table_pool = strtolower($table_pool);
 }
 
 $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools);

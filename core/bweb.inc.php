@@ -265,6 +265,28 @@ class Bweb
 		return $result['job_nb'];
 	}
 	
+	// ==================================================================================
+	// Function: 	countPools()
+	// Parameters: 	none
+	// Return:		number of pools
+	// ==================================================================================
+	public function countPools() {
+		$pools_count = '';
+		$table 		 = 'Pool';
+		
+		// Check db driver for pool table name
+		if ($this->db_link->getDriver() == 'pgsql') {
+			$table = strtolower($table);
+		} 
+		
+		$query = array('table' => $table, 'fields' => array('count(*) as pools_count'));
+		$result = $this->db_link->runQuery(CDBQuery::getQuery($query));
+		
+		// Return result
+		$pools_count = $result->fetch();
+		return $pools_count['pools_count'];
+	}
+	
 	// Return the list of Pools in a array
 	public function getPools()
 	{
