@@ -76,7 +76,7 @@ $order_by_asc 				= 'DESC';
 $result_order_asc_checked	= '';
 
 // Order result by
-$result_order = array( 'jobid' => 'Job Id', 'name' => 'Job name', 'jobbytes' => 'Job Bytes', 'jobfiles' => 'Job Files', 'pool.name' => 'Pool name' );
+$result_order = array( 'jobid' => 'Job Id', 'Job.Name' => 'Job name', 'jobbytes' => 'Job Bytes', 'jobfiles' => 'Job Files', 'Pool.Name' => 'Pool name' );
 $view->assign('result_order', $result_order);
 
 // Order by
