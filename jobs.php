@@ -18,11 +18,10 @@
 session_start();
 include_once( 'core/global.inc.php' );
 
-$view = new CView();
-$dbSql = new Bweb($view);
-// Jobs list
-$query = "";
-$last_jobs = array();
+$view 		= new CView();
+$dbSql 		= new Bweb($view);
+$query 		= "";
+$last_jobs 	= array();
 
 // Job Status list
 define('STATUS_ALL', 0);
@@ -72,8 +71,31 @@ if ($posts != false) {
     $view->assign('job_status_filter', $posts['status']);
 }
 
-// order by
-$query .= "ORDER BY Job.JobId DESC ";
+$order_by	  				= '';
+$order_by_asc 				= 'DESC';
+$result_order_asc_checked	= '';
+
+// Order result by
+$result_order = array( 'jobid' => 'Job Id', 'name' => 'Job name', 'jobbytes' => 'Job Bytes', 'jobfiles' => 'Job Files', 'pool.name' => 'Pool name' );
+$view->assign('result_order', $result_order);
+
+// Order by
+if( isset($posts['orderby']) ) {
+	$order_by = $posts['orderby'];
+}else{
+    $order_by = 'jobid';
+}
+
+// Order by DESC | ASC
+if( isset( $posts['result_order_asc'] ) ) {
+    $order_by_asc = $posts['result_order_asc'];
+	$result_order_asc_checked = 'checked';
+}
+
+$query .= "ORDER BY $order_by $order_by_asc ";
+
+$view->assign( 'result_order_field', $posts['orderby']);
+$view->assign( 'result_order_asc_checked' ,$result_order_asc_checked);
 
 // Jobs per page
 $jobs_per_page = array(25 => '25', 50 => '50', 75 => '75', 100 => '100', 150 => '150');
@@ -86,7 +108,6 @@ if (isset($posts['jobs_per_page'])) {
     $query .= "LIMIT 25 ";
 
 $view->assign('jobs_per_page', $jobs_per_page);
-
 
 $jobsresult = $dbSql->db_link->runQuery($query);
 
@@ -151,18 +172,14 @@ foreach ($jobsresult->fetchAll() as $job) {
     if (is_null($job['pool_name']))
         $job['pool_name'] = 'N/A';
 
-    array_push($last_jobs, $job);
+    $last_jobs[] = $job;
 } // end foreach
 
 $view->assign('last_jobs', $last_jobs);
 
-// Count jobs
-if (isset($posts['status']))
-    $total_jobs = $dbSql->countJobs(FIRST_DAY, NOW, $posts['status']);
-else
-    $total_jobs = $dbSql->countJobs(FIRST_DAY, NOW);
-
-$view->assign('total_jobs', $total_jobs);
+// Counting jobs
+$view->assign('jobs_found', count($last_jobs) );
+$view->assign('total_jobs', $dbSql->countJobs(FIRST_DAY, NOW) );
 
 // Process and display the template 
 $view->render('jobs.tpl');

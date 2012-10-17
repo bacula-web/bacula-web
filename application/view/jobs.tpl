@@ -13,26 +13,38 @@
 
   <!-- Filter jobs -->
   <div class="box">
-	<h4>Filter jobs</h4>
 	<form action="jobs.php" method="post">
-	<table border="0">
-	  <tr>
-	    <td class="info" width="200">
-			{$total_jobs} jobs found
-		</td>
-		<td class="info" colspan="5" width="160">
-			{t}Jobs / Page{/t}
-			{html_options name=jobs_per_page options=$jobs_per_page selected=$jobs_per_page_selected onChange="submit();"}
-		</td>
-		<td class="info" width="160">
-			{t}Job status{/t}
-			{html_options name=status values=$job_status options=$job_status selected=$job_status_filter onChange="submit();"}
-		</td>
-	  </tr>
+	<table style="width:100%";>
+		<tr>
+			<td style="border: 1px solid #c8c8c8; width: 250px; background-color:#eeeeee;"><b>{t}Filter{/t}</b></td>
+			<td style="border: 1px solid #c8c8c8; text-align: right;">
+				{t}Job status{/t}
+				{html_options name=status values=$job_status options=$job_status selected=$job_status_filter onChange="submit();"}
+			</td>
+		</tr>
+		<tr>
+			<td style="border: 1px solid #c8c8c8; width: 250px; background-color:#eeeeee;"><b>{t}Order by{/t}</b></td>
+			<td style="border: 1px solid #c8c8c8; text-align: right;">
+				<input type="checkbox" name="result_order_asc" value="ASC" {$result_order_asc_checked} onChange="submit();"> Up
+				{html_options name=orderby values=$result_order options=$result_order selected=$result_order_field onChange="submit();"}
+			</td>
+		</tr>
+    </table>
+   
+    <table width="100%">
+		<tr>
+			<td style="border: 1px solid #c8c8c8; width:250px; background-color:#eeeeee;"><b>{$jobs_found}</b> job(s) / <b>{$total_jobs} Job(s)</b></td>
+			<td style="border: 1px solid #c8c8c8; text-align: right;">
+				{t}Jobs / Page{/t}
+				{html_options name=jobs_per_page options=$jobs_per_page selected=$jobs_per_page_selected onChange="submit();"}
+			</td>
+		</tr>
 	</table>
 	</form>
-
-	<table border="0">
+	
+    <br />
+	
+	<table border="0" width="100%">
 	  <tr>
 		<td class="tbl_header">{t}Status{/t}</td> 
 		<td class="tbl_header">{t}Job ID{/t}</td>
