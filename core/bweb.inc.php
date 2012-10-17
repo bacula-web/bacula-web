@@ -331,9 +331,14 @@ class Bweb
 		return $filesets_count['filesets_count'];
 	}
 
-	// Return the list of Pools in a array
+	// ==================================================================================
+	// Function: 	getPools()
+	// Parameters: 	none
+	// Return:		list of Pools in a array
+	// ==================================================================================
 	public function getPools()
 	{
+		$query  = '';
 		$pools  = array();
 		$result = '';
 		
@@ -341,14 +346,19 @@ class Bweb
 		{
 			case 'sqlite':
 			case 'mysql':
-				$query 		= "SELECT name, numvols, poolid FROM Pool";
+				$query 		= "SELECT name, numvols, poolid FROM Pool ";
 			break;
 			case 'pgsql':
-				$query 		= "SELECT name, numvols, poolid FROM pool";
+				$query 		= "SELECT name, numvols, poolid FROM pool ";
 			break;
+		}
+		
+		if( $this->bwcfg->get_Param( 'hide_empty_pools' ) ) {
+			$query .= 'WHERE Pool.NumVols > 0';
 		}
 
 		$result = $this->db_link->runQuery($query);
+		
 		foreach( $result->fetchAll() as $pool )
 			$pools[] = $pool;
 

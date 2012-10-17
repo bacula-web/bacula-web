@@ -3,6 +3,9 @@
 // Show inactive clients (false by default)
 $config['show_inactive_clients'] = true;
 
+// Hide empty pools (displayed by default)
+$config['hide_empty_pools'] = false;
+
 // Translations
 $config['language'] = 'en_US';
 
