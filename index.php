@@ -50,6 +50,10 @@ $view->assign('clients', $nb_clients["nb_client"]);
 $defined_filesets = $dbSql->countFilesets();
 $defined_jobs = count( $dbSql->getJobsName() );
 
+// Volumes size
+$volumes_size = $dbSql->getVolumesSize();
+$view->assign('volumes_size', CUtils::Get_Human_Size( $volumes_size ) );
+
 $view->assign('defined_filesets', $defined_filesets);
 $view->assign('defined_jobs', $defined_jobs);
 

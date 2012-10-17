@@ -25,6 +25,9 @@
   	  <tr>
 		<td class="label">{t}Pools{/t} / {t}Volumes{/t}</td> <td class="info">{$pools_nb} / {$volumes_nb}</td>
 	  </tr>
+	  <tr>
+		<td class="label">{t}Volume(s) size{/t}</td> <td class="info">{$volumes_size}</td>
+	  </tr>
     </table>
   </div>
   

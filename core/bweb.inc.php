@@ -519,5 +519,20 @@ class Bweb
 		else
 			return 0;
 	}
+	
+	// ==================================================================================
+	// Function: 	getVolumesSize()
+	// Parameters: 	none
+	// Return:		sum in bytes of all volumes
+	// ==================================================================================
+	public function getVolumesSize() {
+		$query = array( 'table' => 'Media', 'fields' => array('SUM(Media.VolBytes) as volumes_size') );
+		
+		// Run SQL query
+		$result = $this->db_link->runQuery(CDBQuery::getQuery( $query ) );
+		$result = $result->fetch();
+		
+		return $result['volumes_size'];
+	}
 } // end class Bweb
 ?>
