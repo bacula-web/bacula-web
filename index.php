@@ -46,6 +46,13 @@ $view->assign('files_last', $dbSql->translate->get_Number_Format($dbSql->getStor
 $nb_clients = $dbSql->Get_Nb_Clients();
 $view->assign('clients', $nb_clients["nb_client"]);
 
+// Defined Jobs and Filesets
+$defined_filesets = $dbSql->countFilesets();
+$defined_jobs = count( $dbSql->getJobsName() );
+
+$view->assign('defined_filesets', $defined_filesets);
+$view->assign('defined_jobs', $defined_jobs);
+
 // Backup Job list
 $view->assign('jobs_list', $dbSql->getJobsName());
 

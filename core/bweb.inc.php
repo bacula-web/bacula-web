@@ -309,6 +309,28 @@ class Bweb
 		return $vols_count['vols_count'];
 	}
 
+	// ==================================================================================
+	// Function: 	countFilesets()
+	// Parameters: 	none
+	// Return:		number of volumes
+	// ==================================================================================
+	public function countFilesets() {
+		$filesets_count  = '';
+		$table 		     = 'FileSet';
+		
+		// Check db driver for pool table name
+		if ($this->db_link->getDriver() == 'pgsql') {
+			$table = strtolower($table);
+		} 
+		
+		$query = array('table' => $table, 'fields' => array('count(*) as filesets_count'));
+		$result = $this->db_link->runQuery(CDBQuery::getQuery($query));
+		
+		// Return result
+		$filesets_count = $result->fetch();
+		return $filesets_count['filesets_count'];
+	}
+
 	// Return the list of Pools in a array
 	public function getPools()
 	{

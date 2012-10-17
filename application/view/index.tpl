@@ -11,6 +11,9 @@
 	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clients}</td>
 	  </tr>
 	  <tr>
+		<td title="Defined Jobs and Filesets" class="label">{t}Jobs{/t} / {t}Filesets{/t}</td> <td class="info">{$defined_jobs} / {$defined_filesets}</td>
+	  </tr>
+	  <tr>
 		<td class="label">{t}Total bytes{/t}</td> <td class="info">{$stored_bytes}</td>
 	  </tr>
 	  <tr>
