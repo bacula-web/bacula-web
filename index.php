@@ -55,6 +55,9 @@ $view->assign('clients_list', $dbSql->get_Clients());
 // Count pools
 $view->assign('pools_nb', $dbSql->countPools() );
 
+// Count volumes
+$view->assign('volumes_nb', $dbSql->countVolumes() );
+
 // Last 24 hours status (completed, failed and waiting jobs)
 $view->assign('completed_jobs', $dbSql->countJobs(LAST_DAY, NOW, 'completed'));
 $view->assign('failed_jobs', $dbSql->countJobs(LAST_DAY, NOW, 'failed'));

@@ -20,7 +20,10 @@
 		<td class="label">{t}Database size{/t}</td> <td class="info">{$database_size}</td>
 	  </tr>
   	  <tr>
-		<td class="label">{t}Pool(s){/t}</td> <td class="info">{$pools_nb}</td>
+		<td class="label">{t}Pools{/t}</td> <td class="info">{$pools_nb}</td>
+	  </tr>
+  	  <tr>
+		<td class="label">{t}Volumes{/t}</td> <td class="info">{$volumes_nb}</td>
 	  </tr>
     </table>
   </div>
