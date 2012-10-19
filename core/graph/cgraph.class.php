@@ -17,7 +17,6 @@
  */
 
 class CGraph {
-    private $title;
     private $ytitle;
     private $data;
     private $data_type;
@@ -42,13 +41,6 @@ class CGraph {
         $this->height = $height;
     }
 
-    public function SetTitle($title) {
-        if (!empty($title))
-            $this->title = $title;
-        else
-            die("Please provide a non empty title for the graph");
-    }
-
     public function SetYTitle($ytitle) {
         if (!empty($ytitle))
             $this->ytitle = $ytitle;
@@ -69,15 +61,12 @@ class CGraph {
         $this->plot->SetFileFormat("png");
         $this->plot->SetIsInline(true);
 
-
-        $this->plot->SetImageBorderType('plain');
-
         // Data, type and data type
         $this->plot->SetPlotType($this->type);
         $this->plot->SetDataType($this->data_type);
         $this->plot->SetDataValues($this->data);
 
-        // Image border
+        // Set image border type
         $this->plot->SetImageBorderType('none');
 
         switch ($this->type) {
@@ -111,8 +100,7 @@ class CGraph {
 				break;
         }
 
-        // Graph title
-        $this->plot->SetTitle($this->title);
+        // Set graph Y axis title
         $this->plot->SetYTitle($this->ytitle);
 
         # Turn off X tick labels and ticks because they don't apply here:
@@ -120,7 +108,7 @@ class CGraph {
         $this->plot->SetXTickPos('none');
         $this->plot->SetPlotAreaWorld(NULL, 0, NULL, NULL);
 
-        // Render the graph
+        // Graph rendering
         $this->plot->DrawGraph();
     } // end function Render()
 	
