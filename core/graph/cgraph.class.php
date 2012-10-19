@@ -77,9 +77,6 @@ class CGraph {
         $this->plot->SetDataType($this->data_type);
         $this->plot->SetDataValues($this->data);
 
-        // Plot colors
-        $this->plot->SetDataColors($this->colors);
-
         // Image border
         $this->plot->SetImageBorderType('none');
 
