@@ -23,7 +23,6 @@ class CGraph {
     private $data;
     private $data_type;
     private $type;
-    private $colors;
     private $shading;
     private $width;
     private $height;
@@ -105,7 +104,11 @@ class CGraph {
                 $this->plot->SetLegendPixels($this->width - ($legend_width + 5), 10);
                 break;
             case 'bars':
+				// X label angle
                 $this->plot->SetXLabelAngle(90);
+				// Plot and border colors
+				$this->plot->SetDataColors(array('gray'));
+				$this->plot->SetDataBorderColors(array('black'));
                 break;
         }
 
