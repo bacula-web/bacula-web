@@ -17,13 +17,11 @@
  */
 
 class CGraph {
-
     private $title;
     private $ytitle;
     private $data;
     private $data_type;
     private $type;
-    private $shading;
     private $width;
     private $height;
     private $output_file;
@@ -33,11 +31,10 @@ class CGraph {
         $this->output_file = VIEW_CACHE_DIR . '/' . $filename;
     }
 
-    public function SetData($data_in, $type, $data_type, $shading = 2) {
-        $this->data = $data_in;
-        $this->type = $type;
-        $this->data_type = $data_type;
-        $this->shading = $shading;
+    public function SetData($data_in, $type, $data_type) {
+        $this->data 		= $data_in;
+        $this->type 		= $type;
+        $this->data_type 	= $data_type;
     }
 
     public function SetGraphSize($width, $height) {
@@ -83,9 +80,6 @@ class CGraph {
         // Plot colors
         $this->plot->SetDataColors($this->colors);
 
-        // Plot shading
-        $this->plot->SetShading($this->shading);
-
         // Image border
         $this->plot->SetImageBorderType('none');
 
@@ -102,14 +96,22 @@ class CGraph {
                 // Legend position (calculated regarding the width and height of the graph)
                 list($legend_width, $legend_height) = $this->plot->GetLegendSize();
                 $this->plot->SetLegendPixels($this->width - ($legend_width + 5), 10);
+
+                // Shading
+				$this->plot->SetShading( 0 );
+
                 break;
             case 'bars':
 				// X label angle
                 $this->plot->SetXLabelAngle(90);
+
 				// Plot and border colors
 				$this->plot->SetDataColors(array('gray'));
 				$this->plot->SetDataBorderColors(array('black'));
-                break;
+
+                // Shading
+				$this->plot->SetShading( 2 );
+				break;
         }
 
         // Graph title
@@ -123,10 +125,7 @@ class CGraph {
 
         // Render the graph
         $this->plot->DrawGraph();
-    }
-
-// end function Render()
-}
-
-// end BGraph classe
+    } // end function Render()
+	
+}  // end CGraph class
 ?>
