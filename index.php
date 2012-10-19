@@ -88,7 +88,7 @@ foreach ($jobs_status as $status)
     $jobs_status_data[] = array($status, $dbSql->countJobs(LAST_DAY, NOW, $status));
 
 $graph = new CGraph("graph.png");
-$graph->SetData($jobs_status_data, 'pie', 'text-data-single');
+$graph->SetData($jobs_status_data, 'pie');
 $graph->SetGraphSize(310, 200);
 
 $graph->Render();
@@ -134,7 +134,7 @@ foreach ($result->fetchall() as $pool) {
     $vols_by_pool[] = array($pool['name'], $pool['numvols']);
 }
 
-$graph->SetData($vols_by_pool, 'pie', 'text-data-single');
+$graph->SetData($vols_by_pool, 'pie');
 $graph->SetGraphSize(310, 200);
 
 $graph->Render();
@@ -151,7 +151,7 @@ foreach ($days as $day) {
 }
 
 $graph = new CGraph("graph2.png");
-$graph->SetData($days_stored_bytes, 'bars', 'text-data');
+$graph->SetData($days_stored_bytes, 'bars');
 $graph->SetGraphSize(310, 200);
 $graph->SetYTitle("GB");
 

@@ -68,7 +68,7 @@ foreach ($days as $day) {
     $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
 }
 
-$graph->SetData($days_stored_bytes, 'bars', 'text-data');
+$graph->SetData($days_stored_bytes, 'bars');
 $graph->SetGraphSize(400, 230);
 $graph->SetYTitle("GB");
 
@@ -85,7 +85,7 @@ foreach ($days as $day) {
     $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
 }
 
-$graph->SetData($days_stored_files, 'bars', 'text-data');
+$graph->SetData($days_stored_files, 'bars');
 $graph->SetGraphSize(400, 230);
 $graph->SetYTitle("Files");
 

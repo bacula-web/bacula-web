@@ -19,8 +19,8 @@
 class CGraph {
     private $ytitle;
     private $data;
-    private $data_type;
-    private $type;
+    private $data_type = array('pie' => 'text-data-single', 'bars' => 'text-data');
+    private $graph_type;
     private $width;
     private $height;
     private $output_file;
@@ -30,10 +30,9 @@ class CGraph {
         $this->output_file = VIEW_CACHE_DIR . '/' . $filename;
     }
 
-    public function SetData($data_in, $type, $data_type) {
-        $this->data 		= $data_in;
-        $this->type 		= $type;
-        $this->data_type 	= $data_type;
+    public function SetData($data_in, $graph_type) {
+        $this->data 	   = $data_in;
+        $this->graph_type  = $graph_type;
     }
 
     public function SetGraphSize($width, $height) {
@@ -61,15 +60,24 @@ class CGraph {
         $this->plot->SetFileFormat("png");
         $this->plot->SetIsInline(true);
 
-        // Data, type and data type
-        $this->plot->SetPlotType($this->type);
-        $this->plot->SetDataType($this->data_type);
-        $this->plot->SetDataValues($this->data);
+        // Set graph type and data type
+        $this->plot->SetPlotType( $this->graph_type );
+        $this->plot->SetDataType( $this->data_type[$this->graph_type] );
+		
+/*
+		echo '<pre>';
+		var_dump( $this->data_type) ;
+		echo 'Graph type : ' . $this->graph_type . '</br >';
+		echo 'Data type : ' . $this->data_type[$this->graph_type] . '</br >';
+		echo '</pre>';
+*/        
+		// Set graph values
+		$this->plot->SetDataValues($this->data);
 
         // Set image border type
         $this->plot->SetImageBorderType('none');
 
-        switch ($this->type) {
+        switch ( $this->graph_type ) {
             case 'pie':
                 $this->plot->SetPlotAreaPixels(5, 5, ($this->width / 2), $this->height - 5);
                 $this->plot->SetLabelScalePosition(0.2);
