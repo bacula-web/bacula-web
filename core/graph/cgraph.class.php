@@ -60,13 +60,6 @@ class CGraph {
             die("Please provide a non empty title for the Y axis");
     }
 
-    public function SetColors($colors) {
-        if (is_array($colors))
-            $this->colors = $colors;
-        else
-            die("Please provide a array in BGraph->SetColors()");
-    }
-
     public function Get_Image_file() {
         return $this->output_file;
     }
