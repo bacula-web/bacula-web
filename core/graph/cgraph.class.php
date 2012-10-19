@@ -34,11 +34,11 @@ class CGraph {
         $this->output_file = VIEW_CACHE_DIR . '/' . $filename;
     }
 
-    public function SetData($data_in, $type, $data_type, $shading = 5) {
+    public function SetData($data_in, $type, $data_type, $shading = 2) {
         $this->data = $data_in;
         $this->type = $type;
         $this->data_type = $data_type;
-        $this->shadding = $shading;
+        $this->shading = $shading;
     }
 
     public function SetGraphSize($width, $height) {

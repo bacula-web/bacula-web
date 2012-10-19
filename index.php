@@ -134,7 +134,7 @@ foreach ($result->fetchall() as $pool) {
     $vols_by_pool[] = array($pool['name'], $pool['numvols']);
 }
 
-$graph->SetData($vols_by_pool, 'pie', 'text-data-single');
+$graph->SetData($vols_by_pool, 'pie', 'text-data-single', 0);
 $graph->SetGraphSize(310, 200);
 
 $graph->Render();
