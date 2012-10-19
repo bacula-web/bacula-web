@@ -93,7 +93,7 @@ $graph->SetGraphSize(400, 230);
 $graph->SetYTitle("GB");
 
 $graph->Render();
-$view->assign('graph_stored_bytes', $graph->Get_Image_file());
+$view->assign('graph_stored_bytes', $graph->get_Filepath());
 
 // ===============================================================
 // Getting last 7 days stored files graph
@@ -110,7 +110,7 @@ $graph->SetGraphSize(400, 230);
 $graph->SetYTitle("Files");
 
 $graph->Render();
-$view->assign('graph_stored_files', $graph->Get_Image_file());
+$view->assign('graph_stored_files', $graph->get_Filepath());
 
 $view->assign('period', $period);
 $view->assign('client_name', $client['name']);

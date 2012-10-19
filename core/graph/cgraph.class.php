@@ -18,16 +18,19 @@
 
 class CGraph {
     private $ytitle;
+	
     private $data;
     private $data_type = array('pie' => 'text-data-single', 'bars' => 'text-data');
     private $graph_type;
+	
     private $width;
     private $height;
-    private $output_file;
+	
+    private $img_filename;
     private $plot;
 
     function __construct($filename = "graph.png") {
-        $this->output_file = VIEW_CACHE_DIR . '/' . $filename;
+        $this->img_filename = VIEW_CACHE_DIR . '/' . $filename;
     }
 
     public function SetData($data_in, $graph_type) {
@@ -47,8 +50,8 @@ class CGraph {
             die("Please provide a non empty title for the Y axis");
     }
 
-    public function Get_Image_file() {
-        return $this->output_file;
+    public function get_Filepath() {
+		return $this->img_filename;
     }
 
     public function Render() {
@@ -56,21 +59,14 @@ class CGraph {
         $this->plot = new PHPlot($this->width, $this->height);
 
         // Render to file instead of screen
-        $this->plot->SetOutputFile($this->output_file);
+        $this->plot->SetOutputFile($this->img_filename);
         $this->plot->SetFileFormat("png");
         $this->plot->SetIsInline(true);
 
         // Set graph type and data type
         $this->plot->SetPlotType( $this->graph_type );
         $this->plot->SetDataType( $this->data_type[$this->graph_type] );
-		
-/*
-		echo '<pre>';
-		var_dump( $this->data_type) ;
-		echo 'Graph type : ' . $this->graph_type . '</br >';
-		echo 'Data type : ' . $this->data_type[$this->graph_type] . '</br >';
-		echo '</pre>';
-*/        
+		      
 		// Set graph values
 		$this->plot->SetDataValues($this->data);
 

@@ -92,7 +92,7 @@ $graph->SetData($jobs_status_data, 'pie');
 $graph->SetGraphSize(310, 200);
 
 $graph->Render();
-$view->assign('graph_jobs', $graph->Get_Image_file());
+$view->assign('graph_jobs', $graph->get_Filepath() );
 unset($graph);
 
 // Volumes by pools graph
@@ -138,7 +138,7 @@ $graph->SetData($vols_by_pool, 'pie');
 $graph->SetGraphSize(310, 200);
 
 $graph->Render();
-$view->assign('graph_pools', $graph->Get_Image_file());
+$view->assign('graph_pools', $graph->get_Filepath());
 
 // Last 7 days stored Bytes graph
 $days_stored_bytes = array();
@@ -156,7 +156,7 @@ $graph->SetGraphSize(310, 200);
 $graph->SetYTitle("GB");
 
 $graph->Render();
-$view->assign('graph_stored_bytes', $graph->Get_Image_file());
+$view->assign('graph_stored_bytes', $graph->get_Filepath());
 
 // Last used volumes
 $last_volumes = array();

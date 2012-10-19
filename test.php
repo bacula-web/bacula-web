@@ -118,6 +118,6 @@ $graph->Render();
 
 // Parse to template
 $view->assign('checks', $check_list);
-$view->assign('graph_test', $graph->Get_Image_file());
+$view->assign('graph_test', $graph->get_Filepath());
 $view->display('test.tpl');
 ?>
