@@ -72,8 +72,8 @@ $graph->SetData($days_stored_bytes, 'bars');
 $graph->SetGraphSize(400, 230);
 $graph->SetYTitle("GB");
 
-$graph->Render();
-$view->assign('graph_stored_bytes', $graph->get_Filepath());
+// Graph rendering
+$view->assign( 'graph_stored_bytes', $graph->Render() );
 
 // ===============================================================
 // Getting last 7 days stored files graph
@@ -89,8 +89,8 @@ $graph->SetData($days_stored_files, 'bars');
 $graph->SetGraphSize(400, 230);
 $graph->SetYTitle("Files");
 
-$graph->Render();
-$view->assign('graph_stored_files', $graph->get_Filepath());
+// Graph rendering
+$view->assign( 'graph_stored_files', $graph->Render() );
 
 // Last 10 jobs
 $query = "SELECT JobId, Level, JobFiles, JobBytes, JobStatus, StartTime, EndTime, Name ";

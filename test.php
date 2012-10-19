@@ -114,10 +114,10 @@ $graph = new CGraph("graph3.png");
 $graph->SetData($data, 'pie', 'text-data-single');
 $graph->SetGraphSize(300, 230);
 
-$graph->Render();
+// Graph rendering
+$view->assign( 'graph_test', $graph->Render() );
 
-// Parse to template
+// Template rendering
 $view->assign('checks', $check_list);
-$view->assign('graph_test', $graph->get_Filepath());
 $view->display('test.tpl');
 ?>

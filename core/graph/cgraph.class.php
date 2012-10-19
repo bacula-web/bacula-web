@@ -26,7 +26,7 @@ class CGraph {
     private $width;
     private $height;
 	
-    private $img_filename;
+    public $img_filename;
     private $plot;
 
     function __construct($filename = "graph.png") {
@@ -50,7 +50,7 @@ class CGraph {
             die("Please provide a non empty title for the Y axis");
     }
 
-    public function get_Filepath() {
+    private function get_Filepath() {
 		return $this->img_filename;
     }
 
@@ -114,6 +114,10 @@ class CGraph {
 
         // Graph rendering
         $this->plot->DrawGraph();
+		
+		// Return image file path
+		return $this->get_Filepath();
+		
     } // end function Render()
 	
 }  // end CGraph class
