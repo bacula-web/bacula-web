@@ -12,9 +12,9 @@
 <div id="main_center">  
   <div class="box">
     <h4>{t}Client informations{/t}</h4>	
-    <table width="300px">
+    <table width="300">
 	  <tr>
-		<td width="100px" class="label">{t}Client name{/t}:</td> <td>{$client_name}</td>
+		<td width="100" class="label">{t}Client name{/t}:</td> <td>{$client_name}</td>
 	  </tr>
 	  <tr>
 		<td class="label">{t}Client version{/t}:</td> <td>{$client_version}</td>

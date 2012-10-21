@@ -14,7 +14,7 @@
   <!-- Filter jobs -->
   <div class="box">
 	<form action="jobs.php" method="post">
-	<table style="width:100%";>
+	<table style="width:100%;">
 		<tr>
 			<td style="border: 1px solid #c8c8c8; width: 250px; background-color:#eeeeee;"><b>{t}Filter{/t}</b></td>
 			<td style="border: 1px solid #c8c8c8; text-align: right;">
