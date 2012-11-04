@@ -291,7 +291,7 @@ class Bweb
 		} 
 		
 		$query = array('table' => $table, 'fields' => array('count(*) as pools_count'));
-		$result = $this->db_link->runQuery(CDBQuery::getQuery($query));
+		$result = $this->db_link->query(CDBQuery::get_Select($query));
 		
 		// Return result
 		$pools_count = $result->fetch();
@@ -313,7 +313,7 @@ class Bweb
 		} 
 		
 		$query = array('table' => $table, 'fields' => array('count(*) as vols_count'));
-		$result = $this->db_link->runQuery(CDBQuery::getQuery($query));
+		$result = $this->db_link->query(CDBQuery::get_Select($query));
 		
 		// Return result
 		$vols_count = $result->fetch();
@@ -335,7 +335,7 @@ class Bweb
 		} 
 		
 		$query = array('table' => $table, 'fields' => array('count(*) as filesets_count'));
-		$result = $this->db_link->runQuery(CDBQuery::getQuery($query));
+		$result = $this->db_link->query(CDBQuery::get_Select($query));
 		
 		// Return result
 		$filesets_count = $result->fetch();
@@ -539,7 +539,7 @@ class Bweb
 		$query = array( 'table' => 'Media', 'fields' => array('SUM(Media.VolBytes) as volumes_size') );
 		
 		// Run SQL query
-		$result = $this->db_link->runQuery(CDBQuery::getQuery( $query ) );
+		$result = $this->db_link->query(CDBQuery::get_Select( $query ) );
 		$result = $result->fetch();
 		
 		return $result['volumes_size'];

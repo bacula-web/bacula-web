@@ -18,7 +18,7 @@
 
 class CDBQuery {
 
-    public static function getQuery( $param = array() ) {
+    public static function get_Select( $param = array() ) {
         $query = '';
 
         if (!is_array($param) || empty($param)) {
