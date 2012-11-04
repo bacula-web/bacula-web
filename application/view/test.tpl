@@ -16,7 +16,7 @@
 		  <tr>
 			<td><b>{$check.check_label}</b></td>
 			<td rowspan="2" style="text-align: center;"> 
-			  <img src='application/view/style/images/{$check.check_result}' width='25' alt=''/> </td>
+			  <img src='application/view/style/images/{$check.check_result}' width='23' alt=''/> </td>
 		  </tr>
 		  <tr>
 			<td class="comment">{$check.check_descr}</td>

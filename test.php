@@ -20,7 +20,7 @@ session_start();
 require_once ("core/global.inc.php");
 
 // Initialise model and view
-$dSql = null;
+$dbSql = null;
 $view = new CView();
 
 try {
@@ -33,7 +33,7 @@ try {
 $pdo_drivers = PDO::getAvailableDrivers();
 
 // Check result icon
-$icon_result = array(true => 'ok.png', false => 'error.png');
+$icon_result = array( true => 'ok.png', false => 'error.png');
 
 // Checks list
 $check_list = array(array('check_cmd' => 'php-gettext',
@@ -57,6 +57,9 @@ $check_list = array(array('check_cmd' => 'php-gettext',
     array('check_cmd' => 'php-pdo',
         'check_label' => 'PHP - PDO support',
         'check_descr' => 'PHP PDO support is required, please compile PHP with this option'),
+	array('check_cmd' => 'db-connection',
+		'check_label' => 'Database connection status',
+		'check_descr' => '<b>Current status:</b> ' . $dbSql->db_link->getAttribute( PDO::ATTR_CONNECTION_STATUS ) ),
     array('check_cmd' => 'smarty-cache',
         'check_label' => 'Smarty cache folder write permission',
         'check_descr' => realpath(VIEW_CACHE_DIR) . ' must be writable by Apache'),
@@ -98,6 +101,9 @@ foreach ($check_list as &$check) {
         case 'php-version':
             $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '5.0.0', '>=')];
             break;
+		case 'db-connection':
+			$check['check_result'] = $icon_result[ CDBUtils::isConnected( $dbSql->db_link )];
+			break;
     }
 }
 
