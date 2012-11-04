@@ -26,8 +26,14 @@ class CDBUtils {
 		return $db_link->getAttribute(PDO::ATTR_DRIVER_NAME);
 	}
 	
-	public static function isConnected() {
-	
+	public static function isConnected( $PDO_connection ) {
+		$pdo_connection = $PDO_connection->getAttribute( PDO::ATTR_CONNECTION_STATUS );
+		$str = 'Connection OK';
+
+		if ( stripos( $pdo_connection, $str ) === false )
+			return false;
+		else
+			return true;	
 	}
 	
 	public function countResult() {
