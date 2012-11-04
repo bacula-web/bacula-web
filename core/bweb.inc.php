@@ -159,7 +159,7 @@ class Bweb
 			$query = "SELECT Pool.poolid, Pool.name FROM Pool ORDER BY Pool.poolid";
 			
 			foreach( $this->getPools() as $pool ) {
-				switch( $this->db_link->getDriver() )
+				switch( $this->db_driver )
 				{
 					case 'sqlite':
 					case 'mysql':
@@ -221,7 +221,7 @@ class Bweb
 		$start_date		= date( "Y-m-d H:i:s", $start_timestamp);	
 		$end_date		= date( "Y-m-d H:i:s", $end_timestamp);
 		
-		switch( $this->db_link->getDriver() )
+		switch( $this->db_driver )
 		{
 			case 'sqlite':
 			case 'mysql':
@@ -286,7 +286,7 @@ class Bweb
 		$table 		 = 'Pool';
 		
 		// Check db driver for pool table name
-		if ($this->db_link->getDriver() == 'pgsql') {
+		if ( $this->db_driver == 'pgsql' ) {
 			$table = strtolower($table);
 		} 
 		
@@ -308,7 +308,7 @@ class Bweb
 		$table 		 = 'Media';
 		
 		// Check db driver for pool table name
-		if ($this->db_link->getDriver() == 'pgsql') {
+		if ( $this->db_driver == 'pgsql') {
 			$table = strtolower($table);
 		} 
 		
@@ -330,7 +330,7 @@ class Bweb
 		$table 		     = 'FileSet';
 		
 		// Check db driver for pool table name
-		if ($this->db_link->getDriver() == 'pgsql') {
+		if ( $this->db_driver == 'pgsql') {
 			$table = strtolower($table);
 		} 
 		
@@ -353,7 +353,7 @@ class Bweb
 		$pools  = array();
 		$result = '';
 		
-		switch( $this->db_link->getDriver() )
+		switch( $this->db_driver )
 		{
 			case 'sqlite':
 			case 'mysql':
@@ -383,7 +383,7 @@ class Bweb
 		$result 	= '';
 		$backupjobs = array();
 		
-		switch( $this->db_link->getDriver() )
+		switch( $this->db_driver )
 		{
 			case 'sqlite':
 			case 'mysql':
@@ -413,7 +413,7 @@ class Bweb
 		$result  = '';
 		$clients = array();
 
-		switch( $this->db_link->getDriver() )
+		switch( $this->db_driver )
 		{
 			case 'sqlite':
 			case 'mysql':
@@ -501,7 +501,7 @@ class Bweb
 		$start_date		= date( "Y-m-d H:i:s", $start_timestamp);	
 		$end_date		= date( "Y-m-d H:i:s", $end_timestamp);	
 		
-		switch( $this->db_link->getDriver() )
+		switch( $this->db_driver )
 		{
 			case 'sqlite':
 			case 'mysql':
