@@ -16,37 +16,52 @@
   +-------------------------------------------------------------------------+
  */
 
-class CDB {
-    private static $connection;
-    private $options;
-    private $result;
+class CDBUtils {
+	private static $result_count;
 
     private function __construct() {
     }
 
-    public static function connect( $dsn, $user = null, $password = null, $options = array() ) {
+    public static function getDriverName( $db_link ) {
+		return $db_link->getAttribute(PDO::ATTR_DRIVER_NAME);
+	}
+	
+	public static function isConnected() {
+	
+	}
+	
+	public function countResult() {
+		return self::$result_count;
+	}
+
+    public static function runQuery( $query, $db_link ) {
+        $result 	  = null;
+		$result_count = 0;
+		$statment	  = null;
+				
 		try {
-            if ( is_null( self::$connection ) ) {
-				self::$connection = new PDO($dsn, $user, $password);				
-			}
-        }catch (PDOException $e) {
+			$statment	= $db_link->prepare($query); 
+			
+			if( $statment == FALSE )
+				throw new PDOException("Failed to prepare PDOStatment <br />$query");
+			
+			$result 	= $statment->execute();			
+            if ( is_null($result) )
+                throw new PDOException("Failed to execute PDOStatment <br />$query");
+				
+        } catch (PDOException $e) {
             CErrorHandler::displayError($e);
         }
 		
-		return self::$connection;
+		self::$result_count = $statment->rowCount();
+		
+		if( self::$result_count > 1) {
+			return $statment->fetchAll();
+		}else {
+			return $statment->fetch();
+		}
     }
 
-    private function setOptions() {
-		// Set connection options
-		$this->options = array(	PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-								PDO::ATTR_CASE => PDO::CASE_LOWER,
-								PDO::ATTR_STATEMENT_CLASS => array('CDBResult', array($this)) );
-
-		if ($this->getDriver() == 'mysql')
-			$this->options[] = array( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
-	
-		foreach ($this->options as $option => $value)
-            self::$connection->setAttribute($option, $value);
-    }
 }
+
 ?>

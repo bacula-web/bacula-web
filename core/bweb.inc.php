@@ -22,7 +22,9 @@ class Bweb
 	private $catalogs = array();			// Catalog array
 	
 	private $view;							// Template class
-	public  $db_link;						// Database link
+
+	public  $db_link;						// Database connection
+	private $db_driver;						// Database connection driver
 	
 	public  $catalog_nb;					// Catalog count
 	private	$catalog_current_id;			// Current catalog
@@ -69,20 +71,32 @@ class Bweb
 
 		$this->view->assign( 'catalog_current_id', $this->catalog_current_id );
 		
-		// Database connection
-		switch( $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'db_type') ) {
+		// DB connection parameters
+		$dsn 	= $this->bwcfg->get_DSN($this->catalog_current_id);
+		$driver = $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'db_type');
+		$user 	= $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'login');
+		$pwd 	= $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'password');
+
+		// DB connection options
+		$options = array(	PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+							PDO::ATTR_CASE => PDO::CASE_LOWER,
+							PDO::ATTR_STATEMENT_CLASS => array('CDBResult', array($this)) );
+
+		// Specific connection parameters and options for MySQL
+		if ( $driver == 'mysql' )
+			$options[] = array( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+		
+		switch( $driver ) {
 			case 'mysql':
 			case 'pgsql':
-				$this->db_link = new CDB( $this->bwcfg->get_DSN($this->catalog_current_id), 
-										  $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'login'),
-										  $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'password') );
+				$this->db_link = CDB::connect( $dsn, $user, $pwd, $options );
 			break;
 			case 'sqlite':
-				$this->db_link = new CDB( $this->bwcfg->get_DSN($this->catalog_current_id) );
+				$this->db_link = CDB::connect( $dsn, null, null, $options );
 			break;
 		}
-										
-		$this->db_link->connect();	
+		
+		$this->db_driver = CDBUtils::getDriverName( $this->db_link );
 
 		// Catalog selection		
 		if( $this->catalog_nb > 1 ) {
@@ -99,7 +113,7 @@ class Bweb
 		$query 	 = '';
 		$result	 = '';
 		
-		switch( $this->db_link->getDriver() )
+		switch( $this->db_driver )
 		{
 			case 'mysql':
 				$query  = "SELECT table_schema AS 'database', sum( data_length + index_length) AS 'dbsize' ";
@@ -117,11 +131,8 @@ class Bweb
 		}
 		
 		// Execute SQL statment
-		$result  = $this->db_link->runQuery( $query );
-		$db_size = $result->fetch();
-		$db_size = CUtils::Get_Human_Size( $db_size['dbsize'] );
-
-		return $db_size;
+		$db_size = CDBUtils::runQuery( $query, $this->db_link );
+		return CUtils::Get_Human_Size( $db_size['dbsize'] );
 	} // end function GetDbSize()
 	
 	public function Get_Nb_Clients()
@@ -445,11 +456,11 @@ class Bweb
 	
 	public function getStoredFiles( $start_timestamp, $end_timestamp, $job_name = 'ALL', $client = 'ALL' )
 	{
-		$query = "";
+		$query 		= "";
 		$start_date = date( "Y-m-d H:i:s", $start_timestamp);	
 		$end_date   = date( "Y-m-d H:i:s", $end_timestamp);	
 		
-		switch( $this->db_link->getDriver() )
+		switch( $this->db_driver )
 		{
 			case 'sqlite':
 			case 'mysql':
@@ -469,8 +480,7 @@ class Bweb
 			$query .= " AND clientid = '$client'";
 		
 		// Execute query
-		$result = $this->db_link->runQuery( $query );
-		$result = $result->fetch();
+		$result = CDBUtils::runQuery( $query, $this->db_link );
 
 		if( isset($result['stored_files']) and !empty($result['stored_files']) )
 			return $result['stored_files'];
