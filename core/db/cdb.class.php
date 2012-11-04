@@ -30,10 +30,6 @@ class CDB {
         $this->dsn = $dsn;
         $this->user = $user;
         $this->password = $password;
-
-        $this->options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_CASE => PDO::CASE_LOWER,
-            PDO::ATTR_STATEMENT_CLASS => array('CDBResult', array($this)));
     }
 
     public function connect() {
@@ -42,17 +38,22 @@ class CDB {
                 $this->connection = new PDO($this->dsn, $this->user, $this->password);
 
             $this->setOptions();
-        } catch (PDOException $e) {
+        }catch (PDOException $e) {
             CErrorHandler::displayError($e);
         }
     }
 
     private function setOptions() {
-        foreach ($this->options as $option => $value)
-            $this->connection->setAttribute($option, $value);
+	// Set connection options
+	$this->options = array(	PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+							PDO::ATTR_CASE => PDO::CASE_LOWER,
+							PDO::ATTR_STATEMENT_CLASS => array('CDBResult', array($this)) );
 
-        if ($this->getDriver() == 'mysql')
-            $this->connection->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+	if ($this->getDriver() == 'mysql')
+		$this->options[] = array( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+	
+	foreach ($this->options as $option => $value)
+            $this->connection->setAttribute($option, $value);
     }
 
     public function getDriver() {
