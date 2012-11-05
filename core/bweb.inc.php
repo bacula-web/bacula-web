@@ -74,8 +74,11 @@ class Bweb
 		// DB connection parameters
 		$dsn 	= $this->bwcfg->get_DSN($this->catalog_current_id);
 		$driver = $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'db_type');
-		$user 	= $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'login');
-		$pwd 	= $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'password');
+		
+		if( $driver != 'sqlite' ) {
+			$user 	= $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'login');
+			$pwd 	= $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'password');
+		}
 
 		// DB connection options
 		$options = array(	PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
