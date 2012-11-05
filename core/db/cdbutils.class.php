@@ -42,6 +42,15 @@ class CDBUtils {
 			return true;	
 	}
 	
+	public function getConnectionStatus( $PDO_connection ) {
+		// if MySQL of postGreSQL
+		if( $db_link->getAttribute(PDO::ATTR_DRIVER_NAME) != 'sqlite' ) {
+			return $PDO_connection->getAttribute( PDO::ATTR_CONNECTION_STATUS );
+		}else {
+			return '';
+		}
+	}
+	
 	public function countResult() {
 		return self::$result_count;
 	}
