@@ -22,14 +22,14 @@ class CDBUtils {
     private function __construct() {
     }
 
-    public static function getDriverName( $db_link ) {
-		return $db_link->getAttribute(PDO::ATTR_DRIVER_NAME);
+    public static function getDriverName( $PDO_connection ) {
+		return $PDO_connection->getAttribute(PDO::ATTR_DRIVER_NAME);
 	}
 	
 	public static function isConnected( $PDO_connection ) {
 		// if MySQL of postGreSQL
-		if( $db_link->getAttribute(PDO::ATTR_DRIVER_NAME) != 'sqlite' ) {
-			$pdo_connection = $PDO_connection->getAttribute( PDO::ATTR_CONNECTION_STATUS );
+		if( self::getDriverName( $PDO_connection ) != 'sqlite' ) {
+			$pdo_connection = self::getConnectionStatus($PDO_connection);
 			$str = 'Connection OK';
 		}else {
 			// Assume that the SQLite database file is readable by Apache - will be improved
@@ -42,9 +42,9 @@ class CDBUtils {
 			return true;	
 	}
 	
-	public function getConnectionStatus( $PDO_connection ) {
+	public static function getConnectionStatus( $PDO_connection ) {
 		// if MySQL of postGreSQL
-		if( $db_link->getAttribute(PDO::ATTR_DRIVER_NAME) != 'sqlite' ) {
+		if( self::getDriverName( $PDO_connection ) != 'sqlite' ) {
 			return $PDO_connection->getAttribute( PDO::ATTR_CONNECTION_STATUS );
 		}else {
 			return '';
