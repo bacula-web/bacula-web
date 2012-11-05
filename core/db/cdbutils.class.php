@@ -33,7 +33,7 @@ class CDBUtils {
 			$str = 'Connection OK';
 		}else {
 			// Assume that the SQLite database file is readable by Apache - will be improved
-			return true();
+			return true;
 		}
 
 		if ( stripos( $pdo_connection, $str ) === false )
