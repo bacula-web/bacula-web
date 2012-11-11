@@ -56,14 +56,14 @@
         // Where
         if (isset($param['where']) && !is_null($param['where']))
             $query .= 'WHERE ' . $param['where'] . ' ';
-
-        // Order by
-        if (isset($param['orderby']) && !is_null($param['orderby']))
-            $query .= 'ORDER BY ' . $param['orderby'] . ' ';
-
+			
         // Group by
         if (isset($param['groupby']) && !is_null($param['groupby']))
             $query .= 'GROUP BY ' . $param['groupby'] . ' ';
+			
+        // Order by
+        if (isset($param['orderby']) && !is_null($param['orderby']))
+            $query .= 'ORDER BY ' . $param['orderby'] . ' ';
 
         // Limit to
         if (isset($param['limit']) && !is_null($param['limit']))
