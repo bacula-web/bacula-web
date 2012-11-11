@@ -16,8 +16,14 @@
   +-------------------------------------------------------------------------+
  */
 
-class CDBQuery {
 
+ class CDBQuery {
+ 
+	// ==================================================================================
+	// Function: 	get_Select()
+	// Parameters: 	array containing all informations needed to build the SQL statment
+	// Return:		SELECT SQL statment
+	// ==================================================================================
     public static function get_Select( $param = array() ) {
         $query = '';
 
@@ -65,7 +71,6 @@ class CDBQuery {
 
         return $query;
     }
-
-}
+ }
 
 ?>
