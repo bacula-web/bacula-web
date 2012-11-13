@@ -51,22 +51,25 @@ else
 // Client informations
 $client = $dbSql->getClientInfos($clientid);
 
-$job_names = $dbSql->getJobsName($clientid);
+$job_names = $dbSql->getJobsName( $clientid );
 
 foreach ($job_names as $jobname) {
-    //Client's backup jobs
+    // Last good client's backup jobs
     $query = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
     $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
     $query .= "WHERE Job.Name = '$jobname' AND Job.JobStatus = 'T' AND Job.Type = 'B' ";
     $query .= 'ORDER BY Job.EndTime DESC ';
     $query .= 'LIMIT 1';
 
-    $jobs_result = $dbSql->db_link->runQuery($query);
+	$jobs_result = CDBUtils::runQuery( $query, $dbSql->db_link );
 
     foreach ($jobs_result->fetchAll() as $job) {
         $job['level'] = $job_levels[$job['level']];
         $job['jobfiles'] = $dbSql->translate->get_Number_Format($job['jobfiles']);
         $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
+		
+		if (count( $backup_jobs ) % 2)
+			$job['odd_even'] = 'even';
 
         $backup_jobs[] = $job;
     }
