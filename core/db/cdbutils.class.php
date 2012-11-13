@@ -74,13 +74,7 @@ class CDBUtils {
             CErrorHandler::displayError($e);
         }
 		
-		self::$result_count = $statment->rowCount();
-		
-		if( self::$result_count > 1) {
-			return $statment->fetchAll();
-		}else {
-			return $statment->fetch();
-		}
+		return $statment ;
     }
 
 }
