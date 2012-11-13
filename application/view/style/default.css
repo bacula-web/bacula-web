@@ -1,42 +1,23 @@
-a, body, div, em, input, label, legend, li, ol, p, select, span, strong, td, th, textarea, u, ul, a:link, a:visited, a:hover, a:visited {
+body, html {
     font-size: 10pt;
-    color: #404040;
-    background-color: #ffffff;
     padding: 0px;
     margin: 0px;
-    font-family: Arial,Verdana;
+	font-family: Arial,Verdana;
+	color: #000000;
     font-size: 10pt;
     text-align: left;
     vertical-align: middle;
 }
 
-table {
-    min-width: 300px;
-    margin: 5px 0px;
-    border-collapse: collapse;
-}
-
-.tbl_header	{
-    background-color: #c8c8c8; 
-    color: #000000;
-    font-weight: bold;
-}
-
-td {
-    color: #000000;
-    padding: 5px;
-}
-
-select, input {
-    color: #000000;
+a:visited, a:hover, a {
+    color: #404040;
 }
 
 #nav
 {
-    margin: 0px 10px;
-    padding: 5px;
     vertical-align: middle;
     border: 1px solid #C8C8C8;
+	background-color: #f0f0f0;
 }
 
 #nav li {
@@ -46,14 +27,15 @@ select, input {
     margin: 0px;
 }
 
+#nav ul {
+	margin: 5px;
+	padding: 5px;
+}
+
 #nav li a {  
     font-size: 12pt;
     font-weight: bold;
     vertical-align: middle;
-}
-
-#nav li a.home { 
-    /*text-decoration: none; */
 }
 
 .main_center {
@@ -97,10 +79,6 @@ select, input {
     text-align: center;
 }
 
-.widget table {
-    width: 100%;
-}
-
 .widget img.graph {
     margin: 2px 0px;
     border: none;
@@ -113,36 +91,6 @@ select, input {
     color: #404040;
     margin: 0px;
     text-align: center;
-}
-
-.widget td, .box td {
-    padding: 3px;
-    font-size: 9pt;
-    text-align: center;
-}
-
-.widget table tr td.label {
-    text-align: left;
-    font-size: 11pt;
-}
-
-.widget table td.info {
-    text-align: center;
-    font-size: 11pt;
-    font-weight: bold;
-    border: 1px solid #C8C8C8;
-}
-
-td.waiting_jobs {
-    color: #FF6600;
-}
-
-td.completed_jobs {
-    color: #00FF00;
-}
-
-td.failed_jobs {
-    color: #FF0000;
 }
 
 .box {
@@ -159,9 +107,7 @@ td.failed_jobs {
     vertical-align: middle;
     font-size: 11pt;
     background-color: #404040;
-    color: #FFFFFF;
-    /*background-color: #C8C8C8;
-    color: #000000;*/
+    color: #ffffff;
     padding: 3px;
     margin: 0px;
     font-weight: bold;
@@ -174,40 +120,6 @@ td.failed_jobs {
     font-weight: bold;
     padding: 3px;
     margin: 5px 0px 10px 0px;
-}
-
-table tr td.info a { 
-    font-size: 8pt;
-}
-
-td.odd, td.odd a { 
-    background-color: #C8C8C8; 
-}
-
-td.form_submit {
-    text-align: right;
-}
-
-table.test {
-    border: 1px solid #c8c8c8;
-    margin: 5px 0px;
-}
-
-table.test td {
-    border-top: 1px solid #c8c8c8; 
-    text-align: left;
-}
-
-table.test td.comment {
-    text-align: left;
-    font-style: italic;
-    border-top: 0px solid #c8c8c8;
-    border-bottom: 1px solid #c8c8c8;
-}
-
-table.test td img {
-    vertical-align: middle;
-    margin: 10px;
 }
 
 a img { border: none;}

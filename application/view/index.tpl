@@ -6,27 +6,27 @@
   <!-- General information -->
   <div class="widget">
 	<p class="title">{t}Catalog statistics{/t}</p>
-	<table style="border-collapse: separate;">
+	<table class="table_big">
 	  <tr>
-	    <td class="label">{t}Clients{/t}</td> <td class="info">{$clients}</td>
+	    <td>{t}Clients{/t}</td> <td class="strong">{$clients}</td>
 	  </tr>
 	  <tr>
-		<td title="Defined Jobs and Filesets" class="label">{t}Jobs{/t} / {t}Filesets{/t}</td> <td class="info">{$defined_jobs} / {$defined_filesets}</td>
+		<td title="Defined Jobs and Filesets">{t}Jobs{/t} / {t}Filesets{/t}</td> <td class="strong">{$defined_jobs} / {$defined_filesets}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Total bytes{/t}</td> <td class="info">{$stored_bytes}</td>
+		<td>{t}Total bytes{/t}</td> <td class="strong">{$stored_bytes}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Total files{/t}</td> <td class="info">{$stored_files}</td>
+		<td>{t}Total files{/t}</td> <td class="strong">{$stored_files}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Database size{/t}</td> <td class="info">{$database_size}</td>
+		<td>{t}Database size{/t}</td> <td class="strong">{$database_size}</td>
 	  </tr>
   	  <tr>
-		<td class="label">{t}Pools{/t} / {t}Volumes{/t}</td> <td class="info">{$pools_nb} / {$volumes_nb}</td>
+		<td>{t}Pool(s){/t} / {t}Volume(s){/t}</td> <td class="strong">{$pools_nb} / {$volumes_nb}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Volume(s) size{/t}</td> <td class="info">{$volumes_size}</td>
+		<td>{t}Volume(s) size{/t}</td> <td class="strong">{$volumes_size}</td>
 	  </tr>
     </table>
   </div>
@@ -34,34 +34,34 @@
 <!-- Last 24 hours job Status -->
   <div class="widget">
 	<p class="title">{t}Last 24 hours status{/t}</p>
-		<table style="border-collapse: separate;">
+		<table class="table_big">
 			<tr>
-				<td class="label">{t}Completed jobs{/t}</td> 
-				<td class="info completed_jobs">{$completed_jobs}</td>
+				<td>{t}Completed job(s){/t}</td> 
+				<td class="strong good">{$completed_jobs}</td>
 			</tr> 
 			<tr>
-				<td class="label">{t}Waiting jobs{/t}</td> 
-				<td class="info waiting_jobs">{$waiting_jobs}</td>
+				<td>{t}Waiting job(s){/t}</td> 
+				<td class="strong warning">{$waiting_jobs}</td>
 			</tr>
 			<tr>
-				<td class="label">{t}Failed jobs{/t}</td> 
-				<td class="info failed_jobs">{$failed_jobs}</td>
+				<td>{t}Failed job(s){/t}</td> 
+				<td class="strong critical">{$failed_jobs}</td>
 			</tr>
 			<tr>
-				<td class="label">{t}Canceled jobs{/t}</td> 
-				<td class="info failed_jobs">{$canceled_jobs}</td>
+				<td>{t}Canceled job(s){/t}</td> 
+				<td class="strong">{$canceled_jobs}</td>
 			</tr> 
 			<tr>
-				<td class="label">Job Level (Incr / Diff / Full)</td>
-				<td class="info">{$incr_jobs} / {$diff_jobs} / {$full_jobs}</td>
+				<td>Job Level (Incr / Diff / Full)</td>
+				<td class="strong">{$incr_jobs} / {$diff_jobs} / {$full_jobs}</td>
 			</tr>
 			<tr>
-				<td class="label">{t}Transferred Bytes{/t}</td> 
-				<td class="info">{$bytes_last}</td>
+				<td>{t}Transferred Bytes{/t}</td> 
+				<td class="strong">{$bytes_last}</td>
 			</tr>
 			<tr>
-				<td class="label">{t}Transferred Files{/t}</td> 
-				<td class="info">{$files_last}</td>
+				<td>{t}Transferred Files{/t}</td> 
+				<td class="strong">{$files_last}</td>
 			</tr>
 		</table>
   </div> <!-- end div box -->  
@@ -102,19 +102,19 @@
 	<p class="title">{t}Last used volumes{/t}</p>
 	  <table>
 		<tr>
-		  <td class="tbl_header" title="Volume name">Volume</td>
-		  <td class="tbl_header" title="Volume status">Status</td>
-		  <td class="tbl_header" title="Volume pool">Pool</td>
-		  <td class="tbl_header" title="Last written date for this volume">Last written</td>
-		  <td class="tbl_header" title="Number of jobs">Jobs</td>
+		  <th title="Volume name">Volume</th>
+		  <th title="Volume status">Status</th>
+		  <th title="Volume pool">Pool</th>
+		  <th title="Last written date for this volume">Last written</th>
+		  <th title="Number of jobs">Jobs</th>
 		</tr>
 		{foreach from=$volumes_list item=vol}
-		<tr>
-		  <td class="{$vol.odd_even}">{$vol.volumename}</td>
-		  <td class="{$vol.odd_even}">{$vol.volstatus}</td>
-		  <td class="{$vol.odd_even}">{$vol.poolname}</td>
-		  <td class="{$vol.odd_even}">{$vol.lastwritten}</td>
-		  <td class="{$vol.odd_even}"><b>{$vol.jobs_count}</b></td>
+		<tr class="{$vol.odd_even}">
+		  <td>{$vol.volumename}</td>
+		  <td>{$vol.volstatus}</td>
+		  <td>{$vol.poolname}</td>
+		  <td>{$vol.lastwritten}</td>
+		  <td><b>{$vol.jobs_count}</b></td>
 		</tr>
 		{/foreach}
 	  </table>

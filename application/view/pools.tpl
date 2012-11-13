@@ -13,29 +13,29 @@
 <div class="main_center">
 	<div class="header">{$pool_name}</div>
 	<div class="box">
-	<table border="0">
+	<table class="grid">
 		<tr>
-			<td class="tbl_header" width="120">{t}Volume name{/t}</td>
-			<td class="tbl_header" width="120">{t}Bytes{/t}</td>
-			<td class="tbl_header" width="120">{t}Media Type{/t}</td>
-			<td class="tbl_header" width="140">{t}Expire{/t}</td>
-			<td class="tbl_header" width="140">{t}Last written{/t}</td>
-			<td class="tbl_header">{t}Status{/t}</td>
+			<th width="120">{t}Volume name{/t}</th>
+			<th width="120">{t}Bytes{/t}</th>
+			<th width="120">{t}Media Type{/t}</th>
+			<th width="140">{t}Expire{/t}</th>
+			<th width="140">{t}Last written{/t}</th>
+			<th>{t}Status{/t}</th>
 		</tr>
 		{foreach from=$pool item=volume}
-		<tr>
-			<td width="120" class="{$volume.class}">{$volume.volumename}</td>
-			<td width="120" class="{$volume.class}">{$volume.volbytes}</td>
-			<td width="120" class="{$volume.class}">{$volume.mediatype}</td>
-			<td width="140" class="{$volume.class}">{$volume.expire}</td>
-			<td width="140" class="{$volume.class}">{$volume.lastwritten}</td>
-			<td class="{$volume.class}">{$volume.volstatus}</td>
+		<tr class="{$volume.odd_even}">
+			<td>{$volume.volumename}</td>
+			<td>{$volume.volbytes}</td>
+			<td>{$volume.mediatype}</td>
+			<td>{$volume.expire}</td>
+			<td>{$volume.lastwritten}</td>
+			<td>{$volume.volstatus}</td>
 		</tr>
 		{foreachelse}
 		<tr>
-			<td colspan="6" style="text-align: center; font-weight: bold; font-size: 8pt; padding: 1em; width: 100%;">
+			<tfoot colspan="6" style="text-align: center; font-weight: bold; font-size: 8pt; padding: 1em; width: 100%;">
 				{t}No volume(s) in this pool{/t}
-			</td>
+			</tfoot>
 		</tr>
 		{/foreach}
 	</table>	

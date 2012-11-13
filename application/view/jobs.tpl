@@ -11,10 +11,10 @@
 
 <div class="main_center">
 
-  <!-- Filter jobs -->
   <div class="box">
 	<form action="jobs.php" method="post">
-	<table style="width:100%;">
+	<!-- Filter jobs form -->
+	<table>
 		<tr>
 			<td style="border: 1px solid #c8c8c8; width: 250px; background-color:#eeeeee;"><b>{t}Filter{/t}</b></td>
 			<td style="border: 1px solid #c8c8c8; text-align: right;">
@@ -30,8 +30,8 @@
 			</td>
 		</tr>
     </table>
-   
-    <table width="100%">
+    &nbsp;
+    <table>
 		<tr>
 			<td style="border: 1px solid #c8c8c8; width:250px; background-color:#eeeeee;"><b>{$jobs_found}</b> job(s) / <b>{$total_jobs} Job(s)</b></td>
 			<td style="border: 1px solid #c8c8c8; text-align: right;">
@@ -44,40 +44,40 @@
 	
     <br />
 	
-	<table border="0" width="100%">
+	<table class="grid">
 	  <tr>
-		<td class="tbl_header">{t}Status{/t}</td> 
-		<td class="tbl_header">{t}Job ID{/t}</td>
-		<td class="tbl_header">{t}Name{/t}</td>
-		<td class="tbl_header">{t}Type{/t}</td>
-		<td class="tbl_header">{t}Start Time{/t}</td>
-		<td class="tbl_header">{t}End Time{/t}</td>
-		<td class="tbl_header">{t}Elapsed time{/t}</td>
-		<td class="tbl_header">{t}Level{/t}</td>
-		<td class="tbl_header">{t}Bytes{/t}</td>
-		<td class="tbl_header">{t}Files{/t}</td>
-		<td class="tbl_header">{t}Pool{/t}</td>
-		<td class="tbl_header">{t}Log{/t}</td>
+		<th>{t}Status{/t}</th> 
+		<th>{t}Job ID{/t}</th>
+		<th>{t}Name{/t}</th>
+		<th>{t}Type{/t}</th>
+		<th>{t}Start Time{/t}</th>
+		<th>{t}End Time{/t}</th>
+		<th>{t}Elapsed time{/t}</th>
+		<th>{t}Level{/t}</th>
+		<th>{t}Bytes{/t}</th>
+		<th>{t}Files{/t}</th>
+		<th>{t}Pool{/t}</th>
+		<th>{t}Log{/t}</th>
 	  </tr>
 	<!-- <div class="listbox"> -->
 	  {foreach from=$last_jobs item=job}
-	  <tr>
-		<td width="50" class="{$job.Job_classe}">
+	  <tr class="{$job.odd_even}">
+		<td>
 			<img width="20" src="application/view/style/images/{$job.Job_icon}" alt="" title="{$job.jobstatuslong}" />
 		</td>
-		<td class="{$job.Job_classe}">{$job.jobid}</td>
-		<td class="{$job.Job_classe}">
+		<td>{$job.jobid}</td>
+		<td>
 			<a href="backupjob-report.php?backupjob_name={$job.job_name}">{$job.job_name}</a>
 		</td>
-		<td class="{$job.Job_classe}">{$job.type}</td>
-		<td class="{$job.Job_classe}">{$job.starttime}</td>
-		<td class="{$job.Job_classe}">{$job.endtime}</td>
-		<td class="{$job.Job_classe}">{$job.elapsed_time}</td>
-		<td class="{$job.Job_classe}">{$job.level}</td>
-		<td class="{$job.Job_classe}">{$job.jobbytes}</td>
-		<td class="{$job.Job_classe}">{$job.jobfiles}</td>
-		<td class="{$job.Job_classe}">{$job.pool_name}</td>
-		<td class="{$job.Job_classe}">
+		<td>{$job.type}</td>
+		<td>{$job.starttime}</td>
+		<td>{$job.endtime}</td>
+		<td>{$job.elapsed_time}</td>
+		<td>{$job.level}</td>
+		<td>{$job.jobbytes}</td>
+		<td>{$job.jobfiles}</td>
+		<td>{$job.pool_name}</td>
+		<td>
 		  <a href='joblogs.php?jobid={$job.jobid}' title='{t}Show job logs{/t}'> <img src='application/view/style/images/search.png' width='20' /> </a>
 		</td>
 	  </tr>

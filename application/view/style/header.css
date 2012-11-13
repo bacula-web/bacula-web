@@ -1,34 +1,35 @@
 #header{
     width: 100%;
     padding: 0px;
-    margin: 0px 0px;
-    background-color: #404040;
-    display: table;
+    margin: 0px;
+    background-color: #f0f0f0;
+    /*display: table;*/
 }
 
 #header .app_name {
-    display: table-cell;
-    float: right;
+    /*display: table-cell;*/
+    /*float: right;*/
     color: #FFFFFF;
     background-color: #404040;
     vertical-align: middle;
     font: normal small-caps bold 18pt Arial,Verdana;
-    padding: 10px;
+    padding: 7px 15px;
 }
 
 div.app_version {
-    /*float: right;*/
     color: #404040;
     font: normal normal bold 9pt Arial,Verdana;
     text-align: right;
-    margin: 0px 10px;
+    margin: 0px;
     padding: 2px;
+	background-color: #f0f0f0;
 }
 
 #toplinks {
     font-size: 10pt;
     padding: 0px;
     height: 30px;
+	background-color: #f0f0f0;
 }
 
 #toplinks li {
@@ -41,10 +42,5 @@ div.app_version {
 }
 
 #toplinks li a {
-    text-decoration: none;
     font-size: 10pt;
-}
-
-#toplinks form, #toplinks select {
-    vertical-align: middle;
 }

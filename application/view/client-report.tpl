@@ -12,47 +12,47 @@
 <div id="main_center">  
   <div class="box">
     <h4>{t}Client informations{/t}</h4>	
-    <table width="300">
+    <table class="table_big">
 	  <tr>
-		<td width="100" class="label">{t}Client name{/t}:</td> <td>{$client_name}</td>
+		<td>{t}Client name{/t}:</td> <td class="strong">{$client_name}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Client version{/t}:</td> <td>{$client_version}</td>
+		<td>{t}Client version{/t}:</td> <td class="strong">{$client_version}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Client os{/t}:</td> <td>{$client_os}</td>
+		<td>{t}Client os{/t}:</td> <td class="strong">{$client_os}</td>
 	  </tr>
 	  <tr>
-		<td class="label">{t}Client arch{/t}:</td> <td>{$client_arch}</td>
+		<td>{t}Client arch{/t}:</td> <td class="strong">{$client_arch}</td>
 	  </tr>
     </table>
 	
 	<h4>Last good backup job</h4>
 	<table>
 		<tr>
-			<td class="tbl_header">{t}Name{/t}</td>
-			<td class="tbl_header">{t}Jod Id{/t}</td>
-			<td class="tbl_header">{t}Level{/t}</td>
-			<td class="tbl_header">{t}End time{/t}</td>
-			<td class="tbl_header">{t}Bytes{/t}</td>
-			<td class="tbl_header">{t}Files{/t}</td>
-			<td class="tbl_header">{t}Status{/t}</td>
+			<th>{t}Name{/t}</th>
+			<th>{t}Jod Id{/t}</th>
+			<th>{t}Level{/t}</th>
+			<th>{t}End time{/t}</th>
+			<th>{t}Bytes{/t}</th>
+			<th>{t}Files{/t}</th>
+			<th>{t}Status{/t}</th>
 		</tr>
 		{foreach from=$backup_jobs item=job}
-		<tr>
-			<td class="{$job.Job_classe}">{$job.name}</td>
-			<td class="{$job.Job_classe}">{$job.jobid}</td>
-			<td class="{$job.Job_classe}">{$job.level}</td>
-			<td class="{$job.Job_classe}">{$job.endtime}</td>
-			<td class="{$job.Job_classe}">{$job.jobbytes}</td>
-			<td class="{$job.Job_classe}">{$job.jobfiles}</td>
-			<td class="{$job.Job_classe}">{$job.jobstatuslong}</td>
+		<tr class="{$job.odd_even}">
+			<td>{$job.name}</td>
+			<td>{$job.jobid}</td>
+			<td>{$job.level}</td>
+			<td>{$job.endtime}</td>
+			<td>{$job.jobbytes}</td>
+			<td>{$job.jobfiles}</td>
+			<td>{$job.jobstatuslong}</td>
 		</tr>
 		{/foreach}
 	</table>
 	
+	&nbsp;
 	<h4>Statistics - last {$period} days(s)</h4>
-	
 	<table>
 		<tr>
 			<td> <img class="graph" src="{$graph_stored_bytes}" alt="" /> </td>
