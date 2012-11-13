@@ -5,14 +5,16 @@
 <title>bacula-web</title>
 <link rel="stylesheet" type="text/css" href="application/view/style/default.css">
 <link rel="stylesheet" type="text/css" href="application/view/style/header.css">
+<link rel="stylesheet" type="text/css" href="application/view/style/table.css">
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
 <body>
 
 <div id="toplinks">
  <ul>
-	<li> <a href="http://www.bacula-web.org/bugs" target="_blank">Bugs</a> </li>
-	<li> <a href="http://www.bacula-web.org" target="_blank">About</a> </li>
+	<li>Version 5.2.10</li>
+	<li> <a href="http://www.bacula-web.org/bugs" target="_blank" title="Bugs and features tracker">Bugs</a> </li>
+	<li> <a href="http://www.bacula-web.org" target="_blank" title="Visit the official web site">About</a> </li>
 
 	<!-- Condifitional catalog selection if more than 1 catalog is defined in the configuration -->
 	{if $catalog_nb > 1}
@@ -31,5 +33,4 @@
    <div class="app_name">Bacula-Web</div>
 </div> <!-- end div header -->
 
-<div class="app_version">Version 5.2.10</div>
 <!-- End Header -->
