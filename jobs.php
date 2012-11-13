@@ -109,9 +109,9 @@ if (isset($posts['jobs_per_page'])) {
 
 $view->assign('jobs_per_page', $jobs_per_page);
 
-$jobsresult = $dbSql->db_link->runQuery($query);
+$jobsresult = CDBUtils::runQuery( $query, $dbSql->db_link );
 
-foreach ($jobsresult->fetchAll() as $job) {
+foreach ($jobsresult as $job) {
 
     // Determine icon for job status
     switch ($job['jobstatus']) {
@@ -143,9 +143,10 @@ foreach ($jobsresult->fetchAll() as $job) {
             $job['Job_icon'] = "waiting.png";
             break;
     } // end switch
+	
     // Odd or even row
     if (count($last_jobs) % 2)
-        $job['Job_classe'] = 'odd';
+        $job['odd_even'] = 'even';
 
     // Elapsed time for the job
     $start = $job['starttime'];
