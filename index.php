@@ -2,8 +2,8 @@
 
 /*
   +-------------------------------------------------------------------------+
-  | Copyright (C) 2004 Juan Luis Franc�s Jim�nez							  |
-  | Copyright 2010-2012, Davide Franco			                          |
+  | Copyright (C) 2004 Juan Luis Frances Jimenez						    |
+  | Copyright 2010-2012, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -29,18 +29,18 @@ try {
 }
 
 // Stored files number 
-$view->assign('stored_files', $dbSql->translate->get_Number_Format($dbSql->getStoredFiles(FIRST_DAY, NOW)));
+$view->assign( 'stored_files', $dbSql->translate->get_Number_Format($dbSql->getStoredFiles(FIRST_DAY, NOW)));
 
 // Database size
-$view->assign('database_size', $dbSql->getDatabaseSize());
+$view->assign( 'database_size', $dbSql->getDatabaseSize());
 
 // Overall stored bytes
-$stored_bytes = CUtils::Get_Human_Size($dbSql->getStoredBytes(FIRST_DAY, NOW));
-$view->assign('stored_bytes', $stored_bytes);
+$stored_bytes = CUtils::Get_Human_Size( $dbSql->getStoredBytes( FIRST_DAY, NOW ) );
+$view->assign( 'stored_bytes', $stored_bytes);
 
-// Total bytes and files for last 24 hours
-$view->assign('bytes_last', CUtils::Get_Human_Size($dbSql->getStoredBytes(LAST_DAY, NOW)));
-$view->assign('files_last', $dbSql->translate->get_Number_Format($dbSql->getStoredFiles(LAST_DAY, NOW)));
+// Total bytes and files stored over the last 24 hours
+$view->assign( 'bytes_last', CUtils::Get_Human_Size( $dbSql->getStoredBytes(LAST_DAY, NOW ) ) );
+$view->assign( 'files_last', $dbSql->translate->get_Number_Format( $dbSql->getStoredFiles( LAST_DAY, NOW ) ) );
 
 // Number of clients
 $nb_clients = $dbSql->Get_Nb_Clients();
@@ -69,23 +69,39 @@ $view->assign('pools_nb', $dbSql->countPools() );
 // Count volumes
 $view->assign('volumes_nb', $dbSql->countVolumes() );
 
-// Last 24 hours status (completed, failed and waiting jobs)
-$view->assign('completed_jobs', $dbSql->countJobs(LAST_DAY, NOW, 'completed'));
-$view->assign('failed_jobs', $dbSql->countJobs(LAST_DAY, NOW, 'failed'));
-$view->assign('waiting_jobs', $dbSql->countJobs(LAST_DAY, NOW, 'waiting'));
-$view->assign('canceled_jobs', $dbSql->countJobs(LAST_DAY, NOW, 'canceled'));
+// Last 24 hours status
+// Completed jobs
+$completed_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'completed');
+$view->assign('completed_jobs', $completed_jobs[0]);
+// Failed jobs
+$failed_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'failed');
+$view->assign('failed_jobs', $failed_jobs[0]);
+// Waiting jobs
+$waiting_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'waiting');
+$view->assign('waiting_jobs', $waiting_jobs[0]);
+// Canceled jos
+$canceled_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'canceled');
+$view->assign('canceled_jobs', $canceled_jobs[0]);
 
 // Last 24 hours jobs Level
-$view->assign('incr_jobs', $dbSql->countJobs(LAST_DAY, NOW, 'ALL', J_INCR));
-$view->assign('diff_jobs', $dbSql->countJobs(LAST_DAY, NOW, 'ALL', J_DIFF));
-$view->assign('full_jobs', $dbSql->countJobs(LAST_DAY, NOW, 'ALL', J_FULL));
+// Incremental jobs
+$incremental_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'ALL', J_INCR);
+$view->assign('incr_jobs', $incremental_jobs[0]);
+// Differential jobs
+$differential_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'ALL', J_DIFF);
+$view->assign('diff_jobs', $differential_jobs[0]);
+// Full jobs
+$full_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'ALL', J_FULL);
+$view->assign('full_jobs', $full_jobs[0]);
 
 // Last 24 hours Job status graph
-$jobs_status_data = array();
 $jobs_status = array('Running', 'Completed', 'Failed', 'Canceled', 'Waiting');
+$jobs_status_data = array();
 
-foreach ($jobs_status as $status)
-    $jobs_status_data[] = array($status, $dbSql->countJobs(LAST_DAY, NOW, $status));
+foreach ($jobs_status as $status) {
+    $jobs_count = $dbSql->countJobs(LAST_DAY, NOW, $status);
+	$jobs_status_data[] = array($status, $jobs_count[0] );
+}
 
 $graph = new CGraph("graph.png");
 $graph->SetData($jobs_status_data, 'pie');
@@ -114,7 +130,7 @@ if ($pools_count > $max_pools) {
         'fields' => array('SUM(numvols) AS sum_vols'),
         'limit' => $limit,
         'groupby' => 'name');
-    $result = $dbSql->db_link->runQuery(CDBQuery::getQuery($query));
+    $result = $dbSql->db_link->runQuery( CDBQuery::get_Select($query) );
     $sum_vols = $result->fetch();
 
     $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
@@ -123,14 +139,14 @@ if ($pools_count > $max_pools) {
 }
 
 // Check database driver for pool table name
-if ($dbSql->db_link->getDriver() == 'pgsql') {
+if ( CDBUtils::getDriverName( $dbSql->db_link ) == 'pgsql') {
 	$table_pool = strtolower($table_pool);
 }
 
 $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools);
-$result = $dbSql->db_link->runQuery(CDBQuery::getQuery($query));
+$result = CDBUtils::runQuery( CDBQuery::get_Select($query), $dbSql->db_link );
 
-foreach ($result->fetchall() as $pool) {
+foreach ($result as $pool) {
     $vols_by_pool[] = array($pool['name'], $pool['numvols']);
 }
 
@@ -164,7 +180,7 @@ $last_volumes = array();
 // Building SQL statment
 $where = '';
 
-switch ($dbSql->db_link->getDriver()) {
+switch ( CDBUtils::getDriverName( $dbSql->db_link ) ) {
     case 'mysql':
     case 'pgsql':
         $where = "(Media.Volstatus != 'Disabled') OR (Media.LastWritten IS NOT NULL)";
@@ -182,20 +198,20 @@ $query = array('table' => 'Media',
     'limit' => '10');
 
 // Run the query
-$result = $dbSql->db_link->runQuery(CDBQuery::getQuery($query));
+$result = CDBUtils::runQuery( CDBQuery::get_Select($query), $dbSql->db_link );
 
-foreach ($result->fetchAll() as $volume) {
-    $query = CDBQuery::getQuery(array('table' => 'JobMedia', 'fields' => array('COUNT(*) as jobs_count'),
-                'where' => "JobMedia.MediaId = '" . $volume['mediaid'] . "'"));
-    $jobs_by_vol = $dbSql->db_link->runQuery($query);
-    $jobs_by_vol = $jobs_by_vol->fetchAll();
+foreach ( $result as $volume ) {
+    $query = array( 'table' => 'JobMedia', 'fields' => array( 'COUNT(*) as jobs_count' ),
+					'where' => "JobMedia.MediaId = '" . $volume['mediaid'] . "'"); 
+					
+	$jobs_by_vol = CDBUtils::runQuery( CDBQuery::get_Select($query), $dbSql->db_link );
+	$jobs_by_vol = $jobs_by_vol->fetch();
 
-    // Volumes details
-    $volume['jobs_count'] = $jobs_by_vol[0]['jobs_count'];
+    $volume['jobs_count'] = $jobs_by_vol['jobs_count'];
 
     // odd or even row
     if ((count($last_volumes) % 2) > 0)
-        $volume['odd_even'] = "odd";
+        $volume['odd_even'] = "even";
 
     $last_volumes[] = $volume;
 }
