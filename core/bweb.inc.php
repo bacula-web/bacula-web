@@ -134,19 +134,24 @@ class Bweb
 		}
 		
 		// Execute SQL statment
-		$db_size = CDBUtils::runQuery( $query, $this->db_link );
+		$result  = CDBUtils::runQuery( $query, $this->db_link );
+		$db_size = $result->fetch();
+		
 		return CUtils::Get_Human_Size( $db_size['dbsize'] );
 	} // end function GetDbSize()
 	
+	// ==================================================================================
+	// Function: 	Get_Nb_Clients()
+	// Parameters: 	none
+	// Return:		Total of clients
+	// ==================================================================================
 	public function Get_Nb_Clients()
 	{
 		$clients_nb = 0;
 		$query     = "SELECT COUNT(*) AS nb_client FROM Client";
 		
-		$clients    = $this->db_link->runQuery( $query );
-		$clients_nb = $clients->fetch();
-		
-		return $clients_nb;
+		$client_nb = CDBUtils::runQuery( $query, $this->db_link ); 
+		return $client_nb->fetch();
 	}
   
 	// Return an array of volumes ordered by poolid and volume name
@@ -177,7 +182,8 @@ class Bweb
 					break;
 				} // end switch
 				
-				$volumes = $this->db_link->runQuery($query);
+				//$volumes = $this->db_link->runQuery($query);
+				$volumes  = CDBUtils::runQuery( $query, $this->db_link );
 			
 				if( !array_key_exists( $pool['name'], $volumes_list) )
 					$volumes_list[ $pool['name'] ] = array();
@@ -203,7 +209,7 @@ class Bweb
 					
 					// Odd or even row
 					if( count(  $volumes_list[ $pool['name'] ] ) % 2)
-						$volume['class'] = 'odd';
+						$volume['odd_even'] = 'even';
 
 					// Add the media in pool array
 					array_push( $volumes_list[ $pool['name']], $volume);
@@ -271,12 +277,11 @@ class Bweb
 			}else
 				$query .= "AND $condition ";
 		}
-		
-		// Execute the query
-		$jobs   = $this->db_link->runQuery($query);
-		$result = $jobs->fetch(); 
 
-		return $result['job_nb'];
+		// Execute the query
+		$jobs = CDBUtils::runQuery( $query, $this->db_link );
+		
+		return $jobs->fetch();
 	}
 	
 	// ==================================================================================
@@ -371,7 +376,9 @@ class Bweb
 			$query .= 'WHERE Pool.NumVols > 0';
 		}
 
-		$result = $this->db_link->runQuery($query);
+		//$result = $this->db_link->runQuery($query);
+		$result = CDBUtils::runQuery( $query, $this->db_link );
+		
 		
 		foreach( $result->fetchAll() as $pool )
 			$pools[] = $pool;
@@ -381,58 +388,41 @@ class Bweb
 	
 	public function getJobsName( $client_id = null )
 	{
-		$query 		= '';
-		
-		$result 	= '';
-		$backupjobs = array();
-		
-		switch( $this->db_driver )
-		{
-			case 'sqlite':
-			case 'mysql':
-				$query 		= "SELECT name FROM Job ";
-			break;
-			case 'pgsql':
-				$query 		= "SELECT name FROM Job ";
-			break;
-		}
+		$jobs  = array();
+		$query = array( 'table' => 'Job', 'fields' => array('name'), 'orderby' => 'name', 'groupby' => 'name' );
 		
 		if( !is_null($client_id) )
-			$query .= "WHERE clientid = '$client_id' ";
+			$query['where'] = "clientid = '$client_id' ";
 		
-		$query .= 'GROUP BY name ORDER BY name';
+		$result = CDBUtils::runQuery( CDBQuery::get_Select($query), $this->db_link );
 		
-		$result = $this->db_link->runQuery($query);
-		foreach( $result->fetchAll() as $jobname )
-			$backupjobs[] = $jobname['name'];
-		
-		return $backupjobs;
-	}
-	
-	// Return an array with clients list
-	public function get_Clients() 
-	{
-		$query   = '';
-		$result  = '';
-		$clients = array();
-
-		switch( $this->db_driver )
-		{
-			case 'sqlite':
-			case 'mysql':
-			case 'pgsql':
-				$query  = "SELECT Client.ClientId, Client.Name FROM Client ";
-				if( $this->bwcfg->get_Param( 'show_inactive_clients' ) )
-					$query .= "WHERE FileRetention > '0' AND JobRetention > '0' "; 
-				$query .= "ORDER BY Client.Name;";
-			break;
+		foreach( $result->fetchAll() as $job ) {
+			$jobs[] = $job['name'];
 		}
 
-		$result = $this->db_link->runQuery($query);
-			
-		foreach( $result->fetchAll() as $client )
+		return $jobs;
+	}
+	
+	// ==================================================================================
+	// Function: 	get_Clients()
+	// Parameters: 	none
+	// Return:		an array of all clients (except inactive if the option is enabled)
+	// ==================================================================================	
+	public function get_Clients() 
+	{
+		$clients  	= array();
+
+		$query = array( 'table' => 'Client', 'fields' => array('ClientId, Name'), 'orderby' => 'Name' );
+
+		if( $this->bwcfg->get_Param( 'show_inactive_clients' ) )
+				$query['where'] = "WHERE FileRetention > '0' AND JobRetention > '0' "; 
+
+		$result = CDBUtils::runQuery( CDBQuery::get_Select($query), $this->db_link );
+		
+		foreach( $result->fetchAll() as $client ) {
 			$clients[ $client['clientid'] ] = $client['name'];
-				
+		}
+		
 		return $clients;		
 	}
 	
@@ -442,7 +432,7 @@ class Bweb
 		$result = '';
 		$query  = "SELECT name,uname FROM Client WHERE clientid = '$client_id'";
 		
-		$result = $this->db_link->runQuery($query);
+		$result = CDBUtils::runQuery( $query, $this->db_link );
 			
 		foreach( $result->fetchAll() as $client ) {
 			$uname			   = explode( ' ', $client['uname'] );
@@ -457,6 +447,14 @@ class Bweb
 		return $client;
 	}
 	
+	// ==================================================================================
+	// Function: 	getStoredFiles()
+	// Parameters: 	$start_timestamp: 	start date in unix timestamp format
+	//				$end_timestamp: 	end date in unix timestamp format
+	//				$job_name:			optional job name
+	//				$client				optional client name
+	// Return:		Total of stored files within the specific period
+	// ==================================================================================	
 	public function getStoredFiles( $start_timestamp, $end_timestamp, $job_name = 'ALL', $client = 'ALL' )
 	{
 		$query 		= "";
@@ -484,19 +482,21 @@ class Bweb
 		
 		// Execute query
 		$result = CDBUtils::runQuery( $query, $this->db_link );
-
+		$result = $result->fetch();
+		
 		if( isset($result['stored_files']) and !empty($result['stored_files']) )
 			return $result['stored_files'];
 		else
 			return 0;
 	}
 	
-	// Function: getStoredBytes
-	// Parameters:
-	// 		$start_timestamp: 	start date in unix timestamp format
-	// 		$end_timestamp: 	end date in unix timestamp format
-	//		$job_name:			optional job name
-	
+	// ==================================================================================
+	// Function: 	getStoredBytes()
+	// Parameters: 	$start_timestamp: 	start date in unix timestamp format
+	//				$end_timestamp: 	end date in unix timestamp format
+	//				$job_name:			optional job name
+	// Return:		Total of stored bytes within the specific period
+	// ==================================================================================
 	public function getStoredBytes( $start_timestamp, $end_timestamp, $job_name = 'ALL', $client = 'ALL' )
 	{
 		$query    		= '';
@@ -524,7 +524,7 @@ class Bweb
 			$query .= " AND clientid = '$client'";		
 		
 		// Execute SQL statment
-		$result = $this->db_link->runQuery( $query );
+		$result = CDBUtils::runQuery( $query, $this->db_link );
 		$result = $result->fetch();
 
 		if( isset($result['stored_bytes']) and !empty($result['stored_bytes']) )
