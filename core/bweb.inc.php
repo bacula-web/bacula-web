@@ -415,7 +415,7 @@ class Bweb
 		$query = array( 'table' => 'Client', 'fields' => array('ClientId, Name'), 'orderby' => 'Name' );
 
 		if( $this->bwcfg->get_Param( 'show_inactive_clients' ) )
-				$query['where'] = "WHERE FileRetention > '0' AND JobRetention > '0' "; 
+				$query['where'] = "FileRetention > '0' AND JobRetention > '0' "; 
 
 		$result = CDBUtils::runQuery( CDBQuery::get_Select($query), $this->db_link );
 		
