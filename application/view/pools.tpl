@@ -18,7 +18,7 @@
 			<th width="120">{t}Volume name{/t}</th>
 			<th width="120">{t}Bytes{/t}</th>
 			<th width="120">{t}Media Type{/t}</th>
-			<th width="140">{t}Expire{/t}</th>
+			<th width="140" title="{t}Estimated expiration date{/t}">{t}Expire{/t}</th>
 			<th width="140">{t}Last written{/t}</th>
 			<th>{t}Status{/t}</th>
 		</tr>
