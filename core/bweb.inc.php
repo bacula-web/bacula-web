@@ -80,28 +80,29 @@ class Bweb
 			$pwd 	= $this->bwcfg->get_Catalog_Param( $this->catalog_current_id, 'password');
 		}
 
-		// DB connection options
-		$options = array(	PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-							PDO::ATTR_CASE => PDO::CASE_LOWER,
-							PDO::ATTR_STATEMENT_CLASS => array('CDBResult', array($this)) );
-
-		// Specific connection parameters and options for MySQL
-		if ( $driver == 'mysql' )
-			$options[] = array( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
-		
 		switch( $driver ) {
 			case 'mysql':
 			case 'pgsql':
-				$this->db_link = CDB::connect( $dsn, $user, $pwd, $options );
+				$this->db_link = CDB::connect( $dsn, $user, $pwd );
 			break;
 			case 'sqlite':
-				$this->db_link = CDB::connect( $dsn, null, null, $options );
+				$this->db_link = CDB::connect( $dsn );
 			break;
 		}
 		
+		// Getting driver name from PDO connection
 		$this->db_driver = CDBUtils::getDriverName( $this->db_link );
 
-		// Catalog selection		
+		// Set PDO connection options
+		$this->db_link->setAttribute( PDO::ATTR_CASE, PDO::CASE_LOWER);
+		$this->db_link->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$this->db_link->setAttribute( PDO::ATTR_STATEMENT_CLASS, array('CDBResult', array($this)) );
+		
+		// MySQL connection specific parameter
+		if ( $this->db_driver == 'mysql' )
+			$this->db_link->setAttribute( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+
+		// Bacula catalog selection		
 		if( $this->catalog_nb > 1 ) {
 			// Catalogs list
 			$this->view->assign( 'catalogs', $this->bwcfg->get_Catalogs() );			
