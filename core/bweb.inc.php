@@ -225,7 +225,6 @@ class Bweb
 		$query 			  = "";
 		$where_interval	  = "";
 		$where_conditions = array();
-		$result			  = '';
 		
 		// Calculate sql query interval
 		$start_date		= date( "Y-m-d H:i:s", $start_timestamp);	
@@ -281,8 +280,8 @@ class Bweb
 
 		// Execute the query
 		$jobs = CDBUtils::runQuery( $query, $this->db_link );
-		
-		return $jobs->fetch();
+		$jobs = $jobs->fetch();
+		return $jobs['job_nb'];
 	}
 	
 	// ==================================================================================

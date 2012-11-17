@@ -72,27 +72,27 @@ $view->assign('volumes_nb', $dbSql->countVolumes() );
 // Last 24 hours status
 // Completed jobs
 $completed_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'completed');
-$view->assign('completed_jobs', $completed_jobs[0]);
+$view->assign('completed_jobs', $completed_jobs);
 // Failed jobs
 $failed_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'failed');
-$view->assign('failed_jobs', $failed_jobs[0]);
+$view->assign('failed_jobs', $failed_jobs);
 // Waiting jobs
 $waiting_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'waiting');
-$view->assign('waiting_jobs', $waiting_jobs[0]);
+$view->assign('waiting_jobs', $waiting_jobs);
 // Canceled jos
 $canceled_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'canceled');
-$view->assign('canceled_jobs', $canceled_jobs[0]);
+$view->assign('canceled_jobs', $canceled_jobs);
 
 // Last 24 hours jobs Level
 // Incremental jobs
 $incremental_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'ALL', J_INCR);
-$view->assign('incr_jobs', $incremental_jobs[0]);
+$view->assign('incr_jobs', $incremental_jobs);
 // Differential jobs
 $differential_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'ALL', J_DIFF);
-$view->assign('diff_jobs', $differential_jobs[0]);
+$view->assign('diff_jobs', $differential_jobs);
 // Full jobs
 $full_jobs = $dbSql->countJobs(LAST_DAY, NOW, 'ALL', J_FULL);
-$view->assign('full_jobs', $full_jobs[0]);
+$view->assign('full_jobs', $full_jobs);
 
 // Last 24 hours Job status graph
 $jobs_status = array('Running', 'Completed', 'Failed', 'Canceled', 'Waiting');
@@ -100,7 +100,7 @@ $jobs_status_data = array();
 
 foreach ($jobs_status as $status) {
     $jobs_count = $dbSql->countJobs(LAST_DAY, NOW, $status);
-	$jobs_status_data[] = array($status, $jobs_count[0] );
+	$jobs_status_data[] = array($status, $jobs_count );
 }
 
 $graph = new CGraph("graph.png");
