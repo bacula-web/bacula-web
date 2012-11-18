@@ -28,10 +28,10 @@
 	// Return:		Total of jobs
 	// ==================================================================================
 	
-	public static function count_Jobs( $pdo_connection, $period = array(), $job_status = null, $job_level = null) {
+	public static function count_Jobs( $pdo_connection, $period_timestamps = array(), $job_status = null, $job_level = null) {
 		$statment 	 		 = '';
 		$where		 		 = array();
-		$period_timestamp	 = array();
+		$tablename			 = 'Job';
 		$fields				 = array('COUNT(*) as job_count');
 		
 		// Check PDO object
@@ -43,25 +43,11 @@
 			parent::$pdo_connection = $pdo_connection;
 
 		// Check period
-		if( !is_array($period) )
+		if( !is_array($period_timestamps) )
 			throw new Exception('Wrong period of missing array provided in count_Jobs() function');
 		
-		// Convert timestamp to date format
-		foreach( $period as $timestamp ) {
-			$period_timestamp[] = date( "Y-m-d H:i:s", $timestamp);
-		}
-		
 		// Defined period
-		switch( CDBUtils::getDriverName( parent::$pdo_connection ) )
-		{
-			case 'sqlite':
-			case 'mysql':
-				$where[] = "(EndTime BETWEEN '$period_timestamp[0]' AND '$period_timestamp[1]')";
-			break;
-			case 'pgsql':
-				$where[] = "(endtime BETWEEN timestamp '$period_timestamp[0]' AND timestamp '$period_timestamp[1]')";
-			break;
-		}
+		$where[] = CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
 		
 		// Job status
 		if( !is_null( $job_status )) {
@@ -88,12 +74,49 @@
 		if( !is_null($job_level) )
 			$where[] = "Level = '$job_level' ";
 		
-		$statment = array( 'table' => parent::get_Table('Job'), $fields, 'where' => $where);
+		// Building SQL statment
+		$statment = array( 'table' => parent::get_Table($tablename), 'fields' => $fields, 'where' => $where);
 		$statment = CDBQuery::get_Select( $statment );
 		
 		// Execute SQL statment
-		CDBUtils::runQuery($statment, parent::$pdo_connection);
+		$result = CDBUtils::runQuery($statment, parent::$pdo_connection);
+		$result = $result->fetch();
+		return $result['job_count'];
 	}
+	
+	// ==================================================================================
+	// Function: 	get_Stored_Files()
+	// Parameters: 	$period	 		start and end date (unix timestamp)
+	//				$job_name		optional job name
+	//				$client			optional client name
+	// Return:		Total of stored files within the specific period
+	// ==================================================================================	
+	public function get_Stored_Files( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
+	{
+		$statment 	= '';
+		$where  	= array();
+		$fields 	= array( 'SUM(JobFiles) AS stored_files' );
+		$tablename	= 'Job';
+		
+		// Defined period
+		$where[] = CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
+		
+		if( $job_name != 'ALL' ) 
+			$where[] = "name = '$job_name'";
+		
+		if( $client != 'ALL' )
+			$where[] = "clientid = '$client'";
+		
+		// Building SQL statment
+		$statment = array( 'table' => parent::get_Table($tablename), 'fields' => $fields, 'where' => $where);
+		$statment = CDBQuery::get_Select( $statment );
+
+		// Execute query
+		$result = CDBUtils::runQuery( $statment, $pdo_connection );
+		$result = $result->fetch();
+		
+		return $result['stored_files'];
+	}	
 	
  }
  
