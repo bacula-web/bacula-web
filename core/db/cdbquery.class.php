@@ -58,12 +58,10 @@
         if ( isset( $param['where'] ) && !is_null( $param['where'] ) ) {
 			if( count($param['where']) == 1 ) { 
 				$where .= $param['where'][0];
-				echo 'only on where ';
 			}else {
 				foreach( $param['where'] as $key => $where_item) {
 					if( $key == 0) {
 						$where .= $where_item;
-						echo "<br />$where_item</br />";
 					}
 					else
 						$where .= 'AND ' . $where_item;
@@ -84,9 +82,32 @@
         if (isset($param['limit']) && !is_null($param['limit']))
             $query .= 'LIMIT ' . $param['limit'];
 
-		echo "query = $query <br />";
 		return $query;
     }
+	
+    // ==================================================================================
+	// Function: 	get_Timestamp_Interval()
+	// Parameters:	$period array containing start and end timestamp
+	// Return:		return table with correct case
+	// ==================================================================================
+	public static function get_Timestamp_Interval( $pdo_connection, $period_timestamp = array() ) {
+
+		$periods = array();
+		
+		// Convert timestamp to date format
+		foreach( $period_timestamp as $timestamp ) {
+			$periods[] = date( "Y-m-d H:i:s", $timestamp);
+		}
+
+		switch( CDBUtils::getDriverName( $pdo_connection ) ) {
+			case 'pgsql':
+				return "(endtime BETWEEN timestamp '$periods[0]' AND timestamp '$periods[1]') ";
+			break;
+			default:			
+				return "(EndTime BETWEEN '$periods[0]' AND '$periods[1]') ";
+			break;
+		}
+	}
  }
 
 ?>
