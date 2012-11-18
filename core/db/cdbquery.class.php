@@ -26,6 +26,7 @@
 	// ==================================================================================
     public static function get_Select( $param = array() ) {
         $query = '';
+		$where = '';
 
         if (!is_array($param) || empty($param)) {
             throw new Exception("Missing parameters: you should provide an array");
@@ -54,9 +55,23 @@
             $query .= 'LEFT JOIN ' . $param['join']['table'] . ' ON ' . $param['join']['condition'] . ' ';
 
         // Where
-        if (isset($param['where']) && !is_null($param['where']))
-            $query .= 'WHERE ' . $param['where'] . ' ';
-			
+        if ( isset( $param['where'] ) && !is_null( $param['where'] ) ) {
+			if( count($param['where']) == 1 ) { 
+				$where .= $param['where'][0];
+				echo 'only on where ';
+			}else {
+				foreach( $param['where'] as $key => $where_item) {
+					if( $key == 0) {
+						$where .= $where_item;
+						echo "<br />$where_item</br />";
+					}
+					else
+						$where .= 'AND ' . $where_item;
+				} // end foreach
+			} // end else
+		} // end if
+        $query .= 'WHERE ' . $where;
+		
         // Group by
         if (isset($param['groupby']) && !is_null($param['groupby']))
             $query .= 'GROUP BY ' . $param['groupby'] . ' ';
@@ -69,7 +84,8 @@
         if (isset($param['limit']) && !is_null($param['limit']))
             $query .= 'LIMIT ' . $param['limit'];
 
-        return $query;
+		echo "query = $query <br />";
+		return $query;
     }
  }
 
