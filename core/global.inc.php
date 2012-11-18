@@ -57,6 +57,10 @@ require_once BW_OBJ . "db/cdbresult.class.php";
 require_once BW_OBJ . "db/cdbquery.class.php";
 require_once BW_OBJ . "db/cdbutils.class.php";
 
+// Models
+require_once BW_OBJ . "app/cmodel.class.php";
+require_once('application/models/jobs.model.php');
+
 // I18n (Internationalization)
 require_once BW_OBJ . "i18n/ctranslation.class.php";
 
