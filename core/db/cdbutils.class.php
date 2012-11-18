@@ -60,20 +60,15 @@ class CDBUtils {
 		$result_count = 0;
 		$statment	  = null;
 				
-		try {
-			$statment	= $db_link->prepare($query); 
+		$statment	= $db_link->prepare($query);
+		if( $statment == FALSE )
+			throw new PDOException("Failed to prepare PDOStatment <br />$query");
 			
-			if( $statment == FALSE )
-				throw new PDOException("Failed to prepare PDOStatment <br />$query");
-			
-			$result 	= $statment->execute();			
-            if ( is_null($result) )
-                throw new PDOException("Failed to execute PDOStatment <br />$query");
+		$result 	= $statment->execute();			
+
+        if ( is_null($result) )
+            throw new PDOException("Failed to execute PDOStatment <br />$query");
 				
-        } catch (PDOException $e) {
-            CErrorHandler::displayError($e);
-        }
-		
 		return $statment ;
     }
 
