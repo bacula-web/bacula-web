@@ -39,8 +39,8 @@
 			throw new Exception('Unvalid PDO object provided in count_Jobs() function');
 
 		// PDO object singleton
-		if( is_null(parent::$pdo_connection) )
-			parent::$pdo_connection = $pdo_connection;
+		if( is_null(CModel::$pdo_connection) )
+			CModel::$pdo_connection = $pdo_connection;
 
 		// Check period
 		if( !is_array($period_timestamps) )
@@ -75,11 +75,11 @@
 			$where[] = "Level = '$job_level' ";
 		
 		// Building SQL statment
-		$statment = array( 'table' => parent::get_Table($tablename), 'fields' => $fields, 'where' => $where);
+		$statment = array( 'table' => CModel::get_Table($tablename), 'fields' => $fields, 'where' => $where);
 		$statment = CDBQuery::get_Select( $statment );
 		
 		// Execute SQL statment
-		$result = CDBUtils::runQuery($statment, parent::$pdo_connection);
+		$result = CDBUtils::runQuery($statment, CModel::$pdo_connection);
 		$result = $result->fetch();
 		return $result['job_count'];
 	}
@@ -108,7 +108,7 @@
 			$where[] = "clientid = '$client'";
 		
 		// Building SQL statment
-		$statment = array( 'table' => parent::get_Table($tablename), 'fields' => $fields, 'where' => $where);
+		$statment = array( 'table' => CModel::get_Table($tablename), 'fields' => $fields, 'where' => $where);
 		$statment = CDBQuery::get_Select( $statment );
 
 		// Execute query
