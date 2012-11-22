@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<title>bacula-web</title>
+<title>Bacula-Web</title>
 <link rel="stylesheet" type="text/css" href="application/view/style/default.css">
 <link rel="stylesheet" type="text/css" href="application/view/style/header.css">
 <link rel="stylesheet" type="text/css" href="application/view/style/table.css">
