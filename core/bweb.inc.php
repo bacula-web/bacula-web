@@ -111,20 +111,6 @@ class Bweb
 		}
 	}
                 
-	// ==================================================================================
-	// Function: 	Get_Nb_Clients()
-	// Parameters: 	none
-	// Return:		Total of clients
-	// ==================================================================================
-	public function Get_Nb_Clients()
-	{
-		$clients_nb = 0;
-		$query     = "SELECT COUNT(*) AS nb_client FROM Client";
-		
-		$client_nb = CDBUtils::runQuery( $query, $this->db_link ); 
-		return $client_nb->fetch();
-	}
-  
 	// Return an array of volumes ordered by poolid and volume name
 	public function GetVolumeList() 
 	{
