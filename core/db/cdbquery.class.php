@@ -67,8 +67,8 @@
 						$where .= 'AND ' . $where_item;
 				} // end foreach
 			} // end else
+			$query .= 'WHERE ' . $where;
 		} // end if
-        $query .= 'WHERE ' . $where;
 		
         // Group by
         if (isset($param['groupby']) && !is_null($param['groupby']))
