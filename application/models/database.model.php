@@ -17,4 +17,42 @@
 
  class Database_Model extends CModel {
  
+ 	// ==================================================================================
+	// Function: 	get_Size()
+	// Parameters:	$pdo_connection - valid PDO object instance
+	// Return:		Database size
+	// ==================================================================================
+	
+	public static function get_Size( $pdo_connection ) {
+		$db_name	= 'bacula';
+		$statment 	= array();
+		$result	 	= '';
+		
+		$pdo_driver = CDBUtils::getDriverName( $pdo_connection );
+		
+		switch( $pdo_driver )
+		{
+			case 'mysql':
+				$statment 			= array( 	'table'  => 'information_schema.TABLES', 
+												'fields' => "table_schema AS 'database', sum( data_length + index_length) AS 'dbsize'",
+												'where'  => array( "table_schema = '$db_name'" ),
+												'groupy' => 'table_schema' );
+
+				$statment 			= CDBQuery::get_Select( $statment );
+				$result   			= CDBUtils::runQuery($statment, $pdo_connection);
+			break;
+			case 'pgsql':
+				$statment = "SELECT pg_database_size('bacula') AS dbsize";
+				$result = CDBUtils::runQuery($statment, $pdo_connection);
+			break;
+			case 'sqlite':
+				$db_size = filesize($this->bwcfg->get_Catalog_Param($this->catalog_current_id, 'db_name') );
+				return CUtils::Get_Human_Size($db_size);
+			break;
+		}
+		// Execute SQL statment
+		$db_size = $result->fetch();
+		
+		return CUtils::Get_Human_Size( $db_size['dbsize'] );	
+	}
  }
