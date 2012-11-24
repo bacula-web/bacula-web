@@ -60,6 +60,7 @@ require_once BW_OBJ . "db/cdbutils.class.php";
 // Models
 require_once BW_OBJ . "app/cmodel.class.php";
 require_once('application/models/jobs.model.php');
+require_once('application/models/clients.model.php');
 require_once('application/models/database.model.php');
 
 // I18n (Internationalization)
