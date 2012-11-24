@@ -1,7 +1,7 @@
 <?php
-/*
+ /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2012, Davide Franco			                          |
+  | Copyright 2010-2012, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -117,7 +117,40 @@
 		
 		return $result['stored_files'];
 	}	
-	
- }
+
+	// ==================================================================================
+	// Function: 	get_Stored_Bytes()
+	// Parameters: 	$period	 		start and end date (unix timestamp)
+	//				$job_name		optional job name
+	//				$client			optional client name
+	// Return:		Total of stored bytes within the specific period
+	// ==================================================================================	
+	public function get_Stored_Bytes( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
+	{
+		$statment 	= '';
+		$where  	= array();
+		$fields 	= array( 'SUM(JobBytes) AS stored_bytes' );
+		$tablename	= 'Job';
+		
+		// Defined period
+		$where[] = CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
+		
+		if( $job_name != 'ALL' ) 
+			$where[] = "name = '$job_name'";
+		
+		if( $client != 'ALL' )
+			$where[] = "clientid = '$client'";
+		
+		// Building SQL statment
+		$statment = array( 'table' => CModel::get_Table($tablename), 'fields' => $fields, 'where' => $where);
+		$statment = CDBQuery::get_Select( $statment );
+
+		// Execute query
+		$result = CDBUtils::runQuery( $statment, $pdo_connection );
+		$result = $result->fetch();
+		
+		return $result['stored_bytes'];
+	}	
+}
  
 ?>
