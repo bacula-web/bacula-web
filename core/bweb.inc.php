@@ -111,36 +111,6 @@ class Bweb
 		}
 	}
                 
-	public function getDatabaseSize() 
-	{
-		$db_size = 0;
-		$query 	 = '';
-		$result	 = '';
-		
-		switch( $this->db_driver )
-		{
-			case 'mysql':
-				$query  = "SELECT table_schema AS 'database', sum( data_length + index_length) AS 'dbsize' ";
-				$query .= "FROM information_schema.TABLES ";
-				$query .= "WHERE table_schema = 'bacula' ";
-				$query .= "GROUP BY table_schema";
-			break;
-			case 'pgsql':
-				$query  = "SELECT pg_database_size('bacula') AS dbsize";
-			break;
-			case 'sqlite':
-				$db_size = filesize($this->bwcfg->get_Catalog_Param($this->catalog_current_id, 'db_name') );
-				return CUtils::Get_Human_Size($db_size);
-			break;
-		}
-		
-		// Execute SQL statment
-		$result  = CDBUtils::runQuery( $query, $this->db_link );
-		$db_size = $result->fetch();
-		
-		return CUtils::Get_Human_Size( $db_size['dbsize'] );
-	} // end function GetDbSize()
-	
 	// ==================================================================================
 	// Function: 	Get_Nb_Clients()
 	// Parameters: 	none
