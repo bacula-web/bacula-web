@@ -178,9 +178,9 @@ foreach ($jobsresult as $job) {
 
 $view->assign('last_jobs', $last_jobs);
 
-// Counting jobs
+// Count jobs
 $view->assign('jobs_found', count($last_jobs) );
-$view->assign('total_jobs', $dbSql->countJobs(FIRST_DAY, NOW) );
+$view->assign( 'total_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( FIRST_DAY, NOW) ) );
 
 // Process and display the template 
 $view->render('jobs.tpl');
