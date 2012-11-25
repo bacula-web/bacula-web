@@ -56,12 +56,8 @@
 				<td class="strong">{$incr_jobs} / {$diff_jobs} / {$full_jobs}</td>
 			</tr>
 			<tr>
-				<td>{t}Transferred Bytes{/t}</td> 
-				<td class="strong">{$bytes_last}</td>
-			</tr>
-			<tr>
-				<td>{t}Transferred Files{/t}</td> 
-				<td class="strong">{$files_last}</td>
+				<td>{t}Transferred Bytes / Files{/t}</td> 
+				<td class="strong">{$bytes_last} / {$files_last}</td>
 			</tr>
 		</table>
   </div> <!-- end div box -->  
