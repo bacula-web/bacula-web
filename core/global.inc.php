@@ -63,6 +63,7 @@ require_once('application/models/jobs.model.php');
 require_once('application/models/clients.model.php');
 require_once('application/models/database.model.php');
 require_once('application/models/filesets.model.php');
+require_once('application/models/pools.model.php');
 
 // I18n (Internationalization)
 require_once BW_OBJ . "i18n/ctranslation.class.php";
