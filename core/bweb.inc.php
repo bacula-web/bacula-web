@@ -241,28 +241,6 @@ class Bweb
 	}
 	
 	// ==================================================================================
-	// Function: 	countPools()
-	// Parameters: 	none
-	// Return:		number of pools
-	// ==================================================================================
-	public function countPools() {
-		$pools_count = '';
-		$table 		 = 'Pool';
-		
-		// Check db driver for pool table name
-		if ( $this->db_driver == 'pgsql' ) {
-			$table = strtolower($table);
-		} 
-		
-		$query = array('table' => $table, 'fields' => array('count(*) as pools_count'));
-		$result = $this->db_link->query(CDBQuery::get_Select($query));
-		
-		// Return result
-		$pools_count = $result->fetch();
-		return $pools_count['pools_count'];
-	}
-	
-	// ==================================================================================
 	// Function: 	countVolumes()
 	// Parameters: 	none
 	// Return:		number of volumes
