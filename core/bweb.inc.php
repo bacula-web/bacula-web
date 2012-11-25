@@ -177,28 +177,6 @@ class Bweb
 	} // end function GetVolumeList()
 	
 	// ==================================================================================
-	// Function: 	countVolumes()
-	// Parameters: 	none
-	// Return:		number of volumes
-	// ==================================================================================
-	public function countVolumes() {
-		$vols_count  = '';
-		$table 		 = 'Media';
-		
-		// Check db driver for pool table name
-		if ( $this->db_driver == 'pgsql') {
-			$table = strtolower($table);
-		} 
-		
-		$query = array('table' => $table, 'fields' => array('count(*) as vols_count'));
-		$result = $this->db_link->query(CDBQuery::get_Select($query));
-		
-		// Return result
-		$vols_count = $result->fetch();
-		return $vols_count['vols_count'];
-	}
-
-	// ==================================================================================
 	// Function: 	getPools()
 	// Parameters: 	none
 	// Return:		list of Pools in a array
