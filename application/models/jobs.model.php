@@ -53,7 +53,7 @@
 		if( !is_null( $job_status )) {
 			switch( strtolower($job_status) ){
 				case 'running':
-					$where[] = "JobStatus = 'R' ";
+					$where = array( "JobStatus = 'R'" );
 				break;
 				case 'completed':
 					$where[] = "JobStatus = 'T' ";

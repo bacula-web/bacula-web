@@ -36,6 +36,10 @@
 	<p class="title">{t}Last 24 hours status{/t}</p>
 		<table class="table_big">
 			<tr>
+				<td>{t}Running jobs{/t}</td>
+				<td class="strong running">{$running_jobs}</td>
+			</tr>
+			<tr>
 				<td>{t}Completed job(s){/t}</td> 
 				<td class="strong good">{$completed_jobs}</td>
 			</tr> 
