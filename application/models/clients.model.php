@@ -18,22 +18,6 @@
  class Clients_Model extends CModel {
 
     // ==================================================================================
-	// Function: 	count_Clients()
-	// Parameters:	$pdo_connection - valide pdo object
-	// Return:		Number of clients
-	// ==================================================================================
-
-	static public function count_Clients( $pdo_connection ) {
-		$result 	= null;
-		$statment 	= array( 'table' => CModel::get_Table('Client'), 'fields' => array('COUNT(*) AS nb_client') );
-
-		$result 	= CDBUtils::runQuery( CDBQuery::get_Select( $statment ), $pdo_connection ); 
-		
-		$result 	= $result->fetch();
-		return $result['nb_client'];
-	}
-
-    // ==================================================================================
 	// Function: 	count()
 	// Parameters:	$pdo_connection - valide pdo object
 	// Return:		Number of clients
