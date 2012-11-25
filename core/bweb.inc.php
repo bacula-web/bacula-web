@@ -342,23 +342,6 @@ class Bweb
 		return $pools;
 	}
 	
-	public function getJobsName( $client_id = null )
-	{
-		$jobs  = array();
-		$query = array( 'table' => 'Job', 'fields' => array('name'), 'orderby' => 'name', 'groupby' => 'name' );
-		
-		if( !is_null($client_id) )
-			$query['where'] = "clientid = '$client_id' ";
-		
-		$result = CDBUtils::runQuery( CDBQuery::get_Select($query), $this->db_link );
-		
-		foreach( $result->fetchAll() as $job ) {
-			$jobs[] = $job['name'];
-		}
-
-		return $jobs;
-	}
-	
 	// ==================================================================================
 	// Function: 	get_Clients()
 	// Parameters: 	none
