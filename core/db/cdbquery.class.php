@@ -39,9 +39,11 @@
         // Fields
         if (isset($param['fields'])) {
             foreach ($param['fields'] as $field) {
-                $query .= $field . ' ';
+                $query .= $field;
                 if (end($param['fields']) != $field)
                     $query .= ', ';
+				else
+					$query .= ' ';
             }
         }else {
             $query .= '* ';
@@ -55,20 +57,16 @@
             $query .= 'LEFT JOIN ' . $param['join']['table'] . ' ON ' . $param['join']['condition'] . ' ';
 
         // Where
-        if ( isset( $param['where'] ) && !is_null( $param['where'] ) ) {
-			if( count($param['where']) == 1 ) { 
-				$where .= $param['where'][0];
-			}else {
-				foreach( $param['where'] as $key => $where_item) {
-					if( $key == 0) {
-						$where .= $where_item;
-					}
-					else
-						$where .= 'AND ' . $where_item;
-				} // end foreach
-			} // end else
-			$query .= 'WHERE ' . $where;
-		} // end if
+		if( isset( $param['where'] ) && is_array($param['where']) ) {
+			foreach( $param['where'] as $key => $where_item) {
+				if( $key > 0) 
+					$where .= "AND $where_item ";
+				else
+					$where .= "$where_item ";			
+			} // end foreach
+		
+			$query .= 'WHERE ' . $where . ' ';
+		}
 		
         // Group by
         if (isset($param['groupby']) && !is_null($param['groupby']))
