@@ -22,6 +22,7 @@
 	// Parameters:	$pdo_connection - valide pdo object
 	// Return:		Number of clients
 	// ==================================================================================
+
 	static public function count_Clients( $pdo_connection ) {
 		$result 	= null;
 		$statment 	= array( 'table' => CModel::get_Table('Client'), 'fields' => array('COUNT(*) AS nb_client') );
@@ -31,4 +32,15 @@
 		$result 	= $result->fetch();
 		return $result['nb_client'];
 	}
+
+    // ==================================================================================
+	// Function: 	count()
+	// Parameters:	$pdo_connection - valide pdo object
+	// Return:		Number of clients
+	// ==================================================================================
+
+	static public function count($pdo) {
+		return CModel::count( $pdo, 'FileSet');	
+	}
+
  }    
