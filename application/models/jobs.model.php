@@ -151,6 +151,24 @@
 		
 		return $result['stored_bytes'];
 	}	
-}
+
+    // ==================================================================================
+	// Function: 	count_Job_Names()
+	// Parameters:	$pdo - valid PDO object
+	// Return:		total of defined jobs name
+	// ==================================================================================	
+
+	public static function count_Job_Names( $pdo ) {
+		$fields		= array( 'COUNT(DISTINCT Name) AS job_name_count' );
+
+		// Prepare and execute query
+		$statment 	= CDBQuery::get_Select( array( 'table' => CModel::get_Table('Job'), 'fields' => $fields ) );
+		$result 	= CDBUtils::runQuery( $statment, $pdo );
+
+		$result		= $result->fetch();
+		return $result['job_name_count'];
+	}
+
+ }
  
 ?>
