@@ -35,4 +35,22 @@
 			break;
 		}
 	}
+    // ==================================================================================
+	// Function: 	count()
+	// Parameters:	$tablename
+	//				$filter (optional)
+	// Return:		return row count for one table
+	// ==================================================================================
+	
+	protected static function count( $pdo, $tablename, $filter = null ) {
+		$table 		= CModel::get_Table( $tablename);
+		$fields		= array( 'COUNT(*) as row_count' );
+
+		// Prepare and execute query
+		$statment 	= CDBQuery::get_Select( array( 'table' => $table, 'fields' => $fields, $filter) );
+		$result 	= CDBUtils::runQuery($statment, $pdo);
+
+		$result 	= $result->fetch();
+		return $result['row_count'];		
+	}
  }
