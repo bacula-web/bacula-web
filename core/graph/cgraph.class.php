@@ -87,9 +87,11 @@ class CGraph {
                 list($legend_width, $legend_height) = $this->plot->GetLegendSize();
                 $this->plot->SetLegendPixels($this->width - ($legend_width + 5), 10);
 
-                // Shading
+                // Set graph colors and shading
+				$data_colors = array( 'blue', 'green', 'orange', 'red', 'black', 'yellow', 'cyan', 'lavender', 'DimGrey');
+				$this->plot->SetDataColors( $data_colors );
 				$this->plot->SetShading( 0 );
-
+				
                 break;
             case 'bars':
 				// X label angle
