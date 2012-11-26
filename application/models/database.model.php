@@ -34,11 +34,12 @@
 		{
 			case 'mysql':
 				$statment 			= array( 	'table'  => 'information_schema.TABLES', 
-												'fields' => "table_schema AS 'database', sum( data_length + index_length) AS 'dbsize'",
+												'fields' => array("table_schema AS 'database', sum( data_length + index_length) AS 'dbsize'"),
 												'where'  => array( "table_schema = '$db_name'" ),
 												'groupy' => 'table_schema' );
 
 				$statment 			= CDBQuery::get_Select( $statment );
+				
 				$result   			= CDBUtils::runQuery($statment, $pdo_connection);
 			break;
 			case 'pgsql':
