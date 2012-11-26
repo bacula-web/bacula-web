@@ -100,7 +100,7 @@
   <!-- Last used volumes -->
   <div class="widget">
 	<p class="title">{t}Last used volumes{/t}</p>
-	  <table>
+	  <table class="table_small">
 		<tr>
 		  <th title="Volume name">Volume</th>
 		  <th title="Volume status">Status</th>

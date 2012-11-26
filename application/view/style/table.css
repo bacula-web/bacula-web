@@ -6,7 +6,8 @@
  }
 
  table.table_small {
-  font-size: 7pt;
+  font-size: 8pt;
+  padding: 4pt;
  }
  
  table.table_big {
@@ -16,7 +17,7 @@
  td, th {
   border-top: 1px solid #c0c0c0;
   border-bottom: 1px solid #c0c0c0;
-  padding: 3px;
+  padding: 4px;
   min-width: 40px;
   text-align: center;
  }
