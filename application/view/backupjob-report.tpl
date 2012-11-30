@@ -9,63 +9,52 @@
   </ul>
 </div>
 
-<div class="main_center">
-  <!-- Backup job informations -->
+<div id="main_center">
   <div class="box">
-    <table>
-	  <tr>
-		<td width="150">{t}Backup Job name{/t}:</td>
-			<td>{$backupjob_name}</td>
+    <h4>{t}Backup job informations{/t}</h4>	
+
+    <table class="table_big">
+		<tr>
+			<td>{t}Backup Job name{/t}:</td> <td class="strong">{$backupjob_name}</td>
 		</tr>
 		<tr>
-			<td>{t}Period{/t}:</td>
-			<td>{$backupjob_period}</td>
+			<td>{t}Period{/t}:</td> <td class="strong">{$backupjob_period}</td>
 		</tr>
 		<tr>
-			<td>{t}Transfered Bytes{/t}</td>
-			<td>{$backupjob_bytes}</td>
+			<td>{t}Transfered Bytes{/t}</td> <td class="strong">{$backupjob_bytes}</td>
 		</tr>
 		<tr>
-			<td>{t}Transfered Files{/t}</td>
-			<td>{$backupjob_files}</td>
+			<td>{t}Transfered Files{/t}</td> <td class="strong">{$backupjob_files}</td>
 		</tr>
       </table>
-  </div> <!-- end div class=box -->
-</div> <!-- end div class=main_center -->
   
-<div class="main_center">
   <!-- Last jobs list -->
-  <p class="header">{t}Last jobs{/t}</p>
-  <div class="box">	
+  <h4>{t}Last jobs{/t}</h4>
 	<table>
 		<tr>
-			<td class="tbl_header" width="60">{t}Job Id{/t}</td>
-			<td class="tbl_header" width="60">{t}Level{/t}</td>
-			<td class="tbl_header" width="70">{t}Files{/t}</td>
-			<td class="tbl_header" width="70">{t}Bytes{/t}</td>
-			<td class="tbl_header" width="80">{t}Start time{/t}</td>
-			<td class="tbl_header" width="80">{t}End time{/t}</td>
-			<td class="tbl_header" width="80">{t}Elapsed time{/t}</td>
+			<th>{t}Job Id{/t}</th>
+			<th>{t}Level{/t}</th>
+			<th>{t}Files{/t}</th>
+			<th>{t}Bytes{/t}</th>
+			<th>{t}Start time{/t}</th>
+			<th>{t}End time{/t}</th>
+			<th>{t}Elapsed time{/t}</th>
 		</tr>
 		{foreach from=$jobs item=job}
-		<tr>
-			<td class="{$job.row_class}">{$job.jobid}</td>
-			<td class="{$job.row_class}">{$job.joblevel}</td>
-			<td class="{$job.row_class}">{$job.jobfiles}</td>
-			<td class="{$job.row_class}">{$job.jobbytes}</td>
-			<td class="{$job.row_class}">{$job.starttime}</td>
-			<td class="{$job.row_class}">{$job.endtime}</td>
-			<td class="{$job.row_class}">{$job.elapsedtime}</td>
+		<tr class="{$job.odd_even}">
+			<td>{$job.jobid}</td>
+			<td>{$job.joblevel}</td>
+			<td>{$job.jobfiles}</td>
+			<td>{$job.jobbytes}</td>
+			<td>{$job.starttime}</td>
+			<td>{$job.endtime}</td>
+			<td>{$job.elapsedtime}</td>
 		</tr>
 		{/foreach}
 	</table>
-  </div> <!-- end div class=box -->
   
-  </div> <!-- end div=main_center -->
-  
-  <div class="main_center">
     <!-- Transfered Bytes/Files graph -->
-	<p class="header">{t}Transfered Bytes / Files{/t}</p>
+	<h4>{t}Transfered Bytes / Files{/t}</h4>
     <div class="box">
 	  <img class="graph" src="{$graph_stored_bytes}" alt="" />
 	  <img class="graph" src="{$graph_stored_files}" alt="" />
