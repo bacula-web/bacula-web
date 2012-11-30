@@ -99,7 +99,7 @@ class Bweb
 		$this->db_link->setAttribute( PDO::ATTR_STATEMENT_CLASS, array('CDBResult', array($this)) );
 		
 		// MySQL connection specific parameter
-		if ( $this->db_driver == 'mysql' )
+		if ( $driver == 'mysql' )
 			$this->db_link->setAttribute( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 
 		// Bacula catalog selection		
@@ -347,6 +347,7 @@ class Bweb
 	// Parameters: 	none
 	// Return:		sum in bytes of all volumes
 	// ==================================================================================
+
 	public function getVolumesSize() {
 		$query = array( 'table' => 'Media', 'fields' => array('SUM(Media.VolBytes) as volumes_size') );
 		
@@ -356,5 +357,41 @@ class Bweb
 		
 		return $result['volumes_size'];
 	}
+	
+	// ==================================================================================
+	// Function: 	getJobsNameOfClient()
+	// Parameters: 	$client_id
+	// Return:		jobs list for a specific client
+	// ==================================================================================
+
+	public function getJobsNameOfClient( $client_id = null )
+    {
+		$query          = '';
+		$table			= '';
+		$result         = '';
+        $backupjobs = array();
+
+		switch( $this->db_driver ) {
+            case 'sqlite':
+            case 'mysql':
+				$table = 'Job';
+			break;
+            case 'pgsql':
+				$table = 'job';
+			break;
+        }
+		
+		// Build and run SQL statment
+		$query  = CDBQuery::get_Select( array(	'table' => $table, 'fields' => array('name'), 'orderby' => 'name', 
+												'where' => array("clientid = '$client_id'"), 'groupby' => 'name' ) ); 
+					
+		$result = CDBUtils::runQuery( $query, $this->db_link);
+				
+        foreach( $result->fetchAll() as $jobname )
+			$backupjobs[] = $jobname['name'];
+
+		return $backupjobs;
+	}
+	
 } // end class Bweb
 ?>
