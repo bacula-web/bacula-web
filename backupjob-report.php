@@ -92,17 +92,17 @@ $graph->SetYTitle("Files");
 // Graph rendering
 $view->assign( 'graph_stored_files', $graph->Render() );
 
-// Last 10 jobs
+// Get last 10 jobs list
 $query = "SELECT JobId, Level, JobFiles, JobBytes, JobStatus, StartTime, EndTime, Name ";
 $query .= "FROM Job ";
 $query .= "WHERE Name = '$backupjob_name' ";
 $query .= "ORDER BY EndTime DESC ";
 $query .= "LIMIT 7 ";
 
-$jobs = array();
-$joblevel = array('I' => 'Incr', 'D' => 'Diff', 'F' => 'Full');
+$jobs 		= array();
+$joblevel 	= array('I' => 'Incr', 'D' => 'Diff', 'F' => 'Full');
 
-$result = $dbSql->db_link->runQuery($query);
+$result = CDBUtils::runQuery( $query, $dbSql->db_link );
 
 foreach ($result->fetchAll() as $job) {
     // Job level description
@@ -113,7 +113,7 @@ foreach ($result->fetchAll() as $job) {
 
     // odd and even row
     if (count($jobs) % 2)
-        $job['row_class'] = 'odd';
+        $job['odd_even'] = 'even';
 
     // Job bytes more easy to read
     $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
