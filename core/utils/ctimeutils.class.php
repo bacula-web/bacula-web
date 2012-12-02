@@ -28,7 +28,7 @@ class CTimeUtils {
         $start = '';
         $end = '';
 
-        if ($start_time == '0000-00-00 00:00:00' or is_null($start_time))
+        if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time ) = '0')
             return 'N/A';
         else
             $start = strtotime($start_time);

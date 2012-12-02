@@ -152,7 +152,7 @@ foreach ($jobsresult as $job) {
     $start 	= $job['starttime'];
     $end 	= $job['endtime'];
 
-    if ($start == '0000-00-00 00:00:00' or is_null($start))
+    if ($start == '0000-00-00 00:00:00' or is_null($start) or $end = '0')
         $job['starttime'] = 'N/A';
 
     if ($end == '0000-00-00 00:00:00' or is_null($end) or $end = '0')
