@@ -175,7 +175,7 @@
 	// Return:		total of defined jobs name
 	// ==================================================================================	
 
-	public static function get_Jobs_List( $pdo, $client_id ) {
+	public static function get_Jobs_List( $pdo, $client_id = null ) {
 		$jobs		= array();
 		$fields		= array( 'Name' );
 
