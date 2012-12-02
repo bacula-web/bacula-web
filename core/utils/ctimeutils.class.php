@@ -1,8 +1,7 @@
 <?php
-
-/*
+ /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2012, Davide Franco			                          |
+  | Copyright 2010-2012, Davide Franco			                            | 
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -18,7 +17,14 @@
 
 class CTimeUtils {
 
-    static public function Get_Elapsed_Time($start_time, $end_time) {
+	// ==================================================================================
+	// Function: 	Get_Elapsed_Time()
+	// Parameters:	$start_time			(start time in date format)
+	// Parameters:	$end_time			(end time in date format)	
+	// Return:		Total of jobs
+	// ==================================================================================
+
+    static public function Get_Elapsed_Time( $start_time, $end_time) {
         $start = '';
         $end = '';
 
@@ -27,7 +33,7 @@ class CTimeUtils {
         else
             $start = strtotime($start_time);
 
-        if ($end_time == '0000-00-00 00:00:00' or is_null($end_time))
+        if ($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time = '0')
             $end = mktime();
         else
             $end = strtotime($end_time);

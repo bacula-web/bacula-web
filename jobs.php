@@ -149,16 +149,17 @@ foreach ($jobsresult as $job) {
         $job['odd_even'] = 'even';
 
     // Elapsed time for the job
-    $start = $job['starttime'];
-    $end = $job['endtime'];
+    $start 	= $job['starttime'];
+    $end 	= $job['endtime'];
 
     if ($start == '0000-00-00 00:00:00' or is_null($start))
         $job['starttime'] = 'N/A';
 
-    if ($end == '0000-00-00 00:00:00' or is_null($end))
+    if ($end == '0000-00-00 00:00:00' or is_null($end) or $end = '0')
         $job['endtime'] = 'N/A';
 
-    $job['elapsed_time'] = CTimeUtils::Get_Elapsed_Time($start, $end);
+    // Get the job elapsed time completion
+	$job['elapsed_time'] = CTimeUtils::Get_Elapsed_Time($start, $end);
 
     // Job Level
     $job['level'] = $job_levels[$job['level']];
