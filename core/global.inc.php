@@ -33,6 +33,7 @@ require_once( BW_SMARTY_GETTEXT . "smarty_gettext.php" );
 
 // Configuration 
 require_once BW_OBJ . "cfg/config.class.php";
+require_once BW_OBJ . "cfg/fileconfig.class.php";
 
 // Graph
 require_once( BW_PHPLOT . "phplot.php");
