@@ -17,7 +17,7 @@
 
  class FileConfig {
 
-	static private $config_parameters;
+	private static $global_config;
 	
     // ==================================================================================
 	// Function: 	__constructor()
@@ -35,7 +35,7 @@
 	// Return:		return false if the file is unreadable (not found or no enough permission) or no db connection defined
 	// ==================================================================================
 	
-	static public function open() {
+	public static function open() {
 	
 		// Check if config file exist and is readable, then include it
         if ( is_readable( CONFIG_FILE ) ) {
@@ -46,18 +46,18 @@
         }
 		
 		// Getting global $config variable
-		global $config;
-		var_dump($config);
-		self::$config_parameters = $config;
+		FileConfig::$global_config = $config;
 
-        // Checking options and database parameters
-        if ( !array_key_exists('0', self::$config_parameters) ) {
-            throw new Exception("At least one catalog should be defined in the configuration");
-            return false;
-        }
-	
-		return true;
-	}
-	
+       	// Check if at least one catalog have been defined in the configuration file
+        if( isset(FileConfig::$global_config ) ) {
+			if ( empty( FileConfig::$global_config ) ) {
+           		throw new Exception("The configuration is missing");
+            	return false;
+			}
+		}else{
+			throw new Exception("The configuration is missing or ther's something wrong in it");
+			return false;
+		}
+	} // end function open()
 	
  } // end class
