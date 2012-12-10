@@ -17,6 +17,7 @@
  */
 define('BW_ROOT', getcwd());
 define('BW_OBJ', BW_ROOT . '/core/');
+define('BW_LIBS', BW_ROOT . '/application/libs/');
 define('BW_EXTERNAL', BW_OBJ . 'external');
 
 define('BW_PHPLOT', BW_EXTERNAL . '/phplot/');
@@ -33,7 +34,7 @@ require_once( BW_SMARTY_GETTEXT . "smarty_gettext.php" );
 
 // Configuration 
 require_once BW_OBJ . "cfg/config.class.php";
-require_once BW_OBJ . "cfg/fileconfig.class.php";
+require_once BW_LIBS . "fileconfig.class.php";
 
 // Graph
 require_once( BW_PHPLOT . "phplot.php");
