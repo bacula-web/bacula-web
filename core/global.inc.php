@@ -24,6 +24,9 @@ define('BW_PHPLOT', BW_EXTERNAL . '/phplot/');
 define('BW_SMARTY', BW_EXTERNAL . '/smarty/libs/');
 define('BW_SMARTY_GETTEXT', BW_EXTERNAL . '/smarty-gettext/');
 
+// Configuration
+define('CONFIG_DIR', BW_ROOT . "/application/config/");
+define('CONFIG_FILE', CONFIG_DIR . "config.php");
 
 // Main application
 require_once BW_OBJ . "bweb.inc.php";
@@ -31,10 +34,6 @@ require_once BW_OBJ . "bweb.inc.php";
 // Template engine
 require_once( BW_SMARTY . "Smarty.class.php");
 require_once( BW_SMARTY_GETTEXT . "smarty_gettext.php" );
-
-// Configuration 
-require_once BW_OBJ . "cfg/config.class.php";
-require_once BW_LIBS . "fileconfig.class.php";
 
 // Graph
 require_once( BW_PHPLOT . "phplot.php");
@@ -44,6 +43,10 @@ require_once BW_OBJ . "graph/cgraph.class.php";
 require_once BW_OBJ . "utils/cutils.class.php";
 require_once BW_OBJ . "utils/ctimeutils.class.php";
 require_once BW_OBJ . "utils/file.class.php";
+
+// Configuration 
+require_once BW_OBJ . "cfg/config.class.php";
+require_once BW_LIBS . "fileconfig.class.php";
 
 // Http request controler
 require_once BW_OBJ . "utils/chttprequest.class.php";
@@ -71,10 +74,6 @@ require_once('application/models/volumes.model.php');
 
 // I18n (Internationalization)
 require_once BW_OBJ . "i18n/ctranslation.class.php";
-
-// Global constants
-define('CONFIG_DIR', BW_ROOT . "/application/config/");
-define('CONFIG_FILE', CONFIG_DIR . "config.php");
 
 // Views
 define('VIEW_DIR', BW_ROOT . "/application/view/");
