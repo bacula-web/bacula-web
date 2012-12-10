@@ -24,7 +24,7 @@
 		</tr>
 		{foreach from=$pool item=volume}
 		<tr class="{$volume.odd_even}">
-			<td>{$volume.volumename}</td>
+			<td class="strong">{$volume.volumename}</td>
 			<td>{$volume.volbytes}</td>
 			<td>{$volume.mediatype}</td>
 			<td>{$volume.expire}</td>
