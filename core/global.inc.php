@@ -43,6 +43,7 @@ require_once BW_OBJ . "graph/cgraph.class.php";
 // Utils
 require_once BW_OBJ . "utils/cutils.class.php";
 require_once BW_OBJ . "utils/ctimeutils.class.php";
+require_once BW_OBJ . "utils/file.class.php";
 
 // Http request controler
 require_once BW_OBJ . "utils/chttprequest.class.php";
