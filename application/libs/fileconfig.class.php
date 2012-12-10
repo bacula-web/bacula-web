@@ -1,7 +1,7 @@
 <?php
  /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2012, Davide Franco			                    |
+  | Copyright 2010-2012, Davide Franco			                    	    |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -14,76 +14,124 @@
   | GNU General Public License for more details.                            |
   +-------------------------------------------------------------------------+
  */
+ 
+	 require_once( 'core/global.inc.php' );
+	 
+	 class FileConfig extends File {
 
- class FileConfig {
+		 // ==================================================================================
+		 // Function: 	__constructor()
+		 // Parameters:	none
+		 // Return:		none
+		 // ==================================================================================
+			
+		 public function __construct() {
+			
+		 }
 
-	private static $global_config;
-	
-    // ==================================================================================
-	// Function: 	__constructor()
-	// Parameters:	none
-	// Return:		none
-	// ==================================================================================
-	
-	public function __construct() {
-	
-	}
-	
-    // ==================================================================================
-	// Function: 	open()
-	// Parameters:	none
-	// Return:		return false if the file is unreadable (not found or no enough permission) or no db connection defined
-	// ==================================================================================
-	
-	public static function open() {
-	
-		// Check if config file exist and is readable, then include it
-        if ( is_readable( CONFIG_FILE ) ) {
-			require_once( CONFIG_FILE );
-        }else {
-            throw new Exception("Config file not found or bad file permissions");
-            return false;
-        }
+		 // ==================================================================================
+		 // Function: 	check()
+		 // Parameters:	none
+		 // Return:		false if something is wrong in the configuration file
+		 // ==================================================================================
+
+		 public function check() {
+			// Check if all parameters ... to be completed
+		 }
 		
-		// Getting global $config variable
-		FileConfig::$global_config = $config;
+		 // ==================================================================================
+		 // Function: 	count_Catalogs()
+		 // Parameters:	none
+		 // Return:		configured catalog count number or false if something goes wrong
+		 // ==================================================================================
 
-       	// Check if at least one catalog have been defined in the configuration file
-        if( isset(FileConfig::$global_config ) ) {
-			if ( empty( FileConfig::$global_config ) ) {
-           		throw new Exception("The configuration is missing");
-            	return false;
+		 public function count_Catalogs() {
+			$catalog_count = 0;
+			
+			foreach( $GLOBALS['config'] as $param ) {
+				if( is_array($param) ) {
+					$catalog_count += 1;
+				}
 			}
-		}else{
-			throw new Exception("The configuration is missing or ther's something wrong in it");
-			return false;
-		}
-	} // end function open()
+			
+			return $catalog_count;
+		 }
 
- 	// ==================================================================================
-	// Function: 	get_Value()
-	// Parameters:	$parameter
-	//				$catalog_id (optional), take the first catalog by default
-	// Return:		Database size
-	// ==================================================================================
-	
-	public static function get_Value( $parameter, $catalog_id = null ) {
-		// Check if the $global_config have been already set first
-		if( !isset(FileConfig::$global_config) ) {
-			throw new Exception("The configuration is missing or ther's something wrong in it");
-			return false;
-		}
+		// ==================================================================================
+		// Function: 	get_Value()
+		// Parameters:	$parameter
+		//				$catalog_id (optional), take the first catalog by default
+		// Return:		parameter value
+		// ==================================================================================
 		
-		// if the catalog id have been defined in parameters
-		if( !is_ntull($catalog_id) ) {
-			if( isset( FileConfig::$global_config[$catalog_id][$parameter] ) ) {
+		public static function get_Value( $parameter, $catalog_id = null ) {
+			// Check if the $global_config have been already set first
+			if( !isset(self::$config_file) ) {
+				throw new Exception("The configuration is missing or ther's something wrong in it");
+				return false;
+			}
+			
+			if( !is_null($catalog_id) ) {
+				if( is_array( parent::$config[$catalog_id] ) ) {
+					return parent::$config[$catalog_id][$parameter];
+				}else {
+					throw new Exception("Configuration error: the catalog id <$catalog_id> doesn't exist");
+					return false;
+				}
 			}else{
-				throw new Exception("The parameter $parameter is missing in the configuration");
-				return false; 
+				if( isset( parent::$config[$parameter] ) ) {
+					return parent::$config[$parameter];
+				}else{
+					throw new Exception("Configuration error: the parameter <$parameter> doesn't exist");
+					return false;
+				}
 			}
-		}
-	} // end function
-	
+			
+		} // end function	
 
- } // end class
- ?>
+		// ==================================================================================
+		// Function: 	get_DataSourceName()
+		// Parameters:	$catalog_id 
+		// Return:		dsn string
+		// ==================================================================================
+		
+		public function get_DataSourceName($catalog_id) {
+			$dsn 			 = '';
+			$current_catalog = parent::$config[$catalog_id];
+
+			switch ( $current_catalog['db_type'] ) {
+				case 'mysql':
+				case 'pgsql':
+					$dsn = $current_catalog['db_type'] . ':';
+					$dsn .= 'dbname=' . $current_catalog['db_name'] . ';';
+					$dsn .= 'host=' . $current_catalog['host'] . ';';
+					if (isset($current_catalog['db_port']) and !empty($current_catalog['db_port']))
+						$dsn .= 'port=' . $current_catalog['db_port'] . ';';
+					break;
+				case 'sqlite':
+					$dsn = $current_catalog['db_type'] . ':' . $current_catalog['db_name'];
+					break;
+			}
+
+			return $dsn;
+		}		
+
+		// ==================================================================================
+		// Function: 	get_Catalogs()
+		// Parameters:	none
+		// Return:		an array containing all catalogs labels define in the configuration
+		// ==================================================================================
+		
+		public function get_Catalogs() {
+			$catalogs = array();
+
+			foreach (parent::$config as $parameter) {
+				if( is_array($parameter) ) {
+					$catalogs[] = $parameter['label'];
+				}
+			}
+				
+			return $catalogs;
+		}		
+	}	 // end class
+?>
