@@ -79,11 +79,11 @@
 			if( isset( FileConfig::$global_config[$catalog_id][$parameter] ) ) {
 			}else{
 				throw new Exception("The parameter $parameter is missing in the configuration");
-				return 
+				return false; 
 			}
 		}
 	} // end function
 	
-	
+
  } // end class
  ?>
