@@ -59,8 +59,8 @@
 
 		// ==================================================================================
 		// Function: 	get_Value()
-		// Parameters:	$parameter
-		//				$catalog_id (optional), take the first catalog by default
+		// Parameters:	configuration parameter or false (if not defined)
+		//				$catalog_id (optional)
 		// Return:		parameter value
 		// ==================================================================================
 		
@@ -75,14 +75,13 @@
 				if( is_array( parent::$config[$catalog_id] ) ) {
 					return parent::$config[$catalog_id][$parameter];
 				}else {
-					throw new Exception("Configuration error: the catalog id <$catalog_id> doesn't exist");
+					throw new Exception("Configuration error: the catalog id <$catalog_id> do not exist");
 					return false;
 				}
 			}else{
 				if( isset( parent::$config[$parameter] ) ) {
 					return parent::$config[$parameter];
 				}else{
-					throw new Exception("Configuration error: the parameter <$parameter> doesn't exist");
 					return false;
 				}
 			}
