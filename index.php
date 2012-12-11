@@ -36,7 +36,7 @@ try {
  $view->assign( 'stored_files', $dbSql->translate->get_Number_Format( Jobs_Model::get_Stored_Files( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
  
  // Database size
- $view->assign( 'database_size', Database_Model::get_Size( $dbSql->db_link ) );
+ $view->assign( 'database_size', Database_Model::get_Size( $dbSql->db_link, $dbSql->catalog_current_id ) );
 
  // Overall stored bytes
  $view->assign( 'stored_bytes', CUtils::Get_Human_Size( Jobs_Model::get_Stored_Bytes( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
@@ -133,7 +133,9 @@ try {
  foreach ($result as $pool) {
     $vols_by_pool[] = array($pool['name'], $pool['numvols']);
  }
- $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
+
+ if ($pools_count > $max_pools) 
+ 	$vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
 
  $graph->SetData($vols_by_pool, 'pie');
  $graph->SetGraphSize(310, 200);
