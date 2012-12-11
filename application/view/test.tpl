@@ -10,27 +10,32 @@
 </div>
 
 <div class="main_center">
-  <div class="header">{t}Required components{/t}</div>
-	  <table class="test">
+<div class="header">{t}Required components{/t}</div>
+	<table>
+		<tr>
+			<th>Component</th>
+			<th>Description</th>
+			<th>Status</th>
+		</tr>
 		{foreach from=$checks item=check}
-		  <tr>
-			<td><b>{$check.check_label}</b></td>
-			<td rowspan="2" style="text-align: center;"> 
-			  <img src='application/view/style/images/{$check.check_result}' width='23' alt=''/> </td>
-		  </tr>
-		  <tr>
-			<td class="comment">{$check.check_descr}</td>
-		  </tr>
+		<tr>
+			<td class="left strong">{$check.check_label}</td>
+			<td class="left">{$check.check_descr}</td>
+			<td > 
+				<img src='application/view/style/images/{$check.check_result}' width='23' alt=''/> 
+			</td>
+		</tr>
 		{/foreach}
-	  <tr>
-		<td> <b>Graph capabilites</b> </td>
-	    <td rowspan="2" style="text-align: center;">
-		  <img src="{$graph_test}" alt='' width="300" />
-	    </td>
-	  </tr>
-	  <tr>
-	    <td class="comment">{t}Graph system capabilities (Bacula-web only use PNG image format){/t}</td>
-	  </tr>
+		<!-- Graph testing -->
+		<tr>
+			<td class="left"> <b>Graph capabilites</b> </td>
+			<td colspan="2">
+				<img src="{$graph_test}" alt='' width="300" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" class="comment">{t}Graph system capabilities (Bacula-web only use PNG image format){/t}</td>
+		</tr>
 	</table>
 </div> <!-- end div id=main_center -->
 

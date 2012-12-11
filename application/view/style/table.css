@@ -54,3 +54,7 @@
  td.strong {
   font-weight: bold;
  }
+
+ td.left {
+  text-align: left;
+ }
