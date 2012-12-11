@@ -115,8 +115,9 @@ try {
         'fields' => array('SUM(numvols) AS sum_vols'),
         'limit' => $limit,
         'groupby' => 'name');
-    $result = $dbSql->db_link->runQuery( CDBQuery::get_Select($query) );
-    $sum_vols = $result->fetch();
+    
+	$result 	= CDBUtils::runQuery( CDBQuery::get_Select($query), $dbSql->db_link);
+	$sum_vols 	= $result->fetch();
 
     $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
  } else {
