@@ -118,8 +118,6 @@ try {
     
 	$result 	= CDBUtils::runQuery( CDBQuery::get_Select($query), $dbSql->db_link);
 	$sum_vols 	= $result->fetch();
-
-    $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
  } else {
     $limit = $pools_count;
  }
@@ -135,6 +133,7 @@ try {
  foreach ($result as $pool) {
     $vols_by_pool[] = array($pool['name'], $pool['numvols']);
  }
+ $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
 
  $graph->SetData($vols_by_pool, 'pie');
  $graph->SetGraphSize(310, 200);
