@@ -30,7 +30,7 @@
 		private $db_driver;						// Database connection driver
 		
 		public  $catalog_nb;					// Catalog count
-		private	$catalog_current_id;			// Current catalog
+		public	$catalog_current_id;			// Current catalog
 
 		function __construct( &$view )
 		{             
@@ -78,7 +78,7 @@
 			// Getting database connection paremeter from configuration file
 			$dsn 	= FileConfig::get_DataSourceName( $this->catalog_current_id );
 			$driver = FileConfig::get_Value( 'db_type', $this->catalog_current_id); 
-			
+
 			if( $driver != 'sqlite' ) {
 				$user	= FileConfig::get_Value( 'login', $this->catalog_current_id); 
 				$pwd	= FileConfig::get_Value( 'password', $this->catalog_current_id); 
