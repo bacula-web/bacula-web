@@ -20,7 +20,7 @@
 		{foreach from=$checks item=check}
 		<tr>
 			<td class="left strong">{$check.check_label}</td>
-			<td class="left">{$check.check_descr}</td>
+			<td class="left"><i>{$check.check_descr}</i></td>
 			<td > 
 				<img src='application/view/style/images/{$check.check_result}' width='23' alt=''/> 
 			</td>
@@ -28,13 +28,15 @@
 		{/foreach}
 		<!-- Graph testing -->
 		<tr>
-			<td class="left"> <b>Graph capabilites</b> </td>
-			<td colspan="2">
-				<img src="{$graph_test}" alt='' width="300" />
-			</td>
+			<th colspan="3">Graph capabilites (png images format only)</th>
 		</tr>
 		<tr>
-			<td colspan="3" class="comment">{t}Graph system capabilities (Bacula-web only use PNG image format){/t}</td>
+			<td>
+				<img src="{$bar_graph}" alt='' width="300" />
+			</td>
+			<td colspan="2">
+				<img src="{$pie_graph}" alt='' width="300" />
+			</td>
 		</tr>
 	</table>
 </div> <!-- end div id=main_center -->

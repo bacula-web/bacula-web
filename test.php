@@ -58,8 +58,8 @@ $check_list = array(array('check_cmd' => 'php-gettext',
         'check_label' => 'PHP - PDO support',
         'check_descr' => 'PHP PDO support is required, please compile PHP with this option'),
 	array('check_cmd' => 'db-connection',
-		'check_label' => 'Database connection status (MySQL and postgreSQL only',
-		'check_descr' => '<b>Current status:</b> ' . CDBUtils::getConnectionStatus( $dbSql->db_link ) ),
+		'check_label' => 'Database connection status (MySQL and postgreSQL only)',
+		'check_descr' => 'Current status: ' . CDBUtils::getConnectionStatus( $dbSql->db_link ) ),
     array('check_cmd' => 'smarty-cache',
         'check_label' => 'Smarty cache folder write permission',
         'check_descr' => realpath(VIEW_CACHE_DIR) . ' must be writable by Apache'),
@@ -115,13 +115,17 @@ $data = array(
     array('test1', 456)
 );
 
-$graph = new CGraph("graph3.png");
+// Pie graph
+$pie_graph = new CGraph("graph3.png");
+$pie_graph->SetData($data, 'pie');
+$pie_graph->SetGraphSize(300, 230);
+$view->assign( 'pie_graph', $pie_graph->Render() );
 
-$graph->SetData($data, 'pie', 'text-data-single');
-$graph->SetGraphSize(300, 230);
-
-// Graph rendering
-$view->assign( 'graph_test', $graph->Render() );
+// Bar graph
+$bar_graph = new CGraph("graph4.png");
+$bar_graph->SetData( $data, 'bars' );
+$bar_graph->SetGraphSize(300, 230);
+$view->assign( 'bar_graph', $bar_graph->Render() );
 
 // Template rendering
 $view->assign('checks', $check_list);

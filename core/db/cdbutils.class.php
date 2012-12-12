@@ -47,7 +47,7 @@ class CDBUtils {
 		if( self::getDriverName( $PDO_connection ) != 'sqlite' ) {
 			return $PDO_connection->getAttribute( PDO::ATTR_CONNECTION_STATUS );
 		}else {
-			return '';
+			return 'N/A';
 		}
 	}
 	
