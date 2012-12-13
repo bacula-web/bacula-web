@@ -138,7 +138,7 @@ try {
  	$vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
 
  $graph->SetData($vols_by_pool, 'pie');
- $graph->SetGraphSize(310, 200);
+ $graph->SetGraphSize(310, 220);
 
  // Graph rendering
  $view->assign( 'graph_pools', $graph->Render() );
@@ -156,7 +156,7 @@ try {
  
  $graph = new CGraph("graph2.png");
  $graph->SetData($days_stored_bytes, 'bars');
- $graph->SetGraphSize(310, 200);
+ $graph->SetGraphSize(310, 220);
  $graph->SetYTitle("GB");
 
  // Graph rendering

@@ -69,10 +69,9 @@
 <!-- Last 24 hours jobs status -->
   <div class="widget">
 	<p class="title" title="{t}Last 24 hours jobs status{/t}">Jobs status</p>
-	  <a href="jobs.php" title="{t}Show last 24 hours jobs status{/t}">
+	  <a href="jobs.php" title="{t}Click on graph to see the report{/t}">
 	    <img class="graph" src="{$graph_jobs}" alt="" />
 	  </a>
-	  <p class="box_footer">Click on graph to see the report</p>
   </div> <!-- end div box -->
   
 </div>
@@ -85,10 +84,9 @@
 	<p class="title">
 	{t}Pools and volumes status{/t}
 	</p>
-    <a href="pools.php" title="{t}Show pools and volumes report{/t}">
+    <a href="pools.php" title="{t}Click on graph to see the report{/t}">
 	   <img class="graph" src="{$graph_pools}" alt="" />
 	</a>
-	<p class="box_footer">Click on graph to see the report</p>
   </div> <!-- end div box -->
   
   <!-- Stored Bytes for last 7 days -->

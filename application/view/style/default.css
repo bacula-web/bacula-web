@@ -71,7 +71,7 @@ a:visited, a:hover, a {
 .widget {
     float: left;
     width: 340px;
-    min-height: 150px;
+    min-height: 200px;
     padding: 0px; 
     margin: 10px 5px;
     background-color: #FFFFFF;
@@ -80,17 +80,9 @@ a:visited, a:hover, a {
 }
 
 .widget img.graph {
-    margin: 2px 0px;
+    margin: 1px 0px;
     border: none;
     vertical-align: middle;
-}
-
-.widget p.box_footer {
-    font-style: italic;
-    font-size: 9pt;
-    color: #404040;
-    margin: 0px;
-    text-align: center;
 }
 
 .box {
