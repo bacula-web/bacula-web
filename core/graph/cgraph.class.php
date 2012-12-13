@@ -1,8 +1,8 @@
 <?php
 
-/*
+ /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2012, Davide Franco			                          |
+  | Copyright 2010-2012, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -53,7 +53,26 @@ class CGraph {
     private function get_Filepath() {
 		return $this->img_filename;
     }
+	
+    // ==================================================================================
+	// Function: 	setLegent()
+	// Parameters:	none
+	// Return:		
+	// ==================================================================================
+	
+	private function setLegend() {
+		// Setting graph legend values
+		$legends = array();
+    
+		foreach ($this->data as $key => $legend) {
+			$this->plot->SetLegend(implode(': ', $legend));
+		}
 
+		// Legend position (calculated regarding the width and height of the graph)
+		list($legend_width, $legend_height) = $this->plot->GetLegendSize();
+		$this->plot->SetLegendPixels($this->width - ($legend_width + 5), 10);	
+	}
+	
     public function Render() {
         // Setting the size
         $this->plot = new PHPlot($this->width, $this->height);
@@ -69,54 +88,51 @@ class CGraph {
 		      
 		// Set graph values
 		$this->plot->SetDataValues($this->data);
-
-        // Set image border type
-        $this->plot->SetImageBorderType('none');
-
-        switch ( $this->graph_type ) {
-            case 'pie':
-                $this->plot->SetPlotAreaPixels(5, 5, ($this->width / 2), $this->height - 5);
-                $this->plot->SetLabelScalePosition(0.2);
-
-                // Set legend data
-                $legends = array();
-                foreach ($this->data as $key => $legend)
-                    $this->plot->SetLegend(implode(': ', $legend));
-
-                // Legend position (calculated regarding the width and height of the graph)
-                list($legend_width, $legend_height) = $this->plot->GetLegendSize();
-                $this->plot->SetLegendPixels($this->width - ($legend_width + 5), 10);
-
-                // Set graph colors and shading
-				$data_colors = array( 'blue', 'green', 'orange', 'red', 'black', 'yellow', 'cyan', 'lavender', 'DimGrey');
-				$this->plot->SetDataColors( $data_colors );
-				$this->plot->SetShading( 0 );
-				
-                break;
-            case 'bars':
-				// X label angle
-                $this->plot->SetXLabelAngle(90);
-
-				// Plot and border colors
-				$this->plot->SetDataColors(array('gray'));
-				$this->plot->SetDataBorderColors(array('black'));
-
-                // Shading
-				$this->plot->SetShading( 2 );
-				break;
-        }
-
-        // Set graph Y axis title
-        $this->plot->SetYTitle($this->ytitle);
-
-        # Turn off X tick labels and ticks because they don't apply here:
-        $this->plot->SetXTickLabelPos('none');
-        $this->plot->SetXTickPos('none');
-        $this->plot->SetPlotAreaWorld(NULL, 0, NULL, NULL);
-
-        // Graph rendering
-        $this->plot->DrawGraph();
 		
+		// Check if provided datas for the graph are a valid and non empty array
+		if( is_null($this->data) or empty($this->data) ) {
+			$message_options = array( 'draw_background' => TRUE, 'draw_border' => TRUE, 'reset_font' => TRUE, 'text_color' => 'black' );
+			$this->plot->DrawMessage('No statistics to display', $message_options);
+		}else {
+			// Set image border type
+			$this->plot->SetImageBorderType('none');
+
+			switch ( $this->graph_type ) {
+				case 'pie':
+					// Set legend
+					$this->setLegend();
+					
+					$this->plot->SetPlotAreaPixels(5, 5, ($this->width / 2), $this->height - 5);
+					$this->plot->SetLabelScalePosition(0.2);
+
+					// Set graph colors and shading
+					$data_colors = array( 'blue', 'green', 'orange', 'red', 'black', 'yellow', 'cyan', 'lavender', 'DimGrey');
+					$this->plot->SetDataColors( $data_colors );
+					$this->plot->SetShading( 0 );
+					
+					break;
+				case 'bars':
+					// X label angle
+					$this->plot->SetXLabelAngle(90);
+
+					// Plot and border colors
+					$this->plot->SetDataColors(array('gray'));
+					$this->plot->SetDataBorderColors(array('black'));
+
+					// Shading
+					$this->plot->SetShading( 2 );
+					break;
+			}
+
+			# Turn off X tick labels and ticks because they don't apply here:
+			$this->plot->SetXTickLabelPos('none');
+			$this->plot->SetXTickPos('none');
+			$this->plot->SetPlotAreaWorld(NULL, 0, NULL, NULL);
+			
+			// Graph rendering
+			$this->plot->DrawGraph();
+		}
+
 		// Return image file path
 		return $this->get_Filepath();
 		
