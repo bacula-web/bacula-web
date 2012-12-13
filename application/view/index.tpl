@@ -69,7 +69,7 @@
 <!-- Last 24 hours jobs status -->
   <div class="widget">
 	<p class="title" title="{t}Last 24 hours jobs status{/t}">Jobs status</p>
-	  <a href="jobs.php" title="{t}Click on graph to see the report{/t}">
+	  <a href="jobs.php" title="{t}Click here to see the report{/t}">
 	    <img class="graph" src="{$graph_jobs}" alt="" />
 	  </a>
   </div> <!-- end div box -->
@@ -84,7 +84,7 @@
 	<p class="title">
 	{t}Pools and volumes status{/t}
 	</p>
-    <a href="pools.php" title="{t}Click on graph to see the report{/t}">
+    <a href="pools.php" title="{t}Click here to see the report{/t}">
 	   <img class="graph" src="{$graph_pools}" alt="" />
 	</a>
   </div> <!-- end div box -->
