@@ -18,18 +18,19 @@
 session_start();
 include_once( 'core/global.inc.php' );
 
-$view = new CView();
-$dbSql = new Bweb($view);
+$view 		= new CView();
+$dbSql 		= new Bweb($view);
+$joblogs 	= array();
 
-$query = "";
-$joblogs = array();
+// Retrieving $_GET values
+$get_vars 	= CHttpRequest::getRequestVars($_GET);
+$jobid 		= $get_vars['jobid'];
 
-$get_vars = CHttpRequest::getRequestVars($_GET);
-$jobid = $get_vars['jobid'];
+// Prepare and execute SQL statment
+$statment 	= array('table' => 'Log', 'where' => array("JobId = '$jobid'"), 'orderby' => 'Time');
+$result 	= CDBUtils::runQuery( CDBQuery::get_Select($statment), $dbSql->db_link );
 
-$query = CDBQuery::getQuery(array('table' => 'Log', 'where' => "JobId = '$jobid'", 'orderby' => 'Time'));
-$result = $dbSql->db_link->runQuery($query);
-
+// Processing result
 foreach ($result->fetchAll() as $log) {
     // Odd or even row
     if (count($joblogs) % 2) {
