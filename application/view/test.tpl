@@ -19,8 +19,8 @@
 		</tr>
 		{foreach from=$checks item=check}
 		<tr>
-			<td class="left strong">{$check.check_label}</td>
-			<td class="left"><i>{$check.check_descr}</i></td>
+			<td class="left_align strong">{$check.check_label}</td>
+			<td class="left_align"><i>{$check.check_descr}</i></td>
 			<td > 
 				<img src='application/view/style/images/{$check.check_result}' width='23' alt=''/> 
 			</td>
