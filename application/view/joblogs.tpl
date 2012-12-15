@@ -13,15 +13,15 @@
   <h4>{t}Job id{/t} <b>{$jobid}</b></h4>
   
   <div class="box">
-	<table>
+	<table class="grid">
 	  <tr>
-		<td class="tbl_header">{t}Time{/t}</td> 
-		<td class="tbl_header">{t}Event{/t}</td>
+		<th>{t}Time{/t}</th> 
+		<th>{t}Event{/t}</th>
 	  </tr>
 	  {foreach from=$joblogs item=log}
-	  <tr>
-		<td width="150" class="{$log.class}">{$log.time}</td>
-		<td style="text-align: left" class="{$log.class}">{$log.logtext}</td>		
+	  <tr class="odd_even">
+		<td width="150">{$log.time}</td>
+		<td class="left_align">{$log.logtext}</td>		
 	  </tr>
 	  {/foreach}
 	</table>

@@ -164,7 +164,7 @@
 			</td>
 		</tr>		
 		<tr>
-			<td colspan="2" class="form_submit">
+			<td colspan="2" class="form_submit right_align">
 				<input type="submit" value="View report" />
 			</td>
 		</tr>
@@ -187,7 +187,7 @@
 	   </td>
 	 </tr>
 	 <tr>
-	   <td colspan="2" class="form_submit"> 
+	   <td colspan="2" class="form_submit right_align"> 
 		 <input type=submit value="{t}View report{/t}"> 
 	   </td>
 	 </tr>

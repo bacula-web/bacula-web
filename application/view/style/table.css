@@ -55,6 +55,10 @@
   font-weight: bold;
  }
 
- td.left {
+ td.left_align {
   text-align: left;
+ }
+
+ td.right_align {
+  text-align: right;
  }
