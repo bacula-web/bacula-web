@@ -27,6 +27,7 @@
  - displayed jobs / total jobs has been fixed in Jobs report page
  - total of defined jobs and filesets are now displayed in a Dashboard widget 
  - total of volumes is now displayed in a Dashboard widget 
+ - display "No job(s) to display from now in Jobs report page when there's no result
  
  Fixed bugs
 
