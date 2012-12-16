@@ -1,8 +1,52 @@
+=== Bacula-Web 5.2.11 ===
+
+ Version: 5.2.11
+ Released on 15h December 2012
+ 
+ Change log
+
+ - improved look and feel of dashboard and all other pages
+ - internal code improvement starting implementing kind of MVC
+ - code improvment with PHP PDO classes
+ - some application exceptions message have been updated
+ - cleaned up and splitted in different files CSS
+ - fixed legend items order for Pools and volumes status widget in Dashboard
+ - highlighted volume name column in Pools and volumes report page
+ - fixed bug with SQLite for waiting jobs elapsed time in Jobs report page
+ - improved and cleaned up design in Backup jobs report page
+ - added last 24 hours running jobs information in Dashboard widget 
+ - merged Transfered bytes and files into the same cell in Dashboard widget
+ - enhanced look and feel of the header
+ - upgraded Smarty template engine to version 2.6.27
+ - improved grid tables look and feel for Jobs report, Client report, Pools and Volumes and Dashbaord pages
+ - code improvments for graph rendering php class
+ - total of used disk space for volumes is displayed in a Dashboard widget
+ - merged pools and volumes cells in dashboard widget
+ - the Pools and volumes page will not display empty Pools if the option $hide_empty_pools is set to <true> in the configuration
+ - now you can sort job list by different criteria (JobId, Pool name, Job name, Job bytes and Job files) in Jobs report page
+ - displayed jobs / total jobs has been fixed in Jobs report page
+ - total of defined jobs and filesets are now displayed in a Dashboard widget 
+ - total of volumes is now displayed in a Dashboard widget 
+ 
+ Fixed bugs
+
+ - 0000047 index.php is blank
+ - 0000050 Unable to access to the interface "Blank page"
+ - 0000068 pgsql bug with Pools graph in dashboard
+ - 0000066 new bacula-web install reports SQL error
+ - 0000071 Missleading colors in dashboard
+ - 0000063 Jobs list - Elapsed time incorrect for running jobs
+ - 0000044 Job status report - Sort job list by different column
+ - 0000039: multiple catalogs: shows all pools from all catalogs
+ - 0000003: Display total for stored volumes
+  
 === Bacula-Web 5.2.10 ===
 
  Version: 5.2.10
- Released on: August 9th 2012
+ Released on 9th August 2012
 
+ Changelog
+ 
  - upgraded Smarty gettext plugin to version 0.9.1
  - many CSS code improvments
  - SQLite database support improvments
@@ -37,8 +81,10 @@
 === Bacula-Web 5.2.6 ===
 
  Version: 5.2.6
- Released on: March 30th 2012
+ Released on 30th March 2012
 
+ Changelog
+ 
  - Updated french translation (thanks to Guillaume Delacour)
  - Fixed client sort order in Client report form (dashboard)
  - Updated links in header to point to the new website (About and Bugs)
@@ -57,8 +103,10 @@
 === Bacula-Web 5.2.2 ===
 
  Version: 5.2.2
- Released on: December 11th 2011 
+ Released on 11th December 2011 
 
+ Changelog
+ 
  - New layout for dashboard
  - Updated last day status with canceled jobs (dashboard)
  - Pool column in last used volumes widget
@@ -76,8 +124,10 @@
 === Bacula-Web 5.1.0 ===
 
  Version: 5.1.0
- Released on: July 25th 2010
+ Released on 25th July 2010
 
+ Changelog
+ 
  - Improved dashboard statistics
  - Improved database support
  - Multi-catalog support enhancements
@@ -110,8 +160,10 @@
 == Bacula-web 5.0.3  ==
 
  Version: 5.0.3
- Released on: November 2nd 2010
+ Released on 2nd November 2010
 
+ Changelog
+ 
  - Changed content of README file
  - Added new email address in CONTACT file
  - Removed TODO file
@@ -149,8 +201,10 @@
 === Bacula-web 1.3  ===
 
  Version: 1.3
- Released on: January 26th 2006
+ Released on 26th January 2006
 
+ Changelog
+ 
  - (0000019,0000021) Fixed psql querys.
  - Fixed XTicks (Graphs).
 
@@ -161,8 +215,10 @@
 === Bacula web 1.2 ===
 
  Version: 1.2
- Released on: October 6th 2005
+ Released on 6th October 2005
 
+ Changelog
+ 
  - Human redable Y-axis of graphs
  - Updated French translation
  - Initial support for PostgreSQL (thanks to Dan Langille)
@@ -177,8 +233,10 @@
 === Bacula web 1.1 ===
 
  Version: 1.1
- Released on: October 25th 2004
+ Released on 25h October 2004
 
+ Changelog
+ 
  - Add array_fill function (as Mikael suggested)
  - Fix url encode of links. (reported by Phil Stracchino)
  - Upgraded Smarty to 2.6.6 version.
@@ -187,8 +245,10 @@
 === Bacula web 1.0 ===
 
  Version:  1.0
- Released on: August 4th 2004
+ Released on 4th August 2004
 
+ Changelog
+ 
  - Add Italian translation
  - Change some colors of graphs. More clear now (I hope).
 
@@ -200,7 +260,7 @@
 === Bacula web 1.0 ===
 
  Version: 1.0 Beta2
- Released on: June 14th 2004
+ Released on 14th June 2004
 
  Fixed bugs
 
@@ -211,11 +271,13 @@
 === Bacula-web 1.0 ===
 
  Version: 1.0 Beta1
- Released on: June 11th 2004
+ Released on 11th June 2004
 
+ Changelog
+ 
  - Check connection error (reported by Thomas Contamine)
  - Register_globals on/off compatible (reported by Thomas Contamine)
- - Fix bug in graph type=69. The data now is correct.
- - Fix config system.
- - Very internal fixes.
- - Unordered List ItemAdd at last report.
+ - Fix bug in graph type=69. The data now is correct
+ - Fix config system
+ - Very internal fixes
+ - Unordered List ItemAdd at last report
