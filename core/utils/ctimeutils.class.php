@@ -28,12 +28,12 @@ class CTimeUtils {
         $start = '';
         $end = '';
 
-        if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == '0')
+        if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0)
             return 'N/A';
         else
             $start = strtotime($start_time);
 
-        if ($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == '0')
+        if ($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == 0)
             $end = mktime();
         else
             $end = strtotime($end_time);
