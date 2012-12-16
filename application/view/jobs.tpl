@@ -81,6 +81,10 @@
 		  <a href='joblogs.php?jobid={$job.jobid}' title='{t}Show job logs{/t}'> <img src='application/view/style/images/search.png' width='20' /> </a>
 		</td>
 	  </tr>
+	  {foreachelse}
+	  <tr>
+		<td  colspan="12">{t}No job(s) to display{/t}</td>
+      </tr>
 	  {/foreach}
 	</table>
 	<!-- </div> --> <!-- end div class=listbox -->
