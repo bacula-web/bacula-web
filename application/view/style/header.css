@@ -25,14 +25,20 @@ div.app_version {
 	background-color: #f0f0f0;
 }
 
-#toplinks {
+#top_links {
     font-size: 10pt;
     padding: 0px;
+	margin: 0px;
     height: 30px;
 	background-color: #f0f0f0;
 }
 
-#toplinks li {
+#top_links  ul{ 
+	margin:0px; 
+	padding: 0px;
+}
+
+#top_links li {
     height: 30px;
     display: inline;
     float: right;
@@ -41,6 +47,25 @@ div.app_version {
     line-height: 30px;
 }
 
-#toplinks li a {
+#top_links li a {
     font-size: 10pt;
+}
+
+#top_controls {
+    font-size: 10pt;
+    padding: 0px;
+	margin: 0px;
+    height: 35px;
+	background-color: #f0f0f0;
+	border: 1px solid #cdcdcd;
+	vertical-align: middle;
+}
+
+#top_controls form.catalog_selector  {
+	float: right;
+	height: 35px;
+	line-height: 35px;
+	vertical-align: middle;
+	margin: 0px 5px;
+	padding: 0px;
 }
