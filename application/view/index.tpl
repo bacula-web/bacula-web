@@ -112,7 +112,7 @@
 		  <td>{$vol.volstatus}</td>
 		  <td>{$vol.poolname}</td>
 		  <td>{$vol.lastwritten}</td>
-		  <td><b>{$vol.jobs_count}</b></td>
+		  <td class="strong">{$vol.voljobs}</td>
 		</tr>
 		{/foreach}
 	  </table>

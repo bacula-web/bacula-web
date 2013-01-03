@@ -183,7 +183,7 @@ try {
  }
 
  $statment = array(	'table' 	=> 'Media',
-					'fields' 	=> array('Media.MediaId', 'Media.Volumename', 'Media.Lastwritten', 'Media.VolStatus', 'Pool.Name AS poolname'),
+					'fields' 	=> array('Media.MediaId', 'Media.Volumename', 'Media.Lastwritten', 'Media.VolStatus', 'Media.VolJobs', 'Pool.Name AS poolname'),
 					'join' 		=> array('table' => 'Pool', 'condition' => 'Media.PoolId = Pool.poolid'),
 					'where' 	=> $where,
 					'orderby' 	=> 'Media.Lastwritten DESC',
@@ -192,15 +192,7 @@ try {
  // Run the query
  $result 	= CDBUtils::runQuery( CDBQuery::get_Select($statment), $dbSql->db_link );
 
- foreach ( $result as $volume ) {
-    $query = array( 'table' => 'JobMedia', 'fields' => array( 'COUNT(*) as jobs_count' ),
-					'where' => "JobMedia.MediaId = '" . $volume['mediaid'] . "'"); 
-					
-	$jobs_by_vol = CDBUtils::runQuery( CDBQuery::get_Select($query), $dbSql->db_link );
-	$jobs_by_vol = $jobs_by_vol->fetch();
-
-    $volume['jobs_count'] = $jobs_by_vol['jobs_count'];
-
+ foreach( $result as $volume ) {
     // odd or even row
     if ((count($last_volumes) % 2) > 0)
         $volume['odd_even'] = "even";
