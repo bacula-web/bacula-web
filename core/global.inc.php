@@ -1,8 +1,8 @@
 <?php
 
-/*
+ /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2012, Davide Franco			                          |
+  | Copyright 2010-2013, Davide Franco			                    		|
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -15,6 +15,7 @@
   | GNU General Public License for more details.                            |
   +-------------------------------------------------------------------------+
  */
+
 define('BW_ROOT', getcwd());
 define('BW_OBJ', BW_ROOT . '/core/');
 define('BW_LIBS', BW_ROOT . '/application/libs/');
