@@ -20,7 +20,7 @@
 	{if $catalog_nb > 1}
 	<li>
 		<form method="post" action="index.php">
-			Select catalog&nbsp;
+			Catalog&nbsp;
 			{html_options name=catalog_id options=$catalogs selected=$catalog_current_id onchange="submit();"}
 		</form>
 	</li>
