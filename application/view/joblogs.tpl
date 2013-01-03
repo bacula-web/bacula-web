@@ -19,7 +19,7 @@
 		<th>{t}Event{/t}</th>
 	  </tr>
 	  {foreach from=$joblogs item=log}
-	  <tr class="odd_even">
+	  <tr class="{$log.class}">
 		<td width="150">{$log.time}</td>
 		<td class="left_align">{$log.logtext}</td>		
 	  </tr>
