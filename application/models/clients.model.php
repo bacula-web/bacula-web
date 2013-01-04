@@ -24,7 +24,7 @@
 	// ==================================================================================
 
 	static public function count($pdo) {
-		return CModel::count( $pdo, 'FileSet');	
+		return CModel::count( $pdo, 'Client');	
 	}
 
  }    
