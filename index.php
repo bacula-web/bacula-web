@@ -26,7 +26,7 @@ try {
  $dbSql = new Bweb($view);
 
  // Running, completed, failed, waiting and canceled jobs status over last 24 hours
- $view->assign( 'running_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'completed') );
+ $view->assign( 'running_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'running') );
  $view->assign( 'completed_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'completed') );
  $view->assign( 'failed_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'failed') );
  $view->assign( 'waiting_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'waiting') );
