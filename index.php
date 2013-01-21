@@ -109,7 +109,11 @@ try {
 
  // Display 9 biggest pools and rest of volumes in 10th one display as Other
  if ($pools_count > $max_pools) {
-    $limit = $max_pools . ',' . ($pools_count - $max_pools);
+    if( CDBUtils::getDriverName( $dbSql->db_link ) == 'pgsql') {
+	$limit = $max_pools . 'OFFSET ' . ($pools_count - $max_pools);
+    }else{
+	$limit = $max_pools . ',' . ($pools_count - $max_pools);
+    }
 
     $query = array('table' => $table_pool,
         'fields' => array('SUM(numvols) AS sum_vols'),
