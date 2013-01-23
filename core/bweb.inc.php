@@ -21,7 +21,6 @@
 	class Bweb
 	{
 		public	$translate;						// Translation class instance
-		private $bwcfg;							// Config class
 		private $catalogs = array();			// Catalog array
 		
 		private $view;							// Template class
