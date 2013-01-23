@@ -46,7 +46,6 @@ require_once BW_OBJ . "utils/ctimeutils.class.php";
 require_once BW_OBJ . "utils/file.class.php";
 
 // Configuration 
-require_once BW_OBJ . "cfg/config.class.php";
 require_once BW_LIBS . "fileconfig.class.php";
 
 // Http request controler
