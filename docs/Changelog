@@ -1,3 +1,28 @@
+=== Bacula-Web 5.2.12 ===
+
+ Version: 5.2.12
+ Released on 24th January 2013
+
+ Changelog
+
+ - Some internal php code cleanup
+ - Cleaned up CSS code for header
+ - Dashboard: Fixed items order for Pools and volumes status widget
+ - Job report page: Display "No job(s) to display" when there's no jobs result instead of an empty table
+ - Job logs page: Fixed bug with "odd and even" row in job logs table
+ - General: Header look and feel improvments
+ - General: Updated bug tracker url in header
+
+ Fixed bugs
+
+ - 0000066 - new bacula-web install reports SQL error
+ - 0000068 - pgsql bug with Pools graph in dashboard 
+ - 0000085 - pgsql bug with Pools and volumes widget when more than 9 Pools
+ - 0000082 - Wrong Clients information in Catalog statistics widget
+ - 0000081 - Wrong FileSets information in Catalog statistics widget
+ - 0000078 - Last 24 hour summary if reporting the runnign jobs incorrectly
+ - 0000080 - Wrong jobs count value in last used volumes widget (Dashboard)
+
 === Bacula-Web 5.2.11 ===
 
  Version: 5.2.11
