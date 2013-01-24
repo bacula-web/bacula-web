@@ -13,7 +13,7 @@
  - General: Header look and feel improvments
  - General: Updated bug tracker url in header
 
- Fixed bugs
+ Fixed bugs / new features
 
  - 0000066 - new bacula-web install reports SQL error
  - 0000068 - pgsql bug with Pools graph in dashboard 
@@ -22,6 +22,7 @@
  - 0000081 - Wrong FileSets information in Catalog statistics widget
  - 0000078 - Last 24 hour summary if reporting the runnign jobs incorrectly
  - 0000080 - Wrong jobs count value in last used volumes widget (Dashboard)
+ - 0000084 - Dutch translation
 
 === Bacula-Web 5.2.11 ===
 
