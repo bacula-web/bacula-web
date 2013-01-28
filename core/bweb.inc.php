@@ -216,28 +216,11 @@
 		}
 		
 		// ==================================================================================
-		// Function: 	get_Clients()
-		// Parameters: 	none
-		// Return:		an array of all clients (except inactive if the option is enabled)
-		// ==================================================================================	
-		public function get_Clients() 
-		{
-			$clients  	= array();
+		// Function: 	getClientInfos()
+		// Parameters: 	client id
+		// Return:		array containing client information
+		// ==================================================================================
 
-			$query = array( 'table' => 'Client', 'fields' => array('ClientId, Name'), 'orderby' => 'Name' );
-
-			if( FileConfig::get_Value( 'show_inactive_clients' ) )
-					$query['where'] = "FileRetention > '0' AND JobRetention > '0' "; 
-
-			$result = CDBUtils::runQuery( CDBQuery::get_Select($query), $this->db_link );
-			
-			foreach( $result->fetchAll() as $client ) {
-				$clients[ $client['clientid'] ] = $client['name'];
-			}
-			
-			return $clients;		
-		}
-		
 		public function getClientInfos( $client_id )
 		{
 			$client = array();
