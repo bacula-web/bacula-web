@@ -69,7 +69,7 @@ try {
  $view->assign('jobs_list', Jobs_Model::get_Jobs_List($dbSql->db_link) );
  
  // Clients list
- $view->assign('clients_list', $dbSql->get_Clients());
+ $view->assign('clients_list', Clients_Model::getClients($dbSql->db_link) );
 
  // Count volumes
  $view->assign('volumes_nb', Volumes_Model::count($dbSql->db_link) );

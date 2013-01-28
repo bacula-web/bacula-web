@@ -27,4 +27,30 @@
 		return CModel::count( $pdo, 'Client');	
 	}
 
- }    
+    // ==================================================================================
+	// Function: 	getClients()
+	// Parameters:	$pdo_connection - valide pdo object
+	// Return:		array containing client list or false
+	// ==================================================================================
+
+	static public function getClients($pdo) {
+		$clients  	= array();
+		$table 		= 'Client';
+		$fields		= array('ClientId, Name');
+		$orderby	= 'Name';
+
+		$statment 	= array( 'table' => $table, 'fields' => $fields, 'orderby' => $orderby );
+
+		if( FileConfig::get_Value( 'show_inactive_clients' ) )
+			$statment['where'] = "FileRetention > '0' AND JobRetention > '0' "; 
+
+		$result 	= CDBUtils::runQuery( CDBQuery::get_Select($statment), $pdo );
+			
+		foreach( $result->fetchAll() as $client ) {
+			$clients[ $client['clientid'] ] = $client['name'];
+		}
+			
+		return $clients;		
+	}
+
+}    
