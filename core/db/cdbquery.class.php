@@ -96,8 +96,8 @@
 		
 		switch( $db_driver ) {
 			case 'pgsql':
-				$periods['starttime'] 	= 'timestamp ' . date( "Y-m-d H:i:s", $period_timestamp[0]);
-				$periods['endtime'] 	= 'timestamp ' . date( "Y-m-d H:i:s", $period_timestamp[1]);
+				$periods['starttime'] 	= "TIMESTAMP '" . date( "Y-m-d H:i:s", $period_timestamp[0]) . "'";
+				$periods['endtime'] 	= "TIMESTAMP '" . date( "Y-m-d H:i:s", $period_timestamp[1]) . "'";
 			break;
 			default:			
 				$periods['starttime'] 	= date( "Y-m-d H:i:s", $period_timestamp[0]);

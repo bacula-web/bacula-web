@@ -54,13 +54,13 @@
 		if( !is_null($job_status) && !is_null( $period_timestamps ) ) {
 			switch( $job_status ) {
 				case 'running':
-					$where[] = '(starttime BETWEEN "' . $intervals['starttime'] . '" AND "' . $intervals['endtime'] . '") ';
+					$where[] = '(starttime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
 				break;
 				case 'waiting':
 					// don't use interval for waiting jobs
 				break;
 				default:
-					$where[] = '(endtime BETWEEN "' . $intervals['starttime'] . '" AND "' . $intervals['endtime'] . '") ';
+					$where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
 				break;
 			}
 		}
@@ -116,7 +116,7 @@
 		
 		// Defined period
 		$intervals 	= CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
-		$where[] 	= '(endtime BETWEEN "' . $intervals['starttime'] . '" AND "' . $intervals['endtime'] . '") ';
+		$where[] 	= '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
 		
 		if( $job_name != 'ALL' ) 
 			$where[] = "name = '$job_name'";
@@ -151,7 +151,7 @@
 		
 		// Defined period
 		$intervals 	= CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
-		$where[] 	= '(endtime BETWEEN "' . $intervals['starttime'] . '" AND "' . $intervals['endtime'] . '") ';
+		$where[] 	= '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
 		
 		if( $job_name != 'ALL' ) 
 			$where[] = "name = '$job_name'";
