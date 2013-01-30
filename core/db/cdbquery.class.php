@@ -92,19 +92,20 @@
 
 		$periods = array();
 		
-		// Convert timestamp to date format
-		foreach( $period_timestamp as $timestamp ) {
-			$periods[] = date( "Y-m-d H:i:s", $timestamp);
-		}
-
-		switch( CDBUtils::getDriverName( $pdo_connection ) ) {
+		$db_driver = CDBUtils::getDriverName( $pdo_connection );
+		
+		switch( $db_driver ) {
 			case 'pgsql':
-				return "(endtime BETWEEN timestamp '$periods[0]' AND timestamp '$periods[1]') ";
+				$periods['starttime'] 	= 'timestamp ' . date( "Y-m-d H:i:s", $period_timestamp[0]);
+				$periods['endtime'] 	= 'timestamp ' . date( "Y-m-d H:i:s", $period_timestamp[1]);
 			break;
 			default:			
-				return "(EndTime BETWEEN '$periods[0]' AND '$periods[1]') ";
+				$periods['starttime'] 	= date( "Y-m-d H:i:s", $period_timestamp[0]);
+				$periods['endtime'] 	= date( "Y-m-d H:i:s", $period_timestamp[1]);
 			break;
-		}
+		} // end switch
+		
+		return $periods;
 	}
  }
 
