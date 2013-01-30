@@ -35,11 +35,11 @@ try {
  // Stored files number 
  $view->assign( 'stored_files', $dbSql->translate->get_Number_Format( Jobs_Model::get_Stored_Files( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
  
- // Database size
- $view->assign( 'database_size', Database_Model::get_Size( $dbSql->db_link, $dbSql->catalog_current_id ) );
-
  // Overall stored bytes
  $view->assign( 'stored_bytes', CUtils::Get_Human_Size( Jobs_Model::get_Stored_Bytes( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
+
+ // Database size
+ $view->assign( 'database_size', Database_Model::get_Size( $dbSql->db_link, $dbSql->catalog_current_id ) );
  
  // Total bytes and files stored over the last 24 hours
  $view->assign( 'bytes_last', CUtils::Get_Human_Size( Jobs_Model::get_Stored_Bytes( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
@@ -56,6 +56,7 @@ try {
  $view->assign('incr_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_INCR) );
  $view->assign('diff_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_DIFF) );
  $view->assign('full_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_FULL) );
+
  
  // Volumes size
  $volumes_size = $dbSql->getVolumesSize();
@@ -81,7 +82,7 @@ try {
  $jobs_status_data = array();
 
  foreach ($jobs_status as $status) {
-	$jobs_count 		= Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), $status);
+	$jobs_count 		= Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), strtolower($status) );
 	$jobs_status_data[] = array($status, $jobs_count );
  }
  
@@ -209,7 +210,7 @@ try {
  }catch (Exception $e) {
     CErrorHandler::displayError($e);
  }
-
+ 
  // Render template
  $view->render('index.tpl');
 ?>

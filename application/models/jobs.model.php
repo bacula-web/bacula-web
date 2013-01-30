@@ -18,21 +18,20 @@
  class Jobs_Model extends CModel {
 	
 	// ==================================================================================
-	// Function: 	count_jobs()
-	// Parameters:	$start_timestamp
-	//				$end_timestamp
-	//				$status
-	//				$level
-	//				$jobname
-	//				$client
-	// Return:		Total of jobs
+	// Function: 	count_Jobs()
+	// Parameters:	$pdo_connection
+	//				$period_timestamps (optional)
+	//				$job_status (optional)
+	//				$job_level (optional)
+	// Return:		Jobs count (optional)
 	// ==================================================================================
 	
-	public static function count_Jobs( $pdo_connection, $period_timestamps = array(), $job_status = null, $job_level = null) {
-		$statment 	 		 = '';
-		$where		 		 = array();
-		$tablename			 = 'Job';
-		$fields				 = array('COUNT(*) as job_count');
+	public static function count_Jobs( $pdo_connection, $period_timestamps = null, $job_status = null, $job_level = null) {
+		$statment	= null;
+		$where		= null;
+		$tablename	= 'Job';
+		$fields		= array('COUNT(*) as job_count');
+		$intervals	= null;		
 		
 		// Check PDO object
 		if( !is_a( $pdo_connection, 'PDO') and is_null($pdo_connection)  ) 
@@ -41,19 +40,36 @@
 		// PDO object singleton
 		if( is_null(CModel::$pdo_connection) )
 			CModel::$pdo_connection = $pdo_connection;
-
-		// Check period
-		if( !is_array($period_timestamps) )
-			throw new Exception('Wrong period of missing array provided in count_Jobs() function');
 		
-		// Defined period
-		$where[] = CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
+		
+		// Check timestamp interval
+		if( !is_null( $period_timestamps ) ) {
+			if( !is_array($period_timestamps) ) 
+				throw new Exception('Wrong period of missing array provided in count_Jobs() function');
+			else
+				$intervals  = CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
+		}
+		
+		// Defining interval depending on job status
+		if( !is_null($job_status) && !is_null( $period_timestamps ) ) {
+			switch( $job_status ) {
+				case 'running':
+					$where[] = '(starttime BETWEEN "' . $intervals['starttime'] . '" AND "' . $intervals['endtime'] . '") ';
+				break;
+				case 'waiting':
+					// don't use interval for waiting jobs
+				break;
+				default:
+					$where[] = '(endtime BETWEEN "' . $intervals['starttime'] . '" AND "' . $intervals['endtime'] . '") ';
+				break;
+			}
+		}
 		
 		// Job status
 		if( !is_null( $job_status )) {
-			switch( strtolower($job_status) ){
+			switch( $job_status ){
 				case 'running':
-					$where = array( "JobStatus = 'R'" );
+					$where[] = "JobStatus = 'R'" ;
 				break;
 				case 'completed':
 					$where[] = "JobStatus = 'T' ";
@@ -65,7 +81,7 @@
 					$where[] = "JobStatus = 'A' ";
 				break;
 				case 'waiting':
-					$where[] = "Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
+					$where[] = "JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
 				break;
 			} // end switch
 		}		
@@ -75,11 +91,11 @@
 			$where[] = "Level = '$job_level' ";
 		
 		// Building SQL statment
-		$statment = array( 'table' => CModel::get_Table($tablename), 'fields' => $fields, 'where' => $where);
+		$statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
 		$statment = CDBQuery::get_Select( $statment );
-		
+
 		// Execute SQL statment
-		$result = CDBUtils::runQuery($statment, CModel::$pdo_connection);
+		$result = CDBUtils::runQuery($statment, $pdo_connection);
 		$result = $result->fetch();
 		return $result['job_count'];
 	}
@@ -99,7 +115,8 @@
 		$tablename	= 'Job';
 		
 		// Defined period
-		$where[] = CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
+		$intervals 	= CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
+		$where[] 	= '(endtime BETWEEN "' . $intervals['starttime'] . '" AND "' . $intervals['endtime'] . '") ';
 		
 		if( $job_name != 'ALL' ) 
 			$where[] = "name = '$job_name'";
@@ -133,7 +150,8 @@
 		$tablename	= 'Job';
 		
 		// Defined period
-		$where[] = CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
+		$intervals 	= CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
+		$where[] 	= '(endtime BETWEEN "' . $intervals['starttime'] . '" AND "' . $intervals['endtime'] . '") ';
 		
 		if( $job_name != 'ALL' ) 
 			$where[] = "name = '$job_name'";

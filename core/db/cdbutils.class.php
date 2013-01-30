@@ -56,7 +56,7 @@ class CDBUtils {
 	}
 
     public static function runQuery( $query, $db_link ) {
-        $result 	  = null;
+		$result 	  = null;
 		$result_count = 0;
 		$statment	  = null;
 				
