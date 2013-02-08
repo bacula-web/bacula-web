@@ -26,7 +26,12 @@ class CErrorHandler {
     }
 
     public static function displayError($exception) {
-        switch (get_class($exception)) {
+/*		
+		echo '<pre>';
+		var_dump( $exception->getTrace() );
+		echo '</pre>';
+*/		
+		switch (get_class($exception)) {
             case 'PDOException':
                 self::setHeader('Database error');
                 break;
@@ -36,16 +41,18 @@ class CErrorHandler {
                 break;
         } // end switch
 		
-		$output  = '<table style="margin: 10px; width: 900px; border: 1px solid #c0c0c0;">';
+		// Display Exception trace
+		$output .= self::getFormatedTrace($exception);
 		
 		// Header
-		$output .= "<tr> <th colspan='2'>" . self::$header . "</th> </tr>";
+		$output .= '<table style="margin: 10px; width: 900px; border: 1px solid #c0c0c0;">';
+		$output .= "<tr> <th class='left_align' colspan='2'>" . self::$header . "</th> \n </tr> \n";
 		
 		// Exception details
-		$output .= "<tr> <td class='left_align' width='200'>File</td> <td class='left_align'>" . $exception->getFile() . "</td> \n</tr> \n";
-		$output .= "<tr> <td class='left_align'>Line</td> <td class='left_align'>" . $exception->getLine() . "</td> \n </tr> \n";
-		$output .= "<tr> <td class='left_align'>Exception code</td> <td class='left_align'>" . $exception->getCode() . "</td> \n </tr> \n";
-		$output .= "<tr> <td class='left_align'>Exception message</td> <td class='left_align'>" . $exception->getMessage() . "</td> \n </tr> \n";
+		$output .= "<tr> <td class='left_align' width='200'><b>File</b> </td> <td class='left_align'>" . $exception->getFile() . "</td> \n</tr> \n";
+		$output .= "<tr> <td class='left_align'><b>Line</b> </td> <td class='left_align'>" . $exception->getLine() . "</td> \n </tr> \n";
+		$output .= "<tr> <td class='left_align'><b>Exception code</b> </td> <td class='left_align'>" . $exception->getCode() . "</td> \n </tr> \n";
+		$output .= "<tr> <td class='left_align'><b>Exception message</b> </td> <td class='left_align'>" . $exception->getMessage() . "</td> \n </tr> \n";
 		
 		$output .= "<tfoot> \n <tr> \n";
 		$output .= "<td class='left_align' colspan='2'> \n";
@@ -58,8 +65,38 @@ class CErrorHandler {
 		$output .= "</table>";
 		
 		echo $output;
-        die();
-    }
+        //die();
+    } // end function displayError
+	
+	public static function getFormatedTrace( $e ) {
+		$formated_trace  = '<table style="margin: 10px; width: 900px; border: 1px solid #c0c0c0;">';
+		$formated_trace .= '<tr> <th class="left_align">Exception trace</th> </tr>';
+		
+		foreach( $e->getTrace() as $exception ) {
+		
+		//	foreach( $exception as $key => $trace) {
+			$formated_trace .= '<tr>';
+			$formated_trace .= '<td class="left_align">';
+			$formated_trace .= 'File: <b>' . $exception['file'] . '</b> ';
+			$formated_trace .= 'on line <b>' . $exception['line'] . '</b> ';
+			$formated_trace .= 'in function <b>' . $exception['class'] . $exception['type'] . $exception['function'] . '</b>';
+			$formated_trace .= '</td>';
+
+			// Function arguments
+			//$formated_trace .= '<td>';
+			//foreach( $exception['args'] as $param )
+			//	$formated_trace .= $param;
+			//$formated_trace .= '</td>';
+
+			$formated_trace .= '</tr>';
+		//	}
+		}
+
+			
+		$formated_trace .= '</table>';
+		
+		return $formated_trace;
+	}
 
 }
 ?>
