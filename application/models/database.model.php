@@ -24,9 +24,9 @@
 	// ==================================================================================
 	
 	public static function get_Size( $pdo_connection, $catalog_id ) {
-		$db_name	= 'bacula';
-		$statment 	= array();
-		$result	 	= '';
+		$db_name	= FileConfig::get_Value( 'db_name', $catalog_id);
+		$statment 	= null;
+		$result	 	= null;
 		
 		$pdo_driver = CDBUtils::getDriverName( $pdo_connection );
 		
