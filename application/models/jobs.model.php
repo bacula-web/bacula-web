@@ -15,7 +15,7 @@
   +-------------------------------------------------------------------------+
  */
 
- class Jobs_Model extends CModel {
+ class JobsModel extends CModel {
 	
 	// ==================================================================================
 	// Function: 	count_Jobs()
@@ -198,7 +198,7 @@
 		$fields		= array( 'Name' );
 
 		// Prepare and execute query
-		$statment 	= CDBQuery::get_Select( array( 'table' => Jobs_Model::get_Table('Job'), 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name' ) );
+		$statment 	= CDBQuery::get_Select( array( 'table' => JobsModel::get_Table('Job'), 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name' ) );
 		$result 	= CDBUtils::runQuery( $statment, $pdo );
 
 		foreach( $result->fetchAll() as $job ) {

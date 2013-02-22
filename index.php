@@ -26,36 +26,36 @@ try {
  $dbSql = new Bweb($view);
 
  // Running, completed, failed, waiting and canceled jobs status over last 24 hours
- $view->assign( 'running_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'running') );
- $view->assign( 'completed_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'completed') );
- $view->assign( 'failed_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'failed') );
- $view->assign( 'waiting_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'waiting') );
- $view->assign( 'canceled_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'canceled') );
+ $view->assign( 'running_jobs', JobsModel::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'running') );
+ $view->assign( 'completed_jobs', JobsModel::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'completed') );
+ $view->assign( 'failed_jobs', JobsModel::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'failed') );
+ $view->assign( 'waiting_jobs', JobsModel::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'waiting') );
+ $view->assign( 'canceled_jobs', JobsModel::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'canceled') );
 
  // Stored files number 
- $view->assign( 'stored_files', $dbSql->translate->get_Number_Format( Jobs_Model::getStoredFiles( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
+ $view->assign( 'stored_files', $dbSql->translate->get_Number_Format( JobsModel::getStoredFiles( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
  
  // Overall stored bytes
- $view->assign( 'stored_bytes', CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
+ $view->assign( 'stored_bytes', CUtils::Get_Human_Size( JobsModel::getStoredBytes( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
 
  // Database size
  $view->assign( 'database_size', Database_Model::get_Size( $dbSql->db_link, $dbSql->catalog_current_id ) );
  
  // Total bytes and files stored over the last 24 hours
- $view->assign( 'bytes_last', CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
- $view->assign( 'files_last', $dbSql->translate->get_Number_Format( Jobs_Model::getStoredFiles( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
+ $view->assign( 'bytes_last', CUtils::Get_Human_Size( JobsModel::getStoredBytes( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
+ $view->assign( 'files_last', $dbSql->translate->get_Number_Format( JobsModel::getStoredFiles( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
 
  // Number of clients
  $view->assign('clients', Clients_Model::count($dbSql->db_link) );
 
  // Defined Jobs and Filesets
  $view->assign( 'defined_filesets', FileSets_Model::count( $dbSql->db_link ) );
- $view->assign( 'defined_jobs', Jobs_Model::count_Job_Names( $dbSql->db_link ) );
+ $view->assign( 'defined_jobs', JobsModel::count_Job_Names( $dbSql->db_link ) );
 
  // Incremental, Differential and Full jobs over the last 24 hours
- $view->assign('incr_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_INCR) );
- $view->assign('diff_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_DIFF) );
- $view->assign('full_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_FULL) );
+ $view->assign('incr_jobs', JobsModel::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_INCR) );
+ $view->assign('diff_jobs', JobsModel::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_DIFF) );
+ $view->assign('full_jobs', JobsModel::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_FULL) );
 
  
  // Volumes size
@@ -67,7 +67,7 @@ try {
  $view->assign( 'pools_nb', Pools_Model::count( $dbSql->db_link ) );
 
  // Backup Job list
- $view->assign('jobs_list', Jobs_Model::get_Jobs_List($dbSql->db_link) );
+ $view->assign('jobs_list', JobsModel::get_Jobs_List($dbSql->db_link) );
  
  // Clients list
  $view->assign('clients_list', Clients_Model::getClients($dbSql->db_link) );
@@ -82,7 +82,7 @@ try {
  $jobs_status_data = array();
 
  foreach ($jobs_status as $status) {
-	$jobs_count 		= Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), strtolower($status) );
+	$jobs_count 		= JobsModel::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), strtolower($status) );
 	$jobs_status_data[] = array($status, $jobs_count );
  }
  
@@ -155,7 +155,7 @@ try {
  $days = CTimeUtils::getLastDaysIntervals(7);
 
  foreach ($days as $day) {
-    $stored_bytes 			= CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']) ), 1, 'GB', false );
+    $stored_bytes 			= CUtils::Get_Human_Size( JobsModel::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']) ), 1, 'GB', false );
     $days_stored_bytes[] 	= array(date("m-d", $day['start']), $stored_bytes);
  } 
  
