@@ -33,7 +33,7 @@ try {
  $view->assign( 'canceled_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'canceled') );
 
  // Stored files number 
- $view->assign( 'stored_files', $dbSql->translate->get_Number_Format( Jobs_Model::get_Stored_Files( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
+ $view->assign( 'stored_files', $dbSql->translate->get_Number_Format( Jobs_Model::getStoredFiles( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
  
  // Overall stored bytes
  $view->assign( 'stored_bytes', CUtils::Get_Human_Size( Jobs_Model::get_Stored_Bytes( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
@@ -43,7 +43,7 @@ try {
  
  // Total bytes and files stored over the last 24 hours
  $view->assign( 'bytes_last', CUtils::Get_Human_Size( Jobs_Model::get_Stored_Bytes( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
- $view->assign( 'files_last', $dbSql->translate->get_Number_Format( Jobs_Model::get_Stored_Files( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
+ $view->assign( 'files_last', $dbSql->translate->get_Number_Format( Jobs_Model::getStoredFiles( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
 
  // Number of clients
  $view->assign('clients', Clients_Model::count($dbSql->db_link) );

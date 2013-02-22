@@ -101,13 +101,13 @@
 	}
 	
 	// ==================================================================================
-	// Function: 	get_Stored_Files()
+	// Function: 	getStoredFiles()
 	// Parameters: 	$period	 		start and end date (unix timestamp)
 	//				$job_name		optional job name
 	//				$client			optional client name
 	// Return:		Total of stored files within the specific period
 	// ==================================================================================	
-	public function get_Stored_Files( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
+	public function getStoredFiles( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
 	{
 		$statment 	= '';
 		$where  	= array();
