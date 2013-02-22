@@ -17,15 +17,37 @@
 
  class Pools_Model extends CModel {
 
-    // ==================================================================================
+	// ==================================================================================
 	// Function: 	count()
-	// Parameters:	$tablename
-	//				$filter (optional)
-	// Return:		return row count for one table
+	// Parameters:	$pdo (PDO valid connection)
+	// Return:	row count for one table
 	// ==================================================================================
 	
 	public static function count( $pdo ) {
 		return CModel::count( $pdo, 'Pool');
 	}
   
+	// ==================================================================================
+	// Function: 	getPools()
+	// Parameters:	$pdo (PDO valid connection)
+
+	// Return:	pools list in a array
+	// ==================================================================================
+	
+	public static function getPools( $pdo ) {
+		$pools 	  = null;
+		$table    = 'Pool';
+		$where    = null;
+		
+		if( FileConfig::get_Value( 'hide_empty_pools' ) )
+			$where[] = "$table.NumVols > 0";
+		
+		$fields = array( 'poolid', 'name', 'numvols');
+		$result = CDBUtils::runQuery( CDBQuery::get_Select( array('table' => $table, 'fields' => $fields, 'where' => $where ) ), $pdo);
+			
+		foreach( $result->fetchAll() as $pool )
+			$pools[] = $pool;
+
+		return $pools;
+	}
  }
