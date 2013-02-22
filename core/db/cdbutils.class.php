@@ -19,10 +19,10 @@
 class CDBUtils {
 	private static $result_count;
 
-    private function __construct() {
-    }
+	private function __construct() {
+	}
 
-    public static function getDriverName( $PDO_connection ) {
+	public static function getDriverName( $PDO_connection ) {
 		return $PDO_connection->getAttribute(PDO::ATTR_DRIVER_NAME);
 	}
 	
@@ -55,7 +55,7 @@ class CDBUtils {
 		return self::$result_count;
 	}
 
-    public static function runQuery( $query, $db_link ) {
+	public static function runQuery( $query, $db_link ) {
 		$result 	  = null;
 		$result_count = 0;
 		$statment	  = null;
@@ -66,11 +66,11 @@ class CDBUtils {
 			
 		$result 	= $statment->execute();			
 
-        if ( is_null($result) )
-            throw new PDOException("Failed to execute PDOStatment <br />$query");
-				
+		if ( is_null($result) )
+			throw new PDOException("Failed to execute PDOStatment <br />$query");
+	
 		return $statment ;
-    }
+	}
 
 }
 
