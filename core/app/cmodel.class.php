@@ -26,7 +26,7 @@
 	
 	protected static function get_Table( $tablename ) {
 		
-		switch( CDBUtils::getDriverName( self::$pdo_connection ) ) {
+		switch( CDBUtils::getDriverName( CModel::$pdo_connection ) ) {
 			case 'pgsql':
 				return strtolower($tablename);
 			break;
