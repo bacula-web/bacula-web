@@ -128,10 +128,7 @@
 				$query        = "";
 				$debug	      = false;
 				
-				// Get the list of pools id
-				$query = "SELECT Pool.poolid, Pool.name FROM Pool ORDER BY Pool.poolid";
-				
-				foreach( $this->getPools() as $pool ) {
+				foreach( Pools_Model::getPools( $this->db_link ) as $pool ) {
 					switch( $this->db_driver )
 					{
 						case 'sqlite':
@@ -184,42 +181,6 @@
 				return $volumes_list;
 		} // end function GetVolumeList()
 		
-		// ==================================================================================
-		// Function: 	getPools()
-		// Parameters: 	none
-		// Return:	list of Pools in a array
-		// ==================================================================================
-		
-		public function getPools()
-		{
-			$query  = '';
-			$pools  = array();
-			$result = '';
-			
-			switch( $this->db_driver )
-			{
-				case 'sqlite':
-				case 'mysql':
-					$query 		= "SELECT name, numvols, poolid FROM Pool ";
-				break;
-				case 'pgsql':
-					$query 		= "SELECT name, numvols, poolid FROM pool ";
-				break;
-			}
-			
-			if( FileConfig::get_Value( 'hide_empty_pools' ) ) {
-				$query .= 'WHERE Pool.NumVols > 0';
-			}
-
-			//$result = $this->db_link->runQuery($query);
-			$result = CDBUtils::runQuery( $query, $this->db_link );
-			
-			
-			foreach( $result->fetchAll() as $pool )
-				$pools[] = $pool;
-
-			return $pools;
-		}
 		
 		// ==================================================================================
 		// Function: 	getClientInfos()
