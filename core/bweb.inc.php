@@ -114,7 +114,12 @@
 			}
 		}
 					
-		// Return an array of volumes ordered by poolid and volume name
+		// ==================================================================================
+		// Function: 	GetVolumeList()
+		// Parameters: 	none
+		// Return:	array of volumes ordered by poolid and volume name
+		// ==================================================================================
+		
 		public function GetVolumeList() 
 		{
 				$pools        = '';
@@ -182,8 +187,9 @@
 		// ==================================================================================
 		// Function: 	getPools()
 		// Parameters: 	none
-		// Return:		list of Pools in a array
+		// Return:	list of Pools in a array
 		// ==================================================================================
+		
 		public function getPools()
 		{
 			$query  = '';
@@ -242,92 +248,6 @@
 			return $client;
 		}
 		
-		// ==================================================================================
-		// Function: 	getStoredFiles()
-		// Parameters: 	$start_timestamp: 	start date in unix timestamp format
-		//				$end_timestamp: 	end date in unix timestamp format
-		//				$job_name:			optional job name
-		//				$client				optional client name
-		// Return:		Total of stored files within the specific period
-		// ==================================================================================	
-		
-		public function getStoredFiles( $start_timestamp, $end_timestamp, $job_name = 'ALL', $client = 'ALL' )
-		{
-			$query 		= "";
-			$start_date = date( "Y-m-d H:i:s", $start_timestamp);	
-			$end_date   = date( "Y-m-d H:i:s", $end_timestamp);	
-			
-			switch( $this->db_driver )
-			{
-				case 'sqlite':
-				case 'mysql':
-						$query = "SELECT SUM(JobFiles) AS stored_files FROM Job ";
-						$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' )";
-				break;
-				case 'pgsql':
-						$query = "SELECT SUM(JobFiles) AS stored_files FROM job ";
-						$query .= "WHERE ( endtime BETWEEN timestamp '$start_date' AND timestamp '$end_date' )";
-				break;
-			}
-			
-			if( $job_name != 'ALL' ) 
-				$query .= " AND name = '$job_name'";
-			
-			if( $client != 'ALL' )
-				$query .= " AND clientid = '$client'";
-			
-			// Execute query
-			$result = CDBUtils::runQuery( $query, $this->db_link );
-			$result = $result->fetch();
-			
-			if( isset($result['stored_files']) and !empty($result['stored_files']) )
-				return $result['stored_files'];
-			else
-				return 0;
-		}
-		
-		// ==================================================================================
-		// Function: 	getStoredBytes()
-		// Parameters: 	$start_timestamp: 	start date in unix timestamp format
-		//				$end_timestamp: 	end date in unix timestamp format
-		//				$job_name:			optional job name
-		// Return:		Total of stored bytes within the specific period
-		// ==================================================================================
-		public function getStoredBytes( $start_timestamp, $end_timestamp, $job_name = 'ALL', $client = 'ALL' )
-		{
-			$query    		= '';
-			$result			= '';
-			$start_date		= date( "Y-m-d H:i:s", $start_timestamp);	
-			$end_date		= date( "Y-m-d H:i:s", $end_timestamp);	
-			
-			switch( $this->db_driver )
-			{
-				case 'sqlite':
-				case 'mysql':
-					$query  = "SELECT SUM(JobBytes) as stored_bytes FROM Job ";
-					$query .= "WHERE ( EndTime BETWEEN '$start_date' AND '$end_date' )";
-				break;
-				case 'pgsql':
-					$query  = "SELECT SUM(jobbytes) as stored_bytes FROM job ";
-					$query .= "WHERE ( endtime BETWEEN timestamp '$start_date' AND timestamp '$end_date' )";
-				break;
-			}
-
-			if( $job_name != 'ALL' ) 
-				$query .= " AND name = '$job_name'";
-			
-			if( $client != 'ALL' )
-				$query .= " AND clientid = '$client'";		
-			
-			// Execute SQL statment
-			$result = CDBUtils::runQuery( $query, $this->db_link );
-			$result = $result->fetch();
-
-			if( isset($result['stored_bytes']) and !empty($result['stored_bytes']) )
-				return $result['stored_bytes'];
-			else
-				return 0;
-		}
 		
 		// ==================================================================================
 		// Function: 	getVolumesSize()
