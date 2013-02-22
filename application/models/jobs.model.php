@@ -114,6 +114,10 @@
 		$fields 	= array( 'SUM(JobFiles) AS stored_files' );
 		$tablename	= 'Job';
 		
+		// Check PDO object
+		if( !is_a( $pdo_connection, 'PDO') or is_null($pdo_connection)  ) 
+			throw new Exception('Unvalid PDO object provided in count_Jobs() function');		
+		
 		// Defined period
 		$intervals 	= CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
 		$where[] 	= '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
@@ -125,7 +129,7 @@
 			$where[] = "clientid = '$client'";
 		
 		// Building SQL statment
-		$statment = array( 'table' => CModel::get_Table($tablename), 'fields' => $fields, 'where' => $where);
+		$statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
 		$statment = CDBQuery::get_Select( $statment );
 
 		// Execute query
@@ -160,7 +164,7 @@
 			$where[] = "clientid = '$client'";
 		
 		// Building SQL statment
-		$statment = array( 'table' => CModel::get_Table($tablename), 'fields' => $fields, 'where' => $where);
+		$statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
 		$statment = CDBQuery::get_Select( $statment );
 
 		// Execute query
