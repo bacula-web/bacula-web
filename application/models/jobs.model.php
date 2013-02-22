@@ -136,13 +136,13 @@
 	}	
 
 	// ==================================================================================
-	// Function: 	get_Stored_Bytes()
-	// Parameters: 	$period	 		start and end date (unix timestamp)
+	// Function: 	getStoredBytes()
+	// Parameters: 	$period	 	start and end date (unix timestamp)
 	//				$job_name		optional job name
 	//				$client			optional client name
 	// Return:		Total of stored bytes within the specific period
 	// ==================================================================================	
-	public function get_Stored_Bytes( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
+	public function getStoredBytes( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
 	{
 		$statment 	= '';
 		$where  	= array();

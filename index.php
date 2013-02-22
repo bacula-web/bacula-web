@@ -36,13 +36,13 @@ try {
  $view->assign( 'stored_files', $dbSql->translate->get_Number_Format( Jobs_Model::getStoredFiles( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
  
  // Overall stored bytes
- $view->assign( 'stored_bytes', CUtils::Get_Human_Size( Jobs_Model::get_Stored_Bytes( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
+ $view->assign( 'stored_bytes', CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
 
  // Database size
  $view->assign( 'database_size', Database_Model::get_Size( $dbSql->db_link, $dbSql->catalog_current_id ) );
  
  // Total bytes and files stored over the last 24 hours
- $view->assign( 'bytes_last', CUtils::Get_Human_Size( Jobs_Model::get_Stored_Bytes( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
+ $view->assign( 'bytes_last', CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
  $view->assign( 'files_last', $dbSql->translate->get_Number_Format( Jobs_Model::getStoredFiles( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
 
  // Number of clients
@@ -155,7 +155,7 @@ try {
  $days = CTimeUtils::getLastDaysIntervals(7);
 
  foreach ($days as $day) {
-    $stored_bytes 			= CUtils::Get_Human_Size( Jobs_Model::get_Stored_Bytes( $dbSql->db_link, array($day['start'], $day['end']) ), 1, 'GB', false );
+    $stored_bytes 			= CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']) ), 1, 'GB', false );
     $days_stored_bytes[] 	= array(date("m-d", $day['start']), $stored_bytes);
  } 
  
