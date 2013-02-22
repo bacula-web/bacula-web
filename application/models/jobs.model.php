@@ -107,7 +107,7 @@
 	//				$client			optional client name
 	// Return:		Total of stored files within the specific period
 	// ==================================================================================	
-	public function getStoredFiles( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
+	public static function getStoredFiles( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
 	{
 		$statment 	= '';
 		$where  	= array();
@@ -146,7 +146,7 @@
 	//				$client			optional client name
 	// Return:		Total of stored bytes within the specific period
 	// ==================================================================================	
-	public function getStoredBytes( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
+	public static function getStoredBytes( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
 	{
 		$statment 	= '';
 		$where  	= array();
