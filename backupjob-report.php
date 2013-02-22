@@ -83,7 +83,7 @@
     $graph = new CGraph("graph9.png");
     
     foreach ($days as $day) {
-        $stored_files = $dbSql->getStoredFiles($day['start'], $day['end'], $backupjob_name);
+        $stored_files = JobsModel::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']), $backupjob_name);
         $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
     }
     

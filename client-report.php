@@ -65,12 +65,12 @@
 
  // Get job names for the client
  foreach ($dbSql->getJobsNameOfClient( $clientid ) as $jobname) {
-	// Last good client's for each backup jobs
-	$query 		= 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
-    $query 	   .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
-    $query 	   .= "WHERE Job.Name = '$jobname' AND Job.JobStatus = 'T' AND Job.Type = 'B' ";
-    $query     .= 'ORDER BY Job.EndTime DESC ';
-    $query     .= 'LIMIT 1';
+       // Last good client's for each backup jobs
+       $query 	 = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
+       $query 	.= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
+       $query 	.= "WHERE Job.Name = '$jobname' AND Job.JobStatus = 'T' AND Job.Type = 'B' ";
+       $query   .= 'ORDER BY Job.EndTime DESC ';
+       $query   .= 'LIMIT 1';
 
 	$jobs_result = CDBUtils::runQuery( $query, $dbSql->db_link );
 
@@ -115,7 +115,7 @@
  $graph = new CGraph("graph3.png");
 
  foreach ($days as $day) {
-    $stored_files = $dbSql->getStoredFiles($day['start'], $day['end'], 'ALL', $clientid);
+    $stored_files = JobsModel::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']), 'ALL', $clientid );
     $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
  }
 
