@@ -65,7 +65,7 @@
     $graph = new CGraph("graph8.png");
     
     foreach ($days as $day) {
-        $stored_bytes = $dbSql->getStoredBytes($day['start'], $day['end'], $backupjob_name);
+        $stored_bytes = JobsModel::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']), $backupjob_name );
         $stored_bytes = CUtils::Get_Human_Size($stored_bytes, 1, 'GB', false);
         $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
     }
