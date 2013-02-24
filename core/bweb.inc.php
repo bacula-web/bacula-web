@@ -181,35 +181,6 @@
 				return $volumes_list;
 		} // end function GetVolumeList()
 		
-		
-		// ==================================================================================
-		// Function: 	getClientInfos()
-		// Parameters: 	client id
-		// Return:		array containing client information
-		// ==================================================================================
-
-		public function getClientInfos( $client_id )
-		{
-			$client = array();
-			$result = '';
-			$query  = "SELECT name,uname FROM Client WHERE clientid = '$client_id'";
-			
-			$result = CDBUtils::runQuery( $query, $this->db_link );
-				
-			foreach( $result->fetchAll() as $client ) {
-				$uname			   = explode( ' ', $client['uname'] );
-				$client['version'] = $uname[0];
-					
-				$uname			   = explode(',', $uname[2] );
-				$temp    		   = explode('-', $uname[0]);
-				$client['arch']	   = $temp[0];
-				$client['os']      = $uname[1];
-			}
-			
-			return $client;
-		}
-		
-		
 		// ==================================================================================
 		// Function: 	getVolumesSize()
 		// Parameters: 	none

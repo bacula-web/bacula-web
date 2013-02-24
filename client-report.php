@@ -59,9 +59,8 @@
 	throw new Exception("Application error: the period hasn't been provided as expected");
  }
 
-
  // Client informations
- $client = $dbSql->getClientInfos($clientid);
+ $client = Clients_Model::getClientInfos( $dbSql->db_link, $clientid);
 
  // Get job names for the client
  foreach ($dbSql->getJobsNameOfClient( $clientid ) as $jobname) {

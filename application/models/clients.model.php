@@ -33,7 +33,7 @@
 	// Return:		array containing client list or false
 	// ==================================================================================
 
-	static public function getClients($pdo) {
+	public static function getClients($pdo) {
 		$clients  	= array();
 		$table 		= 'Client';
 		$fields		= array('ClientId, Name');
@@ -51,6 +51,36 @@
 		}
 			
 		return $clients;		
+	}
+	
+	// ==================================================================================
+	// Function: 	getClientInfos()
+	// Parameters: 	client id
+	// Return:		array containing client information
+	// ==================================================================================
+
+	public static function getClientInfos( $pdo, $client_id )
+	{
+		$client 	= array();
+		$result 	= '';
+		
+		$fields		= array('name','uname');
+		$where[]	= "clientid = $client_id";
+		$statment  	= CDBQuery::get_Select( array('table'=> 'Client', 'fields' => $fields ) );
+		
+		$result 	= CDBUtils::runQuery( $statment, $pdo );
+			
+		foreach( $result->fetchAll() as $client ) {
+			$uname			   = explode( ' ', $client['uname'] );
+			$client['version'] = $uname[0];
+				
+			$uname			   = explode(',', $uname[2] );
+			$temp    		   = explode('-', $uname[0]);
+			$client['arch']	   = $temp[0];
+			$client['os']      = $uname[1];
+		}
+		
+		return $client;
 	}
 
 }    
