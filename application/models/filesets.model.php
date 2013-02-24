@@ -26,7 +26,7 @@
 	
 	public static function count( $pdo ) {
 		$fields	= array( 'COUNT(DISTINCT FileSet) as filesets_count' );
-		$table	= FileSets_Model::get_Table('FileSet');
+		$table	= 'FileSet';
 
 		// Prepare and execute query
 		$statment 	= CDBQuery::get_Select( array( 'table' => $table, 'fields' => $fields ) );
