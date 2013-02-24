@@ -182,22 +182,6 @@
 		} // end function GetVolumeList()
 		
 		// ==================================================================================
-		// Function: 	getVolumesSize()
-		// Parameters: 	none
-		// Return:		sum in bytes of all volumes
-		// ==================================================================================
-
-		public function getVolumesSize() {
-			$query = array( 'table' => 'Media', 'fields' => array('SUM(Media.VolBytes) as volumes_size') );
-			
-			// Run SQL query
-			$result = $this->db_link->query(CDBQuery::get_Select( $query ) );
-			$result = $result->fetch();
-			
-			return $result['volumes_size'];
-		}
-		
-		// ==================================================================================
 		// Function: 	getJobsNameOfClient()
 		// Parameters: 	$client_id
 		// Return:		jobs list for a specific client

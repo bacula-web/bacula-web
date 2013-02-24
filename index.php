@@ -58,12 +58,11 @@ try {
  $view->assign('full_jobs', JobsModel::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_FULL) );
 
  
- // Volumes size
- $volumes_size = $dbSql->getVolumesSize();
+ // Volumes disk usage
+ $volumes_size = Volumes_Model::getDiskUsage($dbSql->db_link);
  $view->assign('volumes_size', CUtils::Get_Human_Size( $volumes_size ) );
 
  // Pools count
- //$view->assign('pools_nb', $dbSql->countPools() );
  $view->assign( 'pools_nb', Pools_Model::count( $dbSql->db_link ) );
 
  // Backup Job list

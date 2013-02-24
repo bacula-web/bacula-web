@@ -27,4 +27,21 @@
 	public static function count( $pdo ) {
 		return CModel::count( $pdo, 'Media');
 	}
+
+	// ==================================================================================
+	// Function: 	getDiskUsage()
+	// Parameters: 	none
+	// Return:		disk space usage (in Bytes) for all volumes
+	// ==================================================================================
+
+	public static function getDiskUsage( $pdo ) {
+		$fields		= array('SUM(Media.VolBytes) as bytes_size');
+		$statment 	= array( 'table' => 'Media', 'fields' => $fields );
+		
+		// Run SQL query
+		$result 	= CDBUtils::runQuery(CDBQuery::get_Select( $statment), $pdo );
+	
+		$result 	= $result->fetch();
+		return $result['bytes_size'];
+	}
  }
