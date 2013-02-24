@@ -19,23 +19,6 @@
 	protected static $pdo_connection;
  
     // ==================================================================================
-	// Function: 	get_Table()
-	// Parameters:	none
-	// Return:		return table with correct case
-	// ==================================================================================
-	
-	protected static function get_Table( $tablename ) {
-		
-		switch( CDBUtils::getDriverName( CModel::$pdo_connection ) ) {
-			case 'pgsql':
-				return strtolower($tablename);
-			break;
-			default:			
-				return $tablename;
-			break;
-		}
-	}
-    // ==================================================================================
 	// Function: 	count()
 	// Parameters:	$tablename
 	//				$filter (optional)
@@ -43,11 +26,10 @@
 	// ==================================================================================
 	
 	protected static function count( $pdo, $tablename, $filter = null ) {
-		$table 		= CModel::get_Table( $tablename);
 		$fields		= array( 'COUNT(*) as row_count' );
 
 		// Prepare and execute query
-		$statment 	= CDBQuery::get_Select( array( 'table' => $table, 'fields' => $fields, $filter) );
+		$statment 	= CDBQuery::get_Select( array( 'table' => $tablename, 'fields' => $fields, $filter) );
 		$result 	= CDBUtils::runQuery($statment, $pdo);
 
 		$result 	= $result->fetch();
