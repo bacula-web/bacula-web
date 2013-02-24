@@ -36,7 +36,8 @@ $pdo_drivers = PDO::getAvailableDrivers();
 $icon_result = array( true => 'ok.png', false => 'error.png');
 
 // Checks list
-$check_list = array(array('check_cmd' => 'php-gettext',
+$check_list = array(
+	array('check_cmd' => 'php-gettext',
         'check_label' => 'PHP - Gettext support',
         'check_descr' => 'If you want Bacula-web in your language, please compile PHP with Gettext support'),
     array('check_cmd' => 'php-session',
@@ -65,7 +66,10 @@ $check_list = array(array('check_cmd' => 'php-gettext',
         'check_descr' => realpath(VIEW_CACHE_DIR) . ' must be writable by Apache'),
     array('check_cmd' => 'php-version',
         'check_label' => 'PHP version',
-        'check_descr' => 'PHP version must be at least 5.0.0 (current = ' . PHP_VERSION . ')')
+        'check_descr' => 'PHP version must be at least 5.0.0 (current = ' . PHP_VERSION . ')'),
+    array('check_cmd' => 'php-timezone',
+        'check_label' => 'PHP timezone',
+        'check_descr' => 'Timezone must be configured in php.ini (current timezone = ' . ini_get('date.timezone') . ')')
 );
 
 // Doing all checks
@@ -73,37 +77,44 @@ foreach ($check_list as &$check) {
     switch ($check['check_cmd']) {
         case 'php-session':
             $check['check_result'] = $icon_result[function_exists('session_start')];
-            break;
+        break;
         case 'php-gettext':
             $check['check_result'] = $icon_result[function_exists('gettext')];
-            break;
+        break;
         case 'php-gd':
             $check['check_result'] = $icon_result[function_exists('gd_info')];
-            break;
+        break;
         case 'pear-db':
             $check['check_result'] = $icon_result[class_exists('DB')];
-            break;
+        break;
         case 'php-mysql':
             $check['check_result'] = $icon_result[in_array('mysql', $pdo_drivers)];
-            break;
+        break;
         case 'php-postgres':
             $check['check_result'] = $icon_result[in_array('pgsql', $pdo_drivers)];
-            break;
+        break;
         case 'php-sqlite':
             $check['check_result'] = $icon_result[in_array('sqlite', $pdo_drivers)];
-            break;
+		break;
         case 'php-pdo':
             $check['check_result'] = $icon_result[class_exists('PDO')];
-            break;
+		break;
         case 'smarty-cache':
             $check['check_result'] = $icon_result[is_writable(VIEW_CACHE_DIR)];
-            break;
+        break;
         case 'php-version':
             $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '5.0.0', '>=')];
-            break;
+        break;
 		case 'db-connection':
 			$check['check_result'] = $icon_result[ CDBUtils::isConnected( $dbSql->db_link )];
-			break;
+		break;
+		case 'php-timezone':
+			$timezone = ini_get('date.timezone');
+			if( !empty( $timezone ) )
+				$check['check_result'] = $icon_result[true];
+			else
+				$check['check_result'] = $icon_result[false];
+		break;
     }
 }
 
