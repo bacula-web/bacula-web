@@ -7,13 +7,26 @@
 
  table.table_small {
   font-size: 8pt;
-  padding: 4pt;
+  padding: 4px;
  }
  
  table.table_big {
   font-size: 11pt;
  }
  
+ table.grid td {
+  padding: 8px 4px;
+ }
+
+ table.grid th {
+  padding: 10px 4px;
+ }
+
+ table.grid tr:hover {
+  background-color: #c8c8c8;
+  /*cursor: pointer;*/
+ }
+
  td, th {
   border-top: 1px solid #c0c0c0;
   border-bottom: 1px solid #c0c0c0;
@@ -28,11 +41,6 @@
 
  tr.even {
   background-color: #e8e8e8;
- }
- 
- table.grid tr:hover {
-  background-color: #c8c8c8;
-  /*cursor: pointer;*/
  }
  
  td.running {
