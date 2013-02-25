@@ -27,23 +27,35 @@ class CDBUtils {
 	}
 	
 	public static function isConnected( $PDO_connection ) {
-		// if MySQL of postGreSQL
-		if( self::getDriverName( $PDO_connection ) != 'sqlite' ) {
-			$pdo_connection = self::getConnectionStatus($PDO_connection);
-			$str = 'Connection OK';
-		}else {
-			// Assume that the SQLite database file is readable by Apache - will be improved
-			return true;
+		$pdo_connection	= null;
+		
+		// If MySQL of postGreSQL
+		switch( self::getDriverName( $PDO_connection ) ){
+			case 'mysql':
+			case 'pgsql':
+				$pdo_connection = self::getConnectionStatus($PDO_connection);
+			break;
+			default:
+				// Assume that Apache have access to the SQLite database file (to be improved)
+				$pdo_connection = true;
+			break;
 		}
-
-		if ( stripos( $pdo_connection, $str ) === false )
-			return false;
+		
+		// Test connection status
+		if( $pdo_connection != false)
+			return true;
 		else
-			return true;	
+			return false;	
 	}
-	
+
+	// ==================================================================================
+	// Function: 	getConnectionStatus()
+	// Parameters:	$PDO_connection (valid pdo connection)
+	// Return:	true if the PDO connection is valid or false
+	// ==================================================================================
+
 	public static function getConnectionStatus( $PDO_connection ) {
-		// if MySQL of postGreSQL
+		// If MySQL of postGreSQL
 		if( self::getDriverName( $PDO_connection ) != 'sqlite' ) {
 			return $PDO_connection->getAttribute( PDO::ATTR_CONNECTION_STATUS );
 		}else {
@@ -56,9 +68,9 @@ class CDBUtils {
 	}
 
 	public static function runQuery( $query, $db_link ) {
-		$result 	  = null;
-		$result_count = 0;
-		$statment	  = null;
+		$result  	= null;
+		$result_count 	= 0;
+		$statment	= null;
 				
 		$statment	= $db_link->prepare($query);
 		if( $statment == FALSE )
