@@ -33,9 +33,9 @@
 		</tr>
 		{foreachelse}
 		<tr>
-			<tfoot colspan="6" style="text-align: center; font-weight: bold; font-size: 8pt; padding: 1em; width: 100%;">
+			<td colspan="6" style="text-align: center; font-weight: bold; font-size: 8pt; padding: 1em; width: 100%;">
 				{t}No volume(s) in this pool{/t}
-			</tfoot>
+			</td>
 		</tr>
 		{/foreach}
 	</table>	

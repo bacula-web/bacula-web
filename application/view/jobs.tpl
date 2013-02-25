@@ -83,7 +83,7 @@
 	  </tr>
 	  {foreachelse}
 	  <tr>
-		<td  colspan="12">{t}No job(s) to display{/t}</td>
+		<td colspan="12">{t}No job(s) to display{/t}</td>
       </tr>
 	  {/foreach}
 	</table>
