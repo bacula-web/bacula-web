@@ -49,11 +49,11 @@
     $backupjob_period = "From " . date("Y-m-d", (NOW - WEEK)) . " to " . date("Y-m-d", NOW);
     
     // Stored Bytes on the defined period
-    $backupjob_bytes = JobsModel::getStoredBytes( $dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name );
+    $backupjob_bytes = Jobs_Model::getStoredBytes( $dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name );
     $backupjob_bytes = CUtils::Get_Human_Size($backupjob_bytes);
     
     // Stored files on the defined period
-    $backupjob_files = JobsModel::getStoredFiles( $dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name);
+    $backupjob_files = Jobs_Model::getStoredFiles( $dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name);
     $backupjob_files = $dbSql->translate->get_Number_Format($backupjob_files);
     
     // Get the last 7 days interval (start and end)
@@ -65,7 +65,7 @@
     $graph = new CGraph("graph8.png");
     
     foreach ($days as $day) {
-        $stored_bytes = JobsModel::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']), $backupjob_name );
+        $stored_bytes = Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']), $backupjob_name );
         $stored_bytes = CUtils::Get_Human_Size($stored_bytes, 1, 'GB', false);
         $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
     }
@@ -83,7 +83,7 @@
     $graph = new CGraph("graph9.png");
     
     foreach ($days as $day) {
-        $stored_files = JobsModel::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']), $backupjob_name);
+        $stored_files = Jobs_Model::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']), $backupjob_name);
         $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
     }
     
