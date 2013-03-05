@@ -58,12 +58,12 @@
  }else {
 	throw new Exception("Application error: the period hasn't been provided as expected");
  }
-
+ 
  // Client informations
  $client = Clients_Model::getClientInfos( $dbSql->db_link, $clientid);
-
+  
  // Get job names for the client
- foreach ($dbSql->getJobsNameOfClient( $clientid ) as $jobname) {
+ foreach ( Jobs_Model::get_Jobs_List( $dbSql->db_link, $clientid ) as $jobname) {
        // Last good client's for each backup jobs
        $query 	 = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
        $query 	.= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
@@ -87,11 +87,11 @@
 
  $view->assign('backup_jobs', $backup_jobs);
 
- // Get the last 7 days interval (start and end)
+ // Get the last n days interval (start and end)
  $days = CTimeUtils::getLastDaysIntervals($period);
 
  // ===============================================================
- // Last 7 days stored Bytes graph
+ // Last n days stored Bytes graph
  // ===============================================================  
  $graph = new CGraph("graph2.png");
 
@@ -109,7 +109,7 @@
  $view->assign( 'graph_stored_bytes', $graph->Render() );
 
  // ===============================================================
- // Getting last 7 days stored files graph
+ // Getting last n days stored files graph
  // ===============================================================
  $graph = new CGraph("graph3.png");
 
