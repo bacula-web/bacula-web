@@ -198,18 +198,21 @@
 	// ==================================================================================	
 
 	public static function get_Jobs_List( $pdo, $client_id = null ) {
-		$jobs		= array();
-		$fields		= array( 'Name' );
+		$jobs   = array();
+		$fields = array( 'Name' );
+                $where  = null;       
 
 		// Prepare and execute query
-		$statment 	= CDBQuery::get_Select( array( 'table' => 'Job', 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name' ) );
-		$result 	= CDBUtils::runQuery( $statment, $pdo );
+                if( !is_null($client_id) )
+                    $where[] = "clientid = '$client_id'";
 
-		foreach( $result->fetchAll() as $job ) {
+		$statment   = array( 'table' => 'Job', 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
+		$result     = CDBUtils::runQuery( CDBQuery::get_Select($statment), $pdo );
+
+		foreach( $result->fetchAll() as $job )
 			$jobs[] = $job['name'];
-		}
 		
-		return $jobs;
+                return $jobs;
 	}
  }
  
