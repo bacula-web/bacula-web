@@ -49,7 +49,7 @@
 		foreach( $result->fetchAll() as $client ) {
 			$clients[ $client['clientid'] ] = $client['name'];
 		}
-			
+
 		return $clients;		
 	}
 	
@@ -65,8 +65,8 @@
 		$result 	= '';
 		
 		$fields		= array('name','uname');
-		$where[]	= "clientid = $client_id";
-		$statment  	= CDBQuery::get_Select( array('table'=> 'Client', 'fields' => $fields ) );
+		$where		= array( "clientid = $client_id" );
+		$statment  	= CDBQuery::get_Select( array('table'=> 'Client', 'fields' => $fields, 'where' => $where ) );
 		
 		$result 	= CDBUtils::runQuery( $statment, $pdo );
 			
