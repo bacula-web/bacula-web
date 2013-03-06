@@ -20,16 +20,16 @@
 
 	class Bweb
 	{
-		public	$translate;						// Translation class instance
-		private $catalogs = array();			// Catalog array
+		public	$translate;		// Translation class instance
+		private $catalogs = array();	// Catalog array
 		
-		private $view;							// Template class
+		private $view;			// Template class
 
-		public  $db_link;						// Database connection
-		private $db_driver;						// Database connection driver
+		public  $db_link;		// Database connection
+		private $db_driver;		// Database connection driver
 		
-		public  $catalog_nb;					// Catalog count
-		public	$catalog_current_id;			// Current catalog
+		public  $catalog_nb;		// Catalog count
+		public	$catalog_current_id;	// Current catalog
 
 		function __construct( &$view )
 		{             
@@ -181,40 +181,5 @@
 				return $volumes_list;
 		} // end function GetVolumeList()
 		
-		// ==================================================================================
-		// Function: 	getJobsNameOfClient()
-		// Parameters: 	$client_id
-		// Return:		jobs list for a specific client
-		// ==================================================================================
-
-		public function getJobsNameOfClient( $client_id = null )
-		{
-			$query          = '';
-			$table			= '';
-			$result         = '';
-			$backupjobs = array();
-
-			switch( $this->db_driver ) {
-				case 'sqlite':
-				case 'mysql':
-					$table = 'Job';
-				break;
-				case 'pgsql':
-					$table = 'job';
-				break;
-			}
-			
-			// Build and run SQL statment
-			$query  = CDBQuery::get_Select( array(	'table' => $table, 'fields' => array('name'), 'orderby' => 'name', 
-													'where' => array("clientid = '$client_id'"), 'groupby' => 'name' ) ); 
-						
-			$result = CDBUtils::runQuery( $query, $this->db_link);
-					
-			foreach( $result->fetchAll() as $jobname )
-				$backupjobs[] = $jobname['name'];
-
-			return $backupjobs;
-		}
-	
 } // end class Bweb
 ?>
