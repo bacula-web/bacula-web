@@ -26,7 +26,7 @@
 	// Return:		Jobs count (optional)
 	// ==================================================================================
 	
-	public static function count_Jobs( $pdo_connection, $period_timestamps = null, $job_status = null, $job_level = null) {
+	public static function count_Jobs( $pdo_connection, $period_timestamps, $job_status = null, $job_level = null) {
 		$statment	= null;
 		$where		= null;
 		$tablename	= 'Job';
@@ -41,29 +41,25 @@
 		if( is_null(CModel::$pdo_connection) )
 			CModel::$pdo_connection = $pdo_connection;
 		
-		
-		// Check timestamp interval
-		if( !is_null( $period_timestamps ) ) {
-			if( !is_array($period_timestamps) ) 
-				throw new Exception('Wrong period of missing array provided in count_Jobs() function');
-			else
-				$intervals  = CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
-		}
+		// Getting timestamp interval
+		$intervals  = CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
 		
 		// Defining interval depending on job status
-		if( !is_null($job_status) && !is_null( $period_timestamps ) ) {
+		if( !is_null($job_status) ) {
 			switch( $job_status ) {
 				case 'running':
-					$where[] = '(starttime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
+					$where = array('(starttime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ' );
 				break;
 				case 'waiting':
-					// don't use interval for waiting jobs
+					// We don't use interval for waiting jobs
 				break;
 				default:
-					$where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
+					$where = array( '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ' );
 				break;
 			}
-		}
+		}else{
+			$where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
+		}	
 		
 		// Job status
 		if( !is_null( $job_status )) {
@@ -93,7 +89,7 @@
 		// Building SQL statment
 		$statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
 		$statment = CDBQuery::get_Select( $statment );
-
+		
 		// Execute SQL statment
 		$result = CDBUtils::runQuery($statment, $pdo_connection);
 		$result = $result->fetch();
