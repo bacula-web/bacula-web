@@ -19,11 +19,11 @@
 	
 	// ==================================================================================
 	// Function: 	count_Jobs()
-	// Parameters:	$pdo_connection
-	//				$period_timestamps (optional)
-	//				$job_status (optional)
-	//				$job_level (optional)
-	// Return:		Jobs count (optional)
+	// Parameters:	$pdo_connection			Valid PDO connection object
+	//				$period_timestamps		Array containing start and end date (unix timestamp format)	
+	//				$job_status 			Job status (optional)
+	//				$job_level 				Job level (optional)
+	// Return:		Jobs count
 	// ==================================================================================
 	
 	public static function count_Jobs( $pdo_connection, $period_timestamps, $job_status = null, $job_level = null) {
@@ -98,12 +98,14 @@
 	
 	// ==================================================================================
 	// Function: 	getStoredFiles()
-	// Parameters: 	$period	 		start and end date (unix timestamp)
-	//				$job_name		optional job name
-	//				$client			optional client name
+	// Parameters:	$pdo_connection 	Valid pdo connection object
+	//				$period_timestamps	Array containing start and end date (unix timestamp format)
+	//				$job_name			Job name (optional)
+	//				$client_id			Client id (optional)
 	// Return:		Total of stored files within the specific period
-	// ==================================================================================	
-	public static function getStoredFiles( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
+	// ==================================================================================
+	
+	public static function getStoredFiles( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL' )
 	{
 		$statment 	= '';
 		$where  	= array();
@@ -121,8 +123,8 @@
 		if( $job_name != 'ALL' ) 
 			$where[] = "name = '$job_name'";
 		
-		if( $client != 'ALL' )
-			$where[] = "clientid = '$client'";
+		if( $client_id != 'ALL' )
+			$where[] = "clientid = '$client_id'";
 		
 		// Building SQL statment
 		$statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
@@ -137,12 +139,14 @@
 
 	// ==================================================================================
 	// Function: 	getStoredBytes()
-	// Parameters: 	$period	 	start and end date (unix timestamp)
-	//				$job_name		optional job name
-	//				$client			optional client name
+	// Parameters:	$pdo_connection		Valid PDO connection object
+	//				$period_timestamps 	Array containing start and end date (unix timestamp format)
+	//				$job_name			Job name (optional)
+	//				$client_id			Client id (optional)
 	// Return:		Total of stored bytes within the specific period
-	// ==================================================================================	
-	public static function getStoredBytes( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client = 'ALL' )
+	// ==================================================================================
+	
+	public static function getStoredBytes( $pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL' )
 	{
 		$statment 	= '';
 		$where  	= array();
@@ -156,8 +160,8 @@
 		if( $job_name != 'ALL' ) 
 			$where[] = "name = '$job_name'";
 		
-		if( $client != 'ALL' )
-			$where[] = "clientid = '$client'";
+		if( $client_id != 'ALL' )
+			$where[] = "clientid = '$client_id'";
 		
 		// Building SQL statment
 		$statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
@@ -172,7 +176,7 @@
 
     // ==================================================================================
 	// Function: 	count_Job_Names()
-	// Parameters:	$pdo - valid PDO object
+	// Parameters:	$pdo 	Valid PDO connection object
 	// Return:		total of defined jobs name
 	// ==================================================================================	
 
@@ -189,8 +193,9 @@
 
     // ==================================================================================
 	// Function: 	get_Jobs_List()
-	// Parameters:	$pdo - valid PDO object
-	// Return:		total of defined jobs name
+	// Parameters:	$pdo 		Valid PDO connection object
+	//				$client_id 	Client id (optinoal)
+	// Return:		Total of defined jobs name
 	// ==================================================================================	
 
 	public static function get_Jobs_List( $pdo, $client_id = null ) {
@@ -199,8 +204,8 @@
                 $where  = null;       
 
 		// Prepare and execute query
-                if( !is_null($client_id) )
-                    $where[] = "clientid = '$client_id'";
+        if( !is_null($client_id) )
+			$where[] = "clientid = '$client_id'";
 
 		$statment   = array( 'table' => 'Job', 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
 		$result     = CDBUtils::runQuery( CDBQuery::get_Select($statment), $pdo );
