@@ -17,6 +17,16 @@
 
  class Jobs_Model extends CModel {
 	
+    // ==================================================================================
+	// Function: 	count()
+	// Parameters:	$pdo_connection			Valid PDO connection object
+	// Return:		Number of clients
+	// ==================================================================================
+
+	static public function count($pdo) {
+		return CModel::count( $pdo, 'Job');	
+	}	
+	
 	// ==================================================================================
 	// Function: 	count_Jobs()
 	// Parameters:	$pdo_connection			Valid PDO connection object
