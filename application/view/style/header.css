@@ -1,71 +1,71 @@
 #header{
-    width: 100%;
+    display: block;
+	width: 100%;
     padding: 0px;
     margin: 0px;
     background-color: #f0f0f0;
-    /*display: table;*/
-}
-
-#header .app_name {
-    /*display: table-cell;*/
-    /*float: right;*/
-    color: #FFFFFF;
-    background-color: #404040;
-    vertical-align: middle;
-    font: normal small-caps bold 18pt Arial,Verdana;
-    padding: 7px 15px;
-}
-
-div.app_version {
-    color: #404040;
-    font: normal normal bold 9pt Arial,Verdana;
-    text-align: right;
-    margin: 0px;
-    padding: 2px;
-	background-color: #f0f0f0;
-}
-
-#top_links {
-    font-size: 10pt;
-    padding: 0px;
-	margin: 0px;
-    height: 30px;
-	background-color: #f0f0f0;
-}
-
-#top_links  ul{ 
-	margin:0px; 
-	padding: 0px;
-}
-
-#top_links li {
-    height: 30px;
-    display: inline;
-    float: right;
-    padding: 0px 10px;
-    vertical-align: middle;
-    line-height: 30px;
-}
-
-#top_links li a {
-    font-size: 10pt;
-}
-
-#top_controls {
-    font-size: 10pt;
-    padding: 0px;
-	margin: 0px;
-    height: 35px;
-	background-color: #f0f0f0;
-	border: 1px solid #cdcdcd;
 	vertical-align: middle;
 }
 
-#top_controls form.catalog_selector  {
-	float: right;
-	height: 35px;
-	line-height: 35px;
-	vertical-align: middle;
-	margin: 0px 5px;
-	padding: 0px;
+div.toolbar_box {	
+ min-width: 50px;
+ padding: 5px;
 }
+
+#header_main {
+ display: block;
+ background-color: #404040;
+}
+
+#header_main div.toolbar_box { 
+ height: 40px;
+ line-height: 40px;
+}
+
+#header_main .toolbar_box img {
+ height: 40px;
+}
+
+#header_main .app_name {
+ color: #FFFFFF;
+ background-color: #404040;
+ font: normal small-caps bolder 18pt Arial,Verdana;
+ height: 40px;
+ line-height: 40px;
+ text-align: center;
+}
+
+#toolbar_top {
+ display: block;
+}
+
+#toolbar_top div.toolbar_box {
+ line-height: 20px;
+ height: 20px;
+}
+
+#toolbar_top div.toolbar_box li {
+ font-size: 9pt;
+}
+
+div.toolbar_box ul {
+ list-style: none;
+ margin: 0px;
+}
+
+div.toolbar_box li {
+ display: inline;
+ font-size: 11pt;
+ padding: 0px 10px;
+}
+
+div.toolbar_box li a, div.toolbar_box li a:active, div.toolbar_box li a:visited, div.toolbar_box li a:hover {
+ text-decoration: none;
+ font-weight: bold;
+}
+
+div.left_box { float: left; }
+
+div.right_box { float: right; }
+
+div.clear_both { clear: both; }
