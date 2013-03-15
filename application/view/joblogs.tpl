@@ -2,9 +2,6 @@
 
 <div id="nav">
   <ul>
-    <li>
-      <a class="home" href="index.php" title="{t}Back to the dashboard{/t}">{t}Dashboard{/t}</a>
-    </li>
     <li>{t}Job logs{/t}</li>
   </ul>
 </div>
