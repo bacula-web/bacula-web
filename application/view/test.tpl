@@ -33,5 +33,4 @@
 	</table>
 </div> <!-- end div id=main_center -->
 
-</body>
-</html>
+{include file="footer.tpl"}
