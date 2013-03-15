@@ -10,6 +10,7 @@
 div.toolbar_box {	
  min-width: 50px;
  padding: 5px;
+ text-align: center;
 }
 
 #header_main {
@@ -23,13 +24,13 @@ div.toolbar_box {
 }
 
 #header_main .toolbar_box img {
- height: 40px;
+ height: 35px;
 }
 
 #header_main .app_name {
- color: #FFFFFF;
+ color: #c0c0c0;
  background-color: #404040;
- font: normal small-caps bolder 18pt Arial,Verdana;
+ font: normal small-caps bolder 19pt Arial,Verdana;
  height: 40px;
  line-height: 40px;
  text-align: center;
@@ -63,6 +64,20 @@ div.toolbar_box li a, div.toolbar_box li a:active, div.toolbar_box li a:visited,
  text-decoration: none;
  font-weight: bold;
 }
+
+div.toolbar_box ul.page_navigation {
+ margin: 0px;
+ padding: 0px;
+}
+div.toolbar_box ul.page_navigation li {
+ font-size: 16pt;
+}
+
+.page_name {
+ font-size: 13pt;
+ color: #c0c0c0;
+ font-weight: bold;
+ }
 
 div.left_box { float: left; }
 

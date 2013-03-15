@@ -138,6 +138,9 @@ $bar_graph->SetData( $data, 'bars' );
 $bar_graph->SetGraphSize(300, 230);
 $view->assign( 'bar_graph', $bar_graph->Render() );
 
+// Set page name
+$view->assign('page_name', 'Test page');
+ 
 // Template rendering
 $view->assign('checks', $check_list);
 $view->display('test.tpl');

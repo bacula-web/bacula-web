@@ -1,11 +1,5 @@
 {include file=header.tpl}
 
-<div id="nav">
-  <ul>
-    <li>{t}Job logs{/t}</li>
-  </ul>
-</div>
-
 <div class="main_center">
   <h4>{t}Job id{/t} <b>{$jobid}</b></h4>
   

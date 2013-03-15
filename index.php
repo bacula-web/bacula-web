@@ -210,6 +210,9 @@ try {
     CErrorHandler::displayError($e);
  }
  
+ // Set page name
+ $view->assign('page_name', 'Dashboard');
+ 
  // Render template
  $view->render('index.tpl');
 ?>

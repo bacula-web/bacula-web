@@ -1,11 +1,5 @@
 {include file=header.tpl}
 
-<div id="nav">
-  <ul>
-    <li>{t}Client report{/t}</li>
-  </ul>
-</div>
-
 <div id="main_center">  
   <div class="box">
     <h4>{t}Client informations{/t}</h4>	

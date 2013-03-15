@@ -183,6 +183,9 @@ $view->assign('last_jobs', $last_jobs);
 $view->assign('jobs_found', count($last_jobs) );
 $view->assign('total_jobs', Jobs_Model::count( $dbSql->db_link, 'Job') ); 
 
-// Process and display the template 
-$view->render('jobs.tpl');
+ // Set page name
+ $view->assign('page_name', 'Jobs report');
+ 
+ // Process and display the template 
+ $view->render('jobs.tpl');
 ?>

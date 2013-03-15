@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<title>Bacula-Web</title>
+<title>Bacula-Web - {$page_name}</title>
 <link rel="stylesheet" type="text/css" href="application/view/style/default.css">
 <link rel="stylesheet" type="text/css" href="application/view/style/header.css">
 <link rel="stylesheet" type="text/css" href="application/view/style/table.css">
@@ -24,9 +24,16 @@
  </div> <!-- end div toolbar_top -->
 
  <div id="header_main">
+  <!-- Navigation page -->
   <div class="toolbar_box left_box">
-   <a href="index.php" title="Dashboard"> <img src="application/view/style/images/home_w.png" alt=""> </a>
+    <a href="index.php" title="Dashboard"> <img src="application/view/style/images/home_w.png" alt=""> </a>
   </div>
+  <!-- Page name -->
+  <div class="toolbar_box left_box page_name">
+    {$page_name}
+  </div>
+  
+  <!-- Application name -->
   <div class="toolbar_box right_box">
    <div class="app_name">Bacula-Web</div>
   </div>

@@ -1,11 +1,5 @@
 {include file=header.tpl}
 
-<div id="nav">
-  <ul>
-    <li>{t}Jobs report{/t}</li>
-  </ul>
-</div>
-
 <div class="main_center">
 
   <div class="box">

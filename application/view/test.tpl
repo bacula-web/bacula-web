@@ -1,13 +1,8 @@
 {include file=header.tpl}
 
-<div id="nav">
-  <ul>
-    <li>{t}Test page{/t}</li>
-  </ul>
-</div>
-
 <div class="main_center">
-<div class="header">{t}Required components{/t}</div>
+    
+  <div class="header">{t}Required components{/t}</div>
 	<table>
 		<tr>
 			<th>Component</th>

@@ -128,12 +128,15 @@
     CErrorHandler::displayError($e);
  }
 
-$view->assign('jobs', $jobs);
-$view->assign('backupjob_name', $backupjob_name);
-$view->assign('backupjob_period', $backupjob_period);
-$view->assign('backupjob_bytes', $backupjob_bytes);
-$view->assign('backupjob_files', $backupjob_files);
+ $view->assign('jobs', $jobs);
+ $view->assign('backupjob_name', $backupjob_name);
+ $view->assign('backupjob_period', $backupjob_period);
+ $view->assign('backupjob_bytes', $backupjob_bytes);
+ $view->assign('backupjob_files', $backupjob_files);
 
-// Process and display the template 
-$view->display('backupjob-report.tpl');
+ // Set page name
+ $view->assign('page_name', 'Backup job report');
+ 
+ // Process and display the template 
+ $view->display('backupjob-report.tpl');
 ?>

@@ -1,11 +1,5 @@
 {include file=header.tpl}
 
-<div id="nav">
-  <ul>
-    <li>{t}Pools and Volumes list{/t}</li>
-  </ul>
-</div>
-
 {foreach from=$pools item=pool key=pool_name}
 <div class="main_center">
 	<div class="header">{$pool_name}</div>

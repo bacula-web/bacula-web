@@ -43,6 +43,9 @@ foreach ($result->fetchAll() as $log) {
 $view->assign('jobid', $jobid);
 $view->assign('joblogs', $joblogs);
 
+// Set page name
+$view->assign('page_name', 'Job logs');
+
 // Process and display the template 
 $view->render('joblogs.tpl');
 ?>

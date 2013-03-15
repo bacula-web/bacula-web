@@ -15,15 +15,19 @@
   | GNU General Public License for more details.                            |
   +-------------------------------------------------------------------------+
  */
-session_start();
-include_once( 'core/global.inc.php' );
+ session_start();
+ include_once( 'core/global.inc.php' );
 
-// Initialise view and model
-$view = new CView();
-$dbSql = new Bweb($view);
+ // Initialise view and model
+ $view = new CView();
+ $dbSql = new Bweb($view);
 
-// Get volumes list (pools.tpl)
-$view->assign('pools', $dbSql->GetVolumeList());
+ // Get volumes list (pools.tpl)
+ $view->assign('pools', $dbSql->GetVolumeList());
 
-$view->display('pools.tpl');
+ // Set page name
+ $view->assign('page_name', 'Pools and volumes report');
+ 
+ // Process and display the template
+ $view->display('pools.tpl');
 ?>

@@ -135,6 +135,9 @@
  $view->assign('client_arch', $client['arch']);
  $view->assign('client_version', $client['version']);
 
+ // Set page name
+ $view->assign('page_name', 'Client report');
+
  // Process and display the template
  $view->render('client-report.tpl');
 ?>

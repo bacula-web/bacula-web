@@ -13,31 +13,6 @@ a:visited, a:hover, a {
     color: #404040;
 }
 
-#nav
-{
-    vertical-align: middle;
-    border: 1px solid #C8C8C8;
-	background-color: #f0f0f0;
-}
-
-#nav li {
-    display: inline;
-    font-size: 12pt;
-    padding: 0px 10px 0px 5px;
-    margin: 0px;
-}
-
-#nav ul {
-	margin: 5px;
-	padding: 5px;
-}
-
-#nav li a {  
-    font-size: 12pt;
-    font-weight: bold;
-    vertical-align: middle;
-}
-
 .main_center {
     min-width: 1100px;
     margin: 10px;
