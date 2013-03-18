@@ -27,6 +27,9 @@
  ClassAutoLoader::add_Path('core');
  ClassAutoLoader::add_Path('application');
  
+ // Get all $_POST and $_GET values
+ CHttpRequest::get_Vars();
+ 
  // Views path
  define('BW_ROOT', getcwd());
  define('VIEW_DIR', BW_ROOT . "/application/view/");

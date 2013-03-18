@@ -22,9 +22,7 @@ $view 		= new CView();
 $dbSql 		= new Bweb($view);
 $joblogs 	= array();
 
-// Retrieving $_GET values
-$get_vars 	= CHttpRequest::getRequestVars($_GET);
-$jobid 		= $get_vars['jobid'];
+$jobid 		= CHttpRequest::get_Value('jobid');
 
 // Prepare and execute SQL statment
 $statment 	= array('table' => 'Log', 'where' => array("JobId = '$jobid'"), 'orderby' => 'Time');

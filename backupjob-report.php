@@ -31,19 +31,11 @@
     $days_stored_bytes = array();
     $days_stored_files = array();
     
-    // ===============================================================
-    // Get Backup Job name from GET or POST
-    // ===============================================================
-    $http_post = CHttpRequest::getRequestVars($_POST);
-    $http_get = CHttpRequest::getRequestVars($_GET);
-    
     // Backup job name
-    if (isset($http_post['backupjob_name']))
-        $backupjob_name = $http_post['backupjob_name'];
-    elseif (isset($http_get['backupjob_name']))
-        $backupjob_name = $http_get['backupjob_name'];
+    if( !is_null(CHttpRequest::get_value('backupjob_name') ) )
+        $backupjob_name = CHttpRequest::get_value('backupjob_name');
     else
-        die("Please specify a backup job name ");
+        throw new Exeption("Error: Backup job name not specified");
     
     // Generate Backup Job report period string
     $backupjob_period = "From " . date("Y-m-d", (NOW - WEEK)) . " to " . date("Y-m-d", NOW);

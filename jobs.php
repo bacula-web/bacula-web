@@ -32,11 +32,11 @@ define('STATUS_FAILED', 4);
 define('STATUS_CANCELED', 5);
 
 $job_status = array(STATUS_ALL => 'All',
-    STATUS_RUNNING => 'Running',
-    STATUS_WAITING => 'Waiting',
-    STATUS_COMPLETED => 'Completed',
-    STATUS_FAILED => 'Failed',
-    STATUS_CANCELED => 'Canceled');
+					STATUS_RUNNING => 'Running',
+					STATUS_WAITING => 'Waiting',
+					STATUS_COMPLETED => 'Completed',
+					STATUS_FAILED => 'Failed',
+					STATUS_CANCELED => 'Canceled');
 
 $view->assign('job_status', $job_status);
 
@@ -48,10 +48,9 @@ $query .= "FROM Job ";
 $query .= "LEFT JOIN Pool ON Job.PoolId=Pool.PoolId ";
 $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
 
-$posts = CHttpRequest::getRequestVars($_POST);
-
-if ($posts != false) {
-    switch ($posts['status']) {
+// Check job status filter
+if (!is_null(CHttpRequest::get_Value('status') ) ) {
+    switch (CHttpRequest::get_Value('status')) {
         case STATUS_RUNNING:
             $query .= "WHERE Job.JobStatus = 'R' ";
             break;
@@ -68,7 +67,7 @@ if ($posts != false) {
             $query .= "WHERE Job.JobStatus = 'A' ";
             break;
     }
-    $view->assign('job_status_filter', $posts['status']);
+    $view->assign('job_status_filter', CHttpRequest::get_Value('status') );
 }
 
 $order_by	  				= '';
@@ -80,30 +79,30 @@ $result_order = array( 'jobid' => 'Job Id', 'Job.Name' => 'Job name', 'jobbytes'
 $view->assign('result_order', $result_order);
 
 // Order by
-if( isset($posts['orderby']) ) {
-	$order_by = $posts['orderby'];
+if( !is_null( CHttpRequest::get_Value('orderby') ) ) {
+	$order_by = CHttpRequest::get_Value('orderby');
 }else{
     $order_by = 'jobid';
 }
 
-// Order by DESC | ASC
-if( isset( $posts['result_order_asc'] ) ) {
-    $order_by_asc = $posts['result_order_asc'];
-	$result_order_asc_checked = 'checked';
+// Order by DESC || ASC
+if( !is_null( CHttpRequest::get_Value('result_order_asc') ) ) {
+    $order_by_asc 				= CHttpRequest::get_Value('result_order_asc');
+	$result_order_asc_checked 	= 'checked';
 }
 
 $query .= "ORDER BY $order_by $order_by_asc ";
 
-$view->assign( 'result_order_field', $posts['orderby']);
+$view->assign( 'result_order_field', CHttpRequest::get_Value('orderby'));
 $view->assign( 'result_order_asc_checked' ,$result_order_asc_checked);
 
 // Jobs per page
 $jobs_per_page = array(25 => '25', 50 => '50', 75 => '75', 100 => '100', 150 => '150');
 
 // Determine how many jobs to display
-if (isset($posts['jobs_per_page'])) {
-    $query .= "LIMIT " . $posts['jobs_per_page'];
-    $view->assign('jobs_per_page_selected', $posts['jobs_per_page']);
+if( !is_null( CHttpRequest::get_Value('jobs_per_page') ) ) {
+    $query .= "LIMIT " . CHttpRequest::get_Value('jobs_per_page');
+    $view->assign('jobs_per_page_selected', CHttpRequest::get_Value('jobs_per_page') );
 }else
     $query .= "LIMIT 25 ";
 

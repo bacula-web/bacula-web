@@ -60,12 +60,10 @@
 			$this->translate->set_Language( $this->view );
 			
 			// Check catalog id
-			$http_post = CHttpRequest::getRequestVars($_POST);
-			if( isset( $http_post['catalog_id'] ) ) {
-				$this->catalog_current_id = $http_post['catalog_id'];
+			if( !is_null(CHttpRequest::get_Value('catalog_id') ) ) {
+				$this->catalog_current_id = CHttpRequest::get_Value('catalog_id');
 				$_SESSION['catalog_id'] = $this->catalog_current_id;
-			}
-			elseif( isset( $_SESSION['catalog_id'] ) )
+			}elseif( isset( $_SESSION['catalog_id'] ) )
 				$this->catalog_current_id = $_SESSION['catalog_id'];
 			else {
 				$this->catalog_current_id = 0;

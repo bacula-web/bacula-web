@@ -18,30 +18,61 @@
 
 class CHttpRequest {
 
-    // Return a strip taged value
+    private static $value_list;
+    
+    // ==================================================================================
+	// Function: 	__construct()
+	// Parameters:	none
+	// Return:		
+	// ==================================================================================
+
+    private function __construct() {
+        self::$value_list = array();
+    }
+    
+    // ==================================================================================
+	// Function: 	getSaveValue( $value )
+	// Parameters:	$value
+	// Return:		secured value
+	// ==================================================================================
+
     private static function getSafeValue($value) {
         return strip_tags($value);
     }
 
-    // Return an array of $_POST or $_GET values
-    // If $_POST or $_GET are empty, the return value is FALSE
-    public static function getRequestVars(&$value) {
-        $value_list = array();
-
-        if (is_array($value) and count($value) > 0) {
-            foreach ($value as $key => $var) {
-                if (isset($value[$key]))
-                    $value_list[$key] = self::getSafeValue($var);
-                else
-                    $value_list[$key] = false;
-            }
-        }else {
-            return false;
+    // ==================================================================================
+	// Function: 	count()
+	// Parameters:	$tablename
+	//				$filter (optional)
+	// Return:		array containing all passed values by $_POST or $_GET
+	// ==================================================================================
+    
+    public static function get_Vars() {
+        
+        // $_POST
+        foreach( $_POST as $var => $value ) {
+            self::$value_list[$var] = $value;  
         }
-
-        return $value_list;
+        
+        // $_GET
+        foreach( $_GET as $var => $value ) {
+            self::$value_list[$var] = $value;  
+        }
     }
 
+    // ==================================================================================
+	// Function: 	get_Value()
+	// Parameters:	$var
+	// Return:		value of $var, or null if not defined
+	// ==================================================================================
+    
+    public function get_Value($var) {
+        
+        if( isset(self::$value_list[$var]) )
+            return self::$value_list[$var];
+        else
+            return null;
+    }
 }
 
 // end class
