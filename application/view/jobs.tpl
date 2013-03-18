@@ -1,39 +1,48 @@
 {include file=header.tpl}
 
 <div class="main_center">
-
-  <div class="box">
-	<form action="jobs.php" method="post">
+  <div class="box right_box">
+  
+  <form action="jobs.php" method="post">
 	<!-- Filter jobs form -->
 	<table>
 		<tr>
-			<td style="border: 1px solid #c8c8c8; width: 250px; background-color:#eeeeee;"><b>{t}Filter{/t}</b></td>
-			<td style="border: 1px solid #c8c8c8; text-align: right;">
-				{t}Job status{/t}
+			<th colspan="2"> <!-- style="border: 1px solid #c8c8c8; width: 150px; background-color:#eeeeee;"-->
+			  <b>{t}Filter{/t}</b>
+			</th>
+		</tr>
+		<tr>
+			<td style="border: 1px solid #c8c8c8; text-align: right;"><b>{t}Job status{/t}</b></td>
+			<td style="text-align: left;">
 				{html_options name=status values=$job_status options=$job_status selected=$job_status_filter onChange="submit();"}
 			</td>
 		</tr>
 		<tr>
-			<td style="border: 1px solid #c8c8c8; width: 250px; background-color:#eeeeee;"><b>{t}Order by{/t}</b></td>
-			<td style="border: 1px solid #c8c8c8; text-align: right;">
-				<input type="checkbox" name="result_order_asc" value="ASC" {$result_order_asc_checked} onChange="submit();"> Up
+			<td style="border: 1px solid #c8c8c8; text-align:right;"><b>{t}Order by{/t}</b></td>
+			<td style="border: 1px solid #c8c8c8; text-align: left;">
 				{html_options name=orderby values=$result_order options=$result_order selected=$result_order_field onChange="submit();"}
+				<input type="checkbox" name="result_order_asc" value="ASC" {$result_order_asc_checked} onChange="submit();"> Up
 			</td>
 		</tr>
-    </table>
-    &nbsp;
-    <table>
 		<tr>
-			<td style="border: 1px solid #c8c8c8; width:250px; background-color:#eeeeee;"><b>{$jobs_found}</b> job(s) / <b>{$total_jobs} Job(s)</b></td>
 			<td style="border: 1px solid #c8c8c8; text-align: right;">
-				{t}Jobs / Page{/t}
+				<b>{t}Jobs per Page{/t}</b>
+			</td>
+			<td class="left_align">
 				{html_options name=jobs_per_page options=$jobs_per_page selected=$jobs_per_page_selected onChange="submit();"}
+			</td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr>
+			<td colspan="2" style="border: 1px solid #c8c8c8; background-color:#eeeeee;">
+			  Found <b>{$jobs_found}</b> of <b>{$total_jobs} Job(s)</b>
 			</td>
 		</tr>
 	</table>
 	</form>
-	
-    <br />
+  </div>
+  
+  <div class="box left_box">
 	
 	<table class="grid">
 	  <tr>
