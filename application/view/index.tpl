@@ -129,13 +129,13 @@
 	<table>
 		<tr>
 			<td class="label">{t}Client{/t}</td>
-			<td style="text-align: right;">
+			<td class="right_align">
 				{html_options name=client_id options=$clients_list"}
 			</td>
 		</tr>
 		<!--
 		<tr>
-			<td class="label">Report type</td>
+			<td class="label left_align">Report type</td>
 			<td class="info">
 				<select>
 					<option>{t}Transferred Bytes{/t}
@@ -144,7 +144,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="label">Graph type</td>
+			<td class="label left_align">Graph type</td>
 			<td class="info">
 				<select>
 					<option>Bars
@@ -155,7 +155,7 @@
 		-->
 		<tr>
 			<td class="label">{t}Interval{/t}</td>
-			<td style="text-align: right;">
+			<td class="right_align">
 				<select name="period">
 					<option value="7">{t}Last week{/t}
 					<option value="14">{t}Last 2 week{/t}
@@ -179,7 +179,7 @@
    <table>
 	 <tr>
 		<td class="label">{t}Backup job name{/t}</td>
-		<td style="text-align: right;">
+		<td class="right_align">
 	     <input type=hidden name="default" value="1"> 				
 		   <select name=backupjob_name>
 		     {html_options values=$jobs_list output=$jobs_list}
