@@ -54,7 +54,7 @@
     
     // Stored files on the defined period
     $backupjob_files = Jobs_Model::getStoredFiles( $dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name);
-    $backupjob_files = $dbSql->translate->get_Number_Format($backupjob_files);
+    $backupjob_files = CUtils::format_Number( $backupjob_files );
     
     // Get the last 7 days interval (start and end)
     $days = CTimeUtils::getLastDaysIntervals(7);
@@ -119,7 +119,7 @@
     
         // Job bytes more easy to read
         $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
-        $job['jobfiles'] = $dbSql->translate->get_Number_Format($job['jobfiles']);
+        $job['jobfiles'] = CUtils::format_Number( $job['jobfiles'] );
     
         $jobs[] = $job;
     } // end while

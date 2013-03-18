@@ -74,9 +74,9 @@
 	$jobs_result = CDBUtils::runQuery( $query, $dbSql->db_link );
 
     foreach ($jobs_result->fetchAll() as $job) {
-        $job['level'] = $job_levels[$job['level']];
-        $job['jobfiles'] = $dbSql->translate->get_Number_Format($job['jobfiles']);
-        $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
+        $job['level'] 		= $job_levels[$job['level']];
+        $job['jobfiles'] 	= CUtils::format_Number($job['jobfiles']);
+        $job['jobbytes'] 	= CUtils::Get_Human_Size($job['jobbytes']);
 		
 		if (count( $backup_jobs ) % 2)
 			$job['odd_even'] = 'even';

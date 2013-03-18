@@ -25,10 +25,10 @@ class CTranslation {
     private $domaine;
 
     function __construct($lang = 'en_EN') {
-        $this->language = $lang;
-        $this->charset = 'UTF-8';
-        $this->domaine = 'messages';
-        $this->locale_path = LOCALE_DIR;
+        $this->language     = $lang;
+        $this->charset      = 'UTF-8';
+        $this->domaine      = 'messages';
+        $this->locale_path  = LOCALE_DIR;
     }
 
     function set_Language(&$template) {
@@ -43,15 +43,6 @@ class CTranslation {
         bindtextdomain($this->domaine, $this->locale_path);
         bind_textdomain_codeset($this->domaine, $this->charset);
         textdomain($this->domaine);
-    }
-
-    // Return formated number depending on current locale
-    function get_Number_Format($number, $decimal = 0) {
-        // Getting localized numeric formating information
-        $locale = localeconv();
-
-        // Return formated number
-        return number_format($number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
     }
 
 }

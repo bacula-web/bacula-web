@@ -165,7 +165,7 @@ foreach ($jobsresult as $job) {
     $job['level'] = $job_levels[$job['level']];
 
     // Job files
-    $job['jobfiles'] = $dbSql->translate->get_Number_Format($job['jobfiles']);
+    $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
 
     // Job size
     $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);

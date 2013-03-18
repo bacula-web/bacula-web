@@ -51,6 +51,21 @@ class CUtils {
 
         return $hsize;
     }
+    
+    // ==================================================================================
+	// Function: 	format_Number()
+	// Parameters:	$number
+	//				$decimal (optional, default = 0)
+	// Return:		formated number depending on current locale
+	// ==================================================================================
+    
+    function format_Number($number, $decimal = 0) {
+        // Getting localized numeric formating information
+        $locale = localeconv();
+
+        // Return formated number
+        return number_format($number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
+    }    
 
 }
 
