@@ -1,3 +1,31 @@
+=== Bacula-Web 5.2.13 ===
+
+ Version: 5.2.13
+ Released on 1st April 2013
+ 
+ Changelog
+ 
+ - General: code cleanup and improvment
+ - General: improved header look and feel (cleaned up html and css)
+ - General: ability to use home icon in the header to show the dashboard
+ - General: improved exception handling by showing exception trace
+ - General: implemented PHP class autload
+ - General: browser title display the current page name from now
+ - Test page: added php timezone check
+ - Pools and volumes report page: fixed html code for empty pools
+ - Test page: fixed a bug with database connection status (was showing wrong connection status)
+ - Jobs report page: moved display options box on the right
+ 
+ Fixed bugs / new features
+
+ - 0000086 - Wrong waiting jobs count in Dashboard widgets
+ - 0000075 - Special Character in db_name results in "database does not exist"
+ - 0000087 - Issue accessing dashboard page with MySQL 5.0.32-7
+ - 0000093 - Database error
+ - 0000090 - Remove the top white bar on the main page
+ - 0000087 - Issue accessing dashboard page with MySQL 5.0.32-7
+ - 0000079 - Slow graphs generation
+ 
 === Bacula-Web 5.2.12 ===
 
  Version: 5.2.12
