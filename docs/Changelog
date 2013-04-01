@@ -23,7 +23,6 @@
  - 0000087 - Issue accessing dashboard page with MySQL 5.0.32-7
  - 0000093 - Database error
  - 0000090 - Remove the top white bar on the main page
- - 0000087 - Issue accessing dashboard page with MySQL 5.0.32-7
  - 0000079 - Slow graphs generation
  
 === Bacula-Web 5.2.12 ===
