@@ -7,7 +7,7 @@
 	<!-- Filter jobs form -->
 	<table>
 		<tr>
-			<th colspan="2"> <!-- style="border: 1px solid #c8c8c8; width: 150px; background-color:#eeeeee;"-->
+			<th colspan="2">
 			  <b>{t}Filter{/t}</b>
 			</th>
 		</tr>
@@ -16,6 +16,10 @@
 			<td style="text-align: left;">
 				{html_options name=status values=$job_status options=$job_status selected=$job_status_filter onChange="submit();"}
 			</td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr>
+		  <th colspan="2">Options</th>
 		</tr>
 		<tr>
 			<td style="border: 1px solid #c8c8c8; text-align:right;"><b>{t}Order by{/t}</b></td>
