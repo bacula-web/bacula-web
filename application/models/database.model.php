@@ -33,16 +33,17 @@
 		switch( $pdo_driver )
 		{
 			case 'mysql':
-				$statment	 = "SELECT SUM( DATA_LENGTH + INDEX_LENGTH - DATA_FREE) AS dbsize ";
-				$statment	.= "FROM INFORMATION_SCHEMA.TABLES ";
-				$statment	.= "where TABLE_SCHEMA = '$db_name'";			
+				$statment 	= array( 'table'   => 'information_schema.TABLES', 
+									 'fields'  => array("table_schema AS 'database', sum( data_length + index_length) AS 'dbsize'"),
+									 'where'   => array( "table_schema = '$db_name'" ),
+									 'groupby' => 'table_schema' );
+				$statment 	= CDBQuery::get_Select($statment, $pdo_connection);
 			break;
 			case 'pgsql':
-				$statment 	 = "SELECT pg_database_size('bacula') AS dbsize";
-				$result    	 = CDBUtils::runQuery($statment, $pdo_connection);
+				$statment	= "SELECT pg_database_size('bacula') AS dbsize";
 			break;
 			case 'sqlite':
-				$db_size 	 = filesize( FileConfig::get_Value( 'db_name', $catalog_id) );
+				$db_size 	= filesize( FileConfig::get_Value( 'db_name', $catalog_id) );
 				return CUtils::Get_Human_Size($db_size);
 			break;
 		}
