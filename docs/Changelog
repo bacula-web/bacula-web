@@ -1,3 +1,18 @@
+=== Bacula-Web 5.2.13-1 ===
+
+ Version: 5.2.13-1
+ Released on 21st April 2013
+ 
+ Changelog
+ 
+ - Dashboard: Fixed bug with MySQL database size sql query
+ 
+ Fixed bugs / new features
+ 
+ 0000097 - Trouble when doing a fresh install
+ 0000096 - SQLSTATE[22003]: Numeric value out of range: 1690 BIGINT UNSIGNED value is out of range
+ 0000095 - Obtaining db size fails for large catalogs databases
+ 
 === Bacula-Web 5.2.13 ===
 
  Version: 5.2.13
