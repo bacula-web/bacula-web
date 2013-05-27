@@ -40,7 +40,7 @@
 				$statment 	= CDBQuery::get_Select($statment, $pdo_connection);
 			break;
 			case 'pgsql':
-				$statment	= "SELECT pg_database_size('bacula') AS dbsize";
+				$statment	= "SELECT pg_database_size('$db_name') AS dbsize";
 			break;
 			case 'sqlite':
 				$db_size 	= filesize( FileConfig::get_Value( 'db_name', $catalog_id) );
