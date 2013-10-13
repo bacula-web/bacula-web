@@ -46,6 +46,7 @@
    {if $catalog_nb > 1}
 	<form class="catalog_selector" method="post" action="index.php">
 	 Catalog {html_options name=catalog_id options=$catalogs selected=$catalog_current_id onchange="submit();"}
+         <noscript><input type="submit" value="Select"></noscript>
 	</form>
    {/if}
   </div>

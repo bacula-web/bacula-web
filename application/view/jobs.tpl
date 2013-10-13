@@ -14,7 +14,7 @@
 		<tr>
 			<td style="border: 1px solid #c8c8c8; text-align: right;"><b>{t}Job status{/t}</b></td>
 			<td style="text-align: left;">
-				{html_options name=status values=$job_status options=$job_status selected=$job_status_filter onChange="submit();"}
+				{html_options name=status values=$job_status options=$job_status selected=$job_status_filter}
 			</td>
 		</tr>
 		<tr><td colspan="2">&nbsp;</td></tr>
@@ -24,8 +24,8 @@
 		<tr>
 			<td style="border: 1px solid #c8c8c8; text-align:right;"><b>{t}Order by{/t}</b></td>
 			<td style="border: 1px solid #c8c8c8; text-align: left;">
-				{html_options name=orderby values=$result_order options=$result_order selected=$result_order_field onChange="submit();"}
-				<input type="checkbox" name="result_order_asc" value="ASC" {$result_order_asc_checked} onChange="submit();"> Up
+				{html_options name=orderby values=$result_order options=$result_order selected=$result_order_field}
+				<input type="checkbox" name="result_order_asc" value="ASC" {$result_order_asc_checked}> Up
 			</td>
 		</tr>
 		<tr>
@@ -33,10 +33,12 @@
 				<b>{t}Jobs per Page{/t}</b>
 			</td>
 			<td class="left_align">
-				{html_options name=jobs_per_page options=$jobs_per_page selected=$jobs_per_page_selected onChange="submit();"}
+				{html_options name=jobs_per_page options=$jobs_per_page selected=$jobs_per_page_selected}
 			</td>
 		</tr>
-		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr><td colspan="2" class="right_align">
+			<input title="{t}Apply filter and options{/t}" type="submit" value="{t}Apply{/t}">
+		</td></tr>
 		<tr>
 			<td colspan="2" style="border: 1px solid #c8c8c8; background-color:#eeeeee;">
 			  Found <b>{$jobs_found}</b> of <b>{$total_jobs} Job(s)</b>
