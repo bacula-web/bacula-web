@@ -130,7 +130,7 @@
 		<tr>
 			<td class="label">{t}Client{/t}</td>
 			<td class="right_align">
-				{html_options name=client_id options=$clients_list"}
+				{html_options name=client_id options=$clients_list}
 			</td>
 		</tr>
 		<!--
