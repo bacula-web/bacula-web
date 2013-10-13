@@ -17,6 +17,12 @@
 				{html_options name=status values=$job_status options=$job_status selected=$job_status_filter}
 			</td>
 		</tr>
+		<tr>
+			<td style="border: 1px solid #c8c8c8; text-align: right;"><b>{t}Client{/t}</b></td>
+			<td style="text-align: left;">
+				{html_options name=client_id options=$clients_list selected=$client_filter"}
+			</td>
+		</tr>
 		<tr><td colspan="2">&nbsp;</td></tr>
 		<tr>
 		  <th colspan="2">Options</th>
