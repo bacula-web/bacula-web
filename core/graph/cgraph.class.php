@@ -89,7 +89,7 @@ class CGraph {
 		// Set graph values
 		$this->plot->SetDataValues($this->data);
 		
-		// Check if provided datas for the graph are a valid and non empty array
+		// Check if provided datas for the graph are a valid and non empty array (to be improved)
 		if( is_null($this->data) or empty($this->data) ) {
 			$message_options = array( 'draw_background' => TRUE, 'draw_border' => TRUE, 'reset_font' => TRUE, 'text_color' => 'black' );
 			$this->plot->DrawMessage('No statistics to display', $message_options);
@@ -102,11 +102,14 @@ class CGraph {
 					// Set legend
 					$this->setLegend();
 					
-					$this->plot->SetPlotAreaPixels(5, 5, ($this->width / 2), $this->height - 5);
-					$this->plot->SetLabelScalePosition(0.2);
+					// Set Pie graph position
+                                        $this->plot->SetPlotAreaPixels(5, 5, ($this->width * 0.65), $this->height - 5);
+                                        //$this->plot->SetPlotAreaPixels(5, 5, ($this->width / 2), $this->height - 5);
+					//$this->plot->SetLabelScalePosition(0.2);
 
 					// Set graph colors and shading
-					$data_colors = array( 'blue', 'green', 'orange', 'red', 'black', 'yellow', 'cyan', 'lavender', 'DimGrey');
+					//$data_colors = array( 'blue', 'green', 'orange', 'red', 'black', 'yellow', 'cyan', 'lavender', 'DimGrey');
+                                        $data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
 					$this->plot->SetDataColors( $data_colors );
 					$this->plot->SetShading( 0 );
 					

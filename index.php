@@ -86,7 +86,7 @@ try {
  
  $graph = new CGraph("graph.png");
  $graph->SetData($jobs_status_data, 'pie');
- $graph->SetGraphSize(310, 200);
+ $graph->SetGraphSize(320, 200);
 
  // Graph rendering
  $view->assign( 'graph_jobs', $graph->Render() );
