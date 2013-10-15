@@ -103,7 +103,10 @@
 				case 'pgsql':
 					$dsn = $current_catalog['db_type'] . ':';
 					$dsn .= 'dbname=' . $current_catalog['db_name'] . ';';
-					$dsn .= 'host=' . $current_catalog['host'] . ';';
+
+					if ( isset($current_catalog['host']))
+						$dsn .= 'host=' . $current_catalog['host'] . ';';
+
 					if (isset($current_catalog['db_port']) and !empty($current_catalog['db_port']))
 						$dsn .= 'port=' . $current_catalog['db_port'] . ';';
 					break;
