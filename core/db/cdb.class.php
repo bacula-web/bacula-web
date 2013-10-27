@@ -24,7 +24,14 @@ class CDB {
     private function __construct() {
     }
 
-    public static function connect( $dsn, $user = null, $password = null, $options = array() ) {
+	// ==================================================================================
+	// Function: 	connect()
+	// Parameters: 	none
+	// Return:		valid PDO connection
+	// ==================================================================================
+	
+	public static function connect( $dsn, $user = null, $password = null, $options = array() ) {
+
 		try {
             if ( is_null( self::$connection ) ) {
 				self::$connection = new PDO($dsn, $user, $password);				
