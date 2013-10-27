@@ -103,15 +103,13 @@ class CGraph {
 					$this->setLegend();
 					
 					// Set Pie graph position
-                                        $this->plot->SetPlotAreaPixels(5, 5, ($this->width * 0.65), $this->height - 5);
-                                        //$this->plot->SetPlotAreaPixels(5, 5, ($this->width / 2), $this->height - 5);
-					//$this->plot->SetLabelScalePosition(0.2);
+                    $this->plot->SetPlotAreaPixels(5, 5, ($this->width * 0.65), $this->height - 5);
 
 					// Set graph colors and shading
-					//$data_colors = array( 'blue', 'green', 'orange', 'red', 'black', 'yellow', 'cyan', 'lavender', 'DimGrey');
-                                        $data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
+					$data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
 					$this->plot->SetDataColors( $data_colors );
 					$this->plot->SetShading( 0 );
+					$this->plot->SetLabelScalePosition(0.6);
 					
 					break;
 				case 'bars':
