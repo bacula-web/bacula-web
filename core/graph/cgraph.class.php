@@ -73,7 +73,13 @@ class CGraph {
 		$this->plot->SetLegendPixels($this->width - ($legend_width + 5), 10);	
 	}
 	
-    public function Render() {
+    // ==================================================================================
+	// Function: 	Render()
+	// Parameters:	none
+	// Return:		graph image file path
+	// ==================================================================================
+	
+	public function Render() {
         // Setting the size
         $this->plot = new PHPlot($this->width, $this->height);
 
