@@ -108,25 +108,25 @@ try {
 
  // Display 9 biggest pools and rest of volumes in 10th one display as Other
  if ($pools_count > $max_pools) {
-    if( CDBUtils::getDriverName( $dbSql->db_link ) == 'pgsql') {
-	$limit = $max_pools . 'OFFSET ' . ($pools_count - $max_pools);
+    if( CDB::getDriverName() == 'pgsql') {
+	  $limit = $max_pools . 'OFFSET ' . ($pools_count - $max_pools);
     }else{
-	$limit = $max_pools . ',' . ($pools_count - $max_pools);
+	  $limit = $max_pools . ',' . ($pools_count - $max_pools);
     }
 
-    $query = array('table' => $table_pool,
-        'fields' => array('SUM(numvols) AS sum_vols'),
-        'limit' => $limit,
-        'groupby' => 'name');
+    $query = array( 'table' => $table_pool,
+		            'fields' => array('SUM(numvols) AS sum_vols'),
+                    'limit' => $limit,
+                    'groupby' => 'name');
     
 	$result 	= CDBUtils::runQuery( CDBQuery::get_Select($query), $dbSql->db_link);
 	$sum_vols 	= $result->fetch();
  } else {
-    $limit = $pools_count;
+    $limit      = $pools_count;
  }
 
  // Check database driver for pool table name
- if ( CDBUtils::getDriverName( $dbSql->db_link ) == 'pgsql') {
+ if ( CDB::getDriverName() == 'pgsql') {
 	$table_pool = strtolower($table_pool);
  }
 
@@ -175,7 +175,7 @@ try {
  $where = array();
  $tmp   = "(Media.Volstatus != 'Disabled') ";
 
- switch ( CDBUtils::getDriverName( $dbSql->db_link ) ) {
+ switch ( CDB::getDriverName() ) {
     case 'mysql':
     case 'pgsql':
         $tmp .= "AND (Media.LastWritten IS NOT NULL)";

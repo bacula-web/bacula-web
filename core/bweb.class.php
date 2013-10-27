@@ -92,7 +92,7 @@
 			}
 			
 			// Getting driver name from PDO connection
-			$this->db_driver = CDBUtils::getDriverName( $this->db_link );
+			$this->db_driver = CDB::getDriverName();
 
 			// Set PDO connection options
 			$this->db_link->setAttribute( PDO::ATTR_CASE, PDO::CASE_LOWER);

@@ -21,6 +21,12 @@ class CDB {
     private $options;
     private $result;
 
+	// ==================================================================================
+	// Function: 	__construct()
+	// Parameters: 	none
+	// Return:		none
+	// ==================================================================================
+	
     private function __construct() {
     }
 
@@ -42,5 +48,16 @@ class CDB {
 		
 		return self::$connection;
     }
+
+	// ==================================================================================
+	// Function: 	getDriverName()
+	// Parameters: 	none
+	// Return:		driver name (eg: mysql, pgsql, sqlite, etc.)
+	// ==================================================================================
+	
+    public static function getDriverName() {
+		return self::$connection->getAttribute( PDO::ATTR_DRIVER_NAME );
+    }
+
 }
 ?>

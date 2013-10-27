@@ -92,9 +92,7 @@
 
 		$periods = array();
 		
-		$db_driver = CDBUtils::getDriverName( $pdo_connection );
-		
-		switch( $db_driver ) {
+		switch( CDB::getDriverName() ) {
 			case 'pgsql':
 				$periods['starttime'] 	= "TIMESTAMP '" . date( "Y-m-d H:i:s", $period_timestamp[0]) . "'";
 				$periods['endtime'] 	= "TIMESTAMP '" . date( "Y-m-d H:i:s", $period_timestamp[1]) . "'";

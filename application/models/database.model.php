@@ -28,9 +28,7 @@
 		$statment 	= null;
 		$result	 	= null;
 		
-		$pdo_driver = CDBUtils::getDriverName( $pdo_connection );
-		
-		switch( $pdo_driver )
+		switch( CDB::getDriverName() )
 		{
 			case 'mysql':
 				$statment 	= array( 'table'   => 'information_schema.TABLES', 

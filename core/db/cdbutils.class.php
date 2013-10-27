@@ -22,15 +22,11 @@ class CDBUtils {
 	private function __construct() {
 	}
 
-	public static function getDriverName( $PDO_connection ) {
-		return $PDO_connection->getAttribute(PDO::ATTR_DRIVER_NAME);
-	}
-	
 	public static function isConnected( $PDO_connection ) {
 		$pdo_connection	= null;
 		
 		// If MySQL of postGreSQL
-		switch( self::getDriverName( $PDO_connection ) ){
+		switch( CDB::getDriverName() ){
 			case 'mysql':
 			case 'pgsql':
 				$pdo_connection = self::getConnectionStatus($PDO_connection);
@@ -56,7 +52,7 @@ class CDBUtils {
 
 	public static function getConnectionStatus( $PDO_connection ) {
 		// If MySQL of postGreSQL
-		if( self::getDriverName( $PDO_connection ) != 'sqlite' ) {
+		if( CDB::getDriverName() != 'sqlite' ) {
 			return $PDO_connection->getAttribute( PDO::ATTR_CONNECTION_STATUS );
 		}else {
 			return 'N/A';
