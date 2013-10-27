@@ -165,7 +165,6 @@ try {
  // Graph rendering
  $view->assign( 'graph_stored_bytes', $graph->Render() );
 
-
  // ==============================================================
  // Last used volumes graph
  // ==============================================================
@@ -174,16 +173,19 @@ try {
 
  // Building SQL statment
  $where = array();
+ $tmp   = "(Media.Volstatus != 'Disabled') ";
 
  switch ( CDBUtils::getDriverName( $dbSql->db_link ) ) {
     case 'mysql':
     case 'pgsql':
-        $where[] = "(Media.Volstatus != 'Disabled') OR (Media.LastWritten IS NOT NULL)";
+        $tmp .= "AND (Media.LastWritten IS NOT NULL)";
         break;
     case 'sqlite':
-        $where[] = "(Media.Lastwritten != 0)";
+        $tmp .= "AND (Media.Lastwritten != 0)"; 
         break;
  }
+ 
+ $where[] = $tmp;
 
  $statment = array(	'table' 	=> 'Media',
 					'fields' 	=> array('Media.MediaId', 'Media.Volumename', 'Media.Lastwritten', 'Media.VolStatus', 'Media.VolJobs', 'Pool.Name AS poolname'),
