@@ -21,6 +21,7 @@ class CGraph {
 	
     private $data;
     private $data_type = array('pie' => 'text-data-single', 'bars' => 'text-data');
+	private $data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
     private $graph_type;
 	
     private $width;
@@ -39,7 +40,7 @@ class CGraph {
     }
 
     public function SetGraphSize($width, $height) {
-        $this->width = $width;
+        $this->width  = $width;
         $this->height = $height;
     }
 
@@ -79,6 +80,16 @@ class CGraph {
 	// Return:		graph image file path
 	// ==================================================================================
 	
+	public function setPieLegendColors( $colors = array() ) {
+		$this->data_colors = $colors;
+	}
+
+    // ==================================================================================
+	// Function: 	Render()
+	// Parameters:	none
+	// Return:		graph image file path
+	// ==================================================================================
+	
 	public function Render() {
         // Setting the size
         $this->plot = new PHPlot($this->width, $this->height);
@@ -105,17 +116,18 @@ class CGraph {
 
 			switch ( $this->graph_type ) {
 				case 'pie':
+					$plot_padding = 0;
+
 					// Set legend
 					$this->setLegend();
 					
-					// Set Pie graph position
-                    $this->plot->SetPlotAreaPixels(5, 5, ($this->width * 0.65), $this->height - 5);
+					// Set plot area
+					$this->plot->SetPlotAreaPixels($plot_padding, $plot_padding, ($this->width * 0.65), $this->height-$plot_padding);
 
 					// Set graph colors and shading
-					$data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
-					$this->plot->SetDataColors( $data_colors );
+					$this->plot->SetDataColors( $this->data_colors );
 					$this->plot->SetShading( 0 );
-					$this->plot->SetLabelScalePosition(0.6);
+					$this->plot->SetLabelScalePosition(0.5);
 					
 					break;
 				case 'bars':

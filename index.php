@@ -86,7 +86,8 @@ try {
  
  $graph = new CGraph("graph.png");
  $graph->SetData($jobs_status_data, 'pie');
- $graph->SetGraphSize(320, 200);
+ $graph->SetGraphSize(350, 220);
+ $graph->setPieLegendColors( array( 'gray', 'green','blue', 'red', 'orange') );
 
  // Graph rendering
  $view->assign( 'graph_jobs', $graph->Render() );
@@ -141,7 +142,7 @@ try {
  	$vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
 
  $graph->SetData($vols_by_pool, 'pie');
- $graph->SetGraphSize(310, 220);
+ $graph->SetGraphSize(350, 220);
 
  // Graph rendering
  $view->assign( 'graph_pools', $graph->Render() );
@@ -159,7 +160,7 @@ try {
  
  $graph = new CGraph("graph2.png");
  $graph->SetData($days_stored_bytes, 'bars');
- $graph->SetGraphSize(310, 220);
+ $graph->SetGraphSize(350, 220);
  $graph->SetYTitle("GB");
 
  // Graph rendering

@@ -48,16 +48,17 @@ a:visited, a:hover, a {
     width: 350px;
     min-height: 200px;
     padding: 0px; 
-    margin: 10px 5px;
+    margin: 5px 5px;
     background-color: #FFFFFF;
     border: 1px solid #c8c8c8;
     text-align: center;
 }
 
 .widget img.graph {
-    margin: 1px 0px;
+    margin: 0px;
     border: none;
     vertical-align: middle;
+	width: 100%;
 }
 
 .box {
