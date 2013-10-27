@@ -99,10 +99,12 @@ class ClassAutoLoader {
   private function Load_Class($classname) {
     foreach( self::$paths as $dir ) {      
       $file_full_path = $dir . '/' . $classname . '.class.php';
-      $file_full_path = strtolower($file_full_path);
-      
+    
       if( file_exists( $file_full_path ) )
         include( $file_full_path );
+        
+      if( file_exists( strtolower($file_full_path) ) )
+        include( strtolower($file_full_path) );
     }
   }
   
