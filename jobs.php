@@ -133,24 +133,23 @@
   $view->assign('result_order_field', CHttpRequest::get_Value('orderby'));
   $view->assign('result_order_asc_checked', $result_order_asc_checked);
   
-  // Jobs per page
-  $jobs_per_page = array(
-      25 => '25',
-      50 => '50',
-      75 => '75',
-      100 => '100',
-      150 => '150'
-  );
+  // Jobs per page options
+  $jobs_per_page = 25;
+  $view->assign('jobs_per_page', array( 25 => '25', 50 => '50', 75 => '75', 100 => '100', 150 => '150') );
   
-  // Determine how many jobs to display
-  if(!is_null(CHttpRequest::get_Value('jobs_per_page'))) {
-      $query .= "LIMIT " . CHttpRequest::get_Value('jobs_per_page');
-      $view->assign('jobs_per_page_selected', CHttpRequest::get_Value('jobs_per_page'));
-  } else
-      $query .= "LIMIT 25 ";
-  
-  $view->assign('jobs_per_page', $jobs_per_page);
-  
+  // Determine how many jobs per page
+  // From config file
+  if( FileConfig::get_Value('jobs_per_page') != false )
+	$jobs_per_page = FileConfig::get_Value('jobs_per_page');
+	  
+  // From $_POST form
+  if( !is_null( CHttpRequest::get_Value('jobs_per_page') ) )
+    $jobs_per_page = CHttpRequest::get_Value('jobs_per_page');
+	  
+  $query .= "LIMIT $jobs_per_page";
+  $view->assign('jobs_per_page_selected', $jobs_per_page);
+ 
+  // Parsing jobs result 
   $jobsresult = CDBUtils::runQuery($query, $dbSql->db_link);
   
   foreach($jobsresult as $job) {
