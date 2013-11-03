@@ -40,7 +40,8 @@ class CDB {
 
 		try {
             if ( is_null( self::$connection ) ) {
-				self::$connection = new PDO($dsn, $user, $password);				
+				self::$connection = new PDO($dsn, $user, $password);
+				echo 'server version: ' . self::getServerVersion() . '<br />';
 			}
         }catch (PDOException $e) {
             CErrorHandler::displayError($e);
@@ -59,5 +60,14 @@ class CDB {
 		return self::$connection->getAttribute( PDO::ATTR_DRIVER_NAME );
     }
 
+	// ==================================================================================
+	// Function: 	getServerVersion()
+	// Parameters: 	none
+	// Return:		database server version
+	// ==================================================================================
+	
+    public static function getServerVersion() {
+		return self::$connection->getAttribute( PDO::ATTR_SERVER_VERSION );
+    }
 }
 ?>
