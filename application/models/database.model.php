@@ -31,11 +31,16 @@
 		switch( CDB::getDriverName() )
 		{
 			case 'mysql':
-				$statment 	= array( 'table'   => 'information_schema.TABLES', 
-									 'fields'  => array("table_schema AS 'database', sum( data_length + index_length) AS 'dbsize'"),
-									 'where'   => array( "table_schema = '$db_name'" ),
-									 'groupby' => 'table_schema' );
-				$statment 	= CDBQuery::get_Select($statment, $pdo_connection);
+				// Return N/A for MySQL server prior version 5 (no information_schemas)
+				if( version_compare( CDB::getServerVersion(), '5.0.0') >= 0 ) {
+					// Prepare SQL statment
+					$statment = array( 'table'   => 'information_schema.TABLES', 
+									   'fields'  => array("table_schema AS 'database', sum( data_length + index_length) AS 'dbsize'"),
+									   'where'   => array( "table_schema = '$db_name'" ),
+									   'groupby' => 'table_schema' );
+					$statment 	= CDBQuery::get_Select($statment, $pdo_connection);
+				}else
+					echo 'dbsize() unsupported ('.CDB::getServerVersion().') <br />';
 			break;
 			case 'pgsql':
 				$statment	= "SELECT pg_database_size('$db_name') AS dbsize";

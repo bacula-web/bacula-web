@@ -41,7 +41,6 @@ class CDB {
 		try {
             if ( is_null( self::$connection ) ) {
 				self::$connection = new PDO($dsn, $user, $password);
-				echo 'server version: ' . self::getServerVersion() . '<br />';
 			}
         }catch (PDOException $e) {
             CErrorHandler::displayError($e);
@@ -67,7 +66,9 @@ class CDB {
 	// ==================================================================================
 	
     public static function getServerVersion() {
-		return self::$connection->getAttribute( PDO::ATTR_SERVER_VERSION );
+		$server_version = self::$connection->getAttribute( PDO::ATTR_SERVER_VERSION );
+		$server_version = explode(':', $server_version);
+		return $server_version[0];
     }
 }
 ?>
