@@ -21,7 +21,7 @@ class CTimeUtils {
 	// Function: 	Get_Elapsed_Time()
 	// Parameters:	$start_time			(start time in date format)
 	// Parameters:	$end_time			(end time in date format)	
-	// Return:		Total of jobs
+	// Return:		Job elapsed time (day) HH:MM:ss
 	// ==================================================================================
 
     static public function Get_Elapsed_Time( $start_time, $end_time) {
