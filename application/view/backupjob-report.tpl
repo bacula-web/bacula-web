@@ -30,6 +30,7 @@
 			<th>{t}Start time{/t}</th>
 			<th>{t}End time{/t}</th>
 			<th>{t}Elapsed time{/t}</th>
+			<th>{t}Speed{/t}</th>
 		</tr>
 		{foreach from=$jobs item=job}
 		<tr class="{$job.odd_even}">
@@ -40,6 +41,7 @@
 			<td>{$job.starttime}</td>
 			<td>{$job.endtime}</td>
 			<td>{$job.elapsedtime}</td>
+			<td>{$job.speed}</td>
 		</tr>
 		{/foreach}
 	</table>

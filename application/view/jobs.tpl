@@ -68,6 +68,7 @@
 		<th>{t}Level{/t}</th>
 		<th>{t}Bytes{/t}</th>
 		<th>{t}Files{/t}</th>
+		<th>{t}Speed{/t}</th>
 		<th>{t}Pool{/t}</th>
 		<th>{t}Log{/t}</th>
 	  </tr>
@@ -88,6 +89,7 @@
 		<td>{$job.level}</td>
 		<td>{$job.jobbytes}</td>
 		<td>{$job.jobfiles}</td>
+		<td>{$job.speed}</td>
 		<td>{$job.pool_name}</td>
 		<td>
 		  <a href='joblogs.php?jobid={$job.jobid}' title='{t}Show job logs{/t}'> <img src='application/view/style/images/search.png' width='20' /> </a>

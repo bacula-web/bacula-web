@@ -207,10 +207,27 @@
       
       // Job files
       $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
+
+	  // Job speed
+	  $job['speed'] = '0 Mb/s';
+	  
+	  switch( $job['jobstatus'] ) {
+	    case J_COMPLETED:
+        case J_COMPLETED_ERROR:
+        case J_NO_FATAL_ERROR:
+		case J_CANCELED:
+		case J_FATAL:
+			$start 		  = new DateTime($start_time);
+			$end   		  = new DateTime($end_time);
+			$seconds  	  = $end->getTimeStamp() - $start->getTimeStamp(); 
+			$speed 		  = $job['jobbytes'] / $seconds;
+			$job['speed'] = CUtils::Get_Human_Size($speed, 1) . '/s';
+		break;
+	  }
       
       // Job size
       $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
-      
+	        
       // Job Pool
       if(is_null($job['pool_name']))
           $job['pool_name'] = 'N/A';
