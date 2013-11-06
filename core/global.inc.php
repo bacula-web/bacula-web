@@ -16,16 +16,14 @@
   +-------------------------------------------------------------------------+
  */
 
- // Class autloader initialization
+ // Class autloader instance creation
  require_once(getcwd() . "/core/app/classautoloader.class.php");
  ClassAutoLoader::init();
  
- // Path exclusion
- ClassAutoLoader::add_Exclusion('core/external/smarty-gettext');
- 
- // Add paths
+ // Add root path and exclusions
  ClassAutoLoader::add_Path('core');
  ClassAutoLoader::add_Path('application');
+ ClassAutoLoader::add_Exclusion('core/external/smarty-gettext');
  
  // Get all $_POST and $_GET values
  CHttpRequest::get_Vars();
