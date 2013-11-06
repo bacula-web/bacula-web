@@ -17,12 +17,12 @@
 
 class CTimeUtils {
 
-	// ==================================================================================
-	// Function: 	Get_Elapsed_Time()
-	// Parameters:	$start_time			(start time in date format)
-	// Parameters:	$end_time			(end time in date format)	
-	// Return:		Job elapsed time (day) HH:MM:ss
-	// ==================================================================================
+    // ==================================================================================
+    // Function: 	Get_Elapsed_Time()
+    // Parameters:	$start_time			(start time in date format)
+    // Parameters:	$end_time			(end time in date format)	
+    // Return:		Job elapsed time (day) HH:MM:ss
+    // ==================================================================================
 
     static public function Get_Elapsed_Time( $start_time, $end_time) {
         $start = '';
@@ -56,6 +56,12 @@ class CTimeUtils {
             return $hrsDiff . ':' . $minsDiff . ':' . $secsDiff;
     }
 
+    // ==================================================================================
+    // Function: 	get_Day_Intervals()
+    // Parameters:	$day
+    // Return:		array('start' => start_timestamp, 'end' => end_timestamp)
+    // ==================================================================================
+    
     static public function get_Day_Intervals($day) {
         $start = strtotime(date("Y-m-d 00:00:00", $day));
         $end = strtotime(date("Y-m-d 23:59:59", $day));
@@ -63,16 +69,21 @@ class CTimeUtils {
         return array('start' => $start, 'end' => $end);
     }
 
+    // ==================================================================================
+    // Function: 	getLastDaysIntervals()
+    // Parameters:	$nb_day
+    // Return:		array('start' => start_timestamp, 'end' => end_timestamp) of last n days
+    // ==================================================================================
+
     static public function getLastDaysIntervals($nb_days) {
         $days = array();
 
         for ($d = $nb_days; $d >= 0; $d--) {
-            $today = NOW - ($d * DAY);
+            $today  = NOW - ($d * DAY);
             $days[] = self::get_Day_Intervals($today);
         }
         return $days;
     }
-
 }
 
 ?>
