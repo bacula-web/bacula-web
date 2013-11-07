@@ -1,16 +1,27 @@
 #header{
-    display: block;
-	width: 100%;
-    padding: 0px;
-    margin: 0px;
-    background-color: #f0f0f0;
-	vertical-align: middle;
+ display: block;
+ width: 100%;
+ padding: 0px;
+ margin: 0px;
+ background-color: #f0f0f0;
+ vertical-align: middle;
 }
 
-div.toolbar_box {	
- min-width: 50px;
- padding: 5px;
- text-align: center;
+#header ul { 
+ margin: 0px; 
+ padding: 0px;
+}
+
+#header li { 
+ display: inline; 
+ list-style-type: none;
+ padding: 0px 5px; 
+} 
+
+#header * a {
+ font-size: 10pt;
+ font-weight: bold;
+ text-decoration: none;
 }
 
 #header_main {
@@ -23,10 +34,6 @@ div.toolbar_box {
  line-height: 40px;
 }
 
-#header_main .toolbar_box img {
- height: 35px;
-}
-
 #header_main .app_name {
  color: #c0c0c0;
  background-color: #404040;
@@ -34,50 +41,35 @@ div.toolbar_box {
  height: 40px;
  line-height: 40px;
  text-align: center;
+ padding: 0px 5px;
 }
 
-#toolbar_top {
- display: block;
-}
-
-#toolbar_top div.toolbar_box {
- line-height: 20px;
- height: 20px;
-}
-
-#toolbar_top div.toolbar_box li {
- font-size: 9pt;
-}
-
-div.toolbar_box ul {
- list-style: none;
- margin: 0px;
-}
-
-div.toolbar_box li {
- display: inline;
- font-size: 11pt;
- padding: 0px 10px;
-}
-
-div.toolbar_box li a, div.toolbar_box li a:active, div.toolbar_box li a:visited, div.toolbar_box li a:hover {
- text-decoration: none;
- font-weight: bold;
-}
-
-div.toolbar_box ul.page_navigation {
- margin: 0px;
- padding: 0px;
-}
-div.toolbar_box ul.page_navigation li {
- font-size: 16pt;
-}
+#header_main .toolbar_box img { height: 35px; }
 
 .page_name {
  font-size: 13pt;
  color: #c0c0c0;
  font-weight: bold;
- }
+ margin-left: 10px;
+}
+
+#toolbar_top div.toolbar_box {
+ line-height: 20px;
+ height: 20px;
+ min-width: 50px;
+ padding: 5px;
+ text-align: center;
+}
+
+div.toolbar_box ul.page_navigation li {
+ font-size: 16pt;
+}
+
+#top_controls div.toolbar_box { 
+ line-height: 20px
+ height: 20px;
+ padding: 5px;
+}
 
 div.left_box { float: left; }
 

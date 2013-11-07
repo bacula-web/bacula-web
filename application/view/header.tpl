@@ -40,16 +40,27 @@
   <div class="clear_both"></div>
  </div>
 
+<!-- Top Toolbar -->
 <div id="top_controls">
+  <!-- Back link -->
+  <div class="toolbar_box left_box">
+    <ul>
+      <li>
+        {php} echo '<a href="'. $_SERVER['HTTP_REFERER'] .'">Back</a>'; {/php}
+      </li>
+    </ul>
+  </div>
+
   <div class="toolbar_box right_box">
    <!-- Condifitional catalog selection if more than 1 catalog is defined in the configuration -->
-   {if $catalog_nb > 1}
-	<form class="catalog_selector" method="post" action="index.php">
-	 Catalog {html_options name=catalog_id options=$catalogs selected=$catalog_current_id onchange="submit();"}
-         <noscript><input type="submit" value="Select"></noscript>
-	</form>
-   {/if}
+    {if $catalog_nb > 1}
+      <form class="catalog_selector" method="post" action="index.php">
+        Catalog {html_options name=catalog_id options=$catalogs selected=$catalog_current_id onchange="submit();"}
+          <noscript><input type="submit" value="Select"></noscript>
+      </form>
+    {/if}
   </div>
+
   <div class="clear_both"></div>
 </div>
 <!-- end Top controls -->
