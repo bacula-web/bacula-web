@@ -14,6 +14,10 @@
 		<td width="150">{$log.time}</td>
 		<td class="left_align">{$log.logtext}</td>		
 	  </tr>
+          {foreachelse}
+            <tr>
+              <td colspan="2">{t}No log(s) for this job{/t}</td>
+            </tr>
 	  {/foreach}
 	</table>
   </div> <!-- end div class=box --> 
