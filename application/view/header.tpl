@@ -46,7 +46,25 @@
   <div class="toolbar_box left_box">
     <ul>
       <li>
-        {php} echo '<a href="'. $_SERVER['HTTP_REFERER'] .'">Back</a>'; {/php}
+        {php} 
+	  $back	    = null;
+          $referrer = $_SERVER['HTTP_REFERER'];
+          $referrer = end( explode( "/", $referrer) );
+
+          $current  = $_SERVER['SCRIPT_FILENAME'];
+	  $current  = end( explode( "/", $current) );
+  
+          // If referrer and current are not equal and referrer isn't null/empty
+	  if( strcmp($referrer, $current) != 0  ) 
+ 	    $back = $referrer;
+
+          // If current is Dashboard
+          if( $current == 'index.php' )
+	    $back = null;
+
+          if( !is_null($back) )
+   	    echo "<a href='$back' title='back to previous page'>Back</a>";
+	{/php}
       </li>
     </ul>
   </div>
