@@ -40,7 +40,7 @@ class CErrorHandler {
                 self::setHeader('Application error');
                 break;
         } // end switch
-		
+	 	$output = '';	
 		// Display Exception trace
 		$output .= self::getFormatedTrace($exception);
 		
