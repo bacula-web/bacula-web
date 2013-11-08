@@ -94,7 +94,7 @@ try {
  unset($graph);
 
  // ==============================================================
- // Volumes by pools graph
+ // Volumes per pool widget
  // ==============================================================
 
  $vols_by_pool = array();
@@ -148,7 +148,7 @@ try {
  $view->assign( 'graph_pools', $graph->Render() );
 
  // ==============================================================
- // Last 7 days stored Bytes graph
+ // Last 7 days stored Bytes widget
  // ==============================================================
  $days_stored_bytes = array();
  $days = CTimeUtils::getLastDaysIntervals(7);
@@ -167,7 +167,7 @@ try {
  $view->assign( 'graph_stored_bytes', $graph->Render() );
 
  // ==============================================================
- // Last used volumes graph
+ // Last used volumes widget
  // ==============================================================
 
  $last_volumes = array();
