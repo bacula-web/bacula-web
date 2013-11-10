@@ -22,9 +22,10 @@ a:visited, a:hover, a {
     background-color: #ffffff;
 }
 
-.main_center .header {
-    border-bottom: 1px solid #c8c8c8;
-    color: #404040;
+.main_center div.header {
+    /*border-bottom: 1px solid #c8c8c8;*/
+    width: 400px;
+	color: #404040;
     font-size: 12pt;
     font-weight: bold;
     margin: 5px 0px;

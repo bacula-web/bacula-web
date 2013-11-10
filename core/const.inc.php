@@ -18,14 +18,15 @@
  
  // Time intervals in secondes
  define('FIRST_DAY', mktime(0, 0, 0, 1, 1, 1970));
- define('NOW', time());
- define('LAST_DAY', NOW - 86400);
- define('LAST_WEEK', NOW - 604800);
- define('LAST_MONTH', NOW - 2678400);
- define('DAY', 86400);
- define('WEEK', 604800);
- define('MONTH', 2678400);
+ define('NOW',   time());
+ define('DAY',   86400);
+ define('WEEK',  7 * DAY);
+ define('MONTH', 4 * WEEK);
  
+ define('LAST_DAY',   NOW - DAY);
+ define('LAST_WEEK',  NOW - (7 * DAY));
+ define('LAST_MONTH', NOW - (4* WEEK));
+
  // Job status code
  define('J_NOT_RUNNING', 'C');
  define('J_RUNNING', 'R');

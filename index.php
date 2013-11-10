@@ -25,25 +25,57 @@ $dbSql 	= null;
 try {
  $dbSql = new Bweb($view);
 
+// Custom period for dashboard
+$custom_period = array( LAST_DAY, NOW);		// defautl period is last day
+
+if( isset($_POST['period_selector']) and !is_null($_POST['period_selector']) ) {
+ switch($_POST['period_selector']) {
+  case 'last_day':
+    $custom_period = array( LAST_DAY, NOW);
+    break;
+  case 'last_week':
+    $custom_period = array( LAST_WEEK, NOW);
+    break;
+  case 'last_month':
+    $custom_period = array( LAST_MONTH, NOW);
+    break;
+  case 'since_bot':
+    $custom_period = array( FIRST_DAY, NOW);
+    break;
+ }
+}
+
+ /*
+ // debug
+ echo '<pre>';
+ print_r($_POST);
+ print_r($custom_period);
+ echo 'start ' . date('D j M Y', $custom_period[0]) . '<br />';
+ echo 'end ' . date('D j M Y', $custom_period[1]) . '<br />';
+ echo '</pre>';
+ */
+ 
+ $view->assign('literal_period', date("D j M Y ", $custom_period[0]) . ' to ' . date("D j M Y ", $custom_period[1]) );
+
  // Running, completed, failed, waiting and canceled jobs status over last 24 hours
- $view->assign( 'running_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'running') );
- $view->assign( 'completed_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'completed') );
- $view->assign( 'failed_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'failed') );
- $view->assign( 'waiting_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'waiting') );
- $view->assign( 'canceled_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), 'canceled') );
+ $view->assign( 'running_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, $custom_period, 'running') );
+ $view->assign( 'completed_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, $custom_period, 'completed') );
+ $view->assign( 'failed_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, $custom_period, 'failed') );
+ $view->assign( 'waiting_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, $custom_period, 'waiting') );
+ $view->assign( 'canceled_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, $custom_period, 'canceled') );
 
  // Stored files number 
- $view->assign( 'stored_files', CUtils::format_Number( Jobs_Model::getStoredFiles( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
+ $view->assign( 'stored_files', CUtils::format_Number( Jobs_Model::getStoredFiles( $dbSql->db_link, $custom_period ) ) );
  
  // Overall stored bytes
- $view->assign( 'stored_bytes', CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, array(FIRST_DAY, NOW) ) ) );
+ $view->assign( 'stored_bytes', CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, $custom_period ) ) );
 
  // Database size
  $view->assign( 'database_size', Database_Model::get_Size( $dbSql->db_link, $dbSql->catalog_current_id ) );
  
  // Total bytes and files stored over the last 24 hours
- $view->assign( 'bytes_last', CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
- $view->assign( 'files_last', CUtils::format_Number( Jobs_Model::getStoredFiles( $dbSql->db_link, array(LAST_DAY, NOW) ) ) );
+ $view->assign( 'bytes_last', CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, $custom_period ) ) );
+ $view->assign( 'files_last', CUtils::format_Number( Jobs_Model::getStoredFiles( $dbSql->db_link, $custom_period ) ) );
 
  // Number of clients
  $view->assign('clients', Clients_Model::count($dbSql->db_link) );
@@ -53,9 +85,9 @@ try {
  $view->assign( 'defined_jobs', Jobs_Model::count_Job_Names( $dbSql->db_link ) );
 
  // Incremental, Differential and Full jobs over the last 24 hours
- $view->assign('incr_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_INCR) );
- $view->assign('diff_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_DIFF) );
- $view->assign('full_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), null, J_FULL) );
+ $view->assign('incr_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, $custom_period, null, J_INCR) );
+ $view->assign('diff_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, $custom_period, null, J_DIFF) );
+ $view->assign('full_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, $custom_period, null, J_FULL) );
 
  // Volumes disk usage
  $volumes_size = Volumes_Model::getDiskUsage($dbSql->db_link);
@@ -74,13 +106,13 @@ try {
  $view->assign('volumes_nb', Volumes_Model::count($dbSql->db_link) );
 
  // ==============================================================
- // Last 24 hours Job status graph
+ // Last period <Job status graph>
  // ==============================================================
  $jobs_status = array('Running', 'Completed', 'Waiting', 'Failed', 'Canceled');
  $jobs_status_data = array();
 
  foreach ($jobs_status as $status) {
-	$jobs_count 		= Jobs_Model::count_Jobs( $dbSql->db_link, array( LAST_DAY, NOW), strtolower($status) );
+	$jobs_count 		= Jobs_Model::count_Jobs( $dbSql->db_link, $custom_period, strtolower($status) );
 	$jobs_status_data[] = array($status, $jobs_count );
  }
  

@@ -1,8 +1,26 @@
 {include file=header.tpl}
 
 <div class="main_center">
-	<div class="header">{t}Overall status{/t}</div>
-  
+	<div class="header left_box">{t}Overall status{/t} ({$literal_period})</div>
+
+	<!-- Period selector -->
+    <div class="toolbar_box right_box">
+	  <form class="period selector" method="post" action="index.php" name="form_period_selector">
+		<b>{t}Period{/t}</b>
+		<select name="period_selector" onchange="submit();">
+			<option value="last_day" title="{t}Last day{/t}">{t}Last 24 hours{/t}</option>
+			<option value="last_week" title="{t}Last 7 days{/t}">{t}Last week{/t}</option>
+			<option value="last_month" title="{t}Last 4 weeks{/t}">{t}Last month{/t}</option>
+			<option value="since_bot" title="{t}Since beginning of time{/t}">{t}Since BOT{/t}</option>
+		</select>
+		<noscript>
+		  <input title="{t}Update with selected period{/t}" type="submit" value="{t}Submit{/t}">
+		</noscript>
+
+	  </form>
+	</div>
+	<div class="clear_both"></div>
+
   <!-- General information -->
   <div class="widget">
 	<p class="title">{t}Catalog statistics{/t}</p>
@@ -31,9 +49,9 @@
     </table>
   </div>
   
-<!-- Last 24 hours job Status -->
+<!-- Last period job Status -->
   <div class="widget">
-	<p class="title">{t}Last 24 hours status{/t}</p>
+	<p class="title">{t}Last period jobs status{/t}</p>
 		<table class="table_big">
 			<tr>
 				<td>{t}Running jobs{/t}</td>
@@ -66,19 +84,20 @@
 		</table>
   </div> <!-- end div box -->  
   
-<!-- Last 24 hours jobs status -->
+<!-- Last period jobs status graph -->
   <div class="widget">
 	<p class="title" title="{t}Last 24 hours jobs status{/t}">Jobs status</p>
 	  <a href="jobs.php" title="{t}Click here to see the report{/t}">
 	    <img class="graph" src="{$graph_jobs}" alt="" />
 	  </a>
   </div> <!-- end div box -->
-  
-</div>
+
+</div> <!-- end <div class="main_center"> -->
 
 <div class="main_center">
-  <p class="header">{t}Pools and volumes status{/t}</p>
-
+  <div class="header left_box">{t}Pools and volumes status{/t}</div>
+  <div class="clear_both"></div>
+  
   <!-- Pools and Volumes Status -->
   <div class="widget">
 	<p class="title">
@@ -120,7 +139,8 @@
 </div>
 
 <div class="main_center">
- <p class="header">{t}Reports{/t}</p>
+ <div class="header left_box">{t}Reports{/t}</div>
+ <div class="clear_both"></div>
 
 <div class="widget">
  <p class="title">{t}Client report{/t}</p>
