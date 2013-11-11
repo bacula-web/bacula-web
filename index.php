@@ -29,6 +29,8 @@ try {
 $custom_period = array( LAST_DAY, NOW);		// defautl period is last day
 
 if( isset($_POST['period_selector']) and !is_null($_POST['period_selector']) ) {
+ $view->assign( 'custom_period_list_selected', $_POST[period_selector]);
+
  switch($_POST['period_selector']) {
   case 'last_day':
     $custom_period = array( LAST_DAY, NOW);
@@ -43,18 +45,17 @@ if( isset($_POST['period_selector']) and !is_null($_POST['period_selector']) ) {
     $custom_period = array( FIRST_DAY, NOW);
     break;
  }
+}else {
+ $view->assign( 'custom_period_list_selected', 'last_day');
 }
 
- /*
- // debug
- echo '<pre>';
- print_r($_POST);
- print_r($custom_period);
- echo 'start ' . date('D j M Y', $custom_period[0]) . '<br />';
- echo 'end ' . date('D j M Y', $custom_period[1]) . '<br />';
- echo '</pre>';
- */
- 
+ $custom_period_list = array( 	'last_day' => 'Last 24 hours',
+				'last_week' => 'Last week',
+				'last_month' => 'Last month',
+				'since_bot' => 'Since BOT');
+ $view->assign('custom_period_list', $custom_period_list);
+
+ // Set period start - end for widget header
  $view->assign('literal_period', date("D j M Y ", $custom_period[0]) . ' to ' . date("D j M Y ", $custom_period[1]) );
 
  // Running, completed, failed, waiting and canceled jobs status over last 24 hours

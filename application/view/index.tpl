@@ -7,12 +7,8 @@
     <div class="toolbar_box right_box">
 	  <form class="period selector" method="post" action="index.php" name="form_period_selector">
 		<b>{t}Period{/t}</b>
-		<select name="period_selector" onchange="submit();">
-			<option value="last_day" title="{t}Last day{/t}">{t}Last 24 hours{/t}</option>
-			<option value="last_week" title="{t}Last 7 days{/t}">{t}Last week{/t}</option>
-			<option value="last_month" title="{t}Last 4 weeks{/t}">{t}Last month{/t}</option>
-			<option value="since_bot" title="{t}Since beginning of time{/t}">{t}Since BOT{/t}</option>
-		</select>
+                {html_options name=period_selector options=$custom_period_list selected=$custom_period_list_selected onchange="submit();"}
+
 		<noscript>
 		  <input title="{t}Update with selected period{/t}" type="submit" value="{t}Submit{/t}">
 		</noscript>
