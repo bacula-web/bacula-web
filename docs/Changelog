@@ -1,343 +1,329 @@
-=== Bacula-Web 5.2.13-1 ===
-
- Version: 5.2.13-1
- Released on 21st April 2013
- 
- Changelog
- 
- - Dashboard: Fixed bug with MySQL database size sql query
- 
- Fixed bugs / new features
- 
- 0000097 - Trouble when doing a fresh install
- 0000096 - SQLSTATE[22003]: Numeric value out of range: 1690 BIGINT UNSIGNED value is out of range
- 0000095 - Obtaining db size fails for large catalogs databases
- 
-=== Bacula-Web 5.2.13 ===
-
- Version: 5.2.13
- Released on 1st April 2013
- 
- Changelog
- 
- - General: code cleanup and improvment
- - General: improved header look and feel (cleaned up html and css)
- - General: ability to use home icon in the header to show the dashboard
- - General: improved exception handling by showing exception trace
- - General: implemented PHP class autload
- - General: browser title display the current page name from now
- - Test page: added php timezone check
- - Pools and volumes report page: fixed html code for empty pools
- - Test page: fixed a bug with database connection status (was showing wrong connection status)
- - Jobs report page: moved display options box on the right
- 
- Fixed bugs / new features
-
- - 0000086 - Wrong waiting jobs count in Dashboard widgets
- - 0000075 - Special Character in db_name results in "database does not exist"
- - 0000087 - Issue accessing dashboard page with MySQL 5.0.32-7
- - 0000093 - Database error
- - 0000090 - Remove the top white bar on the main page
- - 0000079 - Slow graphs generation
- 
-=== Bacula-Web 5.2.12 ===
-
- Version: 5.2.12
- Released on 24th January 2013
-
- Changelog
-
- - Some internal php code cleanup
- - Cleaned up CSS code for header
- - Dashboard: Fixed items order for Pools and volumes status widget
- - Job report page: Display "No job(s) to display" when there's no jobs result instead of an empty table
- - Job logs page: Fixed bug with "odd and even" row in job logs table
- - General: Header look and feel improvments
- - General: Updated bug tracker url in header
-
- Fixed bugs / new features
-
- - 0000066 - new bacula-web install reports SQL error
- - 0000068 - pgsql bug with Pools graph in dashboard 
- - 0000085 - pgsql bug with Pools and volumes widget when more than 9 Pools
- - 0000082 - Wrong Clients information in Catalog statistics widget
- - 0000081 - Wrong FileSets information in Catalog statistics widget
- - 0000078 - Last 24 hour summary if reporting the runnign jobs incorrectly
- - 0000080 - Wrong jobs count value in last used volumes widget (Dashboard)
- - 0000084 - Dutch translation
-
-=== Bacula-Web 5.2.11 ===
-
- Version: 5.2.11
- Released on 15h December 2012
- 
- Changelog
-
- - improved look and feel in general
- - improved look and feel of grids in all pages
- - code improvments with PHP PDO classes and starting kind of MVC
- - code improvments for graph rendering php class
- - updated application exception messages 
- - cleaned up and splitted CSS code
- - Dashboard: fixed legend items order for Pools and volumes status widget
- - Pools and volumes report: highlighted volume name column in Pools and volumes report page
- - Jobs report: fixed bug with SQLite for waiting jobs elapsed time
- - Jobs report: improved and cleaned up design
- - Dashboard: added last 24 hours running jobs information
- - Dashboard: merged Transfered bytes and Transferted files into the same cell
- - enhanced look and feel of the header
- - upgraded Smarty template engine to version 2.6.27
- - Dashboard: added volumes total used disk space
- - Dashboard: merged pools and volumes cells
- - Pools and volumes report page: empty Pools would not be displayed if the option $hide_empty_pools in the config file is set to true
- - Jobs report: now you can sort job list by different criteria (JobId, Pool name, Job name, Job bytes and Job files) in Jobs report page
- - Jobs report: displayed jobs / total jobs has been fixed
- - Dashboard: total of defined jobs and filesets are now displayed in a widget 
- - Dashboard: total of volumes is now displayed in a Dashboard widget 
- - Jobs report: from now, a "No job(s) to display" message is displayed if there's no job result
- 
- Fixed bugs
-
- - 0000047 index.php is blank
- - 0000050 Unable to access to the interface "Blank page"
- - 0000068 pgsql bug with Pools graph in dashboard
- - 0000066 new bacula-web install reports SQL error
- - 0000071 Missleading colors in dashboard
- - 0000063 Jobs list - Elapsed time incorrect for running jobs
- - 0000044 Job status report - Sort job list by different column
- - 0000039: multiple catalogs: shows all pools from all catalogs
- - 0000003: Display total for stored volumes
-
-=== Bacula-Web 5.2.10 ===
-
- Version: 5.2.10
- Released on August 9th 2012
-
- - upgraded Smarty gettext plugin to version 0.9.1
- - many CSS code improvments
- - SQLite database support improvments
- - fixed database size with SQLite in dashboard
- - added SQLite PDO support in test page
- - test page display template cache full path
- - files structure have been improved and cleaned up
- - many internal code improvments
- - fixed bugy CSS with Internet Explorer
- - improved design of dashboard
- - in job reports page, restore jobs were displaying empty value for pool, replaced now by N/A
- - upgraded PHPLot to version 5.8.0
- - portuguese brazil translation have been added (Thanks to Brivaldo Junior)
- - new option in configuration file [show_inactive_clients]
- - numbers are now formated regarding choosen language in the configuration
- - documentation have been moved into /docs folder
- 
- 
- Fixed bugs
- 
- - (0000045) Backup job - ability to see logs
- - (0000057) Bacula-web does not display a version string in the web interface
- - (0000042) Dashboard can not show all graph legends
- - (0000062) SQLite connection issue - invalid data source name
- - (0000061) Design issue with Internet explorer 8
- - (0000055) Upgraded pt_BR translation
- - (0000038) With multiple catalogs every client is shown in Reports drop down
- - (0000033) Client report stops at RestoreJob
- - (0000059) Large numbers showing apostrophes instead of commas for thousands separator
- - (0000058) client-report.php is reporting deprecated notice errors about split()
- 
-=== Bacula-Web 5.2.6 ===
-
- Version: 5.2.6
- Released on March 30th 2012
-
- - Updated french translation (thanks to Guillaume Delacour)
- - Fixed client sort order in Client report form (dashboard)
- - Updated links in header to point to the new website (About and Bugs)
- - Fixed charset (utf8) in template header
- - Added PHP session support check in test page
- - Fixed client architecture field in Client report page
- - Improved exceptions and error handling
- - Fixed bug with last used volume in dashboard (not used volumes not displayed)
- - PHP code improvment
-
- Fixed bugs
-
- - (0000049) [bug] Port setting for database not picked up
- - (0000048) [translation] Updated French translation
-
-=== Bacula-Web 5.2.2 ===
-
- Version: 5.2.2
- Released on December 11th 2011 
-
- - New layout for dashboard
- - Updated last day status with canceled jobs (dashboard)
- - Pool column in last used volumes widget
- - Improved database support (fixed bugs and better exception handling)
- - Updated translations for all languages
- - Exception handling when config file contain bad parameters or missing database connection
- - Database and application exception handling
- - Upgraded PHPLot to latest version (version 5.5.0)
-
- Fixed bugs
-
- - (0000036) [bug] No localisation (bacula-dev) - resolved.
- - (0000010) [bug] Improve postgreSQL (bacula-dev) - resolved.
-
-=== Bacula-Web 5.1.0 ===
-
- Version: 5.1.0
- Released on July 25th 2010
+=== Release 6.0.0 (November 11th 2013) ===
 
 Changelog
 
- - Improved dashboard statistics
- - Improved database support
- - Multi-catalog support enhancements
- - Support for PHP version 4 removed
- - Cleaned up HTML and CSS code (more W3C compliant)
- - New elements checked in test page such as PHP version, template cache folder permissions, PHP PDO support, etc.
- - New Client backup report page
- - New Pools and volumes page
- - Fixed security issue reported by Leonardo Rota Botelho
+Fixed bugs / New features
 
- Fixed bugs
-
- - (0000023) [design] Problem with graph in the General report with more than 12 Backup jobs (bacula-dev) - resolved
- - (0000034) [bug-php] Useless PEAR:DB include in global.inc.php file (bacula-dev) - resolved
- - (0000030) [bug-html] Error.gif instead of Images (bacula-dev) - resolved
- - (0000029) [bug-pgsql] Unable to get volume number from catalog (bacula-dev) - resolved
- - (0000031) [bug-php] Big Red X in right side when Full mode is enabled (bacula-dev) - resolved
- - (0000004) [bug] Make w3c standard html code (bacula-dev) - resolved
- - (0000027) [bug-php] PHP Errors (bacula-dev) - resolved
- - (0000026) [bug-pgsql] PostgreSQL error (bacula-dev) - resolved
- - (0000025) [bug] Images not appearing correctly in latest version (bacula-dev) - resolved
- - (0000024) [design] Improve design of Bacula-Web when there's a lot of volumes (bacula-dev) - resolved
- - (0000019) [bug] Unreadable dates in graph (bacula-dev) - resolved
- - (0000012) [bug] Wrong spelling in popup (bacula-dev) - resolved
- - (0000011) [bug] Wrong size of database with postgreSQL (bacula-dev) - resolved
- - (0000006) [feature] Scale Down bytes backed up to Kbytes, Mbytes or Gbytes (bacula-dev) - resolved
- - (0000022) [bug-php] List of jobs are no more display as expected (bacula-dev) - resolved
- - (0000007) [feature] Use JPgraph instead of phplot (bacula-dev) - closed
-
-== Bacula-web 5.0.3  ==
-
- Version: 5.0.3
- Released on November 2nd 2010
+=== Release 5.2.13-1 (April 21st 2013) ===
 
 Changelog
 
- - Changed content of README file
- - Added new email address in CONTACT file
- - Removed TODO file
- - Removed changeLog file
- - Moved images folder into style directory
- - Removed var_dump used for debug from report.php
- - Removed fsize_format tag from report.tpl
- - Improved volumes list
- - Changed css classes for header and boxes
- - Removed fzise_format and new function in classes.inc
- - New function ByteToSize() in classe Bweb classe
- - Adapted path for Smarty lib in paths.php
- - Upgraded Smarty to latest version (Smarty 2.6.26)
- - Fixed html and css issue in report page - Fixed in report.tpl and report_select.tpl
- - Fixed html issue in index.tpl - Replaced all & by &amp; in phplot graph
- - Improved css code in volumes.tpl
- - Improved html code in volumes.tpl
- - Fixed Smarty typo in volumes.tpl
- - Fixed Overlib bug in index.tpl
- - Fixed typo in graph in classes.inc
- - Improved design and fixed html/css issue
- - Changed header.tpl design and links
- - Changed CSS file declaration in full_popup.tpl
- - Fixed typo in Javascript declaration
- - Improved test page
- - Fixed all php short tag
- - Fixed some html and css issue
- - Changed header.tpl content
- - Changed css file location in report.tpl
- - Changed css file location in style/default.css
- - Removed title variable from config file
- - New style folder
- - Ignore Smarty cache files
+- Dashboard: Fixed bug with MySQL database size sql query
 
-=== Bacula-web 1.3  ===
+Fixed bugs / new features
 
- Version: 1.3
- Released on January 26th 2006
+- 0000097 [bug] Trouble when doing a fresh install
+- 0000096 [bug-mysql] SQLSTATE[22003]: Numeric value out of range: 1690 BIGINT UNSIGNED value is out of range
+- 0000095 [bug-mysql] Obtaining db size fails for large catalogs databases
 
- - (0000019,0000021) Fixed psql querys.
- - Fixed XTicks (Graphs).
-
- Fixed bugs
-
- - (0000019,0000021) Fixed psql querys.
-
-=== Bacula web 1.2 ===
-
- Version: 1.2
- Released on October 6th 2005
+=== Release 5.2.13 (April 1st 2013) ===
 
 Changelog
 
- - Human readable Y-axis of graphs
- - Updated French translation
- - Initial support for PostgreSQL (thanks to Dan Langille)
- - Upgrade Phplot to 5.0rc2 version.
- - Added templates_c to cvs repository.
- - Added German translation
- - Fix mysql database size (reported by Roland Arendes)
- - Added JobID column in report template. (thanks to Stephan Ebeit)
- - Upgraded Smarty to 2.6.10 version.
- - Added multicatalog support
+- General: code cleanup and improvment
+- General: improved header look and feel (cleaned up html and css)
+- General: ability to use home icon in the header to show the dashboard
+- General: improved exception handling by showing exception trace
+- General: implemented PHP class autload
+- General: browser title display the current page name from now
+- Test page: added php timezone check
+- Pools and volumes report page: fixed html code for empty pools
+- Test page: fixed a bug with database connection status (was showing wrong connection status)
+- Jobs report page: moved display options box on the right
 
-=== Bacula web 1.1 ===
+Fixed bugs / new features
 
- Version: 1.1
- Released on October 25th 2004
+- 0000086 [bug] Wrong waiting jobs count in Dashboard widgets
+- 0000075 [bug-pgsql] Special Character in db_name results in "database does not exist"
+- 0000087 [bug-mysql] Issue accessing dashboard page with MySQL 5.0.32-7
+- 0000093 [bug-mysql] Database error
+- 0000090 [bug-html] Remove the top white bar on the main page
+- 0000079 [bug] Slow graphs generation
 
-Changelog
-
- - Add array_fill function (as Mikael suggested)
- - Fix url encode of links. (reported by Phil Stracchino)
- - Upgraded Smarty to 2.6.6 version.
- - Add French translation
-
-=== Bacula web 1.0 ===
-
- Version:  1.0
- Released on August 4th 2004
+=== Release 5.2.12 (January 24th 2013) ===
 
 Changelog
 
- - Add Italian translation
- - Change some colors of graphs. More clear now (I hope).
+- Some internal php code cleanup
+- Cleaned up CSS code for header
+- Dashboard: Fixed items order for Pools and volumes status widget
+- Job report page: Display "No job(s) to display" when there's no jobs result instead of an empty table
+- Job logs page: Fixed bug with "odd and even" row in job logs table
+- General: Header look and feel improvments
+- General: Updated bug tracker url in header
 
- Fixed bugs
+Fixed bugs / new features
 
- - (0000012) Fix, don't load config in report.php
- - (0000015) Fix, error date in When expire? field.
+- 0000066 [bug-pgsql] new bacula-web install reports SQL error
+- 0000068 [bug-pgsql] pgsql bug with Pools graph in dashboard 
+- 0000085 [bug-pgsql] pgsql bug with Pools and volumes widget when more than 9 Pools
+- 0000082 [bug-php] Wrong Clients information in Catalog statistics widget
+- 0000081 [bug-php] Wrong FileSets information in Catalog statistics widget
+- 0000078 [bug-php] Last 24 hour summary is reporting the runnign jobs incorrectly
+- 0000080 [bug] Wrong jobs count value in last used volumes widget (Dashboard)
+- 0000084 [translation] Dutch translation updated
 
-=== Bacula web 1.0 ===
-
- Version: 1.0 Beta2
- Released on June 14th 2004
-
- Fixed bugs
-
- - (0000009) Fix incorrect date of â€œselect report.
- - (0000010) Fix incorrect symbolic link (Add paths.php).
- - (0000008) Fix elapsed time of execution of jobs more than 24h in Lite mode.
-
-=== Bacula-web 1.0 ===
-
- Version: 1.0 Beta1
- Released on June 11th 2004
+=== Release 5.2.11 (December 15th 2012) ===
 
 Changelog
 
- - Check connection error (reported by Thomas Contamine)
- - Register_globals on/off compatible (reported by Thomas Contamine)
- - Fix bug in graph type=69. The data now is correct
- - Fix config system
- - Very internal fixes
- - Unordered List ItemAdd at last report.
+- improved look and feel in general
+- improved look and feel of grids in all pages
+- code improvments with PHP PDO classes and starting kind of MVC
+- code improvments for graph rendering php class
+- updated application exception messages 
+- cleaned up and splitted CSS code
+- Dashboard: fixed legend items order for Pools and volumes status widget
+- Pools and volumes report: highlighted volume name column in Pools and volumes report page
+- Jobs report: fixed bug with SQLite for waiting jobs elapsed time
+- Jobs report: improved and cleaned up design
+- Dashboard: added last 24 hours running jobs information
+- Dashboard: merged Transfered bytes and Transferted files into the same cell
+- enhanced look and feel of the header
+- upgraded Smarty template engine to version 2.6.27
+- Dashboard: added volumes total used disk space
+- Dashboard: merged pools and volumes cells
+- Pools and volumes report page: empty Pools would not be displayed if the option $hide_empty_pools in the config file is set to true
+- Jobs report: now you can sort job list by different criteria (JobId, Pool name, Job name, Job bytes and Job files) in Jobs report page
+- Jobs report: displayed jobs / total jobs has been fixed
+- Dashboard: total of defined jobs and filesets are now displayed in a widget 
+- Dashboard: total of volumes is now displayed in a Dashboard widget 
+- Jobs report: from now, a "No job(s) to display" message is displayed if there's no job result
+
+Fixed bugs / New features
+
+- 0000047 [bug-php] index.php is blank
+- 0000050 [bug-php] Unable to access to the interface "Blank page"
+- 0000068 [bug-pgsql] pgsql bug with Pools graph in dashboard
+- 0000066 [bug-pgsql] ]new bacula-web install reports SQL error
+- 0000071 [design] Missleading colors in dashboard
+- 0000063 [bug-sqlite] Jobs list - Elapsed time incorrect for running jobs
+- 0000044 [feature] Job status report - Sort job list by different column
+- 0000039 [feature] multiple catalogs: shows all pools from all catalogs
+- 0000003 [feature] Display total for stored volumes
+
+=== Release 5.2.10 (August 9th 2012) ===
+
+- upgraded Smarty gettext plugin to version 0.9.1
+- many CSS code improvments
+- SQLite database support improvments
+- fixed database size with SQLite in dashboard
+- added SQLite PDO support in test page
+- test page display template cache full path
+- files structure have been improved and cleaned up
+- many internal code improvments
+- fixed bugy CSS with Internet Explorer
+- improved design of dashboard
+- in job reports page, restore jobs were displaying empty value for pool, replaced now by N/A
+- upgraded PHPLot to version 5.8.0
+- portuguese brazil translation have been added (Thanks to Brivaldo Junior)
+- new option in configuration file [show_inactive_clients]
+- numbers are now formated regarding choosen language in the configuration
+- documentation have been moved into /docs folder
+
+Fixed bugs / New features
+
+- 0000045 [feature] Backup job - ability to see logs
+- 0000057 [bug-html] Bacula-web does not display a version string in the web interface
+- 0000042 [feature] Dashboard can not show all graph legends
+- 0000062 [bug-php] SQLite connection issue - invalid data source name
+- 0000061 [bug-html] Design issue with Internet explorer 8
+- 0000055 [translation] Upgraded pt_BR translation
+- 0000038 [feature] With multiple catalogs every client is shown in Reports drop down
+- 0000033 [bug] Client report stops at RestoreJob
+- 0000059 [bug-html] Large numbers showing apostrophes instead of commas for thousands separator
+- 0000058 [bug-html] client-report.php is reporting deprecated notice errors about split()
+
+=== Release 5.2.6 (March 30th 2012) ===
+
+Changelog
+
+- Updated french translation (thanks to Guillaume Delacour)
+- Fixed client sort order in Client report form (dashboard)
+- Updated links in header to point to the new website (About and Bugs)
+- Fixed charset (utf8) in template header
+- Added PHP session support check in test page
+- Fixed client architecture field in Client report page
+- Improved exceptions and error handling
+- Fixed bug with last used volume in dashboard (not used volumes not displayed)
+- PHP code improvment
+
+Fixed bugs / New features
+
+- 0000049 [bug] Port setting for database not picked up
+- 0000048 [translation] Updated French translation
+
+=== Release 5.2.2 (December 11th 2011) ===
+
+Changelog
+
+- New layout for dashboard
+- Updated last day status with canceled jobs (dashboard)
+- Pool column in last used volumes widget
+- Improved database support (fixed bugs and better exception handling)
+- Updated translations for all languages
+- Exception handling when config file contain bad parameters or missing database connection
+- Database and application exception handling
+- Upgraded PHPLot to latest version (version 5.5.0)
+
+Fixed bugs / New features
+
+- 0000036 [bug] No localisation (bacula-dev) - resolved.
+- 0000010 [bug] Improve postgreSQL (bacula-dev) - resolved.
+
+=== Release 5.1.0 (July 25th 2010) ===
+
+Changelog
+
+- Improved dashboard statistics
+- Improved database support
+- Multi-catalog support enhancements
+- Support for PHP version 4 removed
+- Cleaned up HTML and CSS code (more W3C compliant)
+- New elements checked in test page such as PHP version, template cache folder permissions, PHP PDO support, etc.
+- New Client backup report page
+- New Pools and volumes page
+- Fixed security issue reported by Leonardo Rota Botelho
+
+Fixed bugs / New features
+
+- 0000023 [design] Problem with graph in the General report with more than 12 Backup jobs (bacula-dev) - resolved
+- 0000034 [bug-php] Useless PEAR:DB include in global.inc.php file (bacula-dev) - resolved
+- 0000030 [bug-html] Error.gif instead of Images (bacula-dev) - resolved
+- 0000029 [bug-pgsql] Unable to get volume number from catalog (bacula-dev) - resolved
+- 0000031 [bug-php] Big Red X in right side when Full mode is enabled (bacula-dev) - resolved
+- 0000004 [bug] Make w3c standard html code (bacula-dev) - resolved
+- 0000027 [bug-php] PHP Errors (bacula-dev) - resolved
+- 0000026 [bug-pgsql] PostgreSQL error (bacula-dev) - resolved
+- 0000025 [bug] Images not appearing correctly in latest version (bacula-dev) - resolved
+- 0000024 [design] Improve design of Bacula-Web when there's a lot of volumes (bacula-dev) - resolved
+- 0000019 [bug] Unreadable dates in graph (bacula-dev) - resolved
+- 0000012 [bug] Wrong spelling in popup (bacula-dev) - resolved
+- 0000011 [bug] Wrong size of database with postgreSQL (bacula-dev) - resolved
+- 0000006 [feature] Scale Down bytes backed up to Kbytes, Mbytes or Gbytes (bacula-dev) - resolved
+- 0000022 [bug-php] List of jobs are no more display as expected (bacula-dev) - resolved
+- 0000007 [feature] Use JPgraph instead of phplot (bacula-dev) - closed
+
+=== Release 5.0.3 (November 2nd 2010) ===
+
+Changelog
+
+- Changed content of README file
+- Added new email address in CONTACT file
+- Removed TODO file
+- Removed changeLog file
+- Moved images folder into style directory
+- Removed var_dump used for debug from report.php
+- Removed fsize_format tag from report.tpl
+- Improved volumes list
+- Changed css classes for header and boxes
+- Removed fzise_format and new function in classes.inc
+- New function ByteToSize() in classe Bweb classe
+- Adapted path for Smarty lib in paths.php
+- Upgraded Smarty to latest version (Smarty 2.6.26)
+- Fixed html and css issue in report page - Fixed in report.tpl and report_select.tpl
+- Fixed html issue in index.tpl - Replaced all & by &amp; in phplot graph
+- Improved css code in volumes.tpl
+- Improved html code in volumes.tpl
+- Fixed Smarty typo in volumes.tpl
+- Fixed Overlib bug in index.tpl
+- Fixed typo in graph in classes.inc
+- Improved design and fixed html/css issue
+- Changed header.tpl design and links
+- Changed CSS file declaration in full_popup.tpl
+- Fixed typo in Javascript declaration
+- Improved test page
+- Fixed all php short tag
+- Fixed some html and css issue
+- Changed header.tpl content
+- Changed css file location in report.tpl
+- Changed css file location in style/default.css
+- Removed title variable from config file
+- New style folder
+- Ignore Smarty cache files
+
+Fixed bugs / New features
+
+- none
+
+=== Release 1.3 (January 26th 2006) ===
+
+Changelog
+
+- 0000019,0000021 Fixed psql querys.
+- Fixed XTicks (Graphs).
+
+Fixed bugs / New features
+
+- (0000019,0000021) Fixed psql querys.
+
+=== Release 1.2 (October 6th 2005) ===
+
+Changelog
+
+- Human readable Y-axis of graphs
+- Updated French translation
+- Initial support for PostgreSQL (thanks to Dan Langille)
+- Upgrade Phplot to 5.0rc2 version.
+- Added templates_c to cvs repository.
+- Added German translation
+- Fix mysql database size (reported by Roland Arendes)
+- Added JobID column in report template. (thanks to Stephan Ebeit)
+- Upgraded Smarty to 2.6.10 version.
+- Added multicatalog support
+
+Fixed bugs / New features
+
+- none
+
+=== Release 1.1 (October 25th 2004) ===
+
+Changelog
+
+- Add array_fill function (as Mikael suggested)
+- Fix url encode of links. (reported by Phil Stracchino)
+- Upgraded Smarty to 2.6.6 version.
+- Add French translation
+
+Fixed bugs / New features
+
+- none
+
+=== Release 1.0 (August 4th 2004) ===
+
+Changelog
+
+- Add Italian translation
+- Change some colors of graphs. More clear now (I hope).
+
+Fixed bugs / New features
+
+- (0000012) Fix, don't load config in report.php
+- (0000015) Fix, error date in When expire? field.
+
+=== Release 1.0 Beta2 (June 14th 2004) ===
+
+Changelog
+
+- none
+
+Fixed bugs / New features
+
+- (0000009) Fix incorrect date of â€œselect report.
+- (0000010) Fix incorrect symbolic link (Add paths.php).
+- (0000008) Fix elapsed time of execution of jobs more than 24h in Lite mode.
+
+=== Release 1.0 (June 11th 2004) ===
+
+Changelog
+
+- Check connection error (reported by Thomas Contamine)
+- Register_globals on/off compatible (reported by Thomas Contamine)
+- Fix bug in graph type=69. The data now is correct
+- Fix config system
+- Very internal fixes
+- Unordered List ItemAdd at last report
+
+Fixed bugs / New features
+
+- none
