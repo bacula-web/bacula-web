@@ -183,7 +183,7 @@ if( isset($_POST['period_selector']) and !is_null($_POST['period_selector']) ) {
  // Last 7 days stored Bytes widget
  // ==============================================================
  $days_stored_bytes = array();
- $days = CTimeUtils::getLastDaysIntervals(7);
+ $days = DateTimeUtil::getLastDaysIntervals(7);
 
  foreach ($days as $day) {
     $stored_bytes 			= CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']) ), 1, 'GB', false );

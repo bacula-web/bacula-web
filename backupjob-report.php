@@ -49,7 +49,7 @@
     $backupjob_files = CUtils::format_Number( $backupjob_files );
     
     // Get the last 7 days interval (start and end)
-    $days = CTimeUtils::getLastDaysIntervals(7);
+    $days = DateTimeUtil::getLastDaysIntervals(7);
     
     // ===============================================================
     // Last 7 days stored Bytes graph
@@ -103,7 +103,7 @@
         $job['joblevel'] = $joblevel[$job['level']];
     
         // Job execution execution time
-        $job['elapsedtime'] = CTimeUtils::Get_Elapsed_Time($job['starttime'], $job['endtime']);
+        $job['elapsedtime'] = DateTimeUtil::Get_Elapsed_Time($job['starttime'], $job['endtime']);
     
         // odd and even row
         if (count($jobs) % 2)

@@ -200,7 +200,7 @@
           $job['endtime'] = 'N/A';
       
       // Get the job elapsed time completion
-      $job['elapsed_time'] = CTimeUtils::Get_Elapsed_Time($start_time, $end_time);
+      $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
       
       // Job Level
       $job['level'] = $job_levels[$job['level']];

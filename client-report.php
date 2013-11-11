@@ -81,7 +81,7 @@
    $view->assign('backup_jobs', $backup_jobs);
   
    // Get the last n days interval (start and end)
-   $days = CTimeUtils::getLastDaysIntervals($period);
+   $days = DateTimeUtil::getLastDaysIntervals($period);
   
    // ===============================================================
    // Last n days stored Bytes graph
