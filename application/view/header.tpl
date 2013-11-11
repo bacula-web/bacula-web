@@ -17,7 +17,7 @@
    <ul>
 	<li> <a href="http://bugs.bacula-web.org" target="_blank" title="Bugs and features tracker">Bugs</a> </li>
 	<li> <a href="http://www.bacula-web.org" target="_blank" title="Visit the official web site">About</a> </li>
-	<li>Version 5.2.13-1</li>
+	<li>Version 6.0.0</li>
    </ul>
   </div> 
   <div class="clear_both"></div>
