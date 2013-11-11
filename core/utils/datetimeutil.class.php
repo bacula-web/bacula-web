@@ -18,6 +18,16 @@
 class DateTimeUtil {
 
     // ==================================================================================
+    // Function:        get_Timestamp()
+    // Parameters:      $time ( UNIX date string)
+    // Return:          UNIX timestamp
+    // ==================================================================================
+
+    static public function get_Timestamp( $time ) {
+        return strtotime( $time );
+    }
+
+    // ==================================================================================
     // Function: 	Get_Elapsed_Time()
     // Parameters:	$start_time			(start time in date format)
     // Parameters:	$end_time			(end time in date format)	
@@ -26,17 +36,17 @@ class DateTimeUtil {
 
     static public function Get_Elapsed_Time( $start_time, $end_time) {
         $start = '';
-        $end = '';
+        $end   = '';
 
         if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0)
             return 'N/A';
         else
-            $start = strtotime($start_time);
+            $start = self::get_Timestamp($start_time);
 
         if ($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == 0)
             $end = mktime();
         else
-            $end = strtotime($end_time);
+            $end = self::get_Timestamp($end_time);
 
         $diff = $end - $start;
 
@@ -57,6 +67,21 @@ class DateTimeUtil {
     }
 
     // ==================================================================================
+    // Function:        get_ElapsedSeconds()
+    // Parameters:      $end  
+    //			$start
+    // Return:          amount of seconds between two UNIX date string or false
+    // ==================================================================================
+
+    static public function get_ElaspedSeconds( $end, $start) {
+	if( date_parse( $start) && date_parse($end) ) {
+ 	  $seconds = strtotime($end) - strtotime($start);
+          return $seconds;
+        }else
+          return false;
+    }
+
+    // ==================================================================================
     // Function: 	get_Day_Intervals()
     // Parameters:	$day
     // Return:		array('start' => start_timestamp, 'end' => end_timestamp)
@@ -64,7 +89,7 @@ class DateTimeUtil {
     
     static public function get_Day_Intervals($day) {
         $start = strtotime(date("Y-m-d 00:00:00", $day));
-        $end = strtotime(date("Y-m-d 23:59:59", $day));
+        $end   = strtotime(date("Y-m-d 23:59:59", $day));
 
         return array('start' => $start, 'end' => $end);
     }
@@ -85,5 +110,4 @@ class DateTimeUtil {
         return $days;
     }
 }
-
 ?>
