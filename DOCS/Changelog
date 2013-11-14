@@ -14,19 +14,19 @@ Changelog
 
 Fixed bugs / New features
 
-- 0000067: [feature] Dashboard date range selector
-- 0000073: [feature] Widget "Last 24 hours status" should be switchable to LAST_WEEK and LAST_MONTH
-- 0000101: [bug-pgsql] Wrong SQL to make 'Last used volumes graph'
-- 0000107: [feature] Jobs average speed in Jobs and backup job report
-- 0000106: [feature] Default jobs number settings in configuration
-- 0000089: [bug-mysql] Bypass database size information in Dashboard for MySQL version 4.x.x
-- 0000098: [bug] gitignore included in tarball
-- 0000052: [feature] Database connection through unix socket
-- 0000099: [bug] Default graph colors hides legends
-- 0000069: [security] Prevent to browse some directories
-- 0000102: [bug-pgsql] error on get information from remote postgresql server 
-- 0000076: [design] Add noscript submit button where ever it does not exist (example provided)
-- 0000043: [feature] Job Status Report for a specific client 
+- 0000067 [feature] Dashboard date range selector
+- 0000073 [feature] Widget "Last 24 hours status" should be switchable to LAST_WEEK and LAST_MONTH
+- 0000101 [bug-pgsql] Wrong SQL to make 'Last used volumes graph'
+- 0000107 [feature] Jobs average speed in Jobs and backup job report
+- 0000106 [feature] Default jobs number settings in configuration
+- 0000089 [bug-mysql] Bypass database size information in Dashboard for MySQL version 4.x.x
+- 0000098 [bug] gitignore included in tarball
+- 0000052 [feature] Database connection through unix socket
+- 0000099 [bug] Default graph colors hides legends
+- 0000069 [security] Prevent to browse some directories
+- 0000102 [bug-pgsql] error on get information from remote postgresql server 
+- 0000076 [design] Add noscript submit button where ever it does not exist (example provided)
+- 0000043 [feature] Job Status Report for a specific client 
 
 === Release 5.2.13-1 (April 21st 2013) ===
 
