@@ -14,8 +14,6 @@ Changelog
 
 Fixed bugs / New features
 
-- new feature - implemented period selection in dashboard (last day, last week, last month, since beginning of time)
-
 - 0000067: [feature] Dashboard date range selector
 - 0000073: [feature] Widget "Last 24 hours status" should be switchable to LAST_WEEK and LAST_MONTH
 - 0000101: [bug-pgsql] Wrong SQL to make 'Last used volumes graph'
