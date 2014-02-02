@@ -2,7 +2,7 @@
 /*
   +-------------------------------------------------------------------------+
   | Copyright (C) 2004 Juan Luis Frances Jimenez						    |
-  | Copyright 2010-2013, Davide Franco			                            |
+  | Copyright 2010-2014, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -14,7 +14,8 @@
   | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           |
   | GNU General Public License for more details.                            |
   +-------------------------------------------------------------------------+
- */
+*/
+
 session_start();
 include_once( 'core/global.inc.php' );
 
