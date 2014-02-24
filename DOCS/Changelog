@@ -1,10 +1,19 @@
+=== Release 6.x.x (Month dd 2014) ===
+
+Changelog
+
+- Updated copyright header in all PHP scripts
+
+Fixed bugs / New features
+
+- 0000121 - Job log not using <br> for EOL
+
 === Release 6.0.0 (November 11th 2013) ===
 
 Changelog
 
 - General php code improvments
-- Renamed docs folder to DOCS
-- General CSS code cleanup and improvments
+- Renamed docs folder to DOCS - General CSS code cleanup and improvments
 - Fixed smarty-gettext version (using latest version, even if it's outdated)
 - Job logs report: Added message "No log(s) for this job" in Job logs report page when logs are missing
 - General: New Navigation "Back" link on top of each page (except Dashboard)
