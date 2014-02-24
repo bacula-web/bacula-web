@@ -34,8 +34,8 @@ foreach ($result->fetchAll() as $log) {
     if (count($joblogs) % 2) {
         $log['class'] = 'even';
     }
-
-    $joblogs[] = $log;
+    $log['logtext'] = nl2br($log['logtext']);
+    $joblogs[] 	    = $log;
 }
 
 $view->assign('jobid', $jobid);
