@@ -113,13 +113,17 @@
         $job['jobfiles'] = CUtils::format_Number( $job['jobfiles'] );
         
         // Job speed
-        $start 		  = new DateTime($job['starttime']);
-		$end   		  = new DateTime($job['endtime']);
-		$seconds  	  = $end->getTimeStamp() - $start->getTimeStamp(); 
-		$speed 		  = $job['jobbytes'] / $seconds;
-		$job['speed'] = CUtils::Get_Human_Size($speed, 1) . '/s';
-    
-        $jobs[] = $job;
+        $start 		= new DateTime($job['starttime']);
+        $end   		= new DateTime($job['endtime']);
+	$seconds  	= $end->getTimeStamp() - $start->getTimeStamp(); 
+
+        if( $seconds > 0) {
+	    $speed 		= $job['jobbytes'] / $seconds;
+	    $job['speed'] = CUtils::Get_Human_Size($speed, 1) . '/s';
+        }else {
+            $job['speed'] = 'N/A';
+        }
+        $jobs[] 	= $job;
     } // end while
 
  }catch (Exception $e) {
