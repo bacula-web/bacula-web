@@ -27,7 +27,8 @@ try {
  $dbSql = new Bweb($view);
 
 // Custom period for dashboard
-$custom_period = array( LAST_DAY, NOW);		// defautl period is last day
+$no_period  	= array(FIRST_DAY, NOW);
+$custom_period  = array(LAST_DAY, NOW);		// defautl period is last day
 
 if( isset($_POST['period_selector']) and !is_null($_POST['period_selector']) ) {
  $view->assign( 'custom_period_list_selected', $_POST[period_selector]);
@@ -67,10 +68,10 @@ if( isset($_POST['period_selector']) and !is_null($_POST['period_selector']) ) {
  $view->assign( 'canceled_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, $custom_period, 'canceled') );
 
  // Stored files number 
- $view->assign( 'stored_files', CUtils::format_Number( Jobs_Model::getStoredFiles( $dbSql->db_link, $custom_period ) ) );
+ $view->assign( 'stored_files', CUtils::format_Number( Jobs_Model::getStoredFiles( $dbSql->db_link, $no_period) ) );
  
  // Overall stored bytes
- $view->assign( 'stored_bytes', CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, $custom_period ) ) );
+ $view->assign( 'stored_bytes', CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, $no_period) ) );
 
  // Database size
  $view->assign( 'database_size', Database_Model::get_Size( $dbSql->db_link, $dbSql->catalog_current_id ) );
