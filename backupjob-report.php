@@ -34,7 +34,7 @@
     if( !is_null(CHttpRequest::get_value('backupjob_name') ) )
         $backupjob_name = CHttpRequest::get_value('backupjob_name');
     else
-        throw new Exeption("Error: Backup job name not specified");
+        throw new Exception("Error: Backup job name not specified");
     
     // Generate Backup Job report period string
     $backupjob_period = "From " . date("Y-m-d", (NOW - WEEK)) . " to " . date("Y-m-d", NOW);
