@@ -51,12 +51,12 @@ class CHttpRequest {
         
         // $_POST
         foreach( $_POST as $var => $value ) {
-            self::$value_list[$var] = $value;  
+            self::$value_list[$var] = self::getSafeValue($value);  
         }
         
         // $_GET
         foreach( $_GET as $var => $value ) {
-            self::$value_list[$var] = $value;  
+            self::$value_list[$var] = self::getSafeValue($value); 
         }
     }
 
