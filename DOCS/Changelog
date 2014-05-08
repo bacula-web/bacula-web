@@ -11,6 +11,7 @@ Fixed bugs / New features
 - 0000126 [bug-php] Wrong value for Total files and Total bytes in Dashboard
 - 0000127 [security] XSS and SQL injection security issue
 - 0000116 [bug-php] division by zero after update to 6.0.0
+- 0000111 [bug-php] Problem with Jobs Report page and PHP prior 5.2 - Call to undefined function date_parse()
 
 === Release 6.0.0 (November 11th 2013) ===
 

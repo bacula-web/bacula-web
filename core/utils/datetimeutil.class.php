@@ -74,7 +74,7 @@ class DateTimeUtil {
     // ==================================================================================
 
     static public function get_ElaspedSeconds( $end, $start) {
-	if( date_parse( $start) && date_parse($end) ) {
+	if( strtotime( $start) && strtotime($end) ) {
  	  $seconds = strtotime($end) - strtotime($start);
           return $seconds;
         }else
