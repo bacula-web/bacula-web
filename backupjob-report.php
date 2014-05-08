@@ -86,7 +86,7 @@
     $view->assign( 'graph_stored_files', $graph->Render() );
     
     // Get last 10 jobs list
-    $query = "SELECT JobId, Level, JobFiles, JobBytes, JobStatus, StartTime, EndTime, Name ";
+    $query = "SELECT JobId, Level, JobFiles, JobBytes, ReadBytes, JobStatus, StartTime, EndTime, Name ";
     $query .= "FROM Job ";
     $query .= "WHERE Name = '$backupjob_name' ";
     $query .= "ORDER BY EndTime DESC ";
@@ -108,6 +108,10 @@
         if (count($jobs) % 2)
             $job['odd_even'] = 'even';
     
+        // Compression
+        $compression        = (1-($job['jobbytes'] / $job['readbytes']));
+        $job['compression'] = number_format( $compression, 2);    
+
         // Job bytes more easy to read
         $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
         $job['jobfiles'] = CUtils::format_Number( $job['jobfiles'] );
@@ -123,6 +127,7 @@
         }else {
             $job['speed'] = 'N/A';
         }
+
         $jobs[] 	= $job;
     } // end while
 

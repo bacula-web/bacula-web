@@ -12,6 +12,7 @@ Fixed bugs / New features
 - 0000127 [security] XSS and SQL injection security issue
 - 0000116 [bug-php] division by zero after update to 6.0.0
 - 0000111 [bug-php] Problem with Jobs Report page and PHP prior 5.2 - Call to undefined function date_parse()
+- 0000120 [feature] Display Jobs speed and compression in Backup Job report page
 
 === Release 6.0.0 (November 11th 2013) ===
 
