@@ -30,7 +30,7 @@
 		<tr>
 			<td style="border: 1px solid #c8c8c8; text-align:right;"><b>{t}Order by{/t}</b></td>
 			<td style="border: 1px solid #c8c8c8; text-align: left;">
-				{html_options name=orderby values=$result_order options=$result_order selected=$result_order_field}
+				{html_options name=orderby values=$result_order options=$result_order selected="$result_order_field"}
 				<input type="checkbox" name="result_order_asc" value="ASC" {$result_order_asc_checked}> Up
 			</td>
 		</tr>

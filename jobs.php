@@ -123,8 +123,6 @@
       $order_by = 'jobid';
   }
   
-  $view->assign('result_order_field', $result_order[$order_by]);
-  
   // Order by DESC || ASC
   if(!is_null(CHttpRequest::get_Value('result_order_asc'))) {
       $order_by_asc             = CHttpRequest::get_Value('result_order_asc');
@@ -133,7 +131,8 @@
   
   $query .= "ORDER BY $order_by $order_by_asc ";
   
-  $view->assign('result_order_field', CHttpRequest::get_Value('orderby'));
+  // Set selected option in template for Job order and Job order asc (ascendant order)
+  $view->assign('result_order_field', $order_by);
   $view->assign('result_order_asc_checked', $result_order_asc_checked);
   
   // Jobs per page options
