@@ -106,11 +106,13 @@
   
   // Order result by
   $result_order = array(
-      'jobid' => 'Job Id',
-      'Job.Name' => 'Job name',
-      'jobbytes' => 'Job Bytes',
-      'jobfiles' => 'Job Files',
-      'Pool.Name' => 'Pool name'
+	  'starttime' => 'Job Start Date',
+	  'endtime'   => 'Job End Date',
+      'jobid'     => 'Job Id',
+      'Job.Name'  => 'Job Name',
+      'jobbytes'  => 'Job Bytes',
+      'jobfiles'  => 'Job Files',
+      'Pool.Name' => 'Pool Name'
   );
   $view->assign('result_order', $result_order);
   
@@ -120,6 +122,8 @@
   } else {
       $order_by = 'jobid';
   }
+  
+  $view->assign('result_order_field', $result_order[$order_by]);
   
   // Order by DESC || ASC
   if(!is_null(CHttpRequest::get_Value('result_order_asc'))) {

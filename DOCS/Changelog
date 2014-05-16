@@ -14,6 +14,7 @@ Fixed bugs / New features
 - 0000111 [bug-php] Problem with Jobs Report page and PHP prior 5.2 - Call to undefined function date_parse()
 - 0000120 [feature] Display Jobs speed and compression in Backup Job report page
 - 0000108 [bug-mysql] Error with catalog size with MySQL 5.5.32 (Ubuntu0.12.04.1) 
+- 0000114 [feature] Order jobs by date in Jobs report pag
 
 === Release 6.0.0 (November 11th 2013) ===
 
