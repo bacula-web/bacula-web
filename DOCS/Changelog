@@ -15,6 +15,7 @@ Fixed bugs / New features
 - 0000120 [feature] Display Jobs speed and compression in Backup Job report page
 - 0000108 [bug-mysql] Error with catalog size with MySQL 5.5.32 (Ubuntu0.12.04.1) 
 - 0000114 [feature] Order jobs by date in Jobs report pag
+- 0000115 [design] Add a "reset" in Jobs report option box 
 
 === Release 6.0.0 (November 11th 2013) ===
 

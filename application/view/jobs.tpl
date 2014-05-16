@@ -42,9 +42,14 @@
 				{html_options name=jobs_per_page options=$jobs_per_page selected=$jobs_per_page_selected}
 			</td>
 		</tr>
-		<tr><td colspan="2" class="right_align">
-			<input title="{t}Apply filter and options{/t}" type="submit" value="{t}Apply{/t}">
-		</td></tr>
+		<tr>
+		  <td class="left_align">
+		    <input type="reset" title="Reset to default options" value="Reset">
+		  </td>
+		  <td class="right_align">
+		    <input title="{t}Apply filter and options{/t}" type="submit" value="{t}Apply{/t}">
+		  </td>
+		</tr>
 		<tr>
 			<td colspan="2" style="border: 1px solid #c8c8c8; background-color:#eeeeee;">
 			  Found <b>{$jobs_found}</b> of <b>{$total_jobs} Job(s)</b>
