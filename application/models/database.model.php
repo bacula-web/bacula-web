@@ -35,25 +35,27 @@
 				if( version_compare( CDB::getServerVersion(), '5.0.0') >= 0 ) {
 					// Prepare SQL statment
 					$statment = array( 'table'   => 'information_schema.TABLES', 
-									   'fields'  => array("table_schema AS 'database', sum( data_length + index_length) AS 'dbsize'"),
+									   'fields'  => array("table_schema AS 'database', (sum( data_length + index_length) / 1024 / 1024 ) AS 'dbsize'"),
 									   'where'   => array( "table_schema = '$db_name'" ),
 									   'groupby' => 'table_schema' );
-					$statment 	= CDBQuery::get_Select($statment, $pdo_connection);
+									   
+					$result		= CDBUtils::runQuery( CDBQuery::get_Select( $statment, $pdo_connection), $pdo_connection);
+					$db_size	= $result->fetch();
+					$db_size 	= $db_size['dbsize'] * 1024 * 1024;
+					return CUtils::Get_Human_Size( $db_size );
 				}else
-					echo 'dbsize() unsupported ('.CDB::getServerVersion().') <br />';
+					echo 'Not supported ('.CDB::getServerVersion().') <br />';
 			break;
 			case 'pgsql':
 				$statment	= "SELECT pg_database_size('$db_name') AS dbsize";
+				$result		= CDBUtils::runQuery( $statment, $pdo_connection);
+				$db_size	= $result->fetch();
+				return CUtils::Get_Human_Size( $db_size['dbsize'] );
 			break;
 			case 'sqlite':
 				$db_size 	= filesize( FileConfig::get_Value( 'db_name', $catalog_id) );
 				return CUtils::Get_Human_Size($db_size);
 			break;
 		}
-		// Execute SQL statment
-		$result   = CDBUtils::runQuery($statment, $pdo_connection);
-		$db_size  = $result->fetch();
-		
-		return CUtils::Get_Human_Size( $db_size['dbsize'] );	
 	}
  }
