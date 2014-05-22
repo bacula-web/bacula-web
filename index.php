@@ -30,7 +30,7 @@ try {
 $no_period  	= array(FIRST_DAY, NOW);
 $custom_period  = array(LAST_DAY, NOW);		// defautl period is last day
 
-if( isset($_POST['period_selector']) and !is_null($_POST['period_selector']) ) {
+if( isset($_POST['period_selector']) ) { 
  $view->assign( 'custom_period_list_selected', $_POST[period_selector]);
 
  switch($_POST['period_selector']) {
