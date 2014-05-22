@@ -27,13 +27,18 @@ try {
  $dbSql = new Bweb($view);
 
 // Custom period for dashboard
-$no_period  	= array(FIRST_DAY, NOW);
-$custom_period  = array(LAST_DAY, NOW);		// defautl period is last day
+$no_period  	 = array(FIRST_DAY, NOW);
+$last_day	 = array(LAST_DAY, NOW);
+
+// Default period (last day)
+$custom_period   = $last_day;
+$selected_period = 'last_day';
 
 if( isset($_POST['period_selector']) ) { 
- $view->assign( 'custom_period_list_selected', $_POST[period_selector]);
+ $selected_period = CHttpRequest::get_Value('period_selector');
+ $view->assign( 'custom_period_list_selected', $selected_period);
 
- switch($_POST['period_selector']) {
+ switch($selected_period) {
   case 'last_day':
     $custom_period = array( LAST_DAY, NOW);
     break;
@@ -44,17 +49,18 @@ if( isset($_POST['period_selector']) ) {
     $custom_period = array( LAST_MONTH, NOW);
     break;
   case 'since_bot':
-    $custom_period = array( FIRST_DAY, NOW);
+    $custom_period = $no_period; 
     break;
  }
 }else {
- $view->assign( 'custom_period_list_selected', 'last_day');
+ $view->assign( 'custom_period_list_selected', $selected_period);
 }
 
  $custom_period_list = array( 	'last_day' => 'Last 24 hours',
 				'last_week' => 'Last week',
 				'last_month' => 'Last month',
 				'since_bot' => 'Since BOT');
+
  $view->assign('custom_period_list', $custom_period_list);
 
  // Set period start - end for widget header
