@@ -21,7 +21,8 @@ class CGraph {
 	
     private $data;
     private $data_type = array('pie' => 'text-data-single', 'bars' => 'text-data');
-	private $data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
+    private $uniform_data = false;
+    private $data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
     private $graph_type;
 	
     private $width;
@@ -34,9 +35,40 @@ class CGraph {
         $this->img_filename = VIEW_CACHE_DIR . '/' . $filename;
     }
 
-    public function SetData($data_in, $graph_type) {
-        $this->data 	   = $data_in;
-        $this->graph_type  = $graph_type;
+    public function SetData($data_in, $graph_type, $uniform_data = false) {
+        $this->uniform_data = $uniform_data;
+
+	if( $this->uniform_data )
+            $this->data = $this->UniformizeData($data_in);
+	else
+            $this->data	= $data_in;
+		
+        $this->graph_type   = $graph_type;
+    }
+
+    public function UniformizeData($data_in) {
+	$array_sum = 0;
+	$best_unit = '';
+
+        // Uniformize data array element based on best unit
+	foreach( $data_in as $key => $data ) {
+	    if( is_null($data[1]) ) 
+	        $data_in[$key][1] = 0;
+	}
+
+	// Calculate sum of all values
+        foreach( $data_in as $value)
+	    $array_sum += $value[1];
+
+	// Calculate average value and best unit
+ 	$avg = $array_sum  / count($data_in);
+ 	list($value,$best_unit) = explode(' ', CUtils::Get_Human_Size($avg, 1) );
+
+        foreach($data_in as $key => $value) {
+	    $data_in[$key][1] = CUtils::Get_Human_Size($value[1], 1, $best_unit, false); 
+        }
+
+        return $data_in;
     }
 
     public function SetGraphSize($width, $height) {
