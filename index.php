@@ -195,12 +195,11 @@ if( isset($_POST['period_selector']) ) {
  $days = DateTimeUtil::getLastDaysIntervals(7);
 
  foreach ($days as $day) {
-    $stored_bytes 			= CUtils::Get_Human_Size( Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']) ), 1, 'GB', false );
-    $days_stored_bytes[] 	= array(date("m-d", $day['start']), $stored_bytes);
+    $days_stored_bytes[] = array( date("m-d", $day['start']), Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']) ));
  } 
- 
+
  $graph = new CGraph("graph2.png");
- $graph->SetData($days_stored_bytes, 'bars');
+ $graph->SetData($days_stored_bytes, 'bars', true);
  $graph->SetGraphSize(350, 220);
  $graph->SetYTitle("GB");
 

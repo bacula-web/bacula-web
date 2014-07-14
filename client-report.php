@@ -90,11 +90,10 @@
   
    foreach ($days as $day) {
 	  $stored_bytes = Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']), 'ALL', $clientid);
-	  $stored_bytes = CUtils::Get_Human_Size($stored_bytes, 1, 'GB', false);
 	  $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
    }
   
-   $graph->SetData($days_stored_bytes, 'bars');
+   $graph->SetData($days_stored_bytes, 'bars', true);
    $graph->SetGraphSize(400, 230);
    $graph->SetYTitle("GB");
   
