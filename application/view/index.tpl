@@ -106,7 +106,7 @@
   
   <!-- Stored Bytes for last 7 days -->
   <div class="widget">
-	<p class="title" title="{t}Used storage over the last 7 days{/t}">{t}Stored Bytes (GB){/t}</p>
+	<p class="title" title="{t}Stored bytes over the last 7 days{/t}">{t}Stored Bytes{/t}</p>
 	  <img class="graph" src="{$graph_stored_bytes}" alt="" />
   </div> <!-- end div box -->
 
