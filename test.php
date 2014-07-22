@@ -128,15 +128,13 @@ $data = array(
 );
 
 // Pie graph
-$pie_graph = new CGraph("graph3.png");
+$pie_graph = new CGraph("graph3.png", 300, 230);
 $pie_graph->SetData($data, 'pie');
-$pie_graph->SetGraphSize(300, 230);
 $view->assign( 'pie_graph', $pie_graph->Render() );
 
 // Bar graph
-$bar_graph = new CGraph("graph4.png");
+$bar_graph = new CGraph("graph4.png", 300, 230);
 $bar_graph->SetData( $data, 'bars' );
-$bar_graph->SetGraphSize(300, 230);
 $view->assign( 'bar_graph', $bar_graph->Render() );
 
 // Set page name

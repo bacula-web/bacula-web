@@ -6,6 +6,7 @@ Changelog
 
 Fixed bugs / New features
 
+- 0000130 [bug-php] Y axis title is missing on some bar graphs
 - 0000113 [bug-php] Bar plot graphs display data based on 1GB only
 - 0000121 [feature] Job log not using <br> for EOL
 - 0000123 [bug-html] Job summary shows as single line in joblogs.php

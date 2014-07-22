@@ -17,7 +17,6 @@
  */
 
 class CGraph {
-    private $ytitle;
 	
     private $data;
     private $data_type = array('pie' => 'text-data-single', 'bars' => 'text-data');
@@ -31,8 +30,12 @@ class CGraph {
     public $img_filename;
     private $plot;
 
-    function __construct($filename = "graph.png") {
+    function __construct($filename = "graph.png", $width, $height) {
         $this->img_filename = VIEW_CACHE_DIR . '/' . $filename;
+        $this->width        = $width;
+        $this->height       = $height;
+
+        $this->plot = new PHPlot($this->width, $this->height);    
     }
 
     public function SetData($data_in, $graph_type, $uniform_data = false) {
@@ -68,30 +71,24 @@ class CGraph {
 	    $data_in[$key][1] = CUtils::Get_Human_Size($value[1], 1, $best_unit, false); 
         }
 
+        $this->plot->SetYTitle($best_unit);
+
         return $data_in;
-    }
-
-    public function SetGraphSize($width, $height) {
-        $this->width  = $width;
-        $this->height = $height;
-    }
-
-    public function SetYTitle($ytitle) {
-        if (!empty($ytitle))
-            $this->ytitle = $ytitle;
-        else
-            die("Please provide a non empty title for the Y axis");
     }
 
     private function get_Filepath() {
 		return $this->img_filename;
     }
+
+    public function SetYTitle($ytitle) {
+      $this->plot->SetYTitle($ytitle);
+    }
 	
     // ==================================================================================
-	// Function: 	setLegent()
-	// Parameters:	none
-	// Return:		
-	// ==================================================================================
+    // Function: 	setLegend()
+    // Parameters:	none
+    // Return:		
+    // ==================================================================================
 	
 	private function setLegend() {
 		// Setting graph legend values
@@ -123,8 +120,6 @@ class CGraph {
 	// ==================================================================================
 	
 	public function Render() {
-        // Setting the size
-        $this->plot = new PHPlot($this->width, $this->height);
 
         // Render to file instead of screen
         $this->plot->SetOutputFile($this->img_filename);
