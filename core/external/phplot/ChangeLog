@@ -1,6 +1,558 @@
 This is the Change Log for PHPlot.
 The project home page is http://sourceforge.net/projects/phplot/
 -----------------------------------------------------------------------------
+
+2013-05-11 ===== Released as 6.1.0 =====
+    * phplot.php: Updated version comment and version constant
+    * README.txt: Updated for new release, fix copyright year
+    * NEWS.txt: Add text for new release
+
+2013-04-22
+    * Feature request #52 "Box Plots":
+      + New plot type 'boxes'.
+      + New internal method DrawBoxes() draws a box plot.
+      + Added 4 new tuning variables for box plot feature size tuning.
+
+2013-04-16
+    * Mark as pre-release 6.1.0
+
+    * Feature Request #47 "Extend horizontal plots to more types":
+      Implemented horizontal error plots. (This is the remaining,
+      unimplemented part the feature request.)
+      + Added new datatype 'data-data-yx-error' for horizontal error plots.
+      + Added new internal static array $datatypes to hold information
+        about the available data types.
+      + Added new internal static array $datatypes_map to handle the old
+        data type names, and also a new alias 'data-data-error-yx'.
+      + Rewrote internal DecodeDataType() to use the new array instead
+        of code to set the datatype flags from the data type.
+      + Changed SetDataType() to use the 2 new arrays to map and validate
+        the data type.
+      + Replaced internal function DrawYErrorBar() - draw one error bar
+        for vertical plots - with DrawYErrorBars() and DrawXErrorBars(),
+        each of which draws both parts of an error bar pair.
+      + Changed DrawDots() and DrawLines() to support both vertical and
+        horizontal error plots.
+
+2013-04-03 ===== Released as 6.0.0 =====
+    * README.txt: Fix PHP versions used for testing - should be 5.4.13 on
+      both Linux and XP.
+
+2013-04-02
+    * phplot.php: Fixed 2 comment errors. No code changes.
+    * NEWS.txt: Add 4 missing items: 2 more compatibility issues, and 2
+      changes that were made along side feature requests but were not
+      directly described in those requests.
+
+2013-04-01
+    Preparing for 6.0.0 release on 2013-04-03
+    * phplot.php: Updated version comment and version constants
+    * README.txt: Updated for new release
+    * NEWS.txt: Add text for new release
+
+2013-03-27
+    * Merged /branches/Rel6 changes back into trunk. Changes recorded below
+      with "(/branches/Rel6)" were made on the branch. Note: Subversion
+      change history for those changes is only available by looking at
+      revision 1558 on the branch, for example: 
+         svn log ^/branches/Rel6/phplot/phplot.php@1558
+      The /branches/Rel6 tree has not been deleted, but may be in the future
+      (as recommended in Subversion documentation).
+
+2013-03-22 (/branches/Rel6)
+    * Changed default minimum number of ticks intervals (min_ticks) for both
+      X and Y from 5 to 8. Considering PHPlot previously used 10 intervals
+      by default, 5 is just too low.
+
+    * Numeric change to CalcStep125() - slight tweak to make the tick steps
+      come out right for exact powers of 2.
+
+2013-03-19 (/branches/Rel6)
+    * Fixed bug #166 "Legend, UsePointShapes, and shape='none'":
+      Added argument to DrawShape() to disallow using 'none' as a shape.  This
+      is used when drawing markers in the legend. DrawShape will draw the
+      'line' shape instead of 'none' in this case.
+
+    * Code cleanup: minor cleanup in CalcMaxDataLabelSize() and
+      CalcMaxTickLabelSize() in selecting 'x' vs 'y' cases.
+    * Code cleanup: minor cleanup in GetDataColor().
+
+2013-03-18 (/branches/Rel6)
+    * Added adjustment factor in CalcStepBinary() to avoid round-off errors
+      for a few values where log2(2^N) < N.
+    * Fixed CalcPlotRange() to prevent the plot range ends from crossing
+      to the wrong side of 0 when there is a tick anchor. Instead, the
+      range will clip to zero, and there won't be a tick mark at that end.
+    * Fixed local variable names in CalcTicks(): data_min/data_max corrected
+      to plot_min/plot_max which is more descriptive.
+
+    * Fixed bug #167 "Fails to find a default font on Ubuntu":
+      Debian changed the install location for the LiberationSans fonts,
+      which also affects Ubuntu and related distributions. Added a new
+      entry to the default font search list in GetDefaultTTFont() so the
+      font will be found at the new location.
+
+2013-03-11 (/branches/Rel6)
+    * Expanded the two modes for calculating a tick increment to three:
+      decimal (1,2,5 * 10^N), date, and binary (2^N).
+      + Changed member array $tickctl[] key 'datetime_interval' (boolean) to
+        'tick_mode' (3 valued string).
+      + New internal function CalcStepBinary() for binary mode.
+      + Changed CalcStep() to select from 3 modes now, using tick_mode.
+      + Changed internal function TuneAutoTicks() and public functions
+        TuneXAutoTicks() and TuneYAutoTicks() parameter 'datetime_interval'
+        to 'tick_mode', checked for validity.
+
+    * Account for tick anchor when adjusting the plot range to start and
+      end at a tick mark. After this change, the range will start and end
+      at a tick mark (when in the default mode) even when a non-zero tick
+      anchor has been set.
+      + Change CalcPlotRange() so that when adjusting the range endpoints
+        to the next tick mark, it uses tick_anchor in the equation. It will
+        not adjust through zero, though. (Example: Range 0-10, tick anchor
+        at 1, resulting range will start at 0, not -9, so the range in this
+        case will not start at a tick mark.)
+
+    * Code cleanup: Avoid use of variable property names such as
+      '$this->{"num_$which" . "_ticks"}' to refer to either num_x_ticks or
+       num_y_ticks, depending on $which. Although these work and are more
+       compact, they make debugging harder (e.g. trying to find everywhere
+       num_x_ticks is used can overlook these).
+
+
+2013-03-01 (/branches/Rel6)
+    * Changes to range and tick calculations, still trying to get more
+      cases to come out right.
+      + Add per-plot-type tuning variable plots[]['adjust_type']. This is
+        to address the issue that some plot types need extra room around
+        the data points, and some do not.
+      + Moved the 6 class variables for tuning range and tick calculations
+        into 2 arrays $rangectl[] and $tickctl[], to make it easier to
+        access especially for new tuning functions.
+      + Added 2 new public functions for tuning plot range:
+        TuneXAutoRange() and TuneYAutoRange().
+        These are implemented by a new internal function TuneAutoRange().
+      + Added 2 new public functions for tuning tick calculations:
+        TuneXAutoTicks() and TuneYAutoTicks().
+        These are implemented by a new internal function TuneAutoTicks().
+      + New internal function GetRangeEndAdjust() which implements the new
+        per-plot-type default for range end adjustment.
+      + Changed usage of internal CalcStep(), which now gets parameters
+        directly from the new class variable arrays.
+      + Rewrote CalcPlotRange() - use the new class variable arrays, and
+        now implements 3 methods for adjusting the range endpoints.
+    Note: This is almost done. There is one known issue with tick anchors.
+
+2013-01-19 (/branches/Rel6)
+    * Minor changes related to range and tick calculations.
+      + Changed FindDataLimits() results for 'implied' range case to include
+        the margins, so CalcRangeInit() does not have to adjust them now.
+      + Simplified usage of internal CalcRangeInit().
+      + Moved debug_scale callbacks from CalcStep() and CalcPlotRange() to
+        caller CalcPlotAreaWorld(), to make it more consistent with 5.8.0.
+
+2013-01-17 (/branches/Rel6)
+    * More changes for feature request #29 "Finer control over plot element
+      colors":
+      + Added new method SetLegendBgColor() to set the legend background
+        color, overriding the image background color.
+      + Added new method SetLegendTextColor() to set the legend text color,
+        overriding the general text color.
+      + Added new class variables for above: legend_bg_color, legend_text_color,
+        ndx_legend_bg_color, ndx_legend_text_color.
+      + Changed SetColorIndexes() to allocate and default the new colors.
+      + Changed DrawLegend() to use the new colors.
+
+2013-01-02 (/branches/Rel6)
+    * Extend copyright years to 2013.
+    * Changed the static plots[] class variable element 'draw_axes' (default
+      if absent is True) to 'suppress_axes' (default if absent is False).
+    * In DrawGraph(), don't use extract() on the whole static plots[] array
+      entry when only 3 variables are used. Access each needed variable.
+
+2012-12-27 (/branches/Rel6)
+    * Added constant PHPlot::version_id which is an integer (vs
+      PHPlot::version which is a string). This is for the test suite so it
+      can check for a minimum version. For PHPlot-6.0.0 the value is 60000.
+
+2012-12-23 (/branches/Rel6)
+    * Feature request #50 "Control legend colorbox borders":
+
+      + Added new method SetLegendColorboxBorders($mode) to control the color
+        and presence of legend color box borders. The default behavior is
+        backward compatible (color box borders use Text color).
+        + Added new class variable: legend_colorbox_borders.
+        + Changed DrawLegend() to add new controls for color box borders.
+
+      + Added new method SetDrawDataBorders() to enable or disable data
+        borders on bars and stackedbars plots. This makes it possible to have
+        the same appearance for the legend color boxes and the data bars, for
+        both shaded and unshaded plots. The default behavior is backward
+        compatible (borders for unshaded, no borders if shaded).
+        + Added new class variable: draw_data_borders
+        + Changed usage of internal GetBarColors() to return both shade and
+          border colors (they were never both needed before).
+        + Change usage of internal DrawBars() to take both shade and border
+          colors, and to control border drawing using the new flag.
+        + Changed 4 bar-chart drawing functions to get both shade and border
+          color and pass both to DrawBar().
+
+    * Feature request #51 "Lines instead of colorboxes in legend":
+
+      Extended the use of SetLegendUseShapes() to apply to more plot types.
+      For lines and squared plots, this will replace the color boxes in the
+      legend with short line segments, with color, style, and width. The new
+      behavior is backward compatible, as SetLegendUseShapes(True) only
+      worked with points and linepoints plots before.
+
+      + Added a new optional key to the internal static $plots array called
+        'legend_alt_marker' to indicate the type of alternate marker that
+        can be used in the legend for this plot type, if any.
+
+      + Changed description of SetLegendUseShapes(), which applies to more
+        plot types now.
+
+      + Changed return variables from internal GetLegendSizeParams() to
+        replace do_colorbox with the more general colorbox_mode. Also, this
+        function implements the 4x scale-up on the color box width for 'line'
+        mode.
+
+      + Changed usage of internal SetDashedStyle() to streamline all the
+        places where line styles are available.
+
+      + Changed functions using styled lines per new SetDashedStyle() usage:
+        Draw[XY]Ticks(), Draw[XY]DataLine(), DrawLines(), DrawSquared().
+
+      + Changed DrawLegend() code for shape vs color box. Don't use
+        point_counts to determine if point shapes should be used - use the
+        new key in $plots[].  Implement line shape markers, including color,
+        width and style.
+
+    * Unrelated fix, found when testing above changes:
+      + Added a work-around in DrawBar() when drawing a bar with height 0.
+        The GD function for drawing unfilled rectangles puts "whiskers" at the
+        ends when height is 0 (see PHP bug #53154), so draw a line instead.
+
+
+2012-09-23 (/branches/Rel6)
+    * Bug #164 (old #3557510) "Calculated defaults applied to subsequent
+      plots":
+      Fixed for X and Y data label formats.
+      + CheckLabels(): Don't copy X or Y entries to XD or YD as defaults,
+        because these will stick for additional plots.
+      + FormatLabel(): Use the X or Y entries when XD or YD are needed
+        but found to be empty.
+
+2012-09-18 (/branches/Rel6)
+    * Feature request #47 "Extend horizontal plots to more types":
+
+      Implemented horizontal form of lines, points, and linepoints plots
+      (using data types data-data-yx and text-data-yx). Merged error plot
+      cases into drawing functions for lines and points.  As a side effect,
+      data value labels now work with error plots.  (Note: Horizontal error
+      plots are not available, but could be added without much work.)
+      + Rewrote internal DrawDots() to draw error bars and horizontal plots
+        too.  Removed internal DrawDotsError() which is now unused.
+      + Rewrite internal DrawLines() to draw error bars and horizontal plots
+        too.  Removed internal DrawLinesError() which is now unused.
+      + Changed usage of internal DrawYErrorBar(): removed error_bar_type
+        argument because this is always the class variable error_bar_shape.
+
+      Implemented Y data label lines, for horizontal plots.
+      + New public function SetDrawYDataLabelLines()
+      + New internal function DrawYDataLine()
+      + Added argument to internal DrawYDataLabel() for plot types that
+        support data label lines, and call DrawYDataLine() if enabled.
+      + Changed DrawDots() and DrawLines() to request data label lines
+        for horizontal plots too.
+
+2012-09-12 (/branches/Rel6)
+    * Feature request #46 "Control pie chart borders":
+      Added a separate color control for pie chart segment borders (vs
+      over-used Grid color), and a flag to enable or disable the borders.
+      Borders now work with shaded pie charts too. The defaults are
+      compatible: no borders for shaded pie charts, borders using grid
+      color for unshaded pie charts.
+      + New function SetPieBorderColor($color)
+      + New function SetDrawPieBorders($draw)
+      + Added separate color index value for pie chart borders, defaulting
+        to the grid color index.
+      + Changed DrawPieChart() to use the new controls, including
+        new ability to have borders with shaded pie charts.
+
+2012-09-10 (/branches/Rel6)
+    * Fixed bug #165 "Missing axis labels on some empty plots":
+      Don't skip the body of DrawLines(), DrawLinesError(), DrawSquared(),
+      or DrawBubbles() when the data column count is zero. Even though there
+      are no points to plot, the outer loops need to run in order to get
+      the X axis data labels drawn.
+
+    Note: Bug and Feature Request numbers above this point refer to the
+    new "Sourceforge2" trackers (low numbers). Below this point, the older
+    tracker numbers (large numbers, unique across all trackers) are used.
+
+2012-08-27 (/branches/Rel6)
+    Ongoing effort to provide 'reset to default' options where missing:
+    * Fixed SetTransparentColor() to accept NULL (or no argument) to mean
+      reset to default - no transparency.
+    * Allow missing argument to SetDefaultTTFont() to mean the same thing
+      as NULL - reset to default TrueType font name.
+
+2012-08-20 (/branches/Rel6)
+    * Declare all class variables at top, initialize where valid, and make
+      most PHPlot class variables 'protected' rather than 'public' visibility.
+      This is a significant change, and undoes the change of 2012-06-14
+      below ("Code cleanup: Avoid static initialization of class member
+      variables that can just as well be unset by default").
+
+      All variables listed in the "Tuning Parameters" section of the manual
+      remain public. In addition, the $img and $fonts member variables
+      remain public, although use in scripts is discouraged. (These are
+      public due to historical use, including use in the PHPlot Test Suite.)
+
+      Compatibility warning: This will break any script that accesses PHPlot
+      member variables other than those listed above as remaining public.
+
+      Code changes were made (mostly undoing changes from 2012-06-14) to
+      account for variable initialization, in many places. For example,
+      we can now test $this->use_ttf directly, rather than using empty() on it.
+      Replace unset() with assignment to NULL where variables have a special
+      state of "unspecified default".
+
+    * Bug #3557510 "Calculated defaults applied to subsequent plots":
+      Use two variables for X Data Label Angle: one for user-set value, and
+      one for the effective value. This fixes a problem with multiple plots,
+      where the X Data Label angle was calculated for the first plot, then
+      applied to subsequent plots as if it was user-set (rather than being
+      recalculated).
+
+    * Renamed variables: x_tick_inc to x_tick_inc_u, and tick_step to
+      x_tick_inc (similar for y_tick) for consistency with above X Data
+      Label Angle variables. The _u suffix is set by the user; the other
+      is the effective value.
+
+    * Changed return from internal GetLegendSizeParams() - removed text_align
+      and colorbox_align from the array. These were the same as the two
+      class variables (with defaults applied), but now the defaults are
+      initialized so there is no need to return them separately.
+
+
+2012-08-14 (/branches/Rel6)
+    * Code cleanup: Use 'self::' to access static properties and constants,
+      rather than the actual class name.
+    * Cleanup SetDefaultFonts(); no functional change.
+
+2012-08-09 (/branches/Rel6)
+    * Fixed problem with grid defaults and multiple plots. The default
+      setting, to draw the grid or not, was being stored back to the class
+      variables, and then this was used for the next plot rather than a new
+      default being calculated. This was wrong when mixing vertical and
+      horizontal plots. Removed internal CalcGridSettings() and added new
+      internal GetGridSetting(), so the default is not stored back into the
+      class variables.
+      Also changed DrawXGrid() and DrawYGrid() to allow NULL or omitted
+      argument to mean restore the default behavior.
+
+2012-08-03 (/branches/Rel6)
+    * Fixed problem with multiple plots and calculated tick increments.
+      The calculated values were stored back into the object, using the same
+      class variables as SetXTickIncrement() and SetYTickIncrement(). With
+      subsequent plots using the same object, the calculated values were seen
+      as user-provided, so new values were not calculated even if the data
+      range changed. This differs from the 5.x behavior and the manual.
+      Now, new class variables x_tick_step y_tick_step are used to store
+      the effective values for the tick increments. If not user-set, the
+      values will be recalculated for each plot.
+
+2012-07-09 (/branches/Rel6)
+    * Feature request #3541471 "Control pie chart start angle":
+      Added SetPieStartAngle() and SetPieDirection(), and changed
+      DrawPieChart() to work with any start angle and either direction.
+
+2012-07-07 (/branches/Rel6)
+    * Changed internal DrawText() and SizeText() to take a text element
+      name (e.g. 'x_title') rather than a font name. This is actually
+      implemented in the lower-level ProcessText().  For compatibility,
+      however, ProcessText() still does accept a font array.  The reason for
+      the change is that when using a drawing annotation callback with a pie
+      chart, this makes it much easier for the callback to draw text using a
+      different font than the one used for the pie chart labels.
+      Changed all internal callers of DrawText() and SizeText() to pass the
+      text element name rather than the $fonts[] array entry.
+
+2012-06-26 (/branches/Rel6)
+    * Fixed conflict between setting number of ticks (SetNum[XY]Ticks) and the
+      new range calculations. (The range was adjusted after calculating the
+      tick increment, but the tick increment depended on the range here. So if
+      you asked for N tick intervals, you probably got N+1.) Moved code to
+      handle pre-specified tick increment or number of ticks from CalcStep()
+      to CalcPlotRange(), and let CalcPlotRange() do special handling for the
+      case with number of ticks set.
+
+2012-06-25 (/branches/Rel6)
+    * Removed TuneAutoRange(). The tuning parameters will be documented as
+      class variables that can be set directly, like other existing variables
+      that tune things. (The problem with TuneAutoRange is that it is a new,
+      3rd way to change plot settings - Set*() functions and directly changing
+      a class variable being the other two. We don't need another interface.)
+
+2012-06-20 (/branches/Rel6)
+    * Fix validation in SetPlotAreaWorld(). Enforce min<max rather than
+      min<=max. Allowing min==max was pointless, as it just produced an
+      error later in CheckPlotRange rather than sooner in SetPlotAreaWorld.
+      (Found while doing documentation updates)
+
+2012-06-14 (/branches/Rel6)
+    * Code cleanup: Avoid static initialization of class member variables
+      that can just as well be unset by default. (Some variables had been
+      removed in prior releases, when they needed dynamic initialization.
+      So the top of the class declaration was no longer useful as
+      documentation of all the class variables.) A comment was added to
+      direct the reader to the Reference Manual, which documents all member
+      class variables. The following class variables no longer get
+      declared and initialized:
+          $bar_extra_space, $bar_width_adjust, $browser_cache,
+          $color_array, $draw_broken_lines, $draw_plot_area_background,
+          $draw_x_data_label_lines, $grid_at_foreground,
+          $group_frac_width, $is_inline, $legend, $output_file, $use_ttf,
+          $x_axis_position, $x_label_angle, $y_axis_position,
+          $y_data_label_angle, $y_label_angle
+
+      Except for the minor differences noted below, there are no changes
+      in behavior (provided one does not access the internal variables):
+      + SetRGBArray(): Report an error if an invalid color map name is used,
+        rather than just using a black and white array with no error reported.
+      + Removed unneeded class variable: $color_array
+      + GetLegendSize() now returns FALSE if there is no legend.
+
+    * Code cleanup: In CalcMargins(), don't make unnecessary local copies
+      of member variables.
+
+2012-06-09 (/branches/Rel6)
+    * Minor fixes for incorrect use of empty(). (Need to remember that
+      empty("0") and empty(0) are true, so this cannot be used on string
+      or number variables that could be "0" or 0.)
+      + Fixed handling of output_file and input_file.
+      + Fixed DrawMessage() - don't use empty() on color index (could be 0).
+      Checked and found no other misuses of empty().
+
+2012-06-06 (/branches/Rel6)
+    * Remove obsolete file: Imagemaps.txt - This feature is now documented
+      in the Reference Manual and no longer 'experimental'.
+      Makefile: Remove Imagemaps.txt from release.
+
+2012-06-01 (/branches/Rel6)
+    More changes for automatic range and tick increment calculations:
+
+    + CalcPlotRange() - renamed "top_adjust" to "end_adjust", since it
+      now potentially applies to both ends of the plot range.
+
+      Added more comments explaining some of the more opaque expressions.
+
+      Redid adjustment of max (for positive) and min (if negative) ends
+      of the plot range.  The plot range will now always begin and end at a
+      tick mark. (PHPlot-5.8.0 does this, but previous changes on this
+      branch made it stop ending on a tick mark.)
+
+      Also, it will now leave more space at the ends away from zero - by
+      default, at least 0.3 * tick increment (since it ends at a tick, you
+      get between 0.3 and 1.3 tick increments of space). This also means
+      data value labels are much less likely to run off the plot area.
+
+    + TuneAutoRange() - renamed "top_adjust" to "end_adjust".
+      Added top comments explaining the parameters in more detail.
+
+    Note: Range ends are much better now, and as a result the PHPlot
+    Test Suite results are greatly improved.
+    There are still issues with tick anchors and date/time ranges.
+
+2012-05-28 (/branches/Rel6)
+    More changes for automatic range and tick increment calculations:
+
+    + Changed internal CalcStep() usage - pass the range, not the min and
+      max.  This is possible because the range checking was moved
+      to CheckPlotRange().
+
+    + New internal CheckPlotRange() makes sure the plot range is positive,
+      after defaults are applied. This expands on code moved from
+      CalcStep().  Called by CalcPlotRange().
+
+    + CalcPlotRange() - renamed "zero affinity" to "zero magnet". Call
+      new CheckPlotRange() to validate and adjust (if necessary) the range.
+
+      Changed the zero magnet algorithm. This is based on some experiments
+      with Libreoffice Calc charting. First, greatly increased the default
+      value for zero_magnet from 0.1 (which gives 11% range expansion) to
+      0.857 (or 6/7, which gives 600% range expansion). This means PHPlot
+      will now expand the range up to 6 times if that would result in
+      including 0 in the range.  Second, the tests were corrected, so now
+      it compares the range with zero versus the original range when
+      deciding whether to extend the range to include zero.
+
+    + TuneAutoRange() - renamed "zero affinity" to "zero magnet".
+
+    + CalcPlotAreaWorld() - pass back any error return from CalcPlotRange().
+
+    Note: There is still work to be done on how it automatically adjusts the
+    end of the range away from zero.  Currently, it tends to leave too
+    little space, which is a problem with data value labels.
+
+
+2012-05-09 (/branches/Rel6)
+    * Incorporate in-progress changes for bug #2919086 "Improve tick
+      interval calculations" and bug #1795969 "Fix automatic Y range
+      calculations". This is planned for PHPlot-6.0.0.
+      NOTE: This is not complete, stable, or  ready for use!
+
+      + Remove initialization of 8 class variables: num_[xy]_ticks,
+        [xy]_tick_inc, skip_*_tick. "Unset" is now the default value.
+
+      + New internal function CalcStep125(), which calculates a tick
+        increment of the form TI = K * 10 ** I, where K = 1, 2, or 5.
+
+      + New internal function CalcStepDateTime(), which calculates a tick
+        increment for date/time scales.
+
+      + New internal function CalcStep(), which calculates a good tick
+        increment given the data range and scale type, among other factors.
+
+      + New internal function CalcRangeInit(), which provides the initial
+        guesses at the plot area range limits.
+
+      + New internal function CalcPlotRange(), which calculates the limits
+        of the plot area range for either X or Y (if not user-provided).
+        It also calculates the tick increment, if necessary.
+
+      + Rewrote internal function CalcPlotAreaWorld(). This now just calls
+        CalcPlotRange() twice - once for X, and once for Y.
+
+      + Changed SetPlotAreaWorld() to validate any provided values, making
+        sure the range is non-negative (which would break the later
+        calculations). It now throws an error on invalid range.
+
+      + Rewrote internal function CalcTicks(). This no longer calculates
+        the tick increment, which was calculated by CalcPlotRange() because
+        the range adjustment is tied to the tick increment now.
+
+      + Remove an unneeded error check in protected function
+        CalcMaxTickLabelSize().
+
+      + Changed public functions SetXTickIncrement() and SetYTickIncrement()
+        to not reset the number of tick marks.  Changed public functions
+        SetNumXTicks() and SetNumYTicks() to not reset the tick increments.
+        These changes are part of fixing an order-dependency problem with
+        these function pairs (different result from calling SetXTickIncrement()
+        then SetNumXTicks(), versus calling them in the other order).
+
+      + New public function TuneAutoRange(). This allows setting (currently)
+        5 parameters for either X or Y axis that are used to adjust the range
+        and tick increment calculations. For example, one parameter sets the
+        minimum number of tick intervals when the tick increment is
+        automatically calculated.
+
+2012-05-07 (/branches/Rel6)
+    * Branch for Release 6.0.0. Mark as unreleased version.
+
 2012-04-06       ===== Released as 5.8.0 =====
     * Feature request #3515519 "Support object serialize/unserialize":
       Add __sleep() and __wakeup() magic methods to support serialize

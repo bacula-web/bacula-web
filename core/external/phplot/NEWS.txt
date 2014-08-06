@@ -5,6 +5,227 @@ Refer the the ChangeLog file for detailed source changes.
 See NEWS_part1.txt for older release documentation.
 -----------------------------------------------------------------------------
 
+2013-05-11 Release 6.1.0
+
+=== Overview:
+
+This is the current stable release of PHPlot. This release includes two new
+plot type features (which were not completed in time to make it into
+PHPlot-6.0.0).
+
+The PHPlot Reference Manual has been updated to match this release.
+
+
+=== Cautions, Important Notes, and Compatibility Issues:
+
+There are no new compatibility issues in this release. However, if
+upgrading from PHPlot-5.8.0 or older, please read the Cautions, Important
+Notes, and Compatibility Issues from the PHPlot-6.0.0 release. Everything
+there is still applicable.
+
+
+=== Bugs Fixed in 6.1.0:
+
+(none)
+
+
+=== New features in 6.1.0:
+
+Feature Request #47 "Extend horizontal plots to more types":
+This feature request was mostly implemented in PHPlot-6.0.0, except for
+horizontal error plots, which are now implemented. A new data type
+'data-data-yx-error' is used for horizontal error plots of type lines,
+points, and linepoints.
+
+Feature request #52 "Box Plots":
+A new plot type 'boxes' is added. This produces a Box Plot, which is used
+to present a 5-number statistical summary of a data set.
+
+
+-----------------------------------------------------------------------------
+
+2013-04-03 Release 6.0.0
+
+=== Overview:
+
+This is the current stable release of PHPlot. This release includes a
+significant rewrite how PHPlot automatically calculates the plot area range
+and tick increments from the data points. A number of new features and bug
+fixes are also included.
+
+The PHPlot Reference Manual has been updated to match this release. A
+previously-experimental feature to help create HTML image maps is now
+fully documented in the manual.
+
+
+=== Cautions, Important Notes, and Compatibility Issues:
+
+There are some important compatibility issues you need to be aware of
+before upgrading to PHPlot-6.0.0 from any previous version. Many scripts
+will produce different-looking plots with PHPlot-6.0.0 compared to earlier
+versions. This is mostly due to changes in the automatic plot range and
+tick increment calculations. Also, some scripts may fail, if they access
+PHPlot class internal variables (properties) which have been changed to
+have 'protected' visibility. See the details below.
+
++ Plot range calculations changed
+
+PHPlot-6.0.0 uses a completely new method to calculate each of the 4 limits
+of the plot area which are not defined using SetPlotAreaWorld(). As a
+result, most plots that don't use SetPlotAreaWorld() with all 4 coordinates
+given will look different under PHPlot-6.0.0. The two most notable changes
+are that PHPlot-6.0.0 will usually stretch the range to include zero (if
+the range does not already include zero), and under most conditions will
+ensure that the X axis and Y axis both start and end at a tick mark position
+(even if tick marks and labels are not visible). See bug #101 below.
+
++ Tick increment calculations changed
+
+PHPlot-6.0.0 uses a completely new method to calculate tick increments
+along the X axis and Y axis. This only occurs if the tick increments have
+not been set using SetXTickIncrement() or SetNumXTicks() for X, and
+SetYTickIncrement() or SetNumXTicks() for Y. If you let PHPlot calculate
+the tick increments, your plot will likely have fewer or more tick
+intervals than before, and the tick increment will be different. In
+general, PHPlot-6.0.0 makes much better choices for tick increment.
+See bug #132 below.
+
++ Class variable visibility changed
+
+Most PHPlot class variables now have 'protected' visibility, so they are no
+longer accessible from scripts that use the class. If your script directly
+accesses PHPlot class variables - other than those documented in the manual
+for 'tuning' - your script will not work with PHPlot-6.0.0. This change was
+necessary because some internal class variables change in each PHPlot release,
+and it is impossible to maintain compatibility with direct access to all these
+class variables. If your script breaks because of variable visibility changes,
+please: (1) see if you can use a public PHPlot class function instead, or
+(2) post a message to the PHPlot help forum explaining why you need access to
+a particular class variable.
+
++ SetPlotAreaWorld() now validates arguments
+
+Starting with PHPlot-6.0.0, the SetPlotAreaWorld() function checks non-NULL
+arguments for validity. For both X and Y, it is required that min < max if
+both are specified. If you have a script that calls SetPlotAreaWorld() with
+max >= min for either X or Y, that script will now fail. On the other hand,
+some valid cases where you specify only one end of a range would previously
+fail and now work.
+
++ SetRGBArray() now validates argument
+
+If you use SetRGBArray() to load a custom color map but pass an invalid
+argument (not an array or one of the known keywords), PHPlot will now fail
+with an error message. In previous releases, a default black/white color
+map was loaded in that case, with no error reported.
+
++ Removed order dependency: number of ticks and tick increment
+
+If you want to control the tick increments (rather than letting PHPlot
+calculate them), you should set either the number of ticks (SetNumXTicks(),
+SetNumYTicks()) or the tick increment (SetXTickIncrement(),
+SetYTickIncrement()), but not both, for each axis.  If you do set both,
+PHPlot-5.8.0 and earlier will use the last setting you made, and ignore the
+other.  PHPlot-6.0.0 gives priority to the tick increment setting and
+ignores the number of ticks, regardless of the order. (The new behavior is
+consistent with the PHPlot design goal that you can use the various Set*()
+functions in any order and get the same plot.)
+
+
+=== Bugs Fixed in 6.0.0:
+
+Fixed bug #101 Fix automatic Y range calculations":
+PHPlot now calculates the Y (and X) ranges using a completely different
+method, which is described in the manual. There are new functions to 'tune'
+the algorithm used, and of course you can still set the range limits manually.
+In most cases, PHPlot now makes much better choices for the plot range limits.
+
+Fixed bug #132 "Improve tick interval calculations":
+PHPlot now by default picks a tick increment which is 1, 2, or 5 times a
+power of 10, for much more 'natural' results. There are alternate
+algorithms for selecting a 'binary' (power of 2) or date/time-based tick
+increment instead. Rather than simply dividing the plot range by 10, PHPlot
+now selects a tick increment based on the above requirement and which
+results in at least 8 (by default) tick intervals.  Of course, you can
+still specify the tick increment(s) directly.
+
+Fixed bug #164 "Calculated defaults applied to subsequent plots":
+This has been fixed for the cases of grid visibility, X data label angle,
+and label format. A new bug #168 was written for a remaining issue with
+label position defaults. This only apples when creating multiple plots on a
+single image (overlay or side-by-side).
+
+Fixed bug #165 "Missing axis labels on some empty plots":
+In some cases, X axis labels would be absent for a plot with an empty data
+array. PHPlot will now draw the axis labels even when the data array is empty.
+
+Fixed bug #166 "Legend, UsePointShapes, and shape='none'":
+PHPlot will now fall back to using a point marker in the legend when doing
+a linepoints plot with a dataset using 'none' as the point shape (rather
+than doing no marker at all). This only applies with SetLegendUseShapes(True).
+
+Fixed bug #167 "Fails to find a default font on Ubuntu":
+Ubuntu (via Debian) changed the installation path for the TrueType font
+that PHPlot used as a default, causing font selection to fail.  The new
+font installation path has been added to the search list, and now PHPlot
+can find the default TrueType font on Ubuntu.
+
+
+=== New features in 6.0.0:
+
+Feature request #29 "Finer control over plot element colors":
+This was an open-ended feature request that is partially implemented and
+now closed. New functions were added to control element colors. (Some other
+functions were added in previous releases.) In PHPlot-6.0.0, these functions
+were added: SetLegendBgColor() for legend background color;
+SetLegendTextColor() for legend text color, and functions for pie chart
+border colors (see feature request #46 below).
+
+Feature request #45 "Control pie chart start angle":
+Implemented with new functions SetPieStartAngle() and SetPieDirection().
+The angle for the first segment, and the direction (clockwise or
+counter-clockwise) can now be set for pie charts.
+
+Feature request #46 "Control pie chart borders":
+Implemented with new functions SetDrawPieBorders() and SetPieBorderColor().
+Pie segment borders can now be on (default for unshaded) or off (default for
+shaded), and the color can be set independent of other elements.
+
+Feature request #47 "Extend horizontal plots to more types":
+This is partially implemented. Horizontal lines, linepoints, and points plots
+are now implemented. Error plot versions of those horizontal plot types are
+not yet implemented, but will probably be in the next release 6.1.0 (with
+the introduction of a new data type).
+
+   Note: In implementing feature request #47, the code for 'error' and
+   'non-error' versions of the 3 plot types above were merged. A side effect
+   of this is that data value labels (the labels within the plot area,
+   identifying the data value at each point) now work for error plots, if
+   enabled.  However, the default label position at 90 degrees will be crossed
+   by the positive error bar. To avoid this, you can use the tuning variable
+   data_value_label_angle; for example setting it to 45 degrees.
+
+Feature request #50 "Control legend colorbox borders":
+Implemented with new function SetLegendColorboxBorders().  There are now 3
+choices for the borders around color boxes in the legend: 1) use the 'text'
+color (the default, and compatible with PHPlot-5.8.0 and older); 2) use
+data border colors; and 3) disable the borders.
+
+  Note: Along with the implementation of feature request #50, a new function
+  SetDrawDataBorders() was added to control drawing the data borders on bars
+  and stackedbars plots. This supports having the same style (borders with
+  matching color, or no borders) on both the legend color boxes and the data
+  bars. The default is backward compatible: borders on unshaded plots, and
+  no borders on shaded plots.
+
+Feature request #51 "Lines instead of colorboxes in legend":
+Implemented with existing function SetLegendUseShapes().  PHPlot now has
+the option of showing short line segments (with correct color and width) in
+the legend, rather than color boxes. This applies to lines and squared
+plots only.
+
+-----------------------------------------------------------------------------
+
 2012-04-06 Release 5.8.0
 
 === Overview:
