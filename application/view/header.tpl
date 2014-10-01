@@ -1,13 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-  "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>Bacula-Web - {$page_name}</title>
-<link rel="stylesheet" type="text/css" href="application/view/style/default.css">
-<link rel="stylesheet" type="text/css" href="application/view/style/header.css">
-<link rel="stylesheet" type="text/css" href="application/view/style/table.css">
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bacula-Web - {$page_name}</title>
+  <!-- Bootstrap front-end framework -->
+  <link rel="stylesheet" type="text/css" href="application/assets/bootstrap/css/bootstrap.min.css">
+
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
+
 <body>
 
 <!-- Header -->
