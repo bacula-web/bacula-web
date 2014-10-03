@@ -6,9 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bacula-Web - {$page_name}</title>
+
   <!-- Bootstrap front-end framework -->
   <link rel="stylesheet" type="text/css" href="application/assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="application/assets/css/default.css">
+  <script src="application/assets/jquery/jquery-1.11.1.min.js"></script>
+  <script src="application/assets/bootstrap/js/bootstrap.min.js"></script>
+
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
 
