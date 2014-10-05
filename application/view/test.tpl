@@ -1,9 +1,9 @@
 {include file=header.tpl}
 
-<div class="main_center">
+<div class="container-fluid">
     
-  <div class="header">{t}Required components{/t}</div>
-	<table>
+  <h4>{t}Required components{/t}</h4>
+	<table class="table table-striped">
 		<tr>
 			<th>Component</th>
 			<th>Description</th>
@@ -11,10 +11,10 @@
 		</tr>
 		{foreach from=$checks item=check}
 		<tr>
-			<td class="left_align strong">{$check.check_label}</td>
-			<td class="left_align"><i>{$check.check_descr}</i></td>
-			<td > 
-				<img src='application/view/style/images/{$check.check_result}' width='23' alt=''/> 
+			<td><strong>{$check.check_label}</strong></td>
+			<td><i>{$check.check_descr}</i></td>
+			<td> 
+				<img class="img-responsive" src='application/view/style/images/{$check.check_result}' width='23' alt=''/> 
 			</td>
 		</tr>
 		{/foreach}
@@ -24,10 +24,10 @@
 		</tr>
 		<tr>
 			<td>
-				<img src="{$bar_graph}" alt='' width="300" />
+				<img class="img-responsive" src="{$bar_graph}" alt='' />
 			</td>
 			<td colspan="2">
-				<img src="{$pie_graph}" alt='' width="300" />
+				<img class="img-responsive" src="{$pie_graph}" alt='' />
 			</td>
 		</tr>
 	</table>
