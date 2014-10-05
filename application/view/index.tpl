@@ -176,56 +176,56 @@
                   <td>
                     {t}Running jobs{/t}
                   </td>
-                  <td>
-                    {$running_jobs}
+                  <td class="text-center">
+                    <strong>{$running_jobs}</strong>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     {t}Completed job(s){/t}
                   </td>
-                  <td>
-                    {$completed_jobs}
+                  <td class="text-center">
+                    <strong>{$completed_jobs}</strong>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     {t}Waiting job(s){/t}
                   </td>
-                  <td>
-                    {$waiting_jobs}
+                  <td class="text-center">
+                    <strong>{$waiting_jobs}</strong>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     {t}Failed job(s){/t}
                   </td>
-                  <td>
-                    {$failed_jobs}
+                  <td class="text-center">
+                    <strong>{$failed_jobs}</strong>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     {t}Canceled job(s){/t}
                   </td>
-                  <td>
-                    {$canceled_jobs}
+                  <td class="text-center">
+                    <strong>{$canceled_jobs}</strong>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     Job Level (Incr / Diff / Full)
                   </td>
-                  <td>
-                    {$incr_jobs} / {$diff_jobs} / {$full_jobs}
+                  <td class="text-center">
+                    <strong>{$incr_jobs}</strong> / <strong>{$diff_jobs}</strong> / <strong>{$full_jobs}</strong>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     {t}Transferred Bytes / Files{/t}
                   </td>
-                  <td>
-                    {$bytes_last} / {$files_last}
+                  <td class="text-center">
+                    <strong>{$bytes_last}</strong> / <strong>{$files_last}</strong>
                   </td>
                 </tr>
               </table>
