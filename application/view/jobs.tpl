@@ -40,7 +40,7 @@
 		<td>{$job.speed}</td>
 		<td>{$job.pool_name}</td>
 		<td>
-		  <a href='joblogs.php?jobid={$job.jobid}' title='{t}Show job logs{/t}'> <img src='application/view/style/images/search.png' width='20' /> </a>
+		  <a href='joblogs.php?jobid={$job.jobid}' title='{t}Show job logs{/t}'> <img src='application/view/style/images/search.png' width='20' alt='' /> </a>
 		</td>
 	  </tr>
 	  {foreachelse}
