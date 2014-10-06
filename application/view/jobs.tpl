@@ -28,7 +28,7 @@
 		</td>
 		<td>{$job.jobid}</td>
 		<td>
-			<a href="backupjob-report.php?backupjob_name={$job.job_name}">{$job.job_name}</a>
+			<a href="backupjob-report.php?backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
 		</td>
 		<td>{$job.type}</td>
 		<td>{$job.starttime}</td>
