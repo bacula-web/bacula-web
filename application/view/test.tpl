@@ -5,16 +5,16 @@
   <h4>{t}Required components{/t}</h4>
 	<table class="table table-striped">
 		<tr>
-			<th>Component</th>
-			<th>Description</th>
-			<th>Status</th>
+			<th class="text-center">Component</th>
+			<th class="text-center">Description</th>
+			<th class="text-center">Status</th>
 		</tr>
 		{foreach from=$checks item=check}
 		<tr>
 			<td><strong>{$check.check_label}</strong></td>
 			<td><i>{$check.check_descr}</i></td>
-			<td> 
-				<img class="img-responsive" src='application/view/style/images/{$check.check_result}' width='23' alt=''/> 
+			<td class="text-center"> 
+				<span class="glyphicon {$check.check_result}"></span> 
 			</td>
 		</tr>
 		{/foreach}

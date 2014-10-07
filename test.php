@@ -34,7 +34,8 @@ try {
 $pdo_drivers = PDO::getAvailableDrivers();
 
 // Check result icon
-$icon_result = array( true => 'ok.png', false => 'error.png');
+//$icon_result = array( true => 'ok.png', false => 'error.png');
+$icon_result = array( true => 'glyphicon-ok', false => 'glyphicon-remove');
 
 // Checks list
 $check_list = array(
