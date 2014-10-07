@@ -31,6 +31,7 @@
 			</td>
 		</tr>
 	</table>
-</div> <!-- end div id=main_center -->
+
+</div> <!-- div class="container-fluid" -->
 
 {include file="footer.tpl"}
