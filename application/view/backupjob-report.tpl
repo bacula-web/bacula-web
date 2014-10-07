@@ -51,8 +51,8 @@
   
     <!-- Transfered Bytes/Files graph -->
 	<h4>{t}Transfered Bytes / Files{/t}</h4>
-	  <img class="graph" src="{$graph_stored_bytes}" alt="" />
-	  <img class="graph" src="{$graph_stored_files}" alt="" />
+	  <img class="img-responsive" src="{$graph_stored_bytes}" alt="" />
+	  <img class="img-responsive" src="{$graph_stored_files}" alt="" />
 
 
     </div> <!-- div class="col-md-..." -->
