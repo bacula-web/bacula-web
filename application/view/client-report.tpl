@@ -1,25 +1,27 @@
 {include file=header.tpl}
 
-<div id="main_center">  
-  <div class="box">
+<div class="container-fluid">  
+  <div class="row">
+    <div class="col-md-8 col-lg-8">
+
     <h4>{t}Client informations{/t}</h4>	
-    <table class="table_big">
+    <table class="table table-condensed table-bordered">
 	  <tr>
-		<td>{t}Client name{/t}:</td> <td class="strong">{$client_name}</td>
+		<td>{t}Client name{/t}:</td> <td>{$client_name}</td>
 	  </tr>
 	  <tr>
-		<td>{t}Client version{/t}:</td> <td class="strong">{$client_version}</td>
+		<td>{t}Client version{/t}:</td> <td>{$client_version}</td>
 	  </tr>
 	  <tr>
-		<td>{t}Client os{/t}:</td> <td class="strong">{$client_os}</td>
+		<td>{t}Client os{/t}:</td> <td>{$client_os}</td>
 	  </tr>
 	  <tr>
-		<td>{t}Client arch{/t}:</td> <td class="strong">{$client_arch}</td>
+		<td>{t}Client arch{/t}:</td> <td>{$client_arch}</td>
 	  </tr>
     </table>
 	
 	<h4>Last good backup job</h4>
-	<table>
+	<table class="table table-bordered table-condensed table-striped">
 		<tr>
 			<th>{t}Name{/t}</th>
 			<th>{t}Jod Id{/t}</th>
@@ -42,17 +44,17 @@
 		{/foreach}
 	</table>
 	
-	&nbsp;
 	<h4>Statistics - last {$period} days(s)</h4>
-	<table>
+	<table class="table">
 		<tr>
-			<td> <img class="graph" src="{$graph_stored_bytes}" alt="" /> </td>
-			<td> <img class="graph" src="{$graph_stored_files}" alt="" /> </td>
+			<td> <img class="img-responsive" src="{$graph_stored_bytes}" alt="" /> </td>
+			<td> <img class="img-responsive" src="{$graph_stored_files}" alt="" /> </td>
 		</tr>
 	</table>
 	
-  </div> <!-- end div class=box -->
+    </div> <!-- div class="col-md-..." -->
+  </div> <!-- div class="row" -->
   
-  </div> <!-- end div id=main_center -->
+  </div> <!-- div class="container-fluid" -->
 
 {include file="footer.tpl"}
