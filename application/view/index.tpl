@@ -4,7 +4,7 @@
   
   <div class="row">
     <!-- Left column -->
-    <div class="col-md-3 col-lg-3">
+    <div class="col-md-3 col-lg-2">
       
       <div class="panel panel-default">
         
@@ -127,7 +127,7 @@
     <!-- div class="col-.. -->
     
 	<!-- Right column -->
-    <div class="col-md-9 col-lg-9">
+    <div class="col-md-9 col-lg-10">
       
       <div class="row">
         
