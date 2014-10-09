@@ -234,13 +234,8 @@ if( isset($_POST['period_selector']) ) {
  // Run the query
  $result 	= CDBUtils::runQuery( CDBQuery::get_Select($statment), $dbSql->db_link );
 
- foreach( $result as $volume ) {
-    // odd or even row
-    if ((count($last_volumes) % 2) > 0)
-        $volume['odd_even'] = "even";
-
+ foreach( $result as $volume )
     $last_volumes[] = $volume;
- }
 
  $view->assign('volumes_list', $last_volumes);
  

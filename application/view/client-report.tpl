@@ -32,7 +32,7 @@
 			<th>{t}Status{/t}</th>
 		</tr>
 		{foreach from=$backup_jobs item=job}
-		<tr class="{$job.odd_even}">
+		<tr>
 			<td>{$job.name}</td>
 			<td>{$job.jobid}</td>
 			<td>{$job.level}</td>

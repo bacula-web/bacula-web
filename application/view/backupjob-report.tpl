@@ -35,7 +35,7 @@
                         <th>{t}Compression{/t}</th>
 		</tr>
 		{foreach from=$jobs item=job}
-		<tr class="{$job.odd_even}">
+		<tr> 
 			<td>{$job.jobid}</td>
 			<td>{$job.joblevel}</td>
 			<td>{$job.jobfiles}</td>

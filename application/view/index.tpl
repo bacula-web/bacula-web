@@ -344,7 +344,7 @@
                   
                 </tr>
                 {foreach from=$volumes_list item=vol} 
-                <tr class="{$vol.odd_even}">
+                <tr>
                   <td>
                     {$vol.volumename}
                   </td>

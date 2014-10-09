@@ -187,10 +187,6 @@
               break;
       } // end switch
       
-      // Odd or even row
-      if(count($last_jobs) % 2)
-          $job['odd_even'] = 'even';
-      
       // Job start time, end time and elapsed time
       $start_time = $job['starttime'];
       $end_time   = $job['endtime'];

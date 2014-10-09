@@ -22,7 +22,7 @@
 	  </tr>
 	<!-- <div class="listbox"> -->
 	  {foreach from=$last_jobs item=job}
-	  <tr class="{$job.odd_even}">
+	  <tr>
 		<td>
 			<img class="img-responsive" width="20" src="application/view/style/images/{$job.Job_icon}" alt="" title="{$job.jobstatuslong}" />
 		</td>

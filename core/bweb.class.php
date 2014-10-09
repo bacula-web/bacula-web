@@ -167,10 +167,6 @@
 							$volume['volbytes'] 	  = "0 KB";
 						}
 						
-						// Odd or even row
-						if( count(  $volumes_list[ $pool['name'] ] ) % 2)
-							$volume['odd_even'] = 'even';
-
 						// Add the media in pool array
 						array_push( $volumes_list[ $pool['name']], $volume);
 					} // end foreach volumes
