@@ -252,7 +252,7 @@
 							</b>
 						</div>
 						<div class="panel-body">
-							<img alt="" src="{$graph_stored_bytes}" class="img-responsive"/>
+							<img alt="" src="{$graph_stored_bytes}" class="img-responsive center-block"/>
 						</div>
 					</div>
 				</div>
