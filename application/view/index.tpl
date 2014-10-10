@@ -212,22 +212,22 @@
 					<!-- div class="panel panel-default" -->
 				</div>
 				<!-- div class="col-md ..." -->
-				<!-- Last period jobs status graph -->
+				<!-- Stored Bytes for last 7 days -->
 				<div class="col-xs-5">
 					<div class="panel panel-default">
-						<div class="panel-heading">
-						</div>
+						<div class="panel-heading" title="{t}Stored bytes over the last 7 days{/t}"><b>{t}Stored Bytes{/t}</b></div>
 						<div class="panel-body">
-
+						  <img alt="" src="{$graph_stored_bytes}" class="img-responsive center-block" title="{t}Stored bytes over the last 7 days{/t}"/>
 						</div>
 					</div>
 					<!-- div class="panel panel-default" -->
 				</div>
 				<!-- div class="col-md-5 ..." -->
 			</div> <!-- div class="row" -->
+			
 			<div class="row">
 				<!-- Pools and volumes status -->
-				<div class="col-md-6 col-lg-5">
+				<div class="col-xs-6 col-lg-5">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<b>
@@ -236,31 +236,16 @@
 						</div>
 						<div class="panel-body">
 							<a href="pools.php" title="{t}Click here to see the report{/t}">
-							<img alt="" src="{$graph_pools}" class="img-responsive" />
+							<img alt="" src="{$graph_pools}" class="img-responsive center-block" />
 							</a>
 						</div>
 					</div>
 					<!-- div class="panel panel-default" -->
 				</div>
 				<!-- div class="col-..." -->
-				<!-- Stored Bytes for last 7 days -->
-				<div class="col-md-6 col-lg-5">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<b>
-							{t}Stored Bytes{/t}
-							</b>
-						</div>
-						<div class="panel-body">
-							<img alt="" src="{$graph_stored_bytes}" class="img-responsive center-block"/>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- div class="row" -->
-			<div class="row">
-				<div class="col-md-6 col-lg-6">
-					<!-- Last used volumes -->
+
+				<!-- Last used volumes -->
+				<div class="col-xs-6 col-lg-6">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<b>
