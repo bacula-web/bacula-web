@@ -9,6 +9,7 @@
 
   <!-- Bootstrap front-end framework -->
   <link rel="stylesheet" type="text/css" href="application/assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="application/assets/bootstrap/css/bootstrap-theme.min.css">
   <link rel="stylesheet" type="text/css" href="application/assets/css/default.css">
   <script src="application/assets/jquery/jquery-1.11.1.min.js"></script>
   <script src="application/assets/bootstrap/js/bootstrap.min.js"></script>
