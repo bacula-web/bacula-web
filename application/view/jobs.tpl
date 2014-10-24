@@ -25,11 +25,11 @@
 		  {foreach from=$last_jobs item=job}
 		  <tr>
 			<td class="text-center">
-				<img class="img-responsive" width="20" src="application/view/style/images/{$job.Job_icon}" alt="" title="{$job.jobstatuslong}" />
+		          <span class="glyphicon glyphicon-{$job.Job_icon}" title="{$job.jobstatuslong}"></span>
 			</td>
 			<td class="text-center">{$job.jobid}</td>
 			<td class="text-center">
-				<a href="backupjob-report.php?backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
+			  <a href="backupjob-report.php?backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
 			</td>
 			<td class="text-center">{$job.type}</td>
 			<td class="text-center">{$job.starttime}</td>
