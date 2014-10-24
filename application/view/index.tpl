@@ -215,7 +215,7 @@
 				<!-- Stored Bytes for last 7 days -->
 				<div class="col-xs-5">
 					<div class="panel panel-default">
-						<div class="panel-heading" title="{t}Stored bytes over the last 7 days{/t}"><b>{t}Stored Bytes{/t}</b></div>
+						<div class="panel-heading" title="{t}Stored bytes over the last 7 days{/t}"><b>{t}Stored Bytes (last 7 days){/t}</b></div>
 						<div class="panel-body">
 						  <img alt="" src="{$graph_stored_bytes}" class="img-responsive center-block" title="{t}Stored bytes over the last 7 days{/t}"/>
 						</div>
