@@ -41,8 +41,8 @@
 			<td class="text-center">{$job.speed}</td>
 			<td class="text-center">{$job.pool_name}</td>
 			<td class="text-center">
-			  <a href="joblogs.php?jobid={$job.jobid}" title="{t}Show job logs{/t}"> 
-		            <img src='application/view/style/images/search.png' width='20' alt='' />
+			  <a href="joblogs.php?jobid={$job.jobid}" title="{t}Show job logs{/t}">
+			    <span class="glyphicon glyphicon-search"></span>
                           </a>
 			</td>
 		  </tr>
