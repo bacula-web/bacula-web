@@ -6,42 +6,44 @@
 		
 		<table class="table table-condensed table-striped">
 		  <tr>
-			<th>{t}Status{/t}</th> 
-			<th>{t}Job ID{/t}</th>
-			<th>{t}Name{/t}</th>
-			<th>{t}Type{/t}</th>
-			<th>{t}Start Time{/t}</th>
-			<th>{t}End Time{/t}</th>
-			<th>{t}Elapsed time{/t}</th>
-			<th>{t}Level{/t}</th>
-			<th>{t}Bytes{/t}</th>
-			<th>{t}Files{/t}</th>
-			<th>{t}Speed{/t}</th>
-			<th>{t}Pool{/t}</th>
-			<th>{t}Log{/t}</th>
+			<th class="text-center">{t}Status{/t}</th> 
+			<th class="text-center">{t}Job ID{/t}</th>
+			<th class="text-center">{t}Name{/t}</th>
+			<th class="text-center">{t}Type{/t}</th>
+			<th class="text-center">{t}Start Time{/t}</th>
+			<th class="text-center">{t}End Time{/t}</th>
+			<th class="text-center">{t}Elapsed time{/t}</th>
+			<th class="text-center">{t}Level{/t}</th>
+			<th class="text-center">{t}Bytes{/t}</th>
+			<th class="text-center">{t}Files{/t}</th>
+			<th class="text-center">{t}Speed{/t}</th>
+			<th class="text-center">{t}Pool{/t}</th>
+			<th class="text-center">{t}Log{/t}</th>
 		  </tr>
 		  
 		  <!-- <div class="listbox"> -->
 		  {foreach from=$last_jobs item=job}
 		  <tr>
-			<td>
+			<td class="text-center">
 				<img class="img-responsive" width="20" src="application/view/style/images/{$job.Job_icon}" alt="" title="{$job.jobstatuslong}" />
 			</td>
-			<td>{$job.jobid}</td>
-			<td>
+			<td class="text-center">{$job.jobid}</td>
+			<td class="text-center">
 				<a href="backupjob-report.php?backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
 			</td>
-			<td>{$job.type}</td>
-			<td>{$job.starttime}</td>
-			<td>{$job.endtime}</td>
-			<td>{$job.elapsed_time}</td>
-			<td>{$job.level}</td>
-			<td>{$job.jobbytes}</td>
-			<td>{$job.jobfiles}</td>
-			<td>{$job.speed}</td>
-			<td>{$job.pool_name}</td>
-			<td>
-			  <a href='joblogs.php?jobid={$job.jobid}' title='{t}Show job logs{/t}'> <img src='application/view/style/images/search.png' width='20' alt='' /> </a>
+			<td class="text-center">{$job.type}</td>
+			<td class="text-center">{$job.starttime}</td>
+			<td class="text-center">{$job.endtime}</td>
+			<td class="text-center">{$job.elapsed_time}</td>
+			<td class="text-center">{$job.level}</td>
+			<td class="text-center">{$job.jobbytes}</td>
+			<td class="text-center">{$job.jobfiles}</td>
+			<td class="text-center">{$job.speed}</td>
+			<td class="text-center">{$job.pool_name}</td>
+			<td class="text-center">
+			  <a href="joblogs.php?jobid={$job.jobid}" title="{t}Show job logs{/t}"> 
+		            <img src='application/view/style/images/search.png' width='20' alt='' />
+                          </a>
 			</td>
 		  </tr>
 		  {foreachelse}
