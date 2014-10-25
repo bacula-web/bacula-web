@@ -2,7 +2,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<!-- Left column -->
-		<div class="col-md-3 col-lg-2">
+		<div class="col-xs-3 col-lg-3">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<b>
@@ -109,7 +109,7 @@
 		</div>
 		<!-- div class="col-.. -->
 		<!-- Right column -->
-		<div class="col-md-9 col-lg-10">
+		<div class="col-xs-9 col-lg-9">
 			<div class="row">
 				<div class="col-md-6 col-lg-6">
 					<div class="well well-sm">
