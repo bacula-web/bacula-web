@@ -15,7 +15,7 @@
   <script src="application/assets/bootstrap/js/bootstrap.min.js"></script>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="application/assets/font-awesome/css/font-awesome.min.css">
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
@@ -59,14 +59,20 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-cog"></span> </a>
 					<ul class="dropdown-menu">
 						<li role="presentation" class="dropdown-header">Tools</li>
-						<li> <a href="test.php" title="Test page">Test page</a></li>
+						<li> 
+						  <a href="test.php" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> Test page</a>
+ 						</li>
 						<li role="presentation" class="divider"></li>
 						<li role="presentation" class="dropdown-header">Help</li>
-						<li> <a href="http://www.bacula-web.org" target="_blank">Official web site</a> </li>
-						<li> <a href="http://bugs.bacula-web.org" target="_blank">Bug tracker</a> </li>
+						<li> 
+						  <a href="http://www.bacula-web.org" title="Visit the official web site" target="_blank"><i class="fa fa-globe fa-fw"></i> Official web site</a> 
+						</li>
+						<li> 
+						  <a href="http://bugs.bacula-web.org" title="Bug and feature request tracker" target="_blank"><i class="fa fa-bug fa-fw"></i> Bug tracker</a> 
+						</li>
 						<li role="presentation" class="divider"></li>
 						<li role="presentation" class="dropdown-header">Version</li>
-						<li class="disabled"> <a href="#">Bacula-Web 6.0.1</a></li>
+						<li class="disabled"> <a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 6.0.1</a></li>
 					</ul>
 				</li>
 			</ul>
