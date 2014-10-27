@@ -14,6 +14,9 @@
   <script src="application/assets/jquery/jquery-1.11.1.min.js"></script>
   <script src="application/assets/bootstrap/js/bootstrap.min.js"></script>
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
 
