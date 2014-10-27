@@ -125,7 +125,7 @@ if( isset($_POST['period_selector']) ) {
 	$jobs_status_data[] = array($status, $jobs_count );
  }
  
- $graph = new CGraph("graph.png", 350, 220);
+ $graph = new CGraph("graph.png", 400, 220);
  $graph->SetData($jobs_status_data, 'pie');
  $graph->setPieLegendColors( array( 'gray', 'green','blue', 'red', 'orange') );
 
@@ -138,7 +138,7 @@ if( isset($_POST['period_selector']) ) {
  // ==============================================================
 
  $vols_by_pool = array();
- $graph = new CGraph("graph1.png", 350, 220);
+ $graph = new CGraph("graph1.png", 400, 220);
  $max_pools = '9';
  $table_pool = 'Pool';
  $limit = '';
@@ -196,7 +196,7 @@ if( isset($_POST['period_selector']) ) {
     $days_stored_bytes[] = array( date("m-d", $day['start']), Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']) ));
  } 
 
- $graph = new CGraph("graph2.png", 350, 220);
+ $graph = new CGraph("graph2.png", 400, 220);
  $graph->SetData($days_stored_bytes, 'bars', true);
 
  // Graph rendering
