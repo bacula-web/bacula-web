@@ -1,6 +1,6 @@
 {include file=header.tpl}
 
-<div class="container-fluid">
+<div class="container-fluid" id="testpage">
     
   <h4>{t}Required components{/t}</h4>
 	<table class="table table-striped">
