@@ -10,7 +10,7 @@
 	  <td>{t}Backup Job name{/t}:</td> <td>{$backupjob_name}</td>
 	</tr>
 	<tr>
-	  <td>{t}Period{/t}:</td> <td>backupjob_period}</td>
+	  <td>{t}Period{/t}:</td> <td>{$backupjob_period}</td>
 	</tr>
 	<tr>
 	  <td>{t}Transfered Bytes{/t}</td> <td>{$backupjob_bytes}</td>
