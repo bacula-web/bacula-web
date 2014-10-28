@@ -22,17 +22,17 @@
   
   <!-- Last jobs list -->
   <h4>{t}Last jobs{/t}</h4>
-	<table class="table table-condensed table-hover table-striped table-bordered">
+	<table class="table table-condensed table-hover table-striped table-bordered text-center">
 		<tr>
-			<th>{t}Job Id{/t}</th>
-			<th>{t}Level{/t}</th>
-			<th>{t}Files{/t}</th>
-			<th>{t}Bytes{/t}</th>
-			<th>{t}Start time{/t}</th>
-			<th>{t}End time{/t}</th>
-			<th>{t}Elapsed time{/t}</th>
-			<th>{t}Speed{/t}</th>
-                        <th>{t}Compression{/t}</th>
+			<th class="text-center">{t}Job Id{/t}</th>
+			<th class="text-center">{t}Level{/t}</th>
+			<th class="text-center">{t}Files{/t}</th>
+			<th class="text-center">{t}Bytes{/t}</th>
+			<th class="text-center">{t}Start time{/t}</th>
+			<th class="text-center">{t}End time{/t}</th>
+			<th class="text-center">{t}Elapsed time{/t}</th>
+			<th class="text-center">{t}Speed{/t}</th>
+                        <th class="text-center">{t}Compression{/t}</th>
 		</tr>
 		{foreach from=$jobs item=job}
 		<tr> 

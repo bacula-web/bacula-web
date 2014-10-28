@@ -21,15 +21,15 @@
     </table>
 	
 	<h4>Last good backup job</h4>
-	<table class="table table-bordered table-condensed table-striped">
+	<table class="table table-bordered table-condensed table-striped text-center">
 		<tr>
-			<th>{t}Name{/t}</th>
-			<th>{t}Jod Id{/t}</th>
-			<th>{t}Level{/t}</th>
-			<th>{t}End time{/t}</th>
-			<th>{t}Bytes{/t}</th>
-			<th>{t}Files{/t}</th>
-			<th>{t}Status{/t}</th>
+			<th class="text-center">{t}Name{/t}</th>
+			<th class="text-center">{t}Jod Id{/t}</th>
+			<th class="text-center">{t}Level{/t}</th>
+			<th class="text-center">{t}End time{/t}</th>
+			<th class="text-center">{t}Bytes{/t}</th>
+			<th class="text-center">{t}Files{/t}</th>
+			<th class="text-center">{t}Status{/t}</th>
 		</tr>
 		{foreach from=$backup_jobs item=job}
 		<tr>

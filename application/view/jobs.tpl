@@ -4,7 +4,7 @@
   <div class="row">
 	  <div class="col-xs-9 col-lg-10">
 		
-		<table class="table table-condensed table-striped">
+		<table class="table table-condensed table-striped text-center">
 		  <tr>
 			<th class="text-center">{t}Status{/t}</th> 
 			<th class="text-center">{t}Job ID{/t}</th>
@@ -24,23 +24,23 @@
 		  <!-- <div class="listbox"> -->
 		  {foreach from=$last_jobs item=job}
 		  <tr>
-			<td class="text-center">
+			<td>
 		          <span class="glyphicon glyphicon-{$job.Job_icon}" title="{$job.jobstatuslong}"></span>
 			</td>
-			<td class="text-center">{$job.jobid}</td>
-			<td class="text-center">
+			<td>{$job.jobid}</td>
+			<td>
 			  <a href="backupjob-report.php?backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
 			</td>
-			<td class="text-center">{$job.type}</td>
-			<td class="text-center">{$job.starttime}</td>
-			<td class="text-center">{$job.endtime}</td>
-			<td class="text-center">{$job.elapsed_time}</td>
-			<td class="text-center">{$job.level}</td>
-			<td class="text-center">{$job.jobbytes}</td>
-			<td class="text-center">{$job.jobfiles}</td>
-			<td class="text-center">{$job.speed}</td>
-			<td class="text-center">{$job.pool_name}</td>
-			<td class="text-center">
+			<td>{$job.type}</td>
+			<td>{$job.starttime}</td>
+			<td>{$job.endtime}</td>
+			<td>{$job.elapsed_time}</td>
+			<td>{$job.level}</td>
+			<td>{$job.jobbytes}</td>
+			<td>{$job.jobfiles}</td>
+			<td>{$job.speed}</td>
+			<td>{$job.pool_name}</td>
+			<td>
 			  <a href="joblogs.php?jobid={$job.jobid}" title="{t}Show job logs{/t}">
 			    <span class="glyphicon glyphicon-search"></span>
                           </a>

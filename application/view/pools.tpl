@@ -5,14 +5,14 @@
     <div class="col-md-10 col-lg-10">
     {foreach from=$pools item=pool key=pool_name}
 	<h4>{$pool_name}</h4>
-	<table class="table table-bordered table-striped table-hover">
+	<table class="table table-bordered table-striped table-hover text-center">
 		<tr>
-			<th>{t}Volume name{/t}</th>
-			<th>{t}Bytes{/t}</th>
-			<th>{t}Media Type{/t}</th>
-			<th title="{t}Estimated expiration date{/t}">{t}Expire{/t}</th>
-			<th>{t}Last written{/t}</th>
-			<th>{t}Status{/t}</th>
+			<th class="text-center">{t}Volume name{/t}</th>
+			<th class="text-center">{t}Bytes{/t}</th>
+			<th class="text-center">{t}Media Type{/t}</th>
+			<th class="text-center"title="{t}Estimated expiration date{/t}">{t}Expire{/t}</th>
+			<th class="text-center">{t}Last written{/t}</th>
+			<th class="text-center">{t}Status{/t}</th>
 		</tr>
 		{foreach from=$pool item=volume}
 		<tr>
