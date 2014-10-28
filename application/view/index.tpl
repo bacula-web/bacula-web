@@ -57,39 +57,26 @@
 		<!-- Right column -->
 		<div class="col-xs-9 col-lg-9">
 			<div class="row">
-				<div class="col-md-6 col-lg-6">
-					<div class="well well-sm">
-						<b>{t}Overall status{/t}</b> ({$literal_period})
-					</div>
-				</div>
-				<div class="col-md-4 col-lg-4">
-					<form class="form-inline pull-right" method="post" role="form" action="index.php">
-						<label>Period</label>
-						<select class="form-control" name="period_selector">
-						{foreach
-						from=$custom_period_list key=period_id item=period_label} 
-						<option value="{$period_id}"
-						{if $period_id eq $custom_period_list_selected} selected {/if}>
-						{$period_label} 
-						</option>
-						{/foreach} 
-						</select>
-						<button title="{t}Update with selected period{/t}" class="btn btn-default" type="submit">
-						{t}Submit{/t}
-						</button>
-					</form>
-				</div>
-			</div>
-			<div class="row">
 				<div class="col-xs-5">
 					<div class="panel panel-default">
-						<div class="panel-heading">
-							<b>
-							{t}Last period job status{/t}
-							</b>
-						</div>
+						<div class="panel-heading"> <b>{t}Last period job status{/t}</b> ({$literal_period}) </div>
+						<!-- Period selector -->
+				 		<div class="panel-body">
+						  <form class="form-inline pull-right" method="post" role="form" action="index.php">
+                                          	    <label>Period </label>
+                                          	    <select class="form-control" name="period_selector">
+                                            	      {foreach from=$custom_period_list key=period_id item=period_label}
+                                              	        <option value="{$period_id}"
+                                                          {if $period_id eq $custom_period_list_selected} selected {/if}>{$period_label}
+                                              	        </option>
+                                            	      {/foreach}
+                                          	    </select>
+                                          	    <button title="{t}Update with selected period{/t}" class="btn btn-default" type="submit">{t}Submit{/t}</button>
+                                        	  </form> 
+						</div> <!-- end div class="panel-body" --> 
+
+					  	<!-- Last period job status graph -->
 						<div class="panel-body">
-							<!-- Last period job status graph -->
 							<a href="jobs.php" title="{t}Click here to see the report{/t}">
 							  <img alt="" src="{$graph_jobs}" class="img-responsive center-block" />
 							</a>
