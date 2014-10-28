@@ -12,94 +12,40 @@
 				<div class="panel-body">
 					<table class="table table-condensed table-striped">
 						<tr>
-							<td>
-								{t}Clients{/t}
-							</td>
-							<td class="text-right">
-								<h3>
-									{$clients}
-								</h3>
-							</td>
+						  <td><h5>{t}Clients{/t}</h5></td>
+						  <td class="text-right"><h4>{$clients}</h4></td>
 						</tr>
 						<tr>
-							<td title="Defined Jobs">
-								{t}Jobs{/t}
-							</td>
-							<td class="text-right">
-								<h3>
-									{$defined_jobs}
-								</h3>
-							</td>
+						  <td title="Defined Jobs"><h5>{t}Jobs{/t}</h5></td>
+						  <td class="text-right"><h4>{$defined_jobs}</h4></td>
 						</tr>
 						<tr>
-							<td title="Defined Filesets">
-								{t}Filesets{/t}
-							</td>
-							<td class="text-right">
-								<h3>
-									{$defined_filesets}
-								</h3>
-							</td>
+						  <td title="Defined Filesets"><h5>{t}Filesets{/t}</h5></td>
+						  <td class="text-right"><h4>{$defined_filesets}</h4></td>
 						</tr>
 						<tr>
-							<td>
-								{t}Total bytes{/t}
-							</td>
-							<td class="text-right">
-								<h3>
-									{$stored_bytes}
-								</h3>
-							</td>
+						  <td><h5>{t}Total bytes{/t}</h5></td>
+						  <td class="text-right"><h4>{$stored_bytes}</h4></td>
 						</tr>
 						<tr>
-							<td>
-								{t}Total files{/t}
-							</td>
-							<td class="text-right">
-								<h3>
-									{$stored_files}
-								</h3>
-							</td>
+						  <td><h5>{t}Total files{/t}</h5></td>
+						  <td class="text-right"><h4>{$stored_files}</h4></td>
 						</tr>
 						<tr>
-							<td>
-								{t}Database size{/t}
-							</td>
-							<td class="text-right">
-								<h3>
-									{$database_size}
-								</h3>
-							</td>
+						  <td><h5>{t}Database size{/t}</h5></td>
+						  <td class="text-right"><h4>{$database_size}</h4></td>
 						</tr>
 						<tr>
-							<td>
-								{t}Pool(s){/t}
-							</td>
-							<td class="text-right">
-								<h3>
-									{$pools_nb}
-								</h3>
-							</td>
+						  <td><h5>{t}Pool(s){/t}</h5></td>
+						  <td class="text-right"><h4>{$pools_nb}</h4></td>
 						</tr>
 						<tr>
-							<td>
-								{t}Volume(s){/t}
-							</td>
-							<td class="text-right">
-								<h3>
-									{$volumes_nb}
-								</h3>
-							</td>
+						  <td><h5>{t}Volume(s){/t}</h5></td>
+						  <td class="text-right"><h4>{$volumes_nb}</h4></td>
 						</tr>
 						<tr>
-							<td>
-								{t}Volume(s) size{/t}
-							</td>
-							<td class="text-right">
-								<h3>
-									{$volumes_size}
-								</h3>
-							</td>
+						  <td><h5>{t}Volume(s) size{/t}</h5></td>
+						  <td class="text-right"><h4>{$volumes_size}</h4></td>
 						</tr>
 					</table>
 				</div>
