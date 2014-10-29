@@ -34,6 +34,17 @@
           </button>
           <a class="navbar-brand" href="index.php">Bacula-Web</a>
         </div> <!-- div class="navbar-header" -->
+		
+   	<!-- Reports dropdown menu -->
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{t}Reports{/t} <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="jobs.php">{t}Jobs{/t}</a></li>
+              <li><a href="pools.php">{t}Pools and volumes{/t}</a></li>
+            </ul>
+          </li>
+        </ul>		
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
