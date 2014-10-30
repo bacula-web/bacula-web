@@ -57,7 +57,7 @@
 		<!-- Right column -->
 		<div class="col-xs-9 col-lg-9">
 			<div class="row">
-				<div class="col-xs-5">
+				<div class="col-xs-6">
 					<div class="panel panel-default">
 						<div class="panel-heading"> <b>{t}Last period job status{/t}</b> ({$literal_period}) </div>
 						<!-- Period selector -->
@@ -120,7 +120,7 @@
 				</div>
 				<!-- div class="col-md ..." -->
 				<!-- Stored Bytes for last 7 days -->
-				<div class="col-xs-5">
+				<div class="col-xs-6">
 					<div class="panel panel-default">
 						<div class="panel-heading" title="{t}Stored bytes over the last 7 days{/t}"><b>{t}Stored Bytes (last 7 days){/t}</b></div>
 						<div class="panel-body">
