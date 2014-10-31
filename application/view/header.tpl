@@ -40,6 +40,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{t}Reports{/t} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
+ 	      <li><a href="index.php">{t}Dashboard{/t}</a></li>
               <li><a href="jobs.php">{t}Jobs{/t}</a></li>
               <li><a href="pools.php">{t}Pools and volumes{/t}</a></li>
             </ul>
