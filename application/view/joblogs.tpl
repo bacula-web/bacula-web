@@ -1,28 +1,29 @@
 {include file=header.tpl}
 
-<div class="main_center">
-  <h4>{t}Job id{/t} <b>{$jobid}</b></h4>
+<div class="container-fluid">
   
-  <div class="box">
-	<table class="grid">
-	  <tr>
-		<th>{t}Time{/t}</th> 
-		<th>{t}Event{/t}</th>
+  <div class="col-md-10 col-lg-10">
+
+    <h4>{t}Job id{/t} <b>{$jobid}</b></h4>
+
+    <table class="table table-hover table-striped table-condensed table-bordered">
+      <tr>
+	<th class="text-center">{t}Time{/t}</th> 
+	<th class="text-center">{t}Event{/t}</th>
 	  </tr>
 	  {foreach from=$joblogs item=log}
-	  <tr class="{$log.class}">
-		<td width="150">{$log.time}</td>
-		<td class="left_align">{$log.logtext}</td>		
-	  </tr>
+	    <tr class="{$log.class}">
+	      <td class="text-center">{$log.time}</td>
+	      <td class="text-left">{$log.logtext}</td>		
+	    </tr>
           {foreachelse}
             <tr>
-              <td colspan="2">{t}No log(s) for this job{/t}</td>
+              <td colspan="2" class="text-center">{t}No log(s) for this job{/t}</td>
             </tr>
 	  {/foreach}
 	</table>
-  </div> <!-- end div class=box --> 
-  
+  </div> <!-- end div class="col-md-..." --> 
 
-</div> <!-- end div class=main_center -->
+</div> <!-- end div class="container-fluid" -->
 
 {include file="footer.tpl"}

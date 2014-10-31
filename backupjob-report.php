@@ -100,10 +100,6 @@
         // Job execution execution time
         $job['elapsedtime'] = DateTimeUtil::Get_Elapsed_Time($job['starttime'], $job['endtime']);
     
-        // odd and even row
-        if (count($jobs) % 2)
-            $job['odd_even'] = 'even';
-    
         // Compression
         $compression        = (1-($job['jobbytes'] / $job['readbytes']));
         $job['compression'] = number_format( $compression, 2);    

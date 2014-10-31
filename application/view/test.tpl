@@ -1,20 +1,20 @@
 {include file=header.tpl}
 
-<div class="main_center">
+<div class="container-fluid" id="testpage">
     
-  <div class="header">{t}Required components{/t}</div>
-	<table>
+  <h4>{t}Required components{/t}</h4>
+	<table class="table table-striped">
 		<tr>
-			<th>Component</th>
-			<th>Description</th>
-			<th>Status</th>
+			<th class="text-center">Component</th>
+			<th class="text-center">Description</th>
+			<th class="text-center">Status</th>
 		</tr>
 		{foreach from=$checks item=check}
 		<tr>
-			<td class="left_align strong">{$check.check_label}</td>
-			<td class="left_align"><i>{$check.check_descr}</i></td>
-			<td > 
-				<img src='application/view/style/images/{$check.check_result}' width='23' alt=''/> 
+			<td><strong>{$check.check_label}</strong></td>
+			<td><i>{$check.check_descr}</i></td>
+			<td class="text-center"> 
+				<span class="glyphicon {$check.check_result}"></span> 
 			</td>
 		</tr>
 		{/foreach}
@@ -24,13 +24,14 @@
 		</tr>
 		<tr>
 			<td>
-				<img src="{$bar_graph}" alt='' width="300" />
+				<img class="img-responsive" src="{$bar_graph}" alt='' />
 			</td>
 			<td colspan="2">
-				<img src="{$pie_graph}" alt='' width="300" />
+				<img class="img-responsive" src="{$pie_graph}" alt='' />
 			</td>
 		</tr>
 	</table>
-</div> <!-- end div id=main_center -->
+
+</div> <!-- div class="container-fluid" -->
 
 {include file="footer.tpl"}

@@ -159,19 +159,19 @@
       // Determine icon for job status
       switch($job['jobstatus']) {
           case J_RUNNING:
-              $job['Job_icon'] = "running.png";
+              $job['Job_icon'] = "play";
               break;
           case J_COMPLETED:
-              $job['Job_icon'] = "ok.png";
+              $job['Job_icon'] = "ok";
               break;
           case J_CANCELED:
-              $job['Job_icon'] = "canceled.png";
+              $job['Job_icon'] = "off";
               break;
           case J_COMPLETED_ERROR:
-              $job['Job_icon'] = "warning.png";
+              $job['Job_icon'] = "warning_sign";
               break;
           case J_FATAL:
-              $job['Job_icon'] = "error.png";
+              $job['Job_icon'] = "remove";
               break;
           case J_WAITING_CLIENT:
           case J_WAITING_SD:
@@ -183,13 +183,9 @@
           case J_WAITING_MAX_JOBS:
           case J_WAITING_START_TIME:
           case J_NOT_RUNNING:
-              $job['Job_icon'] = "waiting.png";
+              $job['Job_icon'] = "waiting";
               break;
       } // end switch
-      
-      // Odd or even row
-      if(count($last_jobs) % 2)
-          $job['odd_even'] = 'even';
       
       // Job start time, end time and elapsed time
       $start_time = $job['starttime'];
