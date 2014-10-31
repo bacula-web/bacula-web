@@ -46,53 +46,59 @@
           </li>
         </ul>		
 
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav navbar-right">
-	{if $catalog_nb > 1}
-	<!-- Bacula catalog dropdown -->
-	<li>
-		<form class="navbar-form" action="index.php" method="post">
-			<select name="catalog_id" class="form-control">
-				{foreach from=$catalogs key=catalog_id item=catalog_name}
-					<option value="{$catalog_id}"
-						{if $catalog_id eq $catalog_current_id} selected {/if} >
-							{$catalog_name}
-					</option>
-				{/foreach}
-			</select>
-
-			<button type="submit" class="btn btn-success">Use</button>
-			{$catalog_selected_id}
-		</form>
-	</li>
-	{/if}			
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-cog"></span> </a>
-					<ul class="dropdown-menu">
-						<li role="presentation" class="dropdown-header">Tools</li>
-						<li> 
-						  <a href="test.php" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> Test page</a>
- 						</li>
-						<li role="presentation" class="divider"></li>
-						<li role="presentation" class="dropdown-header">Help</li>
-						<li> 
-						  <a href="http://www.bacula-web.org" title="Visit the official web site" target="_blank"><i class="fa fa-globe fa-fw"></i> Official web site</a> 
-						</li>
-						<li> 
-						  <a href="http://bugs.bacula-web.org" title="Bug and feature request tracker" target="_blank"><i class="fa fa-bug fa-fw"></i> Bug tracker</a> 
-						</li>
-						<li role="presentation" class="divider"></li>
-						<li role="presentation" class="dropdown-header">Version</li>
-						<li class="disabled"> <a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 6.0.1</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div> <!-- div class="collapse navbar-collapse"-->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-cog"></span> </a>
+          <ul class="dropdown-menu">
+            <li role="presentation" class="dropdown-header">Tools</li>
+            <li> 
+              <a href="test.php" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> Test page</a>
+            </li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation" class="dropdown-header">Help</li>
+            <li> 
+              <a href="http://www.bacula-web.org" title="Visit the official web site" target="_blank"><i class="fa fa-globe fa-fw"></i> Official web site</a> 
+            </li>
+            <li> 
+              <a href="http://bugs.bacula-web.org" title="Bug and feature request tracker" target="_blank"><i class="fa fa-bug fa-fw"></i> Bug tracker</a> 
+            </li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation" class="dropdown-header">Version</li>
+            <li class="disabled"> <a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 6.0.1</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div> <!-- div class="collapse navbar-collapse"-->
   </div> <!-- div class="container-fluid" -->
-</div> <!-- class="narvar" -->
+</div> <!-- class="navbar" -->
 
 
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-6">
+      <h3>{$page_name}</h3>
+    </div>
+    <div class="col-xs-6">
+    <!-- Catalog selector -->
+    {if $catalog_nb > 1}
+    <div class="btn-group pull-right">
+      <a class="btn btn-primary" href="#"><i class="fa fa-database fa-fw"></i> Catalog</a>
+      <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+      <span class="fa fa-caret-down"></span></a>
+      <ul class="dropdown-menu">
+        {foreach from=$catalogs key=catalog_id item=catalog_name}
+          <li> <a href="index.php?catalog_id={$catalog_id}">
+          {if $catalog_id eq $catalog_current_id} <i class="fa fa-check fa-fw"></i> {else} <i class="fa fa-fake fa-fw"></i> {/if}{$catalog_name}</a>
+          </li>
+        {/foreach}
+      </ul>
+    </div>
+    {/if}
+    <!-- end Catalog selector -->	
+	  </div> 
+  </div>
+
   <!-- Breadcrumb -->
   <ol class="breadcrumb">
 	<li class="active">{$page_name}</li>
@@ -117,5 +123,4 @@
   {/php}
   </ol>
   
-  <h3>{$page_name}</h3>
 </div> <!-- div class="container" -->
