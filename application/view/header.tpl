@@ -84,9 +84,10 @@
     <!-- Catalog selector -->
     {if $catalog_nb > 1}
     <div class="btn-group pull-right">
-      <a class="btn btn-primary" href="#"><i class="fa fa-database fa-fw"></i> Catalog</a>
-      <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-      <span class="fa fa-caret-down"></span></a>
+      <button type="button" class="btn btn-primary"><i class="fa fa-database fa-fw"></i> {t}Catalog{/t}</button>
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        <span class="fa fa-caret-down"></span> 
+      </button>
       <ul class="dropdown-menu">
         {foreach from=$catalogs key=catalog_id item=catalog_name}
           <li> <a href="index.php?catalog_id={$catalog_id}">
