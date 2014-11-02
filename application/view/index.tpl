@@ -55,7 +55,7 @@
 		</div>
 		<!-- div class="col-.. -->
 		<!-- Right column -->
-		<div class="col-xs-9 col-lg-9">
+		<div class="col-xs-9">
 			<div class="row">
 				<div class="col-xs-6">
 					<div class="panel panel-default">
@@ -134,7 +134,7 @@
 			
 			<div class="row">
 				<!-- Pools and volumes status -->
-				<div class="col-xs-6 col-lg-5">
+				<div class="col-xs-6">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<b>
@@ -152,7 +152,7 @@
 				<!-- div class="col-..." -->
 
 				<!-- Last used volumes -->
-				<div class="col-xs-6 col-lg-6">
+				<div class="col-xs-6">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<b>
@@ -206,7 +206,7 @@
 			<!-- row -->
 			<div class="row">
 				<!-- Client report -->
-				<div class="col-md-6 col-lg-6">
+				<div class="col-xs-6">
 					<div class="panel panel-default">
 						<div class="panel-heading"><b>{t}Client report{/t}</b></div>
 						<div class="panel-body">
