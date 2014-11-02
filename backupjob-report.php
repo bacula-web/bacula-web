@@ -101,8 +101,13 @@
         $job['elapsedtime'] = DateTimeUtil::Get_Elapsed_Time($job['starttime'], $job['endtime']);
     
         // Compression
-        $compression        = (1-($job['jobbytes'] / $job['readbytes']));
-        $job['compression'] = number_format( $compression, 2);    
+        if( $job['jobbytes'] > 0) {
+          $compression        = (1-($job['jobbytes'] / $job['readbytes']));
+          $job['compression'] = number_format( $compression, 2);    
+        }else {
+          $job['compression'] = 'N/A';
+        }
+        
 
         // Job bytes more easy to read
         $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
