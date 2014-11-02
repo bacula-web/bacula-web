@@ -213,17 +213,26 @@
         case J_COMPLETED:
         case J_COMPLETED_ERROR:
         case J_NO_FATAL_ERROR:
-	case J_CANCELED:
-	case J_FATAL:
-		$seconds = DateTimeUtil::get_ElaspedSeconds($end_time,$start_time);
-		if( $seconds != false) {
-		  $speed 	= $job['jobbytes'] / $seconds;  
-		  $speed 	= CUtils::Get_Human_Size($speed,2) . '/s';
-                  $job['speed'] = $speed;
-		}else
-		  $job['speed']	= 'n/a';
-	break;
-      }
+        case J_CANCELED:
+        case J_FATAL:
+            // Job speed
+            $seconds = DateTimeUtil::get_ElaspedSeconds($end_time,$start_time);
+            if( $seconds != false) {
+                $speed 	= $job['jobbytes'] / $seconds;  
+                $speed 	= CUtils::Get_Human_Size($speed,2) . '/s';
+                $job['speed'] = $speed;
+            }else
+                $job['speed']	= 'n/a';
+                
+            // Job compression
+            if( $job['jobbytes'] > 0) {
+                $compression        = (1-($job['jobbytes'] / $job['readbytes']));
+                $job['compression'] = number_format( $compression, 2);    
+            }else {
+                $job['compression'] = 'N/A';
+            }
+        break;
+      } // end switch
       
       // Job size
       $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);

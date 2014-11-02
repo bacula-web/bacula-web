@@ -17,6 +17,7 @@
 			<th class="text-center">{t}Bytes{/t}</th>
 			<th class="text-center">{t}Files{/t}</th>
 			<th class="text-center">{t}Speed{/t}</th>
+			<th class="text-center">{t}Compression{/t}</th>
 			<th class="text-center">{t}Pool{/t}</th>
 			<th class="text-center">{t}Log{/t}</th>
 		  </tr>
@@ -39,6 +40,7 @@
 			<td>{$job.jobbytes}</td>
 			<td>{$job.jobfiles}</td>
 			<td>{$job.speed}</td>
+			<td>{$job.compression}</td>
 			<td>{$job.pool_name}</td>
 			<td>
 			  <a href="joblogs.php?jobid={$job.jobid}" title="{t}Show job logs{/t}">
