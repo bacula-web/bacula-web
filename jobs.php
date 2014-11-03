@@ -192,10 +192,10 @@
       $end_time   = $job['endtime'];
       
       if($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0)
-          $job['starttime'] = 'N/A';
+          $job['starttime'] = 'n/a';
       
       if($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == 0)
-          $job['endtime'] = 'N/A';
+          $job['endtime'] = 'n/a';
       
       // Get the job elapsed time completion
       $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
@@ -208,6 +208,9 @@
 
       // Job speed
       $job['speed'] = '0 Mb/s';
+
+      // Job compression
+      $job['compression'] = 'n/a';
 	  
       switch( $job['jobstatus'] ) {
         case J_COMPLETED:
@@ -229,7 +232,7 @@
                 $compression        = (1-($job['jobbytes'] / $job['readbytes']));
                 $job['compression'] = number_format( $compression, 2);    
             }else {
-                $job['compression'] = 'N/A';
+                $job['compression'] = 'n/a';
             }
         break;
       } // end switch
@@ -239,7 +242,7 @@
 	        
       // Job Pool
       if(is_null($job['pool_name']))
-          $job['pool_name'] = 'N/A';
+          $job['pool_name'] = 'n/a';
       
       $last_jobs[] = $job;
   } // end foreach

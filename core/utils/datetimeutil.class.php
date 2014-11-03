@@ -39,7 +39,7 @@ class DateTimeUtil {
         $end   = '';
 
         if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0)
-            return 'N/A';
+            return 'n/a';
         else
             $start = self::get_Timestamp($start_time);
 
