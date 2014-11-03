@@ -201,6 +201,22 @@ if( isset($_POST['period_selector']) ) {
 
  // Graph rendering
  $view->assign( 'graph_stored_bytes', $graph->Render() );
+ 
+ // ==============================================================
+ // Last 7 days Stored Files widget
+ // ==============================================================
+ $days_stored_files = array();
+ $days = DateTimeUtil::getLastDaysIntervals(7);
+
+ foreach ($days as $day) {
+    $days_stored_files[] = array( date("m-d", $day['start']), Jobs_Model::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']) ));
+ } 
+
+ $graph = new CGraph("graph3.png", 400, 220);
+ $graph->SetData($days_stored_files, 'bars');
+
+ // Graph rendering
+ $view->assign( 'graph_stored_files', $graph->Render() ); 
 
  // ==============================================================
  // Last used volumes widget

@@ -128,6 +128,13 @@
 						</div>
 					</div>
 					<!-- div class="panel panel-default" -->
+					<div class="panel panel-default">
+						<div class="panel-heading" title="{t}Stored files over the last 7 days{/t}"><b>{t}Stored Files (last 7 days){/t}</b></div>
+						<div class="panel-body">
+						  <img alt="" src="{$graph_stored_files}" class="img-responsive center-block" title="{t}Stored files over the last 7 days{/t}"/>
+						</div>
+					</div>
+					<!-- div class="panel panel-default" -->
 				</div>
 				<!-- div class="col-md-5 ..." -->
 			</div> <!-- div class="row" -->
