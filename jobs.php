@@ -183,7 +183,7 @@
           case J_WAITING_MAX_JOBS:
           case J_WAITING_START_TIME:
           case J_NOT_RUNNING:
-              $job['Job_icon'] = "waiting";
+              $job['Job_icon'] = "time";
               break;
       } // end switch
       
