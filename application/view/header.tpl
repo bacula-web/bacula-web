@@ -74,40 +74,34 @@
   </div> <!-- div class="container-fluid" -->
 </div> <!-- class="navbar" -->
 
-<div class="container-fluid">
-  <!-- Breadcrumb -->
-  <div class="row">
-  <div class="col-xs-12">
-    <ol class="breadcrumb">
-      <li class="active">{$page_name}</li>
-      {php}
-          $back     = null;
-      $referrer = $_SERVER['HTTP_REFERER'];
-      $referrer = end( explode( "/", $referrer) );
+  <div class="container-fluid">
+    <!-- Breadcrumb -->
+    <div class="row">
+      <div class="col-xs-8">
+        <ol class="breadcrumb">
+          <li class="active">{$page_name}</li>
+            {php}
+              $back     = null;
+       	      $referrer = $_SERVER['HTTP_REFERER'];
+              $referrer = end( explode( "/", $referrer) );
 
-      $current  = $_SERVER['SCRIPT_FILENAME'];
-          $current  = end( explode( "/", $current) );
+      	      $current  = $_SERVER['SCRIPT_FILENAME'];
+              $current  = end( explode( "/", $current) );
 
-      // If referrer and current are not equal and referrer isn't null/empty
-          if( strcmp($referrer, $current) != 0  )
-            $back = $referrer;
+              // If referrer and current are not equal and referrer isn't null/empty
+              if( strcmp($referrer, $current) != 0  )
+                $back = $referrer;
 
-      // If current is Dashboard
-      if( $current == 'index.php' )
-            $back = null;
+              // If current is Dashboard
+      	      if( $current == 'index.php' )
+                $back = null;
 
-      if( !is_null($back) )
-            echo "<li><a href='$back' title='back to previous page'>Back</a></li>";
-  {/php}
-  </ol>
-  </div> <!-- div class="col..." -->
-  </div> <!-- div class="row" -->
-  
-  <div class="row">
-    <div class="col-xs-6">
-      <h3>{$page_name}</h3>
-    </div>
-    <div class="col-xs-6">
+              if( !is_null($back) )
+                echo "<li><a href='$back' title='back to previous page'>Back</a></li>";
+            {/php}
+        </ol>
+      </div> <!-- div class="col..." -->
+    <div class="col-xs-4">
     <!-- Catalog selector -->
     {if $catalog_nb > 1}
     <div class="btn-group pull-right">
@@ -124,8 +118,12 @@
       </ul>
     </div>
     {/if}
-    <!-- end Catalog selector -->	
-	  </div> 
-  </div>
+    <!-- end Catalog selector -->      
+    </div> <!-- div class="col-xs..." -->
+  </div> <!-- div class="row" -->
+  
+  <div class="row">
+    <div class="col-xs-12"><h3>{$page_name}</h3></div>
+	</div> 
 
 </div> <!-- div class="container" -->
