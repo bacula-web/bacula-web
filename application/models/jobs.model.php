@@ -52,7 +52,7 @@
 			CModel::$pdo_connection = $pdo_connection;
 		
 		// Getting timestamp interval
-		$intervals  = CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
+		$intervals  = CDBQuery::get_Timestamp_Interval( $period_timestamps );
 		
 		// Defining interval depending on job status
 		if( !is_null($job_status) ) {
@@ -127,7 +127,7 @@
 			throw new Exception('Unvalid PDO object provided in count_Jobs() function');		
 		
 		// Defined period
-		$intervals 	= CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
+		$intervals 	= CDBQuery::get_Timestamp_Interval( $period_timestamps );
 		$where[] 	= '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
 		
 		if( $job_name != 'ALL' ) 
@@ -164,7 +164,7 @@
 		$tablename	= 'Job';
 		
 		// Defined period
-		$intervals 	= CDBQuery::get_Timestamp_Interval( $pdo_connection, $period_timestamps );
+		$intervals 	= CDBQuery::get_Timestamp_Interval( $period_timestamps );
 		$where[] 	= '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
 		
 		if( $job_name != 'ALL' ) 

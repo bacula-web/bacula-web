@@ -83,12 +83,12 @@
 		return $query;
     }
 	
-    // ==================================================================================
+  // ==================================================================================
 	// Function: 	get_Timestamp_Interval()
 	// Parameters:	$period array containing start and end timestamp
 	// Return:		return table with correct case
 	// ==================================================================================
-	public static function get_Timestamp_Interval( $pdo_connection, $period_timestamp = array() ) {
+	public static function get_Timestamp_Interval( $period_timestamp = array() ) {
 
 		$periods = array();
 		
