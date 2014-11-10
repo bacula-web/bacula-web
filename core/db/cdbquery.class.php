@@ -90,20 +90,20 @@
 	// ==================================================================================
 	public static function get_Timestamp_Interval( $period_timestamp = array() ) {
 
-		$periods = array();
+		$period = array();
 		
 		switch( CDB::getDriverName() ) {
 			case 'pgsql':
-				$periods['starttime'] 	= "TIMESTAMP '" . date( "Y-m-d H:i:s", $period_timestamp[0]) . "'";
-				$periods['endtime'] 	= "TIMESTAMP '" . date( "Y-m-d H:i:s", $period_timestamp[1]) . "'";
+				$period['starttime'] 	= "TIMESTAMP '" . date( "Y-m-d H:i:s", $period_timestamp[0]) . "'";
+				$period['endtime'] 	  = "TIMESTAMP '" . date( "Y-m-d H:i:s", $period_timestamp[1]) . "'";
 			break;
 			default:			
-				$periods['starttime'] 	= "'" . date( "Y-m-d H:i:s", $period_timestamp[0]) . "'";
-				$periods['endtime'] 	= "'" . date( "Y-m-d H:i:s", $period_timestamp[1]) . "'";
+				$period['starttime'] 	= "'" . date( "Y-m-d H:i:s", $period_timestamp[0]) . "'";
+				$period['endtime'] 	  = "'" . date( "Y-m-d H:i:s", $period_timestamp[1]) . "'";
 			break;
 		} // end switch
 		
-		return $periods;
+		return $period;
 	}
  }
 
