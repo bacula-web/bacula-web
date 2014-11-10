@@ -54,7 +54,7 @@
   $clients_list[0]  = 'Any';
   $view->assign('clients_list', $clients_list);
   
-  $query .= "SELECT Job.JobId, Job.Name AS Job_name, Job.Type, Job.StartTime, Job.EndTime, Job.Level, Job.JobBytes, Job.JobFiles, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
+  $query .= "SELECT Job.JobId, Job.Name AS Job_name, Job.Type, Job.StartTime, Job.EndTime, Job.Level, Job.ReadBytes, Job.JobBytes, Job.JobFiles, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
   $query .= "FROM Job ";
   $query .= "LEFT JOIN Pool ON Job.PoolId=Pool.PoolId ";
   $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
