@@ -97,6 +97,7 @@ class ClassAutoLoader {
   // ==================================================================================
   
   private function Load_Class($classname) {
+
     foreach( self::$paths as $dir ) {      
       $file_full_path = $dir . '/' . $classname . '.class.php';
     

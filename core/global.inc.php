@@ -22,7 +22,8 @@
  // Add root path and exclusions
  ClassAutoLoader::add_Path('core');
  ClassAutoLoader::add_Path('application');
- ClassAutoLoader::add_Exclusion('core/external/smarty-gettext');
+ ClassAutoLoader::add_Path('vendor');
+ ClassAutoLoader::add_Exclusion('vendor/smarty-gettext');
  
  // Get all $_POST and $_GET values
  CHttpRequest::get_Vars();
@@ -40,10 +41,10 @@
  define('LOCALE_DIR', BW_ROOT . '/application/locale');
  
  // Smarty
- require_once(BW_ROOT . '/core/external/smarty-gettext/smarty-gettext.php');
+ require_once(BW_ROOT . '/vendor/smarty-gettext/smarty-gettext.php');
  
  // PHPLot
- require_once(BW_ROOT . '/core/external/phplot/phplot.php');
+ require_once(BW_ROOT . '/vendor/phplot/phplot.php');
  
  // Constants
  require_once(BW_ROOT . '/core/const.inc.php');
