@@ -47,7 +47,7 @@ class CDB {
         }
 		
 		return self::$connection;
-    }
+  }
 
 	// ==================================================================================
 	// Function: 	getDriverName()
@@ -69,6 +69,22 @@ class CDB {
 		$server_version = self::$connection->getAttribute( PDO::ATTR_SERVER_VERSION );
 		$server_version = explode(':', $server_version);
 		return $server_version[0];
+    }
+
+	// ==================================================================================
+	// Function: 	getServerTimestamp()
+	// Parameters: 	none
+	// Return:		database server current timestamp
+	// ==================================================================================
+    
+    public static function getServerTimestamp() {
+        if( !is_null(self::$connection)) {
+            $result = CDBUtils::runQuery( 'select now() as CurrentDateTime', self::$connection); 
+            $result = $result->fetch();
+            return strtotime($result['currentdatetime']);
+        }else {
+            throw new Exception("No connection to database");
+        }
     }
 }
 ?>
