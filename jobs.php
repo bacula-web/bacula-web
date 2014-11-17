@@ -228,7 +228,7 @@
                 $job['speed']	= 'n/a';
                 
             // Job compression
-            if( $job['jobbytes'] > 0) {
+            if( $job['jobbytes'] > 0 && $job['type'] == 'B') {
                 $compression        = (1-($job['jobbytes'] / $job['readbytes']));
                 $job['compression'] = number_format( $compression, 2);    
             }else {
