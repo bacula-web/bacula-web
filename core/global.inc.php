@@ -41,7 +41,7 @@
  define('LOCALE_DIR', BW_ROOT . '/application/locale');
  
  // Smarty
- require_once(BW_ROOT . '/vendor/smarty-gettext/smarty-gettext.php');
+ require_once(BW_ROOT . '/vendor/smarty-gettext-1.1/smarty-gettext.php');
  
  // PHPLot
  require_once(BW_ROOT . '/vendor/phplot-6.1.0/phplot.php');
