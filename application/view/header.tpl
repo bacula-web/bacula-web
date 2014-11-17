@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="vendor/bootstrap-3.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="vendor/bootstrap-3.2.0/css/bootstrap-theme.min.css">
   <link rel="stylesheet" type="text/css" href="application/assets/css/default.css">
-  <script src="vendor/jquery/jquery-1.11.1.min.js"></script>
+  <script src="vendor/jquery-1.11.1/jquery-1.11.1.min.js"></script>
   <script src="vendor/bootstrap-3.2.0/js/bootstrap.min.js"></script>
 
   <!-- Font Awesome -->
