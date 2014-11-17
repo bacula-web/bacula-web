@@ -45,7 +45,4 @@
  
  // PHPLot
  require_once(BW_ROOT . '/vendor/phplot-6.1.0/phplot.php');
- 
- // Constants
- require_once(BW_ROOT . '/core/const.inc.php');
 ?>
