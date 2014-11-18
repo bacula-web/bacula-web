@@ -1,11 +1,26 @@
-=== Release 6.0.x (Month Day 2014) ===
+=== Release 7.0.0 (November 18th 2014) ===
 
 Changelog
 
+- General: Several code improvments
+- General: Web UI have been reworked using Twitter Bootstrap, JQuery and FontAwesome
+- Jobs report: Fix link problem with jobs name containing space(s)
 - Updated Smarty to version 2.6.28
 - Updated PHPLot from version 5.8.0 to 6.1.0
 
-Fixed bugs / New features
+Fixed bugs
+
+- 0000083 [bug] Bacula-web dashboard queries to *sql does not take into account timezone differences
+- 0000138 [bug-php] Display job compression rate only for Backup jobs
+- 0000132 [translation] Update pt_BR translation (thanks to Brivaldo Junior)
+- 0000133 [bug-php] Division by zero after update to 6.0.1
+- 0000091 [design] Visibility long volume-names (bacula-dev) - feedback.
+- 0000077 [design] "Pools and volumes status" pie and legend overlap with long names. (bacula-dev) - feedback.
+
+New features
+
+- 0000135 [feature] Add Stored Files graph in Dashboard
+- 0000134 [feature] Add compression rate into Jobs report page
 
 === Release 6.0.1 (July 29th 2014) ===
 
