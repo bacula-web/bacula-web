@@ -78,9 +78,19 @@ class CDB {
 	// ==================================================================================
     
     public static function getServerTimestamp() {
-        if( !is_null(self::$connection)) {
-            $result = CDBUtils::runQuery( 'select now() as CurrentDateTime', self::$connection); 
+        $statment = null;
+        if( !is_null(self::$connection) ) {
+            // Different query for SQlite
+            if( self::getDriverName() == 'sqlite' ) {
+                $statment = "SELECT datetime('now') as CurrentDateTime";
+            }else{
+                $statment = 'SELECT now() as CurrentDateTime';                
+            }
+
+            $result = CDBUtils::runQuery( $statment, self::$connection); 
             $result = $result->fetch();
+            
+            // Return timestamp
             return strtotime($result['currentdatetime']);
         }else {
             throw new Exception("No connection to database");
