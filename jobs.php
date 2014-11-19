@@ -16,10 +16,14 @@
 */
 
   session_start();
-  include_once('core/global.inc.php');
+  require_once('core/global.inc.php');
   
   $view      = new CView();
   $dbSql     = new Bweb($view);
+
+  // That's horrible, it must be improved
+  require_once('core/const.inc.php');
+
   $query     = "";
   $last_jobs = array();
   
