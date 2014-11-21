@@ -22,6 +22,8 @@
     $view = new CView();
     $dbSql = new Bweb($view);
     
+    require_once('core/const.inc.php');
+    
     $backupjob_name = "";
     $backupjob_bytes = 0;
     $backupjob_files = 0;
