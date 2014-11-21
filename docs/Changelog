@@ -1,3 +1,15 @@
+=== Release 7.0.1 (November xxth 2014) ===
+
+Changelog
+
+Fixed bugs
+
+- 0000144 [bug-php] Backup job report - php errors in logs
+
+New features
+
+none
+
 === Release 7.0.0 (November 19th 2014) ===
 
 Changelog
@@ -14,8 +26,8 @@ Fixed bugs
 - 0000138 [bug-php] Display job compression rate only for Backup jobs
 - 0000132 [translation] Update pt_BR translation (thanks to Brivaldo Junior)
 - 0000133 [bug-php] Division by zero after update to 6.0.1
-- 0000091 [design] Visibility long volume-names (bacula-dev) - feedback.
-- 0000077 [design] "Pools and volumes status" pie and legend overlap with long names. (bacula-dev) - feedback.
+- 0000091 [design] Visibility long volume-names
+- 0000077 [design] "Pools and volumes status" pie and legend overlap with long names
 
 New features
 
