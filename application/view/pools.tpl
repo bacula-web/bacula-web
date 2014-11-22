@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-10 col-lg-10">
+    <div class="col-md-10">
     {foreach from=$pools item=pool key=pool_name}
 	<h4>{$pool_name}</h4>
 	<table class="table table-bordered table-striped table-hover text-center">
