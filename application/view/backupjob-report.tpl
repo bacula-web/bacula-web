@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-8 col-lg-8">
+    <div class="col-md-8">
       <h4>{t}Backup job informations{/t}</h4>	
 
       <table class="table table-condensed table-bordered">
@@ -57,10 +57,10 @@
    <h4>{t}Transfered Bytes / Files{/t}</h4>
 
    <div class="row">
-     <div class="col-md-4 col-lg-4">
+     <div class="col-md-4">
        <img class="img-responsive" src="{$graph_stored_bytes}" alt="" />
      </div>
-     <div class="col-md-4 col-lg-4">
+     <div class="col-md-4">
        <img class="img-responsive" src="{$graph_stored_files}" alt="" />
      </div>
 

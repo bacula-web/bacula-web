@@ -2,7 +2,7 @@
 
 <div class="container-fluid">  
   <div class="row">
-    <div class="col-md-8 col-lg-8">
+    <div class="col-md-8">
 
     <h4>{t}Client informations{/t}</h4>	
     <table class="table table-condensed table-bordered">
