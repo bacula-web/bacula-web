@@ -8,11 +8,11 @@
   <title>Bacula-Web - {$page_name}</title>
 
   <!-- Bootstrap front-end framework -->
-  <link rel="stylesheet" type="text/css" href="vendor/bootstrap-3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="vendor/bootstrap-3.2.0/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="vendor/bootstrap-3.3.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="vendor/bootstrap-3.3.1/dist/css/bootstrap-theme.min.css">
   <link rel="stylesheet" type="text/css" href="application/assets/css/default.css">
   <script src="vendor/jquery-1.11.1/jquery-1.11.1.min.js"></script>
-  <script src="vendor/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+  <script src="vendor/bootstrap-3.3.1/dist/js/bootstrap.min.js"></script>
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="vendor/font-awesome-4.2.0/css/font-awesome.min.css">
