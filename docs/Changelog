@@ -1,10 +1,14 @@
-=== Release 7.0.1 (November xxth 2014) ===
+=== Release 7.0.1 (November 23rd 2014) ===
 
 Changelog
+
+- General: Upgrade Twitter Bootstrap from version 3.2.0 to 3.3.1
+- General: Fix html code issue in some templates using Bootlint (https://github.com/twbs/bootlint)
 
 Fixed bugs
 
 - 0000144 [bug-php] Backup job report - php errors in logs
+- 0000146 [bug] Graphs sometimes disappear on Firefox 33.0
 
 New features
 
