@@ -7,6 +7,7 @@ Changelog
 
 Fixed bugs
 
+- 0000143 [documentation] bacula-web 7.0.0 and the latest version of wget
 - 0000144 [bug-php] Backup job report - php errors in logs
 - 0000146 [bug] Graphs sometimes disappear on Firefox 33.0
 
