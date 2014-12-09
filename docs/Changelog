@@ -4,7 +4,11 @@ Changelog
 
 Fixed bugs
 
+- 0000151 [bug-php] Period string not translated in Dashboard
+
 New features
+
+none
 
 Translations
 

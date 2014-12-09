@@ -65,7 +65,7 @@
     $view->assign('custom_period_list', $custom_period_list);
 
     // Set period start - end for widget header
-    $view->assign('literal_period', date("D j M Y ", $custom_period[0]) . ' to ' . date("D j M Y ", $custom_period[1]) );
+    $view->assign('literal_period', strftime("%a %e %b %Y", $custom_period[0]).' to ' . strftime("%a %e %b %Y", $custom_period[1]) );
 
     // Running, completed, failed, waiting and canceled jobs status over last 24 hours
     $view->assign( 'running_jobs', Jobs_Model::count_Jobs( $dbSql->db_link, $custom_period, 'running') );
