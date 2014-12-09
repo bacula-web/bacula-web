@@ -95,7 +95,7 @@
                 $back = null;
 
               if( !is_null($back) )
-                echo "<li><a href='$back' title='{t}back to previous page{/t}'>{t}Back{/t}</a></li>";
+                echo "<li><a href='$back' title='{t}back to previous page{/t}'>Back</a></li>";
             {/php}
         </ol>
       </div> <!-- div class="col..." -->
