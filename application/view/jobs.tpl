@@ -10,8 +10,8 @@
 			<th class="text-center">{t}Job ID{/t}</th>
 			<th class="text-center">{t}Name{/t}</th>
 			<th class="text-center">{t}Type{/t}</th>
-			<th class="text-center">{t}Start Time{/t}</th>
-			<th class="text-center">{t}End Time{/t}</th>
+			<th class="text-center">{t}Start time{/t}</th>
+			<th class="text-center">{t}End time{/t}</th>
 			<th class="text-center">{t}Elapsed time{/t}</th>
 			<th class="text-center">{t}Level{/t}</th>
 			<th class="text-center">{t}Bytes{/t}</th>
