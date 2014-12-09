@@ -1,417 +1,529 @@
-# Translation of messages.po to french
-# Copyright (C) 2004 Free Software Foundation, Inc.
-# Morgan LEFIEUX <comete@archlinuxfr.org>, 2004.
-# DFranco <bacula-dev@dflc.ch>, 2012.
+# Bacula-Web - Translation file
+# Copyright (C) 2004-2014 Free Software Foundation, Inc.
+# This file is distributed under the same license as the Bacula-Web package.
+# Translators:
+# Davide Franco <bacula-dev@dflc.ch>, 2014
+# Davide Franco <bacula-dev@dflc.ch>, 2012
+# Morgan LEFIEUX <comete@archlinuxfr.org>, 2004
 msgid ""
 msgstr ""
-"Project-Id-Version: messages_fr.po\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-10 00:36+0100\n"
-"PO-Revision-Date: 2012-01-27 10:44+0200\n"
-"Last-Translator: DFranco <bacula-dev@dflc.ch>\n"
-"Language-Team: FRENCH <LL@li.org>\n"
-"Language: fr\n"
+"Project-Id-Version: Bacula-Web\n"
+"Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
+"POT-Creation-Date: 2011-11-16 21:46+0100\n"
+"PO-Revision-Date: 2014-12-09 13:12+0000\n"
+"Last-Translator: Davide Franco <bacula-dev@dflc.ch>\n"
+"Language-Team: French (France) (http://www.transifex.com/projects/p/bacula-web/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
 
-#: lang.c:1 lang.c:17 lang.c:20 lang.c:72
+#: lang.c:22
+msgid "ASC"
+msgstr "Ascendant"
+
+#: lang.c:27
+msgid "Apply"
+msgstr "Appliquer"
+
+#: lang.c:26
+msgid "Apply filter and options"
+msgstr "Appliquer le filtre et les options"
+
+#: lang.c:57
+msgid "Back"
+msgstr "Retour"
+
+#: lang.c:1 lang.c:35 lang.c:50 lang.c:65
 msgid "Back to the dashboard"
 msgstr "Retour au tableau de bord"
 
-#: lang.c:2
-msgid "Dashboard"
-msgstr "Tableau de bord"
+#: lang.c:36
+msgid "Backup Job Report"
+msgstr "Rapport du travail de sauvegarde"
 
-#: lang.c:3
-msgid "Client Report"
-msgstr "Rapport du client"
+#: lang.c:37 lang.c:115
+msgid "Backup Job name"
+msgstr "Nom du travail de sauvegarde"
 
-#: lang.c:4
-msgid "Client informations"
-msgstr "Information du client"
+#: lang.c:32 lang.c:103
+msgid "Backup Job report"
+msgstr "Rapport des travaux de sauvegarde"
 
-#: lang.c:5
-msgid "Client name"
-msgstr "Nom du client"
+#: lang.c:114
+msgid "Backup job informations"
+msgstr "Informations sur le travail de sauvegarde"
 
-#: lang.c:6
-msgid "Client version"
-msgstr "Version du client"
+#: lang.c:33 lang.c:104
+msgid "Backup job name"
+msgstr "Nom du travail de sauvegarde"
 
-#: lang.c:7
-msgid "Client os"
-msgstr "Système d'exploitation du client"
+#: lang.c:54
+msgid "Bug tracker"
+msgstr ""
 
-#: lang.c:8
-msgid "Client arch"
-msgstr "Architecture du client"
-
-#: lang.c:9
-msgid "Last good backup job"
-msgstr "Dernières tâches de sauvegardes effectuées avec succès"
-
-#: lang.c:10 lang.c:27
-msgid "Name"
-msgstr "Nom"
-
-#: lang.c:11
-msgid "Jod Id"
-msgstr "Id de la tâche"
-
-#: lang.c:12 lang.c:32 lang.c:80
-msgid "Level"
-msgstr "Niveau"
-
-#: lang.c:13 lang.c:84
-msgid "End time"
-msgstr "Heure de fin"
-
-#: lang.c:14 lang.c:33 lang.c:82 lang.c:88
+#: lang.c:45 lang.c:62 lang.c:77 lang.c:81 lang.c:9 lang.c:37 lang.c:107
+#: lang.c:123
 msgid "Bytes"
 msgstr "Octets"
 
-#: lang.c:15 lang.c:34 lang.c:81
-msgid "Files"
-msgstr "Fichiers"
+#: lang.c:79
+msgid "Canceled job(s)"
+msgstr "Travaux annulé(s)"
 
-#: lang.c:16 lang.c:25 lang.c:92
-msgid "Status"
-msgstr "Etat"
+#: lang.c:58
+msgid "Catalog"
+msgstr "Catalogue"
 
-#: lang.c:18
-msgid "Required components"
-msgstr "Composants requis"
-
-#: lang.c:19
-msgid "Graph system capabilities (Bacula-web only use PNG image format)"
-msgstr ""
-"Test des graphiques (Bacula-web utilise seulement le format d'image PNG)"
-
-#: lang.c:21
-msgid "Jobs report"
-msgstr "Rapport des tâches"
-
-#: lang.c:22
-msgid "jobs found"
-msgstr "tâches trouvées"
-
-#: lang.c:23
-msgid "Jobs / Page"
-msgstr "Tâches par page"
-
-#: lang.c:24
-msgid "Job status"
-msgstr "Etat de la tâche"
-
-#: lang.c:26 lang.c:79
-msgid "Job Id"
-msgstr "Id de la tâche"
-
-#: lang.c:28
-msgid "Type"
-msgstr "Type"
-
-#: lang.c:29
-msgid "Start Time"
-msgstr "Heure de début"
-
-#: lang.c:30
-msgid "End Time"
-msgstr "Heure de fin"
-
-#: lang.c:31 lang.c:85
-msgid "Elapsed time"
-msgstr "Durée"
-
-#: lang.c:35
-msgid "Pool"
-msgstr "Pool"
-
-#: lang.c:36
-msgid "Overall status"
-msgstr "Etat général"
-
-#: lang.c:37
+#: lang.c:59
 msgid "Catalog statistics"
 msgstr "Statistiques du catalogue"
 
-#: lang.c:38
-msgid "Clients"
-msgstr "Clients"
+#: lang.c:74 lang.c:89
+msgid "Click here to see the report"
+msgstr "Cliquer ici pour voir le rapport"
 
-#: lang.c:39
-msgid "Total bytes"
-msgstr "Total des octets stockés"
-
-#: lang.c:40
-msgid "Total files"
-msgstr "Nombre total de fichiers"
-
-#: lang.c:41
-msgid "Database size"
-msgstr "Taille de la base de données"
-
-#: lang.c:42
-msgid "Last 24 hours status"
-msgstr "Etat des dernières 24 heures"
-
-#: lang.c:43
-msgid "Completed jobs"
-msgstr "Tâches terminés"
-
-#: lang.c:44
-msgid "Waiting jobs"
-msgstr "Tâches en attente"
-
-#: lang.c:45
-msgid "Failed jobs"
-msgstr "Tâches échoués"
-
-#: lang.c:46
-msgid "Canceled jobs"
-msgstr "Tâches annulés"
-
-#: lang.c:47 lang.c:62
-msgid "Transferred Bytes"
-msgstr "Octets transférés"
-
-#: lang.c:48
-msgid "Transferred Files"
-msgstr "Fichiers transférés"
-
-#: lang.c:49
-msgid "Last 24 hours jobs status"
-msgstr "Etat des tâches des dernières 24 heures"
-
-#: lang.c:50
-msgid "Jobs status"
-msgstr "Etat des tâches"
-
-#: lang.c:51
-msgid "Show last 24 hours jobs status"
-msgstr "Afficher l'état des tâches des dernières 24 heures"
+#: lang.c:25 lang.c:19 lang.c:97
+msgid "Client"
+msgstr "Client"
 
 #: lang.c:52
-msgid "Click on graph to see the report"
-msgstr "Cliquez sur le graphe pour voir le rapport"
+msgid "Client Report"
+msgstr "Rapport du client"
 
-#: lang.c:53 lang.c:54
-msgid "Pools and volumes status"
-msgstr "Etat des pools et volumes"
+#: lang.c:57 lang.c:32
+msgid "Client arch"
+msgstr "Architecture du client"
 
-#: lang.c:55
-msgid "Show pools and volumes report"
-msgstr "Afficher le rapport des pools et volumes"
+#: lang.c:53 lang.c:28
+msgid "Client informations"
+msgstr "Informations sur le client"
 
-#: lang.c:56
-msgid "Stored bytes for last 7 days (GB)"
-msgstr "Octets stockés depuis les 7 derniers jours (GO)"
+#: lang.c:54 lang.c:29
+msgid "Client name"
+msgstr "Nom du client"
 
-#: lang.c:57
-msgid "Stored bytes"
-msgstr "Octets stockés"
+#: lang.c:56 lang.c:31
+msgid "Client os"
+msgstr "Système d'exploitation du client"
 
-#: lang.c:58
-msgid "Last used volumes"
-msgstr "Derniers volumes utilisés"
-
-#: lang.c:59
-msgid "Reports"
-msgstr "Rapports"
-
-#: lang.c:60
+#: lang.c:96
 msgid "Client report"
 msgstr "Rapport du client"
 
-#: lang.c:61
-msgid "Client"
+#: lang.c:55 lang.c:30
+msgid "Client version"
+msgstr "Version du client"
+
+#: lang.c:14 lang.c:60
+msgid "Clients"
 msgstr "Clients"
 
+#: lang.c:76
+msgid "Completed job(s)"
+msgstr "Travaux terminé(s)"
+
+#: lang.c:20
+msgid "Completed jobs"
+msgstr "Travaux terminés"
+
+#: lang.c:12 lang.c:128
+msgid "Compression"
+msgstr "Compression"
+
+#: lang.c:51 lang.c:49
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: lang.c:17 lang.c:67
+msgid "Database size"
+msgstr "Taille de la base de données"
+
 #: lang.c:63
-msgid "Transferred Files "
-msgstr "Fichiers transférés "
+msgid "Defined Filesets"
+msgstr "Filesets définis"
 
-#: lang.c:64
-msgid "Interval"
-msgstr "Intervalle"
+#: lang.c:61
+msgid "Defined Jobs"
+msgstr "Travaux définis"
 
-#: lang.c:65
-msgid "Last week"
-msgstr "Semaine dernière"
-
-#: lang.c:66
-msgid "Last 2 week"
-msgstr "2 dernières semaines"
-
-#: lang.c:67
-msgid "Last month"
-msgstr "Mois dernier"
-
-#: lang.c:68 lang.c:71
-msgid "View report"
-msgstr "Afficher le rapport"
-
-#: lang.c:69
-msgid "Backup Job report"
-msgstr "Rapport des tâches de sauvegarde"
-
-#: lang.c:70
-msgid "Backup job name"
-msgstr "Nom de la tâche de sauvegarde"
-
-#: lang.c:73
-msgid "Backup Job Report"
-msgstr "Rapport de la tâche de sauvegarde"
+#: lang.c:48 lang.c:75 lang.c:7 lang.c:126
+msgid "Elapsed time"
+msgstr "Durée"
 
 #: lang.c:74
-msgid "Backup Job name"
-msgstr "Nom de la tâche de sauvegarde"
+msgid "End Time"
+msgstr "Heure de fin"
 
-#: lang.c:75
-msgid "Period"
-msgstr "Période"
+#: lang.c:47 lang.c:61 lang.c:6 lang.c:36 lang.c:125
+msgid "End time"
+msgstr "Heure de fin"
 
-#: lang.c:76
-msgid "Transfered Bytes"
-msgstr "Octets transférés"
+#: lang.c:109
+msgid "Estimated expiration date"
+msgstr "Date d'expiration estimée"
 
-#: lang.c:77
-msgid "Transfered Files"
-msgstr "Fichiers transférés"
+#: lang.c:46
+msgid "Event"
+msgstr "Événement"
 
-#: lang.c:78
-msgid "Last jobs"
-msgstr "Dernières tâches"
-
-#: lang.c:83
-msgid "Start time"
-msgstr "Heure de début"
-
-#: lang.c:86
-msgid "Transfered Bytes / Files"
-msgstr "Octets / fichiers transférés"
-
-#: lang.c:87
-msgid "Volume name"
-msgstr "Nom du Volume"
-
-#: lang.c:89
-msgid "Media Type"
-msgstr "Type de média"
-
-#: lang.c:90
+#: lang.c:83 lang.c:110
 msgid "Expire"
 msgstr "Expiration"
 
-#: lang.c:91
+#: lang.c:78
+msgid "Failed job(s)"
+msgstr "Travail(aux) échoué(s)"
+
+#: lang.c:19
+msgid "Failed jobs"
+msgstr "Travaux échoués"
+
+#: lang.c:44 lang.c:63 lang.c:78 lang.c:10 lang.c:38 lang.c:122
+msgid "Files"
+msgstr "Fichiers"
+
+#: lang.c:64
+msgid "Filesets"
+msgstr ""
+
+#: lang.c:17
+msgid "Filter"
+msgstr "Filtre"
+
+#: lang.c:3
+msgid "Graph system capabilities (Bacula-web only use PNG image format)"
+msgstr "Test des graphiques (Bacula-web utilise seulement le format d'image PNG)"
+
+#: lang.c:28 lang.c:98
+msgid "Interval"
+msgstr "Intervalle"
+
+#: lang.c:70 lang.c:2
+msgid "Job ID"
+msgstr "ID du travail"
+
+#: lang.c:42 lang.c:120
+msgid "Job Id"
+msgstr "Id du travail"
+
+#: lang.c:80
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Niveau du travail (Incr / Diff / Comp)"
+
+#: lang.c:44
+msgid "Job id"
+msgstr "Id du travail"
+
+#: lang.c:68 lang.c:18
+msgid "Job status"
+msgstr "Etat du travail"
+
+#: lang.c:50 lang.c:62
+msgid "Jobs"
+msgstr "Travaux"
+
+#: lang.c:67
+msgid "Jobs / Page"
+msgstr "Travaux / page"
+
+#: lang.c:23
+msgid "Jobs per Page"
+msgstr "Travaux par page"
+
+#: lang.c:66
+msgid "Jobs report"
+msgstr "Rapport des tâches"
+
+#: lang.c:59 lang.c:34
+msgid "Jod Id"
+msgstr "Id de la tâche"
+
+#: lang.c:30 lang.c:100
+msgid "Last 2 week"
+msgstr "2 dernières semaines"
+
+#: lang.c:9
+msgid "Last 24 hours jobs status"
+msgstr "Etat des tâches des dernières 24 heures"
+
+#: lang.c:18
+msgid "Last 24 hours status"
+msgstr "Etat des dernières 24 heures"
+
+#: lang.c:41 lang.c:119
+msgid "Last jobs"
+msgstr "Dernières tâches"
+
+#: lang.c:31 lang.c:101
+msgid "Last month"
+msgstr "Mois dernier"
+
+#: lang.c:71
+msgid "Last period job status"
+msgstr "Status du travail pour la dernière période"
+
+#: lang.c:12 lang.c:90
+msgid "Last used volumes"
+msgstr "Derniers volumes utilisés"
+
+#: lang.c:29 lang.c:99
+msgid "Last week"
+msgstr "Semaine dernière"
+
+#: lang.c:84 lang.c:111
 msgid "Last written"
 msgstr "Dernière écriture"
 
-#: lang.c:93
+#: lang.c:94
+msgid "Last written date for this volume"
+msgstr "Date de dernière écriture pour ce volume"
+
+#: lang.c:43 lang.c:60 lang.c:76 lang.c:8 lang.c:35 lang.c:121
+msgid "Level"
+msgstr "Niveau"
+
+#: lang.c:14
+msgid "Log"
+msgstr "Événement"
+
+#: lang.c:82 lang.c:108
+msgid "Media Type"
+msgstr "Type de média"
+
+#: lang.c:58 lang.c:71 lang.c:3 lang.c:33
+msgid "Name"
+msgstr "Nom"
+
+#: lang.c:16
+msgid "No job(s) to display"
+msgstr "Aucun travail(aux) à afficher"
+
+#: lang.c:47
+msgid "No log(s) for this job"
+msgstr "Aucun évenement(s) pour ce travail"
+
+#: lang.c:86 lang.c:113
 msgid "No volume(s) in this pool"
 msgstr "Aucun volume(s) dans ce pool"
 
-#~ msgid "Job ID"
-#~ msgstr "Id de la tâche"
+#: lang.c:95
+msgid "Number of jobs"
+msgstr "Nombre de travaux"
 
-#~ msgid "Bytes transferred last 30 days from ALL clients"
-#~ msgstr "Octets transférés durant les 30 derniers jours de TOUS les clients"
+#: lang.c:53
+msgid "Official web site"
+msgstr "Site web officiel"
 
-#~ msgid "GENERAL DATA"
-#~ msgstr "DONNEES GENERALES"
+#: lang.c:20
+msgid "Options"
+msgstr "Options"
 
-#~ msgid "Total clients:"
-#~ msgstr "Nombre total de clients:"
+#: lang.c:21
+msgid "Order by"
+msgstr "Trier par"
 
-#~ msgid "Last month, bytes transferred"
-#~ msgstr "Octets transférés le mois dernier"
+#: lang.c:13
+msgid "Overall status"
+msgstr "Etat général"
 
-#~ msgid "Last month, bytes transferred (pie)"
-#~ msgstr "Octets transférés le mois dernier (pie)"
+#: lang.c:38 lang.c:116
+msgid "Period"
+msgstr "Période"
 
-#~ msgid "General%20report"
-#~ msgstr "Rapport%20général"
+#: lang.c:79 lang.c:13
+msgid "Pool"
+msgstr "Pool"
 
-#~ msgid "Status from last 24h"
-#~ msgstr "Statut des dernières 24h"
+#: lang.c:68
+msgid "Pool(s)"
+msgstr "Pool(s)"
 
-#~ msgid "Errors:"
-#~ msgstr "Erreurs:"
+#: lang.c:51
+msgid "Pools and volumes"
+msgstr "Pools et volumes"
 
-#~ msgid "Terminated Jobs:"
-#~ msgstr "Tâches terminés:"
+#: lang.c:4 lang.c:88
+msgid "Pools and volumes status"
+msgstr "Etat des pools et volumes"
 
-#~ msgid "Total time spent to do backup:"
-#~ msgstr "Temps total passé à faire la sauvegarde:"
+#: lang.c:24 lang.c:48
+msgid "Reports"
+msgstr "Rapports"
 
-#~ msgid "Bytes transferred last 24h"
-#~ msgstr "Octets transférés durants les dernières 24h"
+#: lang.c:2 lang.c:43
+msgid "Required components"
+msgstr "Composants requis"
 
-#~ msgid "Show details"
-#~ msgstr "Afficher les détails"
+#: lang.c:25
+msgid "Reset"
+msgstr "Réinitialiser"
 
-#~ msgid "Jobs with errors"
-#~ msgstr "Tâches comportant des erreurs"
+#: lang.c:24
+msgid "Reset to default options"
+msgstr "Réinitialiser avec les options par défaut"
 
-#~ msgid "EndTime"
-#~ msgstr "Heure de fin"
+#: lang.c:75
+msgid "Running jobs"
+msgstr "Travaux en cours"
 
-#~ msgid "Select a job:"
-#~ msgstr "Sélectionnez une tâche:"
+#: lang.c:15
+msgid "Show job logs"
+msgstr "Afficher le journal du travail"
 
-#~ msgid "go"
-#~ msgstr " Démarrer !"
+#: lang.c:10
+msgid "Show last 24 hours jobs status"
+msgstr "Afficher l'état des tâches des dernières 24 heures"
 
-#~ msgid "Stats Bacula: Job"
-#~ msgstr "Statistiques Bacula: Job"
+#: lang.c:5
+msgid "Show pools and volumes report"
+msgstr "Afficher le rapport des pools et volumes"
 
-#~ msgid "to"
-#~ msgstr "au"
+#: lang.c:11 lang.c:127
+msgid "Speed"
+msgstr "Vitesse"
 
-#~ msgid "Bytes transferred in the period:"
-#~ msgstr "Octets transférés durant la période:"
+#: lang.c:73
+msgid "Start Time"
+msgstr "Heure de début"
 
-#~ msgid "Files transferred in the period:"
-#~ msgstr "Fichiers transférés durant la période:"
+#: lang.c:46 lang.c:5 lang.c:124
+msgid "Start time"
+msgstr "Heure de début"
 
-#~ msgid "Date"
-#~ msgstr "Date"
+#: lang.c:40
+msgid "Statistics"
+msgstr "Statistiques"
 
-#~ msgid "Elapsed"
-#~ msgstr "Ecoulés"
+#: lang.c:64 lang.c:69 lang.c:85 lang.c:1 lang.c:39 lang.c:112
+msgid "Status"
+msgstr "Status"
 
-#~ msgid "SELECT NEW REPORT"
-#~ msgstr "SELECTIONNER UN NOUVEAU RAPPORT"
+#: lang.c:83
+msgid "Stored Bytes (last 7 days)"
+msgstr "Octets stockés (7 derniers jours)"
 
-#~ msgid "Graph mode:"
-#~ msgstr "Mode Graphique:"
+#: lang.c:86
+msgid "Stored Files (last 7 days)"
+msgstr "Fichiers stockés (7 derniers jours)"
 
-#~ msgid "linepoints"
-#~ msgstr "lignes de points"
+#: lang.c:8
+msgid "Stored bytes"
+msgstr "Octets stockés"
 
-#~ msgid "bars"
-#~ msgstr "histogrammes"
+#: lang.c:7
+msgid "Stored bytes for last 7 days (GB)"
+msgstr "Octets stockés depuis les 7 derniers jours (GO)"
 
-#~ msgid "area"
-#~ msgstr "aire"
+#: lang.c:82 lang.c:84
+msgid "Stored bytes over the last 7 days"
+msgstr "Octets stockés durant les 7 derniers jours"
 
-#~ msgid "Data to show"
-#~ msgstr "Données à afficher:"
+#: lang.c:85 lang.c:87
+msgid "Stored files over the last 7 days"
+msgstr "Fichiers stockés durant les 7 derniers jours"
 
-#~ msgid "Start period:"
-#~ msgstr "Période de début:"
+#: lang.c:73
+msgid "Submit"
+msgstr "Soumettre"
 
-#~ msgid "End period:"
-#~ msgstr "Période de fin:"
+#: lang.c:52
+msgid "Test page"
+msgstr "Page de test"
 
-#~ msgid "Volume Bytes"
-#~ msgstr "Taille du volume (octets)"
+#: lang.c:45
+msgid "Time"
+msgstr ""
 
-#~ msgid "When expire?"
-#~ msgstr "Date d'expiration:"
+#: lang.c:15 lang.c:65
+msgid "Total bytes"
+msgstr "Total des octets stockés"
 
-#~ msgid "Volume Status"
-#~ msgstr "Etat du volume"
+#: lang.c:16 lang.c:66
+msgid "Total files"
+msgstr "Nombre total de fichiers"
+
+#: lang.c:39 lang.c:117
+msgid "Transfered Bytes"
+msgstr "Octets transférés"
+
+#: lang.c:49 lang.c:129
+msgid "Transfered Bytes / Files"
+msgstr "Octets / fichiers transférés"
+
+#: lang.c:40 lang.c:118
+msgid "Transfered Files"
+msgstr "Fichiers transférés"
+
+#: lang.c:22 lang.c:26
+msgid "Transferred Bytes"
+msgstr "Octets transférés"
+
+#: lang.c:81
+msgid "Transferred Bytes / Files"
+msgstr "Fichiers / Octets transférés"
+
+#: lang.c:23
+msgid "Transferred Files"
+msgstr "Fichiers transférés"
+
+#: lang.c:27
+msgid "Transferred Files "
+msgstr "Fichiers transférés "
+
+#: lang.c:72 lang.c:4
+msgid "Type"
+msgstr "Type"
+
+#: lang.c:72
+msgid "Update with selected period"
+msgstr "Mettre à jour avec la période sélectionée"
+
+#: lang.c:55
+msgid "Version"
+msgstr "Version"
+
+#: lang.c:6 lang.c:11 lang.c:34 lang.c:102 lang.c:105
+msgid "View report"
+msgstr "Afficher le rapport"
+
+#: lang.c:80 lang.c:91 lang.c:106
+msgid "Volume name"
+msgstr "Nom du Volume"
+
+#: lang.c:93
+msgid "Volume pool"
+msgstr ""
+
+#: lang.c:92
+msgid "Volume status"
+msgstr "Status du volume"
+
+#: lang.c:69
+msgid "Volume(s)"
+msgstr "Volume(s)"
+
+#: lang.c:70
+msgid "Volume(s) size"
+msgstr "Taile du(des) volume(s)"
+
+#: lang.c:21
+msgid "Waiting jobs"
+msgstr "Tâches en attente"
+
+#: lang.c:77
+msgid "Waiting jobs(s)"
+msgstr "Travaux en attente"
+
+#: lang.c:56
+msgid "back to previous page"
+msgstr "Retour vers la page précèdente"
+
+#: lang.c:42
+msgid "days(s)"
+msgstr "jour(s)"
+
+#: lang.c:41
+msgid "last"
+msgstr "dernier"
