@@ -97,7 +97,7 @@
 
 		<div class="checkbox">
 		  <label>
-			<input type="checkbox" name="result_order_asc" value="ASC" {$result_order_asc_checked}> Up
+			<input type="checkbox" name="result_order_asc" value="{t}ASC{/t}" {$result_order_asc_checked}> Up
 		  </label>
 		</div>
 		

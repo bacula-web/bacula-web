@@ -44,7 +44,7 @@
 		{/foreach}
 	</table>
 	
-	<h4>Statistics - last {$period} days(s)</h4>
+	<h4>{t}Statistics{/t} - {t}last{/t} {$period} {t}days(s){/t}</h4>
 	<table class="table">
 		<tr>
 			<td> <img class="img-responsive" src="{$graph_stored_bytes}" alt="" /> </td>

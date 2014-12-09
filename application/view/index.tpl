@@ -16,11 +16,11 @@
 						  <td class="text-right"><h4>{$clients}</h4></td>
 						</tr>
 						<tr>
-						  <td title="Defined Jobs"><h5>{t}Jobs{/t}</h5></td>
+						  <td title="{t}Defined Jobs{/t}"><h5>{t}Jobs{/t}</h5></td>
 						  <td class="text-right"><h4>{$defined_jobs}</h4></td>
 						</tr>
 						<tr>
-						  <td title="Defined Filesets"><h5>{t}Filesets{/t}</h5></td>
+						  <td title="{t}Defined Filesets{/t}"><h5>{t}Filesets{/t}</h5></td>
 						  <td class="text-right"><h4>{$defined_filesets}</h4></td>
 						</tr>
 						<tr>
@@ -105,7 +105,7 @@
                                                                   <td class="text-center"> <h4><span class="label label-warning">{$canceled_jobs}</span></h4> </td>
                                                                 </tr>
 								<tr>
-								  <td> <h5>Job Level (Incr / Diff / Full)</h5> </td>
+								  <td> <h5>{t}Job Level (Incr / Diff / Full){/t}</h5> </td>
 								  <td class="text-center"> <h4>{$incr_jobs} / {$diff_jobs} / {$full_jobs} </h4> </td>
 								</tr>
 								<tr> 
@@ -169,19 +169,19 @@
 						<div class="panel-body">
 							<table class="table table-condensed table-stripped">
 								<tr>
-									<th title="Volume name">
+									<th title="{t}Volume name{/t}">
 										Volume
 									</th>
-									<th title="Volume status">
+									<th title="{t}Volume status{/t}">
 										Status
 									</th>
-									<th title="Volume pool">
+									<th title="{t}Volume pool{/t}">
 										Pool
 									</th>
-									<th title="Last written date for this volume">
+									<th title="{t}Last written date for this volume{/t}">
 										Last written
 									</th>
-									<th title="Number of jobs">
+									<th title="{t}Number of jobs{/t}">
 										Jobs
 									</th>
 								</tr>

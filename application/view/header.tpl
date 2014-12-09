@@ -52,18 +52,18 @@
           <ul class="dropdown-menu">
             <li role="presentation" class="dropdown-header">Tools</li>
             <li> 
-              <a href="test.php" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> Test page</a>
+              <a href="test.php" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
             </li>
             <li role="presentation" class="divider"></li>
             <li role="presentation" class="dropdown-header">Help</li>
             <li> 
-              <a href="http://www.bacula-web.org" title="Visit the official web site" target="_blank"><i class="fa fa-globe fa-fw"></i> Official web site</a> 
+              <a href="http://www.bacula-web.org" title="Visit the official web site" target="_blank"><i class="fa fa-globe fa-fw"></i> {t}Official web site{/t}</a> 
             </li>
             <li> 
-              <a href="http://bugs.bacula-web.org" title="Bug and feature request tracker" target="_blank"><i class="fa fa-bug fa-fw"></i> Bug tracker</a> 
+              <a href="http://bugs.bacula-web.org" title="Bug and feature request tracker" target="_blank"><i class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a> 
             </li>
             <li role="presentation" class="divider"></li>
-            <li role="presentation" class="dropdown-header">Version</li>
+            <li role="presentation" class="dropdown-header">{t}Version{/t}</li>
             <li class="disabled"> <a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 7.0.1</a></li>
           </ul>
         </li>
@@ -95,7 +95,7 @@
                 $back = null;
 
               if( !is_null($back) )
-                echo "<li><a href='$back' title='back to previous page'>Back</a></li>";
+                echo "<li><a href='$back' title='{t}back to previous page{/t}'>{t}Back{/t}</a></li>";
             {/php}
         </ol>
       </div> <!-- div class="col..." -->
