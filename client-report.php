@@ -20,6 +20,8 @@
  // Initialise model and view
  $view = new CView();
  $dbSql = new Bweb($view);
+ 
+ require_once('core/const.inc.php');
 
  try {
 	if( !is_a( $dbSql->db_link, 'PDO') ) {
