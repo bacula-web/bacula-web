@@ -1,26 +1,19 @@
 {include file=header.tpl}
 
-<div class="container-fluid">  
-    <h3>{$page_name}</h3>
-
-  <div class="row">
-    <div class="col-md-8">
-
-    <h4>{t}Client informations{/t}</h4>	
-    <table class="table table-condensed table-bordered">
-	  <tr>
-		<td>{t}Client name{/t}:</td> <td>{$client_name}</td>
-	  </tr>
-	  <tr>
-		<td>{t}Client version{/t}:</td> <td>{$client_version}</td>
-	  </tr>
-	  <tr>
-		<td>{t}Client os{/t}:</td> <td>{$client_os}</td>
-	  </tr>
-	  <tr>
-		<td>{t}Client arch{/t}:</td> <td>{$client_arch}</td>
-	  </tr>
-    </table>
+<div class="container">  
+	<h3>{$page_name}</h3>
+	
+    <div class="panel panel-default">
+		<div class="panel-heading"> <h4 class="panel-title">{t}Client informations{/t}</h4>	</div>
+		<div class="panel-body">
+			<dl class="dl-horizontal">
+				<dt>{t}Client name{/t}</dt> <dd>{$client_name}</dd>
+				<dt>{t}Client version{/t}</dt> <dd>{$client_version}</dd>
+				<dt>{t}Client os{/t}</dt> <dd>{$client_os}</dd>
+				<dt>{t}Client arch{/t}<dt> <dd>{$client_arch}</dd>
+			</dl>
+		</div>
+    </div>
 	
 	<h4>Last good backup job</h4>
 	<table class="table table-bordered table-condensed table-striped text-center">
@@ -47,16 +40,11 @@
 	</table>
 	
 	<h4>{t}Statistics{/t} - {t}last{/t} {$period} {t}days(s){/t}</h4>
-	<table class="table">
-		<tr>
-			<td> <img class="img-responsive" src="{$graph_stored_bytes}" alt="" /> </td>
-			<td> <img class="img-responsive" src="{$graph_stored_files}" alt="" /> </td>
-		</tr>
-	</table>
 	
-    </div> <!-- div class="col-md-..." -->
-  </div> <!-- div class="row" -->
-  
-  </div> <!-- div class="container-fluid" -->
+	<div class="row">
+		<div class="col-xs-6"> <td> <img class="img-responsive center-block" src="{$graph_stored_bytes}" alt="" /> </td> </div>
+		<div class="col-xs-6"> <td> <img class="img-responsive center-block" src="{$graph_stored_files}" alt="" /> </td> </div>
+	</div>
+</div> <!-- div class="container" -->
 
 {include file="footer.tpl"}
