@@ -1,11 +1,9 @@
 {include file=header.tpl}
 
-<div class="container-fluid">
+<div class="container">
 
-    <h3>{$page_name}</h3>
+	<h3>{$page_name}</h3>
 
-  <div class="row">
-    <div class="col-md-10">
     {foreach from=$pools item=pool key=pool_name}
 	<h4>{$pool_name}</h4>
 	<table class="table table-bordered table-striped table-hover text-center">
@@ -35,8 +33,6 @@
 		{/foreach}
 	</table>	
     {/foreach}
-    </div> <!-- div class="col-md-...." -->
-  </div> <!-- div class="row" -->
 </div> <!-- div class="container-fluid" -->
 
 <!-- End pools.tpl -->
