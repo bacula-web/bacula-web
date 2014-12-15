@@ -50,8 +50,8 @@
    <h4>{t}Transfered Bytes / Files{/t}</h4>
 
 	<div class="row">
-		<div class="col-xs-6"> <img class="img-responsive" src="{$graph_stored_bytes}" alt="" /> </div>
-		<div class="col-xs-6"> <img class="img-responsive" src="{$graph_stored_files}" alt="" /> </div>
+		<div class="col-xs-6"> <img class="img-responsive center-block" src="{$graph_stored_bytes}" alt="" /> </div>
+		<div class="col-xs-6"> <img class="img-responsive center-block" src="{$graph_stored_files}" alt="" /> </div>
 	</div> <! -- div class="row" -->
 
 	</div> <!-- class="container-fluid" -->
