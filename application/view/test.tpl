@@ -24,8 +24,8 @@
 	<!-- Graph testing -->
 	<h4>Graph capabilites <small>(png images format only)</small></h4>
 	<div class="row">
-		<div class="col-xs-6"> <img class="img-responsive" src="{$bar_graph}" alt='' /> </div>
-		<div class="col-xs-6"> <img class="img-responsive" src="{$pie_graph}" alt='' /> </div>
+		<div class="col-xs-6"> <img class="img-responsive center-block" src="{$bar_graph}" alt='' /> </div>
+		<div class="col-xs-6"> <img class="img-responsive center-block" src="{$pie_graph}" alt='' /> </div>
 	</div>
 </div> <!-- div class="container" -->
 
