@@ -1,6 +1,9 @@
 {include file=header.tpl}
 
 <div class="container-fluid">
+
+    <h3>{$page_name}</h3>
+
   <div class="row">
     <div class="col-md-10">
     {foreach from=$pools item=pool key=pool_name}

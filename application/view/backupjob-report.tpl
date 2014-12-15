@@ -1,6 +1,8 @@
 {include file=header.tpl}
 
 <div class="container-fluid">
+    <h3>{$page_name}</h3>    
+
   <div class="row">
     <div class="col-md-8">
       <h4>{t}Backup job informations{/t}</h4>	

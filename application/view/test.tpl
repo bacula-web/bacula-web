@@ -1,8 +1,9 @@
 {include file=header.tpl}
 
 <div class="container" id="testpage">
+
+    <h3>{$page_name} <small>{t}Required components{/t}</small></h3>
     
-  <h4>{t}Required components{/t}</h4>
 	<table class="table table-striped">
 		<tr>
 			<th class="text-center">Status</th>

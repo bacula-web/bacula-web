@@ -1,6 +1,8 @@
 {include file=header.tpl}
 
 <div class="container-fluid">
+
+    <h3>{$page_name}</h3>
   
   <div class="col-md-10 col-lg-10">
 
