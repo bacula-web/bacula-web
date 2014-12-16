@@ -30,6 +30,14 @@ class CGraph {
     public $img_filename;
     private $plot;
 
+    // ==================================================================================
+    // Function:    _construct()
+    // Parameters:  $filename (graph output filename)
+    //              $width (graph width)
+    //              $height (graph height)
+    // Return:      -
+    // ==================================================================================
+
     function __construct($filename = "graph.png", $width, $height) {
         // Set image file relative path
         $this->img_filename = str_replace( BW_ROOT . '/', '', VIEW_CACHE_DIR) . '/' . $filename;
@@ -51,12 +59,18 @@ class CGraph {
 		
         $this->graph_type   = $graph_type;
     }
-
+ 
+    // ==================================================================================
+    // Function: 	UniformizeData()
+    // Parameters:	$data_in (array of values to uniformize)
+    // Return:	    array of uniformized values
+    // ==================================================================================
+	
     public function UniformizeData($data_in) {
 	$array_sum = 0;
 	$best_unit = '';
 
-        // Uniformize data array element based on best unit
+    // Uniformize data array element based on best unit
 	foreach( $data_in as $key => $data ) {
 	    if( is_null($data[1]) ) 
 	        $data_in[$key][1] = 0;
@@ -79,10 +93,22 @@ class CGraph {
         return $data_in;
     }
 
+    // ==================================================================================
+    // Function: 	get_Filepath()
+    // Parameters:	none
+    // Return:	    Graph file path
+    // ==================================================================================
+	
     private function get_Filepath() {
 		return $this->img_filename;
     }
 
+    // ==================================================================================
+    // Function: 	SetYTitle()
+    // Parameters:	$ytitle (Y axis title)
+    // Return:	    -
+    // ==================================================================================
+	
     public function SetYTitle($ytitle) {
       $this->plot->SetYTitle($ytitle);
     }
@@ -90,7 +116,7 @@ class CGraph {
     // ==================================================================================
     // Function: 	setLegend()
     // Parameters:	none
-    // Return:		
+    // Return:	    -
     // ==================================================================================
 	
 	private function setLegend() {
@@ -107,9 +133,9 @@ class CGraph {
 	}
 	
     // ==================================================================================
-    // Function:    Render()
-    // Parameters:  none
-	// Return:		graph image file path
+    // Function:    setPieLegendColors()
+    // Parameters:  array variable containing list of color codes (eg: #eeefff) 
+	// Return:	    -	
 	// ==================================================================================
 	
 	public function setPieLegendColors( $colors = array() ) {
