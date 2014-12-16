@@ -31,7 +31,7 @@
  // Views path
  define('BW_ROOT', getcwd());
  define('VIEW_DIR', BW_ROOT . "/application/view/");
- define('VIEW_CACHE_DIR', "application/view/cache");
+ define('VIEW_CACHE_DIR', BW_ROOT . "/application/view/cache");
  
  // Configuration
  define('CONFIG_DIR', BW_ROOT . "/application/config/");

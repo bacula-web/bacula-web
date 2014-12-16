@@ -31,7 +31,10 @@ class CGraph {
     private $plot;
 
     function __construct($filename = "graph.png", $width, $height) {
-        $this->img_filename = VIEW_CACHE_DIR . '/' . $filename;
+        // Set image file relative path
+        $this->img_filename = str_replace( BW_ROOT . '/', '', VIEW_CACHE_DIR) . '/' . $filename;
+
+        // Set image widht and height
         $this->width        = $width;
         $this->height       = $height;
 
@@ -104,8 +107,8 @@ class CGraph {
 	}
 	
     // ==================================================================================
-	// Function: 	Render()
-	// Parameters:	none
+    // Function:    Render()
+    // Parameters:  none
 	// Return:		graph image file path
 	// ==================================================================================
 	
