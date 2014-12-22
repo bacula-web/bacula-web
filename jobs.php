@@ -172,7 +172,7 @@
               $job['Job_icon'] = "off";
               break;
           case J_COMPLETED_ERROR:
-              $job['Job_icon'] = "warning_sign";
+              $job['Job_icon'] = "warning-sign";
               break;
           case J_FATAL:
               $job['Job_icon'] = "remove";

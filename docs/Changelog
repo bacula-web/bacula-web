@@ -9,6 +9,7 @@ Fixed bugs
 - 0000151 [bug-php] Period string not translated in Dashboard
 - 0000153 [bug-php] Missing file include in client report page
 - 0000154 [bug-php] Potential bug in constant definition (global.inc.php)
+- 0000156 [bug-php] Icon not visible for completed jobs with errors in Jobs report page
 
 New features
 
