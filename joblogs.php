@@ -30,10 +30,6 @@ $result 	= CDBUtils::runQuery( CDBQuery::get_Select($statment), $dbSql->db_link 
 
 // Processing result
 foreach ($result->fetchAll() as $log) {
-    // Odd or even row
-    if (count($joblogs) % 2) {
-        $log['class'] = 'even';
-    }
     $log['logtext'] = nl2br($log['logtext']);
     $joblogs[] 	    = $log;
 }
