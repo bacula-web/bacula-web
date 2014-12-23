@@ -21,11 +21,7 @@ class CErrorHandler {
     private static $header;
 
     public static function displayError($exception) {
-/*		
-		echo '<pre>';
-		var_dump( $exception->getTrace() );
-		echo '</pre>';
-*/		
+
 		switch (get_class($exception)) {
             case 'PDOException':
                 self::$header = 'Database error';
