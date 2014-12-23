@@ -20,11 +20,6 @@ class CErrorHandler {
 
     private static $header;
 
-    // Define Header
-    public function setHeader($header) {
-        self::$header = $header;
-    }
-
     public static function displayError($exception) {
 /*		
 		echo '<pre>';
@@ -33,13 +28,14 @@ class CErrorHandler {
 */		
 		switch (get_class($exception)) {
             case 'PDOException':
-                self::setHeader('Database error');
-                break;
+                self::$header = 'Database error';
+			break;
             case 'Exception':
             default:
-                self::setHeader('Application error');
-                break;
+                self::$header = 'Application error';
+			break;
         } // end switch
+		
 	 	$output = '';	
 		// Display Exception trace
 		$output .= self::getFormatedTrace($exception);
