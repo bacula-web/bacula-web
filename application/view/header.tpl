@@ -103,7 +103,7 @@
     <!-- Catalog selector -->
     {if $catalog_nb > 1}
     <div class="btn-group pull-right">
-      <button type="button" class="btn btn-primary"><i class="fa fa-database fa-fw"></i> {t}Catalog{/t}</button>
+      <button type="button" class="btn btn-primary"><i class="fa fa-database fa-fw"></i> {$catalog_label}</button>
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
         <span class="fa fa-caret-down"></span> 
       </button>
