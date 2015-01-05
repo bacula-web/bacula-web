@@ -20,16 +20,16 @@
 
 	class Bweb
 	{
-		public	$translate;		// Translation class instance
-		private $catalogs = array();	// Catalog array
+		public	$translate;					// Translation class instance
+		private $catalogs = array();		// Catalog array
 		
-		private $view;			// Template class
+		private $view;						// Template class
 
-		public  $db_link;		// Database connection
-		private $db_driver;		// Database connection driver
+		public  $db_link;					// Database connection
+		private $db_driver;					// Database connection driver
 		
-		public  $catalog_nb;		// Catalog count
-		public	$catalog_current_id;	// Current catalog
+		public  $catalog_nb;				// Catalog count
+		public	$catalog_current_id = 0;	// Selected or default catalog id
 
 		function __construct( &$view )
 		{             
@@ -59,17 +59,23 @@
 			$this->translate = new CTranslation( $language );
 			$this->translate->set_Language( $this->view );
 			
-			// Check catalog id
+			// Get catalog_id from http $_GET request
 			if( !is_null(CHttpRequest::get_Value('catalog_id') ) ) {
-				$this->catalog_current_id = CHttpRequest::get_Value('catalog_id');
-				$_SESSION['catalog_id'] = $this->catalog_current_id;
-			}elseif( isset( $_SESSION['catalog_id'] ) )
-				$this->catalog_current_id = $_SESSION['catalog_id'];
-			else {
-				$this->catalog_current_id = 0;
-				$_SESSION['catalog_id'] = $this->catalog_current_id;
+                if( FileConfig::catalogExist( CHttpRequest::get_Value('catalog_id') ) ) {
+				    $this->catalog_current_id = CHttpRequest::get_Value('catalog_id');
+					$_SESSION['catalog_id'] = $this->catalog_current_id;
+                }else {
+					$_SESSION['catalog_id']	= 0;
+					$this->catalog_current_id = 0;
+					throw new Exception('The catalog_id value provided does not correspond to a valid catalog, please verify the config.php file');
+                }
+			}else{
+				if(isset($_SESSION['catalog_id'])){
+					// Stick with previously selected catalog_id 
+                    $this->catalog_current_id = $_SESSION['catalog_id'];
+                }
 			}
-
+			
 			$this->view->assign( 'catalog_current_id', $this->catalog_current_id );
 			
 			// Getting database connection paremeter from configuration file
