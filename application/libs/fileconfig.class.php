@@ -135,5 +135,15 @@
 				
 			return $catalogs;
 		}		
-	}	 // end class
+
+		// ==================================================================================
+		// Function: 	catalogExist()
+		// Parameters:	$catalog_id
+		// Return:		true or false (depending if catalog exist or not in the configuration)
+		// ==================================================================================
+		
+		public function catalogExist($catalog_id) {
+			return array_key_exists($catalog_id, parent::$config);
+		}		
+	} // end class
 ?>
