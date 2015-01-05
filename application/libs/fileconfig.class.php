@@ -143,10 +143,7 @@
 		// ==================================================================================
 		
 		public function catalogExist($catalog_id) {
-			if( array_key_exists(parent::$config[$catalog_id]) )
-				return true;
-			else
-				return false;
+			return array_key_exists($catalog_id, parent::$config);
 		}		
-	}	 // end class
+	} // end class
 ?>
