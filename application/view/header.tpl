@@ -102,7 +102,7 @@
     <div class="col-xs-4">
     <!-- Catalog selector -->
     {if $catalog_nb > 1}
-    <div class="btn-group pull-right">
+    <div class="btn-group btn-group-sm pull-right">
       <button type="button" class="btn btn-primary"><i class="fa fa-database fa-fw"></i> {t}Catalog{/t}</button>
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
         <span class="fa fa-caret-down"></span> 
