@@ -27,7 +27,8 @@
  $view->assign('pools', $dbSql->GetVolumeList());
 
  // Set page name
- $view->assign('page_name', 'Pools and volumes report');
+ $current_page = 'Pools and volumes report';
+ $view->assign('page_name', $current_page);
  
  // Process and display the template
  $view->display('pools.tpl');

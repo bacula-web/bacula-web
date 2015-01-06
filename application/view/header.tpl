@@ -75,31 +75,23 @@
   <div class="container-fluid">
     <!-- Breadcrumb -->
     <div class="row">
-      <div class="col-xs-8">
+      <div class="col-xs-3">
         <ol class="breadcrumb">
-          <li class="active">{$page_name}</li>
-            {php}
-              $back     = null;
-       	      $referrer = $_SERVER['HTTP_REFERER'];
-              $referrer = end( explode( "/", $referrer) );
+			{php}
+				global $current_page;
+				$current = end( explode( "/", $_SERVER['SCRIPT_FILENAME']) );
 
-      	      $current  = $_SERVER['SCRIPT_FILENAME'];
-              $current  = end( explode( "/", $current) );
-
-              // If referrer and current are not equal and referrer isn't null/empty
-              if( strcmp($referrer, $current) != 0  )
-                $back = $referrer;
-
-              // If current is Dashboard
-      	      if( $current == 'index.php' )
-                $back = null;
-
-              if( !is_null($back) )
-                echo "<li><a href='$back' title='{t}back to previous page{/t}'>Back</a></li>";
-            {/php}
+				if( $current === 'index.php' ) {
+					echo '<li class="active"> <i class="fa fa-home fa-fw"></i> Dashboard</li>';
+				}else{
+					echo '<li> <a href="index.php" title="{t}Back to Dashboard{/t}"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
+					echo "<li class='active'>$current_page</li>";
+				}
+			{/php}
         </ol>
       </div> <!-- div class="col..." -->
-    <div class="col-xs-4">
+    <div class="col-xs-9">
+
     <!-- Catalog selector -->
     {if $catalog_nb > 1}
     <div class="btn-group btn-group-sm pull-right">

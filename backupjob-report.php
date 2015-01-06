@@ -140,7 +140,8 @@
  $view->assign('backupjob_files', $backupjob_files);
 
  // Set page name
- $view->assign('page_name', 'Backup job report');
+ $current_page = 'Backup job report';
+ $view->assign( 'page_name', $current_page);
  
  // Process and display the template 
  $view->display('backupjob-report.tpl');

@@ -124,7 +124,8 @@
  $view->assign('client_version', $client['version']);
 
  // Set page name
- $view->assign('page_name', 'Client report');
+ $current_page = 'Client report';
+ $view->assign('page_name', $current_page);
 
  // Process and display the template
  $view->render('client-report.tpl');

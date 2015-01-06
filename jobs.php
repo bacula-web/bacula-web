@@ -258,7 +258,8 @@
   $view->assign('total_jobs', Jobs_Model::count($dbSql->db_link, 'Job'));
   
   // Set page name
-  $view->assign('page_name', 'Jobs report');
+  $current_page = 'Jobs report';
+  $view->assign('page_name', $current_page);
   
   // Process and display the template 
   $view->render('jobs.tpl');

@@ -139,7 +139,8 @@ $bar_graph->SetData( $data, 'bars' );
 $view->assign( 'bar_graph', $bar_graph->Render() );
 
 // Set page name
-$view->assign('page_name', 'Test page');
+$current_page = 'Test page';
+$view->assign('page_name', $current_page);
  
 // Template rendering
 $view->assign('checks', $check_list);

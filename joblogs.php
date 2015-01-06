@@ -44,7 +44,8 @@ try {
 	$view->assign('joblogs', $joblogs);
 
 	// Set page name
-	$view->assign('page_name', 'Job logs');
+	$current_page = 'Job logs';
+	$view->assign('page_name', $current_page);
 
 	// Process and display the template 
 	$view->render('joblogs.tpl');
