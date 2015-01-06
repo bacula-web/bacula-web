@@ -17,7 +17,6 @@
 
 class ClassAutoLoader {
 
-  public static $loader;
   private static $paths;
   private static $exclusion;
 
@@ -34,20 +33,6 @@ class ClassAutoLoader {
     spl_autoload_register( array($this,'Load_Class'), true );
     spl_autoload_register( array($this,'Load_Models'), true );
   }
-
-  // ==================================================================================
-  // Function: 	    init()
-  // Parameters:    none
-  // Return:	    ClassAutoLoader object
-  // ==================================================================================
-
-  public static function init()
-  {
-    if( self::$loader == NULL )
-      self::$loader = new self();
-
-    return self::$loader;
-  }    
 
   // ==================================================================================
   // Function: 	    add_Path()

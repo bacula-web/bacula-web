@@ -17,7 +17,6 @@
 
  // Class autloader instance creation
  require_once(getcwd() . "/core/app/classautoloader.class.php");
- ClassAutoLoader::init();
  
  // Add root path and exclusions
  ClassAutoLoader::add_Path('core');
