@@ -7,6 +7,7 @@ Changelog
 
 Fixed bugs
 
+- 0000140 [bug-php] Fix and improve breadcrumb navigation
 - 0000145 [bug/design] Catalog selector should display current catalog name
 - 0000150 [bug-php] Improve check of $_GET value for joblogs.php
 - 0000151 [bug-php] Period string not translated in Dashboard
