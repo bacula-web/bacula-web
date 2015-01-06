@@ -17,9 +17,8 @@
 
 class ClassAutoLoader {
 
-  public static $loader;
-  private static $paths;
-  private static $exclusion;
+  private $paths;
+  private $exclusion;
 
   // ==================================================================================
   // Function: 	    __construct()
@@ -28,26 +27,12 @@ class ClassAutoLoader {
   // ==================================================================================
 
   public function __construct() {
-    self::$paths     = array();
-    self::$exclusion = array();
+    $this->paths     	= array();
+    $this->exclusion 	= array();
     
     spl_autoload_register( array($this,'Load_Class'), true );
     spl_autoload_register( array($this,'Load_Models'), true );
   }
-
-  // ==================================================================================
-  // Function: 	    init()
-  // Parameters:    none
-  // Return:	    ClassAutoLoader object
-  // ==================================================================================
-
-  public static function init()
-  {
-    if( self::$loader == NULL )
-      self::$loader = new self();
-
-    return self::$loader;
-  }    
 
   // ==================================================================================
   // Function: 	    add_Path()
@@ -58,7 +43,7 @@ class ClassAutoLoader {
   public function add_Path($pathname) {
     // Scan and add all subfolders
     if( file_exists( $pathname ) )
-        self::$paths = array_merge(self::$paths, self::scan_Path( $pathname ) );    
+        $this->paths = array_merge($this->paths, $this->scan_Path( $pathname ) );    
   }
   
   // ==================================================================================
@@ -68,7 +53,7 @@ class ClassAutoLoader {
   // ==================================================================================
 
   public function add_Exclusion($path) {
-    self::$exclusion[] = $path;
+	$this->exclusion[] = $path;
   }
   
   // ==================================================================================
@@ -82,8 +67,8 @@ class ClassAutoLoader {
     $cf[] = $path;
     
     foreach( glob($path.'/*', GLOB_ONLYDIR) as $dir) {
-      foreach(self::scan_Path($dir) as $sf ) {
-        if( !in_array($sf, self::$exclusion) )
+      foreach($this->scan_Path($dir) as $sf ) {
+        if( !in_array($sf, $this->exclusion) )
             $cf[] = $sf;
       }
     }
@@ -98,7 +83,7 @@ class ClassAutoLoader {
   
   private function Load_Class($classname) {
 
-    foreach( self::$paths as $dir ) {      
+    foreach( $this->paths as $dir ) {      
       $file_full_path = $dir . '/' . $classname . '.class.php';
     
       if( file_exists( $file_full_path ) )
@@ -116,7 +101,7 @@ class ClassAutoLoader {
   // ==================================================================================
         
   public function Load_Models( $classname ) {
-    foreach( self::$paths as $dir ) {      
+    foreach( $this->paths as $dir ) {      
       list($class) = explode('_', $classname);
       $file_full_path = $dir . '/' . $class . '.model.php';
       $file_full_path = strtolower($file_full_path);
