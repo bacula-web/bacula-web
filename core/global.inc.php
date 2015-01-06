@@ -19,10 +19,11 @@
  require_once(getcwd() . "/core/app/classautoloader.class.php");
  
  // Add root path and exclusions
- ClassAutoLoader::add_Path('core');
- ClassAutoLoader::add_Path('application');
- ClassAutoLoader::add_Path('vendor');
- ClassAutoLoader::add_Exclusion('vendor/smarty-gettext');
+ $classloader = new ClassAutoLoader();
+ $classloader->add_Path('core');
+ $classloader->add_Path('application');
+ $classloader->add_Path('vendor');
+ $classloader->add_Exclusion('vendor/smarty-gettext');
  
  // Get all $_POST and $_GET values
  CHttpRequest::get_Vars();
