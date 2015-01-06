@@ -1,6 +1,6 @@
 {include file=header.tpl}
 
-<div class="container-fluid">
+<div class="container-fluid" id="jobsreport">
 
     <h3>{$page_name}</h3>
 
