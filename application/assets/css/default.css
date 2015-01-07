@@ -1,14 +1,26 @@
-body { min-height: 1000px; padding-top: 60px;}
-h1, .h1, h2, .h2, h3, .h3 {margin-top: 5px; margin-bottom: 20px; }
-div.form-group-sm label {font-size: 12px;}
+body { 
+  min-height: 1000px; 
+  padding-top: 60px;
+}
 
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 5px; 
+  margin-bottom: 20px; 
+}
+
+div.form-group-sm label {
+  font-size: 12px;
+}
+
+/* Test page icons color */
 #testpage .glyphicon-ok { color: #5cb85c; }
 #testpage .glyphicon-remove { color: #d9534f; }
-#testpage .glyphicon {font-size: 1.2em; }
+#testpage .glyphicon { font-size: 1.2em; }
 
-#jobsreport .glyphicon-play { color: #777; }            /* Running jobs */
-#jobsreport .glyphicon-ok { color: #5CB85C; }           /* Completed jobs */
-#jobsreport .glyphicon-time { color: #337AB7; }         /* Waiting jobs */
-#jobsreport .glyphicon-remove { color: #D9534F; }       /* Failed jobs */
-#jobsreport .glyphicon-off { color: #F0AD4E; }          /* Canceled jobs */
-#jobsreport .glyphicon-warning-sign { color: #F0AD4E;}  /* Completed with erros */
+/* Jobs report icons color */
+#jobsreport .glyphicon-play { color: #777; }                /* Running jobs */
+#jobsreport .glyphicon-ok { color: #5CB85C; }               /* Completed jobs */
+#jobsreport .glyphicon-time { color: #337AB7; }             /* Waiting jobs */
+#jobsreport .glyphicon-remove { color: #D9534F; }           /* Failed jobs */
+#jobsreport .glyphicon-off { color: #F0AD4E; }              /* Canceled jobs */
+#jobsreport .glyphicon-warning-sign { color: #F0AD4E; }     /* Completed with erros */
