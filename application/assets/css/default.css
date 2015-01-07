@@ -24,3 +24,7 @@ div.form-group-sm label {
 #jobsreport .glyphicon-remove { color: #D9534F; }           /* Failed jobs */
 #jobsreport .glyphicon-off { color: #F0AD4E; }              /* Canceled jobs */
 #jobsreport .glyphicon-warning-sign { color: #F0AD4E; }     /* Completed with erros */
+
+img {
+  margin-bottom: 20px;
+}
