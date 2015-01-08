@@ -168,6 +168,10 @@ class CGraph {
 			$message_options = array( 'draw_background' => TRUE, 'draw_border' => TRUE, 'reset_font' => TRUE, 'text_color' => 'black' );
 			$this->plot->DrawMessage('No statistics to display', $message_options);
 		}else {
+            // Set Font
+            $this->plot->SetFont( 'x_label', '2');
+            $this->plot->SetFont( 'y_label', '2');
+            
 			// Set image border type
 			$this->plot->SetImageBorderType('none');
 
