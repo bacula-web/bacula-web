@@ -129,12 +129,12 @@ $data = array(
 );
 
 // Pie graph
-$pie_graph = new CGraph("graph3.png", 300, 230);
+$pie_graph = new CGraph("graph3.png");
 $pie_graph->SetData($data, 'pie');
 $view->assign( 'pie_graph', $pie_graph->Render() );
 
 // Bar graph
-$bar_graph = new CGraph("graph4.png", 300, 230);
+$bar_graph = new CGraph("graph4.png");
 $bar_graph->SetData( $data, 'bars' );
 $view->assign( 'bar_graph', $bar_graph->Render() );
 
