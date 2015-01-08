@@ -26,6 +26,7 @@ class CGraph {
 	
     private $width;
     private $height;
+    private $padding = 5;
 	
     public $img_filename;
     private $plot;
@@ -172,13 +173,11 @@ class CGraph {
 
 			switch ( $this->graph_type ) {
 				case 'pie':
-					$plot_padding = 0;
-
 					// Set legend
 					$this->setLegend();
 					
 					// Set plot area
-					$this->plot->SetPlotAreaPixels($plot_padding, $plot_padding, ($this->width * 0.65), $this->height-$plot_padding);
+					$this->plot->SetPlotAreaPixels($this->padding, $this->padding, ($this->width * 0.65), $this->height - $this->padding);
 
 					// Set graph colors and shading
 					$this->plot->SetDataColors( $this->data_colors );
