@@ -85,7 +85,7 @@
    // ===============================================================
    // Last n days stored Bytes graph
    // ===============================================================  
-   $graph = new CGraph("graph2.jpg");
+   $graph = new CGraph("clientreport-graph01.jpg");
   
    foreach ($days as $day) {
 	  $stored_bytes = Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']), 'ALL', $clientid);
@@ -100,7 +100,7 @@
    // ===============================================================
    // Getting last n days stored files graph
    // ===============================================================
-   $graph = new CGraph("graph3.jpg");
+   $graph = new CGraph("clientreport-graph03.jpg");
   
    foreach ($days as $day) {
 	  $stored_files = Jobs_Model::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']), 'ALL', $clientid );

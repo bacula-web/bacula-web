@@ -126,7 +126,7 @@
         $jobs_status_data[] = array($status, $jobs_count );
      }
      
-     $graph = new CGraph("graph.jpg");
+     $graph = new CGraph("dashboard-graph01.jpg");
      $graph->SetData($jobs_status_data, 'pie');
      $graph->setPieLegendColors( array( 'gray', 'green','blue', 'red', 'orange') );
 
@@ -139,7 +139,7 @@
      // ==============================================================
 
      $vols_by_pool = array();
-     $graph = new CGraph("graph1.jpg");
+     $graph = new CGraph("dashboard-graph02.jpg");
      $max_pools = '9';
      $table_pool = 'Pool';
      $limit = '';
@@ -197,7 +197,7 @@
         $days_stored_bytes[] = array( date("m-d", $day['start']), Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']) ));
      } 
 
-     $graph = new CGraph("graph2.jpg" );
+     $graph = new CGraph("dashboard-graph03.jpg" );
      $graph->SetData($days_stored_bytes, 'bars', true);
 
      // Graph rendering
@@ -213,7 +213,7 @@
         $days_stored_files[] = array( date("m-d", $day['start']), Jobs_Model::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']) ));
      } 
 
-     $graph = new CGraph("graph3.jpg");
+     $graph = new CGraph("dashboard-graph04.jpg");
      $graph->SetData($days_stored_files, 'bars');
 
      // Graph rendering
