@@ -153,7 +153,7 @@ class CGraph {
 
         // Render to file instead of screen
         $this->plot->SetOutputFile($this->img_filename);
-        $this->plot->SetFileFormat("png");
+        $this->plot->SetFileFormat("jpg");
         $this->plot->SetIsInline(true);
 
         // Set graph type and data type
