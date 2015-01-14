@@ -96,6 +96,8 @@
   
    // Graph rendering
    $view->assign( 'graph_stored_bytes', $graph->Render() );
+
+   unset($graph);
   
    // ===============================================================
    // Getting last n days stored files graph
@@ -112,6 +114,8 @@
   
    // Graph rendering
    $view->assign('graph_stored_files', $graph->Render() );
+
+   unset($graph);
 
  }catch (Exception $e) {
     CErrorHandler::displayError($e);

@@ -63,9 +63,11 @@
     }
     
     $graph->SetData($days_stored_bytes, 'bars', true);
-    
+
     // Graph rendering
     $view->assign( 'graph_stored_bytes', $graph->Render() );
+
+    unset($graph);
     
     // ===============================================================
     // Getting last 7 days stored files graph
@@ -82,6 +84,8 @@
     
     // Graph rendering
     $view->assign( 'graph_stored_files', $graph->Render() );
+    
+    unset($graph);
     
     // Get last 10 jobs list
     $query = "SELECT JobId, Level, JobFiles, JobBytes, ReadBytes, JobStatus, StartTime, EndTime, Name ";

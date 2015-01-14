@@ -132,6 +132,7 @@
 
      // Graph rendering
      $view->assign( 'graph_jobs', $graph->Render() );
+
      unset($graph);
 
      // ==============================================================
@@ -187,6 +188,8 @@
      // Graph rendering
      $view->assign( 'graph_pools', $graph->Render() );
 
+     unset($graph);
+
      // ==============================================================
      // Last 7 days stored Bytes widget
      // ==============================================================
@@ -213,11 +216,15 @@
         $days_stored_files[] = array( date("m-d", $day['start']), Jobs_Model::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']) ));
      } 
 
+     unset($graph);
+
      $graph = new CGraph("dashboard-graph04.jpg");
      $graph->SetData($days_stored_files, 'bars');
 
      // Graph rendering
      $view->assign( 'graph_stored_files', $graph->Render() ); 
+
+     unset($graph);
 
      // ==============================================================
      // Last used volumes widget
