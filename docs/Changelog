@@ -4,6 +4,7 @@ Changelog
 
 - General: Improve look and feel of all pages
 - Translations: Update messages.po file for all languages
+- Requirements: Minimal supported PHP version have been raised to >= 5.3
 
 Fixed bugs
 

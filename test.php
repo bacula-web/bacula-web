@@ -68,7 +68,7 @@ $check_list = array(
         'check_descr' => realpath(VIEW_CACHE_DIR) . ' must be writable by Apache'),
     array('check_cmd' => 'php-version',
         'check_label' => 'PHP version',
-        'check_descr' => 'PHP version must be at least 5.0.0 (current = ' . PHP_VERSION . ')'),
+        'check_descr' => 'PHP version must be at least 5.3 (current version = ' . PHP_VERSION . ')'),
     array('check_cmd' => 'php-timezone',
         'check_label' => 'PHP timezone',
         'check_descr' => 'Timezone must be configured in php.ini (current timezone = ' . ini_get('date.timezone') . ')')
@@ -105,7 +105,7 @@ foreach ($check_list as &$check) {
             $check['check_result'] = $icon_result[is_writable(VIEW_CACHE_DIR)];
         break;
         case 'php-version':
-            $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '5.0.0', '>=')];
+            $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '5.3', '>=')];
         break;
 		case 'db-connection':
 			$check['check_result'] = $icon_result[ CDBUtils::isConnected( $dbSql->db_link )];

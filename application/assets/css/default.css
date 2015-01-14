@@ -15,7 +15,7 @@ div.form-group-sm label {
 /* Test page icons color */
 #testpage .glyphicon-ok { color: #5cb85c; }
 #testpage .glyphicon-remove { color: #d9534f; }
-#testpage .glyphicon { font-size: 1.2em; }
+#testpage .glyphicon { font-size: 1.4em; }
 
 /* Jobs report icons color */
 #jobsreport .glyphicon-play { color: #777; }                /* Running jobs */
