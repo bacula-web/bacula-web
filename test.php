@@ -138,7 +138,7 @@ unset($pie_graph);
 $bar_graph = new CGraph("testpage-graph04.jpg");
 $bar_graph->SetData( $data, 'bars' );
 $view->assign( 'bar_graph', $bar_graph->Render() );
-$unset($bar_graph);
+unset($bar_graph);
 
 // Set page name
 $current_page = 'Test page';
