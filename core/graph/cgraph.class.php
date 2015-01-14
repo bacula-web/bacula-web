@@ -20,7 +20,7 @@ class CGraph {
 	
     private $data;
     private $data_type = array('pie' => 'text-data-single', 'bars' => 'text-data');
-    private $uniform_data = false;
+    private $uniform_data;
     private $data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
     private $graph_type;
 	
