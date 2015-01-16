@@ -28,3 +28,8 @@ div.form-group-sm label {
 img {
   margin-bottom: 20px;
 }
+
+.img_loader { 
+  width: 100%;
+  min-height: 200px;
+}
