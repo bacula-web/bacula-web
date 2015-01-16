@@ -20,7 +20,7 @@ class CGraph {
 	
     private $data;
     private $data_type = array('pie' => 'text-data-single', 'bars' => 'text-data');
-    private $uniform_data = false;
+    private $uniform_data;
     private $data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
     private $graph_type;
 	
@@ -39,7 +39,7 @@ class CGraph {
     // Return:      -
     // ==================================================================================
 
-    function __construct($filename = "graph.png", $width = 400, $height = 260) {
+    function __construct($filename, $width = 400, $height = 260) {
         // Set image file relative path
         $this->img_filename = str_replace( BW_ROOT . '/', '', VIEW_CACHE_DIR) . '/' . $filename;
 
@@ -47,7 +47,7 @@ class CGraph {
         $this->width        = $width;
         $this->height       = $height;
 
-        $this->plot = new PHPlot($this->width, $this->height);    
+        $this->plot = new PHPlot($this->width, $this->height, $this->img_filename);    
     }
 
     public function SetData($data_in, $graph_type, $uniform_data = false) {
@@ -152,8 +152,7 @@ class CGraph {
 	public function Render() {
 
         // Render to file instead of screen
-        $this->plot->SetOutputFile($this->img_filename);
-        $this->plot->SetFileFormat("png");
+        $this->plot->SetFileFormat("jpg");
         $this->plot->SetIsInline(true);
 
         // Set graph type and data type

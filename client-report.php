@@ -85,7 +85,7 @@
    // ===============================================================
    // Last n days stored Bytes graph
    // ===============================================================  
-   $graph = new CGraph("graph2.png");
+   $graph = new CGraph("clientreport-graph01.jpg");
   
    foreach ($days as $day) {
 	  $stored_bytes = Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']), 'ALL', $clientid);
@@ -96,11 +96,13 @@
   
    // Graph rendering
    $view->assign( 'graph_stored_bytes', $graph->Render() );
+
+   unset($graph);
   
    // ===============================================================
    // Getting last n days stored files graph
    // ===============================================================
-   $graph = new CGraph("graph3.png");
+   $graph = new CGraph("clientreport-graph03.jpg");
   
    foreach ($days as $day) {
 	  $stored_files = Jobs_Model::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']), 'ALL', $clientid );
@@ -112,6 +114,8 @@
   
    // Graph rendering
    $view->assign('graph_stored_files', $graph->Render() );
+
+   unset($graph);
 
  }catch (Exception $e) {
     CErrorHandler::displayError($e);

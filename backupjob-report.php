@@ -55,7 +55,7 @@
     // ===============================================================
     // Last 7 days stored Bytes graph
     // ===============================================================  
-    $graph = new CGraph("graph8.png");
+    $graph = new CGraph("backupjobreport-graph01.jpg");
     
     foreach ($days as $day) {
         $stored_bytes = Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']), $backupjob_name );
@@ -63,14 +63,16 @@
     }
     
     $graph->SetData($days_stored_bytes, 'bars', true);
-    
+
     // Graph rendering
     $view->assign( 'graph_stored_bytes', $graph->Render() );
+
+    unset($graph);
     
     // ===============================================================
     // Getting last 7 days stored files graph
     // ===============================================================
-    $graph = new CGraph("graph9.png");
+    $graph = new CGraph("backupjobreport-graph02.jpg");
     
     foreach ($days as $day) {
         $stored_files = Jobs_Model::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']), $backupjob_name);
@@ -82,6 +84,8 @@
     
     // Graph rendering
     $view->assign( 'graph_stored_files', $graph->Render() );
+    
+    unset($graph);
     
     // Get last 10 jobs list
     $query = "SELECT JobId, Level, JobFiles, JobBytes, ReadBytes, JobStatus, StartTime, EndTime, Name ";

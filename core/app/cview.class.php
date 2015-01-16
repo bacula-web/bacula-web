@@ -23,7 +23,15 @@ class CView extends Smarty {
     }
 
     private function init() {
-        $this->compile_check = true;
+        // Set to true to force template generation if a template has changed
+        $this->compile_check = false;
+
+        // Template caching
+        $this->cache_dir = VIEW_CACHE_DIR;
+        $this->caching = 1;
+        $this->cache_lifetime = 60;
+
+        // Set to true for debug or dev purpose only
         $this->debugging = false;
         $this->force_compile = true;
 
@@ -34,7 +42,6 @@ class CView extends Smarty {
     public function render($view = 'index.tpl') {
         $this->display($view);
     }
-
 }
 
 ?>

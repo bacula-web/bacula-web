@@ -1,3 +1,4 @@
+/application/view/cache/*.tpl
 /application/view/cache/*.php
-/application/view/cache/*.png
+/application/view/cache/*.jpg
 /application/config/config.php

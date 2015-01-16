@@ -2,7 +2,7 @@
 <div class="container-fluid">
 
     <h3>{$page_name}</h3>
-
+	
 	<div class="row">
 		<!-- Left column -->
 		<div class="col-xs-3 col-lg-3">
@@ -82,8 +82,13 @@
 
 					  	<!-- Last period job status graph -->
 						<div class="panel-body">
+							<!-- Graph pre-loader -->
+							<div class="img_loader text-center"> 
+								<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
+								<p>Loading graph</p> 
+							</div>
 							<a href="jobs.php" title="{t}Click here to see the report{/t}">
-							  <img alt="" src="{$graph_jobs}" class="img-responsive center-block" />
+							  <img src="{$graph_jobs}" class="img-responsive center-block" alt="Last period jobs">
 							</a>
 
 							<table class="table table-condensed">
@@ -127,14 +132,22 @@
 					<div class="panel panel-default">
 						<div class="panel-heading" title="{t}Stored bytes over the last 7 days{/t}"><b>{t}Stored Bytes (last 7 days){/t}</b></div>
 						<div class="panel-body">
-						  <img alt="" src="{$graph_stored_bytes}" class="img-responsive center-block" title="{t}Stored bytes over the last 7 days{/t}"/>
+                            <div class="img_loader text-center">
+                                <i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
+                                <p>Loading graph</p>
+                            </div>						
+							<img src="{$graph_stored_bytes}" class="img-responsive center-block" title="{t}Stored bytes over the last 7 days{/t}" alt="Stored Bytes over last 7 days">
 						</div>
 					</div>
 					<!-- div class="panel panel-default" -->
 					<div class="panel panel-default">
 						<div class="panel-heading" title="{t}Stored files over the last 7 days{/t}"><b>{t}Stored Files (last 7 days){/t}</b></div>
 						<div class="panel-body">
-						  <img alt="" src="{$graph_stored_files}" class="img-responsive center-block" title="{t}Stored files over the last 7 days{/t}"/>
+                            <div class="img_loader text-center">
+                                <i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
+                                <p>Loading graph</p>
+                            </div>						
+							<img src="{$graph_stored_files}" class="img-responsive center-block" title="{t}Stored files over the last 7 days{/t}" alt="Stored Files over last 7 days">
 						</div>
 					</div>
 					<!-- div class="panel panel-default" -->
@@ -153,7 +166,7 @@
 						</div>
 						<div class="panel-body">
 							<a href="pools.php" title="{t}Click here to see the report{/t}">
-							<img alt="" src="{$graph_pools}" class="img-responsive center-block" />
+							<img src="{$graph_pools}" class="img-responsive center-block" alt="Pools and volumes">
 							</a>
 						</div>
 					</div>

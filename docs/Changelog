@@ -10,6 +10,7 @@ Fixed bugs
 
 - 0000140 [bug-php] Fix and improve breadcrumb navigation
 - 0000145 [bug/design] Catalog selector should display current catalog name
+- 0000146 [bug] Graphs sometimes disappear on Firefox 33.0
 - 0000147 [bug-php] Improve support for PHP version >= 5.5
 - 0000150 [bug-php] Improve check of $_GET value for joblogs.php
 - 0000151 [bug-php] Period string not translated in Dashboard
@@ -17,6 +18,7 @@ Fixed bugs
 - 0000154 [bug-php] Potential bug in constant definition (global.inc.php)
 - 0000156 [bug-php] Icon not visible for completed jobs with errors in Jobs report page
 - 0000158 [bug-php] Catalog id stored in user session should not take precedence over default catalog
+- 0000160 [bug-html] Graphs loaded randomly (issue 146 not yet fixed)
 
 New features
 

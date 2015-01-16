@@ -129,14 +129,16 @@ $data = array(
 );
 
 // Pie graph
-$pie_graph = new CGraph("graph3.png");
+$pie_graph = new CGraph("testpage-graph03.jpg");
 $pie_graph->SetData($data, 'pie');
 $view->assign( 'pie_graph', $pie_graph->Render() );
+unset($pie_graph);
 
 // Bar graph
-$bar_graph = new CGraph("graph4.png");
+$bar_graph = new CGraph("testpage-graph04.jpg");
 $bar_graph->SetData( $data, 'bars' );
 $view->assign( 'bar_graph', $bar_graph->Render() );
+unset($bar_graph);
 
 // Set page name
 $current_page = 'Test page';

@@ -126,12 +126,13 @@
         $jobs_status_data[] = array($status, $jobs_count );
      }
      
-     $graph = new CGraph("graph.png");
+     $graph = new CGraph("dashboard-graph01.jpg");
      $graph->SetData($jobs_status_data, 'pie');
      $graph->setPieLegendColors( array( 'gray', 'green','blue', 'red', 'orange') );
 
      // Graph rendering
      $view->assign( 'graph_jobs', $graph->Render() );
+
      unset($graph);
 
      // ==============================================================
@@ -139,7 +140,7 @@
      // ==============================================================
 
      $vols_by_pool = array();
-     $graph = new CGraph("graph1.png");
+     $graph = new CGraph("dashboard-graph02.jpg");
      $max_pools = '9';
      $table_pool = 'Pool';
      $limit = '';
@@ -187,6 +188,8 @@
      // Graph rendering
      $view->assign( 'graph_pools', $graph->Render() );
 
+     unset($graph);
+
      // ==============================================================
      // Last 7 days stored Bytes widget
      // ==============================================================
@@ -197,7 +200,7 @@
         $days_stored_bytes[] = array( date("m-d", $day['start']), Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']) ));
      } 
 
-     $graph = new CGraph("graph2.png" );
+     $graph = new CGraph("dashboard-graph03.jpg" );
      $graph->SetData($days_stored_bytes, 'bars', true);
 
      // Graph rendering
@@ -213,11 +216,15 @@
         $days_stored_files[] = array( date("m-d", $day['start']), Jobs_Model::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']) ));
      } 
 
-     $graph = new CGraph("graph3.png");
+     unset($graph);
+
+     $graph = new CGraph("dashboard-graph04.jpg");
      $graph->SetData($days_stored_files, 'bars');
 
      // Graph rendering
      $view->assign( 'graph_stored_files', $graph->Render() ); 
+
+     unset($graph);
 
      // ==============================================================
      // Last used volumes widget
