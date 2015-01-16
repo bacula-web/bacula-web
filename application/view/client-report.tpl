@@ -42,8 +42,13 @@
 	<h4>{t}Statistics{/t} - {t}last{/t} {$period} {t}days(s){/t}</h4>
 	
 	<div class="row">
-		<div class="col-xs-6"> <td> <img class="img-responsive center-block" src="{$graph_stored_bytes}" alt="Stored Bytes"> </td> </div>
-		<div class="col-xs-6"> <td> <img class="img-responsive center-block" src="{$graph_stored_files}" alt="Stored Files"> </td> </div>
+		<div class="col-xs-6">
+			<img class="img-responsive center-block" src="{$graph_stored_bytes}" alt="Stored Bytes">
+		</div>
+		
+		<div class="col-xs-6">
+			<img class="img-responsive center-block" src="{$graph_stored_files}" alt="Stored Files">
+		</div>
 	</div>
 </div> <!-- div class="container" -->
 
