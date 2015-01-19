@@ -47,7 +47,19 @@ class CGraph {
         $this->width        = $width;
         $this->height       = $height;
 
-        $this->plot = new PHPlot($this->width, $this->height, $this->img_filename);    
+        $this->plot = new PHPlot($this->width, $this->height, $this->img_filename);
+
+        // Set Font
+        $this->plot->SetFont( 'x_label', '2');
+        $this->plot->SetFont( 'y_label', '2');
+        
+        // Set image border type
+        $this->plot->SetImageBorderType('none');
+
+        // Render to file instead of screen
+        $this->plot->SetFileFormat("jpg");
+        $this->plot->SetIsInline(true);        
+
     }
 
     // ==================================================================================
@@ -67,12 +79,20 @@ class CGraph {
         
         $this->uniform_data = $uniform_data;
 
-        if( $this->uniform_data )
+        if( $this->uniform_data ) {
             $this->data = $this->UniformizeData($data_in);
-        else
+        }else {
             $this->data	= $data_in;
+        }
+
+		// Set graph values
+		$this->plot->SetDataValues($this->data);    
 		
         $this->graph_type   = $graph_type;
+        
+        // Set graph type and data type
+        $this->plot->SetPlotType( $this->graph_type );
+        $this->plot->SetDataType( $this->data_type[$this->graph_type] );        
     }
  
     // ==================================================================================
@@ -82,22 +102,22 @@ class CGraph {
     // ==================================================================================
 	
     public function UniformizeData($data_in) {
-	$array_sum = 0;
-	$best_unit = '';
+        $array_sum = 0;
+        $best_unit = '';
 
-    // Uniformize data array element based on best unit
-	foreach( $data_in as $key => $data ) {
-	    if( is_null($data[1]) ) 
-	        $data_in[$key][1] = 0;
-	}
+        // Uniformize data array element based on best unit
+        foreach( $data_in as $key => $data ) {
+            if( is_null($data[1]) ) 
+                $data_in[$key][1] = 0;
+        }
 
-	// Calculate sum of all values
-        foreach( $data_in as $value)
-	    $array_sum += $value[1];
+        // Calculate sum of all values
+            foreach( $data_in as $value)
+            $array_sum += $value[1];
 
-	// Calculate average value and best unit
- 	$avg = $array_sum  / count($data_in);
- 	list($value,$best_unit) = explode(' ', CUtils::Get_Human_Size($avg, 1) );
+        // Calculate average value and best unit
+        $avg = $array_sum  / count($data_in);
+        list($value,$best_unit) = explode(' ', CUtils::Get_Human_Size($avg, 1) );
 
         foreach($data_in as $key => $value) {
 	    $data_in[$key][1] = CUtils::Get_Human_Size($value[1], 1, $best_unit, false); 
@@ -164,24 +184,6 @@ class CGraph {
 	// ==================================================================================
 	
 	public function Render() {
-
-        // Render to file instead of screen
-        $this->plot->SetFileFormat("jpg");
-        $this->plot->SetIsInline(true);
-
-        // Set graph type and data type
-        $this->plot->SetPlotType( $this->graph_type );
-        $this->plot->SetDataType( $this->data_type[$this->graph_type] );
-		      
-		// Set graph values
-		$this->plot->SetDataValues($this->data);
-		
-        // Set Font
-        $this->plot->SetFont( 'x_label', '2');
-        $this->plot->SetFont( 'y_label', '2');
-        
-        // Set image border type
-        $this->plot->SetImageBorderType('none');
 
         switch ( $this->graph_type ) {
             case 'pie':
