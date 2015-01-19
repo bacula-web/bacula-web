@@ -178,6 +178,26 @@ class CGraph {
 	}
 
     // ==================================================================================
+	// Function: 	isEmpty()
+	// Parameters:	none
+	// Return:		true sum of values in the graph equal 0
+	// ==================================================================================
+    
+    protected function isEmpty() {
+        $array_sum = 0;
+
+        foreach( $this->data as $val) {
+            $array_sum += $val[1];
+        }
+        
+        if( $array_sum == 0 ) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+    
+    // ==================================================================================
 	// Function: 	Render()
 	// Parameters:	none
 	// Return:		graph image file path
@@ -187,6 +207,7 @@ class CGraph {
 
         switch ( $this->graph_type ) {
             case 'pie':
+
                 // Set legend
                 $this->setLegend();
                 
