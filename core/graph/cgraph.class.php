@@ -50,6 +50,14 @@ class CGraph {
         $this->plot = new PHPlot($this->width, $this->height, $this->img_filename);    
     }
 
+    // ==================================================================================
+    // Function:    SetData()
+    // Parameters:  $data_in
+    //              $graph_type
+    //              $uniform_data (set all values to same unit or not)
+    // Return:      -
+    // ==================================================================================
+    
     public function SetData($data_in, $graph_type, $uniform_data = false) {
         $this->uniform_data = $uniform_data;
 
