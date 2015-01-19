@@ -59,11 +59,17 @@ class CGraph {
     // ==================================================================================
     
     public function SetData($data_in, $graph_type, $uniform_data = false) {
+        
+        if(!is_array($data_in)) {
+            throw new Exception('Passed $data_in variable is not an array');
+            exit;
+        }
+        
         $this->uniform_data = $uniform_data;
 
-	if( $this->uniform_data )
+        if( $this->uniform_data )
             $this->data = $this->UniformizeData($data_in);
-	else
+        else
             $this->data	= $data_in;
 		
         $this->graph_type   = $graph_type;
@@ -170,53 +176,47 @@ class CGraph {
 		// Set graph values
 		$this->plot->SetDataValues($this->data);
 		
-		// Check if provided datas for the graph are a valid and non empty array (to be improved)
-		if( is_null($this->data) or empty($this->data) ) {
-			$message_options = array( 'draw_background' => TRUE, 'draw_border' => TRUE, 'reset_font' => TRUE, 'text_color' => 'black' );
-			$this->plot->DrawMessage('No statistics to display', $message_options);
-		}else {
-            // Set Font
-            $this->plot->SetFont( 'x_label', '2');
-            $this->plot->SetFont( 'y_label', '2');
-            
-			// Set image border type
-			$this->plot->SetImageBorderType('none');
+        // Set Font
+        $this->plot->SetFont( 'x_label', '2');
+        $this->plot->SetFont( 'y_label', '2');
+        
+        // Set image border type
+        $this->plot->SetImageBorderType('none');
 
-			switch ( $this->graph_type ) {
-				case 'pie':
-					// Set legend
-					$this->setLegend();
-					
-					// Set plot area
-					$this->plot->SetPlotAreaPixels($this->padding, $this->padding, ($this->width * 0.65), $this->height - $this->padding);
+        switch ( $this->graph_type ) {
+            case 'pie':
+                // Set legend
+                $this->setLegend();
+                
+                // Set plot area
+                $this->plot->SetPlotAreaPixels($this->padding, $this->padding, ($this->width * 0.65), $this->height - $this->padding);
 
-					// Set graph colors and shading
-					$this->plot->SetDataColors( $this->data_colors );
-					$this->plot->SetShading( 0 );
-					$this->plot->SetLabelScalePosition(0.5);
-					
-					break;
-				case 'bars':
-					// X label angle
-					$this->plot->SetXLabelAngle(90);
+                // Set graph colors and shading
+                $this->plot->SetDataColors( $this->data_colors );
+                $this->plot->SetShading( 0 );
+                $this->plot->SetLabelScalePosition(0.5);
+                
+                break;
+            case 'bars':
+                // X label angle
+                $this->plot->SetXLabelAngle(90);
 
-					// Plot and border colors
-					$this->plot->SetDataColors(array('gray'));
-					$this->plot->SetDataBorderColors(array('black'));
+                // Plot and border colors
+                $this->plot->SetDataColors(array('gray'));
+                $this->plot->SetDataBorderColors(array('black'));
 
-					// Shading
-					$this->plot->SetShading( 2 );
-					break;
-			}
+                // Shading
+                $this->plot->SetShading( 2 );
+                break;
+        }
 
-			# Turn off X tick labels and ticks because they don't apply here:
-			$this->plot->SetXTickLabelPos('none');
-			$this->plot->SetXTickPos('none');
-			$this->plot->SetPlotAreaWorld(NULL, 0, NULL, NULL);
-			
-			// Graph rendering
-			$this->plot->DrawGraph();
-		}
+        # Turn off X tick labels and ticks because they don't apply here:
+        $this->plot->SetXTickLabelPos('none');
+        $this->plot->SetXTickPos('none');
+        $this->plot->SetPlotAreaWorld(NULL, 0, NULL, NULL);
+        
+        // Graph rendering
+        $this->plot->DrawGraph();
 
 		// Return image file path
 		return $this->get_Filepath();
