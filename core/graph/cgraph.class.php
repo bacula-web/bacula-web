@@ -208,18 +208,24 @@ class CGraph {
         switch ( $this->graph_type ) {
             case 'pie':
 
-                // Set legend
-                $this->setLegend();
-                
-                // Set plot area
-                $this->plot->SetPlotAreaPixels($this->padding, $this->padding, ($this->width * 0.65), $this->height - $this->padding);
+                // Display message if data sum equal 0
+                if( $this->isEmpty() ) {
+                    $message = "Sorry ...\nThere is not statistics to display\nfor the selected period :(";
+                    $message_options = array( 'draw_background' => true, 'draw_border' => true, 'reset_font' => true, 'text_color' => 'black' );
+                    $this->plot->DrawMessage( $message, $message_options);                    
+                }else {
+                    // Set legend
+                    $this->setLegend();
+                    
+                    // Set plot area
+                    $this->plot->SetPlotAreaPixels($this->padding, $this->padding, ($this->width * 0.65), $this->height - $this->padding);
 
-                // Set graph colors and shading
-                $this->plot->SetDataColors( $this->data_colors );
-                $this->plot->SetShading( 0 );
-                $this->plot->SetLabelScalePosition(0.5);
-                
-                break;
+                    // Set graph colors and shading
+                    $this->plot->SetDataColors( $this->data_colors );
+                    $this->plot->SetShading( 0 );
+                    $this->plot->SetLabelScalePosition(0.5);
+                }                
+            break;
             case 'bars':
                 // X label angle
                 $this->plot->SetXLabelAngle(90);
@@ -230,8 +236,8 @@ class CGraph {
 
                 // Shading
                 $this->plot->SetShading( 2 );
-                break;
-        }
+            break;
+        } // end switch
 
         # Turn off X tick labels and ticks because they don't apply here:
         $this->plot->SetXTickLabelPos('none');
@@ -245,6 +251,5 @@ class CGraph {
 		return $this->get_Filepath();
 		
     } // end function Render()
-	
 }  // end CGraph class
 ?>
