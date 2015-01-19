@@ -8,6 +8,7 @@ Changelog
 
 Fixed bugs
 
+- 0000137 [bug-php] Pie graph empty if there's no value
 - 0000140 [bug-php] Fix and improve breadcrumb navigation
 - 0000145 [bug/design] Catalog selector should display current catalog name
 - 0000146 [bug] Graphs sometimes disappear on Firefox 33.0
