@@ -27,8 +27,9 @@ Submit your bug / feature request to the official bug tracker
 
 ##License
 
-Bacula-Web is powered by open source technologies and is free (like a bird) and will always be.
-It is released under the terms of the GPL license v2 (see docs/COPYING for more details).
+Bacula-Web is proudly powered by open source softwares and is free (like a bird) to download and use (and will always be) ...  
+Both source code and documentations are released under the <b>GNU GPLv2</b> license.  
+For more details, please read the file <b>docs/COPYING</b> included in the archive or directly on the GNU project website ([www.gnu.org: GNU GPL v2](http://www.gnu.org/licenses/gpl-2.0.html))
 
 ##Authors
 
