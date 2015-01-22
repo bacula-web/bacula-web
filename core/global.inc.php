@@ -45,4 +45,3 @@
  
  // PHPLot
  require_once(BW_ROOT . '/vendor/phplot-6.1.0/phplot.php');
-?>

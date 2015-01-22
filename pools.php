@@ -32,4 +32,3 @@
  
  // Process and display the template
  $view->display('pools.tpl');
-?>

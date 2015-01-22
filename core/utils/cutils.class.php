@@ -16,9 +16,11 @@
   +-------------------------------------------------------------------------+
  */
 
-class CUtils {
+class CUtils
+{
 
-    static public function Get_Human_Size($size, $decimal = 2, $unit = 'auto', $display_unit = true) {
+    public static function Get_Human_Size($size, $decimal = 2, $unit = 'auto', $display_unit = true)
+    {
         $unit_id = 0;
         $lisible = false;
         $units = array('B', 'KB', 'MB', 'GB', 'TB');
@@ -30,9 +32,9 @@ class CUtils {
                     if ($hsize >= 1024) {
                         $hsize = $hsize / 1024;
                         $unit_id++;
-                    }
-                    else
+                    } else {
                         $lisible = true;
+                    }
                 } // end while
                 break;
 
@@ -46,27 +48,26 @@ class CUtils {
         $hsize = number_format($hsize, $decimal, '.', '');
 
         // Append unit or not
-        if ($display_unit)
+        if ($display_unit) {
             $hsize = $hsize . ' ' . $units[$unit_id];
+        }
 
         return $hsize;
     }
     
     // ==================================================================================
-	// Function: 	format_Number()
-	// Parameters:	$number
-	//				$decimal (optional, default = 0)
-	// Return:		formated number depending on current locale
-	// ==================================================================================
+    // Function: 	format_Number()
+    // Parameters:	$number
+    //				$decimal (optional, default = 0)
+    // Return:		formated number depending on current locale
+    // ==================================================================================
     
-    function format_Number($number, $decimal = 0) {
+    function format_Number($number, $decimal = 0)
+    {
         // Getting localized numeric formating information
         $locale = localeconv();
 
         // Return formated number
         return number_format($number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
-    }    
-
+    }
 }
-
-?>

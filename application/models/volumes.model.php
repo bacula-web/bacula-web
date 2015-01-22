@@ -15,33 +15,36 @@
   +-------------------------------------------------------------------------+
  */
 
- class Volumes_Model extends CModel {
+class Volumes_Model extends CModel
+{
  
     // ==================================================================================
-	// Function: 	count()
-	// Parameters:	$tablename
-	//				$filter (optional)
-	// Return:		return row count for one table
-	// ==================================================================================
-	
-	public static function count( $pdo ) {
-		return CModel::count( $pdo, 'Media');
-	}
+    // Function: 	count()
+    // Parameters:	$tablename
+    //				$filter (optional)
+    // Return:		return row count for one table
+    // ==================================================================================
+    
+    public static function count($pdo)
+    {
+        return CModel::count($pdo, 'Media');
+    }
 
-	// ==================================================================================
-	// Function: 	getDiskUsage()
-	// Parameters: 	none
-	// Return:		disk space usage (in Bytes) for all volumes
-	// ==================================================================================
+    // ==================================================================================
+    // Function: 	getDiskUsage()
+    // Parameters: 	none
+    // Return:		disk space usage (in Bytes) for all volumes
+    // ==================================================================================
 
-	public static function getDiskUsage( $pdo ) {
-		$fields		= array('SUM(Media.VolBytes) as bytes_size');
-		$statment 	= array( 'table' => 'Media', 'fields' => $fields );
-		
-		// Run SQL query
-		$result 	= CDBUtils::runQuery(CDBQuery::get_Select( $statment), $pdo );
-	
-		$result 	= $result->fetch();
-		return $result['bytes_size'];
-	}
- }
+    public static function getDiskUsage($pdo)
+    {
+        $fields        = array('SUM(Media.VolBytes) as bytes_size');
+        $statment     = array( 'table' => 'Media', 'fields' => $fields );
+        
+     // Run SQL query
+        $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $pdo);
+    
+        $result     = $result->fetch();
+        return $result['bytes_size'];
+    }
+}

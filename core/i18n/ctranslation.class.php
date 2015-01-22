@@ -16,7 +16,8 @@
   +-------------------------------------------------------------------------+
  */
 
-class CTranslation {
+class CTranslation
+{
 
     private $language;
     private $charset;
@@ -24,14 +25,16 @@ class CTranslation {
     private $lang_file;
     private $domaine;
 
-    function __construct($lang = 'en_EN') {
+    function __construct($lang = 'en_EN')
+    {
         $this->language     = $lang;
         $this->charset      = 'UTF-8';
         $this->domaine      = 'messages';
         $this->locale_path  = LOCALE_DIR;
     }
 
-    function set_Language(&$template) {
+    function set_Language(&$template)
+    {
         // Template engine block registration
         $template->register_block('t', 'smarty_translate');
 
@@ -44,7 +47,4 @@ class CTranslation {
         bind_textdomain_codeset($this->domaine, $this->charset);
         textdomain($this->domaine);
     }
-
 }
-
-?>

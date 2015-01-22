@@ -15,72 +15,75 @@
   +-------------------------------------------------------------------------+
  */
 
- class Clients_Model extends CModel {
+class Clients_Model extends CModel
+{
 
     // ==================================================================================
-	// Function: 	count()
-	// Parameters:	$pdo_connection - valide pdo object
-	// Return:		Number of clients
-	// ==================================================================================
+    // Function: 	count()
+    // Parameters:	$pdo_connection - valide pdo object
+    // Return:		Number of clients
+    // ==================================================================================
 
-	static public function count($pdo) {
-		return CModel::count( $pdo, 'Client');	
-	}
+    public static function count($pdo)
+    {
+        return CModel::count($pdo, 'Client');
+    }
 
     // ==================================================================================
-	// Function: 	getClients()
-	// Parameters:	$pdo_connection - valide pdo object
-	// Return:		array containing client list or false
-	// ==================================================================================
+    // Function: 	getClients()
+    // Parameters:	$pdo_connection - valide pdo object
+    // Return:		array containing client list or false
+    // ==================================================================================
 
-	public static function getClients($pdo) {
-		$clients  	= array();
-		$table 		= 'Client';
-		$fields		= array('ClientId, Name');
-		$orderby	= 'Name';
+    public static function getClients($pdo)
+    {
+        $clients      = array();
+        $table         = 'Client';
+        $fields        = array('ClientId, Name');
+        $orderby    = 'Name';
 
-		$statment 	= array( 'table' => $table, 'fields' => $fields, 'orderby' => $orderby );
+        $statment     = array( 'table' => $table, 'fields' => $fields, 'orderby' => $orderby );
 
-		if( FileConfig::get_Value( 'show_inactive_clients' ) )
-			$statment['where'] = "FileRetention > '0' AND JobRetention > '0' "; 
+        if (FileConfig::get_Value('show_inactive_clients')) {
+            $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
+        }
 
-		$result 	= CDBUtils::runQuery( CDBQuery::get_Select($statment), $pdo );
-			
-		foreach( $result->fetchAll() as $client ) {
-			$clients[ $client['clientid'] ] = $client['name'];
-		}
+        $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $pdo);
+            
+        foreach ($result->fetchAll() as $client) {
+            $clients[ $client['clientid'] ] = $client['name'];
+        }
 
-		return $clients;		
-	}
-	
-	// ==================================================================================
-	// Function: 	getClientInfos()
-	// Parameters: 	client id
-	// Return:		array containing client information
-	// ==================================================================================
+        return $clients;
+    }
+    
+    // ==================================================================================
+    // Function: 	getClientInfos()
+    // Parameters: 	client id
+    // Return:		array containing client information
+    // ==================================================================================
 
-	public static function getClientInfos( $pdo, $client_id )
-	{
-		$client 	= array();
-		$result 	= '';
-		
-		$fields		= array('name','uname');
-		$where		= array( "clientid = $client_id" );
-		$statment  	= CDBQuery::get_Select( array('table'=> 'Client', 'fields' => $fields, 'where' => $where ) );
-		
-		$result 	= CDBUtils::runQuery( $statment, $pdo );
-			
-		foreach( $result->fetchAll() as $client ) {
-			$uname			   = explode( ' ', $client['uname'] );
-			$client['version'] = $uname[0];
-				
-			$uname			   = explode(',', $uname[2] );
-			$temp    		   = explode('-', $uname[0]);
-			$client['arch']	   = $temp[0];
-			$client['os']      = $uname[1];
-		}
-		
-		return $client;
-	}
-
-}    
+    public static function getClientInfos($pdo, $client_id)
+    {
+        $client     = array();
+        $result     = '';
+        
+        $fields        = array('name','uname');
+        $where        = array( "clientid = $client_id" );
+        $statment      = CDBQuery::get_Select(array('table'=> 'Client', 'fields' => $fields, 'where' => $where ));
+        
+        $result     = CDBUtils::runQuery($statment, $pdo);
+            
+        foreach ($result->fetchAll() as $client) {
+            $uname               = explode(' ', $client['uname']);
+            $client['version'] = $uname[0];
+                
+            $uname               = explode(',', $uname[2]);
+            $temp               = explode('-', $uname[0]);
+            $client['arch']       = $temp[0];
+            $client['os']      = $uname[1];
+        }
+        
+        return $client;
+    }
+}

@@ -16,85 +16,90 @@
   +-------------------------------------------------------------------------+
  */
 
-class CDB {
+class CDB
+{
     private static $connection;
     private $options;
     private $result;
 
-	// ==================================================================================
-	// Function: 	__construct()
-	// Parameters: 	none
-	// Return:		none
-	// ==================================================================================
-	
-    private function __construct() {
+    // ==================================================================================
+    // Function: 	__construct()
+    // Parameters: 	none
+    // Return:		none
+    // ==================================================================================
+    
+    private function __construct()
+    {
     }
 
-	// ==================================================================================
-	// Function: 	connect()
-	// Parameters: 	none
-	// Return:		valid PDO connection
-	// ==================================================================================
-	
-	public static function connect( $dsn, $user = null, $password = null, $options = array() ) {
+    // ==================================================================================
+    // Function: 	connect()
+    // Parameters: 	none
+    // Return:		valid PDO connection
+    // ==================================================================================
+    
+    public static function connect($dsn, $user = null, $password = null, $options = array())
+    {
 
-		try {
-            if ( is_null( self::$connection ) ) {
-				self::$connection = new PDO($dsn, $user, $password);
-			}
-        }catch (PDOException $e) {
+        try {
+            if (is_null(self::$connection)) {
+                self::$connection = new PDO($dsn, $user, $password);
+            }
+        } catch (PDOException $e) {
             CErrorHandler::displayError($e);
         }
-		
-		return self::$connection;
-  }
-
-	// ==================================================================================
-	// Function: 	getDriverName()
-	// Parameters: 	none
-	// Return:		driver name (eg: mysql, pgsql, sqlite, etc.)
-	// ==================================================================================
-	
-    public static function getDriverName() {
-		return self::$connection->getAttribute( PDO::ATTR_DRIVER_NAME );
+        
+        return self::$connection;
     }
 
-	// ==================================================================================
-	// Function: 	getServerVersion()
-	// Parameters: 	none
-	// Return:		database server version
-	// ==================================================================================
-	
-    public static function getServerVersion() {
-		$server_version = self::$connection->getAttribute( PDO::ATTR_SERVER_VERSION );
-		$server_version = explode(':', $server_version);
-		return $server_version[0];
-    }
-
-	// ==================================================================================
-	// Function: 	getServerTimestamp()
-	// Parameters: 	none
-	// Return:		database server current timestamp
-	// ==================================================================================
+    // ==================================================================================
+    // Function: 	getDriverName()
+    // Parameters: 	none
+    // Return:		driver name (eg: mysql, pgsql, sqlite, etc.)
+    // ==================================================================================
     
-    public static function getServerTimestamp() {
+    public static function getDriverName()
+    {
+        return self::$connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+    }
+
+    // ==================================================================================
+    // Function: 	getServerVersion()
+    // Parameters: 	none
+    // Return:		database server version
+    // ==================================================================================
+    
+    public static function getServerVersion()
+    {
+        $server_version = self::$connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+        $server_version = explode(':', $server_version);
+        return $server_version[0];
+    }
+
+    // ==================================================================================
+    // Function: 	getServerTimestamp()
+    // Parameters: 	none
+    // Return:		database server current timestamp
+    // ==================================================================================
+    
+    public static function getServerTimestamp()
+    {
         $statment = null;
-        if( !is_null(self::$connection) ) {
+        if (!is_null(self::$connection)) {
             // Different query for SQlite
-            if( self::getDriverName() == 'sqlite' ) {
+            if (self::getDriverName() == 'sqlite') {
                 $statment = "SELECT datetime('now') as CurrentDateTime";
-            }else{
-                $statment = 'SELECT now() as CurrentDateTime';                
+            } else {
+                $statment = 'SELECT now() as CurrentDateTime';
             }
 
-            $result = CDBUtils::runQuery( $statment, self::$connection); 
+            $result = CDBUtils::runQuery($statment, self::$connection);
             $result = $result->fetch();
             
             // Return timestamp
             return strtotime($result['currentdatetime']);
-        }else {
+        } else {
             throw new Exception("No connection to database");
         }
     }
 }
-?>

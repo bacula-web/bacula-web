@@ -16,64 +16,69 @@
   +-------------------------------------------------------------------------+
 */
 
-class CHttpRequest {
+class CHttpRequest
+{
 
     private static $value_list;
     
     // ==================================================================================
-	// Function: 	__construct()
-	// Parameters:	none
-	// Return:		
-	// ==================================================================================
+    // Function: 	__construct()
+    // Parameters:	none
+    // Return:
+    // ==================================================================================
 
-    private function __construct() {
+    private function __construct()
+    {
         self::$value_list = array();
     }
     
     // ==================================================================================
-	// Function: 	getSaveValue( $value )
-	// Parameters:	$value
-	// Return:		secured value
-	// ==================================================================================
+    // Function: 	getSaveValue( $value )
+    // Parameters:	$value
+    // Return:		secured value
+    // ==================================================================================
 
-    private static function getSafeValue($value) {
+    private static function getSafeValue($value)
+    {
         return strip_tags($value);
     }
 
     // ==================================================================================
-	// Function: 	count()
-	// Parameters:	$tablename
-	//				$filter (optional)
-	// Return:		array containing all passed values by $_POST or $_GET
-	// ==================================================================================
+    // Function: 	count()
+    // Parameters:	$tablename
+    //				$filter (optional)
+    // Return:		array containing all passed values by $_POST or $_GET
+    // ==================================================================================
     
-    public static function get_Vars() {
+    public static function get_Vars()
+    {
         
         // $_POST
-        foreach( $_POST as $var => $value ) {
-            self::$value_list[$var] = self::getSafeValue($value);  
+        foreach ($_POST as $var => $value) {
+            self::$value_list[$var] = self::getSafeValue($value);
         }
         
         // $_GET
-        foreach( $_GET as $var => $value ) {
-            self::$value_list[$var] = self::getSafeValue($value); 
+        foreach ($_GET as $var => $value) {
+            self::$value_list[$var] = self::getSafeValue($value);
         }
     }
 
     // ==================================================================================
-	// Function: 	get_Value()
-	// Parameters:	$var
-	// Return:		value of $var, or null if not defined
-	// ==================================================================================
+    // Function: 	get_Value()
+    // Parameters:	$var
+    // Return:		value of $var, or null if not defined
+    // ==================================================================================
     
-    public function get_Value($var) {
+    public function get_Value($var)
+    {
         
-        if( isset(self::$value_list[$var]) )
+        if (isset(self::$value_list[$var])) {
             return self::$value_list[$var];
-        else
+        } else {
             return null;
+        }
     }
 }
 
 // end class
-?>

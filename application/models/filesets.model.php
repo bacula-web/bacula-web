@@ -15,24 +15,26 @@
   +-------------------------------------------------------------------------+
  */
 
- class FileSets_Model extends CModel {
+class FileSets_Model extends CModel
+{
 
     // ==================================================================================
-	// Function: 	count()
-	// Parameters:	$tablename
-	//				$filter (optional)
-	// Return:		return row count for one table
-	// ==================================================================================
-	
-	public static function count( $pdo ) {
-		$fields	= array( 'COUNT(DISTINCT FileSet) as filesets_count' );
-		$table	= 'FileSet';
+    // Function: 	count()
+    // Parameters:	$tablename
+    //				$filter (optional)
+    // Return:		return row count for one table
+    // ==================================================================================
+    
+    public static function count($pdo)
+    {
+        $fields    = array( 'COUNT(DISTINCT FileSet) as filesets_count' );
+        $table    = 'FileSet';
 
-		// Prepare and execute query
-		$statment 	= CDBQuery::get_Select( array( 'table' => $table, 'fields' => $fields ) );
-		$result 	= CDBUtils::runQuery( $statment, $pdo );
+     // Prepare and execute query
+        $statment     = CDBQuery::get_Select(array( 'table' => $table, 'fields' => $fields ));
+        $result     = CDBUtils::runQuery($statment, $pdo);
 
-		$result = $result->fetch();
-		return $result['filesets_count'];
-	}
- }
+        $result = $result->fetch();
+        return $result['filesets_count'];
+    }
+}

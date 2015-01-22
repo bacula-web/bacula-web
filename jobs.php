@@ -64,203 +64,210 @@
   $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
   
   // Check job status filter
-  if(!is_null(CHttpRequest::get_Value('status'))) {
+  if (!is_null(CHttpRequest::get_Value('status'))) {
       // Selected job status filter
       switch(CHttpRequest::get_Value('status')) {
           case STATUS_RUNNING:
               $query .= "WHERE Job.JobStatus = 'R' ";
               break;
-          case STATUS_WAITING:
-              $query .= "WHERE Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
+            case STATUS_WAITING:
+                $query .= "WHERE Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
               break;
-          case STATUS_COMPLETED:
-              $query .= "WHERE Job.JobStatus = 'T' ";
+            case STATUS_COMPLETED:
+                $query .= "WHERE Job.JobStatus = 'T' ";
               break;
-          case STATUS_FAILED:
-              $query .= "WHERE Job.JobStatus IN ('f', 'E') ";
+            case STATUS_FAILED:
+                $query .= "WHERE Job.JobStatus IN ('f', 'E') ";
               break;
-          case STATUS_CANCELED:
-              $query .= "WHERE Job.JobStatus = 'A' ";
+            case STATUS_CANCELED:
+                $query .= "WHERE Job.JobStatus = 'A' ";
               break;
-          case STATUS_ALL:
-              $query .= "WHERE Job.JobStatus != 'xxxx' "; // This code must be improved
+            case STATUS_ALL:
+                $query .= "WHERE Job.JobStatus != 'xxxx' "; // This code must be improved
               break;
-      }
-      $view->assign('job_status_filter', CHttpRequest::get_Value('status'));
-  }
+        }
+        $view->assign('job_status_filter', CHttpRequest::get_Value('status'));
+    }
   
   // Selected client filter
-  if(!is_null(CHttpRequest::get_Value('client_id'))) {
-      $client_id = CHttpRequest::get_Value('client_id');
-      $view->assign('client_filter', $client_id);
+    if (!is_null(CHttpRequest::get_Value('client_id'))) {
+        $client_id = CHttpRequest::get_Value('client_id');
+        $view->assign('client_filter', $client_id);
       
-      if(!is_null(CHttpRequest::get_value('status'))) {
-        if($client_id != 0)
-          $query    .= "AND Job.ClientId = '$client_id' ";            
-      }else {
-        if($client_id != 0)
-          $query    .= "WHERE Job.ClientId = '$client_id' ";            
-      }
-  }else
-    $view->assign('client_filter', 0);
+        if (!is_null(CHttpRequest::get_value('status'))) {
+            if ($client_id != 0) {
+                $query    .= "AND Job.ClientId = '$client_id' ";
+            }
+        } else {
+            if ($client_id != 0) {
+                $query    .= "WHERE Job.ClientId = '$client_id' ";
+            }
+        }
+    } else {
+        $view->assign('client_filter', 0);
+    }
   
-  $order_by                 = '';
-  $order_by_asc             = 'DESC';
-  $result_order_asc_checked = '';
+    $order_by                 = '';
+    $order_by_asc             = 'DESC';
+    $result_order_asc_checked = '';
   
   // Order result by
-  $result_order = array(
-	  'starttime' => 'Job Start Date',
-	  'endtime'   => 'Job End Date',
+    $result_order = array(
+    'starttime' => 'Job Start Date',
+    'endtime'   => 'Job End Date',
       'jobid'     => 'Job Id',
       'Job.Name'  => 'Job Name',
       'jobbytes'  => 'Job Bytes',
       'jobfiles'  => 'Job Files',
       'Pool.Name' => 'Pool Name'
-  );
+    );
   $view->assign('result_order', $result_order);
   
   // Order by
-  if(!is_null(CHttpRequest::get_Value('orderby'))) {
+  if (!is_null(CHttpRequest::get_Value('orderby'))) {
       $order_by = CHttpRequest::get_Value('orderby');
-  } else {
-      $order_by = 'jobid';
-  }
+    } else {
+        $order_by = 'jobid';
+    }
   
   // Order by DESC || ASC
-  if(!is_null(CHttpRequest::get_Value('result_order_asc'))) {
-      $order_by_asc             = CHttpRequest::get_Value('result_order_asc');
-      $result_order_asc_checked = 'checked';
-  }
+    if (!is_null(CHttpRequest::get_Value('result_order_asc'))) {
+        $order_by_asc             = CHttpRequest::get_Value('result_order_asc');
+        $result_order_asc_checked = 'checked';
+    }
   
-  $query .= "ORDER BY $order_by $order_by_asc ";
+    $query .= "ORDER BY $order_by $order_by_asc ";
   
   // Set selected option in template for Job order and Job order asc (ascendant order)
-  $view->assign('result_order_field', $order_by);
-  $view->assign('result_order_asc_checked', $result_order_asc_checked);
+    $view->assign('result_order_field', $order_by);
+    $view->assign('result_order_asc_checked', $result_order_asc_checked);
   
   // Jobs per page options
-  $jobs_per_page = 25;
-  $view->assign('jobs_per_page', array( 25 => '25', 50 => '50', 75 => '75', 100 => '100', 150 => '150') );
+    $jobs_per_page = 25;
+    $view->assign('jobs_per_page', array( 25 => '25', 50 => '50', 75 => '75', 100 => '100', 150 => '150'));
   
   // Determine how many jobs per page
   // From config file
-  if( FileConfig::get_Value('jobs_per_page') != false )
-	$jobs_per_page = FileConfig::get_Value('jobs_per_page');
-	  
+    if (FileConfig::get_Value('jobs_per_page') != false) {
+        $jobs_per_page = FileConfig::get_Value('jobs_per_page');
+    }
+      
   // From $_POST form
-  if( !is_null( CHttpRequest::get_Value('jobs_per_page') ) )
-    $jobs_per_page = CHttpRequest::get_Value('jobs_per_page');
-	  
-  $query .= "LIMIT $jobs_per_page";
-  $view->assign('jobs_per_page_selected', $jobs_per_page);
+    if (!is_null(CHttpRequest::get_Value('jobs_per_page'))) {
+        $jobs_per_page = CHttpRequest::get_Value('jobs_per_page');
+    }
+      
+    $query .= "LIMIT $jobs_per_page";
+    $view->assign('jobs_per_page_selected', $jobs_per_page);
  
-  // Parsing jobs result 
-  $jobsresult = CDBUtils::runQuery($query, $dbSql->db_link);
+  // Parsing jobs result
+    $jobsresult = CDBUtils::runQuery($query, $dbSql->db_link);
   
-  foreach($jobsresult as $job) {
+    foreach ($jobsresult as $job) {
+        // Determine icon for job status
+        switch($job['jobstatus']) {
+            case J_RUNNING:
+                $job['Job_icon'] = "play";
+                break;
+            case J_COMPLETED:
+                $job['Job_icon'] = "ok";
+                break;
+            case J_CANCELED:
+                $job['Job_icon'] = "off";
+                break;
+            case J_COMPLETED_ERROR:
+                $job['Job_icon'] = "warning-sign";
+                break;
+            case J_FATAL:
+                $job['Job_icon'] = "remove";
+                break;
+            case J_WAITING_CLIENT:
+            case J_WAITING_SD:
+            case J_WAITING_MOUNT_MEDIA:
+            case J_WAITING_NEW_MEDIA:
+            case J_WAITING_STORAGE_RES:
+            case J_WAITING_JOB_RES:
+            case J_WAITING_CLIENT_RES:
+            case J_WAITING_MAX_JOBS:
+            case J_WAITING_START_TIME:
+            case J_NOT_RUNNING:
+                $job['Job_icon'] = "time";
+                break;
+        } // end switch
       
-      // Determine icon for job status
-      switch($job['jobstatus']) {
-          case J_RUNNING:
-              $job['Job_icon'] = "play";
-              break;
-          case J_COMPLETED:
-              $job['Job_icon'] = "ok";
-              break;
-          case J_CANCELED:
-              $job['Job_icon'] = "off";
-              break;
-          case J_COMPLETED_ERROR:
-              $job['Job_icon'] = "warning-sign";
-              break;
-          case J_FATAL:
-              $job['Job_icon'] = "remove";
-              break;
-          case J_WAITING_CLIENT:
-          case J_WAITING_SD:
-          case J_WAITING_MOUNT_MEDIA:
-          case J_WAITING_NEW_MEDIA:
-          case J_WAITING_STORAGE_RES:
-          case J_WAITING_JOB_RES:
-          case J_WAITING_CLIENT_RES:
-          case J_WAITING_MAX_JOBS:
-          case J_WAITING_START_TIME:
-          case J_NOT_RUNNING:
-              $job['Job_icon'] = "time";
-              break;
-      } // end switch
+        // Job start time, end time and elapsed time
+        $start_time = $job['starttime'];
+        $end_time   = $job['endtime'];
       
-      // Job start time, end time and elapsed time
-      $start_time = $job['starttime'];
-      $end_time   = $job['endtime'];
+        if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0) {
+            $job['starttime'] = 'n/a';
+        }
       
-      if($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0)
-          $job['starttime'] = 'n/a';
+        if ($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == 0) {
+            $job['endtime'] = 'n/a';
+        }
       
-      if($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == 0)
-          $job['endtime'] = 'n/a';
+        // Get the job elapsed time completion
+        $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
       
-      // Get the job elapsed time completion
-      $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
+        // Job Level
+        $job['level'] = $job_levels[$job['level']];
       
-      // Job Level
-      $job['level'] = $job_levels[$job['level']];
-      
-      // Job files
-      $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
+        // Job files
+        $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
 
-      // Job speed
-      $job['speed'] = '0 Mb/s';
+        // Job speed
+        $job['speed'] = '0 Mb/s';
 
-      // Job compression
-      $job['compression'] = 'n/a';
-	  
-      switch( $job['jobstatus'] ) {
-        case J_COMPLETED:
-        case J_COMPLETED_ERROR:
-        case J_NO_FATAL_ERROR:
-        case J_CANCELED:
-        case J_FATAL:
-            // Job speed
-            $seconds = DateTimeUtil::get_ElaspedSeconds($end_time,$start_time);
-            if( $seconds != false) {
-                $speed 	= $job['jobbytes'] / $seconds;  
-                $speed 	= CUtils::Get_Human_Size($speed,2) . '/s';
-                $job['speed'] = $speed;
-            }else
-                $job['speed']	= 'n/a';
+        // Job compression
+        $job['compression'] = 'n/a';
+      
+        switch($job['jobstatus']) {
+            case J_COMPLETED:
+            case J_COMPLETED_ERROR:
+            case J_NO_FATAL_ERROR:
+            case J_CANCELED:
+            case J_FATAL:
+                // Job speed
+                $seconds = DateTimeUtil::get_ElaspedSeconds($end_time, $start_time);
+                if ($seconds != false) {
+                    $speed     = $job['jobbytes'] / $seconds;
+                    $speed     = CUtils::Get_Human_Size($speed, 2) . '/s';
+                    $job['speed'] = $speed;
+                } else {
+                    $job['speed']    = 'n/a';
+                }
                 
-            // Job compression
-            if( $job['jobbytes'] > 0 && $job['type'] == 'B') {
-                $compression        = (1-($job['jobbytes'] / $job['readbytes']));
-                $job['compression'] = number_format( $compression, 2);    
-            }else {
-                $job['compression'] = 'n/a';
-            }
-        break;
-      } // end switch
+                // Job compression
+                if ($job['jobbytes'] > 0 && $job['type'] == 'B') {
+                    $compression        = (1-($job['jobbytes'] / $job['readbytes']));
+                    $job['compression'] = number_format($compression, 2);
+                } else {
+                    $job['compression'] = 'n/a';
+                }
+                break;
+        } // end switch
       
-      // Job size
-      $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
-	        
-      // Job Pool
-      if(is_null($job['pool_name']))
-          $job['pool_name'] = 'n/a';
+        // Job size
+        $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
+            
+        // Job Pool
+        if (is_null($job['pool_name'])) {
+            $job['pool_name'] = 'n/a';
+        }
       
-      $last_jobs[] = $job;
-  } // end foreach
+        $last_jobs[] = $job;
+    } // end foreach
   
-  $view->assign('last_jobs', $last_jobs);
+    $view->assign('last_jobs', $last_jobs);
   
   // Count jobs
-  $view->assign('jobs_found', count($last_jobs));
-  $view->assign('total_jobs', Jobs_Model::count($dbSql->db_link, 'Job'));
+    $view->assign('jobs_found', count($last_jobs));
+    $view->assign('total_jobs', Jobs_Model::count($dbSql->db_link, 'Job'));
   
   // Set page name
-  $current_page = 'Jobs report';
-  $view->assign('page_name', $current_page);
+    $current_page = 'Jobs report';
+    $view->assign('page_name', $current_page);
   
-  // Process and display the template 
-  $view->render('jobs.tpl');
-?>
+  // Process and display the template
+    $view->render('jobs.tpl');

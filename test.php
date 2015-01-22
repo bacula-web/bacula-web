@@ -39,7 +39,7 @@ $icon_result = array( true => 'glyphicon-ok', false => 'glyphicon-remove');
 
 // Checks list
 $check_list = array(
-	array('check_cmd' => 'php-gettext',
+    array('check_cmd' => 'php-gettext',
         'check_label' => 'PHP - Gettext support',
         'check_descr' => 'If you want Bacula-web in your language, please compile PHP with Gettext support'),
     array('check_cmd' => 'php-session',
@@ -60,9 +60,9 @@ $check_list = array(
     array('check_cmd' => 'php-pdo',
         'check_label' => 'PHP - PDO support',
         'check_descr' => 'PHP PDO support is required, please compile PHP with this option'),
-	array('check_cmd' => 'db-connection',
-		'check_label' => 'Database connection status (MySQL and postgreSQL only)',
-		'check_descr' => 'Current status: ' . CDBUtils::getConnectionStatus( $dbSql->db_link ) ),
+    array('check_cmd' => 'db-connection',
+        'check_label' => 'Database connection status (MySQL and postgreSQL only)',
+        'check_descr' => 'Current status: ' . CDBUtils::getConnectionStatus($dbSql->db_link) ),
     array('check_cmd' => 'smarty-cache',
         'check_label' => 'Smarty cache folder write permission',
         'check_descr' => realpath(VIEW_CACHE_DIR) . ' must be writable by Apache'),
@@ -79,44 +79,45 @@ foreach ($check_list as &$check) {
     switch ($check['check_cmd']) {
         case 'php-session':
             $check['check_result'] = $icon_result[function_exists('session_start')];
-        break;
+            break;
         case 'php-gettext':
             $check['check_result'] = $icon_result[function_exists('gettext')];
-        break;
+            break;
         case 'php-gd':
             $check['check_result'] = $icon_result[function_exists('gd_info')];
-        break;
+            break;
         case 'pear-db':
             $check['check_result'] = $icon_result[class_exists('DB')];
-        break;
+            break;
         case 'php-mysql':
             $check['check_result'] = $icon_result[in_array('mysql', $pdo_drivers)];
-        break;
+            break;
         case 'php-postgres':
             $check['check_result'] = $icon_result[in_array('pgsql', $pdo_drivers)];
-        break;
+            break;
         case 'php-sqlite':
             $check['check_result'] = $icon_result[in_array('sqlite', $pdo_drivers)];
-		break;
+            break;
         case 'php-pdo':
             $check['check_result'] = $icon_result[class_exists('PDO')];
-		break;
+            break;
         case 'smarty-cache':
             $check['check_result'] = $icon_result[is_writable(VIEW_CACHE_DIR)];
-        break;
+            break;
         case 'php-version':
             $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '5.3', '>=')];
-        break;
-		case 'db-connection':
-			$check['check_result'] = $icon_result[ CDBUtils::isConnected( $dbSql->db_link )];
-		break;
-		case 'php-timezone':
-			$timezone = ini_get('date.timezone');
-			if( !empty( $timezone ) )
-				$check['check_result'] = $icon_result[true];
-			else
-				$check['check_result'] = $icon_result[false];
-		break;
+            break;
+        case 'db-connection':
+            $check['check_result'] = $icon_result[ CDBUtils::isConnected($dbSql->db_link)];
+            break;
+        case 'php-timezone':
+            $timezone = ini_get('date.timezone');
+            if (!empty( $timezone )) {
+                $check['check_result'] = $icon_result[true];
+            } else {
+                $check['check_result'] = $icon_result[false];
+            }
+            break;
     }
 }
 
@@ -131,13 +132,13 @@ $data = array(
 // Pie graph
 $pie_graph = new CGraph("testpage-graph03.jpg");
 $pie_graph->SetData($data, 'pie');
-$view->assign( 'pie_graph', $pie_graph->Render() );
+$view->assign('pie_graph', $pie_graph->Render());
 unset($pie_graph);
 
 // Bar graph
 $bar_graph = new CGraph("testpage-graph04.jpg");
-$bar_graph->SetData( $data, 'bars' );
-$view->assign( 'bar_graph', $bar_graph->Render() );
+$bar_graph->SetData($data, 'bars');
+$view->assign('bar_graph', $bar_graph->Render());
 unset($bar_graph);
 
 // Set page name
@@ -147,4 +148,3 @@ $view->assign('page_name', $current_page);
 // Template rendering
 $view->assign('checks', $check_list);
 $view->display('test.tpl');
-?>

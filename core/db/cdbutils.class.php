@@ -16,70 +16,76 @@
   +-------------------------------------------------------------------------+
  */
 
-class CDBUtils {
-	private static $result_count;
+class CDBUtils
+{
+    private static $result_count;
 
-	private function __construct() {
-	}
+    private function __construct()
+    {
+    }
 
-	public static function isConnected( $PDO_connection ) {
-		$pdo_connection	= null;
-		
-		// If MySQL of postGreSQL
-		switch( CDB::getDriverName() ){
-			case 'mysql':
-			case 'pgsql':
-				$pdo_connection = self::getConnectionStatus($PDO_connection);
-			break;
-			default:
-				// Assume that Apache have access to the SQLite database file (to be improved)
-				$pdo_connection = true;
-			break;
-		}
-		
-		// Test connection status
-		if( $pdo_connection != false)
-			return true;
-		else
-			return false;	
-	}
+    public static function isConnected($PDO_connection)
+    {
+        $pdo_connection    = null;
+        
+     // If MySQL of postGreSQL
+        switch(CDB::getDriverName()){
+            case 'mysql':
+            case 'pgsql':
+                $pdo_connection = self::getConnectionStatus($PDO_connection);
+                break;
+            default:
+             // Assume that Apache have access to the SQLite database file (to be improved)
+                $pdo_connection = true;
+                break;
+        }
+        
+     // Test connection status
+        if ($pdo_connection != false) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	// ==================================================================================
-	// Function: 	getConnectionStatus()
-	// Parameters:	$PDO_connection (valid pdo connection)
-	// Return:	true if the PDO connection is valid or false
-	// ==================================================================================
+    // ==================================================================================
+    // Function: 	getConnectionStatus()
+    // Parameters:	$PDO_connection (valid pdo connection)
+    // Return:	true if the PDO connection is valid or false
+    // ==================================================================================
 
-	public static function getConnectionStatus( $PDO_connection ) {
-		// If MySQL of postGreSQL
-		if( CDB::getDriverName() != 'sqlite' ) {
-			return $PDO_connection->getAttribute( PDO::ATTR_CONNECTION_STATUS );
-		}else {
-			return 'N/A';
-		}
-	}
-	
-	public function countResult() {
-		return self::$result_count;
-	}
+    public static function getConnectionStatus($PDO_connection)
+    {
+     // If MySQL of postGreSQL
+        if (CDB::getDriverName() != 'sqlite') {
+            return $PDO_connection->getAttribute(PDO::ATTR_CONNECTION_STATUS);
+        } else {
+            return 'N/A';
+        }
+    }
+    
+    public function countResult()
+    {
+        return self::$result_count;
+    }
 
-	public static function runQuery( $query, $db_link ) {
-		$result  	= null;
-		$result_count 	= 0;
-		$statment	= null;
-				
-		$statment	= $db_link->prepare($query);
-		if( $statment == FALSE )
-			throw new PDOException("Failed to prepare PDOStatment <br />$query");
-			
-		$result 	= $statment->execute();			
+    public static function runQuery($query, $db_link)
+    {
+        $result      = null;
+        $result_count     = 0;
+        $statment    = null;
+                
+        $statment    = $db_link->prepare($query);
+        if ($statment == false) {
+            throw new PDOException("Failed to prepare PDOStatment <br />$query");
+        }
+            
+        $result     = $statment->execute();
 
-		if ( is_null($result) )
-			throw new PDOException("Failed to execute PDOStatment <br />$query");
-	
-		return $statment ;
-	}
-
+        if (is_null($result)) {
+            throw new PDOException("Failed to execute PDOStatment <br />$query");
+        }
+    
+        return $statment ;
+    }
 }
-
-?>

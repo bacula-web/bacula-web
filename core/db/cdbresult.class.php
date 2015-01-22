@@ -16,12 +16,11 @@
   +-------------------------------------------------------------------------+
 */
 
-class CDBResult extends PDOStatement {
+class CDBResult extends PDOStatement
+{
 
-    protected function __construct() {
+    protected function __construct()
+    {
         $this->setFetchMode(PDO::FETCH_ASSOC);
     }
-
 }
-
-?>

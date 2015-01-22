@@ -17,7 +17,7 @@
  session_start();
  include_once( 'core/global.inc.php' );
 
- try{
+try {
     // Initialise view and model
     $view = new CView();
     $dbSql = new Bweb($view);
@@ -33,39 +33,40 @@
     $days_stored_files = array();
     
     // Backup job name
-    if( !is_null(CHttpRequest::get_value('backupjob_name') ) )
+    if (!is_null(CHttpRequest::get_value('backupjob_name'))) {
         $backupjob_name = CHttpRequest::get_value('backupjob_name');
-    else
+    } else {
         throw new Exception("Error: Backup job name not specified");
+    }
     
     // Generate Backup Job report period string
     $backupjob_period = "From " . date("Y-m-d", (NOW - WEEK)) . " to " . date("Y-m-d", NOW);
     
     // Stored Bytes on the defined period
-    $backupjob_bytes = Jobs_Model::getStoredBytes( $dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name );
+    $backupjob_bytes = Jobs_Model::getStoredBytes($dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name);
     $backupjob_bytes = CUtils::Get_Human_Size($backupjob_bytes);
     
     // Stored files on the defined period
-    $backupjob_files = Jobs_Model::getStoredFiles( $dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name);
-    $backupjob_files = CUtils::format_Number( $backupjob_files );
+    $backupjob_files = Jobs_Model::getStoredFiles($dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name);
+    $backupjob_files = CUtils::format_Number($backupjob_files);
     
     // Get the last 7 days interval (start and end)
     $days = DateTimeUtil::getLastDaysIntervals(7);
     
     // ===============================================================
     // Last 7 days stored Bytes graph
-    // ===============================================================  
+    // ===============================================================
     $graph = new CGraph("backupjobreport-graph01.jpg");
     
     foreach ($days as $day) {
-        $stored_bytes = Jobs_Model::getStoredBytes( $dbSql->db_link, array($day['start'], $day['end']), $backupjob_name );
+        $stored_bytes = Jobs_Model::getStoredBytes($dbSql->db_link, array($day['start'], $day['end']), $backupjob_name);
         $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
     }
     
     $graph->SetData($days_stored_bytes, 'bars', true);
 
     // Graph rendering
-    $view->assign( 'graph_stored_bytes', $graph->Render() );
+    $view->assign('graph_stored_bytes', $graph->Render());
 
     unset($graph);
     
@@ -75,7 +76,7 @@
     $graph = new CGraph("backupjobreport-graph02.jpg");
     
     foreach ($days as $day) {
-        $stored_files = Jobs_Model::getStoredFiles( $dbSql->db_link, array($day['start'], $day['end']), $backupjob_name);
+        $stored_files = Jobs_Model::getStoredFiles($dbSql->db_link, array($day['start'], $day['end']), $backupjob_name);
         $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
     }
     
@@ -83,7 +84,7 @@
     $graph->SetYTitle("Files");
     
     // Graph rendering
-    $view->assign( 'graph_stored_files', $graph->Render() );
+    $view->assign('graph_stored_files', $graph->Render());
     
     unset($graph);
     
@@ -94,10 +95,10 @@
     $query .= "ORDER BY EndTime DESC ";
     $query .= "LIMIT 7 ";
     
-    $jobs 		= array();
-    $joblevel 	= array('I' => 'Incr', 'D' => 'Diff', 'F' => 'Full');
+    $jobs         = array();
+    $joblevel     = array('I' => 'Incr', 'D' => 'Diff', 'F' => 'Full');
     
-    $result = CDBUtils::runQuery( $query, $dbSql->db_link );
+    $result = CDBUtils::runQuery($query, $dbSql->db_link);
     
     foreach ($result->fetchAll() as $job) {
         // Job level description
@@ -107,35 +108,35 @@
         $job['elapsedtime'] = DateTimeUtil::Get_Elapsed_Time($job['starttime'], $job['endtime']);
     
         // Compression
-        if( $job['jobbytes'] > 0) {
-          $compression        = (1-($job['jobbytes'] / $job['readbytes']));
-          $job['compression'] = number_format( $compression, 2);    
-        }else {
-          $job['compression'] = 'N/A';
+        if ($job['jobbytes'] > 0) {
+            $compression        = (1-($job['jobbytes'] / $job['readbytes']));
+            $job['compression'] = number_format($compression, 2);
+        } else {
+            $job['compression'] = 'N/A';
         }
         
         // Job bytes more easy to read
         $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
-        $job['jobfiles'] = CUtils::format_Number( $job['jobfiles'] );
+        $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
         
         // Job speed
-        $start 		= new DateTime($job['starttime']);
-        $end   		= new DateTime($job['endtime']);
-        $seconds  	= $end->getTimeStamp() - $start->getTimeStamp(); 
+        $start         = new DateTime($job['starttime']);
+        $end           = new DateTime($job['endtime']);
+        $seconds      = $end->getTimeStamp() - $start->getTimeStamp();
 
-        if( $seconds > 0) {
-            $speed 		= $job['jobbytes'] / $seconds;
+        if ($seconds > 0) {
+            $speed         = $job['jobbytes'] / $seconds;
             $job['speed'] = CUtils::Get_Human_Size($speed, 1) . '/s';
-        }else {
+        } else {
             $job['speed'] = 'N/A';
         }
 
-        $jobs[] 	= $job;
+        $jobs[]     = $job;
     } // end while
 
- }catch (Exception $e) {
+} catch (Exception $e) {
     CErrorHandler::displayError($e);
- }
+}
 
  $view->assign('jobs', $jobs);
  $view->assign('backupjob_name', $backupjob_name);
@@ -145,8 +146,7 @@
 
  // Set page name
  $current_page = 'Backup job report';
- $view->assign( 'page_name', $current_page);
+ $view->assign('page_name', $current_page);
  
- // Process and display the template 
+ // Process and display the template
  $view->display('backupjob-report.tpl');
-?>

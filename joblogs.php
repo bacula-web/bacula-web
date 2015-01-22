@@ -19,37 +19,36 @@ session_start();
 include_once( 'core/global.inc.php' );
 
 try {
-	$view 		= new CView();
-	$dbSql 		= new Bweb($view);
-	$joblogs 	= array();
+    $view         = new CView();
+    $dbSql         = new Bweb($view);
+    $joblogs     = array();
 
-	$jobid 		= CHttpRequest::get_Value('jobid');
-	
-	// If $_GET['jobid'] is null and is not a number, throw an Exception
-	if( is_null($jobid) or !is_numeric($jobid) ) {
-		throw new Exception('Invalid job id (invalid or null) provided in Job logs report');
-	}
+    $jobid         = CHttpRequest::get_Value('jobid');
+    
+    // If $_GET['jobid'] is null and is not a number, throw an Exception
+    if (is_null($jobid) or !is_numeric($jobid)) {
+        throw new Exception('Invalid job id (invalid or null) provided in Job logs report');
+    }
 
-	// Prepare and execute SQL statment
-	$statment 	= array('table' => 'Log', 'where' => array("JobId = '$jobid'"), 'orderby' => 'Time');
-	$result 	= CDBUtils::runQuery( CDBQuery::get_Select($statment), $dbSql->db_link );
+    // Prepare and execute SQL statment
+    $statment     = array('table' => 'Log', 'where' => array("JobId = '$jobid'"), 'orderby' => 'Time');
+    $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $dbSql->db_link);
 
-	// Processing result
-	foreach ($result->fetchAll() as $log) {
-		$log['logtext'] = nl2br($log['logtext']);
-		$joblogs[] 	    = $log;
-	}
+    // Processing result
+    foreach ($result->fetchAll() as $log) {
+        $log['logtext'] = nl2br($log['logtext']);
+        $joblogs[]         = $log;
+    }
 
-	$view->assign('jobid', $jobid);
-	$view->assign('joblogs', $joblogs);
+    $view->assign('jobid', $jobid);
+    $view->assign('joblogs', $joblogs);
 
-	// Set page name
-	$current_page = 'Job logs';
-	$view->assign('page_name', $current_page);
+    // Set page name
+    $current_page = 'Job logs';
+    $view->assign('page_name', $current_page);
 
-	// Process and display the template 
-	$view->render('joblogs.tpl');
-}catch (Exception $e) {
+    // Process and display the template
+    $view->render('joblogs.tpl');
+} catch (Exception $e) {
     CErrorHandler::displayError($e);
 }
-?>

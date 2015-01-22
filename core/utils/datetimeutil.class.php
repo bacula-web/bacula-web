@@ -15,7 +15,8 @@
   +-------------------------------------------------------------------------+
  */
 
-class DateTimeUtil {
+class DateTimeUtil
+{
 
     // ==================================================================================
     // Function:        get_Timestamp()
@@ -23,30 +24,34 @@ class DateTimeUtil {
     // Return:          UNIX timestamp
     // ==================================================================================
 
-    static public function get_Timestamp( $time ) {
-        return strtotime( $time );
+    public static function get_Timestamp($time)
+    {
+        return strtotime($time);
     }
 
     // ==================================================================================
     // Function: 	Get_Elapsed_Time()
     // Parameters:	$start_time			(start time in date format)
-    // Parameters:	$end_time			(end time in date format)	
+    // Parameters:	$end_time			(end time in date format)
     // Return:		Job elapsed time (day) HH:MM:ss
     // ==================================================================================
 
-    static public function Get_Elapsed_Time( $start_time, $end_time) {
+    public static function Get_Elapsed_Time($start_time, $end_time)
+    {
         $start = '';
         $end   = '';
 
-        if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0)
+        if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0) {
             return 'n/a';
-        else
+        } else {
             $start = self::get_Timestamp($start_time);
+        }
 
-        if ($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == 0)
+        if ($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == 0) {
             $end = mktime();
-        else
+        } else {
             $end = self::get_Timestamp($end_time);
+        }
 
         $diff = $end - $start;
 
@@ -60,25 +65,28 @@ class DateTimeUtil {
         $diff -= $minsDiff * 60;
         $secsDiff = sprintf("%02d", $diff);
 
-        if ($daysDiff > 0)
+        if ($daysDiff > 0) {
             return $daysDiff . 'day(s) ' . $hrsDiff . ':' . $minsDiff . ':' . $secsDiff;
-        else
+        } else {
             return $hrsDiff . ':' . $minsDiff . ':' . $secsDiff;
+        }
     }
 
     // ==================================================================================
     // Function:        get_ElapsedSeconds()
-    // Parameters:      $end  
+    // Parameters:      $end
     //			$start
     // Return:          amount of seconds between two UNIX date string or false
     // ==================================================================================
 
-    static public function get_ElaspedSeconds( $end, $start) {
-	if( strtotime( $start) && strtotime($end) ) {
- 	  $seconds = strtotime($end) - strtotime($start);
-          return $seconds;
-        }else
-          return false;
+    public static function get_ElaspedSeconds($end, $start)
+    {
+        if (strtotime($start) && strtotime($end)) {
+            $seconds = strtotime($end) - strtotime($start);
+                 return $seconds;
+        } else {
+            return false;
+        }
     }
 
     // ==================================================================================
@@ -87,7 +95,8 @@ class DateTimeUtil {
     // Return:		array('start' => start_timestamp, 'end' => end_timestamp)
     // ==================================================================================
     
-    static public function get_Day_Intervals($day) {
+    public static function get_Day_Intervals($day)
+    {
         $start = strtotime(date("Y-m-d 00:00:00", $day));
         $end   = strtotime(date("Y-m-d 23:59:59", $day));
 
@@ -100,7 +109,8 @@ class DateTimeUtil {
     // Return:		array('start' => start_timestamp, 'end' => end_timestamp) of last n days
     // ==================================================================================
 
-    static public function getLastDaysIntervals($nb_days) {
+    public static function getLastDaysIntervals($nb_days)
+    {
         $days = array();
 
         for ($d = $nb_days; $d >= 0; $d--) {
@@ -110,4 +120,3 @@ class DateTimeUtil {
         return $days;
     }
 }
-?>

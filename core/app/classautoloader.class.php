@@ -15,46 +15,51 @@
   +-------------------------------------------------------------------------+
  */
 
-class ClassAutoLoader {
+class ClassAutoLoader
+{
 
-  private $paths;
-  private $exclusion;
+    private $paths;
+    private $exclusion;
 
   // ==================================================================================
   // Function: 	    __construct()
   // Parameters:    none
-  // Return:	    
+  // Return:
   // ==================================================================================
 
-  public function __construct() {
-    $this->paths     	= array();
-    $this->exclusion 	= array();
+    public function __construct()
+    {
+        $this->paths         = array();
+        $this->exclusion     = array();
     
-    spl_autoload_register( array($this,'Load_Class'), true );
-    spl_autoload_register( array($this,'Load_Models'), true );
-  }
+        spl_autoload_register(array($this,'Load_Class'), true);
+        spl_autoload_register(array($this,'Load_Models'), true);
+    }
 
   // ==================================================================================
   // Function: 	    add_Path()
   // Parameters:    $pathname
-  // Return:	    
+  // Return:
   // ==================================================================================
 
-  public function add_Path($pathname) {
-    // Scan and add all subfolders
-    if( file_exists( $pathname ) )
-        $this->paths = array_merge($this->paths, $this->scan_Path( $pathname ) );    
-  }
+    public function add_Path($pathname)
+    {
+      // Scan and add all subfolders
+        if (file_exists($pathname)) {
+            $this->paths = array_merge($this->paths, $this->scan_Path($pathname));
+        }
+    }
   
   // ==================================================================================
   // Function: 	    add_Exclusion()
   // Parameters:    $path
-  // Return:	    
+  // Return:
   // ==================================================================================
 
-  public function add_Exclusion($path) {
-	$this->exclusion[] = $path;
-  }
+    public function add_Exclusion($path)
+    {
+        $this->exclusion[] = $path;
+    }
   
   // ==================================================================================
   // Function: 	    Scan_Path()
@@ -62,53 +67,59 @@ class ClassAutoLoader {
   // Return:	    array with containing folder and subfolder(s)
   // ==================================================================================
 
-  public function scan_Path( $path ) {
-    $cf   = null;
-    $cf[] = $path;
+    public function scan_Path($path)
+    {
+        $cf   = null;
+        $cf[] = $path;
     
-    foreach( glob($path.'/*', GLOB_ONLYDIR) as $dir) {
-      foreach($this->scan_Path($dir) as $sf ) {
-        if( !in_array($sf, $this->exclusion) )
-            $cf[] = $sf;
-      }
+        foreach (glob($path.'/*', GLOB_ONLYDIR) as $dir) {
+            foreach ($this->scan_Path($dir) as $sf) {
+                if (!in_array($sf, $this->exclusion)) {
+                    $cf[] = $sf;
+                }
+            }
+        }
+        return $cf;
     }
-    return $cf;
-  }
 
   // ==================================================================================
   // Function: 	    Load_Class()
   // Parameters:    $classname
-  // Return:	    
+  // Return:
   // ==================================================================================
   
-  private function Load_Class($classname) {
+    private function Load_Class($classname)
+    {
 
-    foreach( $this->paths as $dir ) {      
-      $file_full_path = $dir . '/' . $classname . '.class.php';
+        foreach ($this->paths as $dir) {
+            $file_full_path = $dir . '/' . $classname . '.class.php';
     
-      if( file_exists( $file_full_path ) )
-        include( $file_full_path );
+            if (file_exists($file_full_path)) {
+                include( $file_full_path );
+            }
         
-      if( file_exists( strtolower($file_full_path) ) )
-        include( strtolower($file_full_path) );
+            if (file_exists(strtolower($file_full_path))) {
+                include( strtolower($file_full_path) );
+            }
+        }
     }
-  }
   
   // ==================================================================================
   // Function: 	    Load_Models()
   // Parameters:    $classname
-  // Return:	    
+  // Return:
   // ==================================================================================
         
-  public function Load_Models( $classname ) {
-    foreach( $this->paths as $dir ) {      
-      list($class) = explode('_', $classname);
-      $file_full_path = $dir . '/' . $class . '.model.php';
-      $file_full_path = strtolower($file_full_path);
+    public function Load_Models($classname)
+    {
+        foreach ($this->paths as $dir) {
+            list($class) = explode('_', $classname);
+            $file_full_path = $dir . '/' . $class . '.model.php';
+            $file_full_path = strtolower($file_full_path);
             
-      if( file_exists( $file_full_path ) )
-        include( $file_full_path );
-    }    
-  }
-
+            if (file_exists($file_full_path)) {
+                include( $file_full_path );
+            }
+        }
+    }
 } // end class ClassAutoLoader

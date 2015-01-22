@@ -16,18 +16,19 @@
   +-------------------------------------------------------------------------+
  */
 
-class CGraph {
-	
+class CGraph
+{
+    
     private $data;
     private $data_type = array('pie' => 'text-data-single', 'bars' => 'text-data');
     private $uniform_data;
     private $data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
     private $graph_type;
-	
+    
     private $width;
     private $height;
     private $padding = 5;
-	
+    
     public $img_filename;
     private $plot;
 
@@ -39,9 +40,10 @@ class CGraph {
     // Return:      -
     // ==================================================================================
 
-    function __construct($filename, $width = 400, $height = 260) {
+    function __construct($filename, $width = 400, $height = 260)
+    {
         // Set image file relative path
-        $this->img_filename = str_replace( BW_ROOT . '/', '', VIEW_CACHE_DIR) . '/' . $filename;
+        $this->img_filename = str_replace(BW_ROOT . '/', '', VIEW_CACHE_DIR) . '/' . $filename;
 
         // Set image widht and height
         $this->width        = $width;
@@ -50,15 +52,15 @@ class CGraph {
         $this->plot = new PHPlot($this->width, $this->height, $this->img_filename);
 
         // Set Font
-        $this->plot->SetFont( 'x_label', '2');
-        $this->plot->SetFont( 'y_label', '2');
+        $this->plot->SetFont('x_label', '2');
+        $this->plot->SetFont('y_label', '2');
         
         // Set image border type
         $this->plot->SetImageBorderType('none');
 
         // Render to file instead of screen
         $this->plot->SetFileFormat("jpg");
-        $this->plot->SetIsInline(true);        
+        $this->plot->SetIsInline(true);
 
     }
 
@@ -70,29 +72,30 @@ class CGraph {
     // Return:      -
     // ==================================================================================
     
-    public function SetData($data_in, $graph_type, $uniform_data = false) {
+    public function SetData($data_in, $graph_type, $uniform_data = false)
+    {
         
-        if(!is_array($data_in)) {
+        if (!is_array($data_in)) {
             throw new Exception('Passed $data_in variable is not an array');
             exit;
         }
         
         $this->uniform_data = $uniform_data;
 
-        if( $this->uniform_data ) {
+        if ($this->uniform_data) {
             $this->data = $this->UniformizeData($data_in);
-        }else {
-            $this->data	= $data_in;
+        } else {
+            $this->data    = $data_in;
         }
 
-		// Set graph values
-		$this->plot->SetDataValues($this->data);    
-		
+        // Set graph values
+        $this->plot->SetDataValues($this->data);
+        
         $this->graph_type   = $graph_type;
         
         // Set graph type and data type
-        $this->plot->SetPlotType( $this->graph_type );
-        $this->plot->SetDataType( $this->data_type[$this->graph_type] );        
+        $this->plot->SetPlotType($this->graph_type);
+        $this->plot->SetDataType($this->data_type[$this->graph_type]);
     }
  
     // ==================================================================================
@@ -100,27 +103,30 @@ class CGraph {
     // Parameters:	$data_in (array of values to uniformize)
     // Return:	    array of uniformized values
     // ==================================================================================
-	
-    public function UniformizeData($data_in) {
+    
+    public function UniformizeData($data_in)
+    {
         $array_sum = 0;
         $best_unit = '';
 
         // Uniformize data array element based on best unit
-        foreach( $data_in as $key => $data ) {
-            if( is_null($data[1]) ) 
+        foreach ($data_in as $key => $data) {
+            if (is_null($data[1])) {
                 $data_in[$key][1] = 0;
+            }
         }
 
         // Calculate sum of all values
-            foreach( $data_in as $value)
+        foreach ($data_in as $value) {
             $array_sum += $value[1];
+        }
 
         // Calculate average value and best unit
         $avg = $array_sum  / count($data_in);
-        list($value,$best_unit) = explode(' ', CUtils::Get_Human_Size($avg, 1) );
+        list($value,$best_unit) = explode(' ', CUtils::Get_Human_Size($avg, 1));
 
-        foreach($data_in as $key => $value) {
-	    $data_in[$key][1] = CUtils::Get_Human_Size($value[1], 1, $best_unit, false); 
+        foreach ($data_in as $key => $value) {
+            $data_in[$key][1] = CUtils::Get_Human_Size($value[1], 1, $best_unit, false);
         }
 
         $this->plot->SetYTitle($best_unit);
@@ -133,9 +139,10 @@ class CGraph {
     // Parameters:	none
     // Return:	    Graph file path
     // ==================================================================================
-	
-    private function get_Filepath() {
-		return $this->img_filename;
+    
+    private function get_Filepath()
+    {
+        return $this->img_filename;
     }
 
     // ==================================================================================
@@ -143,77 +150,82 @@ class CGraph {
     // Parameters:	$ytitle (Y axis title)
     // Return:	    -
     // ==================================================================================
-	
-    public function SetYTitle($ytitle) {
-      $this->plot->SetYTitle($ytitle);
+    
+    public function SetYTitle($ytitle)
+    {
+        $this->plot->SetYTitle($ytitle);
     }
-	
+    
     // ==================================================================================
     // Function: 	setLegend()
     // Parameters:	none
     // Return:	    -
     // ==================================================================================
-	
-	private function setLegend() {
-		// Setting graph legend values
-		$legends = array();
     
-		foreach ($this->data as $key => $legend) {
-			$this->plot->SetLegend(implode(': ', $legend));
-		}
+    private function setLegend()
+    {
+     // Setting graph legend values
+        $legends = array();
+    
+        foreach ($this->data as $key => $legend) {
+            $this->plot->SetLegend(implode(': ', $legend));
+        }
 
-		// Legend position (calculated regarding the width and height of the graph)
-		list($legend_width, $legend_height) = $this->plot->GetLegendSize();
-		$this->plot->SetLegendPixels($this->width - ($legend_width + 5), 10);	
-	}
-	
+     // Legend position (calculated regarding the width and height of the graph)
+        list($legend_width, $legend_height) = $this->plot->GetLegendSize();
+        $this->plot->SetLegendPixels($this->width - ($legend_width + 5), 10);
+    }
+    
     // ==================================================================================
     // Function:    setPieLegendColors()
-    // Parameters:  array variable containing list of color codes (eg: #eeefff) 
-	// Return:	    -	
-	// ==================================================================================
-	
-	public function setPieLegendColors( $colors = array() ) {
-		$this->data_colors = $colors;
-	}
+    // Parameters:  array variable containing list of color codes (eg: #eeefff)
+    // Return:	    -
+    // ==================================================================================
+    
+    public function setPieLegendColors($colors = array())
+    {
+        $this->data_colors = $colors;
+    }
 
     // ==================================================================================
-	// Function: 	isEmpty()
-	// Parameters:	none
-	// Return:		true sum of values in the graph equal 0
-	// ==================================================================================
+    // Function: 	isEmpty()
+    // Parameters:	none
+    // Return:		true sum of values in the graph equal 0
+    // ==================================================================================
     
-    protected function isEmpty() {
+    protected function isEmpty()
+    {
         $array_sum = 0;
 
-        foreach( $this->data as $val) {
+        foreach ($this->data as $val) {
             $array_sum += $val[1];
         }
         
-        if( $array_sum == 0 ) {
+        if ($array_sum == 0) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
     
     // ==================================================================================
-	// Function: 	Render()
-	// Parameters:	none
-	// Return:		graph image file path
-	// ==================================================================================
-	
-	public function Render() {
+    // Function: 	Render()
+    // Parameters:	none
+    // Return:		graph image file path
+    // ==================================================================================
+    
+    public function Render()
+    {
 
-        switch ( $this->graph_type ) {
+        switch ($this->graph_type) {
             case 'pie':
 
                 // Display message if data sum equal 0
-                if( $this->isEmpty() ) {
+                if ($this->isEmpty()) {
                     $message = "Sorry ...\nThere is not statistics to display\nfor the selected period :(";
                     $message_options = array( 'draw_background' => true, 'draw_border' => true, 'reset_font' => true, 'text_color' => 'black' );
-                    $this->plot->DrawMessage( $message, $message_options);                    
-                }else {
+                    $this->plot->DrawMessage($message, $message_options);
+                } else {
                     // Set legend
                     $this->setLegend();
                     
@@ -221,11 +233,11 @@ class CGraph {
                     $this->plot->SetPlotAreaPixels($this->padding, $this->padding, ($this->width * 0.65), $this->height - $this->padding);
 
                     // Set graph colors and shading
-                    $this->plot->SetDataColors( $this->data_colors );
-                    $this->plot->SetShading( 0 );
+                    $this->plot->SetDataColors($this->data_colors);
+                    $this->plot->SetShading(0);
                     $this->plot->SetLabelScalePosition(0.5);
-                }                
-            break;
+                }
+                break;
             case 'bars':
                 // X label angle
                 $this->plot->SetXLabelAngle(90);
@@ -235,21 +247,20 @@ class CGraph {
                 $this->plot->SetDataBorderColors(array('black'));
 
                 // Shading
-                $this->plot->SetShading( 2 );
-            break;
+                $this->plot->SetShading(2);
+                break;
         } // end switch
 
         # Turn off X tick labels and ticks because they don't apply here:
         $this->plot->SetXTickLabelPos('none');
         $this->plot->SetXTickPos('none');
-        $this->plot->SetPlotAreaWorld(NULL, 0, NULL, NULL);
+        $this->plot->SetPlotAreaWorld(null, 0, null, null);
         
         // Graph rendering
         $this->plot->DrawGraph();
 
-		// Return image file path
-		return $this->get_Filepath();
-		
+     // Return image file path
+        return $this->get_Filepath();
+        
     } // end function Render()
 }  // end CGraph class
-?>

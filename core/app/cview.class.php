@@ -16,13 +16,16 @@
   +-------------------------------------------------------------------------+
  */
 
-class CView extends Smarty {
+class CView extends Smarty
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->init();
     }
 
-    private function init() {
+    private function init()
+    {
         // Set to true to force template generation if a template has changed
         $this->compile_check = false;
 
@@ -39,9 +42,8 @@ class CView extends Smarty {
         $this->compile_dir = VIEW_CACHE_DIR;
     }
 
-    public function render($view = 'index.tpl') {
+    public function render($view = 'index.tpl')
+    {
         $this->display($view);
     }
 }
-
-?>
