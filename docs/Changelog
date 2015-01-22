@@ -1,13 +1,21 @@
-=== Release 7.0.2 (December XX 2014) ===
+=== Release 7.0.2 (January 22nd 2015) ===
 
 Changelog
 
-- General: Improve look and feel of all pages
+- General: Catalog selector now display current catalog label
+- General: Web UI look and feel improvements
+- General: Improved PHP code security and best practices compliance (PSR2)
+- General: Improve support of PHP version 5.5 (see #000147)
+- General: Pie graphs without data will display a message like "There's no data to display" (see #000137)
+- General: With version 7.0.1, graphs appear randomly. This has been fixed by delaying graphs display (thanks to cpasqualini)
+- General: Breadcrumb navigation bar design has been improved
+- Jobs report: Jobs icon are now colourized depending on the job status
 - Translations: Update messages.po file for all languages
 - Requirements: Minimal supported PHP version have been raised to >= 5.3
 
 Fixed bugs
 
+- 0000100 [bug-pgsql] Wrong SQL to make 'Pools and volumes status' graph
 - 0000137 [bug-php] Pie graph empty if there's no value
 - 0000140 [bug-php] Fix and improve breadcrumb navigation
 - 0000145 [bug/design] Catalog selector should display current catalog name
