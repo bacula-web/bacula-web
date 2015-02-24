@@ -31,7 +31,7 @@ class CView extends Smarty
 
         // Template caching
         $this->cache_dir = VIEW_CACHE_DIR;
-        $this->caching = 1;
+        $this->caching = 0;
         $this->cache_lifetime = 60;
 
         // Set to true for debug or dev purpose only
