@@ -22,8 +22,7 @@
  $classloader = new ClassAutoLoader();
  $classloader->add_Path('core');
  $classloader->add_Path('application');
- #$classloader->add_Path('core/vendor');
- $classloader->add_Exclusion('core/vendor/smarty-gettext');
+ $classloader->add_Exclusion('core/vendor/smarty-gettext-1.1');
  
  // Get all $_POST and $_GET values
  CHttpRequest::get_Vars();
