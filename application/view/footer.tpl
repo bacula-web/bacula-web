@@ -1,6 +1,6 @@
         <!-- JQuery and Bootstrap Javascript -->
-        <script src="vendor/jquery-1.11.1/jquery-1.11.1.min.js"></script>
-        <script src="vendor/bootstrap-3.3.1/dist/js/bootstrap.min.js"></script>
+        <script src="core/vendor/jquery-1.11.1/jquery-1.11.1.min.js"></script>
+        <script src="core/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="application/assets/js/ie10-viewport-bug-workaround.js"></script>

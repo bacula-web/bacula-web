@@ -8,12 +8,12 @@
   <title>Bacula-Web - {$page_name}</title>
 
   <!-- Bootstrap front-end framework -->
-  <link rel="stylesheet" href="vendor/bootstrap-3.3.1/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="vendor/bootstrap-3.3.1/dist/css/bootstrap-theme.min.css"> 
+  <link rel="stylesheet" href="core/vendor/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="core/vendor/bootstrap/dist/css/bootstrap-theme.min.css"> 
   <link rel="stylesheet" href="application/assets/css/default.css">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="vendor/font-awesome-4.2.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="core/vendor/font-awesome/css/font-awesome.min.css">
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
