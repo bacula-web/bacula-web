@@ -37,7 +37,6 @@ try {
 
     if (isset($_POST['period_selector'])) {
         $selected_period = CHttpRequest::get_Value('period_selector');
-        echo '<pre>selected period ' . $selected_period . '</pre>';
         $view->assign('custom_period_list_selected', $selected_period);
 
         switch($selected_period) {
