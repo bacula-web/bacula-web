@@ -133,7 +133,6 @@ class Bweb
         
     public function GetVolumeList()
     {
-        $pools        = '';
         $volumes      = '';
         $volumes_list = array();
         $query        = "";
