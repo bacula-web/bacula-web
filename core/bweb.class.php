@@ -82,9 +82,11 @@ class Bweb
         $this->view->assign('catalog_current_id', $this->catalog_current_id);
             $this->view->assign('catalog_label', FileConfig::get_Value('label', $this->catalog_current_id));
             
-     // Getting database connection paremeter from configuration file
-        $dsn     = FileConfig::get_DataSourceName($this->catalog_current_id);
+        // Getting database connection paremeter from configuration file
+        $dsn = FileConfig::get_DataSourceName($this->catalog_current_id);
         $driver = FileConfig::get_Value('db_type', $this->catalog_current_id);
+        $user = '';
+        $pwd = '';
 
         if ($driver != 'sqlite') {
             $user    = FileConfig::get_Value('login', $this->catalog_current_id);
