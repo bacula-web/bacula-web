@@ -27,7 +27,7 @@ class CDBQuery
     // ==================================================================================
     public static function get_Select($param = array())
     {
-        $query = '';
+        $query = 'SELECT ';
         $where = '';
 
         if (!is_array($param) || empty($param)) {
@@ -36,8 +36,6 @@ class CDBQuery
         }
 
         // Buidling SQL query
-        $query = 'SELECT ';
-
         // Fields
         if (isset($param['fields'])) {
             foreach ($param['fields'] as $field) {
