@@ -31,7 +31,7 @@ class Bweb
     public $catalog_nb;                // Catalog count
     public $catalog_current_id = 0;    // Selected or default catalog id
 
-    function __construct(&$view)
+    public function __construct(&$view)
     {
      // Loading configuration file parameters
         try {
