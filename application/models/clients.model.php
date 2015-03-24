@@ -66,22 +66,19 @@ class Clients_Model extends CModel
     public static function getClientInfos($pdo, $client_id)
     {
         $client     = array();
-        $result     = '';
-        
-        $fields        = array('name','uname');
-        $where        = array( "clientid = $client_id" );
-        $statment      = CDBQuery::get_Select(array('table'=> 'Client', 'fields' => $fields, 'where' => $where ));
+        $fields     = array('name','uname');
+        $where      = array( "clientid = $client_id" );
+        $statment   = CDBQuery::get_Select(array('table'=> 'Client', 'fields' => $fields, 'where' => $where ));
         
         $result     = CDBUtils::runQuery($statment, $pdo);
             
         foreach ($result->fetchAll() as $client) {
-            $uname               = explode(' ', $client['uname']);
-            $client['version'] = $uname[0];
-                
-            $uname               = explode(',', $uname[2]);
+            $uname              = explode(' ', $client['uname']);
+            $client['version']  = $uname[0];
+            $uname              = explode(',', $uname[2]);
             $temp               = explode('-', $uname[0]);
-            $client['arch']       = $temp[0];
-            $client['os']      = $uname[1];
+            $client['arch']     = $temp[0];
+            $client['os']       = $uname[1];
         }
         
         return $client;
