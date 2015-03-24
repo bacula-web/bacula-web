@@ -2,7 +2,8 @@
 
 Changelog
 
-- Upgraded Twitter Bootstrap framework from 3.3.1 to version 3.3.4
+- General: Fixed several security issues and bugs in the code
+- General: Upgraded Twitter Bootstrap framework from 3.3.1 to version 3.3.4
 
 Fixed bugs
 
