@@ -136,7 +136,6 @@ class Bweb
         $volumes      = '';
         $volumes_list = array();
         $query        = "";
-        $debug          = false;
                 
         foreach (Pools_Model::getPools($this->db_link) as $pool) {
             switch($this->db_driver)
@@ -154,7 +153,6 @@ class Bweb
                     break;
             } // end switch
                     
-         //$volumes = $this->db_link->runQuery($query);
             $volumes  = CDBUtils::runQuery($query, $this->db_link);
                 
             if (!array_key_exists($pool['name'], $volumes_list)) {
