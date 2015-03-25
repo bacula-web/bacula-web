@@ -230,12 +230,12 @@
             case J_FATAL:
                 // Job speed
                 $seconds = DateTimeUtil::get_ElaspedSeconds($end_time, $start_time);
-                if ($seconds != false) {
+                if ($seconds !== false) {
                     $speed     = $job['jobbytes'] / $seconds;
                     $speed     = CUtils::Get_Human_Size($speed, 2) . '/s';
                     $job['speed'] = $speed;
                 } else {
-                    $job['speed']    = 'n/a';
+                    $job['speed'] = 'n/a';
                 }
                 
                 // Job compression
