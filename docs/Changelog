@@ -7,6 +7,7 @@ Changelog
 
 Fixed bugs
 
+- 0000162 [bug] Client jobs filter does not work in Jobs report page
 - 0000163 [bug-php] Dashboard: Selected period in period selector do not reflect user's choice
 - 0000165 [bug] Problem with the catalog selector
 - 0000166 [bug] joblogs.php is showing wrong jobid
