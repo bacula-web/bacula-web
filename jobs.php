@@ -227,7 +227,6 @@
             case J_COMPLETED_ERROR:
             case J_NO_FATAL_ERROR:
             case J_CANCELED:
-            case J_FATAL:
                 // Job speed
                 $seconds = DateTimeUtil::get_ElaspedSeconds($end_time, $start_time);
                 if ($seconds !== false) {
@@ -245,7 +244,11 @@
                 } else {
                     $job['compression'] = 'n/a';
                 }
-                break;
+            break;
+            case J_FATAL:
+                $job['speed'] = '0 Mb/s';
+                $job['compression'] = 'n/a';
+            break;
         } // end switch
       
         // Job size

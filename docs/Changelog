@@ -11,6 +11,7 @@ Fixed bugs
 - 0000165 [bug] Problem with the catalog selector
 - 0000166 [bug] joblogs.php is showing wrong jobid
 - 0000167 [bug] Problem enabling Smarty template cache
+- 0000168 [bug-php] Division by zero warning in Jobs report page (bacula-dev)
 
 New features
 
