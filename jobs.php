@@ -230,7 +230,7 @@
                 // Job speed
                 $seconds = DateTimeUtil::get_ElaspedSeconds($end_time, $start_time);
                 if ($seconds !== false) {
-                    $speed     = $job['jobbytes'] / $seconds;
+                    $speed     = empty($seconds) ? 0 : $job['jobbytes'] / $seconds;
                     $speed     = CUtils::Get_Human_Size($speed, 2) . '/s';
                     $job['speed'] = $speed;
                 } else {
