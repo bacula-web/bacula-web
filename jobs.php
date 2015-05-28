@@ -52,6 +52,11 @@
       'I' => 'Incr',
       'F' => 'Full'
   );
+
+  // Levels list filter
+  $levels_list = Jobs_Model::getLevels($dbSql->db_link, $job_levels);
+  $levels_list['']  = 'Any';
+  $view->assign('levels_list', $levels_list);
   
   // Clients list filter
   $clients_list     = Clients_Model::getClients($dbSql->db_link);
@@ -89,11 +94,29 @@
         $view->assign('job_status_filter', CHttpRequest::get_Value('status'));
     }
   
+  // Selected level filter
+    if (!is_null(CHttpRequest::get_Value('level_id'))) {
+        $level_id = CHttpRequest::get_Value('level_id');
+        $view->assign('level_filter', $level_id);
+
+        if (!is_null(CHttpRequest::get_value('status'))) {
+            if (!empty($level_id)) {
+                $query    .= "AND Job.Level = '$level_id' ";
+            }
+        } else {
+            if (!empty($level_id)) {
+                $query    .= "WHERE Job.Level = '$level_id' ";
+            }
+        }
+    } else {
+        $view->assign('level_filter', '');
+    }
+
   // Selected client filter
     if (!is_null(CHttpRequest::get_Value('client_id'))) {
         $client_id = CHttpRequest::get_Value('client_id');
         $view->assign('client_filter', $client_id);
-      
+
         if (!is_null(CHttpRequest::get_value('status'))) {
             if ($client_id != 0) {
                 $query    .= "AND Job.ClientId = '$client_id' ";

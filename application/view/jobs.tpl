@@ -80,6 +80,15 @@
 		</div>
 		
 		<div class="form-group">
+		  <label>{t}Level{/t}</label>
+			<select name="level_id" class="form-control">
+			  {foreach from=$levels_list key=level_id item=level_name}
+				<option value="{$level_id}" {if $level_id eq $level_filter}selected{/if}>{$level_name}</option>
+			  {/foreach}
+			</select>
+		</div>
+
+		<div class="form-group">
 		  <label>{t}Client{/t}</label>
 			<select name="client_id" class="form-control">
 			  {foreach from=$clients_list key=client_id item=client_name}
