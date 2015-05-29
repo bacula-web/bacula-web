@@ -1,7 +1,7 @@
 <?php
 /* 
  +-------------------------------------------------------------------------+
- | Copyright (C) 2004 Juan Luis Francés Jiménez				  			   |
+ | Copyright (C) 2004 Juan Luis Francï¿½s Jimï¿½nez				  			   |
  | Copyright 2010-2015, Davide Franco			                  		   |
  |                                                                         |
  | This program is free software; you can redistribute it and/or           |

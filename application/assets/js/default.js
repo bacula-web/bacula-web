@@ -8,7 +8,7 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 
     $('.datetimepicker').datetimepicker({
-        locale: language,
+        locale: config_language,
         format: 'YYYY-MM-DD HH:mm:ss'
     });
 });

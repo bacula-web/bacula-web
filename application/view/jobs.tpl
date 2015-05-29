@@ -149,7 +149,4 @@
 	  </div> <!-- div class="col-md-3 cold-lg-3" -->
   </div> <!-- div class="row" -->
 </div> <!-- div class="container-fluid" -->
-<script>
-    var language = '{$config_language}';
-</script>
 {include file="footer.tpl"}

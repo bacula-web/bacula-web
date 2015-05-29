@@ -8,6 +8,9 @@
         <script src="application/assets/js/ie10-viewport-bug-workaround.js"></script>
 
         <!-- Custom javascript for Bacula-Web -->
+        <script>
+            var config_language = "{php}echo FileConfig::get_Value('language');{/php};"
+        </script>
         <script src="application/assets/js/default.js"></script>
     </body>
 </html>
