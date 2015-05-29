@@ -6,4 +6,9 @@ $(document).ready(function(){
     
     /* Bootstrap Tooltip */
     $('[data-toggle="tooltip"]').tooltip();
-});           
+
+    $('.datetimepicker').datetimepicker({
+        locale: language,
+        format: 'YYYY-MM-DD HH:mm:ss'
+    });
+});

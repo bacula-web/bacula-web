@@ -96,6 +96,26 @@
 			  {/foreach}
 			</select>
 		</div>
+
+		<div class="form-group">
+		  <label>{t}Start time{/t}</label>
+            <div class='input-group date datetimepicker' id='datetimepicker1'>
+                <input name="start_time" type='text' class="form-control" value="{$start_time_filter}" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+            </div>
+		</div>
+
+		<div class="form-group">
+		  <label>{t}End time{/t}</label>
+            <div class='input-group date datetimepicker' id='datetimepicker1'>
+                <input name="end_time" type='text' class="form-control" value="{$end_time_filter}" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+            </div>
+		</div>
 			  
 		<span class="help-block">{t}Options{/t}</span>
 		  
@@ -129,5 +149,7 @@
 	  </div> <!-- div class="col-md-3 cold-lg-3" -->
   </div> <!-- div class="row" -->
 </div> <!-- div class="container-fluid" -->
-
+<script>
+    var language = '{$config_language}';
+</script>
 {include file="footer.tpl"}

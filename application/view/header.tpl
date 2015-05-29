@@ -10,6 +10,7 @@
   <!-- Bootstrap front-end framework -->
   <link rel="stylesheet" href="core/vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="core/vendor/bootstrap/css/bootstrap-theme.min.css"> 
+  <link rel="stylesheet" href="core/vendor/bootstrap/css/bootstrap-datetimepicker.min.css">
   <link rel="stylesheet" href="application/assets/css/default.css">
 
   <!-- Font Awesome -->

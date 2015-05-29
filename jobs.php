@@ -57,7 +57,7 @@
   $levels_list = Jobs_Model::getLevels($dbSql->db_link, $job_levels);
   $levels_list['']  = 'Any';
   $view->assign('levels_list', $levels_list);
-  
+
   // Clients list filter
   $clients_list     = Clients_Model::getClients($dbSql->db_link);
   $clients_list[0]  = 'Any';
@@ -128,6 +128,42 @@
         }
     } else {
         $view->assign('client_filter', 0);
+    }
+
+    // Selected start time filter
+    if (!is_null(CHttpRequest::get_Value('start_time'))) {
+        $start_time = CHttpRequest::get_Value('start_time');
+        $view->assign('start_time_filter', $start_time);
+
+        if (!is_null(CHttpRequest::get_value('status'))) {
+            if (!empty($start_time)) {
+                $query    .= "AND Job.StartTime >= '$start_time' ";
+            }
+        } else {
+            if (!empty($start_time)) {
+                $query    .= "WHERE Job.StartTime >= '$start_time' ";
+            }
+        }
+    } else {
+        $view->assign('start_time_filter', '');
+    }
+
+    // Selected end time filter
+    if (!is_null(CHttpRequest::get_Value('end_time'))) {
+        $end_time = CHttpRequest::get_Value('end_time');
+        $view->assign('end_time_filter', $end_time);
+
+        if (!is_null(CHttpRequest::get_value('status'))) {
+            if (!empty($end_time)) {
+                $query    .= "AND Job.EndTime <= '$end_time' ";
+            }
+        } else {
+            if (!empty($end_time)) {
+                $query    .= "WHERE Job.EndTime <= '$end_time' ";
+            }
+        }
+    } else {
+        $view->assign('end_time_filter', '');
     }
   
     $order_by                 = '';
@@ -294,6 +330,9 @@
   // Set page name
     $current_page = 'Jobs report';
     $view->assign('page_name', $current_page);
+
+    // Language
+    $view->assign('config_language', FileConfig::get_Value('language'));
   
   // Process and display the template
     $view->render('jobs.tpl');
