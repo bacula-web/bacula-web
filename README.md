@@ -9,7 +9,7 @@ This is my little contribution to Bacula Open Source Backup Software project (ht
 Official website
  http://www.bacula-web.org
 
-BaculaWiki
+Bacula wiki
  http://wiki.bacula.org/doku.php?id=3rd_party_addons
 
 Bacula website
