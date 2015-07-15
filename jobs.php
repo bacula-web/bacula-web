@@ -58,6 +58,11 @@
   $clients_list[0]  = 'Any';
   $view->assign('clients_list', $clients_list);
   
+  // Pools list filter
+  $pools_list     = Pools_Model::getPools($dbSql->db_link);
+  $pools_list[0]  = array('poolid' => 0, 'name' => 'Any');
+  $view->assign('pool_list', $pools_list);
+
   $query .= "SELECT Job.JobId, Job.Name AS Job_name, Job.Type, Job.StartTime, Job.EndTime, Job.Level, Job.ReadBytes, Job.JobBytes, Job.JobFiles, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
   $query .= "FROM Job ";
   $query .= "LEFT JOIN Pool ON Job.PoolId=Pool.PoolId ";
@@ -106,7 +111,25 @@
     } else {
         $view->assign('client_filter', 0);
     }
-  
+
+  // Selected pool filter
+    if (!is_null(CHttpRequest::get_Value('pool_id'))) {
+        $pool_id = CHttpRequest::get_Value('pool_id');
+        $view->assign('pool_filter', $pool_id);
+
+        if (!is_null(CHttpRequest::get_value('status')) or !is_null(CHttpRequest::get_value('client_id'))) {
+            if ($pool_id != 0) {
+                $query    .= "AND Job.PoolId = '$pool_id' ";
+            }
+        } else {
+            if ($pool_id != 0) {
+                $query    .= "WHERE Job.PoolId = '$pool_id' ";
+            }
+        }
+    } else {
+        $view->assign('pool_filter', 0);
+    }
+
     $order_by                 = '';
     $order_by_asc             = 'DESC';
     $result_order_asc_checked = '';

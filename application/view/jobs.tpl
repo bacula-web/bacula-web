@@ -87,6 +87,14 @@
 			  {/foreach}
 			</select>
 		</div>
+		<div class="form-group">
+		  <label>{t}Pool{/t}</label>
+			<select name="pool_id" class="form-control">
+			  {foreach from=$pool_list item=pool}
+				<option value="{$pool.poolid}" {if $pool.poolid eq $pool_filter}selected{/if}>{$pool.name}</option>
+			  {/foreach}
+			</select>
+		</div>
 			  
 		<span class="help-block">{t}Options{/t}</span>
 		  
