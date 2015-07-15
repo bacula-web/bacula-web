@@ -41,13 +41,14 @@ class Pools_Model extends CModel
         $pools       = null;
         $table    = 'Pool';
         $where    = null;
+        $orderby  = 'Name';
         
         if (FileConfig::get_Value('hide_empty_pools')) {
             $where[] = "$table.NumVols > 0";
         }
         
         $fields = array( 'poolid', 'name', 'numvols');
-        $result = CDBUtils::runQuery(CDBQuery::get_Select(array('table' => $table, 'fields' => $fields, 'where' => $where )), $pdo);
+        $result = CDBUtils::runQuery(CDBQuery::get_Select(array('table' => $table, 'fields' => $fields, 'where' => $where, 'orderby' => $orderby)), $pdo);
             
         foreach ($result->fetchAll() as $pool) {
             $pools[] = $pool;
