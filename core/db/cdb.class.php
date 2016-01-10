@@ -38,7 +38,7 @@ class CDB
     // Return:		valid PDO connection
     // ==================================================================================
     
-    public static function connect($dsn, $user = null, $password = null, $options = array())
+    public static function connect($dsn, $user = null, $password = null)
     {
 
         try {
@@ -84,7 +84,6 @@ class CDB
     
     public static function getServerTimestamp()
     {
-        $statment = null;
         if (!is_null(self::$connection)) {
             // Different query for SQlite
             if (self::getDriverName() == 'sqlite') {

@@ -266,7 +266,7 @@
   
   // Count jobs
     $view->assign('jobs_found', count($last_jobs));
-    $view->assign('total_jobs', Jobs_Model::count($dbSql->db_link, 'Job'));
+    $view->assign('total_jobs', Jobs_Model::count($dbSql->db_link));
   
   // Set page name
     $current_page = 'Jobs report';

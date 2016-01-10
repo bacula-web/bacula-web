@@ -56,7 +56,6 @@ class File
             return true;
         } else {
             throw new Exception("Config file not found or bad file permissions");
-            return false;
         }
     } // end function open()
 }

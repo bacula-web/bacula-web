@@ -40,11 +40,9 @@ class Jobs_Model extends CModel
     
     public static function count_Jobs($pdo_connection, $period_timestamps, $job_status = null, $job_level = null)
     {
-        $statment    = null;
         $where        = null;
         $tablename    = 'Job';
         $fields        = array('COUNT(*) as job_count');
-        $intervals    = null;
         
      // Check PDO object
         if (!is_a($pdo_connection, 'PDO') and is_null($pdo_connection)) {
@@ -123,7 +121,6 @@ class Jobs_Model extends CModel
     
     public static function getStoredFiles($pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
     {
-        $statment     = '';
         $where      = array();
         $fields     = array( 'SUM(JobFiles) AS stored_files' );
         $tablename    = 'Job';
@@ -167,7 +164,6 @@ class Jobs_Model extends CModel
     
     public static function getStoredBytes($pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
     {
-        $statment     = '';
         $where      = array();
         $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
         $tablename    = 'Job';

@@ -71,11 +71,8 @@ class CDBUtils
 
     public static function runQuery($query, $db_link)
     {
-        $result      = null;
-        $result_count     = 0;
-        $statment    = null;
-                
         $statment    = $db_link->prepare($query);
+
         if ($statment == false) {
             throw new PDOException("Failed to prepare PDOStatment <br />$query");
         }

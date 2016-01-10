@@ -73,7 +73,6 @@ class FileConfig extends File
      // Check if the $global_config have been already set first
         if (!isset(self::$config_file)) {
             throw new Exception("The configuration is missing or ther's something wrong in it");
-            return false;
         }
             
         if (!is_null($catalog_id)) {
@@ -81,7 +80,6 @@ class FileConfig extends File
                 return parent::$config[$catalog_id][$parameter];
             } else {
                 throw new Exception("Configuration error: the catalog id <$catalog_id> do not exist");
-                return false;
             }
         } else {
             if (isset( parent::$config[$parameter] )) {

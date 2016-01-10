@@ -77,7 +77,6 @@ class CGraph
         
         if (!is_array($data_in)) {
             throw new Exception('Passed $data_in variable is not an array');
-            exit;
         }
         
         $this->uniform_data = $uniform_data;
@@ -164,14 +163,12 @@ class CGraph
     
     private function setLegend()
     {
-     // Setting graph legend values
-        $legends = array();
-    
+     	// Setting graph legend values
         foreach ($this->data as $key => $legend) {
             $this->plot->SetLegend(implode(': ', $legend));
         }
 
-     // Legend position (calculated regarding the width and height of the graph)
+     	// Set Legend position (calculated regarding the width and height of the graph)
         list($legend_width, $legend_height) = $this->plot->GetLegendSize();
         $this->plot->SetLegendPixels($this->width - ($legend_width + 5), 10);
     }

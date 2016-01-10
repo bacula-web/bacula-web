@@ -32,7 +32,6 @@ class CDBQuery
 
         if (!is_array($param) || empty($param)) {
             throw new Exception("Missing parameters: you should provide an array");
-            exit;
         }
 
         // Buidling SQL query
