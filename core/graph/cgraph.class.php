@@ -40,7 +40,7 @@ class CGraph
     // Return:      -
     // ==================================================================================
 
-    function __construct($filename, $width = 400, $height = 260)
+    public function __construct($filename, $width = 400, $height = 260)
     {
         // Set image file relative path
         $this->img_filename = str_replace(BW_ROOT . '/', '', VIEW_CACHE_DIR) . '/' . $filename;
