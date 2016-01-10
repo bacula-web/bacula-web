@@ -35,7 +35,7 @@ class CDBUtils
                 $pdo_connection = self::getConnectionStatus($PDO_connection);
                 break;
             default:
-             // Assume that Apache have access to the SQLite database file (to be improved)
+             // We assume that the user running Apache has access to the SQLite database file (to be improved)
                 $pdo_connection = true;
                 break;
         }
