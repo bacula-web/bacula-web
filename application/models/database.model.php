@@ -27,7 +27,6 @@ class Database_Model extends CModel
     public static function get_Size($pdo_connection, $catalog_id)
     {
         $db_name    = FileConfig::get_Value('db_name', $catalog_id);
-        $statment     = null;
         $result         = null;
         
         switch(CDB::getDriverName())
