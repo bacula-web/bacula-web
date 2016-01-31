@@ -227,7 +227,7 @@
             case J_CANCELED:
                 // Job speed
                 $seconds = DateTimeUtil::get_ElaspedSeconds($end_time, $start_time);
-                if ($seconds !== false) {
+                if ($seconds !== false && $seconds > 0) {
                     $speed     = $job['jobbytes'] / $seconds;
                     $speed     = CUtils::Get_Human_Size($speed, 2) . '/s';
                     $job['speed'] = $speed;
