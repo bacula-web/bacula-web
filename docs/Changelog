@@ -3,6 +3,7 @@
 Changelog
 
 - Pools and volumes report: Volumes table now display slot number
+- Jobs report: you can filter jobs with status "Terminated with errors"
 
 Fixed bugs
 
