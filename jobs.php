@@ -216,10 +216,8 @@
         // Job files
         $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
 
-        // Job speed
+        // Set default Job speed and compression rate
         $job['speed'] = '0 Mb/s';
-
-        // Job compression
         $job['compression'] = 'n/a';
       
         switch($job['jobstatus']) {
@@ -244,10 +242,6 @@
                 } else {
                     $job['compression'] = 'n/a';
                 }
-            break;
-            case J_FATAL:
-                $job['speed'] = '0 Mb/s';
-                $job['compression'] = 'n/a';
             break;
         } // end switch
       
