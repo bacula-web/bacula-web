@@ -141,12 +141,12 @@ class Bweb
             {
                 case 'sqlite':
                 case 'mysql':
-                    $query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention
+                    $query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention, Media.slot
 									FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid
 									WHERE Media.poolid = '". $pool['poolid'] . "' ORDER BY Media.volumename";
                     break;
                 case 'pgsql':
-                    $query  = "SELECT media.volumename, media.volbytes, media.volstatus, media.mediatype, media.lastwritten, media.volretention
+                    $query  = "SELECT media.volumename, media.volbytes, media.volstatus, media.mediatype, media.lastwritten, media.volretention, media.slot
 									FROM media LEFT JOIN pool ON media.poolid = pool.poolid
 									WHERE media.poolid = '". $pool['poolid'] . "' ORDER BY media.volumename";
                     break;
