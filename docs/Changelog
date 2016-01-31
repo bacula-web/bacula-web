@@ -6,7 +6,7 @@ Changelog
 
 Fixed bugs
 
- none
+- 0000170 [bug] Warning: Division by zero in jobs.php
 
 New features
 
