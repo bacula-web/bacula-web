@@ -32,14 +32,16 @@
   define('STATUS_RUNNING', 1);
   define('STATUS_WAITING', 2);
   define('STATUS_COMPLETED', 3);
-  define('STATUS_FAILED', 4);
-  define('STATUS_CANCELED', 5);
+  define('STATUS_COMPLETED_WITH_ERRORS', 4);
+  define('STATUS_FAILED', 5);
+  define('STATUS_CANCELED', 6);
   
   $job_status = array(
       STATUS_ALL => 'All',
       STATUS_RUNNING => 'Running',
       STATUS_WAITING => 'Waiting',
       STATUS_COMPLETED => 'Completed',
+      STATUS_COMPLETED_WITH_ERRORS => 'Completed with errors',
       STATUS_FAILED => 'Failed',
       STATUS_CANCELED => 'Canceled'
   );
@@ -76,8 +78,11 @@
             case STATUS_COMPLETED:
                 $query .= "WHERE Job.JobStatus = 'T' ";
               break;
+            case STATUS_COMPLETED_WITH_ERRORS:
+		$query .= "WHERE Job.JobStatus = 'E' ";
+	    break;
             case STATUS_FAILED:
-                $query .= "WHERE Job.JobStatus IN ('f', 'E') ";
+                $query .= "WHERE Job.JobStatus = 'f' ";
               break;
             case STATUS_CANCELED:
                 $query .= "WHERE Job.JobStatus = 'A' ";
