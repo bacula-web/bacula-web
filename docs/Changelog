@@ -6,6 +6,7 @@ Changelog
 
 Fixed bugs
 
+- 0000169 [translation] Update pt_BR translation
 - 0000170 [bug] Warning: Division by zero in jobs.php
 
 New features
@@ -14,7 +15,8 @@ New features
 
 Translations
 
-- Add Japanese translation (Thanks to Ken Sawada)
+- Added Japanese translation (thanks to Ken Sawada)
+- Updated Portugues Brazilian translation (thanks to Brivaldo Junior)
 
 === Release 7.0.3 (March 26th 2015) ===
 
