@@ -1,4 +1,4 @@
-=== Release 7.0.4 (January dd 2016) ===
+=== Release 7.1.0 (March 21 2016) ===
 
 Changelog
 
@@ -10,6 +10,7 @@ Fixed bugs
 - 0000159 [feature] Volume report slot in tape robot
 - 0000169 [translation] Update pt_BR translation
 - 0000170 [bug] Warning: Division by zero in jobs.php
+- 0000171 [bug] Running and Waiting jobs older than 24 hours are not visible in Dashboard
 
 New features
 
