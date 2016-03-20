@@ -20,7 +20,7 @@ class DateTimeUtil
 
     // ==================================================================================
     // Function:        get_Timestamp()
-    // Parameters:      $time ( UNIX date string)
+    // Parameters:      $time (UNIX date string)
     // Return:          UNIX timestamp
     // ==================================================================================
 
@@ -30,10 +30,10 @@ class DateTimeUtil
     }
 
     // ==================================================================================
-    // Function: 	Get_Elapsed_Time()
-    // Parameters:	$start_time			(start time in date format)
-    // Parameters:	$end_time			(end time in date format)
-    // Return:		Job elapsed time (day) HH:MM:ss
+    // Function: 	    Get_Elapsed_Time()
+    // Parameters:	    $start_time (start time in date format)
+    //            	    $end_time (end time in date format)
+    // Return:		    Job elapsed time (day) HH:MM:ss
     // ==================================================================================
 
     public static function Get_Elapsed_Time($start_time, $end_time)
@@ -75,7 +75,7 @@ class DateTimeUtil
     // ==================================================================================
     // Function:        get_ElapsedSeconds()
     // Parameters:      $end
-    //			$start
+    //			        $start
     // Return:          amount of seconds between two UNIX date string or false
     // ==================================================================================
 
@@ -90,9 +90,9 @@ class DateTimeUtil
     }
 
     // ==================================================================================
-    // Function: 	get_Day_Intervals()
-    // Parameters:	$day
-    // Return:		array('start' => start_timestamp, 'end' => end_timestamp)
+    // Function: 	    get_Day_Intervals()
+    // Parameters:	    $day
+    // Return:		    array('start' => start_timestamp, 'end' => end_timestamp)
     // ==================================================================================
     
     public static function get_Day_Intervals($day)
@@ -104,9 +104,9 @@ class DateTimeUtil
     }
 
     // ==================================================================================
-    // Function: 	getLastDaysIntervals()
-    // Parameters:	$nb_day
-    // Return:		array('start' => start_timestamp, 'end' => end_timestamp) of last n days
+    // Function: 	    getLastDaysIntervals()
+    // Parameters:	    $nb_day
+    // Return:		    array('start' => start_timestamp, 'end' => end_timestamp) of last n days
     // ==================================================================================
 
     public static function getLastDaysIntervals($nb_days)
