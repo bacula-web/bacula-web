@@ -7,13 +7,12 @@ Changelog
 
 Fixed bugs
 
-- 0000159 [feature] Volume report slot in tape robot
 - 0000169 [translation] Update pt_BR translation
 - 0000170 [bug] Warning: Division by zero in jobs.php
 
 New features
 
- none
+- 0000159 [feature] Volume report slot in tape robot
 
 Translations
 
