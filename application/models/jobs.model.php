@@ -60,11 +60,11 @@ class Jobs_Model extends CModel
      // Defining interval depending on job status
         if (!is_null($job_status)) {
             switch($job_status) {
-                case 'running':
-                    $where = array('(starttime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ' );
-                    break;
+                // Using Bacula version 5.0.3, waiting jobs have both starttime and endtime set 0000-00-00 00:00:00
+                // Running set to YYYY-mm-dd hh:mm:ss (replace by real time) and endtime set to 0000-00-00 00:00:00
+                // So, I'd not use starttime and endtime for waiting and running jobs here
                 case 'waiting':
-              // We don't use interval for waiting jobs
+                case 'running':
                     break;
                 default:
                     $where = array( '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ' );
