@@ -16,7 +16,7 @@
 			<th class="text-center">{t}Status{/t}</th>
 			<th class="text-center">{t}Slot{/t}</th>
 		</tr>
-		{foreach from=$pool item=volume}
+		{foreach from=$pool.volumes item=volume}
 		<tr>
 			<td class="strong">{$volume.volumename}</td>
 			<td>{$volume.volbytes}</td>
@@ -33,6 +33,10 @@
 			</td>
 		</tr>
 		{/foreach}
+		<tr>
+			<td><b>{t}Total{/t}</b></td>
+			<td>{$pool.total_used_bytes}</td>
+		</tr>
 	</table>	
     {/foreach}
 </div> <!-- div class="container-fluid" -->

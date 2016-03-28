@@ -158,7 +158,8 @@ class Bweb
                 
             // If we have at least 1 volume in this pool, create sub array for the pool
             if (!array_key_exists($pool_name, $pools)) {
-                $pools[ $pool_name ] = array();
+                $pools[$pool_name] = array();
+                $pools[$pool_name]['volumes'] = array();
             }
                     
             foreach ($volumes->fetchAll() as $volume) {
@@ -183,7 +184,7 @@ class Bweb
                 }
                                         
             // Push the volume array to the $pool array
-            array_push($pools[ $pool_name], $volume);
+            array_push($pools[ $pool_name]['volumes'], $volume);
             } // end foreach volumes
             
             // Calulate used bytes for each pool
@@ -193,10 +194,6 @@ class Bweb
             $pools[$pool_name]['total_used_bytes'] = CUtils::Get_Human_Size($result[0]['sum']);
             
         } // end foreach pools
-
-echo '<pre>';
-var_dump( $pools );
-echo '</pre>';
                 
         return $pools;
     } // end function GetVolumeList()
