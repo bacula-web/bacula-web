@@ -137,6 +137,8 @@ class Bweb
         $query = "";
                 
         foreach (Pools_Model::getPools($this->db_link) as $pool) {
+        	$pool_name = $pool['name'];
+        	
             switch($this->db_driver)
             {
                 case 'sqlite':
@@ -155,8 +157,8 @@ class Bweb
             $volumes  = CDBUtils::runQuery($query, $this->db_link);
                 
             // If we have at least 1 volume in this pool, create sub array for the pool
-            if (!array_key_exists($pool['name'], $pools)) {
-                $pools[ $pool['name'] ] = array();
+            if (!array_key_exists($pool_name, $pools)) {
+                $pools[ $pool_name ] = array();
             }
                     
             foreach ($volumes->fetchAll() as $volume) {
@@ -181,14 +183,15 @@ class Bweb
                 }
                                         
             // Push the volume array to the $pool array
-            array_push($pools[ $pool['name']], $volume);
+            array_push($pools[ $pool_name], $volume);
             } // end foreach volumes
             
             // Calulate used bytes for each pool
             $sql = "SELECT SUM(Media.volbytes) FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
             $result = CDBUtils::runQuery($sql, $this->db_link);
             $result = $result->fetchAll();
-            $pools[$pool['name']]['total_used_bytes'] = CUtils::Get_Human_Size($result[0]['sum']);
+            $pools[$pool_name]['total_used_bytes'] = CUtils::Get_Human_Size($result[0]['sum']);
+            
         } // end foreach pools
 
 echo '<pre>';
