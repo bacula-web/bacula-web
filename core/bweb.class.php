@@ -133,10 +133,12 @@ class Bweb
         
     public function GetVolumeList()
     {
-        $volumes_list = array();
-        $query        = "";
+        $pools = array();
+        $query = "";
                 
         foreach (Pools_Model::getPools($this->db_link) as $pool) {
+        	$pool_name = $pool['name'];
+        	
             switch($this->db_driver)
             {
                 case 'sqlite':
@@ -154,33 +156,45 @@ class Bweb
                     
             $volumes  = CDBUtils::runQuery($query, $this->db_link);
                 
-            if (!array_key_exists($pool['name'], $volumes_list)) {
-                $volumes_list[ $pool['name'] ] = array();
+            // If we have at least 1 volume in this pool, create sub array for the pool
+            if (!array_key_exists($pool_name, $pools)) {
+                $pools[$pool_name] = array();
+                $pools[$pool_name]['volumes'] = array();
             }
                     
             foreach ($volumes->fetchAll() as $volume) {
+            	// Set volume default values
+            	$volume['expire'] = 'n/a';
+            	
+            	// Set value for unused volumes
+            	if( empty($volume['lastwritten']) ) {
+            		$volume['lastwritten'] = 'n/a';
+            	}
+            	
+				// Media used bytes in a human format
+                $volume['volbytes'] = CUtils::Get_Human_Size($volume['volbytes']);
+            	
+            	// If volume have alreday been used
                 if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
-                 // Calculate expiration date if the volume is Full
+                 	// Calculate expiration date only if the volume is Full
                     if ($volume['volstatus'] == 'Full') {
-                        $expire_date     = strtotime($volume['lastwritten']) + $volume['volretention'];
+                        $expire_date = strtotime($volume['lastwritten']) + $volume['volretention'];
                         $volume['expire'] = strftime("%Y-%m-%d", $expire_date);
-                    } else {
-                        $volume['expire'] = 'N/A';
                     }
-                            
-                 // Media used bytes in a human format
-                    $volume['volbytes'] = CUtils::Get_Human_Size($volume['volbytes']);
-                } else {
-                    $volume['lastwritten'] = "N/A";
-                    $volume['expire']      = "N/A";
-                    $volume['volbytes']       = "0 KB";
                 }
-                        
-             // Add the media in pool array
-                array_push($volumes_list[ $pool['name']], $volume);
+                                        
+            // Push the volume array to the $pool array
+            array_push($pools[ $pool_name]['volumes'], $volume);
             } // end foreach volumes
+            
+            // Calulate used bytes for each pool
+            $sql = "SELECT SUM(Media.volbytes) FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
+            $result = CDBUtils::runQuery($sql, $this->db_link);
+            $result = $result->fetchAll();
+            $pools[$pool_name]['total_used_bytes'] = CUtils::Get_Human_Size($result[0]['sum']);
+            
         } // end foreach pools
                 
-        return $volumes_list;
+        return $pools;
     } // end function GetVolumeList()
 } // end class Bweb
