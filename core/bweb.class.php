@@ -154,30 +154,34 @@ class Bweb
                     
             $volumes  = CDBUtils::runQuery($query, $this->db_link);
                 
+            // If we have at least 1 volume in this pool, create sub array for the pool
             if (!array_key_exists($pool['name'], $volumes_list)) {
                 $volumes_list[ $pool['name'] ] = array();
             }
                     
             foreach ($volumes->fetchAll() as $volume) {
+            	// Set volume default values
+            	$volume['expire'] = 'n/a';
+            	
+            	// Set value for unused volumes
+            	if( empty($volume['lastwritten']) ) {
+            		$volume['lastwritten'] = 'n/a';
+            	}
+            	
+				// Media used bytes in a human format
+                $volume['volbytes'] = CUtils::Get_Human_Size($volume['volbytes']);
+            	
+            	// If volume have alreday been used
                 if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
-                 // Calculate expiration date if the volume is Full
+                 	// Calculate expiration date only if the volume is Full
                     if ($volume['volstatus'] == 'Full') {
-                        $expire_date     = strtotime($volume['lastwritten']) + $volume['volretention'];
+                        $expire_date = strtotime($volume['lastwritten']) + $volume['volretention'];
                         $volume['expire'] = strftime("%Y-%m-%d", $expire_date);
-                    } else {
-                        $volume['expire'] = 'N/A';
                     }
-                            
-                 // Media used bytes in a human format
-                    $volume['volbytes'] = CUtils::Get_Human_Size($volume['volbytes']);
-                } else {
-                    $volume['lastwritten'] = "N/A";
-                    $volume['expire']      = "N/A";
-                    $volume['volbytes']       = "0 KB";
                 }
-                        
-             // Add the media in pool array
-                array_push($volumes_list[ $pool['name']], $volume);
+                                        
+             // Push the volume array to the $pool array
+             array_push($volumes_list[ $pool['name']], $volume);
             } // end foreach volumes
         } // end foreach pools
                 
