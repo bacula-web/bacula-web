@@ -133,8 +133,8 @@ class Bweb
         
     public function GetVolumeList()
     {
-        $volumes_list = array();
-        $query        = "";
+        $pools = array();
+        $query = "";
                 
         foreach (Pools_Model::getPools($this->db_link) as $pool) {
             switch($this->db_driver)
@@ -155,8 +155,8 @@ class Bweb
             $volumes  = CDBUtils::runQuery($query, $this->db_link);
                 
             // If we have at least 1 volume in this pool, create sub array for the pool
-            if (!array_key_exists($pool['name'], $volumes_list)) {
-                $volumes_list[ $pool['name'] ] = array();
+            if (!array_key_exists($pool['name'], $pools)) {
+                $pools[ $pool['name'] ] = array();
             }
                     
             foreach ($volumes->fetchAll() as $volume) {
@@ -180,11 +180,21 @@ class Bweb
                     }
                 }
                                         
-             // Push the volume array to the $pool array
-             array_push($volumes_list[ $pool['name']], $volume);
+            // Push the volume array to the $pool array
+            array_push($pools[ $pool['name']], $volume);
             } // end foreach volumes
+            
+            // Calulate used bytes for each pool
+            $sql = "SELECT SUM(Media.volbytes) FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
+            $result = CDBUtils::runQuery($sql, $this->db_link);
+            $result = $result->fetchAll();
+            $pools[$pool['name']]['total_used_bytes'] = CUtils::Get_Human_Size($result[0]['sum']);
         } // end foreach pools
+
+echo '<pre>';
+var_dump( $pools );
+echo '</pre>';
                 
-        return $volumes_list;
+        return $pools;
     } // end function GetVolumeList()
 } // end class Bweb
