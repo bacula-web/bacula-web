@@ -70,7 +70,7 @@ class CHttpRequest
     // Return:		value of $var, or null if not defined
     // ==================================================================================
     
-    public function get_Value($var)
+    public static function get_Value($var)
     {
         
         if (isset(self::$value_list[$var])) {

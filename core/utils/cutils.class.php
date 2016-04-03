@@ -62,7 +62,7 @@ class CUtils
     // Return:		formated number depending on current locale
     // ==================================================================================
     
-    public function format_Number($number, $decimal = 0)
+    public static function format_Number($number, $decimal = 0)
     {
         // Getting localized numeric formating information
         $locale = localeconv();
