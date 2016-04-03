@@ -28,7 +28,7 @@
 		</tr>
 		{foreachelse}
 		<tr>
-			<td colspan="6" class="text-center">
+			<td colspan="7" class="text-center">
 				{t}No volume(s) in this pool{/t}
 			</td>
 		</tr>
