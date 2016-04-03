@@ -15,6 +15,7 @@ Fixed bugs
 
 New features
 
+- 0000157 [feature] Add missing job status filter (Terminated with errors) in Jobs report page
 - 0000159 [feature] Volume report slot in tape robot
 - 0000175 [feature] Display total of Bytes for each Pool
 
