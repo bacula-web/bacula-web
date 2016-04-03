@@ -11,6 +11,7 @@ Fixed bugs
 - 0000170 [bug] Warning: Division by zero in jobs.php
 - 0000171 [bug] Running and Waiting jobs older than 24 hours are not visible in Dashboard
 - 0000172 [bug-php] Sometimes we see negative 0.00 compression value in job view
+- 0000174 [bug-php] PHP issues with non-static methods call
 
 New features
 
