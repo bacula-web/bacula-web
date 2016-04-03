@@ -24,9 +24,9 @@ class Jobs_Model extends CModel
     // Return:		Number of clients
     // ==================================================================================
 
-    public static function count($pdo)
+    public static function count($pdo, $tablename = 'Job', $filter = null)
     {
-        return CModel::count($pdo, 'Job');
+        return CModel::count($pdo, $tablename);
     }
     
     // ==================================================================================

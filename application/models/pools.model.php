@@ -24,9 +24,9 @@ class Pools_Model extends CModel
     // Return:	row count for one table
     // ==================================================================================
     
-    public static function count($pdo)
+    public static function count($pdo, $tablename = 'Pool', $filter = null)
     {
-        return CModel::count($pdo, 'Pool');
+        return CModel::count($pdo, $tablename);
     }
   
     // ==================================================================================

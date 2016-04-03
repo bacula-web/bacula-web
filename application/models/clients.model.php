@@ -24,9 +24,9 @@ class Clients_Model extends CModel
     // Return:		Number of clients
     // ==================================================================================
 
-    public static function count($pdo)
+    public static function count($pdo, $tablename = 'Client', $filter = null)
     {
-        return CModel::count($pdo, 'Client');
+        return CModel::count($pdo, $tablename);
     }
 
     // ==================================================================================
