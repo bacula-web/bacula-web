@@ -48,7 +48,7 @@ class FileConfig extends File
          // Return:		configured catalog count number or false if something goes wrong
          // ==================================================================================
 
-    public function count_Catalogs()
+    public static function count_Catalogs()
     {
         $catalog_count = 0;
             
@@ -97,9 +97,9 @@ class FileConfig extends File
         // Return:		dsn string
         // ==================================================================================
         
-    public function get_DataSourceName($catalog_id)
+    public static function get_DataSourceName($catalog_id)
     {
-        $dsn              = '';
+        $dsn             = '';
         $current_catalog = parent::$config[$catalog_id];
 
         switch ($current_catalog['db_type']) {
