@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2015, Davide Franco                                      |
+  | Copyright 2010-2016, Davide Franco                                      |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -14,7 +14,8 @@
   | GNU General Public License for more details.                            |
   +-------------------------------------------------------------------------+
 */
-     require_once( 'core/global.inc.php' );
+
+require_once( 'core/global.inc.php' );
 
 class File
 {
