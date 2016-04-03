@@ -114,22 +114,22 @@ try {
         } else {
             $job['compression'] = 'N/A';
         }
-        
-        // Job bytes more easy to read
-        $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
-        $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
-        
+                
         // Job speed
-        $start         = new DateTime($job['starttime']);
-        $end           = new DateTime($job['endtime']);
-        $seconds      = $end->getTimeStamp() - $start->getTimeStamp();
+        $start         = $job['starttime'];
+        $end           = $job['endtime'];
+        $seconds 	   = DateTimeUtil::get_ElaspedSeconds($end, $start);
 
-        if ($seconds > 0) {
-            $speed         = $job['jobbytes'] / $seconds;
-            $job['speed'] = CUtils::Get_Human_Size($speed, 1) . '/s';
+        if ($seconds !== false && $seconds > 0) {
+            $speed        = $job['jobbytes'] / $seconds;
+            $job['speed'] = CUtils::Get_Human_Size($speed, 2) . '/s';
         } else {
             $job['speed'] = 'N/A';
         }
+        
+        // Job bytes more easy to read
+        $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
+        $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);        
 
         $jobs[]     = $job;
     } // end while
