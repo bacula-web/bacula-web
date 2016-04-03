@@ -37,7 +37,7 @@ class Jobs_Model extends CModel
     //				$job_level 				Job level (optional)
     // Return:		Jobs count
     // ==================================================================================
-    
+
     public static function count_Jobs($pdo_connection, $period_timestamps, $job_status = null, $job_level = null)
     {
         $where        = null;
@@ -59,7 +59,7 @@ class Jobs_Model extends CModel
         
      // Defining interval depending on job status
         if (!is_null($job_status)) {
-            switch($job_status) {
+            switch ($job_status) {
                 // Using Bacula version 5.0.3, waiting jobs have both starttime and endtime set 0000-00-00 00:00:00
                 // Running set to YYYY-mm-dd hh:mm:ss (replace by real time) and endtime set to 0000-00-00 00:00:00
                 // So, I'd not use starttime and endtime for waiting and running jobs here
@@ -76,7 +76,7 @@ class Jobs_Model extends CModel
         
      // Job status
         if (!is_null($job_status)) {
-            switch($job_status){
+            switch ($job_status) {
                 case 'running':
                     $where[] = "JobStatus = 'R'" ;
                     break;
@@ -118,7 +118,7 @@ class Jobs_Model extends CModel
     //				$client_id			Client id (optional)
     // Return:		Total of stored files within the specific period
     // ==================================================================================
-    
+
     public static function getStoredFiles($pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
     {
         $where      = array();
@@ -161,7 +161,7 @@ class Jobs_Model extends CModel
     //				$client_id			Client id (optional)
     // Return:		Total of stored bytes within the specific period
     // ==================================================================================
-    
+
     public static function getStoredBytes($pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
     {
         $where      = array();
@@ -220,7 +220,7 @@ class Jobs_Model extends CModel
     {
         $jobs   = array();
         $fields = array( 'Name' );
-                $where  = null;
+        $where  = null;
 
      // Prepare and execute query
         if (!is_null($client_id)) {
@@ -234,6 +234,6 @@ class Jobs_Model extends CModel
             $jobs[] = $job['name'];
         }
         
-                return $jobs;
+        return $jobs;
     }
 }

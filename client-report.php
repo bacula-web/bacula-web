@@ -15,7 +15,7 @@
   +-------------------------------------------------------------------------+
 */
  session_start();
- require_once( 'core/global.inc.php' );
+ require_once('core/global.inc.php');
 
  // Initialise model and view
  $view = new CView();
@@ -60,7 +60,7 @@ try {
     
    // Get job names for the client
     foreach (Jobs_Model::get_Jobs_List($dbSql->db_link, $clientid) as $jobname) {
-    // Last good client's for each backup jobs
+        // Last good client's for each backup jobs
         $query  = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
         $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
         $query .= "WHERE Job.Name = '$jobname' AND Job.JobStatus = 'T' AND Job.Type = 'B' ";
@@ -117,7 +117,6 @@ try {
     $view->assign('graph_stored_files', $graph->Render());
 
     unset($graph);
-
 } catch (Exception $e) {
     CErrorHandler::displayError($e);
 }

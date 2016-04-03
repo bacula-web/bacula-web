@@ -16,29 +16,29 @@
  +-------------------------------------------------------------------------+ 
 */
 
-    require_once( 'core/global.inc.php' );
+    require_once('core/global.inc.php');
 
 class Bweb
 {
     public $translate;                    // Translation class instance
     private $catalogs = array();        // Catalog array
-        
+
     private $view;                        // Template class
 
     public $db_link;                    // Database connection
     private $db_driver;                    // Database connection driver
-        
+
     public $catalog_nb;                // Catalog count
     public $catalog_current_id = 0;    // Selected or default catalog id
 
     public function __construct(&$view)
     {
-     // Loading configuration file parameters
+        // Loading configuration file parameters
         try {
             if (!FileConfig::open(CONFIG_FILE)) {
                 throw new Exception("The configuration file is missing");
             } else {
-                      $this->catalog_nb = FileConfig::count_Catalogs();
+                $this->catalog_nb = FileConfig::count_Catalogs();
             }
         } catch (Exception $e) {
             CErrorHandler::displayError($e);
@@ -73,14 +73,14 @@ class Bweb
             }
         } else {
             if (isset($_SESSION['catalog_id'])) {
-             // Stick with previously selected catalog_id
+                // Stick with previously selected catalog_id
                     $this->catalog_current_id = $_SESSION['catalog_id'];
             }
         }
             
             // Define catalog id and catalog label
         $this->view->assign('catalog_current_id', $this->catalog_current_id);
-            $this->view->assign('catalog_label', FileConfig::get_Value('label', $this->catalog_current_id));
+        $this->view->assign('catalog_label', FileConfig::get_Value('label', $this->catalog_current_id));
             
         // Getting database connection paremeter from configuration file
         $dsn = FileConfig::get_DataSourceName($this->catalog_current_id);
@@ -93,7 +93,7 @@ class Bweb
             $pwd    = FileConfig::get_Value('password', $this->catalog_current_id);
         }
 
-        switch($driver) {
+        switch ($driver) {
             case 'mysql':
             case 'pgsql':
                 $this->db_link = CDB::connect($dsn, $user, $pwd);
@@ -118,7 +118,7 @@ class Bweb
 
      // Bacula catalog selection
         if ($this->catalog_nb > 1) {
-         // Catalogs list
+            // Catalogs list
             $this->view->assign('catalogs', FileConfig::get_Catalogs());
          // Catalogs count
             $this->view->assign('catalog_nb', $this->catalog_nb);
@@ -130,17 +130,16 @@ class Bweb
         // Parameters: 	none
         // Return:	array of volumes ordered by poolid and volume name
         // ==================================================================================
-        
+
     public function GetVolumeList()
     {
         $pools = array();
         $query = "";
                 
         foreach (Pools_Model::getPools($this->db_link) as $pool) {
-        	$pool_name = $pool['name'];
-        	
-            switch($this->db_driver)
-            {
+            $pool_name = $pool['name'];
+            
+            switch ($this->db_driver) {
                 case 'sqlite':
                 case 'mysql':
                     $query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention, Media.slot
@@ -153,7 +152,7 @@ class Bweb
 									WHERE media.poolid = '". $pool['poolid'] . "' ORDER BY media.volumename";
                     break;
             } // end switch
-                    
+
             $volumes  = CDBUtils::runQuery($query, $this->db_link);
                 
             // If we have at least 1 volume in this pool, create sub array for the pool
@@ -163,20 +162,20 @@ class Bweb
             }
                     
             foreach ($volumes->fetchAll() as $volume) {
-            	// Set volume default values
-            	$volume['expire'] = 'n/a';
-            	
-            	// Set value for unused volumes
-            	if( empty($volume['lastwritten']) ) {
-            		$volume['lastwritten'] = 'n/a';
-            	}
-            	
-				// Media used bytes in a human format
+                // Set volume default values
+                $volume['expire'] = 'n/a';
+                
+                // Set value for unused volumes
+                if (empty($volume['lastwritten'])) {
+                    $volume['lastwritten'] = 'n/a';
+                }
+                
+                // Media used bytes in a human format
                 $volume['volbytes'] = CUtils::Get_Human_Size($volume['volbytes']);
-            	
-            	// If volume have alreday been used
+                
+                // If volume have alreday been used
                 if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
-                 	// Calculate expiration date only if the volume is Full
+                    // Calculate expiration date only if the volume is Full
                     if ($volume['volstatus'] == 'Full') {
                         $expire_date = strtotime($volume['lastwritten']) + $volume['volretention'];
                         $volume['expire'] = strftime("%Y-%m-%d", $expire_date);
@@ -186,15 +185,14 @@ class Bweb
             // Push the volume array to the $pool array
             array_push($pools[ $pool_name]['volumes'], $volume);
             } // end foreach volumes
-            
+
             // Calulate used bytes for each pool
             $sql = "SELECT SUM(Media.volbytes) FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
             $result = CDBUtils::runQuery($sql, $this->db_link);
             $result = $result->fetchAll();
             $pools[$pool_name]['total_used_bytes'] = CUtils::Get_Human_Size($result[0]['sum']);
-            
         } // end foreach pools
-                
+
         return $pools;
     } // end function GetVolumeList()
 } // end class Bweb

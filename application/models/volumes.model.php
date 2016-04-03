@@ -24,7 +24,7 @@ class Volumes_Model extends CModel
     //				$filter (optional)
     // Return:		return row count for one table
     // ==================================================================================
-    
+
     public static function count($pdo, $tablename = 'Media', $filter = null)
     {
         return CModel::count($pdo, $tablename);

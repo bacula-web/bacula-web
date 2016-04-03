@@ -16,7 +16,7 @@
 */
 
 session_start();
-include_once( 'core/global.inc.php' );
+include_once('core/global.inc.php');
 
 try {
     $view         = new CView();

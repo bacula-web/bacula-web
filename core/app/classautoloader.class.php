@@ -32,8 +32,8 @@ class ClassAutoLoader
         $this->paths         = array();
         $this->exclusion     = array();
     
-        spl_autoload_register(array($this,'Load_Class'), true);
-        spl_autoload_register(array($this,'Load_Models'), true);
+        spl_autoload_register(array($this, 'Load_Class'), true);
+        spl_autoload_register(array($this, 'Load_Models'), true);
     }
 
   // ==================================================================================
@@ -44,7 +44,7 @@ class ClassAutoLoader
 
     public function add_Path($pathname)
     {
-      // Scan and add all subfolders
+        // Scan and add all subfolders
         if (file_exists($pathname)) {
             $this->paths = array_merge($this->paths, $this->scan_Path($pathname));
         }
@@ -87,19 +87,18 @@ class ClassAutoLoader
   // Parameters:    $classname
   // Return:
   // ==================================================================================
-  
+
     private function Load_Class($classname)
     {
-
         foreach ($this->paths as $dir) {
             $file_full_path = $dir . '/' . $classname . '.class.php';
     
             if (file_exists($file_full_path)) {
-                include( $file_full_path );
+                include($file_full_path);
             }
         
             if (file_exists(strtolower($file_full_path))) {
-                include( strtolower($file_full_path) );
+                include(strtolower($file_full_path));
             }
         }
     }
@@ -109,7 +108,7 @@ class ClassAutoLoader
   // Parameters:    $classname
   // Return:
   // ==================================================================================
-        
+
     public function Load_Models($classname)
     {
         foreach ($this->paths as $dir) {
@@ -118,7 +117,7 @@ class ClassAutoLoader
             $file_full_path = strtolower($file_full_path);
             
             if (file_exists($file_full_path)) {
-                include( $file_full_path );
+                include($file_full_path);
             }
         }
     }

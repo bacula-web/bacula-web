@@ -15,20 +15,19 @@
   +-------------------------------------------------------------------------+
  */
  
-     require_once( 'core/global.inc.php' );
+     require_once('core/global.inc.php');
      
 class FileConfig extends File
 {
 
-         // ==================================================================================
+    // ==================================================================================
          // Function: 	__constructor()
          // Parameters:	none
          // Return:		none
          // ==================================================================================
-            
+
     public function __construct()
     {
-            
     }
 
          // ==================================================================================
@@ -39,7 +38,7 @@ class FileConfig extends File
 
     public function check()
     {
-    // Check if all parameters ... to be completed
+        // Check if all parameters ... to be completed
     }
         
          // ==================================================================================
@@ -67,10 +66,10 @@ class FileConfig extends File
         //				$catalog_id (optional)
         // Return:		parameter value
         // ==================================================================================
-        
+
     public static function get_Value($parameter, $catalog_id = null)
     {
-     // Check if the $global_config have been already set first
+        // Check if the $global_config have been already set first
         if (!isset(self::$config_file)) {
             throw new Exception("The configuration is missing or ther's something wrong in it");
         }
@@ -82,13 +81,12 @@ class FileConfig extends File
                 throw new Exception("Configuration error: the catalog id <$catalog_id> do not exist");
             }
         } else {
-            if (isset( parent::$config[$parameter] )) {
+            if (isset(parent::$config[$parameter])) {
                 return parent::$config[$parameter];
             } else {
                 return false;
             }
         }
-            
     } // end function
 
         // ==================================================================================
@@ -96,7 +94,7 @@ class FileConfig extends File
         // Parameters:	$catalog_id
         // Return:		dsn string
         // ==================================================================================
-        
+
     public static function get_DataSourceName($catalog_id)
     {
         $dsn             = '';
@@ -129,7 +127,7 @@ class FileConfig extends File
         // Parameters:	none
         // Return:		an array containing all catalogs labels define in the configuration
         // ==================================================================================
-        
+
     public function get_Catalogs()
     {
         $catalogs = array();
@@ -148,7 +146,7 @@ class FileConfig extends File
         // Parameters:	$catalog_id
         // Return:		true or false (depending if catalog exist or not in the configuration)
         // ==================================================================================
-        
+
     public function catalogExist($catalog_id)
     {
         return array_key_exists($catalog_id, parent::$config);

@@ -57,7 +57,7 @@ class CDBQuery
         }
 
         // Where
-        if (isset( $param['where'] ) && is_array($param['where'])) {
+        if (isset($param['where']) && is_array($param['where'])) {
             foreach ($param['where'] as $key => $where_item) {
                 if ($key > 0) {
                     $where .= "AND $where_item ";
@@ -65,7 +65,7 @@ class CDBQuery
                     $where .= "$where_item ";
                 }
             } // end foreach
-        
+
             $query .= 'WHERE ' . $where . ' ';
         }
         
@@ -93,11 +93,10 @@ class CDBQuery
     // Return:		return table with correct case
     // ==================================================================================
     public static function get_Timestamp_Interval($period_timestamp = array())
-  {
-
+    {
         $period = array();
         
-        switch(CDB::getDriverName()) {
+        switch (CDB::getDriverName()) {
             case 'pgsql':
                 $period['starttime']     = "TIMESTAMP '" . date("Y-m-d H:i:s", $period_timestamp[0]) . "'";
                 $period['endtime']       = "TIMESTAMP '" . date("Y-m-d H:i:s", $period_timestamp[1]) . "'";
@@ -107,7 +106,7 @@ class CDBQuery
                 $period['endtime']       = "'" . date("Y-m-d H:i:s", $period_timestamp[1]) . "'";
                 break;
         } // end switch
-        
+
         return $period;
     }
 }

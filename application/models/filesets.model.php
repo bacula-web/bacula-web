@@ -24,7 +24,7 @@ class FileSets_Model extends CModel
     //				$filter (optional)
     // Return:		return row count for one table
     // ==================================================================================
-    
+
     public static function count($pdo, $tablename = 'FileSet', $filter = null)
     {
         $fields    = array( "COUNT(DISTINCT $tablename) as filesets_count" );

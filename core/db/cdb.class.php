@@ -26,7 +26,7 @@ class CDB
     // Parameters: 	none
     // Return:		none
     // ==================================================================================
-    
+
     private function __construct()
     {
     }
@@ -36,10 +36,9 @@ class CDB
     // Parameters: 	none
     // Return:		valid PDO connection
     // ==================================================================================
-    
+
     public static function connect($dsn, $user = null, $password = null)
     {
-
         try {
             if (is_null(self::$connection)) {
                 self::$connection = new PDO($dsn, $user, $password);
@@ -56,7 +55,7 @@ class CDB
     // Parameters: 	none
     // Return:		driver name (eg: mysql, pgsql, sqlite, etc.)
     // ==================================================================================
-    
+
     public static function getDriverName()
     {
         return self::$connection->getAttribute(PDO::ATTR_DRIVER_NAME);
@@ -67,7 +66,7 @@ class CDB
     // Parameters: 	none
     // Return:		database server version
     // ==================================================================================
-    
+
     public static function getServerVersion()
     {
         $server_version = self::$connection->getAttribute(PDO::ATTR_SERVER_VERSION);
@@ -80,7 +79,7 @@ class CDB
     // Parameters: 	none
     // Return:		database server current timestamp
     // ==================================================================================
-    
+
     public static function getServerTimestamp()
     {
         if (!is_null(self::$connection)) {

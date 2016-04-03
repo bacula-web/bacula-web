@@ -17,7 +17,7 @@
 */
 
  session_start();
- include_once( 'core/global.inc.php' );
+ include_once('core/global.inc.php');
 
  // Initialise view and model
  $view = new CView();

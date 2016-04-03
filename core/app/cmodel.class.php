@@ -25,7 +25,7 @@ class CModel
     //				$filter (optional)
     // Return:		return row count for one table
     // ==================================================================================
-    
+
     protected static function count($pdo, $tablename, $filter = null)
     {
         $fields        = array( 'COUNT(*) as row_count' );

@@ -83,7 +83,7 @@ class DateTimeUtil
     {
         if (strtotime($start) && strtotime($end)) {
             $seconds = strtotime($end) - strtotime($start);
-                 return $seconds;
+            return $seconds;
         } else {
             return false;
         }
@@ -94,7 +94,7 @@ class DateTimeUtil
     // Parameters:	    $day
     // Return:		    array('start' => start_timestamp, 'end' => end_timestamp)
     // ==================================================================================
-    
+
     public static function get_Day_Intervals($day)
     {
         $start = strtotime(date("Y-m-d 00:00:00", $day));

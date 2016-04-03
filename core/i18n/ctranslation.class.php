@@ -24,7 +24,7 @@ class CTranslation
     private $lang_file;
     private $domaine;
 
-    function __construct($lang = 'en_EN')
+    public function __construct($lang = 'en_EN')
     {
         $this->language     = $lang;
         $this->charset      = 'UTF-8';
@@ -32,7 +32,7 @@ class CTranslation
         $this->locale_path  = LOCALE_DIR;
     }
 
-    function set_Language(&$template)
+    public function set_Language(&$template)
     {
         // Template engine block registration
         $template->register_block('t', 'smarty_translate');

@@ -23,7 +23,7 @@ class Pools_Model extends CModel
     // Parameters:	$pdo (PDO valid connection)
     // Return:	row count for one table
     // ==================================================================================
-    
+
     public static function count($pdo, $tablename = 'Pool', $filter = null)
     {
         return CModel::count($pdo, $tablename);
@@ -35,7 +35,7 @@ class Pools_Model extends CModel
 
     // Return:	pools list in a array
     // ==================================================================================
-    
+
     public static function getPools($pdo)
     {
         $pools       = null;

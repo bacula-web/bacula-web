@@ -18,7 +18,7 @@
 */
 
 session_start();
-require_once ("core/global.inc.php");
+require_once("core/global.inc.php");
 
 // Initialise model and view
 $dbSql = null;
@@ -112,7 +112,7 @@ foreach ($check_list as &$check) {
             break;
         case 'php-timezone':
             $timezone = ini_get('date.timezone');
-            if (!empty( $timezone )) {
+            if (!empty($timezone)) {
                 $check['check_result'] = $icon_result[true];
             } else {
                 $check['check_result'] = $icon_result[false];

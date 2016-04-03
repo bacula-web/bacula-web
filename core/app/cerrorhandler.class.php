@@ -23,7 +23,6 @@ class CErrorHandler
 
     public static function displayError($exception)
     {
-
         switch (get_class($exception)) {
             case 'PDOException':
                 self::$header = 'Database error';
@@ -33,7 +32,7 @@ class CErrorHandler
                 self::$header = 'Application error';
                 break;
         } // end switch
-        
+
         $output = '';
         // Display Exception trace
         $output .= self::getFormatedTrace($exception);
@@ -61,7 +60,7 @@ class CErrorHandler
         echo $output;
         //die();
     } // end function displayError
-    
+
     public static function getFormatedTrace($e)
     {
         $formated_trace  = '<table style="margin: 10px; width: 900px; border: 1px solid #c0c0c0;">';

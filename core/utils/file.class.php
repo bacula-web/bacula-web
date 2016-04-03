@@ -15,7 +15,7 @@
   +-------------------------------------------------------------------------+
 */
 
-require_once( 'core/global.inc.php' );
+require_once('core/global.inc.php');
 
 class File
 {
@@ -31,7 +31,7 @@ class File
 
     private function __construct()
     {
-    // Nothing to do here
+        // Nothing to do here
     }
      
      // ==================================================================================
@@ -39,7 +39,7 @@ class File
      // Parameters:	none
      // Return:		true or false if the file doesn't exist or unreadable
      // ==================================================================================
-        
+
     public static function open($file)
     {
         global $config;
@@ -51,7 +51,7 @@ class File
         
     // Check if config file exist and is readable, then include it
         if (is_readable(self::$config_file)) {
-            require_once( self::$config_file );
+            require_once(self::$config_file);
          //echo 'configuration file <b>' . self::$config_file . '</b> succesfully loaded <br />';
             self::$config = $config;
             return true;

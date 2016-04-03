@@ -60,7 +60,6 @@ class CGraph
         // Render to file instead of screen
         $this->plot->SetFileFormat("jpg");
         $this->plot->SetIsInline(true);
-
     }
 
     // ==================================================================================
@@ -70,10 +69,9 @@ class CGraph
     //              $uniform_data (set all values to same unit or not)
     // Return:      -
     // ==================================================================================
-    
+
     public function SetData($data_in, $graph_type, $uniform_data = false)
     {
-        
         if (!is_array($data_in)) {
             throw new Exception('Passed $data_in variable is not an array');
         }
@@ -101,7 +99,7 @@ class CGraph
     // Parameters:	$data_in (array of values to uniformize)
     // Return:	    array of uniformized values
     // ==================================================================================
-    
+
     public function UniformizeData($data_in)
     {
         $array_sum = 0;
@@ -121,7 +119,7 @@ class CGraph
 
         // Calculate average value and best unit
         $avg = $array_sum  / count($data_in);
-        list($value,$best_unit) = explode(' ', CUtils::Get_Human_Size($avg, 1));
+        list($value, $best_unit) = explode(' ', CUtils::Get_Human_Size($avg, 1));
 
         foreach ($data_in as $key => $value) {
             $data_in[$key][1] = CUtils::Get_Human_Size($value[1], 1, $best_unit, false);
@@ -137,7 +135,7 @@ class CGraph
     // Parameters:	none
     // Return:	    Graph file path
     // ==================================================================================
-    
+
     private function get_Filepath()
     {
         return $this->img_filename;
@@ -148,7 +146,7 @@ class CGraph
     // Parameters:	$ytitle (Y axis title)
     // Return:	    -
     // ==================================================================================
-    
+
     public function SetYTitle($ytitle)
     {
         $this->plot->SetYTitle($ytitle);
@@ -159,15 +157,15 @@ class CGraph
     // Parameters:	none
     // Return:	    -
     // ==================================================================================
-    
+
     private function setLegend()
     {
-     	// Setting graph legend values
+        // Setting graph legend values
         foreach ($this->data as $key => $legend) {
             $this->plot->SetLegend(implode(': ', $legend));
         }
 
-     	// Set Legend position (calculated regarding the width and height of the graph)
+         // Set Legend position (calculated regarding the width and height of the graph)
         list($legend_width, $legend_height) = $this->plot->GetLegendSize();
         $this->plot->SetLegendPixels($this->width - ($legend_width + 5), 10);
     }
@@ -177,7 +175,7 @@ class CGraph
     // Parameters:  array variable containing list of color codes (eg: #eeefff)
     // Return:	    -
     // ==================================================================================
-    
+
     public function setPieLegendColors($colors = array())
     {
         $this->data_colors = $colors;
@@ -188,7 +186,7 @@ class CGraph
     // Parameters:	none
     // Return:		true sum of values in the graph equal 0
     // ==================================================================================
-    
+
     protected function isEmpty()
     {
         $array_sum = 0;
@@ -209,10 +207,9 @@ class CGraph
     // Parameters:	none
     // Return:		graph image file path
     // ==================================================================================
-    
+
     public function Render()
     {
-
         switch ($this->graph_type) {
             case 'pie':
 
@@ -257,6 +254,5 @@ class CGraph
 
      // Return image file path
         return $this->get_Filepath();
-        
     } // end function Render()
 }  // end CGraph class

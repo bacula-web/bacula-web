@@ -48,7 +48,7 @@ class CHttpRequest
     //				$filter (optional)
     // Return:		array containing all passed values by $_POST or $_GET
     // ==================================================================================
-    
+
     public static function get_Vars()
     {
         
@@ -68,10 +68,9 @@ class CHttpRequest
     // Parameters:	$var
     // Return:		value of $var, or null if not defined
     // ==================================================================================
-    
+
     public static function get_Value($var)
     {
-        
         if (isset(self::$value_list[$var])) {
             return self::$value_list[$var];
         } else {
