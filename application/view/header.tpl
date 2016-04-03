@@ -75,7 +75,7 @@
   <div class="container-fluid">
     <!-- Breadcrumb -->
     <div class="row">
-      <div class="col-xs-6 col-md-4 col-lg-3">
+      <div class="col-xs-6 col-md-4 col-lg-4">
         <ol class="breadcrumb">
 			{php}
 				global $current_page;
@@ -91,7 +91,7 @@
 			{/php}
         </ol>
       </div> <!-- div class="col..." -->
-    <div class="col-xs-6 col-md-8 col-lg-9">
+    <div class="col-xs-6 col-md-8 col-lg-8">
 
     <!-- Catalog selector -->
     {if $catalog_nb > 1}
