@@ -79,7 +79,8 @@
         <ol class="breadcrumb">
 			{php}
 				global $current_page;
-				$current = end( explode( "/", $_SERVER['SCRIPT_FILENAME']) );
+				$scriptname = explode( "/", $_SERVER['SCRIPT_FILENAME']);
+				$current = end( $scriptname );
 
 				if( $current === 'index.php' ) {
 					echo '<li class="active"> <i class="fa fa-home fa-fw"></i> Dashboard</li>';
