@@ -7,7 +7,6 @@ Changelog
 
 Fixed bugs
 
-- 0000169 [translation] Update pt_BR translation
 - 0000170 [bug] Warning: Division by zero in jobs.php
 - 0000171 [bug] Running and Waiting jobs older than 24 hours are not visible in Dashboard
 - 0000172 [bug-php] Sometimes we see negative 0.00 compression value in job view
@@ -22,7 +21,7 @@ New features
 Translations
 
 - Added Japanese translation (thanks to Ken Sawada)
-- Updated Portugues Brazilian translation (thanks to Brivaldo Junior)
+- 0000169 [translation] Updated Portugues Brazilian translation (thanks to Brivaldo Junior)
 
 === Release 7.0.3 (March 26th 2015) ===
 
