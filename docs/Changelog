@@ -2,8 +2,16 @@
 
 Changelog
 
+- Dashboard: Fixed problem with jobs running since more than 24 hours
+- Pools and volumes: 
+  - Total of bytes used now displayed for each pool
+  - Display slot number of volumes (if using a library)
+- General: 
+  - PHP 5.6 and higher version compatibility improvments
+  - Many code fixes and improvments
 - Pools and volumes report: Volumes table now display slot number
 - Jobs report: you can filter jobs with status "Terminated with errors"
+- Translation: Portuguese brazilian have been updated and added Japanese
 
 Fixed bugs
 
