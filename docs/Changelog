@@ -4,6 +4,8 @@ Changelog
 
 Fixed bugs
 
+- 0000187 [bug-php] Total of bytes per pool problem in Pool and volumes report
+
 New features
 
 Translations

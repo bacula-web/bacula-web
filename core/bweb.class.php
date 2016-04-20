@@ -187,10 +187,10 @@ class Bweb
             } // end foreach volumes
 
             // Calulate used bytes for each pool
-            $sql = "SELECT SUM(Media.volbytes) FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
+            $sql = "SELECT SUM(Media.volbytes) as sumbytes FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
             $result = CDBUtils::runQuery($sql, $this->db_link);
             $result = $result->fetchAll();
-            $pools[$pool_name]['total_used_bytes'] = CUtils::Get_Human_Size($result[0]['sum']);
+            $pools[$pool_name]['total_used_bytes'] = CUtils::Get_Human_Size($result[0]['sumbytes']);
         } // end foreach pools
 
         return $pools;
