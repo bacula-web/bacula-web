@@ -113,8 +113,8 @@
 		  </select>
 		</div>
 
-		<button type="reset" class="btn btn-default" title="{t}Reset to default options{/t}">{t}Reset{/t}</button>
-		<button type="submit" class="btn btn-primary" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
+		<button type="reset" class="btn btn-default btn-sm" title="{t}Reset to default options{/t}">{t}Reset{/t}</button>
+		<button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
 	  </form>
 		
 	  </div> <!-- div class="col-md-3 cold-lg-3" -->
