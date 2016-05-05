@@ -1,4 +1,4 @@
-=== Release 7.1.1 (April dd 2016) ===
+=== Release 7.1.1 (May dd 2016) ===
 
 Changelog
 
@@ -9,6 +9,9 @@ Fixed bugs
 New features
 
 Translations
+
+- As of Bacula-Web 7.1.1, all language translations are hosted on Tranifex.com)
+  If you want to help translating in your language, please follow Bacula-Web documentation
 
 === Release 7.1.0 (April 4 2016) ===
 

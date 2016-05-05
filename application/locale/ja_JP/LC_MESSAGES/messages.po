@@ -1,31 +1,33 @@
-# Bacula-Web - Translation file
-# Copyright (C) 2004-2014 Free Software Foundation, Inc.
+# Bacula-Web translations 
+# Copyright (C) 2004 - 2016 
 # This file is distributed under the same license as the Bacula-Web package.
+# 
 # Translators:
 # Juan-Luis Frances <bacula_list@veloxia.com>, 2004
+# Ken Sawada, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: Bacula-Web\n"
-"Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
-"POT-Creation-Date: 2011-11-16 21:46+0100\n"
-"PO-Revision-Date: 2014-12-09 09:28+0000\n"
-"Last-Translator: Davide Franco <bacula-dev@dflc.ch>\n"
-"Language-Team: English (United States) (http://www.transifex.com/projects/p/bacula-web/language/en_US/)\n"
+"Project-Id-Version: Bacula-Web 7.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-24 20:52+0200\n"
+"PO-Revision-Date: 2016-05-05 09:59+0000\n"
+"Last-Translator: Ken Sawada\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/bacula-web/bacula-web/language/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en_US\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: ja_JP\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lang.c:22
+#: lang.c:22 messages.c:32
 msgid "ASC"
 msgstr "ASC"
 
-#: lang.c:27
+#: lang.c:27 messages.c:37
 msgid "Apply"
 msgstr "表示"
 
-#: lang.c:26
+#: lang.c:26 messages.c:36
 msgid "Apply filter and options"
 msgstr "Apply filter and options"
 
@@ -41,32 +43,32 @@ msgstr "Back to the dashboard"
 msgid "Backup Job Report"
 msgstr "Backup Job Report"
 
-#: lang.c:37 lang.c:115
+#: lang.c:37 lang.c:115 messages.c:86
 msgid "Backup Job name"
 msgstr "Backup Job name"
 
-#: lang.c:32 lang.c:103
+#: lang.c:32 lang.c:103 messages.c:82
 msgid "Backup Job report"
 msgstr "バックアップジョブレポート"
 
-#: lang.c:114
+#: lang.c:114 messages.c:85
 msgid "Backup job informations"
 msgstr "Backup job informations"
 
-#: lang.c:33 lang.c:104
+#: lang.c:33 lang.c:104 messages.c:83
 msgid "Backup job name"
 msgstr "Backup job name"
 
-#: lang.c:54
+#: lang.c:54 messages.c:7
 msgid "Bug tracker"
 msgstr "Bug tracker"
 
 #: lang.c:45 lang.c:62 lang.c:77 lang.c:81 lang.c:9 lang.c:37 lang.c:107
-#: lang.c:123
+#: lang.c:123 messages.c:19 messages.c:94 messages.c:102 messages.c:120
 msgid "Bytes"
 msgstr "Bytes"
 
-#: lang.c:79
+#: lang.c:79 messages.c:58
 msgid "Canceled job(s)"
 msgstr "キャンセルジョブ"
 
@@ -74,15 +76,15 @@ msgstr "キャンセルジョブ"
 msgid "Catalog"
 msgstr "Catalog"
 
-#: lang.c:59
+#: lang.c:59 messages.c:38
 msgid "Catalog statistics"
 msgstr "カタログ統計情報"
 
-#: lang.c:74 lang.c:89
+#: lang.c:74 lang.c:89 messages.c:53 messages.c:68
 msgid "Click here to see the report"
 msgstr "Click here to see the report"
 
-#: lang.c:25 lang.c:19 lang.c:97
+#: lang.c:25 lang.c:19 lang.c:97 messages.c:29 messages.c:76
 msgid "Client"
 msgstr "Client"
 
@@ -90,35 +92,35 @@ msgstr "Client"
 msgid "Client Report"
 msgstr "クライアントレポート"
 
-#: lang.c:57 lang.c:32
+#: lang.c:57 lang.c:32 messages.c:115
 msgid "Client arch"
 msgstr "Client arch"
 
-#: lang.c:53 lang.c:28
+#: lang.c:53 lang.c:28 messages.c:111
 msgid "Client informations"
 msgstr "Client informations"
 
-#: lang.c:54 lang.c:29
+#: lang.c:54 lang.c:29 messages.c:112
 msgid "Client name"
 msgstr "Client name"
 
-#: lang.c:56 lang.c:31
+#: lang.c:56 lang.c:31 messages.c:114
 msgid "Client os"
 msgstr "Client os"
 
-#: lang.c:96
+#: lang.c:96 messages.c:75
 msgid "Client report"
 msgstr "クライアントレポート"
 
-#: lang.c:55 lang.c:30
+#: lang.c:55 lang.c:30 messages.c:113
 msgid "Client version"
 msgstr "Client version"
 
-#: lang.c:14 lang.c:60
+#: lang.c:14 lang.c:60 messages.c:39
 msgid "Clients"
 msgstr "クライアント数"
 
-#: lang.c:76
+#: lang.c:76 messages.c:55
 msgid "Completed job(s)"
 msgstr "実行完了ジョブ"
 
@@ -126,27 +128,27 @@ msgstr "実行完了ジョブ"
 msgid "Completed jobs"
 msgstr "Completed jobs"
 
-#: lang.c:12 lang.c:128
+#: lang.c:12 lang.c:128 messages.c:22 messages.c:99
 msgid "Compression"
 msgstr "圧縮率"
 
-#: lang.c:51 lang.c:49
+#: lang.c:51 lang.c:49 messages.c:2
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: lang.c:17 lang.c:67
+#: lang.c:17 lang.c:67 messages.c:46
 msgid "Database size"
 msgstr "データベースサイズ"
 
-#: lang.c:63
+#: lang.c:63 messages.c:42
 msgid "Defined Filesets"
 msgstr "Defined Filesets"
 
-#: lang.c:61
+#: lang.c:61 messages.c:40
 msgid "Defined Jobs"
 msgstr "Defined Jobs"
 
-#: lang.c:48 lang.c:75 lang.c:7 lang.c:126
+#: lang.c:48 lang.c:75 lang.c:7 lang.c:126 messages.c:17 messages.c:97
 msgid "Elapsed time"
 msgstr "経過時間"
 
@@ -154,23 +156,24 @@ msgstr "経過時間"
 msgid "End Time"
 msgstr "終了時間"
 
-#: lang.c:47 lang.c:61 lang.c:6 lang.c:36 lang.c:125
+#: lang.c:47 lang.c:61 lang.c:6 lang.c:36 lang.c:125 messages.c:16
+#: messages.c:96 messages.c:119
 msgid "End time"
 msgstr "終了時間"
 
-#: lang.c:109
+#: lang.c:109 messages.c:104
 msgid "Estimated expiration date"
 msgstr "Estimated expiration date"
 
-#: lang.c:46
+#: lang.c:46 messages.c:129
 msgid "Event"
 msgstr "Event"
 
-#: lang.c:83 lang.c:110
+#: lang.c:83 lang.c:110 messages.c:105
 msgid "Expire"
 msgstr "Expire"
 
-#: lang.c:78
+#: lang.c:78 messages.c:57
 msgid "Failed job(s)"
 msgstr "実行失敗ジョブ"
 
@@ -178,15 +181,16 @@ msgstr "実行失敗ジョブ"
 msgid "Failed jobs"
 msgstr "Failed jobs"
 
-#: lang.c:44 lang.c:63 lang.c:78 lang.c:10 lang.c:38 lang.c:122
+#: lang.c:44 lang.c:63 lang.c:78 lang.c:10 lang.c:38 lang.c:122 messages.c:20
+#: messages.c:93 messages.c:121
 msgid "Files"
 msgstr "ファイル数"
 
-#: lang.c:64
+#: lang.c:64 messages.c:43
 msgid "Filesets"
 msgstr "Fileset数"
 
-#: lang.c:17
+#: lang.c:17 messages.c:27
 msgid "Filter"
 msgstr "Filter"
 
@@ -194,31 +198,31 @@ msgstr "Filter"
 msgid "Graph system capabilities (Bacula-web only use PNG image format)"
 msgstr "Graph system capabilities (Bacula-web only use PNG image format)"
 
-#: lang.c:28 lang.c:98
+#: lang.c:28 lang.c:98 messages.c:77
 msgid "Interval"
 msgstr "Interval"
 
-#: lang.c:70 lang.c:2
+#: lang.c:70 lang.c:2 messages.c:12
 msgid "Job ID"
 msgstr "Job ID"
 
-#: lang.c:42 lang.c:120
+#: lang.c:42 lang.c:120 messages.c:91
 msgid "Job Id"
 msgstr "Job Id"
 
-#: lang.c:80
+#: lang.c:80 messages.c:59
 msgid "Job Level (Incr / Diff / Full)"
 msgstr "ジョブレベル (増分/差分/フル)"
 
-#: lang.c:44
+#: lang.c:44 messages.c:127
 msgid "Job id"
 msgstr "Job id"
 
-#: lang.c:68 lang.c:18
+#: lang.c:68 lang.c:18 messages.c:28
 msgid "Job status"
 msgstr "Job status"
 
-#: lang.c:50 lang.c:62
+#: lang.c:50 lang.c:62 messages.c:3 messages.c:41
 msgid "Jobs"
 msgstr "Jobs"
 
@@ -226,7 +230,7 @@ msgstr "Jobs"
 msgid "Jobs / Page"
 msgstr "Jobs / Page"
 
-#: lang.c:23
+#: lang.c:23 messages.c:33
 msgid "Jobs per Page"
 msgstr "1ページ表示件数"
 
@@ -234,11 +238,11 @@ msgstr "1ページ表示件数"
 msgid "Jobs report"
 msgstr "Jobs report"
 
-#: lang.c:59 lang.c:34
+#: lang.c:59 lang.c:34 messages.c:117
 msgid "Jod Id"
 msgstr "Jod Id"
 
-#: lang.c:30 lang.c:100
+#: lang.c:30 lang.c:100 messages.c:79
 msgid "Last 2 week"
 msgstr "先々週"
 
@@ -250,75 +254,76 @@ msgstr "Last 24 hours jobs status"
 msgid "Last 24 hours status"
 msgstr "24時間以内"
 
-#: lang.c:41 lang.c:119
+#: lang.c:41 lang.c:119 messages.c:90
 msgid "Last jobs"
 msgstr "Last jobs"
 
-#: lang.c:31 lang.c:101
+#: lang.c:31 lang.c:101 messages.c:80
 msgid "Last month"
 msgstr "先月"
 
-#: lang.c:71
+#: lang.c:71 messages.c:50
 msgid "Last period job status"
 msgstr "ジョブステータス"
 
-#: lang.c:12 lang.c:90
+#: lang.c:12 lang.c:90 messages.c:69
 msgid "Last used volumes"
 msgstr "volume最終使用履歴"
 
-#: lang.c:29 lang.c:99
+#: lang.c:29 lang.c:99 messages.c:78
 msgid "Last week"
 msgstr "先週"
 
-#: lang.c:84 lang.c:111
+#: lang.c:84 lang.c:111 messages.c:106
 msgid "Last written"
 msgstr "最終更新日"
 
-#: lang.c:94
+#: lang.c:94 messages.c:73
 msgid "Last written date for this volume"
 msgstr "Last written date for this volume"
 
-#: lang.c:43 lang.c:60 lang.c:76 lang.c:8 lang.c:35 lang.c:121
+#: lang.c:43 lang.c:60 lang.c:76 lang.c:8 lang.c:35 lang.c:121 messages.c:18
+#: messages.c:92 messages.c:118
 msgid "Level"
 msgstr "Level"
 
-#: lang.c:14
+#: lang.c:14 messages.c:24
 msgid "Log"
 msgstr "詳細"
 
-#: lang.c:82 lang.c:108
+#: lang.c:82 lang.c:108 messages.c:103
 msgid "Media Type"
 msgstr "Media Type"
 
-#: lang.c:58 lang.c:71 lang.c:3 lang.c:33
+#: lang.c:58 lang.c:71 lang.c:3 lang.c:33 messages.c:13 messages.c:116
 msgid "Name"
 msgstr "ジョブ名"
 
-#: lang.c:16
+#: lang.c:16 messages.c:26
 msgid "No job(s) to display"
 msgstr "No job(s) to display"
 
-#: lang.c:47
+#: lang.c:47 messages.c:130
 msgid "No log(s) for this job"
 msgstr "No log(s) for this job"
 
-#: lang.c:86 lang.c:113
+#: lang.c:86 lang.c:113 messages.c:109
 msgid "No volume(s) in this pool"
 msgstr "No volume(s) in this pool"
 
-#: lang.c:95
+#: lang.c:95 messages.c:74
 msgid "Number of jobs"
 msgstr "Number of jobs"
 
-#: lang.c:53
+#: lang.c:53 messages.c:6
 msgid "Official web site"
 msgstr "公式ページ"
 
-#: lang.c:20
+#: lang.c:20 messages.c:30
 msgid "Options"
 msgstr "Options"
 
-#: lang.c:21
+#: lang.c:21 messages.c:31
 msgid "Order by"
 msgstr "ソート条件"
 
@@ -326,47 +331,47 @@ msgstr "ソート条件"
 msgid "Overall status"
 msgstr "Overall status"
 
-#: lang.c:38 lang.c:116
+#: lang.c:38 lang.c:116 messages.c:87
 msgid "Period"
 msgstr "Period"
 
-#: lang.c:79 lang.c:13
+#: lang.c:79 lang.c:13 messages.c:23
 msgid "Pool"
 msgstr "Pool"
 
-#: lang.c:68
+#: lang.c:68 messages.c:47
 msgid "Pool(s)"
 msgstr "Pool数"
 
-#: lang.c:51
+#: lang.c:51 messages.c:4
 msgid "Pools and volumes"
 msgstr "Pools and volumes"
 
-#: lang.c:4 lang.c:88
+#: lang.c:4 lang.c:88 messages.c:67
 msgid "Pools and volumes status"
 msgstr "Pools and volumes status"
 
-#: lang.c:24 lang.c:48
+#: lang.c:24 lang.c:48 messages.c:1
 msgid "Reports"
 msgstr "Reports"
 
-#: lang.c:2 lang.c:43
+#: lang.c:2 lang.c:43 messages.c:10
 msgid "Required components"
 msgstr "Required components"
 
-#: lang.c:25
+#: lang.c:25 messages.c:35
 msgid "Reset"
 msgstr "リセット"
 
-#: lang.c:24
+#: lang.c:24 messages.c:34
 msgid "Reset to default options"
 msgstr "Reset to default options"
 
-#: lang.c:75
+#: lang.c:75 messages.c:54
 msgid "Running jobs"
 msgstr "実行中ジョブ"
 
-#: lang.c:15
+#: lang.c:15 messages.c:25
 msgid "Show job logs"
 msgstr "Show job logs"
 
@@ -378,7 +383,7 @@ msgstr "Show last 24 hours jobs status"
 msgid "Show pools and volumes report"
 msgstr "Show pools and volumes report"
 
-#: lang.c:11 lang.c:127
+#: lang.c:11 lang.c:127 messages.c:21 messages.c:98
 msgid "Speed"
 msgstr "書き込み速度"
 
@@ -386,23 +391,24 @@ msgstr "書き込み速度"
 msgid "Start Time"
 msgstr "Start Time"
 
-#: lang.c:46 lang.c:5 lang.c:124
+#: lang.c:46 lang.c:5 lang.c:124 messages.c:15 messages.c:95
 msgid "Start time"
 msgstr "開始時間"
 
-#: lang.c:40
+#: lang.c:40 messages.c:123
 msgid "Statistics"
 msgstr "Statistics"
 
-#: lang.c:64 lang.c:69 lang.c:85 lang.c:1 lang.c:39 lang.c:112
+#: lang.c:64 lang.c:69 lang.c:85 lang.c:1 lang.c:39 lang.c:112 messages.c:11
+#: messages.c:107 messages.c:122
 msgid "Status"
 msgstr "Status"
 
-#: lang.c:83
+#: lang.c:83 messages.c:62
 msgid "Stored Bytes (last 7 days)"
 msgstr "バックアップ済み総容量 (1週間以内)"
 
-#: lang.c:86
+#: lang.c:86 messages.c:65
 msgid "Stored Files (last 7 days)"
 msgstr "バックアップ済み総ファイル数 (1週間以内)"
 
@@ -414,43 +420,43 @@ msgstr "Stored bytes"
 msgid "Stored bytes for last 7 days (GB)"
 msgstr "Stored bytes for last 7 days (GB)"
 
-#: lang.c:82 lang.c:84
+#: lang.c:82 lang.c:84 messages.c:61 messages.c:63
 msgid "Stored bytes over the last 7 days"
 msgstr "Stored bytes over the last 7 days"
 
-#: lang.c:85 lang.c:87
+#: lang.c:85 lang.c:87 messages.c:64 messages.c:66
 msgid "Stored files over the last 7 days"
 msgstr "Stored files over the last 7 days"
 
-#: lang.c:73
+#: lang.c:73 messages.c:52
 msgid "Submit"
 msgstr "Submit"
 
-#: lang.c:52
+#: lang.c:52 messages.c:5
 msgid "Test page"
 msgstr "テストページ"
 
-#: lang.c:45
+#: lang.c:45 messages.c:128
 msgid "Time"
 msgstr "Time"
 
-#: lang.c:15 lang.c:65
+#: lang.c:15 lang.c:65 messages.c:44
 msgid "Total bytes"
 msgstr "総容量"
 
-#: lang.c:16 lang.c:66
+#: lang.c:16 lang.c:66 messages.c:45
 msgid "Total files"
 msgstr "総ファイル数"
 
-#: lang.c:39 lang.c:117
+#: lang.c:39 lang.c:117 messages.c:88
 msgid "Transfered Bytes"
 msgstr "Transfered Bytes"
 
-#: lang.c:49 lang.c:129
+#: lang.c:49 lang.c:129 messages.c:100
 msgid "Transfered Bytes / Files"
 msgstr "Transfered Bytes / Files"
 
-#: lang.c:40 lang.c:118
+#: lang.c:40 lang.c:118 messages.c:89
 msgid "Transfered Files"
 msgstr "Transfered Files"
 
@@ -458,7 +464,7 @@ msgstr "Transfered Files"
 msgid "Transferred Bytes"
 msgstr "Transferred Bytes"
 
-#: lang.c:81
+#: lang.c:81 messages.c:60
 msgid "Transferred Bytes / Files"
 msgstr "転送容量 / ファイル数"
 
@@ -470,39 +476,40 @@ msgstr "Transferred Files"
 msgid "Transferred Files "
 msgstr "Transferred Files "
 
-#: lang.c:72 lang.c:4
+#: lang.c:72 lang.c:4 messages.c:14
 msgid "Type"
 msgstr "Type"
 
-#: lang.c:72
+#: lang.c:72 messages.c:51
 msgid "Update with selected period"
 msgstr "Update with selected period"
 
-#: lang.c:55
+#: lang.c:55 messages.c:8
 msgid "Version"
 msgstr "Version"
 
-#: lang.c:6 lang.c:11 lang.c:34 lang.c:102 lang.c:105
+#: lang.c:6 lang.c:11 lang.c:34 lang.c:102 lang.c:105 messages.c:81
+#: messages.c:84
 msgid "View report"
 msgstr "View report"
 
-#: lang.c:80 lang.c:91 lang.c:106
+#: lang.c:80 lang.c:91 lang.c:106 messages.c:70 messages.c:101
 msgid "Volume name"
 msgstr "ボリューム名"
 
-#: lang.c:93
+#: lang.c:93 messages.c:72
 msgid "Volume pool"
 msgstr "Volume pool"
 
-#: lang.c:92
+#: lang.c:92 messages.c:71
 msgid "Volume status"
 msgstr "Volume status"
 
-#: lang.c:69
+#: lang.c:69 messages.c:48
 msgid "Volume(s)"
 msgstr "Volume数"
 
-#: lang.c:70
+#: lang.c:70 messages.c:49
 msgid "Volume(s) size"
 msgstr "Volume総容量"
 
@@ -510,7 +517,7 @@ msgstr "Volume総容量"
 msgid "Waiting jobs"
 msgstr "実行待ちジョブ"
 
-#: lang.c:77
+#: lang.c:77 messages.c:56
 msgid "Waiting jobs(s)"
 msgstr "実行待ちジョブ"
 
@@ -518,10 +525,26 @@ msgstr "実行待ちジョブ"
 msgid "back to previous page"
 msgstr "back to previous page"
 
-#: lang.c:42
+#: lang.c:42 messages.c:125
 msgid "days(s)"
 msgstr "days(s)"
 
-#: lang.c:41
+#: lang.c:41 messages.c:124
 msgid "last"
 msgstr "last"
+
+#: messages.c:9
+msgid "Back to Dashboard"
+msgstr ""
+
+#: messages.c:108
+msgid "Slot"
+msgstr ""
+
+#: messages.c:110
+msgid "Total"
+msgstr ""
+
+#: messages.c:126
+msgid "Job details"
+msgstr ""

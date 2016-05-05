@@ -1,11 +1,12 @@
 # Bacula-Web - Translation file
-# Copyright (C) 2004-2014 Free Software Foundation, Inc.
+# Copyright (C) 2004-2016 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Bacula-Web package.
 # Translators:
+# Davide Franco, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: Bacula-Web\n"
-"Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
+"Project-Id-Version: Bacula-Web 7.1.0\n"
+"Report-Msgid-Bugs-To: http://bugs.bacula-web.org\n"
 "POT-Creation-Date: 2011-11-16 21:46+0100\n"
 "PO-Revision-Date: 2014-12-09 12:37+0000\n"
 "Last-Translator: Davide Franco <bacula-dev@dflc.ch>\n"
