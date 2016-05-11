@@ -5,8 +5,12 @@ body {
 
 h1, .h1, h2, .h2, h3, .h3 {
   margin-top: 5px; 
-  margin-bottom: 20px; 
+  margin-bottom: 10px; 
 }
+
+div.panel h3 { margin: 5px;}
+
+table.table {margin-bottom: 2px;}
 
 div.form-group-sm label {
   font-size: 12px;
