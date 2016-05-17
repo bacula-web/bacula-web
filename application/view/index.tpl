@@ -306,8 +306,8 @@
             {foreach from=$clients_consume_list item=client}
               <tr>
                 <td>{$client.name}</td>
-                <td>{$client.jobbytes}</td>
-                <td>{$client.jobfiles}</td>
+                <td class="text-left">{$client.jobbytes}</td>
+                <td class="text-left">{$client.jobfiles}</td>
                 <td class="strong">{$client.day}</td>
               </tr>
             {/foreach}
