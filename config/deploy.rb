@@ -9,4 +9,4 @@ set :deploy_to, '/var/www/bacula.blackslot.com/'
 
 set :keep_releases, 5
 
-set :linked_files,           ['application/config/config.php']
+set :linked_files, ['application/config/config.php']
