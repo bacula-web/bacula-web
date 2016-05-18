@@ -115,6 +115,12 @@ try {
     //Client list Consumes
     $view->assign('clients_consume_list', Clients_Model::getClientConsumes($dbSql->db_link));
 
+    //Everyday backup info
+    $view->assign('week_backups', Jobs_Model::getWeekConsumes($dbSql->db_link));
+
+    //Best day to new Backup
+    $view->assign('best_day_new_backup', Jobs_Model::getBestDayToNewBackup($dbSql->db_link));
+
     // Count volumes
     $view->assign('volumes_nb', Volumes_Model::count($dbSql->db_link));
 

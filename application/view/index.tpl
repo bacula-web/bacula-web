@@ -85,6 +85,18 @@
 
         </tr>
       </table>
+      <table class="table">
+        <tr>
+          <!-- Best day to new Backup -->
+          <td>
+            <div class="panel panel-default">
+              <div class="panel-heading">{t}Next Best Backup Day{/t}</div>
+              <div class="panel-body text-center"><h3>{$best_day_new_backup}</h3</div>
+            </div>
+          </td>
+
+        </tr>
+      </table>
     </div> <!-- end col -->
   </div> <!-- end <div class="row"> -->
 
@@ -293,22 +305,46 @@
     <div class="col-xs-12 col-md-6">
       <!-- Last used volumes -->
       <div class="panel panel-default">
-        <div class="panel-heading"><b>{t}Client Weight List{/t}</b></div>
+        <div class="panel-heading"><b>{t}Clients Size List{/t}</b></div>
         <div class="panel-body">
           <table class="table table-condensed table-stripped">
             <tr>
-              <th title="{t}Client name{/t}">Client</th>
-              <th title="{t}Weight{/t}">Weight</th>
-              <th title="{t}Files{/t}">Files</th>
-              <th title="{t}Backup day{/t}">Date</th>
+              <th class="text-right" title="{t}Client name{/t}">Client</th>
+              <th class="text-right" title="{t}Size{/t}">Weight</th>
+              <th class="text-right" title="{t}Files{/t}">Files</th>
+              <th class="text-right" title="{t}Backup day{/t}">Date</th>
             </tr>
 
             {foreach from=$clients_consume_list item=client}
               <tr>
-                <td>{$client.name}</td>
-                <td class="text-left">{$client.jobbytes}</td>
-                <td class="text-left">{$client.jobfiles}</td>
-                <td class="strong">{$client.day}</td>
+                <td class="text-right">{$client.name}</td>
+                <td class="text-right">{$client.jobbytes}</td>
+                <td class="text-right">{$client.jobfiles}</td>
+                <td class="text-right strong">{$client.day}</td>
+              </tr>
+            {/foreach}
+          </table>
+        </div> <!-- <div class="panel-body"> -->
+      </div> <!-- <div class="panel panel-default"> -->
+    </div> <!-- end class="col-..."-->
+
+    <div class="col-xs-12 col-md-6">
+      <!-- Last used volumes -->
+      <div class="panel panel-default">
+        <div class="panel-heading"><b>{t}Everyday backup size{/t}</b></div>
+        <div class="panel-body">
+          <table class="table table-condensed table-stripped">
+            <tr>
+              <th class="text-right" title="{t}Day{/t}">Day</th>
+              <th class="text-right" title="{t}Size{/t}">Size</th>
+              <th class="text-right" title="{t}Files{/t}">Files</th>
+            </tr>
+
+            {foreach from=$week_backups item=day}
+              <tr>
+                <td class="text-right">{t}{$day.day}{/t}</td>
+                <td class="text-right">{$day.jobbytes}</td>
+                <td class="text-right">{$day.jobfiles}</td>
               </tr>
             {/foreach}
           </table>
