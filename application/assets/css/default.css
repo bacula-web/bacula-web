@@ -27,7 +27,7 @@ div.form-group-sm label {
 #jobsreport .glyphicon-time { color: #337AB7; }             /* Waiting jobs */
 #jobsreport .glyphicon-remove { color: #D9534F; }           /* Failed jobs */
 #jobsreport .glyphicon-off { color: #F0AD4E; }              /* Canceled jobs */
-#jobsreport .glyphicon-warning-sign { color: #F0AD4E; }     /* Completed with erros */
+#jobsreport .glyphicon-warning-sign { color: #F0AD4E; }     /* Completed with errors */
 
 img {
   margin-bottom: 20px;

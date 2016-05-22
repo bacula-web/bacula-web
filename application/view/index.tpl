@@ -49,7 +49,7 @@
 	  	  
 	</div> <!-- end <div class="row"> -->
 	
-	<div class="row ">
+	<div class="row">
 	
 	  <!-- Catalog (database) size -->
       <div class="col-xs-2 col-xs-offset-1">    
