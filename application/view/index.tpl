@@ -4,89 +4,86 @@
 	<h3>{$page_name}</h3>
 	
 	<!-- First row with catalog statistics -->
+	<h4>{t}Catalog statistics{/t}</h4>
+	
 	<div class="row">
-		<div class="col-xs-12">
-		<h4>{t}Catalog statistics{/t}</h4>
-			<table class="table">
-				<tr>
-					<!-- Clients -->
-					<td>
-						<div class="panel panel-default">
-							<div class="panel-heading">{t}Clients{/t}</div>
-							<div class="panel-body text-right"><h3>{$clients}</h3</div>
-						</div>
-					</td>
-					<!-- Defined Jobs -->
-					<td>
-						<div class="panel panel-default">
-							<div class="panel-heading">{t}Jobs{/t}</div>
-							<div class="panel-body text-right"><h3>{$defined_jobs}</h3</div>
-						</div>
-					</td>
-
-					<!-- Defined FileSets -->
-					<td>
-						<div class="panel panel-default">
-							<div class="panel-heading">{t}Filesets{/t}</div>
-							<div class="panel-body text-right"><h3>{$defined_filesets}</h3</div>
-						</div>
-					</td>
-
-					<!-- Stored Bytes -->
-					<td>
-						<div class="panel panel-default">
-							<div class="panel-heading">{t}Total bytes{/t}</div>
-							<div class="panel-body text-right"><h3>{$stored_bytes}</h3</div>
-						</div>
-					</td>
-
-					<!-- Total files -->
-					<td>
-						<div class="panel panel-default">
-							<div class="panel-heading">{t}Total files{/t}</div>
-							<div class="panel-body text-right"><h3>{$stored_files}</h3</div>
-						</div>
-					</td>
-				</tr>
-			</table>
-			<table class="table">
-				<tr>
-					<!-- Catablog database size -->
-					<td>
-						<div class="panel panel-default">
-							<div class="panel-heading">{t}Database size{/t}</div>
-							<div class="panel-body text-right"><h3>{$database_size}</h3</div>
-						</div>
-					</td>				
-
-					<!-- Pools -->
-					<td>
-						<div class="panel panel-default">
-							<div class="panel-heading">{t}Pool(s){/t}</div>
-							<div class="panel-body text-right"><h3>{$pools_nb}</h3</div>
-						</div>
-					</td>				
-
-					<!-- Volumes -->
-					<td>
-						<div class="panel panel-default">
-							<div class="panel-heading">{t}Volume(s){/t}</div>
-							<div class="panel-body text-right"><h3>{$volumes_nb}</h3</div>
-						</div>
-					</td>				
-
-					<!-- Used storage for volumes -->
-					<td>
-						<div class="panel panel-default">
-							<div class="panel-heading">{t}Volume(s) size{/t}</div>
-							<div class="panel-body text-right"><h3>{$volumes_size}</h3</div>
-						</div>
-					</td>				
-
-				</tr>
-			</table>
-		</div> <!-- end col -->
+	  <!-- Defined clients -->
+	  <div class="col-xs-2 col-xs-offset-1">
+	    <div class="panel panel-default">
+	      <div class="panel-heading">{t}Clients{/t}</div>
+		  <div class="panel-body text-right"><h3>{$clients}</h3></div>
+	    </div> <!-- end <div class="panel panel-default"> -->
+	  </div> <!-- end <div class="col-xs-2 col-xs-offset-1"> -->
+	
+	  <!-- Defined Jobs -->
+	  <div class="col-xs-2">
+	    <div class="panel panel-default">
+		  <div class="panel-heading">{t}Jobs{/t}</div>
+		  <div class="panel-body text-right"><h3>{$defined_jobs}</h3></div>
+		</div> <!-- end <div class="panel ... -->
+	  </div> <!-- end <div class="col- -->
+	  
+	  <!-- Defined FileSets -->
+	  <div class="col-xs-2">
+	    <div class="panel panel-default">
+	      <div class="panel-heading">{t}Filesets{/t}</div>
+		  <div class="panel-body text-right"><h3>{$defined_filesets}</h3></div>
+	    </div>
+	  </div>
+	  
+	  <!-- Stored bytes -->
+	  <div class="col-xs-2">
+	    <div class="panel panel-default">
+	      <div class="panel-heading">{t}Total bytes{/t}</div>
+		  <div class="panel-body text-right"><h3>{$stored_bytes}</h3></div>
+		</div>
+	  </div>
+	  
+	  <!-- Stored files -->
+	  <div class="col-xs-2">
+	    <div class="panel panel-default">
+	      <div class="panel-heading">{t}Total files{/t}</div>
+		  <div class="panel-body text-right"><h3>{$stored_files}</h3></div>
+		</div>
+	  </div>
+	  	  
 	</div> <!-- end <div class="row"> -->
+	
+	<div class="row ">
+	
+	  <!-- Catalog (database) size -->
+      <div class="col-xs-2 col-xs-offset-1">    
+	    <div class="panel panel-default">
+		  <div class="panel-heading">{t}Database size{/t}</div>
+		  <div class="panel-body text-right"><h3>{$database_size}</h3></div>
+		</div> <!-- end <div class="panel ...." -->
+	  </div> <!-- end <div class="col-..." -->
+
+      <!-- Defined pools -->
+	  <div class="col-xs-2">
+	    <div class="panel panel-default">
+		  <div class="panel-heading">{t}Pool(s){/t}</div>
+		  <div class="panel-body text-right"><h3>{$pools_nb}</h3></div>
+		</div> <!-- end <div class="panel ...." -->
+	  </div> <!-- end <div class="col-..." -->
+	  
+	  <!-- Defined volumes -->
+	  <div class="col-xs-2">
+	    <div class="panel panel-default">
+		  <div class="panel-heading">{t}Volume(s){/t}</div>
+		  <div class="panel-body text-right"><h3>{$volumes_nb}</h3></div>
+		</div> <!-- end <div class="panel ...." -->
+	  </div> <!-- end <div class="col-..." -->
+	  
+	  <!-- Volumes storage usage -->
+	  <div class="col-xs-2">
+	    <div class="panel panel-default">
+		  <div class="panel-heading">{t}Volume(s) size{/t}</div>
+		  <div class="panel-body text-right"><h3>{$volumes_size}</h3></div>
+		</div> <!-- end <div class="panel ...." -->
+	  </div> <!-- end <div class="col-..." -->
+
+	</div> <!-- end <div class="row equalwidth"> -->
 	
 	<!-- Second row with Jobs statistics, stored bytes and stored files widgets -->
 	<div class="row">
