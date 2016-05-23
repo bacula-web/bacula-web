@@ -17,7 +17,7 @@
 
 class Jobs_Model extends CModel
 {
-    
+
     // ==================================================================================
     // Function: 	count()
     // Parameters:	$pdo_connection			Valid PDO connection object
@@ -28,7 +28,7 @@ class Jobs_Model extends CModel
     {
         return CModel::count($pdo, $tablename);
     }
-    
+
     // ==================================================================================
     // Function: 	count_Jobs()
     // Parameters:	$pdo_connection			Valid PDO connection object
@@ -43,7 +43,7 @@ class Jobs_Model extends CModel
         $where        = null;
         $tablename    = 'Job';
         $fields        = array('COUNT(*) as job_count');
-        
+
      // Check PDO object
         if (!is_a($pdo_connection, 'PDO') and is_null($pdo_connection)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
@@ -53,10 +53,10 @@ class Jobs_Model extends CModel
         if (is_null(CModel::$pdo_connection)) {
             CModel::$pdo_connection = $pdo_connection;
         }
-        
+
      // Getting timestamp interval
         $intervals  = CDBQuery::get_Timestamp_Interval($period_timestamps);
-        
+
      // Defining interval depending on job status
         if (!is_null($job_status)) {
             switch ($job_status) {
@@ -73,7 +73,7 @@ class Jobs_Model extends CModel
         } else {
             $where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         }
-        
+
      // Job status
         if (!is_null($job_status)) {
             switch ($job_status) {
@@ -94,22 +94,22 @@ class Jobs_Model extends CModel
                     break;
             } // end switch
         }
-        
+
      // Job level
         if (!is_null($job_level)) {
             $where[] = "Level = '$job_level' ";
         }
-        
+
      // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
-        
+
      // Execute SQL statment
         $result = CDBUtils::runQuery($statment, $pdo_connection);
         $result = $result->fetch();
         return $result['job_count'];
     }
-    
+
     // ==================================================================================
     // Function: 	getStoredFiles()
     // Parameters:	$pdo_connection 	Valid pdo connection object
@@ -124,24 +124,24 @@ class Jobs_Model extends CModel
         $where      = array();
         $fields     = array( 'SUM(JobFiles) AS stored_files' );
         $tablename    = 'Job';
-        
+
      // Check PDO object
         if (!is_a($pdo_connection, 'PDO') or is_null($pdo_connection)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
         }
-        
+
      // Defined period
         $intervals     = CDBQuery::get_Timestamp_Interval($period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
-        
+
         if ($job_name != 'ALL') {
             $where[] = "name = '$job_name'";
         }
-        
+
         if ($client_id != 'ALL') {
             $where[] = "clientid = '$client_id'";
         }
-        
+
      // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
@@ -149,7 +149,7 @@ class Jobs_Model extends CModel
      // Execute query
         $result = CDBUtils::runQuery($statment, $pdo_connection);
         $result = $result->fetch();
-        
+
         return $result['stored_files'];
     }
 
@@ -167,19 +167,19 @@ class Jobs_Model extends CModel
         $where      = array();
         $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
         $tablename    = 'Job';
-        
+
      // Defined period
         $intervals     = CDBQuery::get_Timestamp_Interval($period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
-        
+
         if ($job_name != 'ALL') {
             $where[] = "name = '$job_name'";
         }
-        
+
         if ($client_id != 'ALL') {
             $where[] = "clientid = '$client_id'";
         }
-        
+
      // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
@@ -187,7 +187,7 @@ class Jobs_Model extends CModel
      // Execute query
         $result = CDBUtils::runQuery($statment, $pdo_connection);
         $result = $result->fetch();
-        
+
         return $result['stored_bytes'];
     }
 
@@ -233,7 +233,34 @@ class Jobs_Model extends CModel
         foreach ($result->fetchAll() as $job) {
             $jobs[] = $job['name'];
         }
-        
+
         return $jobs;
+    }
+
+    // ==================================================================================
+    // Function:    getWeekSize()
+    // Parameters:  $pdo        Valid PDO connection object
+    // Return:      Array with days in a week and her backup size
+    // ==================================================================================
+
+    public static function getWeekSize($pdo)
+    {
+        $days       = array();
+        $fields     = array( 'SUM(Job.Jobbytes) AS Jobbytes', 'SUM(Job.Jobfiles) AS Jobfiles', "FROM_UNIXTIME(Job.JobTDate, '%W') AS day" );
+        $join       = array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus');
+        $where      = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
+        $groupBy    = 'day';
+        $orderby    = 'Jobbytes DESC';
+
+        $statment   = CDBQuery::get_Select(array('table'=> 'Job', 'fields' => $fields, 'join' => $join, 'where' => $where, 'groupby' => $groupBy, 'orderby' => $orderby));
+        $result     = CDBUtils::runQuery($statment, $pdo);
+
+        foreach ($result->fetchAll() as $day) {
+            $day['jobbytes'] = CUtils::Get_Human_Size($day['jobbytes']);
+            $day['jobfiles'] = CUtils::format_Number($day['jobfiles'], 0);
+            $days[] = $day;
+        }
+
+        return $days;
     }
 }
