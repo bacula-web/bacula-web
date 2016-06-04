@@ -19,9 +19,12 @@ class CGraph
 {
     
     private $data;
-    private $data_type = array('pie' => 'text-data-single', 'bars' => 'text-data');
+    private $data_ok;
+    private $data_type = array( 'pie' => 'text-data-single', 
+    							'bars' => 'text-data');
     private $uniform_data;
-    private $data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
+    private $data_colors = array( 'blue', 'orange', 'purple', 'red', 'green', 
+    							  'SkyBlue', 'yellow', 'cyan', 'lavender', 'DimGrey');
     private $graph_type;
     
     private $width;
@@ -107,25 +110,24 @@ class CGraph
     public function SetData($data_in, $graph_type, $uniform_data = false)
     {
 		$this->data = $data_in;
-        $this->uniform_data = $uniform_data;
+	  	$this->uniform_data = $uniform_data;
 
         // Check $this->data before creating the graph
-        if (!$this->CheckData()) {
-            throw new Exception('Passed $data_in variable is not an array');
-        }
-
-        if ($this->uniform_data) {
+        $this->data_ok = $this->CheckData();
+        
+        // Set value to same unit but only if values are safe
+        if ($this->uniform_data === true AND $this->data_ok === true) {
             $this->data = $this->UniformizeData($this->data);
-        } else {
-            $this->data = $data_in;
         }
         
-        $this->plot->SetDataValues($this->data);
-        
-        $this->graph_type   = $graph_type;
+        // Set plot values only if they are safe
+		if($this->data_ok === true)
+        	$this->plot->SetDataValues($this->data); 
         
         // Set graph type and data type
+        $this->graph_type   = $graph_type;
         $this->plot->SetPlotType($this->graph_type);
+
         $this->plot->SetDataType($this->data_type[$this->graph_type]);
     }
  
