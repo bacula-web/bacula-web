@@ -3,6 +3,7 @@
 Changelog
 
 - Dashboard: Improved dashboard layout by moving catalog statistics on top of the page
+- General: Bootstrap upgraded to version 3.3.6
 
 Fixed bugs
 
