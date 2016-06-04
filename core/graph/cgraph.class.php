@@ -61,6 +61,40 @@ class CGraph
         $this->plot->SetFileFormat("jpg");
         $this->plot->SetIsInline(true);
     }
+    
+    // ==================================================================================
+    // Function:    CheckData()
+    // Return:      true or false
+    // Description: check if data class property class->data is an array, contain at least one sub-array and
+    // if the array does contain at least a non null value.
+    // ==================================================================================
+
+    private function CheckData() {
+    	$label_ok = true;
+    	$data_ok = false;
+    	
+    	// Check if $values is an array
+    	if( !is_array($this->data) ) {
+    		return false;
+    	}
+    	
+    	// Check if $values does not contain null or empty values
+    	foreach($this->data as $row) {
+    		// check if first element of the sub-array is a valid string
+    		if( !is_string($row[0]) ) { 
+    			$label_ok = false;
+    		}
+    		// check if at least one second element of the sub-array is set (not null and contain value)
+    		if( isset($row[1]) ) { 
+    			$data_ok = true; 
+    		}
+    	}
+    	
+    	if( $data_ok === true && $label_ok === true)
+    		return true;
+    	else
+    		return false;
+    }
 
     // ==================================================================================
     // Function:    SetData()
@@ -72,19 +106,20 @@ class CGraph
 
     public function SetData($data_in, $graph_type, $uniform_data = false)
     {
-        if (!is_array($data_in)) {
-            throw new Exception('Passed $data_in variable is not an array');
-        }
-        
+		$this->data = $data_in;
         $this->uniform_data = $uniform_data;
 
-        if ($this->uniform_data) {
-            $this->data = $this->UniformizeData($data_in);
-        } else {
-            $this->data    = $data_in;
+        // Check $this->data before creating the graph
+        if (!$this->CheckData()) {
+            throw new Exception('Passed $data_in variable is not an array');
         }
 
-        // Set graph values
+        if ($this->uniform_data) {
+            $this->data = $this->UniformizeData($this->data);
+        } else {
+            $this->data = $data_in;
+        }
+        
         $this->plot->SetDataValues($this->data);
         
         $this->graph_type   = $graph_type;
