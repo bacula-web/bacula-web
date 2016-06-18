@@ -3,6 +3,8 @@
 Changelog
 
 - Dashboard: Improved dashboard layout by moving catalog statistics on top of the page
+- General: The catalog dropdown is now displayed even if you have only one catalog defined 
+	   It's much better to know on which bacula instance you're looking at
 - General: Upgraded Bootstrap to version 3.3.6
 
 Fixed bugs

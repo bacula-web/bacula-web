@@ -94,7 +94,6 @@
     <div class="col-xs-6 col-md-8">
 
     <!-- Catalog selector -->
-    {if $catalog_nb > 1}
     <div class="btn-group btn-group-sm pull-right">
       <button type="button" class="btn btn-primary"><i class="fa fa-database fa-fw"></i> {$catalog_label}</button>
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -108,7 +107,6 @@
         {/foreach}
       </ul>
     </div>
-    {/if}
     <!-- end Catalog selector -->      
     </div> <!-- div class="col-xs..." -->
   </div> <!-- div class="row" -->
