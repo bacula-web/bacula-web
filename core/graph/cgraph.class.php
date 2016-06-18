@@ -81,6 +81,10 @@ class CGraph
     		return false;
     	}
     	
+    	// Check if the array contain at least one element
+    	if( count($this->data) == 0 )
+    		return false;
+
     	// Check if $values does not contain null or empty values
     	foreach($this->data as $row) {
     		// check if first element of the sub-array is a valid string
@@ -89,9 +93,12 @@ class CGraph
     		}
     		// check if at least one second element of the sub-array is set (not null and contain value)
     		if( isset($row[1]) ) { 
-    			$data_ok = true; 
+    			echo '<h3>we found a good value here -> ' . $row[1] . ' :)</h3>';
+    			$data_ok = true;
+    		}else {
+    			echo '<h3>we found a BAD value here -> ' . var_dump($row[1]) . ' :(</h3>';
     		}
-    	}
+    	} // end foreach
     	
     	if( $data_ok === true && $label_ok === true)
     		return true;
@@ -103,32 +110,32 @@ class CGraph
     // Function:    SetData()
     // Parameters:  $data_in
     //              $graph_type
-    //              $uniform_data (set all values to same unit or not)
+    //              $uniform_data (set all values to the same unit or not)
     // Return:      -
     // ==================================================================================
 
     public function SetData($data_in, $graph_type, $uniform_data = false)
     {
+        
 		$this->data = $data_in;
-	  	$this->uniform_data = $uniform_data;
-
-        // Check $this->data before creating the graph
+		$this->uniform_data = $uniform_data;
+		
+		// Check $this->data before creating the graph
         $this->data_ok = $this->CheckData();
         
-        // Set value to same unit but only if values are safe
+        // Set array values to same unit but only if values are clean
         if ($this->uniform_data === true AND $this->data_ok === true) {
             $this->data = $this->UniformizeData($this->data);
         }
         
-        // Set plot values only if they are safe
-		if($this->data_ok === true)
-        	$this->plot->SetDataValues($this->data); 
-        
-        // Set graph type and data type
-        $this->graph_type   = $graph_type;
-        $this->plot->SetPlotType($this->graph_type);
-
-        $this->plot->SetDataType($this->data_type[$this->graph_type]);
+        // Set plot values and other stuffs only if provided values are clean
+		if($this->data_ok === true) {
+		        // Set graph datas, type and data type
+        		$this->graph_type   = $graph_type;
+        		$this->plot->SetPlotType($this->graph_type);
+        		$this->plot->SetDataValues($this->data); 
+        		$this->plot->SetDataType($this->data_type[$this->graph_type]);
+        }
     }
  
     // ==================================================================================
@@ -221,7 +228,7 @@ class CGraph
     // ==================================================================================
     // Function: 	isEmpty()
     // Parameters:	none
-    // Return:		true sum of values in the graph equal 0
+    // Return:		true (boolean) if sum of values in the graph is equal to 0
     // ==================================================================================
 
     protected function isEmpty()
@@ -247,40 +254,44 @@ class CGraph
 
     public function Render()
     {
-        switch ($this->graph_type) {
-            case 'pie':
+        $nostats_msg = "Sorry ...\nThere is not statistics to display\nfor the selected period :(";
+        $msg_options = array( 	'draw_background' => true, 
+        							'draw_border' => true, 
+        							'reset_font' => true, 
+        							'text_color' => 'black' );
 
-                // Display message if data sum equal 0
-                if ($this->isEmpty()) {
-                    $message = "Sorry ...\nThere is not statistics to display\nfor the selected period :(";
-                    $message_options = array( 'draw_background' => true, 'draw_border' => true, 'reset_font' => true, 'text_color' => 'black' );
-                    $this->plot->DrawMessage($message, $message_options);
-                } else {
-                    // Set legend
-                    $this->setLegend();
-                    
-                    // Set plot area
-                    $this->plot->SetPlotAreaPixels($this->padding, $this->padding, ($this->width * 0.65), $this->height - $this->padding);
+    	// Check if passed values to graph are ok first
+    	if( $this->data_ok !== true ) {
+    		$this->plot->DrawMessage( $nostats_msg, $msg_options);
+        }else {
+        	// Everything is fine, we can draw the graph :)
+			switch ($this->graph_type) {
+				case 'pie':
+					// Set legend
+					$this->setLegend();
+				
+					// Set plot area
+					$this->plot->SetPlotAreaPixels($this->padding, $this->padding, ($this->width * 0.65), $this->height - $this->padding);
 
-                    // Set graph colors and shading
-                    $this->plot->SetDataColors($this->data_colors);
-                    $this->plot->SetShading(0);
-                    $this->plot->SetLabelScalePosition(0.5);
-                }
-                break;
-            case 'bars':
-                // X label angle
-                $this->plot->SetXLabelAngle(90);
+					// Set graph colors and shading
+					$this->plot->SetDataColors($this->data_colors);
+					$this->plot->SetShading(0);
+					$this->plot->SetLabelScalePosition(0.5);
+				break;
+				case 'bars':
+					// X label angle
+					$this->plot->SetXLabelAngle(90);
 
-                // Plot and border colors
-                $this->plot->SetDataColors(array('gray'));
-                $this->plot->SetDataBorderColors(array('black'));
+					// Plot and border colors
+					$this->plot->SetDataColors(array('gray'));
+					$this->plot->SetDataBorderColors(array('black'));
 
-                // Shading
-                $this->plot->SetShading(2);
-                break;
-        } // end switch
-
+					// Shading
+					$this->plot->SetShading(2);
+				break;
+			} // end switch
+		} // end else
+		
         # Turn off X tick labels and ticks because they don't apply here:
         $this->plot->SetXTickLabelPos('none');
         $this->plot->SetXTickPos('none');
@@ -289,7 +300,8 @@ class CGraph
         // Graph rendering
         $this->plot->DrawGraph();
 
-     // Return image file path
+         // Return image file path
         return $this->get_Filepath();
     } // end function Render()
+    
 }  // end CGraph class
