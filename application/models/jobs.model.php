@@ -150,7 +150,12 @@ class Jobs_Model extends CModel
         $result = CDBUtils::runQuery($statment, $pdo_connection);
         $result = $result->fetch();
         
-        return $result['stored_files'];
+		// If result == null, return 0 instead
+		if( is_null($result['stored_files']) ) {
+			return 0;
+		}else {
+			return $result['stored_files'];
+		}
     }
 
     // ==================================================================================
@@ -168,7 +173,7 @@ class Jobs_Model extends CModel
         $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
         $tablename    = 'Job';
         
-     // Defined period
+        // Defined period
         $intervals     = CDBQuery::get_Timestamp_Interval($period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
@@ -180,15 +185,20 @@ class Jobs_Model extends CModel
             $where[] = "clientid = '$client_id'";
         }
         
-     // Building SQL statment
+        // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
 
-     // Execute query
+        // Execute query
         $result = CDBUtils::runQuery($statment, $pdo_connection);
         $result = $result->fetch();
-        
-        return $result['stored_bytes'];
+
+		// If result == null, return 0 instead
+		if( is_null($result['stored_bytes']) ) {
+			return 0;
+		}else {
+			return $result['stored_bytes'];
+		}
     }
 
     // ==================================================================================

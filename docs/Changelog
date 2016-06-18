@@ -2,13 +2,15 @@
 
 Changelog
 
-- Dashboard: Improved dashboard layout by moving catalog statistics on top of the page
 - General: The catalog dropdown is now displayed even if you have only one catalog defined 
 	   It's much better to know on which bacula instance you're looking at
-- General: Upgraded Bootstrap to version 3.3.6
+- General: Bootstrap upgraded to version 3.3.6
+- General: Bacula-Web will not die even if there's no data to display in graphs (see Mantis #00180 below)
+- Dashboard: Improved dashboard layout by moving catalog statistics on top of the page
 
 Fixed bugs
 
+- 0000180 [bug-php] DrawGraph No data array error in http logs
 - 0000187 [bug-php] Total of bytes per pool problem in Pool and volumes report
 
 New features
