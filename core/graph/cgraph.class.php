@@ -206,8 +206,9 @@ class CGraph
             $this->plot->SetLegend(implode(': ', $legend));
         }
 
-         // Set Legend position (calculated regarding the width and height of the graph)
-        list($legend_width, $legend_height) = $this->plot->GetLegendSize();
+        // Set Legend position (calculated regarding the width and height of the graph)
+        $legendsize = $this->plot->GetLegendSize();
+        $legend_width = $legendsize[0];
         $this->plot->SetLegendPixels($this->width - ($legend_width + 5), 10);
     }
     
