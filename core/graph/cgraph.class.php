@@ -93,10 +93,7 @@ class CGraph
     		}
     		// check if at least one second element of the sub-array is set (not null and contain value)
     		if( isset($row[1]) ) { 
-    			echo '<h3>we found a good value here -> ' . $row[1] . ' :)</h3>';
     			$data_ok = true;
-    		}else {
-    			echo '<h3>we found a BAD value here -> ' . var_dump($row[1]) . ' :(</h3>';
     		}
     	} // end foreach
     	
