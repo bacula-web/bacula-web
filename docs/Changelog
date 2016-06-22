@@ -15,8 +15,9 @@ Fixed bugs
 
 New features
 
-none
-
+- 0000142 [feature] Filter Job Report by Backup Level
+- 0000192 [feature] Add filter by Start/End Time in Jobs report
+ 
 Translations
 
 - As of Bacula-Web 7.1.1, all language translations are hosted on Tranifex.com)
