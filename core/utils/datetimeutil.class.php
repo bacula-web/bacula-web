@@ -40,6 +40,7 @@ class DateTimeUtil
     {
         $start = '';
         $end   = '';
+	$elapsed_time = '';
 
         if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0) {
             return 'n/a';
@@ -65,11 +66,19 @@ class DateTimeUtil
         $diff -= $minsDiff * 60;
         $secsDiff = sprintf("%02d", $diff);
 
+	// If elapsed time is more than 24 hours, return a string with days
         if ($daysDiff > 0) {
-            return $daysDiff . 'day(s) ' . $hrsDiff . ':' . $minsDiff . ':' . $secsDiff;
+            $elapsed_time = "$daysDiff day(s) $hrsDiff:$minsDiff$secsDiff";
         } else {
-            return $hrsDiff . ':' . $minsDiff . ':' . $secsDiff;
+          $elapsed_time = "$hrsDiff:$minsDiff:$secsDiff";
+
+          // Quick fix as Bacula has a bug with startdate and enddate when using pre nor post scripts
+          if( $elapsed_time == "00:00:00" ) {
+            $elapsed_time = "00:00:01";
+          }
         }
+
+  	return $elapsed_time;
     }
 
     // ==================================================================================
@@ -83,8 +92,14 @@ class DateTimeUtil
     {
         if (strtotime($start) && strtotime($end)) {
             $seconds = strtotime($end) - strtotime($start);
-            return $seconds;
-        } else {
+
+            // Quick fix as Bacula has a bug with startdate and enddate when using pre nor post scripts
+	    if($seconds == 0) {
+	      return 1;
+            }else {
+              return $seconds;
+ 	    }
+        }else {
             return false;
         }
     }
