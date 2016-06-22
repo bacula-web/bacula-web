@@ -80,12 +80,41 @@
 		</div>
 		
 		<div class="form-group">
+		  <label>{t}Level{/t}</label>
+			<select name="level_id" class="form-control">
+			  {foreach from=$levels_list key=level_id item=level_name}
+				<option value="{$level_id}" {if $level_id eq $level_filter}selected{/if}>{$level_name}</option>
+			  {/foreach}
+			</select>
+		</div>
+
+		<div class="form-group">
 		  <label>{t}Client{/t}</label>
 			<select name="client_id" class="form-control">
 			  {foreach from=$clients_list key=client_id item=client_name}
 				<option value="{$client_id}" {if $client_id eq $client_filter}selected{/if}>{$client_name}</option>
 			  {/foreach}
 			</select>
+		</div>
+
+		<div class="form-group">
+		  <label>{t}Start time{/t}</label>
+            <div class='input-group date datetimepicker' id='datetimepicker1'>
+                <input name="start_time" type='text' class="form-control" value="{$start_time_filter}" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+            </div>
+		</div>
+
+		<div class="form-group">
+		  <label>{t}End time{/t}</label>
+            <div class='input-group date datetimepicker' id='datetimepicker1'>
+                <input name="end_time" type='text' class="form-control" value="{$end_time_filter}" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+            </div>
 		</div>
 			  
 		<span class="help-block">{t}Options{/t}</span>
@@ -120,5 +149,4 @@
 	  </div> <!-- div class="col-md-3 cold-lg-3" -->
   </div> <!-- div class="row" -->
 </div> <!-- div class="container-fluid" -->
-
 {include file="footer.tpl"}
