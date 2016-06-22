@@ -249,18 +249,16 @@ class Jobs_Model extends CModel
 
     // ==================================================================================
     // Function: 	getLevels()
-    // Parameters:	$pdo_connection - valide pdo object
-    //              $levels_name - Array containing level name
+    // Parameters:	$pdo_connection - valid PDO object
+    //                  $levels_name - Array containing level name
     // Return:		array containing level list
     // ==================================================================================
 
     public static function getLevels($pdo, $levels_name = array())
     {
-        $levels      = array();
-
-        $statment     = array( 'table' => 'Job', 'fields' => array('Level'), 'groupby' => 'Level');
-
-        $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $pdo);
+        $levels = array();
+        $statment = array( 'table' => 'Job', 'fields' => array('Level'), 'groupby' => 'Level');
+        $result = CDBUtils::runQuery(CDBQuery::get_Select($statment), $pdo);
 
         foreach ($result->fetchAll() as $level) {
             if (array_key_exists($level['level'], $levels_name)) {
