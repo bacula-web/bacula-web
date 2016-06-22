@@ -1,9 +1,9 @@
-=== Release 7.1.1 (May dd 2016) ===
+=== Release 7.2.0 (June dd 2016) ===
 
 Changelog
 
 - General: The catalog dropdown is now displayed even if you have only one catalog defined 
-	   It's much better to know on which bacula instance you're looking at
+	   I tought it would be much better to always see on which bacula instance your are monitoring
 - General: Bootstrap upgraded to version 3.3.6
 - General: Bacula-Web will not die even if there's no data to display in graphs (see Mantis #00180 below)
 - Dashboard: Improved dashboard layout by moving catalog statistics on top of the page
@@ -12,6 +12,7 @@ Fixed bugs
 
 - 0000180 [bug-php] DrawGraph No data array error in http logs
 - 0000187 [bug-php] Total of bytes per pool problem in Pool and volumes report
+- 0000190 [bug-php] Some backup jobs in Jobs report page shows a duration of 0 second
 
 New features
 
