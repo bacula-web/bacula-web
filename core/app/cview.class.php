@@ -36,7 +36,7 @@ class CView extends Smarty
 
         // Set to true for debug or dev purpose only
         $this->debugging = false;
-        $this->force_compile = true;
+        $this->force_compile = false;
 
         $this->template_dir = VIEW_DIR;
         $this->compile_dir = VIEW_CACHE_DIR;
