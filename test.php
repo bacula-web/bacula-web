@@ -105,7 +105,7 @@ foreach ($check_list as &$check) {
             $check['check_result'] = $icon_result[is_writable(VIEW_CACHE_DIR)];
             break;
         case 'php-version':
-            $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '5.3', '>=')];
+            $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '5.4', '>=')];
             break;
         case 'db-connection':
             $check['check_result'] = $icon_result[ CDBUtils::isConnected($dbSql->db_link)];
