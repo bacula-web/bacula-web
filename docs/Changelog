@@ -4,6 +4,7 @@ Changelog
 
 - General: The catalog dropdown is now displayed even if you have only one catalog defined 
 	   I tought it would be much better to always see on which bacula instance your are monitoring
+- General: Dashboard link have been removed from reports dropdown menu in header
 - General: Bootstrap upgraded to version 3.3.6
 - General: Bacula-Web will not die even if there's no data to display in graphs (see Mantis #00180 below)
 - Dashboard: Improved dashboard layout by moving catalog statistics on top of the page
