@@ -1,4 +1,4 @@
-=== Release 7.2.0 (June dd 2016) ===
+=== Release 7.2.0 (June 28 2016) ===
 
 Changelog
 
@@ -7,6 +7,7 @@ Changelog
 - General: Bootstrap upgraded to version 3.3.6
 - General: Bacula-Web will not die even if there's no data to display in graphs (see Mantis #00180 below)
 - Dashboard: Improved dashboard layout by moving catalog statistics on top of the page
+- Test page: As of now, you should run at least PHP version 5.4 to have Bacula-Web running smoothly 
 
 Fixed bugs
 
