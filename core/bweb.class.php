@@ -176,7 +176,7 @@ class Bweb
                 // If volume have alreday been used
                 if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
                     // Calculate expiration date only if the volume is Full
-                    if ($volume['volstatus'] == 'Full') {
+                    if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
                         $expire_date = strtotime($volume['lastwritten']) + $volume['volretention'];
                         $volume['expire'] = strftime("%Y-%m-%d", $expire_date);
                     }
