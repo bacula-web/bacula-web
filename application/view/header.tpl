@@ -23,59 +23,74 @@
 
 <!-- Header -->
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.php">Bacula-Web</a>
-        </div> <!-- div class="navbar-header" -->
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="index.php">Bacula-Web</a>
+		</div> <!-- div class="navbar-header" -->
 		
-   	<!-- Reports dropdown menu -->
-        <ul class="nav navbar-nav">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{t}Reports{/t} <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="jobs.php">{t}Jobs{/t}</a></li>
-              <li><a href="pools.php">{t}Pools and volumes{/t}</a></li>
-            </ul>
-          </li>
-        </ul>		
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-cog"></span> </a>
-          <ul class="dropdown-menu">
-            <li role="presentation" class="dropdown-header">Tools</li>
-            <li> 
-              <a href="test.php" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
-            </li>
-            <li role="presentation" class="divider"></li>
-            <li role="presentation" class="dropdown-header">Help</li>
-            <li> 
-              <a href="http://www.bacula-web.org" title="Visit the official web site" target="_blank"><i class="fa fa-globe fa-fw"></i> {t}Official web site{/t}</a> 
-            </li>
-            <li> 
-              <a href="http://bugs.bacula-web.org" title="Bug and feature request tracker" target="_blank"><i class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a> 
-            </li>
-            <li role="presentation" class="divider"></li>
-            <li role="presentation" class="dropdown-header">{t}Version{/t}</li>
-            <li class="disabled"> <a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 7.2.0</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div> <!-- div class="collapse navbar-collapse"-->
-  </div> <!-- div class="container-fluid" -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<!-- Reports dropdown menu -->
+			<ul class="nav navbar-nav">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-text-o fa-fw"></i> {t}Reports{/t} <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="jobs.php">{t}Jobs{/t}</a></li>
+						<li><a href="pools.php">{t}Pools and volumes{/t}</a></li>
+					</ul>
+				</li>
+			</ul>		
+		
+			<ul class="nav navbar-nav navbar-right">
+				<!-- Catalog selector -->
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-fw"></i> {$catalog_label} <span class="caret"></span></a>
+						
+					<ul class="dropdown-menu">
+						<li><a href="#">Test</a></li>
+						{foreach from=$catalogs key=catalog_id item=catalog_name}
+						<li><a href="index.php?catalog_id={$catalog_id}">
+						{if $catalog_id eq $catalog_current_id} <i class="fa fa-check fa-fw"></i> {else} <i class="fa fa-fake fa-fw"></i> {/if}{$catalog_name}</a>
+						</li>
+						{/foreach}
+					</ul>
+				</li>
+				<!-- end Catalog selector -->
+				
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-cog fa-fw"></i> <span class="hidden-sm hidden-md hidden-lg">{t}About{/t}</span></a>
+					<ul class="dropdown-menu">
+						<li role="presentation" class="dropdown-header">Tools</li>
+						<li> 
+							<a href="test.php" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
+						</li>
+						<li role="presentation" class="divider"></li>
+						<li role="presentation" class="dropdown-header">Help</li>
+						<li> 
+							<a href="http://www.bacula-web.org" title="Visit the official web site" target="_blank"><i class="fa fa-globe fa-fw"></i> {t}Official web site{/t}</a> 
+						</li>
+						<li> 
+							<a href="http://bugs.bacula-web.org" title="Bug and feature request tracker" target="_blank"><i class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a> 
+						</li>
+						<li role="presentation" class="divider"></li>
+						<li role="presentation" class="dropdown-header">{t}Version{/t}</li>
+						<li class="disabled"><a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 7.2.0</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div> <!-- div class="collapse navbar-collapse"-->
+	</div> <!-- div class="container-fluid" -->
 </div> <!-- class="navbar" -->
 
   <div class="container-fluid">
     <!-- Breadcrumb -->
     <div class="row">
-      <div class="col-xs-6 col-md-4">
+      <div class="col-xs-12">
         <ol class="breadcrumb">
 			{php}
 				global $current_page;
@@ -91,23 +106,5 @@
 			{/php}
         </ol>
       </div> <!-- div class="col..." -->
-    <div class="col-xs-6 col-md-8">
-
-    <!-- Catalog selector -->
-    <div class="btn-group btn-group-sm pull-right">
-      <button type="button" class="btn btn-primary"><i class="fa fa-database fa-fw"></i> {$catalog_label}</button>
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-        <span class="fa fa-caret-down"></span> 
-      </button>
-      <ul class="dropdown-menu">
-        {foreach from=$catalogs key=catalog_id item=catalog_name}
-          <li> <a href="index.php?catalog_id={$catalog_id}">
-          {if $catalog_id eq $catalog_current_id} <i class="fa fa-check fa-fw"></i> {else} <i class="fa fa-fake fa-fw"></i> {/if}{$catalog_name}</a>
-          </li>
-        {/foreach}
-      </ul>
-    </div>
-    <!-- end Catalog selector -->      
-    </div> <!-- div class="col-xs..." -->
   </div> <!-- div class="row" -->
 </div> <!-- div class="container" -->
