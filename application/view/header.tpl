@@ -52,7 +52,6 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-fw"></i> {$catalog_label} <span class="caret"></span></a>
 						
 					<ul class="dropdown-menu">
-						<li><a href="#">Test</a></li>
 						{foreach from=$catalogs key=catalog_id item=catalog_name}
 						<li><a href="index.php?catalog_id={$catalog_id}">
 						{if $catalog_id eq $catalog_current_id} <i class="fa fa-check fa-fw"></i> {else} <i class="fa fa-fake fa-fw"></i> {/if}{$catalog_name}</a>
