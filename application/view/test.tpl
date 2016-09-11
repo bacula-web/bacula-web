@@ -24,14 +24,14 @@
 	<!-- Graph testing -->
 	<h4>Graph capabilites <small>(png images format only)</small></h4>
 	<div class="row">
-		<div class="col-xs-6"> 
+		<div class="col-xs-12 col-sm-6"> 
 			<div class="img_loader text-center">
 				<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
 				<p>Loading graph</p>
 			</div>
 			<img class="img-responsive center-block" src="{$bar_graph}" alt="Graph 1">
 		</div>
-		<div class="col-xs-6">
+		<div class="col-xs-12 col-sm-6">
 			<div class="img_loader text-center">
 				<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
 				<p>Loading graph</p>

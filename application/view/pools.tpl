@@ -6,6 +6,7 @@
 
     {foreach from=$pools item=pool key=pool_name}
 	<h4>{$pool_name}</h4>
+	<div class="table-responsive">
 	<table class="table table-bordered table-striped table-hover text-center">
 		<tr>
 			<th class="text-center">{t}Volume name{/t}</th>
@@ -37,7 +38,8 @@
 			<td><b>{t}Total{/t}</b></td>
 			<td>{$pool.total_used_bytes}</td>
 		</tr>
-	</table>	
+	</table>
+	</div>
     {/foreach}
 </div> <!-- div class="container-fluid" -->
 
