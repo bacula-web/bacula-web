@@ -10,7 +10,7 @@
 	    <div class="panel-heading" role="tab" id="heading{$pool_name}">
 	      <h4 class="panel-title">
 	        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{$pool_name}" aria-expanded="true" aria-controls="collapse{$pool_name}" class="btn-block">
-	          {$pool_name} - <small><b>{t}Volumes{/t} / {t}Bytes{/t}:</b> {$pool.volumes|@count} / {$pool.total_used_bytes}</small> <span class="caret"></span>
+	          {$pool_name} <span class="hidden-xs">-</span> <br class="hidden-sm hidden-md hidden-lg" /> <small><b>{t}Volumes{/t} / {t}Bytes{/t}:</b> {$pool.volumes|@count} / {$pool.total_used_bytes}</small> <span class="caret"></span>
 	        </a>
 	      </h4>
 	    </div>
