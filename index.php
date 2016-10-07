@@ -15,12 +15,12 @@
   | GNU General Public License for more details.                            |
   +-------------------------------------------------------------------------+
 */
- session_start();
- include_once( 'core/global.inc.php' );
+session_start();
+include_once('core/global.inc.php');
 
- // Initialise view and model
- $view     = new CView();
- $dbSql     = null;
+// Initialise view and model
+$view     = new CView();
+$dbSql     = null;
 
 try {
     $dbSql = new Bweb($view);
@@ -39,7 +39,7 @@ try {
         $selected_period = CHttpRequest::get_Value('period_selector');
         $view->assign('custom_period_list_selected', $selected_period);
 
-        switch($selected_period) {
+        switch ($selected_period) {
             case 'last_day':
                 $custom_period = array( LAST_DAY, NOW);
                 break;
@@ -112,14 +112,14 @@ try {
     // Clients list
     $view->assign('clients_list', Clients_Model::getClients($dbSql->db_link));
 
-    //Client list Consumes
-    $view->assign('clients_consume_list', Clients_Model::getClientConsumes($dbSql->db_link));
-
-    //Everyday backup info
-    $view->assign('week_backups', Jobs_Model::getWeekConsumes($dbSql->db_link));
-
     //Best day to new Backup
     $view->assign('best_day_new_backup', Jobs_Model::getBestDayToNewBackup($dbSql->db_link));
+
+    // Client list size
+    $view->assign('clients_size_list', Clients_Model::getClientSize($dbSql->db_link));
+
+    // Everyday backup info
+    $view->assign('week_size', Jobs_Model::getWeekSize($dbSql->db_link));
 
     // Count volumes
     $view->assign('volumes_nb', Volumes_Model::count($dbSql->db_link));

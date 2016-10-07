@@ -2,11 +2,15 @@
 
 Changelog
 
+- Dashboard: Improved dashboard layout by moving catalog statistics on top of the page
+
 Fixed bugs
 
 - 0000187 [bug-php] Total of bytes per pool problem in Pool and volumes report
 
 New features
+
+none
 
 Translations
 
@@ -64,6 +68,8 @@ Fixed bugs
 - 0000168 [bug-php] Division by zero warning in Jobs report page (bacula-dev)
 
 New features
+
+none
 
 Translations
 

@@ -85,12 +85,12 @@ class Clients_Model extends CModel
     }
 
     // ==================================================================================
-    // Function:    getClientConsumes()
+    // Function:    getClientSize()
     // Parameters:  none
-    // Return:      array containing client information
+    // Return:      array containing client size information
     // ==================================================================================
 
-    public static function getClientConsumes($pdo)
+    public static function getClientSize($pdo)
     {
         $clients    = array();
         $fields     = array('Name','Level', 'SUM(Job.Jobbytes) AS Jobbytes', 'SUM(Job.Jobfiles) AS Jobfiles', "FROM_UNIXTIME(JobTDate,'%Y-%m-%d') as day");

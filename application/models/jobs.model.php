@@ -238,12 +238,12 @@ class Jobs_Model extends CModel
     }
 
     // ==================================================================================
-    // Function:    getWeekConsumes()
+    // Function:    getWeekSize()
     // Parameters:  $pdo        Valid PDO connection object
     // Return:      Array with days in a week and her backup size
     // ==================================================================================
 
-    public static function getWeekConsumes($pdo)
+    public static function getWeekSize($pdo)
     {
         $days       = array();
         $fields     = array( 'SUM(Job.Jobbytes) AS Jobbytes', 'SUM(Job.Jobfiles) AS Jobfiles', "FROM_UNIXTIME(Job.JobTDate, '%W') AS day" );
