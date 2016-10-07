@@ -31,10 +31,16 @@ class CModel
         $fields        = array( 'COUNT(*) as row_count' );
 
      // Prepare and execute query
-        $statment     = CDBQuery::get_Select(array( 'table' => $tablename, 'fields' => $fields, $filter));
+        $statment   = CDBQuery::get_Select(array( 'table' => $tablename, 'fields' => $fields, $filter));
         $result     = CDBUtils::runQuery($statment, $pdo);
 
         $result     = $result->fetch();
-        return $result['row_count'];
+        
+        // If SQL count result is null, return 0 instead (much better when plotting data)
+        if( is_null($result['row_count']) ) {
+        	return 0;
+        }else {
+        	return $result['row_count'];
+        }
     }
 }

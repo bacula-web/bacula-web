@@ -1,7 +1,7 @@
 {include file=header.tpl}
 
 <div class="container">
-<<<<<<< HEAD
+
   <h3>{$page_name}</h3>
 
   <!-- First row with catalog statistics -->

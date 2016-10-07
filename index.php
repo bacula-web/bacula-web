@@ -226,8 +226,6 @@ try {
         $days_stored_files[] = array( date("m-d", $day['start']), Jobs_Model::getStoredFiles($dbSql->db_link, array($day['start'], $day['end'])));
     }
 
-    unset($graph);
-
     $graph = new CGraph("dashboard-graph04.jpg");
     $graph->SetData($days_stored_files, 'bars');
 

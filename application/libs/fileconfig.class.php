@@ -94,7 +94,6 @@ class FileConfig extends File
         // Parameters:	$catalog_id
         // Return:		dsn string
         // ==================================================================================
-
     public static function get_DataSourceName($catalog_id)
     {
         $dsn             = '';

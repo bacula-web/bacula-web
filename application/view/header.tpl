@@ -10,6 +10,7 @@
   <!-- Bootstrap front-end framework -->
   <link rel="stylesheet" href="core/vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="core/vendor/bootstrap/css/bootstrap-theme.min.css"> 
+  <link rel="stylesheet" href="core/vendor/bootstrap-datetimepicker-4.7.14/css/bootstrap-datetimepicker.min.css">
   <link rel="stylesheet" href="application/assets/css/default.css">
 
   <!-- Font Awesome -->
@@ -38,7 +39,6 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{t}Reports{/t} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
- 	      <li><a href="index.php">{t}Dashboard{/t}</a></li>
               <li><a href="jobs.php">{t}Jobs{/t}</a></li>
               <li><a href="pools.php">{t}Pools and volumes{/t}</a></li>
             </ul>
@@ -64,7 +64,7 @@
             </li>
             <li role="presentation" class="divider"></li>
             <li role="presentation" class="dropdown-header">{t}Version{/t}</li>
-            <li class="disabled"> <a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 7.1.0</a></li>
+            <li class="disabled"> <a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 7.2.0</a></li>
           </ul>
         </li>
       </ul>
@@ -94,7 +94,6 @@
     <div class="col-xs-6 col-md-8">
 
     <!-- Catalog selector -->
-    {if $catalog_nb > 1}
     <div class="btn-group btn-group-sm pull-right">
       <button type="button" class="btn btn-primary"><i class="fa fa-database fa-fw"></i> {$catalog_label}</button>
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -108,7 +107,6 @@
         {/foreach}
       </ul>
     </div>
-    {/if}
     <!-- end Catalog selector -->      
     </div> <!-- div class="col-xs..." -->
   </div> <!-- div class="row" -->

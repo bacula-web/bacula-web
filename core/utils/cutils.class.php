@@ -60,7 +60,6 @@ class CUtils
     //				$decimal (optional, default = 0)
     // Return:		formated number depending on current locale
     // ==================================================================================
-
     public static function format_Number($number, $decimal = 0)
     {
         // Getting localized numeric formating information
