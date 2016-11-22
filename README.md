@@ -25,6 +25,16 @@ If you are looking for informations on installing, configuring, upgrading, troub
 Submit your bug / feature request to the official bug tracker
  http://bugs.bacula-web.org
 
+##Contribute
+
+####Translations
+You will find useful informations on how to help translating Bacula-Web in your own language
+ http://bacula-web.org/translations.html
+
+####Developpment
+If you want to contribute in adding new features or fixing bugs, please read the developper guidance
+ http://bacula-web.org/Development.html
+
 ##License
 
 Bacula-Web is proudly powered by open source softwares and is free (like a bird) to download and use (and will always be) ...  
