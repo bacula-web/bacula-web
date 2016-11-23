@@ -53,7 +53,7 @@ class CUtils
 
         return $hsize;
     }
-    
+
     // ==================================================================================
     // Function: 	format_Number()
     // Parameters:	$number
@@ -67,5 +67,17 @@ class CUtils
 
         // Return formated number
         return number_format($number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
+    }
+
+    // ==================================================================================
+    // Function:  debug()
+    // Parameters:  $something
+    // Return:    prints <pre> dumping $something
+    // ==================================================================================
+    public static function debug($debug)
+    {
+      echo "<pre style='text-aling'>";
+      var_dump($debug);
+      echo "</pre>";
     }
 }

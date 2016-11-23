@@ -1,7 +1,7 @@
-# Bacula-Web translations  
-# Copyright (C) 2004-2016 
+# Bacula-Web translations
+# Copyright (C) 2004-2016
 # This file is distributed under the same license as the Bacula-Web package.
-# 
+#
 # Translators:
 # Juan Luis Francés Jiménez <bacula_listATveloxia,com>, 2005
 msgid ""
@@ -20,35 +20,35 @@ msgstr ""
 
 #: lang.c:22 messages.c:32
 msgid "ASC"
-msgstr ""
+msgstr "ASC"
 
 #: lang.c:27 messages.c:37
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: lang.c:26 messages.c:36
 msgid "Apply filter and options"
-msgstr ""
+msgstr "Aplicar filtro y opciones"
 
 #: lang.c:57
 msgid "Back"
-msgstr ""
+msgstr "Atras"
 
 #: lang.c:1 lang.c:35 lang.c:50 lang.c:65
 msgid "Back to the dashboard"
-msgstr ""
+msgstr "Volver al panel"
 
 #: lang.c:36
 msgid "Backup Job Report"
-msgstr ""
+msgstr "Reporte de trabajos de backup"
 
 #: lang.c:37 lang.c:115 messages.c:86
 msgid "Backup Job name"
-msgstr ""
+msgstr "Nombre del trabajo de backup"
 
 #: lang.c:32 lang.c:103 messages.c:82
 msgid "Backup Job report"
-msgstr ""
+msgstr "Reporte del trabajo de backup"
 
 #: lang.c:114 messages.c:85
 msgid "Backup job informations"
@@ -300,7 +300,7 @@ msgstr "Nombre"
 
 #: lang.c:16 messages.c:26
 msgid "No job(s) to display"
-msgstr ""
+msgstr "Numero de trabajos a monstrar"
 
 #: lang.c:47 messages.c:130
 msgid "No log(s) for this job"

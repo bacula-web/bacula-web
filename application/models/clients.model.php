@@ -49,14 +49,14 @@ class Clients_Model extends CModel
         }
 
         $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $pdo);
-            
+
         foreach ($result->fetchAll() as $client) {
             $clients[ $client['clientid'] ] = $client['name'];
         }
 
         return $clients;
     }
-    
+
     // ==================================================================================
     // Function: 	getClientInfos()
     // Parameters: 	client id
@@ -69,9 +69,9 @@ class Clients_Model extends CModel
         $fields     = array('name','uname');
         $where      = array( "clientid = $client_id" );
         $statment   = CDBQuery::get_Select(array('table'=> 'Client', 'fields' => $fields, 'where' => $where ));
-        
+
         $result     = CDBUtils::runQuery($statment, $pdo);
-            
+
         foreach ($result->fetchAll() as $client) {
             $uname              = explode(' ', $client['uname']);
             $client['version']  = $uname[0];
@@ -80,7 +80,34 @@ class Clients_Model extends CModel
             $client['arch']     = $temp[0];
             $client['os']       = $uname[1];
         }
-        
+
         return $client;
+    }
+
+    // ==================================================================================
+    // Function:    getClientSize()
+    // Parameters:  none
+    // Return:      array containing client size information
+    // ==================================================================================
+
+    public static function getClientSize($pdo)
+    {
+        $clients    = array();
+        $fields     = array('Name','Level', 'SUM(Job.Jobbytes) AS Jobbytes', 'SUM(Job.Jobfiles) AS Jobfiles', "FROM_UNIXTIME(JobTDate,'%Y-%m-%d') as day");
+        $where      = array("JobStatus = 'T'", "Type = 'B'");
+        $groupBy    = 'Name';
+        $orderby    = 'Jobbytes DESC';
+        $limit      = 10;
+
+        $statment   = CDBQuery::get_Select(array('table'=> 'Job', 'fields' => $fields, 'where' => $where, 'groupby' => $groupBy, 'orderby' => $orderby, 'limit' => $limit));
+        $result     = CDBUtils::runQuery($statment, $pdo);
+
+        foreach ($result->fetchAll() as $client) {
+            $client['jobbytes'] = CUtils::Get_Human_Size($client['jobbytes']);
+            $client['jobfiles'] = CUtils::format_Number($client['jobfiles'], 0);
+            $clients[] = $client;
+        }
+
+        return $clients;
     }
 }

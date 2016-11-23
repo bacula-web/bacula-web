@@ -2,3 +2,6 @@
 /application/view/cache/*.php
 /application/view/cache/*.jpg
 /application/config/config.php
+Gemfile.lock
+.htaccess
+.htpasswd
