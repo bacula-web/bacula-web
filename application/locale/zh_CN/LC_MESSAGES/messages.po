@@ -1,0 +1,549 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# cxl nh <nhcxl@tom.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Bacula-Web 7.3.0\n"
+"Report-Msgid-Bugs-To: http://bugs.bacula-web.org\n"
+"POT-Creation-Date: 2016-04-24 20:52+0200\n"
+"PO-Revision-Date: 2016-07-13 07:47+0000\n"
+"Last-Translator: cxl nh <nhcxl@tom.com>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/bacula-web/bacula-web/language/zh_CN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: lang.c:22 messages.c:32
+msgid "ASC"
+msgstr "升序"
+
+#: lang.c:27 messages.c:37
+msgid "Apply"
+msgstr "应用"
+
+#: lang.c:26 messages.c:36
+msgid "Apply filter and options"
+msgstr "应用过滤器和选项"
+
+#: lang.c:57
+msgid "Back"
+msgstr "回退"
+
+#: lang.c:1 lang.c:35 lang.c:50 lang.c:65
+msgid "Back to the dashboard"
+msgstr "回到主面板"
+
+#: lang.c:36
+msgid "Backup Job Report"
+msgstr "备份任务报告"
+
+#: lang.c:37 lang.c:115 messages.c:86
+msgid "Backup Job name"
+msgstr "备份任务名称"
+
+#: lang.c:32 lang.c:103 messages.c:82
+msgid "Backup Job report"
+msgstr "备份任务报告"
+
+#: lang.c:114 messages.c:85
+msgid "Backup job informations"
+msgstr "备份任务信息"
+
+#: lang.c:33 lang.c:104 messages.c:83
+msgid "Backup job name"
+msgstr "备份任务名称"
+
+#: lang.c:54 messages.c:7
+msgid "Bug tracker"
+msgstr "Bug跟踪"
+
+#: lang.c:45 lang.c:62 lang.c:77 lang.c:81 lang.c:9 lang.c:37 lang.c:107
+#: lang.c:123 messages.c:19 messages.c:94 messages.c:102 messages.c:120
+msgid "Bytes"
+msgstr "字节"
+
+#: lang.c:79 messages.c:58
+msgid "Canceled job(s)"
+msgstr "取消任务（所选任务）"
+
+#: lang.c:58
+msgid "Catalog"
+msgstr "分类"
+
+#: lang.c:59 messages.c:38
+msgid "Catalog statistics"
+msgstr "分类统计信息"
+
+#: lang.c:74 lang.c:89 messages.c:53 messages.c:68
+msgid "Click here to see the report"
+msgstr "查看报告"
+
+#: lang.c:25 lang.c:19 lang.c:97 messages.c:29 messages.c:76
+msgid "Client"
+msgstr "客户端"
+
+#: lang.c:52
+msgid "Client Report"
+msgstr "客户端报告"
+
+#: lang.c:57 lang.c:32 messages.c:115
+msgid "Client arch"
+msgstr "客户端地址"
+
+#: lang.c:53 lang.c:28 messages.c:111
+msgid "Client informations"
+msgstr "客户端信息"
+
+#: lang.c:54 lang.c:29 messages.c:112
+msgid "Client name"
+msgstr "客户端名称"
+
+#: lang.c:56 lang.c:31 messages.c:114
+msgid "Client os"
+msgstr "客户端操作系统"
+
+#: lang.c:96 messages.c:75
+msgid "Client report"
+msgstr "客户端报告"
+
+#: lang.c:55 lang.c:30 messages.c:113
+msgid "Client version"
+msgstr "客户端版本"
+
+#: lang.c:14 lang.c:60 messages.c:39
+msgid "Clients"
+msgstr "客户端"
+
+#: lang.c:76 messages.c:55
+msgid "Completed job(s)"
+msgstr "已完成的备份任务"
+
+#: lang.c:20
+msgid "Completed jobs"
+msgstr "已完成的备份任务"
+
+#: lang.c:12 lang.c:128 messages.c:22 messages.c:99
+msgid "Compression"
+msgstr "压缩"
+
+#: lang.c:51 lang.c:49 messages.c:2
+msgid "Dashboard"
+msgstr "主仪表板"
+
+#: lang.c:17 lang.c:67 messages.c:46
+msgid "Database size"
+msgstr "数据库大小"
+
+#: lang.c:63 messages.c:42
+msgid "Defined Filesets"
+msgstr "定义文件集"
+
+#: lang.c:61 messages.c:40
+msgid "Defined Jobs"
+msgstr "定义任务"
+
+#: lang.c:48 lang.c:75 lang.c:7 lang.c:126 messages.c:17 messages.c:97
+msgid "Elapsed time"
+msgstr "耗时"
+
+#: lang.c:74
+msgid "End Time"
+msgstr "完成时间"
+
+#: lang.c:47 lang.c:61 lang.c:6 lang.c:36 lang.c:125 messages.c:16
+#: messages.c:96 messages.c:119
+msgid "End time"
+msgstr "完成时间"
+
+#: lang.c:109 messages.c:104
+msgid "Estimated expiration date"
+msgstr "预估完成时间"
+
+#: lang.c:46 messages.c:129
+msgid "Event"
+msgstr "事件"
+
+#: lang.c:83 lang.c:110 messages.c:105
+msgid "Expire"
+msgstr "过期"
+
+#: lang.c:78 messages.c:57
+msgid "Failed job(s)"
+msgstr "失败的任务"
+
+#: lang.c:19
+msgid "Failed jobs"
+msgstr "失败的任务"
+
+#: lang.c:44 lang.c:63 lang.c:78 lang.c:10 lang.c:38 lang.c:122 messages.c:20
+#: messages.c:93 messages.c:121
+msgid "Files"
+msgstr "文件"
+
+#: lang.c:64 messages.c:43
+msgid "Filesets"
+msgstr "文件集"
+
+#: lang.c:17 messages.c:27
+msgid "Filter"
+msgstr "过滤"
+
+#: lang.c:3
+msgid "Graph system capabilities (Bacula-web only use PNG image format)"
+msgstr "系统容量图（PNG格式）"
+
+#: lang.c:28 lang.c:98 messages.c:77
+msgid "Interval"
+msgstr "间隔"
+
+#: lang.c:70 lang.c:2 messages.c:12
+msgid "Job ID"
+msgstr "任务ID"
+
+#: lang.c:42 lang.c:120 messages.c:91
+msgid "Job Id"
+msgstr "任务ID"
+
+#: lang.c:80 messages.c:59
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "备份任务类型（增量/差异/完全备份）"
+
+#: lang.c:44 messages.c:127
+msgid "Job id"
+msgstr "任务ID"
+
+#: lang.c:68 lang.c:18 messages.c:28
+msgid "Job status"
+msgstr "任务状态"
+
+#: lang.c:50 lang.c:62 messages.c:3 messages.c:41
+msgid "Jobs"
+msgstr "任务"
+
+#: lang.c:67
+msgid "Jobs / Page"
+msgstr "任务/页面"
+
+#: lang.c:23 messages.c:33
+msgid "Jobs per Page"
+msgstr "任务/每页"
+
+#: lang.c:66
+msgid "Jobs report"
+msgstr "备份任务报告"
+
+#: lang.c:59 lang.c:34 messages.c:117
+msgid "Jod Id"
+msgstr "任务ID"
+
+#: lang.c:30 lang.c:100 messages.c:79
+msgid "Last 2 week"
+msgstr "最后2周"
+
+#: lang.c:9
+msgid "Last 24 hours jobs status"
+msgstr "最后24小时任务状态"
+
+#: lang.c:18
+msgid "Last 24 hours status"
+msgstr "最后24小时状态"
+
+#: lang.c:41 lang.c:119 messages.c:90
+msgid "Last jobs"
+msgstr "最后任务信息"
+
+#: lang.c:31 lang.c:101 messages.c:80
+msgid "Last month"
+msgstr "最后一个月"
+
+#: lang.c:71 messages.c:50
+msgid "Last period job status"
+msgstr "上阶段任务状态"
+
+#: lang.c:12 lang.c:90 messages.c:69
+msgid "Last used volumes"
+msgstr "最后使用的卷"
+
+#: lang.c:29 lang.c:99 messages.c:78
+msgid "Last week"
+msgstr "上周"
+
+#: lang.c:84 lang.c:111 messages.c:106
+msgid "Last written"
+msgstr "最后写入"
+
+#: lang.c:94 messages.c:73
+msgid "Last written date for this volume"
+msgstr "本卷最后写入日期"
+
+#: lang.c:43 lang.c:60 lang.c:76 lang.c:8 lang.c:35 lang.c:121 messages.c:18
+#: messages.c:92 messages.c:118
+msgid "Level"
+msgstr "备份类型"
+
+#: lang.c:14 messages.c:24
+msgid "Log"
+msgstr "日志"
+
+#: lang.c:82 lang.c:108 messages.c:103
+msgid "Media Type"
+msgstr "介质类型"
+
+#: lang.c:58 lang.c:71 lang.c:3 lang.c:33 messages.c:13 messages.c:116
+msgid "Name"
+msgstr "名称"
+
+#: lang.c:16 messages.c:26
+msgid "No job(s) to display"
+msgstr "无可显示的任务"
+
+#: lang.c:47 messages.c:130
+msgid "No log(s) for this job"
+msgstr "无相关任务日志"
+
+#: lang.c:86 lang.c:113 messages.c:109
+msgid "No volume(s) in this pool"
+msgstr "介质池无备份卷"
+
+#: lang.c:95 messages.c:74
+msgid "Number of jobs"
+msgstr "备份任务数量"
+
+#: lang.c:53 messages.c:6
+msgid "Official web site"
+msgstr "官方网站"
+
+#: lang.c:20 messages.c:30
+msgid "Options"
+msgstr "选项"
+
+#: lang.c:21 messages.c:31
+msgid "Order by"
+msgstr "排序"
+
+#: lang.c:13
+msgid "Overall status"
+msgstr "总体状态"
+
+#: lang.c:38 lang.c:116 messages.c:87
+msgid "Period"
+msgstr "阶段"
+
+#: lang.c:79 lang.c:13 messages.c:23
+msgid "Pool"
+msgstr "介质池"
+
+#: lang.c:68 messages.c:47
+msgid "Pool(s)"
+msgstr "介质池"
+
+#: lang.c:51 messages.c:4
+msgid "Pools and volumes"
+msgstr "介质池与备份卷"
+
+#: lang.c:4 lang.c:88 messages.c:67
+msgid "Pools and volumes status"
+msgstr "介质池与备份卷状态"
+
+#: lang.c:24 lang.c:48 messages.c:1
+msgid "Reports"
+msgstr "报告"
+
+#: lang.c:2 lang.c:43 messages.c:10
+msgid "Required components"
+msgstr "所需组件"
+
+#: lang.c:25 messages.c:35
+msgid "Reset"
+msgstr "重置"
+
+#: lang.c:24 messages.c:34
+msgid "Reset to default options"
+msgstr "重置为默认设置"
+
+#: lang.c:75 messages.c:54
+msgid "Running jobs"
+msgstr "运行中的任务"
+
+#: lang.c:15 messages.c:25
+msgid "Show job logs"
+msgstr "显示任务日志"
+
+#: lang.c:10
+msgid "Show last 24 hours jobs status"
+msgstr "显示最后24小时任务状态"
+
+#: lang.c:5
+msgid "Show pools and volumes report"
+msgstr "显示介质池与备份卷报告"
+
+#: lang.c:11 lang.c:127 messages.c:21 messages.c:98
+msgid "Speed"
+msgstr "速度"
+
+#: lang.c:73
+msgid "Start Time"
+msgstr "开始时间"
+
+#: lang.c:46 lang.c:5 lang.c:124 messages.c:15 messages.c:95
+msgid "Start time"
+msgstr "开始时间"
+
+#: lang.c:40 messages.c:123
+msgid "Statistics"
+msgstr "统计信息"
+
+#: lang.c:64 lang.c:69 lang.c:85 lang.c:1 lang.c:39 lang.c:112 messages.c:11
+#: messages.c:107 messages.c:122
+msgid "Status"
+msgstr "状态"
+
+#: lang.c:83 messages.c:62
+msgid "Stored Bytes (last 7 days)"
+msgstr "写入字节（最后7天）"
+
+#: lang.c:86 messages.c:65
+msgid "Stored Files (last 7 days)"
+msgstr "写入文件（最后7天）"
+
+#: lang.c:8
+msgid "Stored bytes"
+msgstr "写入字节"
+
+#: lang.c:7
+msgid "Stored bytes for last 7 days (GB)"
+msgstr "最后7天写入字节（GB）"
+
+#: lang.c:82 lang.c:84 messages.c:61 messages.c:63
+msgid "Stored bytes over the last 7 days"
+msgstr "过往7天的存储字节 "
+
+#: lang.c:85 lang.c:87 messages.c:64 messages.c:66
+msgid "Stored files over the last 7 days"
+msgstr "过往7天的存储文件"
+
+#: lang.c:73 messages.c:52
+msgid "Submit"
+msgstr "提交"
+
+#: lang.c:52 messages.c:5
+msgid "Test page"
+msgstr "测试页面"
+
+#: lang.c:45 messages.c:128
+msgid "Time"
+msgstr "时间"
+
+#: lang.c:15 lang.c:65 messages.c:44
+msgid "Total bytes"
+msgstr "总字节数"
+
+#: lang.c:16 lang.c:66 messages.c:45
+msgid "Total files"
+msgstr "总文件数"
+
+#: lang.c:39 lang.c:117 messages.c:88
+msgid "Transfered Bytes"
+msgstr "传输字节数"
+
+#: lang.c:49 lang.c:129 messages.c:100
+msgid "Transfered Bytes / Files"
+msgstr "传输字节数/文件数"
+
+#: lang.c:40 lang.c:118 messages.c:89
+msgid "Transfered Files"
+msgstr "传输文件数"
+
+#: lang.c:22 lang.c:26
+msgid "Transferred Bytes"
+msgstr "已完成传输字节"
+
+#: lang.c:81 messages.c:60
+msgid "Transferred Bytes / Files"
+msgstr "已完成传输字节/文件"
+
+#: lang.c:23
+msgid "Transferred Files"
+msgstr "已完成传输文件"
+
+#: lang.c:27
+msgid "Transferred Files "
+msgstr "已完成传输文件"
+
+#: lang.c:72 lang.c:4 messages.c:14
+msgid "Type"
+msgstr "类型"
+
+#: lang.c:72 messages.c:51
+msgid "Update with selected period"
+msgstr "所选阶段更新"
+
+#: lang.c:55 messages.c:8
+msgid "Version"
+msgstr "版本"
+
+#: lang.c:6 lang.c:11 lang.c:34 lang.c:102 lang.c:105 messages.c:81
+#: messages.c:84
+msgid "View report"
+msgstr "卷报告"
+
+#: lang.c:80 lang.c:91 lang.c:106 messages.c:70 messages.c:101
+msgid "Volume name"
+msgstr "卷名称"
+
+#: lang.c:93 messages.c:72
+msgid "Volume pool"
+msgstr "卷介质池"
+
+#: lang.c:92 messages.c:71
+msgid "Volume status"
+msgstr "卷状态"
+
+#: lang.c:69 messages.c:48
+msgid "Volume(s)"
+msgstr "卷"
+
+#: lang.c:70 messages.c:49
+msgid "Volume(s) size"
+msgstr "卷大小"
+
+#: lang.c:21
+msgid "Waiting jobs"
+msgstr "等待中的任务"
+
+#: lang.c:77 messages.c:56
+msgid "Waiting jobs(s)"
+msgstr "等待中的任务"
+
+#: lang.c:56
+msgid "back to previous page"
+msgstr "返回上一页"
+
+#: lang.c:42 messages.c:125
+msgid "days(s)"
+msgstr "日"
+
+#: lang.c:41 messages.c:124
+msgid "last"
+msgstr "最后"
+
+#: messages.c:9
+msgid "Back to Dashboard"
+msgstr "回到仪表盘"
+
+#: messages.c:108
+msgid "Slot"
+msgstr "安排"
+
+#: messages.c:110
+msgid "Total"
+msgstr "总计"
+
+#: messages.c:126
+msgid "Job details"
+msgstr "任务详细信息"
