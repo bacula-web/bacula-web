@@ -17,14 +17,14 @@
 */
  session_start();
  include_once( 'core/global.inc.php' );
- 
+
  // Initialise view and model
  $view     = new CView();
  $dbSql     = null;
 
 try {
     $dbSql = new Bweb($view);
-    
+
     require_once('core/const.inc.php');
 
     // Custom period for dashboard
@@ -76,13 +76,13 @@ try {
 
     // Stored files number
     $view->assign('stored_files', CUtils::format_Number(Jobs_Model::getStoredFiles($dbSql->db_link, $no_period)));
- 
+
     // Overall stored bytes
     $view->assign('stored_bytes', CUtils::Get_Human_Size(Jobs_Model::getStoredBytes($dbSql->db_link, $no_period)));
 
     // Database size
     $view->assign('database_size', Database_Model::get_Size($dbSql->db_link, $dbSql->catalog_current_id));
- 
+
     // Total bytes and files stored over the last 24 hours
     $view->assign('bytes_last', CUtils::Get_Human_Size(Jobs_Model::getStoredBytes($dbSql->db_link, $custom_period)));
     $view->assign('files_last', CUtils::format_Number(Jobs_Model::getStoredFiles($dbSql->db_link, $custom_period)));
@@ -108,12 +108,18 @@ try {
 
     // Backup Job list
     $view->assign('jobs_list', Jobs_Model::get_Jobs_List($dbSql->db_link));
- 
+
     // Clients list
     $view->assign('clients_list', Clients_Model::getClients($dbSql->db_link));
 
     // Count volumes
     $view->assign('volumes_nb', Volumes_Model::count($dbSql->db_link));
+
+    // Client list size
+    $view->assign('clients_size_list', Clients_Model::getClientSize($dbSql->db_link));
+
+    // Everyday backup info
+    $view->assign('week_size', Jobs_Model::getWeekSize($dbSql->db_link));
 
     // ==============================================================
     // Last period <Job status graph>
@@ -125,7 +131,7 @@ try {
         $jobs_count = Jobs_Model::count_Jobs($dbSql->db_link, $custom_period, strtolower($status));
         $jobs_status_data[] = array($status, $jobs_count );
     }
-     
+
     $graph = new CGraph("dashboard-graph01.jpg");
     $graph->SetData($jobs_status_data, 'pie');
     $graph->setPieLegendColors(array( 'gray', 'green','blue', 'red', 'orange'));
@@ -161,7 +167,7 @@ try {
                        'fields' => array('SUM(numvols) AS sum_vols'),
                        'limit' => $limit,
                        'groupby' => 'name');
-        
+
         $result = CDBUtils::runQuery(CDBQuery::get_Select($query), $dbSql->db_link);
         $sum_vols = $result->fetch();
     } else {
@@ -206,7 +212,7 @@ try {
 
     // Graph rendering
     $view->assign('graph_stored_bytes', $graph->Render());
-     
+
     // ==============================================================
     // Last 7 days Stored Files widget
     // ==============================================================
@@ -244,7 +250,7 @@ try {
             $tmp .= "AND (Media.Lastwritten != 0)";
             break;
     }
-     
+
     $where[] = $tmp;
 
     $statment = array(    'table'     => 'Media',
@@ -262,14 +268,14 @@ try {
     }
 
     $view->assign('volumes_list', $last_volumes);
-     
+
 } catch (Exception $e) {
     CErrorHandler::displayError($e);
 }
- 
+
  // Set page name
  $current_page = 'Dashboard';
  $view->assign('page_name', $current_page);
- 
+
  // Render template
  $view->render('index.tpl');

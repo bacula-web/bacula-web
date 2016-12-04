@@ -286,32 +286,55 @@
 				</div>
 			</div>
 		</div> <!-- end <div class="col-..." -->
+	</div>
 
-		 <div class="col-xs-12 col-md-6">
-			<!-- Last used volumes -->
+	<div class="row">
+		<div class="col-xs-12 col-md-6">
+		<!-- Client list size -->
 			<div class="panel panel-default">
-				<div class="panel-heading"><b>{t}Client Weight List{/t}</b></div>
+				<div class="panel-heading"><b>{t}Clients Size List{/t}</b></div>
+					<div class="panel-body">
+						<table class="table table-condensed table-stripped">
+							<tr>
+								<th class="text-right" title="{t}Client name{/t}">Client</th>
+								<th class="text-right" title="{t}Size{/t}">Weight</th>
+								<th class="text-right" title="{t}Files{/t}">Files</th>
+								<th class="text-right" title="{t}Backup day{/t}">Date</th>
+							</tr>
+							{foreach from=$clients_size_list item=client}
+								<tr>
+									<td class="text-right">{$client.name}</td>
+									<td class="text-right">{$client.jobbytes}</td>
+									<td class="text-right">{$client.jobfiles}</td>
+									<td class="text-right strong">{$client.day}</td>
+								</tr>
+							{/foreach}
+						</table>
+					</div> <!-- <div class="panel-body"> -->
+			</div> <!-- <div class="panel panel-default"> -->
+		</div> <!-- end class="col-..."-->
+		<div class="col-xs-12 col-md-6">
+		<!-- Week size -->
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>{t}Everyday backup size{/t}</b></div>
 				<div class="panel-body">
 					<table class="table table-condensed table-stripped">
 						<tr>
-							<th title="{t}Client name{/t}">Client</th>
-							<th title="{t}Weight{/t}">Weight</th>
-							<th title="{t}Files{/t}">Files</th>
-							<th title="{t}Backup day{/t}">Date</th>
+							<th class="text-right" title="{t}Day{/t}">Day</th>
+							<th class="text-right" title="{t}Size{/t}">Size</th>
+							<th class="text-right" title="{t}Files{/t}">Files</th>
 						</tr>
-						{foreach from=$clients_consume_list item=client}
+						{foreach from=$week_size item=day}
 							<tr>
-								<td>{$client.name}</td>
-								<td>{$client.jobbytes}</td>
-								<td>{$client.jobfiles}</td>
-								<td class="strong">{$client.day}</td>
+								<td class="text-right">{t}{$day.day}{/t}</td>
+								<td class="text-right">{$day.jobbytes}</td>
+								<td class="text-right">{$day.jobfiles}</td>
 							</tr>
 						{/foreach}
 					</table>
 				</div> <!-- <div class="panel-body"> -->
 			</div> <!-- <div class="panel panel-default"> -->
 		</div> <!-- end class="col-..."-->
-
 	</div> <!-- end <div class="row"> -->
 </div> <!-- end <div class="container"> -->
 
