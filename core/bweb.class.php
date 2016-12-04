@@ -1,7 +1,7 @@
 <?php
 /* 
  +-------------------------------------------------------------------------+
- | Copyright (C) 2004 Juan Luis Francés Jiménez				   |
+ | Copyright (C) 2004 Juan Luis FrancÃ©s JimÃ©nez				   |
  | Copyright 2010-2016, Davide Franco			       		   |
  |                                                                         |
  | This program is free software; you can redistribute it and/or           |
@@ -175,8 +175,8 @@ class Bweb
                 
                 // If volume have alreday been used
                 if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
-                    // Calculate expiration date only if the volume is Full
-                    if ($volume['volstatus'] == 'Full') {
+                    // Calculate expiration date if the volume status is Full or Used
+                    if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
                         $expire_date = strtotime($volume['lastwritten']) + $volume['volretention'];
                         $volume['expire'] = strftime("%Y-%m-%d", $expire_date);
                     }
