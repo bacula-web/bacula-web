@@ -5,66 +5,8 @@
     <h3>{$page_name}</h3>
 
   <div class="row">
-	  <div class="col-xs-9 col-lg-10">
-		
-		<table class="table table-condensed table-striped text-center">
-		  <tr>
-			<th class="text-center">{t}Status{/t}</th> 
-			<th class="text-center">{t}Job ID{/t}</th>
-			<th class="text-center">{t}Name{/t}</th>
-			<th class="text-center">{t}Type{/t}</th>
-			<th class="text-center">{t}Start time{/t}</th>
-			<th class="text-center">{t}End time{/t}</th>
-			<th class="text-center">{t}Elapsed time{/t}</th>
-			<th class="text-center">{t}Level{/t}</th>
-			<th class="text-center">{t}Bytes{/t}</th>
-			<th class="text-center">{t}Files{/t}</th>
-			<th class="text-center">{t}Speed{/t}</th>
-			<th class="text-center">{t}Compression{/t}</th>
-			<th class="text-center">{t}Pool{/t}</th>
-			<th class="text-center">{t}Log{/t}</th>
-		  </tr>
-		  
-		  <!-- <div class="listbox"> -->
-		  {foreach from=$last_jobs item=job}
-		  <tr>
-			<td>
-		          <span class="glyphicon glyphicon-{$job.Job_icon}" title="{$job.jobstatuslong}"></span>
-			</td>
-			<td>{$job.jobid}</td>
-			<td>
-			  <a href="backupjob-report.php?backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
-			</td>
-			<td>{$job.type}</td>
-			<td>{$job.starttime}</td>
-			<td>{$job.endtime}</td>
-			<td>{$job.elapsed_time}</td>
-			<td>{$job.level}</td>
-			<td>{$job.jobbytes}</td>
-			<td>{$job.jobfiles}</td>
-			<td>{$job.speed}</td>
-			<td>{$job.compression}</td>
-			<td>{$job.pool_name}</td>
-			<td>
-			  <a href="joblogs.php?jobid={$job.jobid}" title="{t}Show job logs{/t}">
-			    <span class="glyphicon glyphicon-search"></span>
-                          </a>
-			</td>
-		  </tr>
-		  {foreachelse}
-		  <tr>
-			<td colspan="12">{t}No job(s) to display{/t}</td>
-		  </tr>
-		  {/foreach}
-		</table>
-		
-		<div class="alert alert-info text-center" role="alert">
-		  Found <b>{$jobs_found}</b> of <b>{$total_jobs} Job(s)</b>
-		</div>
-	  </div>
-
 	  <!-- Filter jobs form -->
-	  <div class="col-xs-3 col-lg-2">
+	  <div class="col-xs-12 col-sm-3 col-sm-push-9 col-lg-2 col-lg-push-10">
 	  
 	  <form class="form" role="form" action="jobs.php" method="post">
 		
@@ -147,6 +89,69 @@
 	  </form>
 		
 	  </div> <!-- div class="col-md-3 cold-lg-3" -->
+	  
+	  <div class="visible-xs-block"><p>&nbsp;</p></div>
+	  
+	  <div class="col-xs-12 col-sm-9 col-sm-pull-3 col-lg-10 col-lg-pull-2">
+	  <div class="table-responsive">
+		<table class="table table-condensed table-striped text-center">
+		  <tr>
+			<th class="text-center">{t}Status{/t}</th> 
+			<th class="text-center">{t}Job ID{/t}</th>
+			<th class="text-center">{t}Name{/t}</th>
+			<th class="text-center">{t}Type{/t}</th>
+			<th class="text-center">{t}Start time{/t}</th>
+			<th class="text-center">{t}End time{/t}</th>
+			<th class="text-center">{t}Elapsed time{/t}</th>
+			<th class="text-center">{t}Level{/t}</th>
+			<th class="text-center">{t}Bytes{/t}</th>
+			<th class="text-center">{t}Files{/t}</th>
+			<th class="text-center">{t}Speed{/t}</th>
+			<th class="text-center">{t}Compression{/t}</th>
+			<th class="text-center">{t}Pool{/t}</th>
+			<th class="text-center">{t}Log{/t}</th>
+		  </tr>
+		  
+		  <!-- <div class="listbox"> -->
+		  {foreach from=$last_jobs item=job}
+		  <tr>
+			<td>
+				<a href="joblogs.php?jobid={$job.jobid}" title="{t}Show job logs{/t}">
+		          <span class="glyphicon glyphicon-{$job.Job_icon}" title="{$job.jobstatuslong}"></span>
+				</a>
+			</td>
+			<td>{$job.jobid}</td>
+			<td>
+			  <a href="backupjob-report.php?backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
+			</td>
+			<td>{$job.type}</td>
+			<td>{$job.starttime}</td>
+			<td>{$job.endtime}</td>
+			<td>{$job.elapsed_time}</td>
+			<td>{$job.level}</td>
+			<td>{$job.jobbytes}</td>
+			<td>{$job.jobfiles}</td>
+			<td>{$job.speed}</td>
+			<td>{$job.compression}</td>
+			<td>{$job.pool_name}</td>
+			<td>
+			  <a href="joblogs.php?jobid={$job.jobid}" title="{t}Show job logs{/t}">
+			    <span class="glyphicon glyphicon-search"></span>
+                          </a>
+			</td>
+		  </tr>
+		  {foreachelse}
+		  <tr>
+			<td colspan="12">{t}No job(s) to display{/t}</td>
+		  </tr>
+		  {/foreach}
+		</table>
+	  </div>
+		
+		<div class="alert alert-info text-center" role="alert">
+		  Found <b>{$jobs_found}</b> of <b>{$total_jobs} Job(s)</b>
+		</div>
+	  </div>
   </div> <!-- div class="row" -->
 </div> <!-- div class="container-fluid" -->
 {include file="footer.tpl"}

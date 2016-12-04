@@ -1,6 +1,6 @@
 {include file=header.tpl}
 
-<div class="container">
+<div class="container-fluid">
 
     <h3>{$page_name}</h3>
   
@@ -12,7 +12,7 @@
 			</dl>
 		</div> <!-- end div class="panel-body" -->
 	</div>
-
+	<div class="table-responsive">
     <table class="table table-hover table-striped table-condensed table-bordered">
 		<tr>
 			<th class="text-center">{t}Time{/t}</th> 
@@ -29,6 +29,7 @@
         </tr>
 		{/foreach}
 	</table>
+	</div>
 </div> <!-- end div class="container-fluid" -->
 
 {include file="footer.tpl"}

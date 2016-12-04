@@ -1,6 +1,6 @@
 {include file=header.tpl}
 
-<div class="container">
+<div class="container-fluid">
 	<h3>{$page_name}</h3>
 	
 	<!-- First row with catalog statistics -->
@@ -8,7 +8,7 @@
 	
 	<div class="row">
 	  <!-- Defined clients -->
-	  <div class="col-xs-2 col-xs-offset-1">
+	  <div class="col-xs-6 col-sm-4 col-lg-2 col-lg-offset-1">
 	    <div class="panel panel-default">
 	      <div class="panel-heading">{t}Clients{/t}</div>
 		  <div class="panel-body text-right"><h3>{$clients}</h3></div>
@@ -16,7 +16,7 @@
 	  </div> <!-- end <div class="col-xs-2 col-xs-offset-1"> -->
 	
 	  <!-- Defined Jobs -->
-	  <div class="col-xs-2">
+	  <div class="col-xs-6 col-sm-4 col-lg-2">
 	    <div class="panel panel-default">
 		  <div class="panel-heading">{t}Jobs{/t}</div>
 		  <div class="panel-body text-right"><h3>{$defined_jobs}</h3></div>
@@ -24,7 +24,7 @@
 	  </div> <!-- end <div class="col- -->
 	  
 	  <!-- Defined FileSets -->
-	  <div class="col-xs-2">
+	  <div class="col-xs-6 col-sm-4 col-lg-2">
 	    <div class="panel panel-default">
 	      <div class="panel-heading">{t}Filesets{/t}</div>
 		  <div class="panel-body text-right"><h3>{$defined_filesets}</h3></div>
@@ -32,7 +32,7 @@
 	  </div>
 	  
 	  <!-- Stored bytes -->
-	  <div class="col-xs-2">
+	  <div class="col-xs-6 col-sm-4 col-lg-2">
 	    <div class="panel panel-default">
 	      <div class="panel-heading">{t}Total bytes{/t}</div>
 		  <div class="panel-body text-right"><h3>{$stored_bytes}</h3></div>
@@ -40,19 +40,15 @@
 	  </div>
 	  
 	  <!-- Stored files -->
-	  <div class="col-xs-2">
+	  <div class="col-xs-12 col-sm-4 col-lg-2">
 	    <div class="panel panel-default">
 	      <div class="panel-heading">{t}Total files{/t}</div>
 		  <div class="panel-body text-right"><h3>{$stored_files}</h3></div>
 		</div>
 	  </div>
-	  	  
-	</div> <!-- end <div class="row"> -->
-	
-	<div class="row">
 	
 	  <!-- Catalog (database) size -->
-      <div class="col-xs-2 col-xs-offset-1">    
+      <div class="col-xs-6 col-sm-4 col-lg-2 col-lg-offset-1">    
 	    <div class="panel panel-default">
 		  <div class="panel-heading">{t}Database size{/t}</div>
 		  <div class="panel-body text-right"><h3>{$database_size}</h3></div>
@@ -60,7 +56,7 @@
 	  </div> <!-- end <div class="col-..." -->
 
       <!-- Defined pools -->
-	  <div class="col-xs-2">
+	  <div class="col-xs-6 col-sm-4 col-lg-2">
 	    <div class="panel panel-default">
 		  <div class="panel-heading">{t}Pool(s){/t}</div>
 		  <div class="panel-body text-right"><h3>{$pools_nb}</h3></div>
@@ -68,7 +64,7 @@
 	  </div> <!-- end <div class="col-..." -->
 	  
 	  <!-- Defined volumes -->
-	  <div class="col-xs-2">
+	  <div class="col-xs-6 col-sm-4 col-lg-2">
 	    <div class="panel panel-default">
 		  <div class="panel-heading">{t}Volume(s){/t}</div>
 		  <div class="panel-body text-right"><h3>{$volumes_nb}</h3></div>
@@ -76,7 +72,7 @@
 	  </div> <!-- end <div class="col-..." -->
 	  
 	  <!-- Volumes storage usage -->
-	  <div class="col-xs-2">
+	  <div class="col-xs-6 col-sm-4 col-lg-2">
 	    <div class="panel panel-default">
 		  <div class="panel-heading">{t}Volume(s) size{/t}</div>
 		  <div class="panel-body text-right"><h3>{$volumes_size}</h3></div>
@@ -118,7 +114,6 @@
 						<a href="jobs.php" title="{t}Click here to see the report{/t}">
 							<img src="{$graph_jobs}" class="img-responsive center-block" alt="Last period jobs">
 						</a>
-
 						<table class="table table-condensed">
 							<tr>
 								<td><h5>{t}Running jobs{/t}</h5></td>
@@ -154,7 +149,7 @@
 			</div> <!-- end column -->
 			
 			<!-- Stored Bytes for last 7 days -->
-			<div class="col-xs-6">
+			<div class="col-xs-12 col-sm-6">
 				<div class="panel panel-default">
 					<div class="panel-heading" title="{t}Stored bytes over the last 7 days{/t}"><b>{t}Stored Bytes (last 7 days){/t}</b></div>
 					<div class="panel-body">
@@ -165,19 +160,21 @@
 						<img src="{$graph_stored_bytes}" class="img-responsive center-block" title="{t}Stored bytes over the last 7 days{/t}" alt="Stored Bytes over last 7 days">
 					</div> <!-- end <div class="panel-body"> -->
 				</div> <!-- end class="panel panel-default" -->
-			
-			<div class="panel panel-default">
-				<div class="panel-heading" title="{t}Stored files over the last 7 days{/t}"><b>{t}Stored Files (last 7 days){/t}</b></div>
-				<div class="panel-body">
-                	<div class="img_loader text-center">
-                    	<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-                        <p>Loading graph</p>
-                    </div>						
-					<img src="{$graph_stored_files}" class="img-responsive center-block" title="{t}Stored files over the last 7 days{/t}" alt="Stored Files over last 7 days">
-				</div>
-			</div> <!-- div class="panel panel-default" -->
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<div class="panel panel-default">
+					<div class="panel-heading" title="{t}Stored files over the last 7 days{/t}"><b>{t}Stored Files (last 7 days){/t}</b></div>
+					<div class="panel-body">
+	                	<div class="img_loader text-center">
+	                    	<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
+	                        <p>Loading graph</p>
+	                    </div>						
+						<img src="{$graph_stored_files}" class="img-responsive center-block" title="{t}Stored files over the last 7 days{/t}" alt="Stored Files over last 7 days">
+					</div>
+				</div> <!-- div class="panel panel-default" -->
+			</div>
 		</div> <!-- div class="col-md-5 ..." -->	
-	</div> <!-- end <div class="row"> -->
+	 <!-- end <div class="row"> -->
 
 	<!-- Third row with Pools and volumes status + Last used volumes widgets -->
 	<div class="row">
@@ -198,6 +195,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>{t}Last used volumes{/t}</b></div>
 				<div class="panel-body">
+					<div class="table-responsive">
 					<table class="table table-condensed table-stripped">
 						<tr>
 							<th title="{t}Volume name{/t}">Volume</th>
@@ -217,6 +215,7 @@
 							</tr>
 						{/foreach} 
 					</table>
+					</div>
 				</div> <!-- <div class="panel-body"> -->
 			</div> <!-- <div class="panel panel-default"> -->		
 		</div> <!-- end class="col-..."-->

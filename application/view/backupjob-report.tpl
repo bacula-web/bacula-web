@@ -1,6 +1,6 @@
 {include file=header.tpl}
 
-<div class="container">
+<div class="container-fluid">
 
     <h3>{$page_name}</h3>    
 
@@ -18,8 +18,9 @@
 			
 		<!-- Last jobs list -->
 		<h4>{t}Last jobs{/t}</h4>
-		
-		<table class="table table-condensed table-hover table-striped table-bordered text-center">
+	
+	<div class="table-responsive">
+	<table class="table table-condensed table-hover table-striped table-bordered text-center">
 		<tr>
 			<th class="text-center">{t}Job Id{/t}</th>
 			<th class="text-center">{t}Level{/t}</th>
@@ -45,24 +46,35 @@
 		</tr>
 		{/foreach}
 	</table>
+	</div>
+  
+	<p>&nbsp;</p>
   
    <!-- Transfered Bytes/Files graph -->
-   <h4>{t}Transfered Bytes / Files{/t}</h4>
-
 	<div class="row">
-		<div class="col-xs-6"> 
-			<div class="img_loader text-center">
-				<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-				<p>Loading graph</p>
+		<div class="col-xs-12 col-sm-6">
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>{t}Transfered Bytes{/t}</b></div>
+				<div class="panel-body">			
+					<div class="img_loader text-center">
+						<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
+						<p>Loading graph</p>
+					</div>
+					<img class="img-responsive center-block" src="{$graph_stored_bytes}" alt="Stored Bytes">
+				</div>
 			</div>
-			<img class="img-responsive center-block" src="{$graph_stored_bytes}" alt="Stored Bytes"> 
 		</div>
-		<div class="col-xs-6"> 
-			<div class="img_loader text-center">
-				<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-				<p>Loading graph</p>
+		<div class="col-xs-12 col-sm-6"> 
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>{t}Transfered Files{/t}</b></div>
+				<div class="panel-body">
+					<div class="img_loader text-center">
+						<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
+						<p>Loading graph</p>
+					</div>
+					<img class="img-responsive center-block" src="{$graph_stored_files}" alt="Stored Files"> 
+				</div>
 			</div>
-			<img class="img-responsive center-block" src="{$graph_stored_files}" alt="Stored Files"> 
 		</div>
 	</div> <! -- div class="row" -->
 
