@@ -2,12 +2,17 @@
 
 Changelog
 
-- General: Improve responsive design for all pages
+- General: Improve responsive design for all pages (thanks to feldsam)
 - Pool and volumes: Add accordion for each pool
+- Pool and volumes: Used and Full volume status shows expiration date (thanks to wanderleihuttel)
 
 Fixed bugs
 
+none
+
 Translactions
+
+- Added Russian translation (thanks to sayanvd) 
 
 === Release 7.2.0 (June 28 2016) ===
 
@@ -93,7 +98,7 @@ none
 
 Translations
 
- none
+none
 
 === Release 7.0.2 (January 22nd 2015) ===
 
