@@ -50,9 +50,14 @@
   
   // Global variables
   $job_levels = array(
-      'D' => 'Diff',
-      'I' => 'Incr',
-      'F' => 'Full'
+      'D' => 'Differential',
+      'I' => 'Incremental',
+      'F' => 'Full',
+      'V' => 'InitCatalog',
+      'C' => 'Catalog',
+      'O' => 'VolumeToCatalog',
+      'd' => 'DiskToCatalog',
+      'A' => 'Data'
   );
 
   // Levels list filter
