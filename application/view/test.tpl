@@ -22,21 +22,31 @@
 	</table>
 	
 	<!-- Graph testing -->
-	<h4>Graph capabilites <small>(png images format only)</small></h4>
+	<h4>Graph capabilites</h4>
 	<div class="row">
 		<div class="col-xs-12 col-sm-6"> 
-			<div class="img_loader text-center">
-				<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-				<p>Loading graph</p>
-			</div>
-			<img class="img-responsive center-block" src="{$bar_graph}" alt="Graph 1">
+			<div id="bar_graph"><i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;{t}Loading{/t}...</div>
+			{literal}
+			<script type="text/javascript">
+			$(function () {
+			{/literal}
+			    {$bar_graph_js}
+			{literal}
+			});
+			</script>
+			{/literal}
 		</div>
 		<div class="col-xs-12 col-sm-6">
-			<div class="img_loader text-center">
-				<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-				<p>Loading graph</p>
-			</div>
-			<img class="img-responsive center-block" src="{$pie_graph}" alt="Graph 2">
+			<div id="pie_graph"><i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;{t}Loading{/t}...</div>
+			{literal}
+			<script type="text/javascript">
+			$(function () {
+			{/literal}
+			    {$pie_graph_js}
+			{literal}
+			});
+			</script>
+			{/literal}
 		</div>
 	</div>
 </div> <!-- div class="container" -->

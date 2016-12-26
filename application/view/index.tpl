@@ -106,14 +106,17 @@
 
 					<!-- Last period job status graph -->
 					<div class="panel-body">
-						<!-- Graph pre-loader -->
-						<div class="img_loader text-center"> 
-							<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-							<p>Loading graph</p> 
-						</div>
-						<a href="jobs.php" title="{t}Click here to see the report{/t}">
-							<img src="{$graph_jobs}" class="img-responsive center-block" alt="Last period jobs">
-						</a>
+						<div id="graph_jobs"><i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;{t}Loading{/t}...</div>
+						{literal}
+						<script type="text/javascript">
+						$(function () {
+						{/literal}
+						    {$graph_jobs_js}
+						{literal}
+						});
+						</script>
+						{/literal}
+						
 						<table class="table table-condensed">
 							<tr>
 								<td><h5>{t}Running jobs{/t}</h5></td>
@@ -152,12 +155,17 @@
 			<div class="col-xs-12 col-sm-6">
 				<div class="panel panel-default">
 					<div class="panel-heading" title="{t}Stored bytes over the last 7 days{/t}"><b>{t}Stored Bytes (last 7 days){/t}</b></div>
-					<div class="panel-body">
-                    	<div class="img_loader text-center">
-                    		<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-                        	<p>Loading graph</p>
-                    	</div>						
-						<img src="{$graph_stored_bytes}" class="img-responsive center-block" title="{t}Stored bytes over the last 7 days{/t}" alt="Stored Bytes over last 7 days">
+					<div class="panel-body">						
+						<div id="graph_stored_bytes"><i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;{t}Loading{/t}...</div>
+						{literal}
+						<script type="text/javascript">
+						$(function () {
+						{/literal}
+						    {$graph_stored_bytes_js}
+						{literal}
+						});
+						</script>
+						{/literal}
 					</div> <!-- end <div class="panel-body"> -->
 				</div> <!-- end class="panel panel-default" -->
 			</div>
@@ -165,11 +173,16 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" title="{t}Stored files over the last 7 days{/t}"><b>{t}Stored Files (last 7 days){/t}</b></div>
 					<div class="panel-body">
-	                	<div class="img_loader text-center">
-	                    	<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-	                        <p>Loading graph</p>
-	                    </div>						
-						<img src="{$graph_stored_files}" class="img-responsive center-block" title="{t}Stored files over the last 7 days{/t}" alt="Stored Files over last 7 days">
+						<div id="graph_stored_files"><i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;{t}Loading{/t}...</div>
+						{literal}
+						<script type="text/javascript">
+						$(function () {
+						{/literal}
+						    {$graph_stored_files_js}
+						{literal}
+						});
+						</script>
+						{/literal}
 					</div>
 				</div> <!-- div class="panel panel-default" -->
 			</div>
@@ -181,11 +194,18 @@
 		<!-- Pools and volumes status -->
 		<div class="col-xs-12 col-md-6">
 			<div class="panel panel-default">
-				<div class="panel-heading"><b>{t}Pools and volumes status{/t}</b></div>
+				<div class="panel-heading"><a href="pools.php"><b>{t}Pools and volumes status{/t}</b></a></div>
 				<div class="panel-body">
-					<a href="pools.php" title="{t}Click here to see the report{/t}">
-						<img src="{$graph_pools}" class="img-responsive center-block" alt="Pools and volumes">
-					</a>
+					<div id="graph_pools"><i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;{t}Loading{/t}...</div>
+					{literal}
+					<script type="text/javascript">
+					$(function () {
+					{/literal}
+					    {$graph_pools_js}
+					{literal}
+					});
+					</script>
+					{/literal}
 				</div>
 			</div> <!-- div class="panel panel-default" -->
 		</div> <!-- end class="col-xs-12 col-md-6" -->

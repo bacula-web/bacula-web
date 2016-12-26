@@ -118,21 +118,24 @@ try {
     // ==============================================================
     // Last period <Job status graph>
     // ==============================================================
-    $jobs_status = array('Running', 'Completed', 'Waiting', 'Failed', 'Canceled');
+    $jobs_status = array(
+    	'Running' => array('color' => '#777', 'url' => 'jobs.php?states=1'),
+    	'Completed' => array('color' => '#5cb85c', 'url' => 'jobs.php?states=3'),
+    	'Waiting' => array('color' => '#337ab7', 'url' => 'jobs.php?states=2'),
+    	'Failed' => array('color' => '#d9534f', 'url' => 'jobs.php?states=5'),
+    	'Canceled' => array('color' => '#f0ad4e', 'url' => 'jobs.php?states=6')
+    );
     $jobs_status_data = array();
 
-    foreach ($jobs_status as $status) {
+    foreach ($jobs_status as $status => $options) {
         $jobs_count = Jobs_Model::count_Jobs($dbSql->db_link, $custom_period, strtolower($status));
-        $jobs_status_data[] = array($status, $jobs_count );
+        $jobs_status_data[] = array($status, $jobs_count, $options);
     }
      
-    $graph = new CGraph("dashboard-graph01.jpg");
-    $graph->SetData($jobs_status_data, 'pie');
-    $graph->setPieLegendColors(array( 'gray', 'green','blue', 'red', 'orange'));
-
-    // Graph rendering
-    $view->assign('graph_jobs', $graph->Render());
-
+	// Graph data for JS highcharts
+	$graph = new Highcharts('graph_jobs', 'pie', 'Jobs', $jobs_status_data, null, array('showLegend' => 1));
+	$view->assign('graph_jobs_js', $graph->get_graph_js());
+	
     unset($graph);
 
     // ==============================================================
@@ -140,7 +143,7 @@ try {
     // ==============================================================
 
     $vols_by_pool = array();
-    $graph = new CGraph("dashboard-graph02.jpg");
+    $vols_by_pool_drilldown = array();
     $max_pools = '9';
     $table_pool = 'Pool';
     $limit = '';
@@ -181,13 +184,28 @@ try {
     }
 
     if ($pools_count > $max_pools) {
-        $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
+        $vols_by_pool[] = array('Others', $sum_vols['sum_vols'], array('drilldown' => 'others'));
+        
+        $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'offset' => $max_pools);
+	    $result = CDBUtils::runQuery(CDBQuery::get_Select($query), $dbSql->db_link);
+        
+        $drilldown = array(
+        	'name' => 'Others',
+        	'id' => 'others',
+        	'data' => array()
+        );
+        
+        foreach ($result as $pool) {
+	    	$drilldown['data'][] = array($pool['name'], $pool['numvols']);
+	    }
+	    
+	    $vols_by_pool_drilldown[] = $drilldown;
+	    unset($drilldown);
     }
-
-    $graph->SetData($vols_by_pool, 'pie');
-
-    // Graph rendering
-    $view->assign('graph_pools', $graph->Render());
+    
+    // Graph data for JS highcharts
+	$graph = new Highcharts('graph_pools', 'pie', 'Pools and Volumes', $vols_by_pool, $vols_by_pool_drilldown);
+	$view->assign('graph_pools_js', $graph->get_graph_js());
 
     unset($graph);
 
@@ -195,33 +213,59 @@ try {
     // Last 7 days stored Bytes widget
     // ==============================================================
     $days_stored_bytes = array();
+    $days_stored_bytes_drilldown = array();
     $days = DateTimeUtil::getLastDaysIntervals(7);
 
     foreach ($days as $day) {
-        $days_stored_bytes[] = array( date("m-d", $day['start']), Jobs_Model::getStoredBytes($dbSql->db_link, array($day['start'], $day['end'])));
+        $days_stored_bytes[] = array( date("m-d", $day['start']), Jobs_Model::getStoredBytes($dbSql->db_link, array($day['start'], $day['end'])), array('drilldown' => date("m-d", $day['start'])));
+        
+        $result = Jobs_Model::getStoredBytes($dbSql->db_link, array($day['start'], $day['end']), 'ALL', 'ALL', 'clientid');
+        
+        $drilldown = array(
+        	'name' => date("m-d", $day['start']),
+        	'id' => date("m-d", $day['start']),
+        	'data' => array()
+        );
+        
+        foreach ($result as $r) {
+	    	$drilldown['data'][] = array($r['name'], $r['stored_bytes']);
+	    }
+        
+        $days_stored_bytes_drilldown[] = $drilldown;
     }
 
-    $graph = new CGraph("dashboard-graph03.jpg");
-    $graph->SetData($days_stored_bytes, 'bars', true);
-
-    // Graph rendering
-    $view->assign('graph_stored_bytes', $graph->Render());
+    // Graph data for JS highcharts
+	$graph = new Highcharts('graph_stored_bytes', 'column', 'Stored Bytes', $days_stored_bytes, $days_stored_bytes_drilldown, array('colorByPoint' => 0, 'formatBytes' => 1));
+	$view->assign('graph_stored_bytes_js', $graph->get_graph_js());
      
     // ==============================================================
     // Last 7 days Stored Files widget
     // ==============================================================
     $days_stored_files = array();
+    $days_stored_files_drilldown = array();
     $days = DateTimeUtil::getLastDaysIntervals(7);
 
     foreach ($days as $day) {
-        $days_stored_files[] = array( date("m-d", $day['start']), Jobs_Model::getStoredFiles($dbSql->db_link, array($day['start'], $day['end'])));
+        $days_stored_files[] = array( date("m-d", $day['start']), Jobs_Model::getStoredFiles($dbSql->db_link, array($day['start'], $day['end'])), array('drilldown' => date("m-d", $day['start'])));
+        
+        $result = Jobs_Model::getStoredFiles($dbSql->db_link, array($day['start'], $day['end']), 'ALL', 'ALL', 'clientid');
+        
+        $drilldown = array(
+        	'name' => date("m-d", $day['start']),
+        	'id' => date("m-d", $day['start']),
+        	'data' => array()
+        );
+        
+        foreach ($result as $r) {
+	    	$drilldown['data'][] = array($r['name'], $r['stored_files']);
+	    }
+        
+        $days_stored_files_drilldown[] = $drilldown;
     }
 
-    $graph = new CGraph("dashboard-graph04.jpg");
-    $graph->SetData($days_stored_files, 'bars');
-
-    // Graph rendering
-    $view->assign('graph_stored_files', $graph->Render());
+     // Graph data for JS highcharts
+	$graph = new Highcharts('graph_stored_files', 'column', 'Stored Files', $days_stored_files, $days_stored_files_drilldown, array('colorByPoint' => 0, 'formatScale' => 1));
+	$view->assign('graph_stored_files_js', $graph->get_graph_js());
 
     unset($graph);
 

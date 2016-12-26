@@ -86,35 +86,30 @@ try {
    // ===============================================================
    // Last n days stored Bytes graph
    // ===============================================================
-    $graph = new CGraph("clientreport-graph01.jpg");
   
     foreach ($days as $day) {
         $stored_bytes = Jobs_Model::getStoredBytes($dbSql->db_link, array($day['start'], $day['end']), 'ALL', $clientid);
         $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
     }
   
-    $graph->SetData($days_stored_bytes, 'bars', true);
-  
-   // Graph rendering
-    $view->assign('graph_stored_bytes', $graph->Render());
+    // Graph data for JS highcharts
+	$graph = new Highcharts('graph_stored_bytes', 'column', 'Bytes', $days_stored_bytes, null, array('colorByPoint' => 0, 'formatBytes' => 1));
+	$view->assign('graph_stored_bytes_js', $graph->get_graph_js());
 
     unset($graph);
   
    // ===============================================================
    // Getting last n days stored files graph
    // ===============================================================
-    $graph = new CGraph("clientreport-graph03.jpg");
   
     foreach ($days as $day) {
         $stored_files = Jobs_Model::getStoredFiles($dbSql->db_link, array($day['start'], $day['end']), 'ALL', $clientid);
         $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
     }
   
-    $graph->SetData($days_stored_files, 'bars');
-    $graph->SetYTitle("Files");
-  
-   // Graph rendering
-    $view->assign('graph_stored_files', $graph->Render());
+    // Graph data for JS highcharts
+	$graph = new Highcharts('graph_stored_files', 'column', 'Files', $days_stored_files, null, array('colorByPoint' => 0, 'formatScale' => 1));
+	$view->assign('graph_stored_files_js', $graph->get_graph_js());
 
     unset($graph);
 } catch (Exception $e) {

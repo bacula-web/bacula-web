@@ -1,5 +1,4 @@
-        <!-- JQuery and Bootstrap Javascript -->
-        <script src="core/vendor/jquery-1.11.1/jquery-1.11.1.min.js"></script>
+        <!-- Bootstrap Javascript -->
         <script src="core/vendor/moment/moment-with-locales.min.js"></script>
         <script src="core/vendor/bootstrap/js/bootstrap.min.js"></script>
         <script src="core/vendor/bootstrap-datetimepicker-4.7.14/js/bootstrap-datetimepicker.min.js"></script>
@@ -12,5 +11,10 @@
             var config_language = "{php}echo FileConfig::get_Value('language');{/php};"
         </script>
         <script src="application/assets/js/default.js"></script>
+        
+        <!-- Highcharts -->
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="https://code.highcharts.com/modules/data.js"></script>
+		<script src="https://code.highcharts.com/modules/drilldown.js"></script>
     </body>
 </html>

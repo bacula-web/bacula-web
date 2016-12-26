@@ -116,14 +116,16 @@ class Jobs_Model extends CModel
     //				$period_timestamps	Array containing start and end date (unix timestamp format)
     //				$job_name			Job name (optional)
     //				$client_id			Client id (optional)
+    //				$group_by			Group By (optional)
     // Return:		Total of stored files within the specific period
     // ==================================================================================
 
-    public static function getStoredFiles($pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
+    public static function getStoredFiles($pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL', $group_by = false)
     {
-        $where      = array();
-        $fields     = array( 'SUM(JobFiles) AS stored_files' );
-        $tablename    = 'Job';
+        $where     = array();
+        $groupby   = null;
+        $fields    = array( 'SUM(JobFiles) AS stored_files' );
+        $tablename = 'Job';
         
      // Check PDO object
         if (!is_a($pdo_connection, 'PDO') or is_null($pdo_connection)) {
@@ -142,12 +144,23 @@ class Jobs_Model extends CModel
             $where[] = "clientid = '$client_id'";
         }
         
+        // Group By
+        if ($group_by) {
+	        $fields[] = 'name';
+	        $groupby  = $group_by;
+        }
+        
      // Building SQL statment
-        $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
+        $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where, 'groupby' => $groupby);
         $statment = CDBQuery::get_Select($statment);
 
      // Execute query
         $result = CDBUtils::runQuery($statment, $pdo_connection);
+        
+        if ($group_by) {
+	    	return $result->fetchAll();
+	    }
+        
         $result = $result->fetch();
         
 		// If result == null, return 0 instead
@@ -164,14 +177,16 @@ class Jobs_Model extends CModel
     //				$period_timestamps 	Array containing start and end date (unix timestamp format)
     //				$job_name			Job name (optional)
     //				$client_id			Client id (optional)
+    //				$group_by			Group By (optional)
     // Return:		Total of stored bytes within the specific period
     // ==================================================================================
 
-    public static function getStoredBytes($pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
+    public static function getStoredBytes($pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL', $group_by = false)
     {
-        $where      = array();
-        $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
-        $tablename    = 'Job';
+        $where     = array();
+        $groupby   = null;
+        $fields    = array( 'SUM(JobBytes) AS stored_bytes' );
+        $tablename = 'Job';
         
         // Defined period
         $intervals     = CDBQuery::get_Timestamp_Interval($period_timestamps);
@@ -185,12 +200,23 @@ class Jobs_Model extends CModel
             $where[] = "clientid = '$client_id'";
         }
         
+        // Group By
+        if ($group_by) {
+	        $fields[] = 'name';
+	        $groupby  = $group_by;
+        }
+        
         // Building SQL statment
-        $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
+        $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where, 'groupby' => $groupby);
         $statment = CDBQuery::get_Select($statment);
 
         // Execute query
         $result = CDBUtils::runQuery($statment, $pdo_connection);
+        
+        if ($group_by) {
+	    	return $result->fetchAll();
+	    }
+        
         $result = $result->fetch();
 
 		// If result == null, return 0 instead
