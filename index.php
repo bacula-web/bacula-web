@@ -119,11 +119,11 @@ try {
     // Last period <Job status graph>
     // ==============================================================
     $jobs_status = array(
-    	'Running' => array('color' => '#777', 'url' => 'jobs.php?states=1'),
-    	'Completed' => array('color' => '#5cb85c', 'url' => 'jobs.php?states=3'),
-    	'Waiting' => array('color' => '#337ab7', 'url' => 'jobs.php?states=2'),
-    	'Failed' => array('color' => '#d9534f', 'url' => 'jobs.php?states=5'),
-    	'Canceled' => array('color' => '#f0ad4e', 'url' => 'jobs.php?states=6')
+    	'Running' => array('color' => '#777', 'url' => 'jobs.php?status=1'),
+    	'Completed' => array('color' => '#5cb85c', 'url' => 'jobs.php?status=3'),
+    	'Waiting' => array('color' => '#337ab7', 'url' => 'jobs.php?status=2'),
+    	'Failed' => array('color' => '#d9534f', 'url' => 'jobs.php?status=5'),
+    	'Canceled' => array('color' => '#f0ad4e', 'url' => 'jobs.php?status=6')
     );
     $jobs_status_data = array();
 
