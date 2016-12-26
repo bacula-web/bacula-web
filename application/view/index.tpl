@@ -152,7 +152,7 @@
 			</div> <!-- end column -->
 			
 			<!-- Stored Bytes for last 7 days -->
-			<div class="col-xs-12 col-sm-6">
+			<div class="col-xs-12 col-md-6">
 				<div class="panel panel-default">
 					<div class="panel-heading" title="{t}Stored bytes over the last 7 days{/t}"><b>{t}Stored Bytes (last 7 days){/t}</b></div>
 					<div class="panel-body">						
@@ -169,7 +169,7 @@
 					</div> <!-- end <div class="panel-body"> -->
 				</div> <!-- end class="panel panel-default" -->
 			</div>
-			<div class="col-xs-12 col-sm-6">
+			<div class="col-xs-12 col-md-6">
 				<div class="panel panel-default">
 					<div class="panel-heading" title="{t}Stored files over the last 7 days{/t}"><b>{t}Stored Files (last 7 days){/t}</b></div>
 					<div class="panel-body">
@@ -244,7 +244,7 @@
 	<!-- Fourth row with Client and backup job reports widgets  -->
 	<div class="row">
 		<!-- Client report -->
-		<div class="col-xs-12 col-md-6">
+		<div class="col-xs-12 col-sm-6">
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>{t}Client report{/t}</b></div>
 				<div class="panel-body">
@@ -282,7 +282,7 @@
 			</div> <!-- end <div class="panel panel-default"> -->
 		</div> <!-- end <div class="col-..." -->
 		
-		<div class="col-xs-12 col-md-6">
+		<div class="col-xs-12 col-sm-6">
 			<!-- Backup job report -->
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>{t}Backup Job report{/t}</b></div>
