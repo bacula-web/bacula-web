@@ -133,7 +133,7 @@ try {
     }
      
 	// Graph data for JS highcharts
-	$graph = new Highcharts('graph_jobs', 'pie', 'Jobs', $jobs_status_data, null, array('showLegend' => 1));
+	$graph = new Highcharts('graph_jobs', 'pie', 'Jobs', $jobs_status_data, null, array('showLegend' => 1, 'enable3D' => 1));
 	$view->assign('graph_jobs_js', $graph->get_graph_js());
 	
     unset($graph);
@@ -204,7 +204,7 @@ try {
     }
     
     // Graph data for JS highcharts
-	$graph = new Highcharts('graph_pools', 'pie', 'Pools and Volumes', $vols_by_pool, $vols_by_pool_drilldown);
+	$graph = new Highcharts('graph_pools', 'pie', 'Pools and Volumes', $vols_by_pool, $vols_by_pool_drilldown, array('enable3D' => 1));
 	$view->assign('graph_pools_js', $graph->get_graph_js());
 
     unset($graph);

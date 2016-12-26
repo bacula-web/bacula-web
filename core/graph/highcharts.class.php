@@ -2,7 +2,7 @@
 	
 class Highcharts
 {
-	private $id, $type, $title, $series, $drilldown, $showLegend, $colorByPoint, $formatBytes;
+	private $id, $type, $title, $series, $drilldown, $showLegend, $colorByPoint, $formatBytes, $enable3D;
 	
 	public function __construct($id, $type, $title, $series, $drilldown, $options = array())
 	{
@@ -16,13 +16,22 @@ class Highcharts
 		$this->colorByPoint = (isset($options['colorByPoint'])) ? $options['colorByPoint'] : 1;
 		$this->formatBytes = (isset($options['formatBytes'])) ? $options['formatBytes'] : 0;
 		$this->formatScale = (isset($options['formatScale'])) ? $options['formatScale'] : 0;
+		$this->enable3D = (isset($options['enable3D'])) ? $options['enable3D'] : 0;
 	}
 	
 	public function get_graph_js()
 	{
 		$js = "Highcharts.chart('".$this->id."', {
-		        chart: {
-		            type: '".$this->type."'
+		        chart: {";
+		        if($this->enable3D)
+		        {
+		        $js .= "options3d: {
+		                enabled: true,
+		                alpha: 45,
+		                beta: 0
+		            },";
+		        }   
+		$js .=      "type: '".$this->type."'
 		        },
 		        title: {
 		            text: ''
@@ -57,13 +66,12 @@ class Highcharts
 			                    $js .= "format: '{point.name}: {point.y:.0f}'";
 		                    }
 		$js .=             "}
-		            }";
-		            if($this->showLegend)
-		            {
-		            $js .= ",".$this->type.": {showInLegend: true}";
+		            },
+		            ".$this->type.": {";
+		            if($this->showLegend) $js .= "showInLegend: true,";
+		$js .=         	"depth: 35
 		            }
-		$js .= "},
-		
+		        },
 		        tooltip: {
 		            headerFormat: '<span style=\"font-size:11px\">{series.name}</span><br>',";
                     if($this->formatBytes || $this->formatScale)
