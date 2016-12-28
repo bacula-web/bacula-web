@@ -248,12 +248,12 @@ class Jobs_Model extends CModel
     }
 
     // ==================================================================================
-    // Function:    getWeekSize()
+    // Function:    getWeekConsumes()
     // Parameters:  $pdo        Valid PDO connection object
     // Return:      Array with days in a week and her backup size
     // ==================================================================================
 
-    public static function getWeekSize($pdo)
+    public static function getWeekConsumes($pdo)
     {
         $days       = array();
         $fields     = array( 'SUM(Job.Jobbytes) AS Jobbytes', 'SUM(Job.Jobfiles) AS Jobfiles', "FROM_UNIXTIME(Job.JobTDate, '%W') AS day" );
@@ -272,6 +272,55 @@ class Jobs_Model extends CModel
         }
 
         return $days;
+    }
+
+    // ==================================================================================
+    // Function:    getClientConsumes()
+    // Parameters:  none
+    // Return:      array containing client information
+    // ==================================================================================
+
+    public static function getClientConsumes($pdo)
+    {
+        $clients    = array();
+        $fields     = array('Name','Level', 'SUM(Job.Jobbytes) AS Jobbytes', 'SUM(Job.Jobfiles) AS Jobfiles', "FROM_UNIXTIME(JobTDate,'%Y-%m-%d') as day");
+        $where      = array("JobStatus = 'T'", "Type = 'B'");
+        $groupBy    = 'Name';
+        $orderby    = 'Jobbytes DESC';
+        $limit      = 10;
+
+        $statment   = CDBQuery::get_Select(array('table'=> 'Job', 'fields' => $fields, 'where' => $where, 'groupby' => $groupBy, 'orderby' => $orderby, 'limit' => $limit));
+        $result     = CDBUtils::runQuery($statment, $pdo);
+
+        foreach ($result->fetchAll() as $client) {
+            $client['jobbytes'] = CUtils::Get_Human_Size($client['jobbytes']);
+            $client['jobfiles'] = CUtils::format_Number($client['jobfiles'], 0);
+            $clients[] = $client;
+        }
+
+        return $clients;
+    }
+
+    // ==================================================================================
+    // Function:    getNextDayToNewBackup()
+    // Parameters:  $pdo        Valid PDO connection object
+    // Return:      The best day to "Schedule" new backup Server
+    // ==================================================================================
+
+    public static function getBestDayToNewBackup($pdo)
+    {
+        $days       = array();
+        $fields     = array( 'SUM(Job.Jobbytes) AS Jobbytes', 'SUM(Job.Jobfiles) AS Jobfiles', "FROM_UNIXTIME(Job.JobTDate, '%W') AS day" );
+        $join       = array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus');
+        $where      = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
+        $groupBy    = 'day';
+        $orderby    = 'Jobbytes ASC';
+        $limit      = 1;
+
+        $statment   = CDBQuery::get_Select(array('table'=> 'Job', 'fields' => $fields, 'join' => $join, 'where' => $where, 'groupby' => $groupBy, 'orderby' => $orderby, 'limit' => $limit));
+        $result     = CDBUtils::runQuery($statment, $pdo);
+
+        return $result->fetchAll()[0]['day'];
     }
 
     // ==================================================================================
