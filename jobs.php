@@ -17,7 +17,7 @@
 
   session_start();
   require_once('core/global.inc.php');
-  
+
   $view      = new CView();
   $dbSql     = new Bweb($view);
 
@@ -26,7 +26,7 @@
 
   $query     = "";
   $last_jobs = array();
-  
+
   // Job Status list
   define('STATUS_ALL', 0);
   define('STATUS_RUNNING', 1);
@@ -35,7 +35,7 @@
   define('STATUS_COMPLETED_WITH_ERRORS', 4);
   define('STATUS_FAILED', 5);
   define('STATUS_CANCELED', 6);
-  
+
   $job_status = array(
       STATUS_ALL => 'All',
       STATUS_RUNNING => 'Running',
@@ -45,9 +45,9 @@
       STATUS_FAILED => 'Failed',
       STATUS_CANCELED => 'Canceled'
   );
-  
+
   $view->assign('job_status', $job_status);
-  
+
   // Global variables
   $job_levels = array(
       'D' => 'Diff',
@@ -64,12 +64,12 @@
   $clients_list     = Clients_Model::getClients($dbSql->db_link);
   $clients_list[0]  = 'Any';
   $view->assign('clients_list', $clients_list);
-  
-  $query .= "SELECT Job.JobId, Job.Name AS Job_name, Job.Type, Job.StartTime, Job.EndTime, Job.Level, Job.ReadBytes, Job.JobBytes, Job.JobFiles, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
+
+  $query .= "SELECT Job.JobId, Job.Name AS Job_name, Job.Type, Job.SchedTime, Job.StartTime, Job.EndTime, Job.Level, Job.ReadBytes, Job.JobBytes, Job.JobFiles, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
   $query .= "FROM Job ";
   $query .= "LEFT JOIN Pool ON Job.PoolId=Pool.PoolId ";
   $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
-  
+
   // Check job status filter
   if (!is_null(CHttpRequest::get_Value('status'))) {
       // Selected job status filter
@@ -98,7 +98,7 @@
         }
         $view->assign('job_status_filter', CHttpRequest::get_Value('status'));
     }
-  
+
   // Selected level filter
     if (!is_null(CHttpRequest::get_Value('level_id'))) {
         $level_id = CHttpRequest::get_Value('level_id');
@@ -170,13 +170,14 @@
     } else {
         $view->assign('end_time_filter', '');
     }
-  
+
     $order_by                 = '';
     $order_by_asc             = 'DESC';
     $result_order_asc_checked = '';
-  
+
   // Order result by
     $result_order = array(
+      'SchedTime' => 'Job Scheduled Time',
     'starttime' => 'Job Start Date',
     'endtime'   => 'Job End Date',
       'jobid'     => 'Job Id',
@@ -186,47 +187,47 @@
       'Pool.Name' => 'Pool Name'
     );
   $view->assign('result_order', $result_order);
-  
+
   // Order by
   if (!is_null(CHttpRequest::get_Value('orderby'))) {
       $order_by = CHttpRequest::get_Value('orderby');
     } else {
         $order_by = 'jobid';
     }
-  
+
   // Order by DESC || ASC
     if (!is_null(CHttpRequest::get_Value('result_order_asc'))) {
         $order_by_asc             = CHttpRequest::get_Value('result_order_asc');
         $result_order_asc_checked = 'checked';
     }
-  
+
     $query .= "ORDER BY $order_by $order_by_asc ";
-  
+
   // Set selected option in template for Job order and Job order asc (ascendant order)
     $view->assign('result_order_field', $order_by);
     $view->assign('result_order_asc_checked', $result_order_asc_checked);
-  
+
   // Jobs per page options
     $jobs_per_page = 25;
     $view->assign('jobs_per_page', array( 25 => '25', 50 => '50', 75 => '75', 100 => '100', 150 => '150'));
-  
+
   // Determine how many jobs per page
   // From config file
     if (FileConfig::get_Value('jobs_per_page') != false) {
         $jobs_per_page = FileConfig::get_Value('jobs_per_page');
     }
-      
+
   // From $_POST form
     if (!is_null(CHttpRequest::get_Value('jobs_per_page'))) {
         $jobs_per_page = CHttpRequest::get_Value('jobs_per_page');
     }
-      
+
     $query .= "LIMIT $jobs_per_page";
     $view->assign('jobs_per_page_selected', $jobs_per_page);
- 
+
   // Parsing jobs result
     $jobsresult = CDBUtils::runQuery($query, $dbSql->db_link);
-  
+
     foreach ($jobsresult as $job) {
         // Determine icon for job status
         switch($job['jobstatus']) {
@@ -258,32 +259,35 @@
                 $job['Job_icon'] = "time";
                 break;
         } // end switch
-      
+
+        // Sched time
+        $sched_time = $job['SchedTime'];
+
         // Job start time, end time and elapsed time
         $start_time = $job['starttime'];
         $end_time   = $job['endtime'];
-      
+
         if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0) {
             $job['starttime'] = 'n/a';
         }
-      
+
         if ($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == 0) {
             $job['endtime'] = 'n/a';
         }
-      
+
         // Get the job elapsed time completion
         $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
-      
+
         // Job Level
         $job['level'] = $job_levels[$job['level']];
-      
+
         // Job files
         $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
 
         // Set default Job speed and compression rate
         $job['speed'] = '0 Mb/s';
         $job['compression'] = 'n/a';
-      
+
         switch($job['jobstatus']) {
             case J_COMPLETED:
             case J_COMPLETED_ERROR:
@@ -298,7 +302,7 @@
                 } else {
                     $job['speed'] = 'n/a';
                 }
-                
+
                 // Job compression
                 if ($job['jobbytes'] > 0 && $job['type'] == 'B') {
                     $compression        = (1-($job['jobbytes'] / $job['readbytes']));
@@ -308,30 +312,33 @@
                 }
             break;
         } // end switch
-      
+
         // Job size
         $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
-            
+
         // Job Pool
         if (is_null($job['pool_name'])) {
             $job['pool_name'] = 'n/a';
         }
-      
+
         $last_jobs[] = $job;
     } // end foreach
-  
+
+
+
+
     $view->assign('last_jobs', $last_jobs);
-  
+
   // Count jobs
     $view->assign('jobs_found', count($last_jobs));
     $view->assign('total_jobs', Jobs_Model::count($dbSql->db_link));
-  
+
   // Set page name
     $current_page = 'Jobs report';
     $view->assign('page_name', $current_page);
 
     // Language
     $view->assign('config_language', FileConfig::get_Value('language'));
-  
+
   // Process and display the template
     $view->render('jobs.tpl');
