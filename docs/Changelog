@@ -5,6 +5,7 @@ Changelog
 - Jobs report: 
    Include more Levels InitCatalog=V, Catalog=C, VolumeToCatalog=O, DiskToCatalog=d and Data=A (wanderleihuttel)
    Align job name on the left (wanderleihuttel)
+   Add Job scheduled time (sgargel)
 
 Fixed bugs
 
