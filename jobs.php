@@ -262,6 +262,8 @@
         // Job start time, end time and elapsed time
         $start_time = $job['starttime'];
         $end_time   = $job['endtime'];
+        $job['starttime'] = CUtils::format_DateTime($start_time, $config['datetime_format']);
+        $job['endtime']   = CUtils::format_DateTime($start_time, $config['datetime_format']);
       
         if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0) {
             $job['starttime'] = 'n/a';

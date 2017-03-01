@@ -40,8 +40,8 @@ try {
     }
     
     // Generate Backup Job report period string
-    $backupjob_period = "From " . date("Y-m-d", (NOW - WEEK)) . " to " . date("Y-m-d", NOW);
-    
+    $backupjob_period = "From " . CUtils::format_Date(date("Y-m-d", (NOW - WEEK)), $config['date_format']) . " to " . CUtils::format_Date(date("Y-m-d", NOW), $config['date_format']);
+
     // Stored Bytes on the defined period
     $backupjob_bytes = Jobs_Model::getStoredBytes($dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name);
     $backupjob_bytes = CUtils::Get_Human_Size($backupjob_bytes);
@@ -118,6 +118,8 @@ try {
         // Job speed
         $start         = $job['starttime'];
         $end           = $job['endtime'];
+        $job['starttime']  = CUtils::format_DateTime($start, $config['datetime_format']);
+        $job['endtime']    = CUtils::format_DateTime($end, $config['datetime_format']);
         $seconds 	   = DateTimeUtil::get_ElaspedSeconds($end, $start);
 
         if ($seconds !== false && $seconds > 0) {
