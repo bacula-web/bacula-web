@@ -98,7 +98,7 @@
 		  <tr>
 			<th class="text-center">{t}Status{/t}</th> 
 			<th class="text-center">{t}Job ID{/t}</th>
-			<th class="text-center">{t}Name{/t}</th>
+			<th class="text-left">{t}Name{/t}</th>
 			<th class="text-center">{t}Type{/t}</th>
 			<th class="text-center">{t}Start time{/t}</th>
 			<th class="text-center">{t}End time{/t}</th>
@@ -121,7 +121,7 @@
 				</a>
 			</td>
 			<td>{$job.jobid}</td>
-			<td>
+			<td class="text-left">
 			  <a href="backupjob-report.php?backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
 			</td>
 			<td>{$job.type}</td>
