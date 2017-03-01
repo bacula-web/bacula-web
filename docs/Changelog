@@ -1,3 +1,15 @@
+=== Release 7.x.0 (March dd 2017)
+
+Changelog
+
+- Jobs report: 
+   Include more Levels InitCatalog=V, Catalog=C, VolumeToCatalog=O, DiskToCatalog=d and Data=A (wanderleihuttel)
+   Align job name on the left (wanderleihuttel)
+
+Fixed bugs
+
+Translations
+
 === Release 7.3.0 (December 4 2016 ===
 
 Changelog
@@ -10,7 +22,7 @@ Fixed bugs
 
 none
 
-Translactions
+Translations
 
 - Added Russian translation (thanks to sayanvd) 
 - Added Chinese translation (thanks to cxl nh)
