@@ -7,20 +7,20 @@
   <div class="row">
 	  <!-- Filter jobs form -->
 	  <div class="col-xs-12 col-sm-3 col-sm-push-9 col-lg-2 col-lg-push-10">
-	  
+
 	  <form class="form" role="form" action="jobs.php" method="post">
-		
+
 		<span class="help-block">{t}Filter{/t}</span>
-		
+
 		<div class="form-group">
 		  <label>{t}Job status{/t}</label>
 		  <select name="status" class="form-control">
 			{foreach from=$job_status item=status_name key=status_id}
-			  <option value="{$status_id}" {if $status_id eq $job_status_filter} selected {/if}>{$status_name}</option>		  
+			  <option value="{$status_id}" {if $status_id eq $job_status_filter} selected {/if}>{$status_name}</option>
 			{/foreach}
 		  </select>
 		</div>
-		
+
 		<div class="form-group">
 		  <label>{t}Level{/t}</label>
 			<select name="level_id" class="form-control">
@@ -58,11 +58,11 @@
                     </span>
             </div>
 		</div>
-			  
+
 		<span class="help-block">{t}Options{/t}</span>
-		  
+
 		<label>{t}Order by{/t}</label>
-		  
+
 		<select name="orderby" class="form-control">
 		  {foreach from=$result_order item=label key=id}
 			<option value="{$id}" {if $id eq $result_order_field}selected{/if}>{$label}</option>
@@ -74,32 +74,33 @@
 			<input type="checkbox" name="result_order_asc" value="{t}ASC{/t}" {$result_order_asc_checked}> Up
 		  </label>
 		</div>
-		
+
 		<div class="form-group">
 		  <label>{t}Jobs per Page{/t}</label>
 		  <select class="form-control" name="jobs_per_page">
 			{foreach from=$jobs_per_page item=label key=id}
 			  <option value="{$id}" {if $id eq $jobs_per_page_selected}selected{/if}>{$label}</option>
-			{/foreach}			
+			{/foreach}
 		  </select>
 		</div>
 
 		<button type="reset" class="btn btn-default btn-sm" title="{t}Reset to default options{/t}">{t}Reset{/t}</button>
 		<button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
 	  </form>
-		
+
 	  </div> <!-- div class="col-md-3 cold-lg-3" -->
-	  
+
 	  <div class="visible-xs-block"><p>&nbsp;</p></div>
-	  
+
 	  <div class="col-xs-12 col-sm-9 col-sm-pull-3 col-lg-10 col-lg-pull-2">
 	  <div class="table-responsive">
 		<table class="table table-condensed table-striped text-center">
 		  <tr>
-			<th class="text-center">{t}Status{/t}</th> 
+			<th class="text-center">{t}Status{/t}</th>
 			<th class="text-center">{t}Job ID{/t}</th>
-			<th class="text-center">{t}Name{/t}</th>
+			<th class="text-left">{t}Name{/t}</th>
 			<th class="text-center">{t}Type{/t}</th>
+      <th class="text-center">{t}Scheduled Time{/t}</th>
 			<th class="text-center">{t}Start time{/t}</th>
 			<th class="text-center">{t}End time{/t}</th>
 			<th class="text-center">{t}Elapsed time{/t}</th>
@@ -111,7 +112,7 @@
 			<th class="text-center">{t}Pool{/t}</th>
 			<th class="text-center">{t}Log{/t}</th>
 		  </tr>
-		  
+
 		  <!-- <div class="listbox"> -->
 		  {foreach from=$last_jobs item=job}
 		  <tr>
@@ -121,10 +122,11 @@
 				</a>
 			</td>
 			<td>{$job.jobid}</td>
-			<td>
+			<td class="text-left">
 			  <a href="backupjob-report.php?backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
 			</td>
 			<td>{$job.type}</td>
+      <td>{$job.schedtime}</td>
 			<td>{$job.starttime}</td>
 			<td>{$job.endtime}</td>
 			<td>{$job.elapsed_time}</td>
@@ -147,7 +149,7 @@
 		  {/foreach}
 		</table>
 	  </div>
-		
+
 		<div class="alert alert-info text-center" role="alert">
 		  Found <b>{$jobs_found}</b> of <b>{$total_jobs} Job(s)</b>
 		</div>

@@ -39,7 +39,16 @@ try {
  $days_stored_bytes = array();
  $days_stored_files = array();
 
- $job_levels = array('D' => 'Differential', 'I' => 'Incremental', 'F' => 'Full');
+ $job_levels = array(
+      'D' => 'Differential',
+      'I' => 'Incremental',
+      'F' => 'Full',
+      'V' => 'InitCatalog',
+      'C' => 'Catalog',
+      'O' => 'VolumeToCatalog',
+      'd' => 'DiskToCatalog',
+      'A' => 'Data'
+ );
 
 try {
     if (!is_null(CHttpRequest::get_Value('client_id'))) {
