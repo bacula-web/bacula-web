@@ -258,8 +258,7 @@ try {
     $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $dbSql->db_link);
 
     foreach ($result as $volume) {
-        $lastwritten = $volume['lastwritten'];
-        $volume['lastwritten'] = CUtils::format_DateTime($lastwritten, $config['date_format']);
+        $volume['lastwritten'] = CUtils::format_DateTime($volume['lastwritten'], $config['date_format']);
         $last_volumes[] = $volume;
     }
 

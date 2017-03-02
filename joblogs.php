@@ -37,8 +37,7 @@ try {
     // Processing result
     foreach ($result->fetchAll() as $log) {
         $log['logtext'] = nl2br($log['logtext']);
-        $time = $log['time'];
-        $log['time'] = CUtils::format_DateTime($time, $config['datetime_format']);
+        $log['time'] = CUtils::format_DateTime($log['time'], $config['datetime_format']);
         $joblogs[]         = $log;
     }
 
