@@ -15,6 +15,9 @@
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="core/vendor/font-awesome/css/font-awesome.min.css">
+  
+  <!-- jQuer Javascript -->
+  <script src="core/vendor/jquery-1.11.1/jquery-1.11.1.min.js"></script>
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>

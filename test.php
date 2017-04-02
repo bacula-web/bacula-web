@@ -123,23 +123,21 @@ foreach ($check_list as &$check) {
 
 // Testing graph capabilities
 $data = array(
-    array('test', 100),
-    array('test1', 150),
-    array('test1', 180),
-    array('test1', 456)
+    array('test1', 100),
+    array('test2', 150),
+    array('test3', 180),
+    array('test4', 456)
 );
 
 // Pie graph
-$pie_graph = new CGraph("testpage-graph03.jpg");
-$pie_graph->SetData($data, 'pie');
-$view->assign('pie_graph', $pie_graph->Render());
-unset($pie_graph);
+$graph = new Highcharts('pie_graph', 'pie', 'Pie Graph', $data, null, array('showLegend' => 1));
+$view->assign('pie_graph_js', $graph->get_graph_js());
+unset($graph);
 
 // Bar graph
-$bar_graph = new CGraph("testpage-graph04.jpg");
-$bar_graph->SetData($data, 'bars');
-$view->assign('bar_graph', $bar_graph->Render());
-unset($bar_graph);
+$graph = new Highcharts('bar_graph', 'column', 'Bar Graph', $data, null, array('colorByPoint' => 0));
+$view->assign('bar_graph_js', $graph->get_graph_js());
+unset($graph);
 
 // Set page name
 $current_page = 'Test page';

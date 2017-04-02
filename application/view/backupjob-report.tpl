@@ -56,11 +56,16 @@
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>{t}Transfered Bytes{/t}</b></div>
 				<div class="panel-body">			
-					<div class="img_loader text-center">
-						<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-						<p>Loading graph</p>
-					</div>
-					<img class="img-responsive center-block" src="{$graph_stored_bytes}" alt="Stored Bytes">
+					<div id="graph_stored_bytes"><i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;{t}Loading{/t}...</div>
+					{literal}
+					<script type="text/javascript">
+					$(function () {
+					{/literal}
+					    {$graph_stored_bytes_js}
+					{literal}
+					});
+					</script>
+					{/literal}
 				</div>
 			</div>
 		</div>
@@ -68,11 +73,16 @@
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>{t}Transfered Files{/t}</b></div>
 				<div class="panel-body">
-					<div class="img_loader text-center">
-						<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-						<p>Loading graph</p>
-					</div>
-					<img class="img-responsive center-block" src="{$graph_stored_files}" alt="Stored Files"> 
+					<div id="graph_stored_files"><i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;{t}Loading{/t}...</div>
+					{literal}
+					<script type="text/javascript">
+					$(function () {
+					{/literal}
+					    {$graph_stored_files_js}
+					{literal}
+					});
+					</script>
+					{/literal}
 				</div>
 			</div>
 		</div>

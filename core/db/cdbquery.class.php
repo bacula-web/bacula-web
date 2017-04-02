@@ -79,9 +79,13 @@ class CDBQuery
             $query .= 'ORDER BY ' . $param['orderby'] . ' ';
         }
 
-        // Limit to
-        if (isset($param['limit']) && !is_null($param['limit'])) {
-            $query .= 'LIMIT ' . $param['limit'];
+        // Limit/Offset
+        if (isset($param['limit']) && !is_null($param['limit']) && isset($param['offset']) && !is_null($param['offset'])) {
+            $query .= 'LIMIT ' . $param['offset'].', ' . $param['limit'];
+        } elseif (isset($param['limit']) && !is_null($param['limit'])) {
+	        $query .= 'LIMIT ' . $param['limit'];
+        } elseif (isset($param['offset']) && !is_null($param['offset'])) {
+	        $query .= 'LIMIT ' . $param['offset'] . ', 9999999';
         }
 
         return $query;
