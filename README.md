@@ -44,7 +44,7 @@ For more details, please read the file <b>docs/COPYING</b> included in the archi
 ## Authors
 
 Original author 
-Juan Luis Frances (bacula_list AT veloxia dot com)
+> Juan Luis Frances (bacula_list AT veloxia dot com)
 
 Official current maintainer
-Davide Franco (bacula-dev AT dflc dot ch)
+> Davide Franco (bacula-dev AT dflc dot ch)
