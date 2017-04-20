@@ -12,6 +12,10 @@ Fixed bugs
 
 - 0000203 [bug-php] Ubuntu PHP version string problem
 
+New features
+
+- 0000186 [feature] Add column "InChanger" in Volumes/Pool
+
 Translations
 
 === Release 7.3.0 (December 4 2016 ===
