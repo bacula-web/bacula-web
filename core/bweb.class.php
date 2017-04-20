@@ -170,10 +170,10 @@ class Bweb
                     $volume['lastwritten'] = 'n/a';
                 }
                 
-                // Media used bytes in a human format
+                // Get volume used bytes in a human format
                 $volume['volbytes'] = CUtils::Get_Human_Size($volume['volbytes']);
                 
-                // If volume have alreday been used
+                // If volume have already been used
                 if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
                     // Calculate expiration date if the volume status is Full or Used
                     if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
@@ -193,7 +193,7 @@ class Bweb
             array_push($pools[ $pool_name]['volumes'], $volume);
             } // end foreach volumes
 
-            // Calulate used bytes for each pool
+            // Calculate used bytes for each pool
             $sql = "SELECT SUM(Media.volbytes) as sumbytes FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
             $result = CDBUtils::runQuery($sql, $this->db_link);
             $result = $result->fetchAll();
