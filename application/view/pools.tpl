@@ -26,6 +26,7 @@
 							<th class="text-center">{t}Last written{/t}</th>
 							<th class="text-center">{t}Status{/t}</th>
 							<th class="text-center">{t}Slot{/t}</th>
+							<th class="text-center">{t}In Changer{/t}</th>
 						</tr>
 						{foreach from=$pool.volumes item=volume}
 						<tr>
@@ -36,6 +37,7 @@
 							<td>{$volume.lastwritten}</td>
 							<td>{$volume.volstatus}</td>
 							<td>{$volume.slot}</td>
+							<td>{$volume.inchanger}</td>
 						</tr>
 						{foreachelse}
 						<tr>

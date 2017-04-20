@@ -142,12 +142,12 @@ class Bweb
             switch ($this->db_driver) {
                 case 'sqlite':
                 case 'mysql':
-                    $query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention, Media.slot
+                    $query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention, Media.slot, Media.InChanger
 									FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid
 									WHERE Media.poolid = '". $pool['poolid'] . "' ORDER BY Media.volumename";
                     break;
                 case 'pgsql':
-                    $query  = "SELECT media.volumename, media.volbytes, media.volstatus, media.mediatype, media.lastwritten, media.volretention, media.slot
+                    $query  = "SELECT media.volumename, media.volbytes, media.volstatus, media.mediatype, media.lastwritten, media.volretention, media.slot, media.inchanger
 									FROM media LEFT JOIN pool ON media.poolid = pool.poolid
 									WHERE media.poolid = '". $pool['poolid'] . "' ORDER BY media.volumename";
                     break;
@@ -181,6 +181,13 @@ class Bweb
                         $volume['expire'] = strftime("%Y-%m-%d", $expire_date);
                     }
                 }
+		
+		// Update volume inchanger
+                if( $volume['inchanger'] == '0' ) {
+ 		    $volume['inchanger'] = '-'; 
+		}else {
+ 		    $volume['inchanger'] = '<span class="glyphicon glyphicon-ok"></span>'; 
+		}
                                         
             // Push the volume array to the $pool array
             array_push($pools[ $pool_name]['volumes'], $volume);

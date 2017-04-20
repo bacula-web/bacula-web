@@ -15,6 +15,7 @@ Fixed bugs
 New features
 
 - 0000204 [enhancement] Provide SHA checksum for Bacula-Web compressed archive
+- 0000186 [feature] Add column "InChanger" in Volumes/Pool
 
 Translations
 
