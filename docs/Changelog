@@ -12,6 +12,10 @@ Fixed bugs
 
 - 0000203 [bug-php] Ubuntu PHP version string problem
 
+New features
+
+- 0000204 [enhancement] Provide SHA checksum for Bacula-Web compressed archive
+
 Translations
 
 === Release 7.3.0 (December 4 2016 ===
