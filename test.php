@@ -2,8 +2,8 @@
 
 /*
  +-------------------------------------------------------------------------+
- | Copyright (C) 2004 Juan Luis Frances Jimenez							   |
- | Copyright 2010-2016, Davide Franco			                           |
+ | Copyright (C) 2004 Juan Luis Frances Jimenez							         |
+ | Copyright 2010-2017, Davide Franco			                              |
  |                                                                         |
  | This program is free software; you can redistribute it and/or           |
  | modify it under the terms of the GNU General Public License             |
