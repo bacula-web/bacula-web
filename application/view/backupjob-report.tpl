@@ -5,10 +5,10 @@
     <h3>{$page_name}</h3>    
 
 		<div class="panel panel-default">
-			<div class="panel-heading"><h3 class="panel-title">{t}Backup job informations{/t}</h3></div>
+			<div class="panel-heading"><h3 class="panel-title">{t}Job informations{/t}</h3></div>
 			<div class="panel-body">
 				<dl class="dl-horizontal">
-					<dt>{t}Backup Job name{/t}</dt> <dd>{$backupjob_name}</dd>
+					<dt>{t}Job name{/t}</dt> <dd>{$backupjob_name}</dd>
 					<dt>{t}Period{/t}</dt> <dd>{$backupjob_period}</dd>
 					<dt>{t}Transfered Bytes{/t}</dt> <dd>{$backupjob_bytes}</dd>
 					<dt>{t}Transfered Files{/t}</dt> <dd>{$backupjob_files}</dd>
