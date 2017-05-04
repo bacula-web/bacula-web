@@ -9,6 +9,15 @@ $config['hide_empty_pools'] = false;
 // Jobs per page (Jobs report page)
 $config['jobs_per_page'] = 25;
 
+// Jobs per page (Jobs report page)
+$config['jobs_per_page'] = 25;
+
+//Format datetime  (Default: Y-m-d H:i:s)
+//$config['datetime_format'] = '';
+
+//Format date  (Default: Y-m-d)
+//$config['date_format'] = '';
+
 // Translations
 $config['language'] = 'en_US';
 

@@ -182,9 +182,9 @@
 
   // Order result by
     $result_order = array(
-      'SchedTime' => 'Job Scheduled Time',
-    'starttime' => 'Job Start Date',
-    'endtime'   => 'Job End Date',
+      'schedtime' => 'Job Scheduled Time',
+      'starttime' => 'Job Start Date',
+      'endtime'   => 'Job End Date',
       'jobid'     => 'Job Id',
       'Job.Name'  => 'Job Name',
       'jobbytes'  => 'Job Bytes',
@@ -266,12 +266,16 @@
         } // end switch
 
         // Sched time
-        $sched_time = $job['SchedTime'];
+        $sched_time = $job['schedtime'];
 
         // Job start time, end time and elapsed time
         $start_time = $job['starttime'];
         $end_time   = $job['endtime'];
 
+        $job['starttime']   = CUtils::format_DateTime($start_time, $config['datetime_format']);
+        $job['endtime']     = CUtils::format_DateTime($start_time, $config['datetime_format']);
+        $job['schedtime']   = CUtils::format_DateTime($sched_time, $config['datetime_format']);
+      
         if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0) {
             $job['starttime'] = 'n/a';
         }

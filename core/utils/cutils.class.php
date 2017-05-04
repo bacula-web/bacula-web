@@ -68,4 +68,38 @@ class CUtils
         // Return formated number
         return number_format($number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
     }
+
+    // ==================================================================================
+    // Function: 	format_Date()
+    // Parameters:	$date
+    //				$format (optional, default = null)
+    // Return:		formated date
+    // ==================================================================================
+    public static function format_Date($date, $format = null)
+    {
+        // Return formated date
+        if($format == null) {
+           return date('Y-m-d', strtotime($date));
+        } else {
+             return date($format, strtotime($date) );
+        }
+    }
+
+    // ==================================================================================
+    // Function: 	format_DateTime()
+    // Parameters:	$date
+    //				$format (optional, default = null)
+    // Return:		formated date
+    // ==================================================================================
+    public static function format_DateTime($date, $format = null)
+    {
+        // Return formated date
+        if($format == null) {
+           return date('Y-m-d H:i:s', strtotime($date));
+        } else {
+             return date($format, strtotime($date) );
+        }
+    }
+//$this->escape(date($this->datetime_format,strtotime($line['last_login'])));?
+
 }

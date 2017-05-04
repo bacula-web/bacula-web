@@ -82,7 +82,7 @@ try {
             $job['level']     = $job_levels[$job['level']];
             $job['jobfiles']     = CUtils::format_Number($job['jobfiles']);
             $job['jobbytes']     = CUtils::Get_Human_Size($job['jobbytes']);
-          
+            $job['endtime'] = CUtils::format_DateTime($job['endtime'], $config['datetime_format']);
             $backup_jobs[] = $job;
         }
     }

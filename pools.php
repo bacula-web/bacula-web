@@ -23,8 +23,18 @@
  $view = new CView();
  $dbSql = new Bweb($view);
 
+ $result = $dbSql->GetVolumeList();
+ // Looping over the array to change the 'expire' and 'lastwritten' fields with the date/time format
+ foreach ($result as $key1 => $value1) {
+    foreach ($result[$key1]['volumes'] as $key2 => $value2) {
+       $expire      =  $result[$key1]['volumes'][$key2]['expire'];
+       $lastwritten =  $result[$key1]['volumes'][$key2]['lastwritten'];
+       $result[$key1]['volumes'][$key2]['expire'] = CUtils::format_DateTime($expire, $config['date_format']);;
+       $result[$key1]['volumes'][$key2]['lastwritten'] = CUtils::format_DateTime($lastwritten, $config['datetime_format']);;
+    }
+ }
  // Get volumes list (pools.tpl)
- $view->assign('pools', $dbSql->GetVolumeList());
+ $view->assign('pools', $result);
 
  // Set page name
  $current_page = 'Pools and volumes report';
