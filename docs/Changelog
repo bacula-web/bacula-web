@@ -1,12 +1,12 @@
-=== Release 7.4.0 (April 30 2017)
+=== Release 7.4.0 (May dd 2017)
 
 Changelog
 
 - General: Minimum PHP version is now 5.6, the test page have been updated accordingly
-- Jobs report: 
-   Include more Levels InitCatalog=V, Catalog=C, VolumeToCatalog=O, DiskToCatalog=d and Data=A (wanderleihuttel)
-   Align job name on the left (wanderleihuttel)
-   Add Job scheduled time (sgargel)
+- Jobs report: Include more Levels InitCatalog=V, Catalog=C, VolumeToCatalog=O, DiskToCatalog=d and Data=A (wanderleihuttel)
+- Jobs report: Align job name on the left (wanderleihuttel)
+- Jobs report: Add Job scheduled time (sgargel)
+- Backup job report: Fix "Backup job name" to "Job name" as there's not only backup jobs in Bacula
 
 Fixed bugs
 
