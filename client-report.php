@@ -80,8 +80,9 @@ try {
   
         foreach ($jobs_result->fetchAll() as $job) {
             $job['level']     = $job_levels[$job['level']];
-            $job['jobfiles']     = CUtils::format_Number($job['jobfiles']);
-            $job['jobbytes']     = CUtils::Get_Human_Size($job['jobbytes']);
+            $job['jobfiles']  = CUtils::format_Number($job['jobfiles']);
+            $job['jobbytes']  = CUtils::Get_Human_Size($job['jobbytes']);
+            $job['endtime']   = date( $dbSql->datetime_format, strtotime($job['endtime']));
           
             $backup_jobs[] = $job;
         }
