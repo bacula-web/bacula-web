@@ -258,7 +258,12 @@ try {
     $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $dbSql->db_link);
 
     foreach ($result as $volume) {
-        $last_volumes[] = $volume;
+       if($volume['lastwritten'] != '0000-00-00 00:00:00') {
+          $volume['lastwritten'] = date( $dbSql->datetime_format, strtotime($volume['lastwritten']));
+       }else {
+          $volume['lastwritten'] = 'n/a';
+       }
+       $last_volumes[] = $volume;
     }
 
     $view->assign('volumes_list', $last_volumes);

@@ -12,6 +12,11 @@ $config['jobs_per_page'] = 25;
 // Translations
 $config['language'] = 'en_US';
 
+// Custom datetime format (by default: Y-m-d H:i:s)
+// Examples 
+// $config['datetime_format'] = 'd/m/Y H:i:s';
+// $config['datetime_format'] = 'm-d-Y H:i:s';
+
 // en_US -> English 
 // es_ES -> Spanish 
 // it_IT -> Italian

@@ -31,6 +31,8 @@ class Bweb
     public $catalog_nb;                // Catalog count
     public $catalog_current_id = 0;    // Selected or default catalog id
 
+    public $datetime_format;
+
     public function __construct(&$view)
     {
         // Loading configuration file parameters
@@ -38,7 +40,14 @@ class Bweb
             if (!FileConfig::open(CONFIG_FILE)) {
                 throw new Exception("The configuration file is missing");
             } else {
-                $this->catalog_nb = FileConfig::count_Catalogs();
+               // Count defined Bacula catalogs
+               $this->catalog_nb = FileConfig::count_Catalogs();
+
+               // Check if datetime_format is defined in configuration
+               if( FileConfig::get_Value('datetime_format') != false)
+                  $this->datetime_format = FileConfig::get_Value('datetime_format');
+               else
+                  $this->datetime_format = 'Y-m-d H:i:s';
             }
         } catch (Exception $e) {
             CErrorHandler::displayError($e);
@@ -168,7 +177,8 @@ class Bweb
                 // Set value for unused volumes
                 if (empty($volume['lastwritten'])) {
                     $volume['lastwritten'] = 'n/a';
-                }
+                }else
+                   $volume['lastwritten'] = date( $this->datetime_format, strtotime($volume['lastwritten']));
                 
                 // Get volume used bytes in a human format
                 $volume['volbytes'] = CUtils::Get_Human_Size($volume['volbytes']);
