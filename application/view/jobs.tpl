@@ -40,6 +40,15 @@
 		</div>
 
 		<div class="form-group">
+		  <label>{t}Pool{/t}</label>
+			<select name="pool_id" class="form-control">
+			  {foreach from=$pools_list key=pool_id item=pool}
+				<option value="{$pool.poolid}" {if $pool_id eq $pool_filter}selected{/if}>{$pool.name}</option>
+			  {/foreach}
+			</select>
+		</div>
+
+		<div class="form-group">
 		  <label>{t}Start time{/t}</label>
             <div class='input-group date datetimepicker' id='datetimepicker1'>
                 <input name="start_time" type='text' class="form-control" value="{$start_time_filter}" />
