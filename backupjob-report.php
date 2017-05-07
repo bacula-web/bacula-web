@@ -129,7 +129,11 @@ try {
         
         // Job bytes more easy to read
         $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
-        $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);        
+        $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
+
+        // Format date/time 
+        $job['starttime'] = date( $dbSql->datetime_format, strtotime($job['starttime']));
+        $job['endtime'] = date( $dbSql->datetime_format, strtotime($job['endtime']));
 
         $jobs[]     = $job;
     } // end while
