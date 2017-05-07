@@ -70,6 +70,11 @@
   $clients_list[0]  = 'Any';
   $view->assign('clients_list', $clients_list);
 
+  // Pools list filer
+  $pools_list     = Pools_Model::getPools($dbSql->db_link);
+  array_unshift( $pools_list, array('name' => 'Any', 'pool_id' => '0') );
+  $view->assign('pools_list', $pools_list);
+
   $query .= "SELECT Job.JobId, Job.Name AS Job_name, Job.Type, Job.SchedTime, Job.StartTime, Job.EndTime, Job.Level, Job.ReadBytes, Job.JobBytes, Job.JobFiles, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
   $query .= "FROM Job ";
   $query .= "LEFT JOIN Pool ON Job.PoolId=Pool.PoolId ";
@@ -120,6 +125,24 @@
         }
     } else {
         $view->assign('level_filter', '');
+    }
+
+   // Selected pool filter
+   if (!is_null(CHttpRequest::get_Value('pool_id'))) {
+      $pool_id = CHttpRequest::get_Value('pool_id');
+      $view->assign('pool_filter', $pool_id);
+
+      if (!is_null(CHttpRequest::get_value('status'))) {
+         if (!empty($pool_id)) {
+            $query    .= "AND Job.PoolId = '$pool_id' ";
+         }
+      }else {
+         if (!empty($pool_id)) {
+            $query    .= "WHERE Job.PoolId = '$pool_id' ";
+         }
+      }
+    }else {
+      $view->assign('pool_filter', '');
     }
 
   // Selected client filter
