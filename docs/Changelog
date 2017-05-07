@@ -17,8 +17,11 @@ New features
 - 0000176 [feature] Custom date time format in config.php
 - 0000186 [feature] Add column "InChanger" in Volumes/Pool
 - 0000204 [enhancement] Provide SHA checksum for Bacula-Web compressed archive
+- 0000205 [feature] Filtering by pool on jobs report page
 
 Translations
+
+none
 
 === Release 7.3.0 (December 4 2016 ===
 
