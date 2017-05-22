@@ -18,7 +18,7 @@ Bacula website
 ## Documentation
 
 If you are looking for informations on installing, configuring, upgrading, troubleshooting, etc. Bacula-Web, the link below would be helpful
- http://www.bacula-web.org/docs.html
+ http://docs.bacula-web.org
 
 ## Support
 
@@ -29,11 +29,11 @@ Submit your bug / feature request to the official bug tracker
 
 #### Translations
 You will find useful informations on how to help translating Bacula-Web in your own language
- http://bacula-web.org/translations.html
+ http://docs.bacula-web.org/en/master/03_contribute/translations.html 
 
 #### Developpment
 If you want to contribute in adding new features or fixing bugs, please read the developper guidance
- http://bacula-web.org/Development.html
+ http://docs.bacula-web.org/en/master/03_contribute/development.html
 
 ## License
 
