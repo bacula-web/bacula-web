@@ -12,7 +12,7 @@ Guidance for developpers
 Please find below some guidance for developpers
 
    * create a bug / feature report in `Mantis`_ first (important for me to track changes in the code)
-   * clone the master git branch and give it a useful name such as
+   * clone the **develop** git branch and give it a useful name such as
       * bugfix-xxx to fix a bug
       * feature-yyy for a new feature
    * do not create "huge" pull request, I do prefer as small as possible pull request
