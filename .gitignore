@@ -2,3 +2,4 @@
 /application/view/cache/*.php
 /application/view/cache/*.jpg
 /application/config/config.php
+docs/_build
