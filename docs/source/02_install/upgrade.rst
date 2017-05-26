@@ -31,7 +31,7 @@ On Centos / Fedora / RHEL
 
    # rm -rfv /var/www/html/bacula-web/*
  
-On Deiban / Ubuntu
+On Debian / Ubuntu
 
 ::
 

@@ -1,4 +1,4 @@
-.. _install/install:
+.. _install/requirements:
 
 ============
 Requirements
