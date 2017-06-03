@@ -1,4 +1,5 @@
 [![Documentation Status](https://readthedocs.org/projects/bacula-web/badge/?version=master)](http://docs.bacula-web.org/en/master/?badge=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bacula-web/bacula-web/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bacula-web/bacula-web/?branch=master)
 
 ## About
 
