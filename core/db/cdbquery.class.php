@@ -104,7 +104,6 @@ class CDBQuery
             default:
                 $period['starttime']     = "'" . date("Y-m-d H:i:s", $period_timestamp[0]) . "'";
                 $period['endtime']       = "'" . date("Y-m-d H:i:s", $period_timestamp[1]) . "'";
-                break;
         } // end switch
 
         return $period;

@@ -65,11 +65,10 @@ class Jobs_Model extends CModel
                 // So, I'd not use starttime and endtime for waiting and running jobs here
                 case 'waiting':
                 case 'running':
-                    break;
+                break;
                 default:
                     $where = array( '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ' );
-                    break;
-            }
+            } // end switch
         } else {
             $where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         }
@@ -91,7 +90,6 @@ class Jobs_Model extends CModel
                     break;
                 case 'waiting':
                     $where[] = "JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
-                    break;
             } // end switch
         }
         

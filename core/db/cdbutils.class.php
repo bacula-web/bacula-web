@@ -36,7 +36,6 @@ class CDBUtils
             default:
              // We assume that the user running Apache has access to the SQLite database file (to be improved)
                 $pdo_connection = true;
-                break;
         }
         
      // Test connection status
