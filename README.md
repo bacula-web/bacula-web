@@ -1,3 +1,5 @@
+[![Documentation Status](https://readthedocs.org/projects/bacula-web/badge/?version=master)](http://docs.bacula-web.org/en/master/?badge=master)
+
 ## About
 
 Bacula-Web is a web based tool written in PHP that provide you a summarized view of your Bacula backup infrastructure. 
