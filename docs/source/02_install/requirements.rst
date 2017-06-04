@@ -6,29 +6,27 @@ Requirements
 
 Before installing Bacula-Web on your server, you must ensure that your system fullfill Bacula-Web requirements
 
-   * ssh (root or sudo access) on your server
-   * Apache Web server (at least version 2)
-   * PHP version >= 5.6 with
+  * ssh (root or sudo access) on your server
+  * Apache Web server (at least version 2)
+  * PHP version >= 5.6 with
 
-      * Gettext support
-      * GD library support (used for graphs)
-      * TrueType support (optional)
-      * PHP PDO and PHP support for MySQL, postgreSQL or SQLite (depend your your Bacula setup)
-      * Session support
+    * Gettext support
+    * GD library support (used for graphs)
+    * TrueType support (optional)
+    * PHP PDO and PHP support for MySQL, postgreSQL or SQLite (depend your your Bacula setup)
+    * Session support
 
-   * Valid database connection to your Bacula director catalog (each if you have several)
-   * supported database backend are MySQL, postgreSQL or SQLite
+  * Valid database connection to your Bacula director catalog (each if you have several)
+  * supported database backend are MySQL, postgreSQL or SQLite
 
 Using SELinux
 -------------
 
 To install Bacula-Web with SELinux enforced, please use instructions below
 
-
 *Should you use SELinux on your server ?*
 
 My answer is **YES**, For security purpose, I would strongly encourage people to keep SELinux enabled.
-
 
 Check if SELinux is enabled
 
