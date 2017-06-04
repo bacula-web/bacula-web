@@ -16,7 +16,7 @@ Frequently asked questions
 General
 -------
 
-  * :ref:`Which web browser is compatible with Bacula-Web ?`
+  * Which :ref:`web browsers <supported-web-broswer>` can be used with Bacula-Web ?
   * :ref:`Which version of Bacula is compatible with Bacula-Web ?`
   * :ref:`Which version of PHP is supported ?`
   * :ref:`Where can I download the latest version of Bacula-Web ?`
@@ -42,7 +42,7 @@ Developpment
 Answers
 =======
 
-.. _Which web browser is compatible with Bacula-Web ?:
+.. _supported-web-broswer:
 
 Bacula-Web is compatible with almost of well known web browser. The only thing you've to worry about is to make sure that Javacript is enabled.
 
