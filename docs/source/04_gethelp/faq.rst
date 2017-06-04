@@ -205,10 +205,3 @@ I'm proud to say **Yes**
 Bacula-Web source code, documentations, logo, etc. are released under the GNU General Public License (version 2).
 
 This license allow you to use, modify and redistribute Bacula-Web under the terms of this license.
-
-Feedback
---------
-
-Bacula-Web website, documentation and source code are a done on my spare time, but I try to give you the best tool.
-
-Obviously, if you find something missing or not up to date, please get back to me by sending an email to bacula-dev [at] dflc [dot] ch.
