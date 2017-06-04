@@ -88,11 +88,13 @@ The latest version of Bacula-Web can be found in the `Download page`_ of the Bac
 How can I submit a bug and features report ?
 --------------------------------------------
 
-Register in the `bug tracking tool <bug-tracker>`_ and submit your bug and/or feature request.
+Register or log in (if you already registered) in the `bug tracker`_ and submit your bug and/or feature request.
 
-.. _bug-tracker: http://bugs.bacula-web.org
+.. _bug tracker: http://bugs.bacula-web.org
 
-Please remember that as much details and/or informations you'll provide, as fast I will be able to fix the issue.
+More informations on how to submit a bug report can be found :ref:`here <gethelp/support>`
+
+.. note:: Please remember, as much details and/or informations you provide, as fast I can help you and/for fix the code ;)
 
 .. _supported-db:
 
