@@ -25,6 +25,7 @@ Before submiting a bug report, please make sure that ...
   * all items are ok in the test page (except for the database engine you don't use)
   * you checked Apache error log file for some warnings or errors
   * you're able to connect to the database with the client
+
     * $ mysql for MySQL
     * $ psql for postgreSQL
     * $ sqlite3 for SQLite
