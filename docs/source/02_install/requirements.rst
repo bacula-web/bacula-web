@@ -32,8 +32,6 @@ Check if SELinux is enabled
 
 As root, run the command below to check how SELinux is configured on your system
 
-Run this command (as root)
-
 ::
 
    # getenforce
