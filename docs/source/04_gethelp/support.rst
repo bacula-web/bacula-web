@@ -19,6 +19,7 @@ Bug report guideline
 
 Before submiting a bug report, please make sure that ...
 
+  * check the :ref:`FAQ page <gethelp/faq>`, there might be some useful informations which can help you
   * you're using the latest version of Bacula-Web
   * the config file have been adapted to your configuration (check the documentation)
   * all items are ok in the test page (except for the database engine you don't use)
