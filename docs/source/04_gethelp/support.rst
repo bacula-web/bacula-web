@@ -37,4 +37,4 @@ Then make sure you include those details in the bug report
   * Apache (or any web server) logs
   * Screenshot(s) are useful too
 
-As much details you provide, as fast I will be able to help you and fix the bug (if any)
+.. note:: As much details you provide, as fast I will be able to help you and fix the bug (if any)
