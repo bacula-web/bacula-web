@@ -70,9 +70,9 @@ As of Bacula-Web version 7.4.0, the recommended PHP version is version <= 5.6.0
 
 .. important:: PHP versions prior to 5.6 are not supported anymore, thoses versions no longer have security support and are exposed to unpatched security vulnerabilities.
 
-For more details, please have a look at the `currently supported PHP version <php-supported-versions>`_ (PHP.net website)
+For more details, please have a look at the `currently supported PHP version`_ (PHP.net website)
 
-.. _php-supported-versions: http://php.net/supported-versions.php
+.. _currently supported PHP version: http://php.net/supported-versions.php
 
 .. _download-latest-version:
 
@@ -80,6 +80,7 @@ Where can I download the latest version of Bacula-Web ?
 -------------------------------------------------------
 
 The latest version of Bacula-Web can be found in the `Download page`_ of the Bacula-Web project website
+
 .. _Download page: http://bacula-web.org/download.html
 
 .. _bug-feature-request:
