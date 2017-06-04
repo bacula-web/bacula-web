@@ -1,0 +1,214 @@
+.. _gethelp/faq:
+
+####
+FAQ
+####
+
+*******
+Summary
+*******
+
+Here's below a summary of most frequently asked questions that might help you to install, upgrade, troubleshoot or contribute to Bacula-Web project
+
+Frequently asked questions
+==========================
+
+General
+-------
+
+  * :ref:`Which web browser is compatible with Bacula-Web ?`
+  * :ref:`Which version of Bacula is compatible with Bacula-Web ?`
+  * :ref:`Which version of PHP is supported ?`
+  * :ref:`Where can I download the latest version of Bacula-Web ?`
+  * :ref:`Where can I submit a bug report or a feature request ?`
+  * :ref:`Which database engine is supported by Bacula-Web ?`
+  * :ref:`What do I need to use Bacula-Web on my server ?`
+  * :ref:`On which OS can I install Bacula-Web ?`
+
+Install, upgrade, configure and troubleshoot
+--------------------------------------------
+
+  * :ref:`I've installed Bacula-Web without issue but I got a blank page`
+  * :ref:`Why I can't connect to remote db server with SELinux enforced ?`
+  * :ref:`Does Bacula-Web run fine with SELinux enforced ?`
+
+Developpment
+------------
+
+  * :ref:`What is the current status of Bacula-Web ?`
+  * :ref:`Why reviving Bacula-Web project ?`
+  * :ref:`Is Bacula-Web a free and open source software ?`
+
+Answers
+=======
+
+.. _Which web browser is compatible with Bacula-Web ?:
+
+Bacula-Web is compatible with almost of well known web browser. The only thing you've to worry about is to make sure that Javacript is enabled.
+
+Before releasing a new version, i usualy make some test with latest version of Firefox, Chrome ad Internet Explorer.
+Don't hesitate to share your experience with any other web browser by giving to me a positive/negative feedback.
+
+.. _Which version of Bacula is compatible with Bacula-Web ?:
+
+Bacula-Web should be compatible with any version of Bacula.
+
+If you encounter problems with a specific version of Bacula, feel free to submit a bug report and I'll do my best to help you or make a bug fix.
+
+.. _Which version of PHP is supported ?:
+
+Since version 5.1.0, you should have at least PHP version 5.
+
+PHP 4 support has been deprecated for security and performance reasons (see `Bacula-Web 5.10-alpha release note`_).
+.. _Bacula-Web 5.10-alpha release note: http://bacula-web.org/news-reader/bacula-web-510-alpha-available-for-download.html
+
+.. _Where can I download the latest version of Bacula-Web ?:
+
+The latest version of Bacula-Web can be found in the `Download page`_ of the Bacula-Web project website
+.. _Download page: http://bacula-web.org/download.html
+
+.. _Where can I submit bug and features report ?:
+
+Register in the bug tracking tool and submit your bug and/or feature requests.
+
+Please remember that as much details and/or informations you'll provide, as fast I will be able to fix the issue.
+
+.. _Which database is supported by Bacula-Web ?:
+
+Bacula-Web support Bacula catlog running on MySQL, postgreSQL and SQlite database.
+
+.. _What do I need to use Bacula-Web on my server ?:
+
+A full :ref:`install/requirements` is documented in the documentation section.
+
+.. _On which OS can I install Bacula-Web ?:
+
+Bacula-Web is currently developped and tested under Centos 6 and Red Hat EL version 5.
+
+But it should work fine on your prefered Linux distributions as
+
+  * Debian/Ubuntu (or any kind of Debian based distros)
+  * Gentoo
+  * Slackware
+  * OpenSuse
+  * Fedora
+  * etc.
+
+Bacula-Web should work as well on XAMPP but without any warranty (not tested yet).
+
+If you intend to install Bacula-web on WAMP (Windows + Apache + PHP + MySQL), it should work without problems. 
+You just need to ensure that PHP has been compiled with the bacula's database support (MySQL, postgreSQL, SQLite) and PDO as well.
+
+In case you need further help, don't hesitate to get back to me by mail (bacula-dev at dflc dot ch)
+
+.. _I've installed Bacula-Web without issue but I got a blank page:
+
+You've installed and configured Bacula-Web and what you got is just a blank page.
+
+So, first, ensure that running the test page, everything is ok (use the link below)
+
+::
+
+http://yourserver/bacula-web/test.php
+
+If it doesn't solve the problem, verify your Apache's error log and search for an error message.
+
+.. _Why I can't connect to remote db server with SELinux enforced ?:
+
+
+If you gave right permissions and access to your database user, I guess that SELinux is the problem
+
+Check your log file (/var/log/audit/audit.log on RedHat/Centos) for the error below
+
+::
+
+type=AVC msg=audit(1346832664.222:2491): avc:  denied  { name_connect } for  pid=3427 comm="httpd" dest=3306 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:mysqld_port_t:s0 tclass=tcp_socket
+type=SYSCALL msg=audit(1346832664.222:2491): arch=40000003 syscall=102 success=no exit=-13 a0=3 a1=bfb94dd0 a2=b63d80c0 a3=c items=0 ppid=3421 pid=3427 auid=0 uid=48 gid=48 euid=48 suid=48 fsuid=48 egid=48 sgid=48 fsgid=48 tty=(none) ses=32 comm="httpd" exe="/usr/sbin/httpd" subj=unconfined_u:system_r:httpd_t:s0 key=(null)
+
+and disable SELinux on your server
+
+::
+
+$ sudo setenforce permissive
+
+or
+
+::
+
+$sudo setenforce disabled
+
+.. _Does Bacula-Web run fine with SELinux enforced ?:
+
+The short answer is **yes**.
+
+The long answer is below
+
+If nothing seems to be working and you are using SELinux, please remember that you must have the correct contexts for the bacula-web files. Assuming you have installed the files in this directory
+
+:: 
+
+/var/www/html/bacula-web
+
+you can fix the SELinux context by running the command below
+
+::
+
+$ sudo chcon -t httpd_sys_content_t /var/www/html/bacula-web/ -R
+
+Otherwise, the simpliest would be to set SELinux to Permissive or Disabled
+
+.. _What is the current status of Bacula-Web ?:
+
+As described in Bacula-Web project story, I revived the Bacula-Web project since end of 2010 after few years without bug fixes and improvments.
+As you already know, a lot of effort has been made a provide more stable, secure and usefull tool.
+
+But there's still a lot of things to do but since version 5.1.0 alpha, Bacula-Web is slightly stable.
+
+For people that use Bacula-Web on a daily basis, you already know that they're a lot improvments to achieve.
+That's what I'll try to do on my spare time and hope you'll enjoy
+
+.. _Why reviving Bacula-Web project ?:
+
+Since several years, I'm using as you this amazing open source backup tool Bacula and I was looking for a web based tool that provide me usefull informations about last night jobs.
+
+My first look were on WeBacula and bweb which are nice to use and features full but maybe pretty much not easy to install and configure.
+
+Then, I've found Bacula-Web which wasn't patched and updated since many years.
+
+I submited patches to Bacula developper list and after some commit, i proposed to become the official maintainer of this project. That's was on July 2010.
+
+I know that there's a lot of web based console for administring, monitoring and configuring bacula like
+
+  * bweb
+  * bat
+  * Webacula
+
+You can find a complete list of GUI in the Bacula's web site
+
+Because bacula-web stand to be (for both next patch and future release)
+
+  * Really easy to install, configure and upgrade
+  * Easy to use (after you've successfully installed, you just need a web browser, no GUI)
+  * Usefull (see roadmap for the next version's coming)
+
+I do use Bacula-Web for personal usage several time per week and the idea was to share thoses improvments with the community
+
+  * Fixes and enhancement I've created on my side
+  * Added features such as a new test page
+  * Improved design
+  * Fixed some SQL query bugs (MySQL and postgreSQL)
+
+.. _Is Bacula-Web a free and open source software ?:
+
+I'm proud to say **Yes**
+
+Bacula-Web source code, documentations, logo, etc. are released under the GNU General Public License (version 2).
+
+This license allow you to use, modify and redistribute Bacula-Web under the terms of this license.
+
+Feedback
+--------
+
+Bacula-Web website, documentation and source code are a done on my spare time, but I try to give you the best tool.
+
+Obviously, if you find something missing or not up to date, please get back to me by sending an email to bacula-dev [at] dflc [dot] ch.
