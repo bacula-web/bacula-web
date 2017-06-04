@@ -44,6 +44,9 @@ Answers
 
 .. _supported-web-broswer:
 
+Which web browsers can be used with Bacula-Web ?
+------------------------------------------------
+
 Bacula-Web is compatible with almost of well known web browser. The only thing you've to worry about is to make sure that Javacript is enabled.
 
 Before releasing a new version, i usualy make some test with latest version of Firefox, Chrome ad Internet Explorer.
