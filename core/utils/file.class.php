@@ -52,7 +52,6 @@ class File
     // Check if config file exist and is readable, then include it
         if (is_readable(self::$config_file)) {
             require_once(self::$config_file);
-         //echo 'configuration file <b>' . self::$config_file . '</b> succesfully loaded <br />';
             self::$config = $config;
             return true;
         } else {
