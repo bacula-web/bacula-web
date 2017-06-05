@@ -91,33 +91,9 @@ class Bweb
         $this->view->assign('catalog_current_id', $this->catalog_current_id);
         $this->view->assign('catalog_label', FileConfig::get_Value('label', $this->catalog_current_id));
             
-        // Getting database connection paremeter from configuration file
-//        $dsn = FileConfig::get_DataSourceName($this->catalog_current_id);
-//        $driver = FileConfig::get_Value('db_type', $this->catalog_current_id);
-//        $user = '';
-//        $pwd = '';
-
-//        if ($driver != 'sqlite') {
-//            $user    = FileConfig::get_Value('login', $this->catalog_current_id);
-//            $pwd    = FileConfig::get_Value('password', $this->catalog_current_id);
-//        }
-
-/*        switch ($driver) {
-            case 'mysql':
-            case 'pgsql':
-                $this->db_link = CDB::connect($dsn, $user, $pwd);
-                break;
-            case 'sqlite':
-                $this->db_link = CDB::connect($dsn);
-                break;
-        }
- */            
-     // Getting driver name from PDO connection
-     //$this->db_driver = CDB->getDriverName();
-
-     // Bacula catalog selection
-        if ($this->catalog_nb > 1) {
-            // Catalogs list
+      // Bacula catalog selection
+      if ($this->catalog_nb > 1) {
+         // Catalogs list
             $this->view->assign('catalogs', FileConfig::get_Catalogs());
          // Catalogs count
             $this->view->assign('catalog_nb', $this->catalog_nb);
