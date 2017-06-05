@@ -24,9 +24,9 @@ class Clients_Model extends CModel
     // Return:		Number of clients
     // ==================================================================================
 
-    public static function count($pdo, $tablename = 'Client', $filter = null)
+    public function count( $tablename = 'Client', $filter = null)
     {
-        return CModel::count($pdo, $tablename);
+        return parent::count($tablename);
     }
 
     // ==================================================================================
@@ -35,7 +35,7 @@ class Clients_Model extends CModel
     // Return:		array containing client list or false
     // ==================================================================================
 
-    public static function getClients($pdo)
+    public function getClients()
     {
         $clients      = array();
         $table         = 'Client';
@@ -48,7 +48,7 @@ class Clients_Model extends CModel
             $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
         }
 
-        $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $pdo);
+        $result     = $this->run_query(CDBQuery::get_Select($statment));
             
         foreach ($result->fetchAll() as $client) {
             $clients[ $client['clientid'] ] = $client['name'];
@@ -63,14 +63,14 @@ class Clients_Model extends CModel
     // Return:		array containing client information
     // ==================================================================================
 
-    public static function getClientInfos($pdo, $client_id)
+    public function getClientInfos($client_id)
     {
         $client     = array();
         $fields     = array('name','uname');
         $where      = array( "clientid = $client_id" );
         $statment   = CDBQuery::get_Select(array('table'=> 'Client', 'fields' => $fields, 'where' => $where ));
         
-        $result     = CDBUtils::runQuery($statment, $pdo);
+        $result     = $this->run_query($statment);
             
         foreach ($result->fetchAll() as $client) {
             $uname              = explode(' ', $client['uname']);

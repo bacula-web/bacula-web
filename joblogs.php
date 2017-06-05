@@ -31,8 +31,9 @@ try {
     }
 
     // Prepare and execute SQL statment
+    $jobs = new Jobs_Model();
     $statment     = array('table' => 'Log', 'where' => array("JobId = '$jobid'"), 'orderby' => 'Time');
-    $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $dbSql->db_link);
+    $result     = $jobs->run_query(CDBQuery::get_Select($statment));
 
     // Processing result
     foreach ($result->fetchAll() as $log) {

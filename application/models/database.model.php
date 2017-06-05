@@ -24,21 +24,21 @@ class Database_Model extends CModel
     // Return:		Database size
     // ==================================================================================
 
-    public static function get_Size($pdo_connection, $catalog_id)
+    public function get_Size($catalog_id)
     {
         $db_name    = FileConfig::get_Value('db_name', $catalog_id);
         
-        switch (CDB::getDriverName()) {
+        switch ($this->driver) {
             case 'mysql':
              // Return N/A for MySQL server prior version 5 (no information_schemas)
-                if (version_compare(CDB::getServerVersion(), '5.0.0') >= 0) {
+                if (version_compare($this->cdb->getServerVersion(), '5.0.0') >= 0) {
                     // Prepare SQL statment
                     $statment = array( 'table'   => 'information_schema.TABLES',
                      'fields'  => array("table_schema AS 'database', (sum( data_length + index_length) / 1024 / 1024 ) AS 'dbsize'"),
                      'where'   => array( "table_schema = '$db_name'" ),
                      'groupby' => 'table_schema' );
                                        
-                    $result        = CDBUtils::runQuery(CDBQuery::get_Select($statment, $pdo_connection), $pdo_connection);
+                    $result        = $this->run_query(CDBQuery::get_Select($statment, $this->db_link));
                     $db_size    = $result->fetch();
                     $db_size     = $db_size['dbsize'] * 1024 * 1024;
                     return CUtils::Get_Human_Size($db_size);
@@ -48,7 +48,7 @@ class Database_Model extends CModel
                 break;
             case 'pgsql':
                 $statment    = "SELECT pg_database_size('$db_name') AS dbsize";
-                $result        = CDBUtils::runQuery($statment, $pdo_connection);
+                $result        = $this->run_query( $statment);
                 $db_size    = $result->fetch();
                 return CUtils::Get_Human_Size($db_size['dbsize']);
             break;

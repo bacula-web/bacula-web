@@ -25,9 +25,9 @@ class Volumes_Model extends CModel
     // Return:		return row count for one table
     // ==================================================================================
 
-    public static function count($pdo, $tablename = 'Media', $filter = null)
+    public function count($tablename = 'Media', $filter = null)
     {
-        return CModel::count($pdo, $tablename);
+        return CModel::count($tablename);
     }
 
     // ==================================================================================
@@ -36,13 +36,13 @@ class Volumes_Model extends CModel
     // Return:		disk space usage (in Bytes) for all volumes
     // ==================================================================================
 
-    public static function getDiskUsage($pdo)
+    public function getDiskUsage()
     {
         $fields        = array('SUM(Media.VolBytes) as bytes_size');
         $statment     = array( 'table' => 'Media', 'fields' => $fields );
         
      // Run SQL query
-        $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $pdo);
+        $result     = $this->run_query(CDBQuery::get_Select($statment));
     
         $result     = $result->fetch();
         return $result['bytes_size'];

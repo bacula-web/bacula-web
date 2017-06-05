@@ -24,7 +24,12 @@
 
 try {
     $dbSql = new Bweb($view);
-    
+
+    $jobs      = new Jobs_Model();
+    $catalog   = new Database_Model();
+    $clients   = new Clients_Model(); 
+    $filesets  = new FileSets_Model();
+
     require_once('core/const.inc.php');
 
     // Custom period for dashboard
@@ -68,52 +73,54 @@ try {
     $view->assign('literal_period', strftime("%a %e %b %Y", $custom_period[0]).' to ' . strftime("%a %e %b %Y", $custom_period[1]));
 
     // Running, completed, failed, waiting and canceled jobs status over last 24 hours
-    $view->assign('running_jobs', Jobs_Model::count_Jobs($dbSql->db_link, $custom_period, 'running'));
-    $view->assign('completed_jobs', Jobs_Model::count_Jobs($dbSql->db_link, $custom_period, 'completed'));
-    $view->assign('failed_jobs', Jobs_Model::count_Jobs($dbSql->db_link, $custom_period, 'failed'));
-    $view->assign('waiting_jobs', Jobs_Model::count_Jobs($dbSql->db_link, $custom_period, 'waiting'));
-    $view->assign('canceled_jobs', Jobs_Model::count_Jobs($dbSql->db_link, $custom_period, 'canceled'));
+    $view->assign('running_jobs', $jobs->count_Jobs( $custom_period, 'running'));
+    $view->assign('completed_jobs', $jobs->count_Jobs( $custom_period, 'completed'));
+    $view->assign('failed_jobs', $jobs->count_Jobs( $custom_period, 'failed'));
+    $view->assign('waiting_jobs', $jobs->count_Jobs( $custom_period, 'waiting'));
+    $view->assign('canceled_jobs', $jobs->count_Jobs( $custom_period, 'canceled'));
 
     // Stored files number
-    $view->assign('stored_files', CUtils::format_Number(Jobs_Model::getStoredFiles($dbSql->db_link, $no_period)));
+    $view->assign('stored_files', CUtils::format_Number($jobs->getStoredFiles($no_period)));
  
     // Overall stored bytes
-    $view->assign('stored_bytes', CUtils::Get_Human_Size(Jobs_Model::getStoredBytes($dbSql->db_link, $no_period)));
+    $view->assign('stored_bytes', CUtils::Get_Human_Size($jobs->getStoredBytes($no_period)));
 
     // Database size
-    $view->assign('database_size', Database_Model::get_Size($dbSql->db_link, $dbSql->catalog_current_id));
+    $view->assign('database_size', $catalog->get_Size( $dbSql->catalog_current_id ));
  
     // Total bytes and files stored over the last 24 hours
-    $view->assign('bytes_last', CUtils::Get_Human_Size(Jobs_Model::getStoredBytes($dbSql->db_link, $custom_period)));
-    $view->assign('files_last', CUtils::format_Number(Jobs_Model::getStoredFiles($dbSql->db_link, $custom_period)));
+    $view->assign('bytes_last', CUtils::Get_Human_Size($jobs->getStoredBytes($custom_period)));
+    $view->assign('files_last', CUtils::format_Number($jobs->getStoredFiles($custom_period)));
 
     // Number of clients
-    $view->assign('clients', Clients_Model::count($dbSql->db_link));
+    $view->assign('clients', $clients->count());
 
     // Defined Jobs and Filesets
-    $view->assign('defined_filesets', FileSets_Model::count($dbSql->db_link));
-    $view->assign('defined_jobs', Jobs_Model::count_Job_Names($dbSql->db_link));
+    $view->assign('defined_filesets', $filesets->count());
+    $view->assign('defined_jobs', $jobs->count_Job_Names());
 
     // Incremental, Differential and Full jobs over the last 24 hours
-    $view->assign('incr_jobs', Jobs_Model::count_Jobs($dbSql->db_link, $custom_period, null, J_INCR));
-    $view->assign('diff_jobs', Jobs_Model::count_Jobs($dbSql->db_link, $custom_period, null, J_DIFF));
-    $view->assign('full_jobs', Jobs_Model::count_Jobs($dbSql->db_link, $custom_period, null, J_FULL));
+    $view->assign('incr_jobs', $jobs->count_Jobs( $custom_period, null, J_INCR));
+    $view->assign('diff_jobs', $jobs->count_Jobs( $custom_period, null, J_DIFF));
+    $view->assign('full_jobs', $jobs->count_Jobs( $custom_period, null, J_FULL));
 
     // Volumes disk usage
-    $volumes_size = Volumes_Model::getDiskUsage($dbSql->db_link);
+    $volumes = new Volumes_Model();
+    $volumes_size = $volumes->getDiskUsage();
     $view->assign('volumes_size', CUtils::Get_Human_Size($volumes_size));
 
     // Pools count
-    $view->assign('pools_nb', Pools_Model::count($dbSql->db_link));
+    $pools = new Pools_Model();
+    $view->assign('pools_nb', $pools->count());
 
     // Backup Job list
-    $view->assign('jobs_list', Jobs_Model::get_Jobs_List($dbSql->db_link));
+    $view->assign('jobs_list', $jobs->get_Jobs_List());
  
     // Clients list
-    $view->assign('clients_list', Clients_Model::getClients($dbSql->db_link));
+    $view->assign('clients_list', $clients->getClients());
 
     // Count volumes
-    $view->assign('volumes_nb', Volumes_Model::count($dbSql->db_link));
+    $view->assign('volumes_nb', $volumes->count());
 
     // ==============================================================
     // Last period <Job status graph>
@@ -122,7 +129,8 @@ try {
     $jobs_status_data = array();
 
     foreach ($jobs_status as $status) {
-        $jobs_count = Jobs_Model::count_Jobs($dbSql->db_link, $custom_period, strtolower($status));
+        $jobs_count = $jobs->count_Jobs( $custom_period, strtolower($status));
+        $jobs_count = 1;
         $jobs_status_data[] = array($status, $jobs_count );
     }
      
@@ -147,34 +155,30 @@ try {
     $sum_vols = '';
 
     // Count defined pools in catalog
-    $pools_count = Pools_Model::count($dbSql->db_link);
+    $pools_count = $pools->count();
 
     // Display 9 biggest pools and rest of volumes in 10th one display as Other
     if ($pools_count > $max_pools) {
-        if (CDB::getDriverName() == 'pgsql') {
+        /*
+        if ( $pools->get_driver_name() == 'pgsql') {
             $limit = $max_pools . 'OFFSET ' . ($pools_count - $max_pools);
         } else {
             $limit = $max_pools . ',' . ($pools_count - $max_pools);
         }
-
+         */
         $query = array( 'table' => $table_pool,
                        'fields' => array('SUM(numvols) AS sum_vols'),
-                       'limit' => $limit,
+                       'limit' => array( 'offset' => ($pools_count - $max_pools), 'count' => $pools_count),
                        'groupby' => 'name');
         
-        $result = CDBUtils::runQuery(CDBQuery::get_Select($query), $dbSql->db_link);
+        $result = $pools->run_query(CDBQuery::get_Select($query, $pools->get_driver_name()));
         $sum_vols = $result->fetch();
     } else {
         $limit = $pools_count;
     }
 
-    // Check database driver for pool table name
-    if (CDB::getDriverName() == 'pgsql') {
-        $table_pool = strtolower($table_pool);
-    }
-
     $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools);
-    $result = CDBUtils::runQuery(CDBQuery::get_Select($query), $dbSql->db_link);
+    $result = $pools->run_query(CDBQuery::get_Select($query));
 
     foreach ($result as $pool) {
         $vols_by_pool[] = array($pool['name'], $pool['numvols']);
@@ -198,7 +202,7 @@ try {
     $days = DateTimeUtil::getLastDaysIntervals(7);
 
     foreach ($days as $day) {
-        $days_stored_bytes[] = array( date("m-d", $day['start']), Jobs_Model::getStoredBytes($dbSql->db_link, array($day['start'], $day['end'])));
+        $days_stored_bytes[] = array( date("m-d", $day['start']), $jobs->getStoredBytes(array($day['start'], $day['end'])));
     }
 
     $graph = new CGraph("dashboard-graph03.jpg");
@@ -214,7 +218,7 @@ try {
     $days = DateTimeUtil::getLastDaysIntervals(7);
 
     foreach ($days as $day) {
-        $days_stored_files[] = array( date("m-d", $day['start']), Jobs_Model::getStoredFiles($dbSql->db_link, array($day['start'], $day['end'])));
+        $days_stored_files[] = array( date("m-d", $day['start']), $jobs->getStoredFiles(array($day['start'], $day['end'])));
     }
 
     $graph = new CGraph("dashboard-graph04.jpg");
@@ -235,14 +239,13 @@ try {
     $where = array();
     $tmp   = "(Media.Volstatus != 'Disabled') ";
 
-    switch (CDB::getDriverName()) {
+    switch ($volumes->get_driver_name()) {
         case 'mysql':
         case 'pgsql':
             $tmp .= "AND (Media.LastWritten IS NOT NULL)";
             break;
         case 'sqlite':
             $tmp .= "AND (Media.Lastwritten != 0)";
-            break;
     }
      
     $where[] = $tmp;
@@ -255,7 +258,7 @@ try {
                        'limit'     => '10');
 
     // Run the query
-    $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $dbSql->db_link);
+    $result     = $volumes->run_query(CDBQuery::get_Select($statment));
 
     foreach ($result as $volume) {
        if($volume['lastwritten'] != '0000-00-00 00:00:00') {

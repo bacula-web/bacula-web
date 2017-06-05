@@ -23,13 +23,15 @@
  
  require_once('core/const.inc.php');
 
-try {
+ /*
+ try {
     if (!is_a($dbSql->db_link, 'PDO')) {
         throw new Exception("Application error: invalid PDO connection object provided");
     }
 } catch (Exception $e) {
     CErrorHandler::displayError($e);
 }
+  */
 
  $clientid             = '';
  $client             = '';
@@ -64,11 +66,14 @@ try {
         throw new Exception("Application error: the period hasn't been provided as expected");
     }
    
-   // Client informations
-    $client = Clients_Model::getClientInfos($dbSql->db_link, $clientid);
+    // Client informations
+    $client       = new Clients_Model();
+    $client_info  = $client->getClientInfos($clientid);
     
-   // Get job names for the client
-    foreach (Jobs_Model::get_Jobs_List($dbSql->db_link, $clientid) as $jobname) {
+    // Get job names for the client
+    $jobs = new Jobs_Model();
+
+    foreach ($jobs->get_Jobs_List($clientid) as $jobname) {
         // Last good client's for each backup jobs
         $query  = 'SELECT Job.Name, Job.Jobid, Job.Level, Job.Endtime, Job.Jobbytes, Job.Jobfiles, Status.JobStatusLong FROM Job ';
         $query .= "LEFT JOIN Status ON Job.JobStatus = Status.JobStatus ";
@@ -76,7 +81,7 @@ try {
         $query .= 'ORDER BY Job.EndTime DESC ';
         $query .= 'LIMIT 1';
   
-        $jobs_result = CDBUtils::runQuery($query, $dbSql->db_link);
+        $jobs_result = $jobs->run_query($query);
   
         foreach ($jobs_result->fetchAll() as $job) {
             $job['level']     = $job_levels[$job['level']];
@@ -99,7 +104,7 @@ try {
     $graph = new CGraph("clientreport-graph01.jpg");
   
     foreach ($days as $day) {
-        $stored_bytes = Jobs_Model::getStoredBytes($dbSql->db_link, array($day['start'], $day['end']), 'ALL', $clientid);
+        $stored_bytes = $jobs->getStoredBytes(array($day['start'], $day['end']), 'ALL', $clientid);
         $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
     }
   
@@ -116,7 +121,7 @@ try {
     $graph = new CGraph("clientreport-graph03.jpg");
   
     foreach ($days as $day) {
-        $stored_files = Jobs_Model::getStoredFiles($dbSql->db_link, array($day['start'], $day['end']), 'ALL', $clientid);
+        $stored_files = $jobs->getStoredFiles(array($day['start'], $day['end']), 'ALL', $clientid);
         $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
     }
   
@@ -132,10 +137,10 @@ try {
 }
 
  $view->assign('period', $period);
- $view->assign('client_name', $client['name']);
- $view->assign('client_os', $client['os']);
- $view->assign('client_arch', $client['arch']);
- $view->assign('client_version', $client['version']);
+ $view->assign('client_name', $client_info['name']);
+ $view->assign('client_os', $client_info['os']);
+ $view->assign('client_arch', $client_info['arch']);
+ $view->assign('client_version', $client_info['version']);
 
  // Set page name
  $current_page = 'Client report';

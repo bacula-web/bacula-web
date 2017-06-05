@@ -61,17 +61,20 @@
   );
 
   // Levels list filter
-  $levels_list = Jobs_Model::getLevels($dbSql->db_link, $job_levels);
+  $jobs = new Jobs_Model();
+  $levels_list = $jobs->getLevels($job_levels);
   $levels_list['']  = 'Any';
   $view->assign('levels_list', $levels_list);
 
   // Clients list filter
-  $clients_list     = Clients_Model::getClients($dbSql->db_link);
+  $clients = new Clients_Model();
+  $clients_list     = $clients->getClients();
   $clients_list[0]  = 'Any';
   $view->assign('clients_list', $clients_list);
 
   // Pools list filer
-  $pools_list     = Pools_Model::getPools($dbSql->db_link);
+  $pools = new Pools_Model();
+  $pools_list     = $pools->getPools();
   array_unshift( $pools_list, array('name' => 'Any', 'pool_id' => '0') );
   $view->assign('pools_list', $pools_list);
 
@@ -254,7 +257,7 @@
     $view->assign('jobs_per_page_selected', $jobs_per_page);
 
   // Parsing jobs result
-    $jobsresult = CDBUtils::runQuery($query, $dbSql->db_link);
+    $jobsresult = $jobs->run_query($query);
 
     foreach ($jobsresult as $job) {
         // Determine icon for job status
@@ -353,14 +356,11 @@
         $last_jobs[] = $job;
     } // end foreach
 
-
-
-
     $view->assign('last_jobs', $last_jobs);
 
   // Count jobs
     $view->assign('jobs_found', count($last_jobs));
-    $view->assign('total_jobs', Jobs_Model::count($dbSql->db_link));
+    $view->assign('total_jobs', $jobs->count());
 
   // Set page name
     $current_page = 'Jobs report';
