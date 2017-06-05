@@ -23,30 +23,6 @@ class CDBUtils
     {
     }
 
-    public static function isConnected($PDO_connection)
-    {
-        $pdo_connection    = null;
-        
-     // If MySQL of postGreSQL
-        switch (CDB::getDriverName()) {
-            case 'mysql':
-            case 'pgsql':
-                $pdo_connection = self::getConnectionStatus($PDO_connection);
-                break;
-            default:
-             // We assume that the user running Apache has access to the SQLite database file (to be improved)
-                $pdo_connection = true;
-                break;
-        }
-        
-     // Test connection status
-        if ($pdo_connection != false) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     // ==================================================================================
     // Function: 	getConnectionStatus()
     // Parameters:	$PDO_connection (valid pdo connection)
