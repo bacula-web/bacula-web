@@ -31,8 +31,7 @@ class Pools_Model extends CModel
   
     // ==================================================================================
     // Function: 	getPools()
-    // Parameters:	$pdo (PDO valid connection)
-
+    // Parameters: 	none	
     // Return:	pools list in a array
     // ==================================================================================
 
