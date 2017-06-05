@@ -18,44 +18,39 @@
 class Jobs_Model extends CModel
 {
     
-    // ==================================================================================
-    // Function: 	count()
-    // Parameters:	$pdo_connection			Valid PDO connection object
-    // Return:		Number of clients
-    // ==================================================================================
+   // ==================================================================================
+   // Function: 	count()
+   // Parameters: $tablename = Job by default
+   //             $filter (actualy unused, need to fix this
+   // Return:		Number of clients
+   // ==================================================================================
 
-    public static function count($pdo, $tablename = 'Job', $filter = null)
+    public function count($tablename = 'Job', $filter = null)
     {
-        return CModel::count($pdo, $tablename);
+        return parent::count($tablename);
     }
     
     // ==================================================================================
-    // Function: 	count_Jobs()
-    // Parameters:	$pdo_connection			Valid PDO connection object
-    //				$period_timestamps		Array containing start and end date (unix timestamp format)
-    //				$job_status 			Job status (optional)
-    //				$job_level 				Job level (optional)
-    // Return:		Jobs count
+    // Function: 	 count_Jobs()
+    // Parameters: $period_timestamps		Array containing start and end date (unix timestamp format)
+    //				 $job_status 			Job status (optional)
+    //				 $job_level 				Job level (optional)
+    // Return:		 Jobs count
     // ==================================================================================
 
-    public static function count_Jobs($pdo_connection, $period_timestamps, $job_status = null, $job_level = null)
+    public function count_Jobs($period_timestamps, $job_status = null, $job_level = null)
     {
         $where        = null;
         $tablename    = 'Job';
         $fields        = array('COUNT(*) as job_count');
         
      // Check PDO object
-        if (!is_a($pdo_connection, 'PDO') and is_null($pdo_connection)) {
+        if (!is_a( $this->db_link, 'PDO' ) && is_null( $this->db_link) ) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
         }
 
-     // PDO object singleton
-        if (is_null(CModel::$pdo_connection)) {
-            CModel::$pdo_connection = $pdo_connection;
-        }
-        
-     // Getting timestamp interval
-        $intervals  = CDBQuery::get_Timestamp_Interval($period_timestamps);
+        // Getting timestamp interval
+        $intervals = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
         
      // Defining interval depending on job status
         if (!is_null($job_status)) {
@@ -103,33 +98,32 @@ class Jobs_Model extends CModel
         $statment = CDBQuery::get_Select($statment);
         
      // Execute SQL statment
-        $result = CDBUtils::runQuery($statment, $pdo_connection);
+        $result = $this->run_query($statment);
         $result = $result->fetch();
         return $result['job_count'];
     }
     
     // ==================================================================================
-    // Function: 	getStoredFiles()
-    // Parameters:	$pdo_connection 	Valid pdo connection object
-    //				$period_timestamps	Array containing start and end date (unix timestamp format)
-    //				$job_name			Job name (optional)
-    //				$client_id			Client id (optional)
-    // Return:		Total of stored files within the specific period
+    // Function: 	 getStoredFiles()
+    // Parameters: $period_timestamps	Array containing start and end date (unix timestamp format)
+    //				 $job_name			Job name (optional)
+    //				 $client_id			Client id (optional)
+    // Return:		 Total of stored files within the specific period
     // ==================================================================================
 
-    public static function getStoredFiles($pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
+    public function getStoredFiles($period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
     {
         $where      = array();
         $fields     = array( 'SUM(JobFiles) AS stored_files' );
         $tablename    = 'Job';
         
      // Check PDO object
-        if (!is_a($pdo_connection, 'PDO') or is_null($pdo_connection)) {
+        if (!is_a($this->db_link, 'PDO') or is_null($this->db_link)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
         }
         
      // Defined period
-        $intervals     = CDBQuery::get_Timestamp_Interval($period_timestamps);
+        $intervals     = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
@@ -145,7 +139,7 @@ class Jobs_Model extends CModel
         $statment = CDBQuery::get_Select($statment);
 
      // Execute query
-        $result = CDBUtils::runQuery($statment, $pdo_connection);
+        $result = $this->run_query($statment);
         $result = $result->fetch();
         
 		// If result == null, return 0 instead
@@ -157,22 +151,21 @@ class Jobs_Model extends CModel
     }
 
     // ==================================================================================
-    // Function: 	getStoredBytes()
-    // Parameters:	$pdo_connection		Valid PDO connection object
-    //				$period_timestamps 	Array containing start and end date (unix timestamp format)
-    //				$job_name			Job name (optional)
-    //				$client_id			Client id (optional)
-    // Return:		Total of stored bytes within the specific period
+    // Function: 	 getStoredBytes()
+    // Parameters: $period_timestamps 	Array containing start and end date (unix timestamp format)
+    //				 $job_name			Job name (optional)
+    //				 $client_id			Client id (optional)
+    // Return:		 Total of stored bytes within the specific period
     // ==================================================================================
 
-    public static function getStoredBytes($pdo_connection, $period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
+    public function getStoredBytes($period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
     {
         $where      = array();
         $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
         $tablename    = 'Job';
         
         // Defined period
-        $intervals     = CDBQuery::get_Timestamp_Interval($period_timestamps);
+        $intervals     = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
@@ -188,7 +181,7 @@ class Jobs_Model extends CModel
         $statment = CDBQuery::get_Select($statment);
 
         // Execute query
-        $result = CDBUtils::runQuery($statment, $pdo_connection);
+        $result = $this->run_query($statment);
         $result = $result->fetch();
 
 		// If result == null, return 0 instead
@@ -200,34 +193,33 @@ class Jobs_Model extends CModel
     }
 
     // ==================================================================================
-    // Function: 	count_Job_Names()
-    // Parameters:	$pdo 	Valid PDO connection object
-    // Return:		total of defined jobs name
+    // Function: 	 count_Job_Names()
+    // Parameters: none	
+    // Return:		 total of defined jobs name
     // ==================================================================================
 
-    public static function count_Job_Names($pdo)
+    public function count_Job_Names()
     {
         $fields        = array( 'COUNT(DISTINCT Name) AS job_name_count' );
 
      // Prepare and execute query
         $statment     = CDBQuery::get_Select(array( 'table' => 'Job', 'fields' => $fields ));
-        $result     = CDBUtils::runQuery($statment, $pdo);
+        $result     = $this->run_query($statment);
 
         $result        = $result->fetch();
         return $result['job_name_count'];
     }
 
     // ==================================================================================
-    // Function: 	get_Jobs_List()
-    // Parameters:	$pdo 		Valid PDO connection object
-    //				$client_id 	Client id (optinoal)
-    // Return:		Total of defined jobs name
+    // Function: 	 get_Jobs_List()
+    // Parameters: $client_id 	Client id (optinoal)
+    // Return:		 Total of defined jobs name
     // ==================================================================================
 
-    public static function get_Jobs_List($pdo, $client_id = null)
+    public function get_Jobs_List( $client_id = null)
     {
         $jobs   = array();
-        $fields = array( 'Name' );
+        $fields = array( 'Name');
         $where  = null;
 
      // Prepare and execute query
@@ -236,7 +228,7 @@ class Jobs_Model extends CModel
         }
 
         $statment   = array( 'table' => 'Job', 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
-        $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $pdo);
+        $result     = $this->run_query(CDBQuery::get_Select($statment));
 
         foreach ($result->fetchAll() as $job) {
             $jobs[] = $job['name'];
@@ -246,17 +238,16 @@ class Jobs_Model extends CModel
     }
 
     // ==================================================================================
-    // Function: 	getLevels()
-    // Parameters:	$pdo_connection - valid PDO object
-    //                  $levels_name - Array containing level name
-    // Return:		array containing level list
+    // Function: 	 getLevels()
+    // Parameters: $levels_name - Array containing level name
+    // Return:		 array containing level list
     // ==================================================================================
 
-    public static function getLevels($pdo, $levels_name = array())
+    public function getLevels($levels_name = array())
     {
         $levels = array();
         $statment = array( 'table' => 'Job', 'fields' => array('Level'), 'groupby' => 'Level');
-        $result = CDBUtils::runQuery(CDBQuery::get_Select($statment), $pdo);
+        $result = $this->run_query(CDBQuery::get_Select($statment));
 
         foreach ($result->fetchAll() as $level) {
             if (array_key_exists($level['level'], $levels_name)) {

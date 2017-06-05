@@ -25,14 +25,14 @@ class FileSets_Model extends CModel
     // Return:		return row count for one table
     // ==================================================================================
 
-    public static function count($pdo, $tablename = 'FileSet', $filter = null)
+    public function count($tablename = 'FileSet', $filter = null)
     {
         $fields    = array( "COUNT(DISTINCT $tablename) as filesets_count" );
         $table    = 'FileSet';
 
      // Prepare and execute query
         $statment     = CDBQuery::get_Select(array( 'table' => $table, 'fields' => $fields ));
-        $result     = CDBUtils::runQuery($statment, $pdo);
+        $result     = $this->run_query($statment);
 
         $result = $result->fetch();
         return $result['filesets_count'];

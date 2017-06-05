@@ -24,9 +24,9 @@ class Pools_Model extends CModel
     // Return:	row count for one table
     // ==================================================================================
 
-    public static function count($pdo, $tablename = 'Pool', $filter = null)
+    public function count($tablename = 'Pool', $filter = null)
     {
-        return CModel::count($pdo, $tablename);
+        return parent::count($tablename);
     }
   
     // ==================================================================================
@@ -36,7 +36,7 @@ class Pools_Model extends CModel
     // Return:	pools list in a array
     // ==================================================================================
 
-    public static function getPools($pdo)
+    public function getPools()
     {
         $pools    = null;
         $table    = 'Pool';
@@ -48,11 +48,10 @@ class Pools_Model extends CModel
         }
         
         $fields = array( 'poolid', 'name', 'numvols');
-        $result = CDBUtils::runQuery(CDBQuery::get_Select( array( 'table' => $table, 
+        $result = $this->run_query(CDBQuery::get_Select( array( 'table' => $table, 
                                                                   'fields' => $fields, 
                                                                   'where' => $where,
-                                                                  'orderby' => $orderby )), 
-                                                                  $pdo);
+                                                                  'orderby' => $orderby )));
             
         foreach ($result->fetchAll() as $pool) {
             $pools[] = $pool;

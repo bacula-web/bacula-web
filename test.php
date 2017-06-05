@@ -25,6 +25,7 @@ $dbSql = null;
 $view = new CView();
 
 try {
+    $catalog = new Database_Model();
     $dbSql = new Bweb($view);
 } catch (Exception $e) {
     CErrorHandler::displayError($e);
@@ -62,7 +63,7 @@ $check_list = array(
         'check_descr' => 'PHP PDO support is required, please compile PHP with this option'),
     array('check_cmd' => 'db-connection',
         'check_label' => 'Database connection status (MySQL and postgreSQL only)',
-        'check_descr' => 'Current status: ' . CDBUtils::getConnectionStatus($dbSql->db_link) ),
+        'check_descr' => 'Current status: ' . $catalog->getConnectionStatus() ),
     array('check_cmd' => 'smarty-cache',
         'check_label' => 'Smarty cache folder write permission',
         'check_descr' => realpath(VIEW_CACHE_DIR) . ' must be writable by Apache'),
@@ -108,7 +109,7 @@ foreach ($check_list as &$check) {
             $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '5.6', '>=')];
             break;
         case 'db-connection':
-            $check['check_result'] = $icon_result[ CDBUtils::isConnected($dbSql->db_link)];
+            $check['check_result'] = $icon_result[$catalog->isConnected()];
             break;
         case 'php-timezone':
             $timezone = ini_get('date.timezone');

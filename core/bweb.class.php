@@ -91,43 +91,9 @@ class Bweb
         $this->view->assign('catalog_current_id', $this->catalog_current_id);
         $this->view->assign('catalog_label', FileConfig::get_Value('label', $this->catalog_current_id));
             
-        // Getting database connection paremeter from configuration file
-        $dsn = FileConfig::get_DataSourceName($this->catalog_current_id);
-        $driver = FileConfig::get_Value('db_type', $this->catalog_current_id);
-        $user = '';
-        $pwd = '';
-
-        if ($driver != 'sqlite') {
-            $user    = FileConfig::get_Value('login', $this->catalog_current_id);
-            $pwd    = FileConfig::get_Value('password', $this->catalog_current_id);
-        }
-
-        switch ($driver) {
-            case 'mysql':
-            case 'pgsql':
-                $this->db_link = CDB::connect($dsn, $user, $pwd);
-                break;
-            case 'sqlite':
-                $this->db_link = CDB::connect($dsn);
-                break;
-        }
-            
-     // Getting driver name from PDO connection
-        $this->db_driver = CDB::getDriverName();
-
-     // Set PDO connection options
-        $this->db_link->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
-        $this->db_link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->db_link->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('CDBResult', array($this)));
-            
-     // MySQL connection specific parameter
-        if ($driver == 'mysql') {
-            $this->db_link->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
-        }
-
-     // Bacula catalog selection
-        if ($this->catalog_nb > 1) {
-            // Catalogs list
+      // Bacula catalog selection
+      if ($this->catalog_nb > 1) {
+         // Catalogs list
             $this->view->assign('catalogs', FileConfig::get_Catalogs());
          // Catalogs count
             $this->view->assign('catalog_nb', $this->catalog_nb);
@@ -142,13 +108,14 @@ class Bweb
 
     public function GetVolumeList()
     {
-        $pools = array();
-        $query = "";
+        $pool_list   = array();
+        $query       = "";
+        $pools       = new Pools_Model();
                 
-        foreach (Pools_Model::getPools($this->db_link) as $pool) {
+        foreach ($pools->getPools() as $pool) {
             $pool_name = $pool['name'];
             
-            switch ($this->db_driver) {
+            switch ( $pools->get_driver_name() ) {
                 case 'sqlite':
                 case 'mysql':
                     $query  = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, Media.volretention, Media.slot, Media.InChanger
@@ -162,15 +129,16 @@ class Bweb
                     break;
             } // end switch
 
-            $volumes  = CDBUtils::runQuery($query, $this->db_link);
+            $volumes = new Volumes_Model();
+            $volume_list  = $volumes->run_query($query);
                 
             // If we have at least 1 volume in this pool, create sub array for the pool
-            if (!array_key_exists($pool_name, $pools)) {
-                $pools[$pool_name] = array();
-                $pools[$pool_name]['volumes'] = array();
+            if (!array_key_exists($pool_name, $pool_list)) {
+                $pool_list[$pool_name] = array();
+                $pool_list[$pool_name]['volumes'] = array();
             }
                     
-            foreach ($volumes->fetchAll() as $volume) {
+            foreach ($volume_list->fetchAll() as $volume) {
                 // Set volume default values
                 $volume['expire'] = 'n/a';
                 
@@ -200,16 +168,16 @@ class Bweb
 		}
                                         
             // Push the volume array to the $pool array
-            array_push($pools[ $pool_name]['volumes'], $volume);
+            array_push($pool_list[ $pool_name]['volumes'], $volume);
             } // end foreach volumes
 
             // Calculate used bytes for each pool
             $sql = "SELECT SUM(Media.volbytes) as sumbytes FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
-            $result = CDBUtils::runQuery($sql, $this->db_link);
+            $result = $volumes->run_query($sql);
             $result = $result->fetchAll();
-            $pools[$pool_name]['total_used_bytes'] = CUtils::Get_Human_Size($result[0]['sumbytes']);
+            $pool_list[$pool_name]['total_used_bytes'] = CUtils::Get_Human_Size($result[0]['sumbytes']);
         } // end foreach pools
 
-        return $pools;
+        return $pool_list;
     } // end function GetVolumeList()
 } // end class Bweb

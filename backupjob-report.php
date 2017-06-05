@@ -43,11 +43,12 @@ try {
     $backupjob_period = "From " . date("Y-m-d", (NOW - WEEK)) . " to " . date("Y-m-d", NOW);
     
     // Stored Bytes on the defined period
-    $backupjob_bytes = Jobs_Model::getStoredBytes($dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name);
+    $jobs = new Jobs_Model();
+    $backupjob_bytes = $jobs->getStoredBytes(array(LAST_WEEK, NOW), $backupjob_name);
     $backupjob_bytes = CUtils::Get_Human_Size($backupjob_bytes);
     
     // Stored files on the defined period
-    $backupjob_files = Jobs_Model::getStoredFiles($dbSql->db_link, array(LAST_WEEK, NOW), $backupjob_name);
+    $backupjob_files = $jobs->getStoredFiles(array(LAST_WEEK, NOW), $backupjob_name);
     $backupjob_files = CUtils::format_Number($backupjob_files);
     
     // Get the last 7 days interval (start and end)
@@ -59,7 +60,7 @@ try {
     $graph = new CGraph("backupjobreport-graph01.jpg");
     
     foreach ($days as $day) {
-        $stored_bytes = Jobs_Model::getStoredBytes($dbSql->db_link, array($day['start'], $day['end']), $backupjob_name);
+        $stored_bytes = $jobs->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
         $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
     }
     
@@ -76,7 +77,7 @@ try {
     $graph = new CGraph("backupjobreport-graph02.jpg");
     
     foreach ($days as $day) {
-        $stored_files = Jobs_Model::getStoredFiles($dbSql->db_link, array($day['start'], $day['end']), $backupjob_name);
+        $stored_files = $jobs->getStoredFiles(array($day['start'], $day['end']), $backupjob_name);
         $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
     }
     
@@ -95,10 +96,10 @@ try {
     $query .= "ORDER BY EndTime DESC ";
     $query .= "LIMIT 7 ";
     
-    $jobs         = array();
+    $joblist      = array();
     $joblevel     = array('I' => 'Incr', 'D' => 'Diff', 'F' => 'Full');
     
-    $result = CDBUtils::runQuery($query, $dbSql->db_link);
+    $result = $jobs->run_query($query);
     
     foreach ($result->fetchAll() as $job) {
         // Job level description
@@ -135,14 +136,14 @@ try {
         $job['starttime'] = date( $dbSql->datetime_format, strtotime($job['starttime']));
         $job['endtime'] = date( $dbSql->datetime_format, strtotime($job['endtime']));
 
-        $jobs[]     = $job;
+        $joblist[] = $job;
     } // end while
 
 } catch (Exception $e) {
     CErrorHandler::displayError($e);
 }
 
- $view->assign('jobs', $jobs);
+ $view->assign('jobs', $joblist);
  $view->assign('backupjob_name', $backupjob_name);
  $view->assign('backupjob_period', $backupjob_period);
  $view->assign('backupjob_bytes', $backupjob_bytes);
