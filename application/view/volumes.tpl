@@ -35,6 +35,12 @@
 	    <td>{$volume.slot}</td>
 	    <td>{$volume.inchanger}</td>
 	  </tr>
+     {foreachelse}
+     <tr>
+       <td colspan="10" class="text-center">
+         {t}No volume(s) to display{/t}
+       </td>
+     </tr>
 	  {/foreach}
     </table>
   </div> <!-- end div class="table-responsive" -->
