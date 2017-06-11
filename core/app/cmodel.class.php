@@ -104,7 +104,6 @@ class CModel
 
       if ($statment == false) {
          throw new PDOException("Failed to prepare PDOStatment <br />$query");
-         return false;
       }
 
       $result     = $statment->execute();
