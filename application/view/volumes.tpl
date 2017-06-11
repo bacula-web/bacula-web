@@ -44,29 +44,32 @@
 	  {/foreach}
     </table>
   </div> <!-- end div class="table-responsive" -->
+  </div> <!-- end div class=col-xxx -->
+</div> <!-- end div class=row -->
 
 &nbsp;
 
-<div class="panel panel-default">
-  <!-- Default panel contents -->
-  <div class="panel-heading"><b>Result</b></div>
-  <div class="panel-body">
-    <ul class="list-group">
-      <li class="list-group-item">
-        <span class="badge">{$volumes_count}</span>
-        {t}Volume(s) found{/t}
-      </li>
-      <li class="list-group-item">
-        <span class="badge">{$volumes_total_bytes}</span>
-        {t}Total bytes{/t}
-      </li>
-    </ul>
-  </div>
-</div>
-
-  </div> <!-- end div class=col-xxx -->
-
-  </div> <!-- end div class="row" -->
+<!-- Found volumes footer -->
+<div class="row">
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading"><b>Result</b></div>
+      <div class="panel-body">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <span class="badge">{$volumes_count}</span>
+            {t}Volume(s) found{/t}
+          </li>
+          <li class="list-group-item">
+            <span class="badge">{$volumes_total_bytes}</span>
+            {t}Total bytes{/t}
+          </li>
+        </ul>
+      </div> <!-- end div class="panel-body -->
+    </div> <!-- end div class="panel" -->
+  </div> <!-- end div class="col-..." -->
+</div> <!-- end div class="row" -->
 
 </div> <!-- div class="container-fluid" -->
 
