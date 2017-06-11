@@ -41,7 +41,8 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-text-o fa-fw"></i> {t}Reports{/t} <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="jobs.php">{t}Jobs{/t}</a></li>
-						<li><a href="pools.php">{t}Pools and volumes{/t}</a></li>
+						<li><a href="pools.php">{t}Pools{/t}</a></li>
+						<li><a href="volumes.php">{t}Volumes{/t}</a></li>
 					</ul>
 				</li>
 			</ul>		
