@@ -50,22 +50,26 @@ class Volumes_Model extends CModel
 
     // ==================================================================================
     // Function: 	getVolumes()
-    // Parameters: 	$filter
+    // Parameters: 	$pool_id
     // Return:	        list of volumes (array)	
     // ==================================================================================
 
-    public function getVolumes( $filter = null) {
-
+    public function getVolumes( $pool_id = null) {
        $volumes_list = array();
 
-	$query    = "SELECT Media.volumename, Media.volbytes, Media.voljobs, Media.volstatus, Media.mediatype, Media.lastwritten, 
-			    Media.volretention, Media.slot, Media.inchanger, Pool.Name AS pool_name
-		     FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid 
- 		     ORDER BY Media.Volumename";
+	    $query    = "SELECT Media.volumename, Media.volbytes, Media.voljobs, Media.volstatus, Media.mediatype, Media.lastwritten, 
+			           Media.volretention, Media.slot, Media.inchanger, Pool.Name AS pool_name
+                    FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid ";
 
-        $result = $this->run_query($query);
+       if( !is_null($pool_id) ) {
+         $query .= " WHERE Media.PoolId = $pool_id ";
+       }
 
-        foreach ($result->fetchAll() as $volume) {
+       $query .= "ORDER BY Media.Volumename";
+
+       $result = $this->run_query($query);
+
+       foreach ($result->fetchAll() as $volume) {
             $volumes_list[] = $volume;
         }
 

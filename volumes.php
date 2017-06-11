@@ -27,7 +27,14 @@
  $volumes_list = array();
  $volumes_total_bytes = 0;
 
- foreach ($volumes->getVolumes() as $volume) {
+ $poolid         = CHttpRequest::get_Value('pool_id');
+
+ // If pool_id have been passed in GET request 
+ if (!is_numeric($poolid) && !is_null($poolid)) {
+   throw new Exception('Invalid pool id (not numeric) provided in Volumes report page');
+ }
+
+ foreach ($volumes->getVolumes($poolid) as $volume) {
      // Set lastwritten for the volume
    if (empty($volume['lastwritten'])) {
        $volume['lastwritten'] = 'n/a';
