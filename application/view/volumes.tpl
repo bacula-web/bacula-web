@@ -15,6 +15,7 @@
 	    <th class="text-center">{t}Bytes{/t}</th>
        <th class="text-center">{t}Jobs{/t}</th>
 	    <th class="text-center">{t}Media Type{/t}</th>
+	    <th class="text-center">{t}Pool{/t}</th>
 	    <th class="text-center">{t}Expire{/t}</th>
 	    <th class="text-center">{t}Last written{/t}</th>
 	    <th class="text-center">{t}Status{/t}</th>
@@ -27,6 +28,7 @@
 	    <td>{$volume.volbytes}</td>
 	    <td>{$volume.voljobs}</td>
 	    <td>{$volume.mediatype}</td>
+	    <td>{$volume.pool_name}</td>
 	    <td>{$volume.expire}</td>
 	    <td>{$volume.lastwritten}</td>
 	    <td>{$volume.volstatus}</td>
