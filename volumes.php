@@ -60,6 +60,9 @@
        $volume['expire'] = 'n/a';
    }
 
+   // Format voljobs
+   $volume['voljobs'] = CUtils::format_Number($volume['voljobs']);
+
    // add volume in volumes list array
    $volumes_list[] = $volume;
  }
