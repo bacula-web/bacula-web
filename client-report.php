@@ -23,16 +23,6 @@
  
  require_once('core/const.inc.php');
 
- /*
- try {
-    if (!is_a($dbSql->db_link, 'PDO')) {
-        throw new Exception("Application error: invalid PDO connection object provided");
-    }
-} catch (Exception $e) {
-    CErrorHandler::displayError($e);
-}
-  */
-
  $clientid             = '';
  $client             = '';
  $period             = '';
