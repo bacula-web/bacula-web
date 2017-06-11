@@ -68,6 +68,7 @@
  }
 
  $view->assign('volumes', $volumes_list);
+ $view->assign('volumes_count', count($volumes_list));
 
  // Set page name
  $current_page = 'Volumes report';

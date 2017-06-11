@@ -44,7 +44,24 @@
 	  {/foreach}
     </table>
   </div> <!-- end div class="table-responsive" -->
+
+&nbsp;
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><b>Result</b></div>
+  <div class="panel-body">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <span class="badge">{$volumes_count}</span>
+        {t}Volume(s) found{/t}
+      </li>
+    </ul>
+  </div>
+</div>
+
   </div> <!-- end div class=col-xxx -->
+
   </div> <!-- end div class="row" -->
 
 </div> <!-- div class="container-fluid" -->
