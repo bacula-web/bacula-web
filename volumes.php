@@ -25,6 +25,7 @@
 
  $volumes = new Volumes_Model();
  $volumes_list = array();
+ $volumes_total_bytes = 0;
 
  foreach ($volumes->getVolumes() as $volume) {
      // Set lastwritten for the volume
@@ -36,6 +37,9 @@
          $volume['lastwritten'] = date(FileConfig::get_Value('datetime_format'), strtotime($volume['lastwritten']));
      }
    }
+
+   // Sum volumes bytes
+   $volumes_total_bytes += $volume['volbytes'];
 
    // Get volume used bytes in a human format
    $volume['volbytes'] = CUtils::Get_Human_Size($volume['volbytes']);
@@ -69,6 +73,7 @@
 
  $view->assign('volumes', $volumes_list);
  $view->assign('volumes_count', count($volumes_list));
+ $view->assign('volumes_total_bytes', CUtils::Get_Human_Size($volumes_total_bytes));
 
  // Set page name
  $current_page = 'Volumes report';

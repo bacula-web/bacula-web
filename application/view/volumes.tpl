@@ -56,6 +56,10 @@
         <span class="badge">{$volumes_count}</span>
         {t}Volume(s) found{/t}
       </li>
+      <li class="list-group-item">
+        <span class="badge">{$volumes_total_bytes}</span>
+        {t}Total bytes{/t}
+      </li>
     </ul>
   </div>
 </div>
