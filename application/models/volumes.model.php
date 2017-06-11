@@ -56,6 +56,8 @@ class Volumes_Model extends CModel
 
     public function getVolumes( $filter = null) {
 
+       $volumes_list = array();
+
 	$query    = "SELECT Media.volumename, Media.volbytes, Media.voljobs, Media.volstatus, Media.mediatype, Media.lastwritten, 
 			    Media.volretention, Media.slot, Media.inchanger, Pool.Name AS pool_name
 		     FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid 
