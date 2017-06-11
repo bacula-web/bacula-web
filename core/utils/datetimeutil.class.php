@@ -42,13 +42,13 @@ class DateTimeUtil
         $end   = '';
 	$elapsed_time = '';
 
-        if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0) {
+        if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
             return 'n/a';
         } else {
             $start = self::get_Timestamp($start_time);
         }
 
-        if ($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == 0) {
+        if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
             $end = mktime();
         } else {
             $end = self::get_Timestamp($end_time);
