@@ -41,10 +41,34 @@ class Volumes_Model extends CModel
         $fields        = array('SUM(Media.VolBytes) as bytes_size');
         $statment     = array( 'table' => 'Media', 'fields' => $fields );
         
-     // Run SQL query
+     	// Run SQL query
         $result     = $this->run_query(CDBQuery::get_Select($statment));
     
         $result     = $result->fetch();
         return $result['bytes_size'];
+    }
+
+    // ==================================================================================
+    // Function: 	getVolumes()
+    // Parameters: 	$filter
+    // Return:	        list of volumes (array)	
+    // ==================================================================================
+
+    public function getVolumes( $filter = null) {
+
+        $table    = 'Media';
+
+	$query    = "SELECT Media.volumename, Media.volbytes, Media.volstatus, Media.mediatype, Media.lastwritten, 
+			    Media.volretention, Media.slot, Media.inchanger, Pool.Name AS pool_name
+		     FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid 
+ 		     ORDER BY Media.Volumename";
+
+        $result = $this->run_query($query);
+
+        foreach ($result->fetchAll() as $volume) {
+            $volumes_list[] = $volume;
+        }
+
+        return $volumes_list;
     }
 }
