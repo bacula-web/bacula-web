@@ -12,7 +12,14 @@ From Bacula-Web root folder, copy the file config.php.sample as below
 
    # cd application/config
    # cp -v config.php.sample config.php
+
+**On Red Hat / Centos / Fedora**
+
    # chown -v apache: config.php
+
+**On Debian / Ubuntu**
+
+   # chown -v www-data: config.php
 
 Languages
 ---------
