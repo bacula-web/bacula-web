@@ -15,9 +15,13 @@ From Bacula-Web root folder, copy the file config.php.sample as below
 
 **On Red Hat / Centos / Fedora**
 
+::
+
    # chown -v apache: config.php
 
 **On Debian / Ubuntu**
+
+::
 
    # chown -v www-data: config.php
 
