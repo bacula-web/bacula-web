@@ -8,13 +8,15 @@
   <title>Bacula-Web - {$page_name}</title>
 
   <!-- Bootstrap front-end framework -->
-  <link rel="stylesheet" href="core/vendor/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="core/vendor/bootstrap/css/bootstrap-theme.min.css"> 
-  <link rel="stylesheet" href="core/vendor/bootstrap-datetimepicker-4.7.14/css/bootstrap-datetimepicker.min.css">
+  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="vendor/components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+
+  <!-- Custom css -->
   <link rel="stylesheet" href="application/assets/css/default.css">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="core/vendor/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="vendor/components/font-awesome/css/font-awesome.min.css">
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
