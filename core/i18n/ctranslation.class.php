@@ -35,7 +35,7 @@ class CTranslation
     public function set_Language(&$template)
     {
         // Template engine block registration
-        $template->register_block('t', 'smarty_translate');
+        $template->register_block('t', 'smarty_block_t');
 
         // Setting up language
         putenv("LANGUAGE=" . $this->language . '.' . $this->charset);

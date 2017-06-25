@@ -1,3 +1,4 @@
+/vendor
 /application/view/cache/*.tpl
 /application/view/cache/*.php
 /application/view/cache/*.jpg
