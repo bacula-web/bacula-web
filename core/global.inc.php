@@ -16,13 +16,7 @@
 */
 
  // Class autloader instance creation
- require_once(getcwd() . "/core/app/classautoloader.class.php");
- 
- // Add root path and exclusions
- $classloader = new ClassAutoLoader();
- $classloader->add_Path('core');
- $classloader->add_Path('application');
- $classloader->add_Exclusion('core/vendor/smarty-gettext-1.1');
+ require_once 'vendor/autoload.php';
  
  // Get all $_POST and $_GET values
  CHttpRequest::get_Vars();
@@ -38,9 +32,3 @@
  
  // Locales
  define('LOCALE_DIR', BW_ROOT . '/application/locale');
- 
- // Smarty
- require_once(BW_ROOT . '/core/vendor/smarty-gettext-1.1/smarty-gettext.php');
- 
- // PHPLot
- require_once(BW_ROOT . '/core/vendor/phplot-6.1.0/phplot.php');
