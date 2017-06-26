@@ -21,7 +21,6 @@ class CTranslation
     private $language;
     private $charset;
     private $locale_path;
-    private $lang_file;
     private $domaine;
 
     public function __construct($lang = 'en_EN')
