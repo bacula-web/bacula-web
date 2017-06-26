@@ -130,7 +130,6 @@ try {
 
     foreach ($jobs_status as $status) {
         $jobs_count = $jobs->count_Jobs( $custom_period, strtolower($status));
-        $jobs_count = 1;
         $jobs_status_data[] = array($status, $jobs_count );
     }
      
