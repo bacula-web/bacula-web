@@ -1,4 +1,21 @@
 {
+   "name": "bacula-web/bacula-web",
+   "type": "library",
+   "description": "The open source web based reporting and monitoring tool for Bacula",
+   "keywords": "php","reporting","monitoring","bacula",
+   "homepage": "http://www.bacula-web.org",
+   "licenes": "GPLv2",
+   "authors": [
+      {
+         "name": "Davide Franco",
+         "email": "bacula-dev@dflc.ch",
+         "homepage": "http://www.bacula-web.org",
+         "role": "Developer"
+      }
+   ],
+   "require": {
+      "php": ">=5.6.0"
+   },
    "config": {
 		"component-dir": "vendor/components"
 	},
