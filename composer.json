@@ -13,19 +13,18 @@
          "role": "Developer"
       }
    ],
-   "require": {
-      "php": ">=5.6.0"
-   },
    "config": {
 		"component-dir": "vendor/components"
 	},
    "require": {
-         "twbs/bootstrap": "3.3.7",
-		   "eonasdan/bootstrap-datetimepicker": "4.7.14",
-		   "smarty/smarty": "2.6.28",
-		   "smarty-gettext/smarty-gettext": "1.2",
-		   "components/font-awesome": "4.*",
-		   "davefx/phplot": "6.2.1"
+      "php": ">=5.6.0",
+      "novus/nvd3": "@stable",
+      "twbs/bootstrap": "3.3.7",
+      "eonasdan/bootstrap-datetimepicker": "4.7.14",
+      "smarty/smarty": "2.6.28",
+      "smarty-gettext/smarty-gettext": "1.2",
+      "components/font-awesome": "4.*",
+      "davefx/phplot": "6.2.1"
 	},
 	"autoload": {
 		"classmap": [
