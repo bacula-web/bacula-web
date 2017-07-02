@@ -2,7 +2,7 @@
    "name": "bacula-web/bacula-web",
    "type": "library",
    "description": "The open source web based reporting and monitoring tool for Bacula",
-   "keywords": "php","reporting","monitoring","bacula",
+   "keywords": ["php","reporting","monitoring","bacula"],
    "homepage": "http://www.bacula-web.org",
    "licenes": "GPLv2",
    "authors": [
@@ -19,7 +19,7 @@
    "config": {
 		"component-dir": "vendor/components"
 	},
-      "require": {
+   "require": {
          "twbs/bootstrap": "3.3.7",
 		   "eonasdan/bootstrap-datetimepicker": "4.7.14",
 		   "smarty/smarty": "2.6.28",
