@@ -4,7 +4,7 @@
    "description": "The open source web based reporting and monitoring tool for Bacula",
    "keywords": ["php","reporting","monitoring","bacula"],
    "homepage": "http://www.bacula-web.org",
-   "licenes": "GPLv2",
+   "license": "GPL-2.0",
    "authors": [
       {
          "name": "Davide Franco",
