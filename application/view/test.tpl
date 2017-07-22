@@ -1,6 +1,6 @@
 {include file=header.tpl}
 
-<div class="container-fluid" id="testpage">
+<div class="container" id="testpage">
 
     <h3>{$page_name} <small>{t}Required components{/t}</small></h3>
     
