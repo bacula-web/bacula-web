@@ -21,6 +21,7 @@ class Chart {
    public $name;
    protected $type;
    protected $data = array();
+   protected $margin = 30;
 
    public function __construct($chart_data) {
       if( !is_array($chart_data)) {
@@ -83,7 +84,13 @@ class Chart {
       }
 
       // Set chart margins
-      $blob .= '.margin({"top": 60,"right": 60,"left": 60,"bottom": 60})'."\n";
+      switch($this->type) {
+      case 'bar':
+         $blob .= '.margin({"top": ' . $this->margin . ',"right": ' . $this->margin . ',"left": 100,"bottom": ' . $this->margin . '})'."\n";
+         break;
+      default: 
+         $blob .= '.margin({"top": ' . $this->margin . ',"right": ' . $this->margin . ',"left": ' . $this->margin . ',"bottom": ' . $this->margin . '})'."\n";
+      }
 
       // Set colors
       $blob .= '.color(["#4169E1","#FF8C00","#BA55D3","#FF0000","#7CFC00","#ADD8E6","#FFD700","#E0FFFF","#E6E6FA","#A9A9A9"]);';
