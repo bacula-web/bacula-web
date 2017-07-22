@@ -39,6 +39,6 @@ img {
 }
 
 [id^="chart"] {
-  height: 100%;
+  height: 400px;
   width: 100%;
 }
