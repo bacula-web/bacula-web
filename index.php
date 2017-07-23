@@ -199,7 +199,7 @@ try {
         $days_stored_bytes[] = array( date("m-d", $day['start']), $jobs->getStoredBytes(array($day['start'], $day['end'])));
     }
 
-    $storedbytes_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedbytes', 'data' => $days_stored_bytes ) );
+    $storedbytes_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedbytes', 'data' => $days_stored_bytes, 'ylabel' => 'Stored Bytes' ) );
 
     $view->assign('storedbytes_chart_id', $storedbytes_chart->name);
     $view->assign('storedbytes_chart', $storedbytes_chart->render());
@@ -216,7 +216,7 @@ try {
         $days_stored_files[] = array( date("m-d", $day['start']), $jobs->getStoredFiles(array($day['start'], $day['end'])));
     }
 
-    $storedfiles_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedfiles', 'data' => $days_stored_files ) );
+    $storedfiles_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedfiles', 'data' => $days_stored_files, 'ylabel' => 'Stored files' ) );
 
     $view->assign('storedfiles_chart_id', $storedfiles_chart->name);
     $view->assign('storedfiles_chart', $storedfiles_chart->render());

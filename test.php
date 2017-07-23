@@ -144,7 +144,8 @@ unset($pie_graph);
 // Dummy bar graph
 $bar_chart = new Chart( array(   'type' => 'bar', 
                                  'name' => 'chart_bar_test', 
-                                 'data' => $data ) );
+                                 'data' => $data,
+                                 'ylabel' => 'Coffee cups' ) );
 
 $view->assign('bar_chart_id', $bar_chart->name);
 $view->assign('bar_chart', $bar_chart->render());
