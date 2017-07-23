@@ -81,7 +81,7 @@ class Chart {
       // Set animation duration an staggerLabels for bar chart
       if($this->type == 'bar') { 
          $blob .= '.duration(500)' . "\n";
-         $blob .= '.showValues(true)'."\n";
+         $blob .= '.showValues(false)'."\n";
          $blob .= '.staggerLabels(true)'."\n";
          $blob .= '.showYAxis(true)'."\n";
       }
