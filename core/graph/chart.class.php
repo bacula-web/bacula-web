@@ -44,7 +44,7 @@ class Chart {
       $json_data = array();
 
       foreach($this->data as $key => $val) {
-         $json_data[] = array( 'label' => $val[0], 'value' => $val[1]);
+         $json_data[] = array( 'label' => $val[0], 'value' => intval($val[1]));
       }
 
       // If the chart type is <bar>, prepare JSON data differently
