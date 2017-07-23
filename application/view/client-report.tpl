@@ -41,7 +41,7 @@
 	</table>
 	</div>
 	
-	<h4>{t}Statistics{/t} - {t}Last{/t} {$period}{t}days(s){/t}</h4>
+	<h4>{t}Statistics{/t} - {t}Last{/t} {$period} {t}days(s){/t}</h4>
   
 	<div class="row">
 		<div class="col-xs-12 col-sm-6">
