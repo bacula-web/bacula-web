@@ -106,13 +106,11 @@
 
 					<!-- Last period job status graph -->
 					<div class="panel-body">
-						<!-- Graph pre-loader -->
-						<div class="img_loader text-center"> 
-							<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-							<p>Loading graph</p> 
-						</div>
+                  <div id="{$last_jobs_chart_id}"> <svg></svg> </div>
+                     {$last_jobs_chart}
+
 						<a href="jobs.php" title="{t}Click here to see the report{/t}">
-							<img src="{$graph_jobs}" class="img-responsive center-block" alt="Last period jobs">
+							<!-- <img src="{$graph_jobs}" class="img-responsive center-block" alt="Last period jobs"> -->
 						</a>
 						<table class="table table-condensed">
 							<tr>
@@ -153,11 +151,8 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" title="{t}Stored bytes over the last 7 days{/t}"><b>{t}Stored Bytes (last 7 days){/t}</b></div>
 					<div class="panel-body">
-                    	<div class="img_loader text-center">
-                    		<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-                        	<p>Loading graph</p>
-                    	</div>						
-						<img src="{$graph_stored_bytes}" class="img-responsive center-block" title="{t}Stored bytes over the last 7 days{/t}" alt="Stored Bytes over last 7 days">
+                  <div id="{$storedbytes_chart_id}"> <svg></svg> </div>
+                  {$storedbytes_chart}
 					</div> <!-- end <div class="panel-body"> -->
 				</div> <!-- end class="panel panel-default" -->
 			</div>
@@ -165,11 +160,8 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" title="{t}Stored files over the last 7 days{/t}"><b>{t}Stored Files (last 7 days){/t}</b></div>
 					<div class="panel-body">
-	                	<div class="img_loader text-center">
-	                    	<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-	                        <p>Loading graph</p>
-	                    </div>						
-						<img src="{$graph_stored_files}" class="img-responsive center-block" title="{t}Stored files over the last 7 days{/t}" alt="Stored Files over last 7 days">
+                  <div id="{$storedfiles_chart_id}"> <svg></svg> </div>
+                  {$storedfiles_chart}
 					</div>
 				</div> <!-- div class="panel panel-default" -->
 			</div>
@@ -183,9 +175,8 @@
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>{t}Pools and volumes status{/t}</b></div>
 				<div class="panel-body">
-					<a href="pools.php" title="{t}Click here to see the report{/t}">
-						<img src="{$graph_pools}" class="img-responsive center-block" alt="Pools and volumes">
-					</a>
+               <div id="{$pools_usage_chart_id}"> <svg></svg> </div>
+               {$pools_usage_chart}
 				</div>
 			</div> <!-- div class="panel panel-default" -->
 		</div> <!-- end class="col-xs-12 col-md-6" -->
