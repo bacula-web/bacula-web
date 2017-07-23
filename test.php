@@ -127,7 +127,8 @@ $data = array(
     array('test', 100),
     array('test1', 150),
     array('test2', 180),
-    array('test3', 456)
+    array('test3', 270),
+    array('test4', 456)
  ); 
 
 // Dummy Pie chart
