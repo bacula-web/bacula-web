@@ -42,7 +42,33 @@
 	</div>
 	
 	<h4>{t}Statistics{/t} - {t}Last{/t} {$period} {t}days(s){/t}</h4>
-  
+
+   <!-- Bytes and files charts -->
+   {if ( $period > 7 ) } 
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>{t}Bytes{/t}</b></div>
+				<div class="panel-body">
+               <div id="{$stored_bytes_chart_id}"> <svg></svg> </div>
+                  {$stored_bytes_chart}
+				</div>
+			</div>
+		</div>
+   </div> <!-- div class="row" -->
+
+   <div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>{t}Files{/t}</b></div>
+				<div class="panel-body">
+               <div id="{$stored_files_chart_id}"> <svg></svg> </div>
+                  {$stored_files_chart}
+				</div>
+			</div>
+		</div>
+	</div>
+   {else}
 	<div class="row">
 		<div class="col-xs-12 col-sm-6">
 			<div class="panel panel-default">
@@ -64,6 +90,7 @@
 			</div>
 		</div>
 	</div>
+   {/if}
 </div> <!-- div class="container" -->
 
 {include file="footer.tpl"}
