@@ -91,37 +91,35 @@ try {
    // ===============================================================
    // Last n days stored Bytes graph
    // ===============================================================
-    $graph = new CGraph("clientreport-graph01.jpg");
-  
-    foreach ($days as $day) {
-        $stored_bytes = $jobs->getStoredBytes(array($day['start'], $day['end']), 'ALL', $clientid);
-        $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
-    }
-  
-    $graph->SetData($days_stored_bytes, 'bars', true);
-  
-   // Graph rendering
-    $view->assign('graph_stored_bytes', $graph->Render());
+   foreach ($days as $day) {
+      $stored_bytes = $jobs->getStoredBytes(array($day['start'], $day['end']), 'ALL', $clientid);
+      $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
+   }
+    
+    $stored_bytes_chart = new Chart( array( 'type' => 'bar', 'name' => 'chart_storedbytes',
+       'data' => $days_stored_bytes ) );
+    
+    $view->assign('stored_bytes_chart_id', $stored_bytes_chart->name);
+    $view->assign('stored_bytes_chart', $stored_bytes_chart->render());
+   
+    unset($stored_bytes_chart);
 
-    unset($graph);
-  
    // ===============================================================
    // Getting last n days stored files graph
    // ===============================================================
-    $graph = new CGraph("clientreport-graph03.jpg");
-  
+
     foreach ($days as $day) {
         $stored_files = $jobs->getStoredFiles(array($day['start'], $day['end']), 'ALL', $clientid);
         $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
     }
-  
-    $graph->SetData($days_stored_files, 'bars');
-    $graph->SetYTitle("Files");
-  
-   // Graph rendering
-    $view->assign('graph_stored_files', $graph->Render());
+    
+    $stored_files_chart = new Chart( array( 'type' => 'bar', 'name' => 'chart_storedfiles', 'data' => $days_stored_files ) );
+    
+    $view->assign('stored_files_chart_id', $stored_files_chart->name);
+    $view->assign('stored_files_chart', $stored_files_chart->render());
+    
+    unset($stored_files_chart);
 
-    unset($graph);
 } catch (Exception $e) {
     CErrorHandler::displayError($e);
 }
