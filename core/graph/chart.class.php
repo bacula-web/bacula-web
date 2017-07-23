@@ -22,6 +22,7 @@ class Chart {
    protected $type;
    protected $data = array();
    protected $margin = 30;
+   protected $ylabel = null;
 
    public function __construct($chart_data) {
       if( !is_array($chart_data)) {
@@ -31,6 +32,7 @@ class Chart {
 
          if( isset($chart_data['name']) ) { $this->name = $chart_data['name']; }
          if( isset($chart_data['type']) ) { $this->type = $chart_data['type']; }
+         if( isset($chart_data['ylabel']) ) { $this->ylabel = $chart_data['ylabel']; }
       }
    }
 
@@ -55,7 +57,7 @@ class Chart {
          $blob .= 'key: ' . '"Serie one"' . ',' . "\n";
          $blob .= 'values: ' . json_encode( $json_data) . '} ];';
       }
-      $blob .= 'nv.addGraph(function() {';
+      $blob .= 'nv.addGraph(function() {'."\n";
 
       // Check chart type
       switch( $this->type ) {
@@ -81,6 +83,7 @@ class Chart {
          $blob .= '.duration(500)' . "\n";
          $blob .= '.showValues(true)'."\n";
          $blob .= '.staggerLabels(true)'."\n";
+         $blob .= '.showYAxis(true)'."\n";
       }
 
       // Set chart margins
@@ -99,6 +102,16 @@ class Chart {
          break;
       default:
          $blob .= '.color(["#696969","#32CD32","#4169E1","#FF8C00","#FF0000","#ADD8E6","#FFD700","#E0FFFF","#E6E6FA","#A9A9A9"]);';
+      }
+
+      $blob .= "\n";
+
+      if( $this->type == 'bar') {
+         if(!is_null($this->ylabel)) {
+            $blob .= "\n".'chart.yAxis'."\n";
+            $blob .= ".axisLabelDistance(25)\n";
+            $blob .= ".axisLabel('".$this->ylabel."');\n";
+         }
       }
 
       $blob .= 'd3.select(\'#'.$this->name . ' svg\')' . "\n";
