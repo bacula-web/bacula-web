@@ -97,7 +97,7 @@ class Chart {
          $blob .= '.color(["#696969"]);';
          break;
       default:
-         $blob .= '.color(["#4169E1","#FF8C00","#BA55D3","#FF0000","#7CFC00","#ADD8E6","#FFD700","#E0FFFF","#E6E6FA","#A9A9A9"]);';
+         $blob .= '.color(["#696969","#7CFC00","#4169E1","#FF8C00","#FF0000","#ADD8E6","#FFD700","#E0FFFF","#E6E6FA","#A9A9A9"]);';
       }
 
       $blob .= 'd3.select(\'#'.$this->name . ' svg\')' . "\n";
