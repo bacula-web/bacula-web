@@ -74,6 +74,7 @@ class Chart {
          $blob .= '.showLabels(true)'."\n"; 
          $blob .= '.labelsOutside(true)'."\n";
          $blob .= '.growOnHover(true)'."\n";
+         $blob .= '.labelType("percent")'."\n";
       }
       // Set animation duration an staggerLabels for bar chart
       if($this->type == 'bar') { 
