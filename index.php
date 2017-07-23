@@ -155,22 +155,14 @@ try {
 
     // Display 9 biggest pools and rest of volumes in 10th one display as Other
     if ($pools_count > $max_pools) {
-        /*
-        if ( $pools->get_driver_name() == 'pgsql') {
-            $limit = $max_pools . 'OFFSET ' . ($pools_count - $max_pools);
-        } else {
-            $limit = $max_pools . ',' . ($pools_count - $max_pools);
-        }
-         */
-        $query = array( 'table' => $table_pool,
-                       'fields' => array('SUM(numvols) AS sum_vols'),
-                       'limit' => array( 'offset' => ($pools_count - $max_pools), 'count' => $pools_count),
-                       'groupby' => 'name');
-        
-        $result = $pools->run_query(CDBQuery::get_Select($query, $pools->get_driver_name()));
-        $sum_vols = $result->fetch();
+       $query = array( 'table' => $table_pool,
+          'fields' => array('SUM(numvols) AS sum_vols'),
+          'limit' => array( 'offset' => ($pools_count - $max_pools), 'count' => $pools_count),
+          'groupby' => 'name');
+       $result = $pools->run_query(CDBQuery::get_Select($query, $pools->get_driver_name()));
+       $sum_vols = $result->fetch();
     } else {
-        $limit = $pools_count;
+       $limit = $pools_count;
     }
 
     $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools);
