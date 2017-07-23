@@ -37,16 +37,15 @@ class Chart {
    public function render() {
       $blob = '';
       $blob .= '<script type="text/javascript">' . "\n";
-      // Set width + height
-      $blob .= 'var title = "' . $this->title . '"; ' . "\n";
 
-      // Let's have fun with PHP array -> json and transform data array to javascript array
+      // Transform PHP array to JSON 
       $json_data = array();
 
       foreach($this->data as $key => $val) {
          $json_data[] = array( 'label' => $val[0], 'value' => $val[1]);
       }
 
+      // If the chart type is <bar>, prepare JSON data differently
       switch($this->type) {
       case 'pie':
          $blob .= $this->name . '_data = ' . json_encode( $json_data ) . ';' . "\n";
@@ -58,7 +57,7 @@ class Chart {
       }
       $blob .= 'nv.addGraph(function() {';
 
-      // check chart type
+      // Check chart type
       switch( $this->type ) {
       case 'pie':
          $blob .= 'var chart = nv.models.pieChart()' . "\n";
