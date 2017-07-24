@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e81abc3e8c24e24dcdec748b8127b57",
+    "content-hash": "e02a9e4ab15279370d2a2fbba9753ed2",
     "packages": [
         {
             "name": "components/font-awesome",
@@ -82,41 +82,6 @@
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
             "time": "2017-03-21T07:01:49+00:00"
-        },
-        {
-            "name": "davefx/phplot",
-            "version": "6.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/davefx/PHPlot.git",
-                "reference": "d2e201ecaabb0428116c89cebe281a8f54096450"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/davefx/PHPlot/zipball/d2e201ecaabb0428116c89cebe281a8f54096450",
-                "reference": "d2e201ecaabb0428116c89cebe281a8f54096450",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "phplot/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL"
-            ],
-            "description": "PHPlot - Create charts in PHP",
-            "homepage": "http://phplot.sourceforge.net",
-            "keywords": [
-                "chart",
-                "phplot"
-            ],
-            "time": "2016-10-19T07:14:15+00:00"
         },
         {
             "name": "eonasdan/bootstrap-datetimepicker",
@@ -242,6 +207,43 @@
             "time": "2016-11-11T18:43:20+00:00"
         },
         {
+            "name": "mbostock/d3",
+            "version": "v3.5.17",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mbostock/d3.git",
+                "reference": "9cc9a875e636a1dcf36cc1e07bdf77e1ad6e2c74"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mbostock/d3/zipball/9cc9a875e636a1dcf36cc1e07bdf77e1ad6e2c74",
+                "reference": "9cc9a875e636a1dcf36cc1e07bdf77e1ad6e2c74",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Mike Bostock",
+                    "homepage": "http://bost.ocks.org/mike"
+                }
+            ],
+            "description": "A JavaScript visualization library for HTML and SVG.",
+            "homepage": "http://d3js.org/",
+            "keywords": [
+                "W3C",
+                "animation",
+                "canvas",
+                "dom",
+                "svg",
+                "visualization"
+            ],
+            "time": "2016-05-05T00:29:22+00:00"
+        },
+        {
             "name": "moment/moment",
             "version": "2.18.1",
             "source": {
@@ -294,6 +296,55 @@
                 "validate"
             ],
             "time": "2017-03-21T22:54:37+00:00"
+        },
+        {
+            "name": "novus/nvd3",
+            "version": "v1.8.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/novus/nvd3.git",
+                "reference": "3fee7f9eec75b9e9234706cca01bf128607a41a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/novus/nvd3/zipball/3fee7f9eec75b9e9234706cca01bf128607a41a6",
+                "reference": "3fee7f9eec75b9e9234706cca01bf128607a41a6",
+                "shasum": ""
+            },
+            "require": {
+                "mbostock/d3": "@stable"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Bob Monteverde"
+                },
+                {
+                    "name": "Tyler Wolf"
+                },
+                {
+                    "name": "Robin Hu"
+                },
+                {
+                    "name": "Frank Shao"
+                },
+                {
+                    "name": "liquidpele"
+                }
+            ],
+            "description": "A reusable charting library written in d3.js",
+            "homepage": "https://github.com/novus/nvd3",
+            "keywords": [
+                "chart",
+                "d3",
+                "graph",
+                "nvd3"
+            ],
+            "time": "2016-12-01T12:31:30+00:00"
         },
         {
             "name": "robloach/component-installer",
@@ -443,16 +494,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.3.2",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "8e30690c67aafb6c7992d6d8eb0d707807dd3eaf"
+                "reference": "07432804942b9f6dd7b7377faf9920af5f95d70a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/8e30690c67aafb6c7992d6d8eb0d707807dd3eaf",
-                "reference": "8e30690c67aafb6c7992d6d8eb0d707807dd3eaf",
+                "url": "https://api.github.com/repos/symfony/process/zipball/07432804942b9f6dd7b7377faf9920af5f95d70a",
+                "reference": "07432804942b9f6dd7b7377faf9920af5f95d70a",
                 "shasum": ""
             },
             "require": {
@@ -488,7 +539,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-22T12:32:03+00:00"
+            "time": "2017-07-13T13:05:09+00:00"
         },
         {
             "name": "twbs/bootstrap",
@@ -545,9 +596,13 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "novus/nvd3": 0
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.6.0"
+    },
     "platform-dev": []
 }

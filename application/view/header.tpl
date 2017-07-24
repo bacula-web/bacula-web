@@ -18,6 +18,13 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="vendor/components/font-awesome/css/font-awesome.min.css">
 
+  <!-- nvd3 javascript -->
+  <script src="vendor/mbostock/d3/d3.min.js" charset="utf-8"></script>
+  <script src="vendor/novus/nvd3/build/nv.d3.js"></script>
+
+  <!-- nvd3 css -->
+  <link href="vendor/novus/nvd3/build/nv.d3.css" rel="stylesheet" type="text/css">
+
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
 

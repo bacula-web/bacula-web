@@ -46,9 +46,6 @@ $check_list = array(
     array('check_cmd' => 'php-session',
         'check_label' => 'PHP - Session support',
         'check_descr' => 'PHP session support is required'),
-    array('check_cmd' => 'php-gd',
-        'check_label' => 'PHP - GD support',
-        'check_descr' => 'This is required by phplot, please compile PHP with GD support'),
     array('check_cmd' => 'php-mysql',
         'check_label' => 'PHP - MySQL support',
         'check_descr' => 'PHP MySQL support must be installed in order to run bacula-web with MySQL bacula catalog'),
@@ -83,9 +80,6 @@ foreach ($check_list as &$check) {
             break;
         case 'php-gettext':
             $check['check_result'] = $icon_result[function_exists('gettext')];
-            break;
-        case 'php-gd':
-            $check['check_result'] = $icon_result[function_exists('gd_info')];
             break;
         case 'pear-db':
             $check['check_result'] = $icon_result[class_exists('DB')];
@@ -126,21 +120,31 @@ foreach ($check_list as &$check) {
 $data = array(
     array('test', 100),
     array('test1', 150),
-    array('test1', 180),
-    array('test1', 456)
-);
+    array('test2', 180),
+    array('test3', 270),
+    array('test4', 456)
+ ); 
 
-// Pie graph
-$pie_graph = new CGraph("testpage-graph03.jpg");
-$pie_graph->SetData($data, 'pie');
-$view->assign('pie_graph', $pie_graph->Render());
+// Dummy Pie chart
+$pie_chart = new Chart( array(   'type' => 'pie', 
+                                 'name' => 'chart_pie_test', 
+                                 'data' => $data ) );
+
+$view->assign( 'pie_graph_id', $pie_chart->name);
+$view->assign( 'pie_graph', $pie_chart->render());
+
 unset($pie_graph);
 
-// Bar graph
-$bar_graph = new CGraph("testpage-graph04.jpg");
-$bar_graph->SetData($data, 'bars');
-$view->assign('bar_graph', $bar_graph->Render());
-unset($bar_graph);
+// Dummy bar graph
+$bar_chart = new Chart( array(   'type' => 'bar', 
+                                 'name' => 'chart_bar_test', 
+                                 'data' => $data,
+                                 'ylabel' => 'Coffee cups' ) );
+
+$view->assign('bar_chart_id', $bar_chart->name);
+$view->assign('bar_chart', $bar_chart->render());
+
+unset($bar_chart);
 
 // Set page name
 $current_page = 'Test page';

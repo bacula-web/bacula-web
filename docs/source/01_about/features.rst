@@ -189,7 +189,6 @@ The test page do the following check for you
 
    * PHP - gettext support (uses for translation)
    * PHP - session support (used in the Core php code)
-   * PHP - GD support (used for graphs)
    * PHP - MySQL support
    * PHP - postgreSQL support
    * PHP - sqlite support

@@ -44,7 +44,7 @@ Bacula-Web use the following tools and libraries
 
    * `PHP`_ 
    * `Smarty`_ 
-   * `PHPLot`_
+   * `NVD3`_
    * `Bootstrap`_
    * `Font Awesome`_
    * `jQuery`_ 
@@ -55,7 +55,8 @@ Supported browser
 Bacula-Web was succesfully tested with
 
    * Internet Explorer version 7/8
-   * Mozilla Firefox 3.6.x
+   * Mozilla Firefox (version 54.0.1)
+   * Google Chrome (version 59.0.3071.115)
 
 Your web browser must have Javascript enabled
 
@@ -108,7 +109,7 @@ Bacula is a registered trademark of Kern Sibbald
 
 .. _PHP: http://www.php.net
 .. _Smarty: http://www.smarty.net/
-.. _PHPLot: http://phplot.sourceforge.net/
+.. _NVD3: http://nvd3.org/
 .. _Bootstrap: http://getbootstrap.com/
 .. _Font Awesome: http://fontawesome.io/
 .. _jQuery: http://jquery.com

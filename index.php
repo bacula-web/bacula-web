@@ -125,6 +125,7 @@ try {
     // ==============================================================
     // Last period <Job status graph>
     // ==============================================================
+
     $jobs_status = array('Running', 'Completed', 'Waiting', 'Failed', 'Canceled');
     $jobs_status_data = array();
 
@@ -132,22 +133,18 @@ try {
         $jobs_count = $jobs->count_Jobs( $custom_period, strtolower($status));
         $jobs_status_data[] = array($status, $jobs_count );
     }
-     
-    $graph = new CGraph("dashboard-graph01.jpg");
-    $graph->SetData($jobs_status_data, 'pie');
-    $graph->setPieLegendColors(array( 'gray', 'green','blue', 'red', 'orange'));
 
-    // Graph rendering
-    $view->assign('graph_jobs', $graph->Render());
-
-    unset($graph);
+    $last_jobs_chart = new Chart( array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data ) );
+    $view->assign( 'last_jobs_chart_id', $last_jobs_chart->name);
+    $view->assign( 'last_jobs_chart', $last_jobs_chart->render());
+    
+    unset($last_jobs_chart);     
 
     // ==============================================================
     // Volumes per pool widget
     // ==============================================================
 
     $vols_by_pool = array();
-    $graph = new CGraph("dashboard-graph02.jpg");
     $max_pools = '9';
     $table_pool = 'Pool';
     $limit = '';
@@ -158,22 +155,14 @@ try {
 
     // Display 9 biggest pools and rest of volumes in 10th one display as Other
     if ($pools_count > $max_pools) {
-        /*
-        if ( $pools->get_driver_name() == 'pgsql') {
-            $limit = $max_pools . 'OFFSET ' . ($pools_count - $max_pools);
-        } else {
-            $limit = $max_pools . ',' . ($pools_count - $max_pools);
-        }
-         */
-        $query = array( 'table' => $table_pool,
-                       'fields' => array('SUM(numvols) AS sum_vols'),
-                       'limit' => array( 'offset' => ($pools_count - $max_pools), 'count' => $pools_count),
-                       'groupby' => 'name');
-        
-        $result = $pools->run_query(CDBQuery::get_Select($query, $pools->get_driver_name()));
-        $sum_vols = $result->fetch();
+       $query = array( 'table' => $table_pool,
+          'fields' => array('SUM(numvols) AS sum_vols'),
+          'limit' => array( 'offset' => ($pools_count - $max_pools), 'count' => $pools_count),
+          'groupby' => 'name');
+       $result = $pools->run_query(CDBQuery::get_Select($query, $pools->get_driver_name()));
+       $sum_vols = $result->fetch();
     } else {
-        $limit = $pools_count;
+       $limit = $pools_count;
     }
 
     $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools);
@@ -187,12 +176,10 @@ try {
         $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
     }
 
-    $graph->SetData($vols_by_pool, 'pie');
-
-    // Graph rendering
-    $view->assign('graph_pools', $graph->Render());
-
-    unset($graph);
+    $pools_usage_chart = new Chart( array( 'type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool ) );
+    $view->assign( 'pools_usage_chart_id', $pools_usage_chart->name);
+    $view->assign( 'pools_usage_chart', $pools_usage_chart->render());
+    unset($pools_usage_chart);
 
     // ==============================================================
     // Last 7 days stored Bytes widget
@@ -204,12 +191,13 @@ try {
         $days_stored_bytes[] = array( date("m-d", $day['start']), $jobs->getStoredBytes(array($day['start'], $day['end'])));
     }
 
-    $graph = new CGraph("dashboard-graph03.jpg");
-    $graph->SetData($days_stored_bytes, 'bars', true);
+    $storedbytes_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedbytes', 'data' => $days_stored_bytes, 'ylabel' => 'Stored Bytes', 'uniformize_data' => true ) );
 
-    // Graph rendering
-    $view->assign('graph_stored_bytes', $graph->Render());
-     
+    $view->assign('storedbytes_chart_id', $storedbytes_chart->name);
+    $view->assign('storedbytes_chart', $storedbytes_chart->render());
+
+    unset($storedbytes_chart);   
+
     // ==============================================================
     // Last 7 days Stored Files widget
     // ==============================================================
@@ -220,13 +208,12 @@ try {
         $days_stored_files[] = array( date("m-d", $day['start']), $jobs->getStoredFiles(array($day['start'], $day['end'])));
     }
 
-    $graph = new CGraph("dashboard-graph04.jpg");
-    $graph->SetData($days_stored_files, 'bars');
+    $storedfiles_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedfiles', 'data' => $days_stored_files, 'ylabel' => 'Stored files' ) );
 
-    // Graph rendering
-    $view->assign('graph_stored_files', $graph->Render());
+    $view->assign('storedfiles_chart_id', $storedfiles_chart->name);
+    $view->assign('storedfiles_chart', $storedfiles_chart->render());
 
-    unset($graph);
+    unset($storedfiles_chart);
 
     // ==============================================================
     // Last used volumes widget

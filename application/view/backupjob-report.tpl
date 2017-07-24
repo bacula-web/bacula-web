@@ -55,24 +55,19 @@
 		<div class="col-xs-12 col-sm-6">
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>{t}Transfered Bytes{/t}</b></div>
-				<div class="panel-body">			
-					<div class="img_loader text-center">
-						<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-						<p>Loading graph</p>
-					</div>
-					<img class="img-responsive center-block" src="{$graph_stored_bytes}" alt="Stored Bytes">
+				<div class="panel-body">
+               <div id="{$stored_bytes_chart_id}"> <svg></svg> </div>
+                  {$stored_bytes_chart}
 				</div>
 			</div>
 		</div>
+
 		<div class="col-xs-12 col-sm-6"> 
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>{t}Transfered Files{/t}</b></div>
 				<div class="panel-body">
-					<div class="img_loader text-center">
-						<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-						<p>Loading graph</p>
-					</div>
-					<img class="img-responsive center-block" src="{$graph_stored_files}" alt="Stored Files"> 
+               <div id="{$stored_files_chart_id}"> <svg></svg> </div>
+                  {$stored_files_chart}
 				</div>
 			</div>
 		</div>

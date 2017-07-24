@@ -54,40 +54,32 @@ try {
     // Get the last 7 days interval (start and end)
     $days = DateTimeUtil::getLastDaysIntervals(7);
     
-    // ===============================================================
-    // Last 7 days stored Bytes graph
-    // ===============================================================
-    $graph = new CGraph("backupjobreport-graph01.jpg");
-    
-    foreach ($days as $day) {
-        $stored_bytes = $jobs->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
-        $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
-    }
-    
-    $graph->SetData($days_stored_bytes, 'bars', true);
-
-    // Graph rendering
-    $view->assign('graph_stored_bytes', $graph->Render());
-
-    unset($graph);
-    
-    // ===============================================================
-    // Getting last 7 days stored files graph
-    // ===============================================================
-    $graph = new CGraph("backupjobreport-graph02.jpg");
-    
+    // Last 7 days stored files chart  
     foreach ($days as $day) {
         $stored_files = $jobs->getStoredFiles(array($day['start'], $day['end']), $backupjob_name);
         $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
     }
+
+    $stored_files_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedfiles',
+       'data' => $days_stored_files, 'ylabel' => 'Files' ) );
+
+    $view->assign('stored_files_chart_id', $stored_files_chart->name);
+    $view->assign('stored_files_chart', $stored_files_chart->render());
     
-    $graph->SetData($days_stored_files, 'bars');
-    $graph->SetYTitle("Files");
+    unset($stored_files_chart);   
+    // Last 7 days stored bytes chart  
+    foreach ($days as $day) {
+        $stored_bytes = $jobs->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
+        $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
+    }
+
+    $stored_bytes_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedbytes', 'uniformize_data' => true,
+       'data' => $days_stored_bytes, 'ylabel' => 'Bytes' ) );
+
+    $view->assign('stored_bytes_chart_id', $stored_bytes_chart->name);
+    $view->assign('stored_bytes_chart', $stored_bytes_chart->render());
     
-    // Graph rendering
-    $view->assign('graph_stored_files', $graph->Render());
-    
-    unset($graph);
+    unset($stored_bytes_chart);   
     
     // Get last 10 jobs list
     $query = "SELECT JobId, Level, JobFiles, JobBytes, ReadBytes, JobStatus, StartTime, EndTime, Name ";
