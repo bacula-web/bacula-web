@@ -46,9 +46,6 @@ $check_list = array(
     array('check_cmd' => 'php-session',
         'check_label' => 'PHP - Session support',
         'check_descr' => 'PHP session support is required'),
-    array('check_cmd' => 'php-gd',
-        'check_label' => 'PHP - GD support',
-        'check_descr' => 'This is required by phplot, please compile PHP with GD support'),
     array('check_cmd' => 'php-mysql',
         'check_label' => 'PHP - MySQL support',
         'check_descr' => 'PHP MySQL support must be installed in order to run bacula-web with MySQL bacula catalog'),
@@ -83,9 +80,6 @@ foreach ($check_list as &$check) {
             break;
         case 'php-gettext':
             $check['check_result'] = $icon_result[function_exists('gettext')];
-            break;
-        case 'php-gd':
-            $check['check_result'] = $icon_result[function_exists('gd_info')];
             break;
         case 'pear-db':
             $check['check_result'] = $icon_result[class_exists('DB')];
