@@ -97,7 +97,7 @@ try {
    }
     
     $stored_bytes_chart = new Chart( array( 'type' => 'bar', 'name' => 'chart_storedbytes',
-       'data' => $days_stored_bytes, 'ylabel' => 'Bytes' ) );
+       'data' => $days_stored_bytes, 'ylabel' => 'Bytes', 'uniformize_data' => true ) );
     
     $view->assign('stored_bytes_chart_id', $stored_bytes_chart->name);
     $view->assign('stored_bytes_chart', $stored_bytes_chart->render());

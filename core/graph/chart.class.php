@@ -23,6 +23,18 @@ class Chart {
    protected $data = array();
    protected $margin = 30;
    protected $ylabel = null;
+   protected $uniformize_data = false;
+
+   /*
+    * Function:      __construct()
+    * Parameters:    array containing data below
+    *                data              array( key => value )
+    *                ylabel            label for Y axis (string)
+    *                type              'bar' or 'pie' (string)
+    *                name              name of the chart (string)
+    *                uniformize_data   do we normalize data ? (boolean)
+    *
+    */
 
    public function __construct($chart_data) {
       if( !is_array($chart_data)) {
@@ -33,12 +45,58 @@ class Chart {
          if( isset($chart_data['name']) ) { $this->name = $chart_data['name']; }
          if( isset($chart_data['type']) ) { $this->type = $chart_data['type']; }
          if( isset($chart_data['ylabel']) ) { $this->ylabel = $chart_data['ylabel']; }
+         if( isset($chart_data['uniformize_data']) ) { $this->uniformize_data = $chart_data['uniformize_data']; }
       }
    }
+
+   /*
+      * Function:     uniformizeData()
+      * Parameters:   $data_in (array of values to uniformize)
+      * Return:       array of uniformized values
+    */
+   
+   private function uniformizeData()
+   {
+      $array_sum = 0;
+      $best_unit = '';
+
+      // Uniformize data array element based on best unit
+      foreach ($this->data as $key => $data) {
+         if (is_null($data[1])) {
+            $this->data[$key][1] = 0;
+         }
+      }
+      
+      // Calculate sum of all values
+      foreach ($this->data as $value) {
+         $array_sum += $value[1];
+      }
+      
+      // Calculate average value and best unit
+      $avg = $array_sum  / count($this->data);
+      list($value, $best_unit) = explode(' ', CUtils::Get_Human_Size($avg, 1));
+      
+      foreach ($this->data as $key => $value) {
+         $this->data[$key][1] = CUtils::Get_Human_Size($value[1], 1, $best_unit, false);
+      }
+      
+      $this->ylabel = $best_unit;
+   }
+
+   /*
+      * Function:     render()
+      * Parameters:   none 
+      * Return:       nothing 
+    */
 
    public function render() {
       $blob = '';
       $blob .= '<script type="text/javascript">' . "\n";
+
+      // Uniformize data
+      if( $this->uniformize_data == true ) {
+         $this->uniformizeData();
+      }
 
       // Transform PHP array to JSON 
       $json_data = array();

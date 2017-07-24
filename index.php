@@ -191,7 +191,7 @@ try {
         $days_stored_bytes[] = array( date("m-d", $day['start']), $jobs->getStoredBytes(array($day['start'], $day['end'])));
     }
 
-    $storedbytes_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedbytes', 'data' => $days_stored_bytes, 'ylabel' => 'Stored Bytes' ) );
+    $storedbytes_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedbytes', 'data' => $days_stored_bytes, 'ylabel' => 'Stored Bytes', 'uniformize_data' => true ) );
 
     $view->assign('storedbytes_chart_id', $storedbytes_chart->name);
     $view->assign('storedbytes_chart', $storedbytes_chart->render());

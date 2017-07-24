@@ -73,7 +73,7 @@ try {
         $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
     }
 
-    $stored_bytes_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedbytes',
+    $stored_bytes_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedbytes', 'uniformize_data' => true,
        'data' => $days_stored_bytes, 'ylabel' => 'Bytes' ) );
 
     $view->assign('stored_bytes_chart_id', $stored_bytes_chart->name);
