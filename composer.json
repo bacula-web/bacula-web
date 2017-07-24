@@ -23,8 +23,7 @@
       "eonasdan/bootstrap-datetimepicker": "4.7.14",
       "smarty/smarty": "2.6.28",
       "smarty-gettext/smarty-gettext": "1.2",
-      "components/font-awesome": "4.*",
-      "davefx/phplot": "6.2.1"
+      "components/font-awesome": "4.*"
 	},
 	"autoload": {
 		"classmap": [
