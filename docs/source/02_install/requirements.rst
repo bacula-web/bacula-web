@@ -11,7 +11,6 @@ Before installing Bacula-Web on your server, you must ensure that your system fu
   * PHP version >= 5.6 with
 
     * Gettext support
-    * GD library support (used for graphs)
     * TrueType support (optional)
     * PHP PDO and PHP support for MySQL, postgreSQL or SQLite (depend your your Bacula setup)
     * Session support
