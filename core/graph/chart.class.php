@@ -94,7 +94,7 @@ class Chart {
       $blob .= '<script type="text/javascript">' . "\n";
 
       // Uniformize data
-      if( $this->uniformize_data == true ) {
+      if( $this->uniformize_data === true ) {
          $this->uniformizeData();
       }
 
