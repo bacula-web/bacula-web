@@ -159,7 +159,7 @@ class Chart {
          $blob .= '.color(["#696969"]);';
          break;
       default:
-         $blob .= '.color(["#696969","#32CD32","#4169E1","#FF8C00","#FF0000","#ADD8E6","#FFD700","#E0FFFF","#E6E6FA","#A9A9A9"]);';
+         $blob .= '.color(["#696969","#32CD32","#4169E1","#FF0000","#FF8C00","#ADD8E6","#FFD700","#E0FFFF","#E6E6FA","#A9A9A9"]);';
       }
 
       $blob .= "\n";
