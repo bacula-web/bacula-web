@@ -38,9 +38,9 @@ try {
     } else {
         throw new Exception("Error: Backup job name not specified");
     }
-    
+
     // Generate Backup Job report period string
-    $backupjob_period = "From " . date("Y-m-d", (NOW - WEEK)) . " to " . date("Y-m-d", NOW);
+    $backupjob_period = "From " . date( $dbSql->datetime_format_short, (NOW - WEEK)) . " to " . date( $dbSql->datetime_format_short, NOW);
     
     // Stored Bytes on the defined period
     $jobs = new Jobs_Model();
