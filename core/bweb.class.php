@@ -28,6 +28,7 @@ class Bweb
     public $catalog_current_id = 0;    // Selected or default catalog id
 
     public $datetime_format;
+    public $datetime_format_short;
 
     public function __construct(&$view)
     {
@@ -40,10 +41,17 @@ class Bweb
                $this->catalog_nb = FileConfig::count_Catalogs();
 
                // Check if datetime_format is defined in configuration
-               if( FileConfig::get_Value('datetime_format') != false)
+               if( FileConfig::get_Value('datetime_format') != false) {
                   $this->datetime_format = FileConfig::get_Value('datetime_format');
-               else
+                  
+                  // Get first part of datetime_format
+                  $this->datetime_format_short = split( ' ', $this->datetime_format);
+                  $this->datetime_format_short = $this->datetime_format_short[0];
+               }else {
+                  // Set default time format
                   $this->datetime_format = 'Y-m-d H:i:s';
+                  $this->datetime_format_short = 'Y-m-d';
+               }
             }
         } catch (Exception $e) {
             CErrorHandler::displayError($e);
