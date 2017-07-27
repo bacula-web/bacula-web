@@ -35,14 +35,27 @@
  }
 
  foreach ($volumes->getVolumes($poolid) as $volume) {
-     // Set lastwritten for the volume
+
+    // Calculate volume expiration
+    // // If volume have already been used
+    if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
+       // Calculate expiration date only if volume status is Full or Used
+       if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
+         $expire_date = strtotime($volume['lastwritten']) + $volume['volretention'];
+         $volume['expire'] = date( $dbSql->datetime_format_short, $expire_date);
+     } else {
+         $volume['expire'] = 'n/a';
+     }
+   } else {
+       $volume['expire'] = 'n/a';
+   }
+
+   // Set lastwritten for the volume
    if (empty($volume['lastwritten'])) {
        $volume['lastwritten'] = 'n/a';
    } else {
-       // Format lastwritten in custom format if defined in config file
-     if (FileConfig::get_Value('datetime_format') != false) {
-         $volume['lastwritten'] = date(FileConfig::get_Value('datetime_format'), strtotime($volume['lastwritten']));
-     }
+      // Format lastwritten in custom format if defined in config file
+      $volume['lastwritten'] = date( $dbSql->datetime_format, strtotime($volume['lastwritten']));
    }
 
    // Sum volumes bytes
@@ -58,18 +71,6 @@
        $volume['inchanger'] = '<span class="glyphicon glyphicon-ok"></span>';
    }
 
-   // If volume have already been used
-   if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
-       // Calculate expiration date if the volume status is Full or Used
-     if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
-         $expire_date = strtotime($volume['lastwritten']) + $volume['volretention'];
-         $volume['expire'] = strftime("%Y-%m-%d", $expire_date);
-     } else {
-         $volume['expire'] = 'n/a';
-     }
-   } else {
-       $volume['expire'] = 'n/a';
-   }
 
    // Format voljobs
    $volume['voljobs'] = CUtils::format_Number($volume['voljobs']);
