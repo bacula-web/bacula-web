@@ -15,7 +15,7 @@
 		</div>
     </div>
 	
-	<h4>Last good backup job</h4>
+	<h4>{t}Last good backup job{/t}</h4>
 	<div class="table-responsive">
 	<table class="table table-bordered table-condensed table-striped text-center">
 		<tr>

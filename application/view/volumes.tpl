@@ -54,7 +54,7 @@
   <div class="col-xs-6">
     <div class="panel panel-default">
       <!-- Default panel contents -->
-      <div class="panel-heading"><b>Result</b></div>
+      <div class="panel-heading"><b>{t}Result{/t}</b></div>
       <div class="panel-body">
         <ul class="list-group">
           <li class="list-group-item">

@@ -22,7 +22,7 @@
 	</table>
 	
 	<!-- Graph testing -->
-	<h4>Graph capabilities</h4>
+	<h4>{t}Graph capabilities{/t}</h4>
 	<div class="row">
 		<div class="col-xs-12 col-sm-6"> 
          <div id="{$pie_graph_id}"> <svg></svg> </div>

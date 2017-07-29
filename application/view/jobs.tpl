@@ -160,7 +160,7 @@
 	  </div>
 
 		<div class="alert alert-info text-center" role="alert">
-		  Found <b>{$jobs_found}</b> of <b>{$total_jobs} Job(s)</b>
+		  {t}Found{/t} <b>{$jobs_found}</b> / <b>{$total_jobs} Job(s)</b>
 		</div>
 	  </div>
   </div> <!-- div class="row" -->

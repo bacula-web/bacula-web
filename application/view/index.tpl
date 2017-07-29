@@ -91,7 +91,7 @@
 					<div class="panel-body">
 						<form class="form-inline pull-right" method="post" role="form" action="index.php">
 						    <div class="form-group form-group-sm">
-                            	<label class="control-label">Period </label>
+                            	<label class="control-label">{t}Period{/t} </label>
                                 <select class="form-control input-sm" name="period_selector">
                                 {foreach from=$custom_period_list key=period_id item=period_label}
                                 	<option value="{$period_id}"
