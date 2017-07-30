@@ -108,7 +108,7 @@ class Jobs_Model extends CModel
     // Parameters: $period_timestamps	Array containing start and end date (unix timestamp format)
     //				 $job_name			Job name (optional)
     //				 $client_id			Client id (optional)
-    // Return:		 Total of stored files within the specific period
+    // Return:		 Total of stored files (backup) within the specific period
     // ==================================================================================
 
     public function getStoredFiles($period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
@@ -133,6 +133,8 @@ class Jobs_Model extends CModel
         if ($client_id != 'ALL') {
             $where[] = "clientid = '$client_id'";
         }
+        // Get stored files only for Bacula job type <Backup>
+        $where[] = "Type = 'B'";
         
      // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
@@ -155,7 +157,7 @@ class Jobs_Model extends CModel
     // Parameters: $period_timestamps 	Array containing start and end date (unix timestamp format)
     //				 $job_name			Job name (optional)
     //				 $client_id			Client id (optional)
-    // Return:		 Total of stored bytes within the specific period
+    // Return:		 Total of stored bytes (backup) within the specific period
     // ==================================================================================
 
     public function getStoredBytes($period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
@@ -176,6 +178,9 @@ class Jobs_Model extends CModel
             $where[] = "clientid = '$client_id'";
         }
         
+        // Get stored files only for Bacula job type <Backup>
+        $where[] = "Type = 'B'";
+
         // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
