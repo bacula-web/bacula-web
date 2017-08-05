@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2017, Davide Franco			                            |
+  | Copyright 2010-2017, Davide Franco			                               |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -14,12 +14,12 @@
   | GNU General Public License for more details.                            |
   +-------------------------------------------------------------------------+
 */
-
   session_start();
   require_once('core/global.inc.php');
 
   $view      = new CView();
   $dbSql     = new Bweb($view);
+  $jobs = new Jobs_Model();
 
   // That's horrible, it must be improved
   require_once('core/const.inc.php');
@@ -58,10 +58,33 @@
       'O' => 'VolumeToCatalog',
       'd' => 'DiskToCatalog',
       'A' => 'Data'
-  );
+   );
+
+  // Job types
+  $job_types = array( 
+     'B' => 'Backup',
+     'M' => 'Migrated',
+     'V' => 'Verify',
+     'R' => 'Restore',
+     'D' => 'Admin',
+     'A' => 'Archive',
+     'C' => 'Copy',
+     'g' => 'Migration' );
+ 
+  // Jobs type filter
+  $job_type_filter = '0';
+  $job_types_list = $jobs->getUsedJobTypes($job_types);
+  $job_types_list[0] = 'Any'; 
+  $view->assign('job_types_list', $job_types_list);
+
+  if( !is_null(CHttpRequest::get_Value('job_type')) ) {
+     $job_type_filter = CHttpRequest::get_Value('job_type');
+     $view->assign( 'job_type_filter', $job_type_filter);
+  }else {
+     $view->assign('job_type_filter', $job_type_filter);
+  }
 
   // Levels list filter
-  $jobs = new Jobs_Model();
   $levels_list = $jobs->getLevels($job_levels);
   $levels_list['']  = 'Any';
   $view->assign('levels_list', $levels_list);
@@ -146,6 +169,10 @@
       }
     }else {
       $view->assign('pool_filter', '');
+    }
+    // Filter by type if user asked for
+    if($job_type_filter !== '0') {
+       $query .= "AND Job.Type = '$job_type_filter' ";
     }
 
   // Selected client filter
@@ -256,7 +283,7 @@
     $query .= "LIMIT $jobs_per_page";
     $view->assign('jobs_per_page_selected', $jobs_per_page);
 
-  // Parsing jobs result
+    // Parsing jobs result
     $jobsresult = $jobs->run_query($query);
 
     foreach ($jobsresult as $job) {
