@@ -29,6 +29,11 @@
 			  {/foreach}
 			</select>
 		</div>
+      
+      <div class="form-group">
+		  <label>{t}Type{/t}</label>
+          {html_options class="form-control" name=job_type options=$job_types_list selected=$job_type_filter}
+      </div>
 
 		<div class="form-group">
 		  <label>{t}Client{/t}</label>
