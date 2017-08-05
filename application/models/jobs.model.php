@@ -265,4 +265,25 @@ class Jobs_Model extends CModel
 
         return $levels;
     }
+
+    // ==================================================================================
+    // Function: 	   getUsedJobTypes()
+    // Parameters:   array of available Bacula job types 
+    // Return:		   array containing distinct list of jobs type
+    // ==================================================================================
+
+    public function getUsedJobTypes( $job_types )
+    {
+        $used_types = array();
+        $sql_query = "SELECT DISTINCT Type from Job";
+        $result = $this->run_query($sql_query);
+
+        foreach ($result->fetchAll() as $job_type) {
+           if( array_key_exists( $job_type['type'], $job_types) ) {
+              $used_types[ $job_type['type'] ] = $job_types[ $job_type['type']];
+           }
+        }
+
+        return $used_types;
+    }
 }
