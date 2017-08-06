@@ -97,8 +97,13 @@
 
   // Pools list filer
   $pools = new Pools_Model();
-  $pools_list     = $pools->getPools();
-  array_unshift( $pools_list, array('name' => 'Any', 'pool_id' => '0') );
+  $pols_list = array();
+
+  foreach( $pools->getPools() as $pool ) {
+     $pools_list[$pool['poolid']] = $pool['name'];
+  }
+  $pools_list[0] = 'Any';
+
   $view->assign('pools_list', $pools_list);
 
   $query .= "SELECT Job.JobId, Job.Name AS Job_name, Job.Type, Job.SchedTime, Job.StartTime, Job.EndTime, Job.Level, Job.ReadBytes, Job.JobBytes, Job.JobFiles, Pool.Name, Job.JobStatus, Pool.Name AS Pool_name, Status.JobStatusLong ";
