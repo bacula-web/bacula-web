@@ -27,6 +27,16 @@
  $volumes_list = array();
  $volumes_total_bytes = 0;
 
+ // Volumes status icon
+ $volume_status = array( 'Full' => 'fa-battery-full',
+    'Archive' => 'fa-file-archive-o',
+    'Append' => 'fa-battery-quarter',
+    'Recycle' => 'fa-recycle',
+    'Read-Only' => 'fa-lock',
+    'Disabled' => 'fa-ban',
+    'Error' => 'fa-times-circle',
+    'Busy' => 'fa-clock-o' );
+
  $poolid         = CHttpRequest::get_Value('pool_id');
 
  // If pool_id have been passed in GET request 
@@ -70,6 +80,9 @@
    } else {
        $volume['inchanger'] = '<span class="glyphicon glyphicon-ok"></span>';
    }
+
+   // Set volume status icon
+   $volume['status_icon'] = $volume_status[ $volume['volstatus'] ];
 
 
    // Format voljobs

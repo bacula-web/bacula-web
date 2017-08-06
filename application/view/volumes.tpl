@@ -31,7 +31,9 @@
 	    <td>{$volume.pool_name}</td>
 	    <td>{$volume.expire}</td>
 	    <td>{$volume.lastwritten}</td>
-	    <td>{$volume.volstatus}</td>
+	    <td title="{$volume.volstatus}">
+         <i class="fa {$volume.status_icon}"></i>
+       </td>
 	    <td>{$volume.slot}</td>
 	    <td>{$volume.inchanger}</td>
 	  </tr>
