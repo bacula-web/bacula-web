@@ -73,8 +73,10 @@
         {html_options class="form-control" name=jobs_per_page options=$jobs_per_page selected=$jobs_per_page_selected}
 		</div>
 
-		<button type="reset" class="btn btn-default btn-sm" title="{t}Reset to default options{/t}">{t}Reset{/t}</button>
+		<button type="reset" class="btn btn-default btn-sm" title="{t}Reset{/t}">{t}Reset{/t}</button>
 		<button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
+
+      <a class="btn btn-link btn-sm" title="{t}Reset to default{/t}" href="jobs.php" role="button">{t}Reset to default{/t}</a>
 	  </form>
 
 	  </div> <!-- div class="col-md-3 cold-lg-3" -->
