@@ -121,6 +121,10 @@
  								<td><h5>{t}Completed job(s){/t}</h5></td>
 								<td class="text-center"> <h4><span class="label label-success">{$completed_jobs}</span></h4> </td>
 							</tr>
+                     <tr>
+                        <td><h5>{t}Completed with errors job(s){/t}
+								<td class="text-center"> <h4><span style="background-color: #FFD700;" class="label label-default">{$completed_with_errors_jobs}</span></h4> </td>
+                     </tr>
  							<tr>
                             	<td> <h5>{t}Waiting jobs(s){/t}</h5></td>
                                 <td class="text-center"> <h4><span class="label label-primary">{$waiting_jobs}</span></h4> </td>

@@ -75,6 +75,7 @@ try {
     // Running, completed, failed, waiting and canceled jobs status over last 24 hours
     $view->assign('running_jobs', $jobs->count_Jobs( $custom_period, 'running'));
     $view->assign('completed_jobs', $jobs->count_Jobs( $custom_period, 'completed'));
+    $view->assign('completed_with_errors_jobs', $jobs->count_Jobs( $custom_period, 'completed with errors'));
     $view->assign('failed_jobs', $jobs->count_Jobs( $custom_period, 'failed'));
     $view->assign('waiting_jobs', $jobs->count_Jobs( $custom_period, 'waiting'));
     $view->assign('canceled_jobs', $jobs->count_Jobs( $custom_period, 'canceled'));
@@ -126,7 +127,7 @@ try {
     // Last period <Job status graph>
     // ==============================================================
 
-    $jobs_status = array('Running', 'Completed', 'Waiting', 'Failed', 'Canceled');
+    $jobs_status = array('Running', 'Completed', 'Completed with errors', 'Waiting', 'Failed', 'Canceled');
     $jobs_status_data = array();
 
     foreach ($jobs_status as $status) {
