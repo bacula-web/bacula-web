@@ -77,8 +77,11 @@ class Jobs_Model extends CModel
                 case 'completed':
                     $where[] = "JobStatus = 'T' ";
                     break;
+                case 'completed with errors':
+                    $where[] = "JobStatus IN ('E', 'e') ";
+                   break;
                 case 'failed':
-                    $where[] = "JobStatus IN ('f','E') ";
+                    $where[] = "JobStatus = 'f' ";
                     break;
                 case 'canceled':
                     $where[] = "JobStatus = 'A' ";
