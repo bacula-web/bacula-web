@@ -173,7 +173,7 @@
          }
       }
     }else {
-      $view->assign('pool_filter', '');
+      $view->assign('pool_filter', '0');
     }
     // Filter by type if user asked for
     if($job_type_filter !== '0') {
