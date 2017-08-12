@@ -326,7 +326,7 @@
         // Job start time, end time and scheduled time in custom format (if defined)
         $job['starttime'] = date( $dbSql->datetime_format, strtotime($job['starttime']));
         $job['endtime'] = date( $dbSql->datetime_format, strtotime($job['endtime'])); 
-        $job['schedime'] = date( $dbSql->datetime_format, strtotime($job['schedtime'])); 
+        $job['schedtime'] = date( $dbSql->datetime_format, strtotime($job['schedtime'])); 
         
         $start_time = $job['starttime'];
         $end_time   = $job['endtime'];
