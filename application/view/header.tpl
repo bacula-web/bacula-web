@@ -52,6 +52,7 @@
 						<li><a href="jobs.php">{t}Jobs{/t}</a></li>
 						<li><a href="pools.php">{t}Pools{/t}</a></li>
 						<li><a href="volumes.php">{t}Volumes{/t}</a></li>
+						<li><a href="backupjob-report.php">{t}Backup job{/t}</a></li>
 					</ul>
 				</li>
 			</ul>		
