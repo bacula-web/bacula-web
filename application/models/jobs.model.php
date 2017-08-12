@@ -224,15 +224,20 @@ class Jobs_Model extends CModel
     // Return:		 Total of defined jobs name
     // ==================================================================================
 
-    public function get_Jobs_List( $client_id = null)
+    public function get_Jobs_List( $client_id = null, $jobtype = null)
     {
         $jobs   = array();
         $fields = array( 'Name');
         $where  = null;
 
-     // Prepare and execute query
+        // Prepare and execute query
         if (!is_null($client_id)) {
-            $where[] = "clientid = '$client_id'";
+           $where[] = "clientid = '$client_id'";
+        }
+
+        // Job type filter
+        if( !is_null( $jobtype ) ) {
+           $where[] = "type = '$jobtype'";
         }
 
         $statment   = array( 'table' => 'Job', 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
