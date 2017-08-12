@@ -31,6 +31,11 @@
     $days = array();
     $days_stored_bytes = array();
     $days_stored_files = array();
+
+    // Period list
+    $periods_list = array( '7' => "Last week", '14' => "Last 2 weeks", '30' => "Last month");
+    $view->assign('periods_list', $periods_list);
+
     
     // Backup job name
     if (!is_null(CHttpRequest::get_value('backupjob_name'))) {

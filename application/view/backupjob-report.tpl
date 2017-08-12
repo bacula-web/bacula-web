@@ -9,11 +9,18 @@
       <div class="panel-heading"><b>{t}Report options{/t}</b></div>
       <div class="panel-body">
         <form method="post" action="backupjob-report.php" class="form-inline">
+          <!-- Backup job name -->
           <div class="form-group">
             <label for="backupjobname">{t}Backup job name{/t}</label>
               <input type=hidden id="backupjobname" name="default" value="1"> <!-- <- what is it ? -->
               <select name=backupjob_name class="form-control">{html_options values=$jobs_list output=$jobs_list}</select>
           </div>
+          <!-- Period -->
+          <div class="form-group">
+            <label for="period">{t}Period{/t}</label>
+              <select name=period class="form-control">{html_options values=$periods_list output=$periods_list}</select>
+          </div>
+
           <!-- Submit button -->
           <div class="form-group pull-right">
               <button type="submit" class="btn btn-primary">{t}View report{/t}</button>
