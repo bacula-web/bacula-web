@@ -84,7 +84,7 @@ try {
     // Get last 10 jobs list
     $query = "SELECT JobId, Level, JobFiles, JobBytes, ReadBytes, JobStatus, StartTime, EndTime, Name ";
     $query .= "FROM Job ";
-    $query .= "WHERE Name = '$backupjob_name' ";
+    $query .= "WHERE Name = '$backupjob_name' AND Type = 'B' ";
     $query .= "ORDER BY EndTime DESC ";
     $query .= "LIMIT 7 ";
     
