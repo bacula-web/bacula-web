@@ -42,8 +42,12 @@
 			<td>{$job.endtime}</td>
 			<td>{$job.elapsedtime}</td>
 			<td>{$job.speed}</td>
-            <td>{$job.compression}</td>
+         <td>{$job.compression}</td>
 		</tr>
+      {foreachelse}
+      <tr>
+         <td colspan="9">{t}No job(s) to display{/t}</td>
+      </tr>
 		{/foreach}
 	</table>
 	</div>
