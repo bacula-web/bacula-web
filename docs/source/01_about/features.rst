@@ -51,7 +51,6 @@ Backup job report
 
 Backup job report display useful information about Bacula jobs like
 
-   * last 7 days stored bytes and files
    * last completed jobs
    * last 7 days stored bytes and files graphs
 

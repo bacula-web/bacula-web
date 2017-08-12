@@ -115,7 +115,7 @@ try {
     $view->assign('pools_nb', $pools->count());
 
     // Backup Job list
-    $view->assign('jobs_list', $jobs->get_Jobs_List());
+    $view->assign('jobs_list', $jobs->get_Jobs_List(null, 'B'));
  
     // Clients list
     $view->assign('clients_list', $clients->getClients());
