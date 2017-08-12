@@ -4,6 +4,24 @@
 
     <h3>{$page_name}</h3>    
 
+    <!-- Backup job report -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><b>{t}Report options{/t}</b></div>
+      <div class="panel-body">
+        <form method="post" action="backupjob-report.php" class="form-inline">
+          <div class="form-group">
+            <label for="backupjobname">{t}Backup job name{/t}</label>
+              <input type=hidden id="backupjobname" name="default" value="1"> <!-- <- what is it ? -->
+              <select name=backupjob_name class="form-control">{html_options values=$jobs_list output=$jobs_list}</select>
+          </div>
+          <!-- Submit button -->
+          <div class="form-group pull-right">
+              <button type="submit" class="btn btn-primary">{t}View report{/t}</button>
+          </div>
+        </form>
+      </div> <!-- end div class=panel-body -->
+    </div> <!-- end div class=panel ... -->
+
 		<div class="panel panel-default">
 			<div class="panel-heading"><h3 class="panel-title">{t}Job informations{/t}</h3></div>
 			<div class="panel-body">

@@ -17,7 +17,7 @@
  session_start();
  include_once( 'core/global.inc.php' );
 
-try {
+#try {
     // Initialise view and model
     $view = new CView();
     $dbSql = new Bweb($view);
@@ -36,7 +36,7 @@ try {
     if (!is_null(CHttpRequest::get_value('backupjob_name'))) {
         $backupjob_name = CHttpRequest::get_value('backupjob_name');
     } else {
-        throw new Exception("Error: Backup job name not specified");
+#        throw new Exception("Error: Backup job name not specified");
     }
 
     // Generate Backup Job report period string
@@ -44,6 +44,9 @@ try {
     
     // Stored Bytes on the defined period
     $jobs = new Jobs_Model();
+    // Backup Job list
+    $view->assign('jobs_list', $jobs->get_Jobs_List(null, 'B'));
+
     $backupjob_bytes = $jobs->getStoredBytes(array(LAST_WEEK, NOW), $backupjob_name);
     $backupjob_bytes = CUtils::Get_Human_Size($backupjob_bytes);
     
@@ -131,9 +134,9 @@ try {
         $joblist[] = $job;
     } // end while
 
-} catch (Exception $e) {
-    CErrorHandler::displayError($e);
-}
+#} catch (Exception $e) {
+#    CErrorHandler::displayError($e);
+#}
 
  $view->assign('jobs', $joblist);
  $view->assign('backupjob_name', $backupjob_name);
