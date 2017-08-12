@@ -17,7 +17,7 @@
 		</div> <!-- end div class="panel ..." -->
 			
 		<!-- Last jobs list -->
-		<h4>{t}Last jobs{/t}</h4>
+		<h4>{t}Last backup jobs{/t}</h4>
 	
 	<div class="table-responsive">
 	<table class="table table-condensed table-hover table-striped table-bordered text-center">
