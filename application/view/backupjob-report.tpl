@@ -13,12 +13,12 @@
           <div class="form-group">
             <label for="backupjobname">{t}Backup job name{/t}</label>
               <input type=hidden id="backupjobname" name="default" value="1"> <!-- <- what is it ? -->
-              <select name=backupjob_name class="form-control">{html_options values=$jobs_list output=$jobs_list}</select>
+              {html_options class="form-control" name=backupjob_name options=$jobs_list}
           </div>
           <!-- Period -->
           <div class="form-group">
             <label for="period">{t}Period{/t}</label>
-              <select name=period class="form-control">{html_options values=$periods_list output=$periods_list}</select>
+              {html_options class="form-control" name=period options=$periods_list}
           </div>
 
           <!-- Submit button -->
