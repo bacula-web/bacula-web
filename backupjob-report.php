@@ -39,6 +39,7 @@
  // Backup job name
  if (!is_null(CHttpRequest::get_value('backupjob_name'))) {
     $backupjob_name = CHttpRequest::get_value('backupjob_name');
+    $view->assign( 'no_report_options', 'false');
  } else {
     $view->assign( 'no_report_options', 'true');
  }

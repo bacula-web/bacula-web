@@ -29,6 +29,7 @@
       </div> <!-- end div class=panel-body -->
     </div> <!-- end div class=panel ... -->
 
+    {if $no_report_options == 'false'}
 		<div class="panel panel-default">
 			<div class="panel-heading"><h3 class="panel-title">{t}Job informations{/t}</h3></div>
 			<div class="panel-body">
@@ -100,7 +101,8 @@
 				</div>
 			</div>
 		</div>
-	</div> <! -- div class="row" -->
+   {/if}
+	</div> <!-- div class="row" -->
 
 	</div> <!-- class="container-fluid" -->
 
