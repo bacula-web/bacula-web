@@ -101,6 +101,8 @@
 				</div>
 			</div>
 		</div>
+   {else}
+     <div class="alert alert-info" role="alert">{t}Choose the backup job name and the period interval, then click on the{/t} <strong>{t}View report{/t}</strong> {t}button{/t}</div>
    {/if}
 	</div> <!-- div class="row" -->
 
