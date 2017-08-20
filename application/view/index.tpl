@@ -191,7 +191,7 @@
 				<div class="panel-heading"><b>{t}Last used volumes{/t}</b></div>
 				<div class="panel-body">
 					<div class="table-responsive">
-					<table class="table table-condensed table-stripped">
+					<table class="table table-condensed table-striped">
 						<tr>
 							<th title="{t}Volume name{/t}">Volume</th>
 							<th title="{t}Volume status{/t}">Status</th>
