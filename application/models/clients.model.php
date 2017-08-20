@@ -19,12 +19,12 @@ class Clients_Model extends CModel
 {
 
     // ==================================================================================
-    // Function: 	count()
-    // Parameters:	$pdo_connection - valide pdo object
-    // Return:		Number of clients
+    // Function: 	   count()
+    // Parameters:	$tablename - Client table name
+    // Return:		   Number of clients
     // ==================================================================================
 
-    public function count( $tablename = 'Client', $filter = null)
+    public function count( $tablename = 'Client')
     {
         return parent::count($tablename);
     }
