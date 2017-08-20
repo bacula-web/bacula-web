@@ -68,9 +68,7 @@
           $backupjob_period = "From " . date( $dbSql->datetime_format_short, (NOW - MONTH)) . " to " . date( $dbSql->datetime_format_short, NOW);
           $interval[0] = NOW-MONTH;
        }
-    }else {
-       $backupjob_period = 7;
-    } 
+    }
     
     // Get start and end datetime for backup jobs report and charts
     $periods = CDBQuery::get_Timestamp_Interval($jobs->get_driver_name(), $interval);
