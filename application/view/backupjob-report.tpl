@@ -81,6 +81,7 @@
 	<p>&nbsp;</p>
   
    <!-- Transfered Bytes/Files graph -->
+   {if ($selected_period <= 14) } 
 	<div class="row">
 		<div class="col-xs-12 col-sm-6">
 			<div class="panel panel-default">
@@ -101,6 +102,30 @@
 				</div>
 			</div>
 		</div>
+   {else}
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>{t}Transfered Bytes{/t}</b></div>
+				<div class="panel-body">
+               <div id="{$stored_bytes_chart_id}"> <svg></svg> </div>
+                  {$stored_bytes_chart}
+				</div>
+			</div>
+		</div>
+   </div> <! -- end div class="row" -->
+  
+   <div class="row">
+		<div class="col-xs-12"> 
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>{t}Transfered Files{/t}</b></div>
+				<div class="panel-body">
+               <div id="{$stored_files_chart_id}"> <svg></svg> </div>
+                  {$stored_files_chart}
+				</div>
+			</div>
+		</div>
+   {/if} 
    {else}
      <div class="alert alert-info" role="alert">{t}Choose the backup job name and the period interval, then click on the{/t} <strong>{t}View report{/t}</strong> {t}button{/t}</div>
    {/if}
