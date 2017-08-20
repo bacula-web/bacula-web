@@ -48,13 +48,20 @@
 
  if (($backupjob_name === NULL) && (empty($backupjob_name)) ) {
     $view->assign( 'no_report_options', 'true');
+    // Set selected period
+    $view->assign( 'selected_period', 7);
  } else {
     $view->assign( 'no_report_options', 'false');
 
+    $view->assign( 'selected_jobname', $backupjob_name);
+
     // Generate Backup Job report period string
     $backupjob_period = CHttpRequest::get_value('period');
-    
+
     if (!is_null($backupjob_period)) {
+       // Set selected period
+       $view->assign( 'selected_period', $backupjob_period);
+
        switch( $backupjob_period ) {
        case '7':
           $backupjob_period = "From " . date( $dbSql->datetime_format_short, (NOW - WEEK)) . " to " . date( $dbSql->datetime_format_short, NOW);
