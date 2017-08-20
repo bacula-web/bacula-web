@@ -256,30 +256,6 @@
 				</div> <!-- end <div class="panel-body"> -->
 			</div> <!-- end <div class="panel panel-default"> -->
 		</div> <!-- end <div class="col-..." -->
-		
-		<div class="col-xs-12 col-md-6">
-			<!-- Backup job report -->
-			<div class="panel panel-default">
-				<div class="panel-heading"><b>{t}Backup Job report{/t}</b></div>
-				<div class="panel-body">
-					<form method="post" action="backupjob-report.php" class="form-horizontal" role="form">
-						<div class="form-group">
-							<label class="col-sm-4 control-label">{t}Backup job name{/t}</label>
-							<div class="col-sm-8">
-								<input type=hidden name="default" value="1">
-								<select name=backupjob_name class="form-control">{html_options values=$jobs_list output=$jobs_list}</select>
-							</div>
-						</div>
-						<!-- Submit button -->
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">{t}View report{/t}</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>		
-		</div> <!-- end <div class="col-..." -->
 	</div> <!-- end <div class="row"> -->
 </div> <!-- end <div class="container"> -->
 
