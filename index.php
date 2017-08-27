@@ -251,7 +251,37 @@ try {
     }
 
     $view->assign('volumes_list', $last_volumes);
-     
+
+    // Per job name backup and restore statistics
+    $job_types = array( 'R' => 'Restore', 'B' => 'Backup' );      // TO IMPROVE
+
+    $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes, Name AS JobName FROM Job WHERE Type in ('B','R') GROUP BY Name";
+    $result = $jobs->run_query($query);
+    $jobs_result = array();
+
+    foreach( $result->fetchAll() as $job) {
+       $job['jobfiles'] = CUtils::format_Number( $job['jobfiles']);
+       $job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes']);
+       $job['type'] = $job_types[ $job['type'] ];
+       $jobs_result[] = $job;
+    }
+
+    $view->assign( 'jobnames_jobs_stats', $jobs_result);
+
+    // Per job type backup and restore statistics
+    $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes FROM Job WHERE Type in ('B','R') GROUP BY Type";
+    $result = $jobs->run_query($query);
+    $jobs_result = null;
+
+    foreach( $result->fetchAll() as $job) {
+       $job['jobfiles'] = CUtils::format_Number( $job['jobfiles']);
+       $job['jobbytes'] = CUtils::Get_Human_Size( $job['jobbytes']);
+       $job['type'] = $job_types[ $job['type'] ];
+       $jobs_result[] = $job;
+    }
+
+    $view->assign( 'jobtypes_jobs_stats', $jobs_result);
+
 } catch (Exception $e) {
     CErrorHandler::displayError($e);
 }
