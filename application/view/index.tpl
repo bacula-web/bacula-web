@@ -213,8 +213,60 @@
 					</div>
 				</div> <!-- <div class="panel-body"> -->
 			</div> <!-- <div class="panel panel-default"> -->		
+
 		</div> <!-- end class="col-..."-->
 	</div> <!-- end <div class="row"> -->
+
+	<div class="row">
+		<div class="col-xs-12 col-md-6">
+
+         <!-- Clients jobs total widget -->
+         <div class="panel panel-default">
+            <div class="panel-heading"><b>{t}Clients jobs total{/t}</b></div>
+            <div class="panel-body">
+             <p>{t}Per job name backup and restore jobs statistics{/t}</p>
+            </div> <!-- end div class=panel-body -->
+            <table class="table table-condensed">
+               <tr>
+                  <th>{t}Job name{/t}</th>
+                  <th>{t}Jobs{/t}</th>
+                  <th>{t}Files{/t}</th>
+                  <th>{t}Bytes{/t}</th>
+                  <th>{t}Type{/t}</th>
+               </tr>
+               {foreach from=$jobnames_jobs_stats item=jobname}
+               <tr>
+                  <td>{$jobname.jobname}</td>
+                  <td>{$jobname.jobscount}</td>
+                  <td>{$jobname.jobfiles}</td>
+                  <td>{$jobname.jobbytes}</td>
+                  <td>{$jobname.type}</td>
+               </tr>
+               {/foreach}
+            </table>
+            <div class="panel-body">
+               <p>Per job type backup and restore jobs statistics</p>
+            </div> <!-- end div class=panel-body -->
+            <table class="table table-condensed">
+               <tr>
+                  <th>{t}Type{/t}</th>
+                  <th>{t}Files{/t}</th>
+                  <th>{t}Bytes{/t}</th>
+                  <th>{t}Jobs{/t}</th>
+               </tr>
+               {foreach from=$jobtypes_jobs_stats item=jobtype}
+               <tr>
+                  <td>{$jobtype.type}</td>
+                  <td>{$jobtype.jobfiles}</td>
+                  <td>{$jobtype.jobbytes}</td>
+                  <td>{$jobtype.jobscount}</td>
+               </tr>
+               {/foreach}
+            </table>
+         </div> <!-- end div class=panel... -->
+      </div> <!-- end div class=col-xx -->
+   </div> <!-- end div class=row -->
+  
 </div> <!-- end <div class="container"> -->
 
 {include file="footer.tpl"}
