@@ -217,46 +217,6 @@
 	</div> <!-- end <div class="row"> -->
 
 	<!-- Fourth row with Client and backup job reports widgets  -->
-	<div class="row">
-		<!-- Client report -->
-		<div class="col-xs-12 col-md-6">
-			<div class="panel panel-default">
-				<div class="panel-heading"><b>{t}Client report{/t}</b></div>
-				<div class="panel-body">
-					<form method="post" action="client-report.php" class="form-horizontal" role="form">
-						<!-- Clients list -->
-						<div class="form-group">
-							<label class="col-sm-2 control-label">{t}Client{/t}</label>
-							<div class="col-sm-10">
-								<select name="client_id" class="form-control">
-									{foreach from=$clients_list key=client_id item=client_name}
-									<option value="{$client_id}">{$client_name}</option>
-									{/foreach}
-								</select>
-							</div>
-						</div>
-						<!-- Intervals -->
-						<div class="form-group">
-							<label class="col-sm-2 control-label">{t}Interval{/t}</label>
-							<div class="col-sm-10">
-								<select name="period" class="form-control">
-									<option value="7">{t}Last week{/t}
-									<option value="14">{t}Last 2 week{/t}
-									<option value="28">{t}Last month{/t}
-								</select>
-							</div>
-						</div>
-						<!-- Submit button -->
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">{t}View report{/t}</button>
-							</div>
-						</div>
-					</form>
-				</div> <!-- end <div class="panel-body"> -->
-			</div> <!-- end <div class="panel panel-default"> -->
-		</div> <!-- end <div class="col-..." -->
-	</div> <!-- end <div class="row"> -->
 </div> <!-- end <div class="container"> -->
 
 {include file="footer.tpl"}

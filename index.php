@@ -114,9 +114,6 @@ try {
     $pools = new Pools_Model();
     $view->assign('pools_nb', $pools->count());
 
-    // Clients list
-    $view->assign('clients_list', $clients->getClients());
-
     // Count volumes
     $view->assign('volumes_nb', $volumes->count());
 
