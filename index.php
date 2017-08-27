@@ -257,8 +257,7 @@ try {
 }
  
  // Set page name
- $current_page = 'Dashboard';
- $view->assign('page_name', $current_page);
+ $view->assign('page_name', 'Dashboard');
  
  // Render template
  $view->render('index.tpl');

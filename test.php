@@ -147,8 +147,7 @@ $view->assign('bar_chart', $bar_chart->render());
 unset($bar_chart);
 
 // Set page name
-$current_page = 'Test page';
-$view->assign('page_name', $current_page);
+$view->assign('page_name', 'Test page');
  
 // Template rendering
 $view->assign('checks', $check_list);

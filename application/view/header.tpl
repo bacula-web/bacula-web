@@ -104,7 +104,6 @@
       <div class="col-xs-12">
         <ol class="breadcrumb">
 			{php}
-				global $current_page;
 				$scriptname = explode( "/", $_SERVER['SCRIPT_FILENAME']);
 				$current = end( $scriptname );
 
@@ -112,7 +111,6 @@
 					echo '<li class="active"> <i class="fa fa-home fa-fw"></i> Dashboard</li>';
 				}else{
 					echo '<li> <a href="index.php" title="{t}Back to Dashboard{/t}"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
-					echo "<li class='active'>$current_page</li>";
 				}
 			{/php}
         </ol>

@@ -43,8 +43,7 @@
  $view->assign('pools', $pools_list);
 
  // Set page name
- $current_page = 'Pools report';
- $view->assign('page_name', $current_page);
+ $view->assign('page_name', 'Pools report');
  
  // Process and display the template
  $view->display('pools.tpl');

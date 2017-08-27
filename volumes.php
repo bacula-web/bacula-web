@@ -97,8 +97,7 @@
  $view->assign('volumes_total_bytes', CUtils::Get_Human_Size($volumes_total_bytes));
 
  // Set page name
- $current_page = 'Volumes report';
- $view->assign('page_name', $current_page);
+ $view->assign('page_name', 'Volumes report');
 
  // Process and display the template
  $view->display('volumes.tpl');

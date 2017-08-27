@@ -179,8 +179,7 @@
  } // end else
 
  // Set page name
- $current_page = 'Backup job report';
- $view->assign('page_name', $current_page);
+ $view->assign('page_name', 'Backup job report');
  
  // Process and display the template
  $view->display('backupjob-report.tpl');

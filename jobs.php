@@ -395,8 +395,7 @@
     $view->assign('total_jobs', $jobs->count());
 
   // Set page name
-    $current_page = 'Jobs report';
-    $view->assign('page_name', $current_page);
+    $view->assign('page_name', 'Jobs report');
 
     // Language
     $view->assign('config_language', FileConfig::get_Value('language'));

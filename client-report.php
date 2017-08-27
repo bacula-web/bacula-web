@@ -137,8 +137,7 @@
  $view->assign('period', $period);
 
  // Set page name
- $current_page = 'Client report';
- $view->assign('page_name', $current_page);
+ $view->assign('page_name', 'Client report');
 
  // Process and display the template
  $view->render('client-report.tpl');
