@@ -215,8 +215,6 @@
 			</div> <!-- <div class="panel panel-default"> -->		
 		</div> <!-- end class="col-..."-->
 	</div> <!-- end <div class="row"> -->
-
-	<!-- Fourth row with Client and backup job reports widgets  -->
 </div> <!-- end <div class="container"> -->
 
 {include file="footer.tpl"}
