@@ -285,6 +285,9 @@ try {
     # Weekly jobs statistics
     $view->assign( 'weeklyjobsstats', $jobs->getWeeklyJobsStats());
 
+    # 10 biggest completed backup jobs
+    $view->assign( 'biggestjobs', $jobs->getBiggestJobsStats());
+
 } catch (Exception $e) {
     CErrorHandler::displayError($e);
 }
