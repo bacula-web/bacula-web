@@ -283,6 +283,8 @@
                      <td>{$day.jobbytes}</td>
                      <td>{$day.jobfiles}</td>
                   </tr>
+                  {foreachelse}
+                     <tr> <td colspan="3" class="text-center">{t}Nothing to display{/t}</td> </tr>
                   {/foreach}
                </table>
             </div> <!-- end div class=panel-body -->
@@ -308,6 +310,8 @@
                         <td>{$job.jobbytes}</td>
                         <td>{$job.jobfiles}</td>
                      </tr>
+                  {foreachelse}
+                     <tr> <td colspan="3" class="text-center">{t}Nothing to display{/t}</td> </tr>
                   {/foreach}
                </table>
       </div>
