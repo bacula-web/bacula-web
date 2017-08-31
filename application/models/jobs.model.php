@@ -337,4 +337,34 @@ class Jobs_Model extends CModel
       
        return $res;
     }
+
+    // ==================================================================================
+    // Function: 	   getBiggestJobsStats()
+    // Parameters:   none 
+    // Return:		   array containing 10 biggest backup jobs (stored bytes) 
+    // ==================================================================================
+
+    public function getBiggestJobsStats() 
+    {
+       $fields = array( 'SUM(Job.Jobbytes) as jobbytes', 'SUM(Job.Jobfiles) as jobfiles', 'Name');
+       $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
+       $res = array();
+
+       $query = CDBQuery::get_Select( array( 'table' => 'Job',
+          'fields' => $fields,
+          'where' => $where,
+          'groupby' => 'Job.Name',
+          'orderby' => 'Job.JobBytes DESC',
+          'limit' => '10'));
+       
+       $result = $this->run_query($query);
+
+       foreach( $result->fetchAll() as $job) {
+          $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
+          $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
+          $res[] = $job;
+       } 
+      
+       return $res;
+    }
 }
