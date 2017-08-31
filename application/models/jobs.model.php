@@ -295,4 +295,46 @@ class Jobs_Model extends CModel
 
         return $used_types;
     }
+
+    // ==================================================================================
+    // Function: 	   getWeeklyJobsStats()
+    // Parameters:   none 
+    // Return:		   array containing stored bytes and files of completed backup jobs for each day of the week
+    // ==================================================================================
+
+    public function getWeeklyJobsStats() 
+    {
+       $query = '';
+       $fields = array( 'SUM(Job.Jobbytes) as jobbytes' , 'SUM(Job.Jobfiles) as jobfiles');
+       $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
+       $orderby = 'JobBytes DESC';
+       $res = array();
+
+       switch($this->driver) {
+       case 'mysql':
+          $fields[] = "FROM_UNIXTIME(Job.JobTDate, '%W') AS dayofweek";
+          $groupby = 'dayofweek';
+          break;
+       case 'pgsql':
+          break;
+       case 'sqlite':
+          return null;
+       } // end switch
+
+       $query = CDBQuery::get_Select( array( 'table' => 'Job',
+          'fields' => $fields,
+          'where' => $where,
+          'groupby' => $groupby,
+          'orderby' => $orderby));
+
+       $result = $this->run_query($query);
+
+       foreach( $result->fetchAll() as $day ) {
+          $day['jobbytes'] = CUtils::Get_Human_Size($day['jobbytes']);
+          $day['jobfiles'] = CUtils::format_Number($day['jobfiles']);
+          $res[] = $day;
+       } 
+      
+       return $res;
+    }
 }
