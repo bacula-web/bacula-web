@@ -265,6 +265,29 @@
             </table>
          </div> <!-- end div class=panel... -->
       </div> <!-- end div class=col-xx -->
+   
+      <!-- Weekly jobs statistics -->
+      <div class="col col-xs-12 col-md-6"> 
+         <div class="panel panel-default">
+            <div class="panel-heading"><b>{t}Weekly jobs statistics{/t}</b></div>
+            <div class="panel-body">
+               <table class="table table-condensed table-striped">
+                  <tr>
+                     <th>{t}Day of week{/t}</th>
+                     <th>{t}Bytes{/t}</th>
+                     <th>{t}Files{/t}</th>
+                  </tr>
+                  {foreach from=$weeklyjobsstats item=day}
+                  <tr>
+                     <td>{$day.dayofweek}</td>
+                     <td>{$day.jobbytes}</td>
+                     <td>{$day.jobfiles}</td>
+                  </tr>
+                  {/foreach}
+               </table>
+            </div> <!-- end div class=panel-body -->
+         </div> <!-- end div class=panel -->
+      </div> <!-- end div class=col col-xx -->
    </div> <!-- end div class=row -->
   
 </div> <!-- end <div class="container"> -->

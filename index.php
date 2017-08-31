@@ -282,6 +282,9 @@ try {
 
     $view->assign( 'jobtypes_jobs_stats', $jobs_result);
 
+    # Weekly jobs statistics
+    $view->assign( 'weeklyjobsstats', $jobs->getWeeklyJobsStats());
+
 } catch (Exception $e) {
     CErrorHandler::displayError($e);
 }
