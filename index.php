@@ -221,10 +221,10 @@ try {
     $tmp   = "(Media.Volstatus != 'Disabled') ";
 
     switch ($volumes->get_driver_name()) {
-        case 'mysql':
         case 'pgsql':
             $tmp .= "AND (Media.LastWritten IS NOT NULL)";
             break;
+        case 'mysql':
         case 'sqlite':
             $tmp .= "AND (Media.Lastwritten != 0)";
     }
