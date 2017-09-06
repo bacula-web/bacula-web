@@ -352,17 +352,17 @@ class Jobs_Model extends CModel
 
     public function getBiggestJobsStats() 
     {
-       $fields = array( 'SUM(Job.Jobbytes) as jobbytes', 'SUM(Job.Jobfiles) as jobfiles', 'Name');
+       $fields = array( 'SUM(Job.Jobbytes) as jobbytes', 'SUM(Job.Jobfiles) as jobfiles', 'Job.Name');
        $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
        $res = array();
 
        $query = CDBQuery::get_Select( array( 'table' => 'Job',
           'fields' => $fields,
           'where' => $where,
-          'groupby' => 'Job.Name',
-          'orderby' => 'Job.JobBytes DESC',
+          'groupby' => 'Name',
+          'orderby' => 'jobbytes DESC',
           'limit' => '10'));
-       
+
        $result = $this->run_query($query);
 
        foreach( $result->fetchAll() as $job) {
