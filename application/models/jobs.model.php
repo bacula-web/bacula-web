@@ -308,14 +308,15 @@ class Jobs_Model extends CModel
        $fields = array( 'SUM(Job.Jobbytes) as jobbytes' , 'SUM(Job.Jobfiles) as jobfiles');
        $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
        $orderby = 'JobBytes DESC';
+       $groupby = 'dayofweek';
        $res = array();
 
        switch($this->driver) {
        case 'mysql':
           $fields[] = "FROM_UNIXTIME(Job.JobTDate, '%W') AS dayofweek";
-          $groupby = 'dayofweek';
           break;
        case 'pgsql':
+          $fields[] = 'extract(dow from Job.EndTime::timestamp) AS dayofweek';
           break;
        case 'sqlite':
           return null;
@@ -329,12 +330,17 @@ class Jobs_Model extends CModel
 
        $result = $this->run_query($query);
 
+       // Simply fix day name for postgreSQL
+       // It could be improved but I lack some SQL (postgreSQL skills)
+       $week = array( 0 => 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+
        foreach( $result->fetchAll() as $day ) {
           $day['jobbytes'] = CUtils::Get_Human_Size($day['jobbytes']);
           $day['jobfiles'] = CUtils::format_Number($day['jobfiles']);
+          $day['dayofweek'] = $week[ $day['dayofweek'] ];
           $res[] = $day;
        } 
-      
+
        return $res;
     }
 
