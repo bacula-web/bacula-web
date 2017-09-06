@@ -295,4 +295,86 @@ class Jobs_Model extends CModel
 
         return $used_types;
     }
+
+    // ==================================================================================
+    // Function: 	   getWeeklyJobsStats()
+    // Parameters:   none 
+    // Return:		   array containing stored bytes and files of completed backup jobs for each day of the week
+    // ==================================================================================
+
+    public function getWeeklyJobsStats() 
+    {
+       $query = '';
+       $fields = array( 'SUM(Job.Jobbytes) as jobbytes' , 'SUM(Job.Jobfiles) as jobfiles');
+       $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
+       $orderby = 'JobBytes DESC';
+       $groupby = 'dayofweek';
+       $res = array();
+
+       switch($this->driver) {
+       case 'mysql':
+          $fields[] = "FROM_UNIXTIME(Job.JobTDate, '%W') AS dayofweek";
+          break;
+       case 'pgsql':
+          $fields[] = 'extract(dow from Job.EndTime::timestamp) AS dayofweek';
+          break;
+       case 'sqlite':
+          return null;
+       } // end switch
+
+       $query = CDBQuery::get_Select( array( 'table' => 'Job',
+          'fields' => $fields,
+          'where' => $where,
+          'groupby' => $groupby,
+          'orderby' => $orderby));
+
+       $result = $this->run_query($query);
+
+       $week = array( 0 => 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+
+       foreach( $result->fetchAll() as $day ) {
+          $day['jobbytes'] = CUtils::Get_Human_Size($day['jobbytes']);
+          $day['jobfiles'] = CUtils::format_Number($day['jobfiles']);
+          
+          // Simply fix day name for postgreSQL
+          // It could be improved but I lack some SQL (postgreSQL skills)
+          if( $this->driver == 'pgsql' ) {
+             $day['dayofweek'] = $week[ $day['dayofweek'] ];
+          }
+          
+          $res[] = $day;
+       } 
+
+       return $res;
+    }
+
+    // ==================================================================================
+    // Function: 	   getBiggestJobsStats()
+    // Parameters:   none 
+    // Return:		   array containing 10 biggest backup jobs (stored bytes) 
+    // ==================================================================================
+
+    public function getBiggestJobsStats() 
+    {
+       $fields = array( 'SUM(Job.Jobbytes) as jobbytes', 'SUM(Job.Jobfiles) as jobfiles', 'Job.Name');
+       $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
+       $res = array();
+
+       $query = CDBQuery::get_Select( array( 'table' => 'Job',
+          'fields' => $fields,
+          'where' => $where,
+          'groupby' => 'Name',
+          'orderby' => 'jobbytes DESC',
+          'limit' => '10'));
+
+       $result = $this->run_query($query);
+
+       foreach( $result->fetchAll() as $job) {
+          $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
+          $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
+          $res[] = $job;
+       } 
+      
+       return $res;
+    }
 }

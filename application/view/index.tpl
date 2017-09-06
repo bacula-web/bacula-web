@@ -265,7 +265,57 @@
             </table>
          </div> <!-- end div class=panel... -->
       </div> <!-- end div class=col-xx -->
+   
+      <!-- Weekly jobs statistics -->
+      <div class="col col-xs-12 col-md-6"> 
+         <div class="panel panel-default">
+            <div class="panel-heading"><b>{t}Weekly jobs statistics{/t}</b></div>
+            <div class="panel-body">
+               <table class="table table-condensed table-striped">
+                  <tr>
+                     <th>{t}Day of week{/t}</th>
+                     <th>{t}Bytes{/t}</th>
+                     <th>{t}Files{/t}</th>
+                  </tr>
+                  {foreach from=$weeklyjobsstats item=day}
+                  <tr>
+                     <td>{$day.dayofweek}</td>
+                     <td>{$day.jobbytes}</td>
+                     <td>{$day.jobfiles}</td>
+                  </tr>
+                  {foreachelse}
+                     <tr> <td colspan="3" class="text-center">{t}Nothing to display{/t}</td> </tr>
+                  {/foreach}
+               </table>
+            </div> <!-- end div class=panel-body -->
+         </div> <!-- end div class=panel -->
+      </div> <!-- end div class=col col-xx -->
    </div> <!-- end div class=row -->
+
+   <div class="row">
+      <div class="col col-xs-12 col-md-6">
+         <!-- 10th biggest job names -->
+         <div class="panel panel-default">
+            <div class="panel panel-heading"><b>{t}Biggest backup jobs{/t}</b></div>
+            <div class="panel-body">
+               <table class="table table-condensed table-striped">
+                  <tr>
+                     <th>{t}Job name{/t}</th>
+                     <th>{t}Total bytes{/t}</th>
+                     <th>{t}Total files{/t}</th>
+                  </tr>
+                  {foreach from=$biggestjobs item=job}
+                     <tr>
+                        <td>{$job.name}</td>
+                        <td>{$job.jobbytes}</td>
+                        <td>{$job.jobfiles}</td>
+                     </tr>
+                  {foreachelse}
+                     <tr> <td colspan="3" class="text-center">{t}Nothing to display{/t}</td> </tr>
+                  {/foreach}
+               </table>
+      </div>
+   </div>
   
 </div> <!-- end <div class="container"> -->
 
