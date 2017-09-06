@@ -330,14 +330,18 @@ class Jobs_Model extends CModel
 
        $result = $this->run_query($query);
 
-       // Simply fix day name for postgreSQL
-       // It could be improved but I lack some SQL (postgreSQL skills)
        $week = array( 0 => 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
 
        foreach( $result->fetchAll() as $day ) {
           $day['jobbytes'] = CUtils::Get_Human_Size($day['jobbytes']);
           $day['jobfiles'] = CUtils::format_Number($day['jobfiles']);
-          $day['dayofweek'] = $week[ $day['dayofweek'] ];
+          
+          // Simply fix day name for postgreSQL
+          // It could be improved but I lack some SQL (postgreSQL skills)
+          if( $this->driver == 'pgsql' ) {
+             $day['dayofweek'] = $week[ $day['dayofweek'] ];
+          }
+          
           $res[] = $day;
        } 
 
