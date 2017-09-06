@@ -255,7 +255,7 @@ try {
     // Per job name backup and restore statistics
     $job_types = array( 'R' => 'Restore', 'B' => 'Backup' );      // TO IMPROVE
 
-    $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes, Name AS JobName FROM Job WHERE Type in ('B','R') GROUP BY Name";
+    $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes, Name AS JobName FROM Job WHERE Type in ('B','R') GROUP BY Name,Type";
     $result = $jobs->run_query($query);
     $jobs_result = array();
 
