@@ -1,13 +1,28 @@
 {include file=header.tpl}
 
 <div class="container">
-
   <div class="row">
-
-    <div class="col-xs-12">
-
+    <div class="col-xs-12 col-md-8">
       <h3>{$page_name}</h3>
+    </div>
 
+    <div class="col-xs-12 col-md-3 col-md-offset-1">
+      <!-- Options -->
+      <form class="form-inline" role="form" action="volumes.php" method="post">
+        <span class="help-block">{t}Options{/t}</span>
+        <div class="form-group">
+          <label>{t}Order by{/t}</label>
+          {html_options class="form-control" name=orderby options=$orderby selected=$orderby_selected}
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
+      </form>
+     </div> <!-- end div class="col-x... -->
+   </div> <!-- end div=class=row -->
+
+   &nbsp;
+
+   <div class="row">
+     <div class="col-xs-12">
       <div class="table-responsive">
         <table class="table table-condensed table-striped text-center">
           <tr>
@@ -71,6 +86,9 @@
       </div> <!-- end div class="panel-body -->
     </div> <!-- end div class="panel" -->
   </div> <!-- end div class="col-..." -->
+
+
+
 </div> <!-- end div class="row" -->
 
 </div> <!-- div class="container-fluid" -->

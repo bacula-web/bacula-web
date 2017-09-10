@@ -37,6 +37,16 @@
     'Error' => 'fa-times-circle',
     'Busy' => 'fa-clock-o' );
 
+ $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
+ $view->assign( 'orderby', $orderby);
+ $volume_orderby_filter = 'Name';
+
+ if( !is_null(CHttpRequest::get_Value('orderby')) ) {
+    $volume_orderby_filter = CHttpRequest::get_Value('orderby');
+ }
+ 
+ $view->assign( 'orderby_selected', $volume_orderby_filter);
+
  $poolid         = CHttpRequest::get_Value('pool_id');
 
  // If pool_id have been passed in GET request 
@@ -44,7 +54,7 @@
    throw new Exception('Invalid pool id (not numeric) provided in Volumes report page');
  }
 
- foreach ($volumes->getVolumes($poolid) as $volume) {
+ foreach ($volumes->getVolumes($poolid, $volume_orderby_filter) as $volume) {
 
     // Calculate volume expiration
     // // If volume have already been used
