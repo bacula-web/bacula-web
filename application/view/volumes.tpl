@@ -12,7 +12,7 @@
         <span class="help-block">{t}Options{/t}</span>
         <div class="form-group">
           <label>{t}Order by{/t}</label>
-          {html_options class="form-control" name=orderby options=$orderby selected=$orderby_selected}
+          {html_options class="form-control input-sm" name=orderby options=$orderby selected=$orderby_selected}
         </div>
         <button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
       </form>
