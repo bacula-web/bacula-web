@@ -40,12 +40,20 @@
  $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
  $view->assign( 'orderby', $orderby);
  $volume_orderby_filter = 'Name';
+ $volume_orderby_asc = 'DESC';
 
  if( !is_null(CHttpRequest::get_Value('orderby')) ) {
     $volume_orderby_filter = CHttpRequest::get_Value('orderby');
  }
  
+ if( !is_null(CHttpRequest::get_Value('orderby_asc')) ) {
+   $volume_orderby_asc = 'ASC';
+   $view->assign( 'orderby_asc_checked', 'checked');
+ }
+
  $view->assign( 'orderby_selected', $volume_orderby_filter);
+
+ $volume_orderby_filter .= ' ' . $volume_orderby_asc;
 
  $poolid         = CHttpRequest::get_Value('pool_id');
 

@@ -6,13 +6,18 @@
       <h3>{$page_name}</h3>
     </div>
 
-    <div class="col-xs-12 col-md-3 col-md-offset-1">
+    <div class="col-xs-12 col-md-4">
       <!-- Options -->
       <form class="form-inline" role="form" action="volumes.php" method="post">
         <span class="help-block">{t}Options{/t}</span>
         <div class="form-group">
           <label>{t}Order by{/t}</label>
           {html_options class="form-control input-sm" name=orderby options=$orderby selected=$orderby_selected}
+        </div>
+        <div class="checkbox">
+          <label>
+          <input type="checkbox" name="orderby_asc" value="{t}Asc{/t}" {$orderby_asc_checked}> Asc 
+          </label>
         </div>
         <button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
       </form>
