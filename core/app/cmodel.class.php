@@ -21,7 +21,7 @@ class CModel
    protected $cdb;
    protected $driver;
 
-   public function __construct( $catalog_id = 0 ) {
+   public function __construct() {
       $user = '';
       $pwd  = '';
       $this->cdb  = new CDB();
@@ -30,6 +30,7 @@ class CModel
       FileConfig::open(CONFIG_FILE);
 
       // Create PDO connection to database
+      $catalog_id = $_SESSION['catalog_id'];
       $this->driver = FileConfig::get_Value('db_type', $catalog_id);
       $dsn = FileConfig::get_DataSourceName( $catalog_id );
       
