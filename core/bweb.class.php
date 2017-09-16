@@ -32,8 +32,8 @@ class Bweb
 
     public function __construct(&$view)
     {
-        // Loading configuration file parameters
         try {
+            // Loading configuration file parameters
             if (!FileConfig::open(CONFIG_FILE)) {
                 throw new Exception("The configuration file is missing");
             } else {
