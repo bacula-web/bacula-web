@@ -299,16 +299,16 @@
         },
         {
             "name": "novus/nvd3",
-            "version": "v1.8.5",
+            "version": "v1.8.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/novus/nvd3.git",
-                "reference": "3fee7f9eec75b9e9234706cca01bf128607a41a6"
+                "reference": "d273ea52d91b482d044f8cef1e921256f2bfddcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/novus/nvd3/zipball/3fee7f9eec75b9e9234706cca01bf128607a41a6",
-                "reference": "3fee7f9eec75b9e9234706cca01bf128607a41a6",
+                "url": "https://api.github.com/repos/novus/nvd3/zipball/d273ea52d91b482d044f8cef1e921256f2bfddcd",
+                "reference": "d273ea52d91b482d044f8cef1e921256f2bfddcd",
                 "shasum": ""
             },
             "require": {
@@ -344,7 +344,7 @@
                 "graph",
                 "nvd3"
             ],
-            "time": "2016-12-01T12:31:30+00:00"
+            "time": "2017-08-24T01:23:44+00:00"
         },
         {
             "name": "robloach/component-installer",
@@ -494,20 +494,20 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.3.5",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "07432804942b9f6dd7b7377faf9920af5f95d70a"
+                "reference": "b7666e9b438027a1ea0e1ee813ec5042d5d7f6f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/07432804942b9f6dd7b7377faf9920af5f95d70a",
-                "reference": "07432804942b9f6dd7b7377faf9920af5f95d70a",
+                "url": "https://api.github.com/repos/symfony/process/zipball/b7666e9b438027a1ea0e1ee813ec5042d5d7f6f0",
+                "reference": "b7666e9b438027a1ea0e1ee813ec5042d5d7f6f0",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.9"
+                "php": "^5.5.9|>=7.0.8"
             },
             "type": "library",
             "extra": {
@@ -539,7 +539,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-13T13:05:09+00:00"
+            "time": "2017-07-29T21:54:42+00:00"
         },
         {
             "name": "twbs/bootstrap",
