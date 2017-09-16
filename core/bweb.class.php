@@ -86,8 +86,10 @@ class Bweb
             }
         } else {
             if (isset($_SESSION['catalog_id'])) {
-                // Stick with previously selected catalog_id
-                    $this->catalog_current_id = $_SESSION['catalog_id'];
+               // Stick with previously selected catalog_id
+               $this->catalog_current_id = $_SESSION['catalog_id'];
+            }else{
+               $_SESSION['catalog_id'] = $this->catalog_current_id;
             }
         }
             
