@@ -29,6 +29,8 @@ try {
     $catalog   = new Database_Model();
     $clients   = new Clients_Model(); 
     $filesets  = new FileSets_Model();
+    $pools = new Pools_Model();
+    $volumes = new Volumes_Model();
 
     require_once('core/const.inc.php');
 
@@ -83,39 +85,10 @@ try {
     // Stored files number
     $view->assign('stored_files', CUtils::format_Number($jobs->getStoredFiles($no_period)));
  
-    // Overall stored bytes
-    $view->assign('stored_bytes', CUtils::Get_Human_Size($jobs->getStoredBytes($no_period)));
-
-    // Database size
-    $view->assign('database_size', $catalog->get_Size( $dbSql->catalog_current_id ));
- 
-    // Total bytes and files stored over the last 24 hours
-    $view->assign('bytes_last', CUtils::Get_Human_Size($jobs->getStoredBytes($custom_period)));
-    $view->assign('files_last', CUtils::format_Number($jobs->getStoredFiles($custom_period)));
-
-    // Number of clients
-    $view->assign('clients', $clients->count());
-
-    // Defined Jobs and Filesets
-    $view->assign('defined_filesets', $filesets->count());
-    $view->assign('defined_jobs', $jobs->count_Job_Names());
-
     // Incremental, Differential and Full jobs over the last 24 hours
     $view->assign('incr_jobs', $jobs->count_Jobs( $custom_period, null, J_INCR));
     $view->assign('diff_jobs', $jobs->count_Jobs( $custom_period, null, J_DIFF));
     $view->assign('full_jobs', $jobs->count_Jobs( $custom_period, null, J_FULL));
-
-    // Volumes disk usage
-    $volumes = new Volumes_Model();
-    $volumes_size = $volumes->getDiskUsage();
-    $view->assign('volumes_size', CUtils::Get_Human_Size($volumes_size));
-
-    // Pools count
-    $pools = new Pools_Model();
-    $view->assign('pools_nb', $pools->count());
-
-    // Count volumes
-    $view->assign('volumes_nb', $volumes->count());
 
     // ==============================================================
     // Last period <Job status graph>
