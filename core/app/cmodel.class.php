@@ -113,13 +113,13 @@ class CModel
          throw new PDOException("Failed to prepare PDOStatment <br />$query");
       }
 
-      $result     = $statment->execute();
+      $result = $statment->execute();
 
-      if (is_null($result)) {
+      if ($result == FALSE) {
          throw new PDOException("Failed to execute PDOStatment <br />$query");
-      }   
-
-      return $statment;
+      }else{
+         return $statment;
+      }
    }
 
    // ==================================================================================
