@@ -99,6 +99,12 @@ class CModel
       return $this->cdb->getDriverName();
    }
 
+   /*
+     Function: run_query	
+     Parameters:  $query
+     Return:	   PDO_Statment
+   */
+
    public function run_query($query) {
       // Prepare SQL query
       $statment    = $this->db_link->prepare($query);
