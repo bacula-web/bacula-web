@@ -1,7 +1,9 @@
 {include file=header.tpl}
 
 <div class="container-fluid">
-	<h3>{$page_name}</h3>
+   <div class="page-header">
+     <h3>{$page_name} <small>{t}General overview{/t}</small></h3>
+   </div>
 	
 	<!-- First row with Jobs statistics, stored bytes and stored files widgets -->
 	<div class="row">

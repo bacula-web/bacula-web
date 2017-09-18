@@ -1,7 +1,9 @@
 {include file=header.tpl}
 
 <div class="container">  
-  <h3>{$page_name}</h3>
+  <div class="page-header">
+    <h3>{$page_name} <small>{t}Report per Bacula client{/t}</small></h3>
+  </div>
 
     <div class="panel panel-default">
       <div class="panel-heading"><b>{t}Report options{/t}</b></div>

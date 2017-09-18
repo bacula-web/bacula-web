@@ -2,7 +2,9 @@
 
 <div class="container">
 
-    <h3>{$page_name}</h3>    
+  <div class="page-header">
+    <h3>{$page_name} <small>{t}Report per Bacula backup job name{/t}</small></h3>
+  </div>
 
     <!-- Backup job report -->
     <div class="panel panel-default">

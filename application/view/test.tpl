@@ -2,7 +2,9 @@
 
 <div class="container" id="testpage">
 
-    <h3>{$page_name} <small>{t}Required components{/t}</small></h3>
+   <div class="page-header">
+     <h3>{$page_name} <small>{t}Check requirements and configuration{/t}</small></h3>
+   </div>
     
 	<table class="table table-striped">
 		<tr>

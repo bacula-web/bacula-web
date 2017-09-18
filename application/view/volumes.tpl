@@ -1,9 +1,13 @@
 {include file=header.tpl}
 
 <div class="container">
+
+  <div class="page-header">
+    <h3>{$page_name} <small>{t}Bacula volume(s) overview {/t}</small></h3>
+  </div>
+
   <div class="row">
     <div class="col-xs-12 col-md-8">
-      <h3>{$page_name}</h3>
     </div>
 
     <div class="col-xs-12 col-md-4">

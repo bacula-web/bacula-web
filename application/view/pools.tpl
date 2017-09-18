@@ -2,14 +2,13 @@
 
 <div class="container">
 
+  <div class="page-header">
+    <h3>{$page_name} <small>{t}Bacula pool(s) overview{/t}</small></h3>
+  </div>
+
   <div class="row">
-
     <div class="col-xs-12">
-
-    <h3>{$page_name}</h3>
-
       <div class="table-responsive">
-
         <table class="table table-condensed table-striped text-center">
           <tr>
 	    <th class="text-center">{t}Pool name{/t}</th>
