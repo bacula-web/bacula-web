@@ -107,11 +107,19 @@ class CModel
    */
 
    public function run_query($query) {
-      // Prepare SQL query
+
+      // Prepare PDO statment
       $statment    = $this->db_link->prepare($query);
 
       if ($statment == false) {
          throw new PDOException("Failed to prepare PDOStatment <br />$query");
+      }
+
+      // Bind PHP variables with named placeholders
+      foreach( $this->parameters as $name => $value) {
+         if( $statment->bindParam(":$name", $value) != TRUE ) {
+            throw new PDOException("Something went wrong with PDO_Statment::bindParam()");
+         }
       }
 
       $result = $statment->execute();
