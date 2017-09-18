@@ -20,6 +20,7 @@ class CModel
    protected $db_link;
    protected $cdb;
    protected $driver;
+   protected $parameters;
 
    public function __construct() {
       $user = '';
@@ -120,6 +121,17 @@ class CModel
       }else{
          return $statment;
       }
+   }
+
+   /*
+     Function: addParameter
+     Parameters:  $name
+                  $value
+     Return:	   nothing
+   */
+
+   public function addParameter($name, $value) {
+      $this->parameters[$name] = $value;
    }
 
    // ==================================================================================
