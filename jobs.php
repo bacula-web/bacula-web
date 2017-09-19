@@ -17,12 +17,15 @@
   session_start();
   require_once('core/global.inc.php');
 
-  $view      = new CView();
-  $dbSql     = new Bweb($view);
-  $jobs = new Jobs_Model();
+  $view = new CView();
+  $dbSql = new Bweb($view);
+  $jobs = new Jobs_Model();  
 
   // That's horrible, it must be improved
   require_once('core/const.inc.php');
+
+  // Set tatal jobs first
+  $view->assign('total_jobs', $jobs->count());
 
   $query     = "";
   $last_jobs = array();
@@ -146,8 +149,9 @@
         $view->assign('level_filter', $level_id);
 
         if (!is_null(CHttpRequest::get_value('status'))) {
-            if (!empty($level_id)) {
-                $query    .= "AND Job.Level = '$level_id' ";
+           if (!empty($level_id)) {
+              $jobs->addParameter( 'job_level', $level_id);
+                $query    .= "AND Job.Level = :job_level ";
             }
         } else {
             if (!empty($level_id)) {
@@ -392,7 +396,6 @@
 
   // Count jobs
     $view->assign('jobs_found', count($last_jobs));
-    $view->assign('total_jobs', $jobs->count());
 
   // Set page name
     $view->assign('page_name', 'Jobs report');
