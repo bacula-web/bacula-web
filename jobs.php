@@ -27,6 +27,11 @@
   // Set tatal jobs first
   $view->assign('total_jobs', $jobs->count());
 
+  // Levels list filter
+  $levels_list = $jobs->getLevels($job_levels);
+  $levels_list['']  = 'Any';
+  $view->assign('levels_list', $levels_list);
+
   $query     = "";
   $last_jobs = array();
 
@@ -86,11 +91,6 @@
   }else {
      $view->assign('job_type_filter', $job_type_filter);
   }
-
-  // Levels list filter
-  $levels_list = $jobs->getLevels($job_levels);
-  $levels_list['']  = 'Any';
-  $view->assign('levels_list', $levels_list);
 
   // Clients list filter
   $clients = new Clients_Model();
