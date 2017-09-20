@@ -17,6 +17,8 @@
   session_start();
   require_once('core/global.inc.php');
 
+  try {
+
   $view = new CView();
   $dbSql = new Bweb($view);
   $jobs = new Jobs_Model();  
@@ -406,3 +408,7 @@
 
   // Process and display the template
     $view->render('jobs.tpl');
+
+  } catch (Exception $e) {
+         CErrorHandler::displayError($e);
+  }
