@@ -165,15 +165,16 @@
    // Selected pool filter
    if (!is_null(CHttpRequest::get_Value('pool_id'))) {
       $pool_id = CHttpRequest::get_Value('pool_id');
+      $jobs->addParameter( 'pool_id', $pool_id);
       $view->assign('pool_filter', $pool_id);
 
       if (!is_null(CHttpRequest::get_value('status'))) {
          if (!empty($pool_id)) {
-            $query    .= "AND Job.PoolId = '$pool_id' ";
+            $query    .= "AND Job.PoolId = :pool_id ";
          }
       }else {
          if (!empty($pool_id)) {
-            $query    .= "WHERE Job.PoolId = '$pool_id' ";
+            $query    .= "WHERE Job.PoolId = :pool_id ";
          }
       }
     }else {
