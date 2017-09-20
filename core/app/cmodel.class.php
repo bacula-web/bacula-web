@@ -116,9 +116,11 @@ class CModel
       }
 
       // Bind PHP variables with named placeholders
-      foreach( $this->parameters as $name => $value) {
-         if( $statment->bindParam(":$name", $value) != TRUE ) {
-            throw new PDOException("Something went wrong with PDO_Statment::bindParam()");
+      if( isset($this->parameters) ) {
+         foreach( $this->parameters as $name => $value) {
+            if( $statment->bindParam(":$name", $value) != TRUE ) {
+               throw new PDOException("Something went wrong with PDO_Statment::bindParam()");
+            }
          }
       }
 
