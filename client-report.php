@@ -54,7 +54,14 @@
  try {
     // Check client_id and period received by POST request
     if (!is_null(CHttpRequest::get_Value('client_id'))) {
+       
        $clientid = CHttpRequest::get_Value('client_id');
+
+       // Verify if client_id is a valid integer
+       if( !filter_var( $clientid, FILTER_VALIDATE_INT)) {
+          throw new Exception('Critical: provided parameter (client_id) is not valid');
+       }
+
        $period = CHttpRequest::get_Value('period');
 
        $view->assign( 'no_report_options', 'false');
