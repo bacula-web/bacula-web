@@ -64,6 +64,15 @@
 
        $period = CHttpRequest::get_Value('period');
 
+       // Check if period is an integer and listed in known periods
+       if(!array_key_exists( $period, $periods_list)) {
+          throw new Exception('Critical: provided value for (period) is unknown or not valid');
+       }
+
+       if(!filter_var($period, FILTER_VALIDATE_INT)) {
+          throw new Exception('Critical: provided value for (period) is unknown or not valid');
+       }
+
        $view->assign( 'no_report_options', 'false');
        
        // Client informations
