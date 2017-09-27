@@ -129,6 +129,8 @@ class CModel
       if ($result == FALSE) {
          throw new PDOException("Failed to execute PDOStatment <br />$query");
       }else{
+         // Erase parameters to bind to avoid problem on next CModel::run_query() call
+         $this->parameters = null;
          return $statment;
       }
    }
