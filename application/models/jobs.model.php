@@ -174,7 +174,8 @@ class Jobs_Model extends CModel
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
-            $where[] = "name = '$job_name'";
+           $this->addParameter( 'jobname', $job_name);
+           $where[] = "name = :jobname";
         }
         
         if ($client_id != 'ALL') {
