@@ -337,11 +337,11 @@ try {
        $start_time = $job['starttime'];
        $end_time   = $job['endtime'];
        
-       if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0) {
+       if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
           $job['starttime'] = 'n/a';
        }
        
-       if ($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == 0) {
+       if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
           $job['endtime'] = 'n/a';
        }
        
