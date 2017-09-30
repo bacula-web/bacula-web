@@ -32,7 +32,8 @@ try {
 
     // Prepare and execute SQL statment
     $jobs = new Jobs_Model();
-    $statment     = array('table' => 'Log', 'where' => array("JobId = '$jobid'"), 'orderby' => 'Time');
+    $statment     = array('table' => 'Log', 'where' => array("JobId = :jobid"), 'orderby' => 'Time');
+    $jobs->addParameter( 'jobid', $jobid);
     $result     = $jobs->run_query(CDBQuery::get_Select($statment));
 
     // Processing result

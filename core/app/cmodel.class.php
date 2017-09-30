@@ -20,6 +20,7 @@ class CModel
    protected $db_link;
    protected $cdb;
    protected $driver;
+   protected $parameters;
 
    public function __construct() {
       $user = '';
@@ -99,21 +100,50 @@ class CModel
       return $this->cdb->getDriverName();
    }
 
+   /*
+     Function: run_query	
+     Parameters:  $query
+     Return:	   PDO_Statment
+   */
+
    public function run_query($query) {
-      // Prepare SQL query
+
+      // Prepare PDO statment
       $statment    = $this->db_link->prepare($query);
 
       if ($statment == false) {
          throw new PDOException("Failed to prepare PDOStatment <br />$query");
       }
 
-      $result     = $statment->execute();
+      // Bind PHP variables with named placeholders
+      if( isset($this->parameters) ) {
+         foreach( $this->parameters as $name => $value) {
+            if( $statment->bindParam(":$name", $value) != TRUE ) {
+               throw new PDOException("Something went wrong with PDO_Statment::bindParam()");
+            }
+         }
+      }
 
-      if (is_null($result)) {
+      $result = $statment->execute();
+
+      if ($result == FALSE) {
          throw new PDOException("Failed to execute PDOStatment <br />$query");
-      }   
+      }else{
+         // Erase parameters to bind to avoid problem on next CModel::run_query() call
+         $this->parameters = null;
+         return $statment;
+      }
+   }
 
-      return $statment;
+   /*
+     Function: addParameter
+     Parameters:  $name
+                  $value
+     Return:	   nothing
+   */
+
+   public function addParameter($name, $value) {
+      $this->parameters[$name] = $value;
    }
 
    // ==================================================================================
