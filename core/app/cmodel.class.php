@@ -170,8 +170,6 @@ class CModel
 
    public function isConnected()
    {
-      $pdo_connection = true;
-
       // If MySQL of postGreSQL
       switch ($this->get_driver_name()) {
          case 'mysql':
