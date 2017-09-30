@@ -165,7 +165,7 @@ try {
   
   // Selected pool filter
   if (!is_null(CHttpRequest::get_Value('pool_id'))) {
-      $pool_id = CHttpRequest::get_Value('pool_id');
+      $pool_id = intval(CHttpRequest::get_Value('pool_id'));
       $jobs->addParameter( 'pool_id', $pool_id);
       $view->assign('pool_filter', $pool_id);
 
