@@ -38,10 +38,6 @@ class DateTimeUtil
 
     public static function Get_Elapsed_Time($start_time, $end_time)
     {
-        $start = '';
-        $end   = '';
-	$elapsed_time = '';
-
         if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
             return 'n/a';
         } else {
