@@ -26,6 +26,17 @@ try {
    // That's horrible, it must be improved
    require_once('core/const.inc.php');
    
+  // Global variables
+  $job_levels = array( 'D' => 'Differential',
+     'I' => 'Incremental',
+     'F' => 'Full',
+     'V' => 'InitCatalog',
+     'C' => 'Catalog',
+     'O' => 'VolumeToCatalog',
+     'd' => 'DiskToCatalog',
+     'A' => 'Data'
+  );
+
    // Set tatal jobs first
    $view->assign('total_jobs', $jobs->count());
 
@@ -56,17 +67,6 @@ try {
   );
 
   $view->assign('job_status', $job_status);
-
-  // Global variables
-  $job_levels = array( 'D' => 'Differential',
-     'I' => 'Incremental',
-     'F' => 'Full',
-     'V' => 'InitCatalog',
-     'C' => 'Catalog',
-     'O' => 'VolumeToCatalog',
-     'd' => 'DiskToCatalog',
-     'A' => 'Data'
-  );
 
   // Job types
   $job_types = array( 'B' => 'Backup',
