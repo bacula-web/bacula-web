@@ -305,7 +305,6 @@ class Jobs_Model extends CModel
 
     public function getWeeklyJobsStats() 
     {
-       $query = '';
        $fields = array( 'SUM(Job.Jobbytes) as jobbytes' , 'SUM(Job.Jobfiles) as jobfiles');
        $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
        $orderby = 'JobBytes DESC';
