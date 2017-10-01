@@ -23,7 +23,7 @@ class CDBQuery
     *             table    name of the table for FROM
     *             fields   array of fields (SELECT field1, field2, field3 as var, etc.)
     *             where    array of condition (WHERE condition1 AND condition2 ...)
-    *             join     array with elements table and condition 
+    *             join     array which contain 1 to several array with fields table and condition for each jointure
     *             groupby  add GROUP BY field
     *             orderby  add ORDER BY field
     *             limit    add LIMIT (might change depending on used DMBS)
@@ -58,7 +58,9 @@ class CDBQuery
 
         // Join
         if (isset($param['join']) && !is_null($param['join']) && is_array($param['join'])) {
-            $query .= 'LEFT JOIN ' . $param['join']['table'] . ' ON ' . $param['join']['condition'] . ' ';
+           foreach($param['join'] as $join) {
+              $query .= 'LEFT JOIN ' . $join['table'] . ' ON ' . $join['condition'] . ' ';
+           }
         }
 
         // Where
