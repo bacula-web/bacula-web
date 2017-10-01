@@ -17,6 +17,23 @@
 
 class DateTimeUtil
 {
+   /*
+    * Function:      checkDate()
+    *
+    * Parameter(s):  $date (date in string format)
+    * Return:        true if $date is a valid date, else otherwise
+    *
+    */
+
+   public static function checkDate($date) {
+      $d = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+
+      if( $d->format('Y-m-d H:i:s') === $date) {
+         return true;
+      }else {
+         return false;
+      }
+   }
 
     // ==================================================================================
     // Function:        get_Timestamp()
