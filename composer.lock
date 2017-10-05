@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e02a9e4ab15279370d2a2fbba9753ed2",
+    "content-hash": "1c57d10147ec15348d52d43946d1d7f3",
     "packages": [
         {
             "name": "components/font-awesome",
@@ -85,21 +85,21 @@
         },
         {
             "name": "eonasdan/bootstrap-datetimepicker",
-            "version": "4.7.14",
+            "version": "4.17.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Eonasdan/bootstrap-datetimepicker.git",
-                "reference": "d004434a5ff76e7b97c8b07c01f34ca69e635d97"
+                "reference": "25c11d79e614bc6463a87c3dd9cbf8280422e006"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Eonasdan/bootstrap-datetimepicker/zipball/d004434a5ff76e7b97c8b07c01f34ca69e635d97",
-                "reference": "d004434a5ff76e7b97c8b07c01f34ca69e635d97",
+                "url": "https://api.github.com/repos/Eonasdan/bootstrap-datetimepicker/zipball/25c11d79e614bc6463a87c3dd9cbf8280422e006",
+                "reference": "25c11d79e614bc6463a87c3dd9cbf8280422e006",
                 "shasum": ""
             },
             "require": {
                 "components/jquery": ">=1.9.1",
-                "moment/moment": ">=2.8",
+                "moment/moment": ">=2.10.5",
                 "robloach/component-installer": "*"
             },
             "type": "component",
@@ -110,10 +110,7 @@
                     ],
                     "files": [
                         "build/js/bootstrap-datetimepicker.min.js",
-                        "build/css/bootstrap-datetimepicker.css",
-                        "build/css/bootstrap-datetimepicker.min.css",
-                        "src/less/_bootstrap-datetimepicker.less",
-                        "src/less/bootstrap-datetimepicker-build.less"
+                        "build/css/bootstrap-datetimepicker.min.css"
                     ]
                 }
             },
@@ -127,7 +124,7 @@
                 "DateTimePicker",
                 "bootstrap"
             ],
-            "time": "2015-03-07T16:32:25+00:00"
+            "time": "2017-02-28T14:32:02+00:00"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -494,16 +491,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.3.9",
+            "version": "v3.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "b7666e9b438027a1ea0e1ee813ec5042d5d7f6f0"
+                "reference": "fdf89e57a723a29baf536e288d6e232c059697b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/b7666e9b438027a1ea0e1ee813ec5042d5d7f6f0",
-                "reference": "b7666e9b438027a1ea0e1ee813ec5042d5d7f6f0",
+                "url": "https://api.github.com/repos/symfony/process/zipball/fdf89e57a723a29baf536e288d6e232c059697b1",
+                "reference": "fdf89e57a723a29baf536e288d6e232c059697b1",
                 "shasum": ""
             },
             "require": {
@@ -539,7 +536,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-29T21:54:42+00:00"
+            "time": "2017-10-02T06:42:24+00:00"
         },
         {
             "name": "twbs/bootstrap",
@@ -597,7 +594,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "novus/nvd3": 0
+        "novus/nvd3": 0,
+        "eonasdan/bootstrap-datetimepicker": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,
