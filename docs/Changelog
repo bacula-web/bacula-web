@@ -1,3 +1,19 @@
+=== Release 8.0.0-RC1 (Oct xx 2017)
+
+Changelog
+
+- General: 
+	- PHPLot has been replaced by nvd3
+	- Uncountable code improvment and cleanup
+
+Fixed bug(s)
+
+New feature(s)
+
+Translations
+
+Documentation
+
 === Release 7.4.0 (May 7 2017)
 
 Changelog
