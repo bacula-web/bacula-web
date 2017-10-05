@@ -204,12 +204,14 @@ try {
      
     $where[] = $tmp;
 
-    $statment = array(    'table'     => 'Media',
-                       'fields'     => array('Media.MediaId', 'Media.Volumename', 'Media.Lastwritten', 'Media.VolStatus', 'Media.VolJobs', 'Pool.Name AS poolname'),
-                       'join'         => array('table' => 'Pool', 'condition' => 'Media.PoolId = Pool.poolid'),
-                       'where'     => $where,
-                       'orderby'     => 'Media.Lastwritten DESC',
-                       'limit'     => '10');
+    $statment = array( 'table' => 'Media',
+                       'fields' => array('Media.MediaId', 'Media.Volumename', 'Media.Lastwritten', 'Media.VolStatus', 'Media.VolJobs', 'Pool.Name AS poolname'),
+                       'join' => array(
+                          array('table' => 'Pool', 'condition' => 'Media.PoolId = Pool.poolid')
+                       ),
+                       'where' => $where,
+                       'orderby' => 'Media.Lastwritten DESC',
+                       'limit' => '10');
 
     // Run the query
     $result     = $volumes->run_query(CDBQuery::get_Select($statment));
