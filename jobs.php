@@ -191,12 +191,12 @@ try {
   }
 
   // Selected start time filter
-  if(!is_null($job_starttime_filter)) {
+  if(!is_null($job_starttime_filter) && !empty($job_starttime_filter)) {
      if(DateTimeUtil::checkDate($job_starttime_filter)) { 
         $where[] = "Job.StartTime >= '$job_starttime_filter'"; 
      }
   }
-  if(!is_null($job_endtime_filter)) {
+  if(!is_null($job_endtime_filter) && !empty($job_starttime_filter)) {
      if(DateTimeUtil::checkDate($job_endtime_filter)) { 
         $where[] = "Job.EndTime <= '$job_endtime_filter'"; 
      }
