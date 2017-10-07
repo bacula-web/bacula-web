@@ -49,17 +49,24 @@ Debian / Ubuntu
 
 ::
 
-   $ sudo vi /etc/apache2/sites-available/default
+   $ sudo vim /etc/apache2/conf-available/bacula-web.conf
 
-and add the content below
+with the content below
 
 ::
 
    <Directory /var/www/html/bacula-web>
-   AllowOverride All
+     AllowOverride All
    </Directory>
-   
-Then reload Apache to apply the configuration change
+
+
+Enable the configuration
+
+::
+
+    $ sudo a2enconf bacula-web
+
+Then restart Apache to apply the configuration change
 
 Centos / Red Hat
 
