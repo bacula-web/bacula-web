@@ -91,9 +91,31 @@ case 'setupauth':
 
     $password = getPassword("Enter your password");
 
+    // Hash the password
+    $options = ['cost' => 12];
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT, $options);
+
+    $htpwdFile = '.htpasswd';
+
+    // Check if .htpasswd already exists
+    if(file_exists($htpwdFile)) {
+        exit("\nError: file $htpwdFile already exists, please remove it and run this command again\n");
+    }
+
+    $handle = @fopen($htpwdFile, 'w');
+    if($handle !== FALSE) {
+        $data = "$username:$hashedPassword";
+        fwrite($handle, $data);
+        fclose($handle);
+    }else{
+        exit("\nError: unable to create file $htpwdFile, please check permissions\n");
+    }
     break;
 default:
     exit("\nError: unknown command, use <php console help> for further informations\n\n");
 }
+
+echo "\nGreat !!! Apache authentication setup is now completed\n\n";
+echo "You can now the credentials you've provided to access Bacula-Web\n";
 
 ?>
