@@ -1,0 +1,99 @@
+#!/usr/bin/env php
+<?php
+/*
+  +-------------------------------------------------------------------------+
+  | Copyright (C) 2004 Juan Luis Frances Jimenez						    |
+  | Copyright 2010-2017, Davide Franco                                      |
+  |                                                                         |
+  | This program is free software; you can redistribute it and/or           |
+  | modify it under the terms of the GNU General Public License             |
+  | as published by the Free Software Foundation; either version 2          |
+  | of the License, or (at your option) any later version.                  |
+  |                                                                         |
+  | This program is distributed in the hope that it will be useful,         |
+  | but WITHOUT ANY WARRANTY; without even the implied warranty of          |
+  | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           |
+  | GNU General Public License for more details.                            |
+  +-------------------------------------------------------------------------+
+*/
+
+/*
+ * Function:    printUsage
+ * Parameters:  none
+ *
+ */
+
+function printUsage() {
+    echo "Bacula-Web version 8.0.0-RC1\n\n";
+    echo "Usage:\n";
+    echo "   php console [command]\n\n";
+    echo "Available commands:\n";
+    echo "   help\t\t\tPrint this help summary\n";
+    echo "   setupauth\t\tSetup Apache authentication\n\n";
+}
+
+/*
+ * Function:    getPassword
+ * Parameters:  $prompt
+ *
+ */
+
+function getPassword($prompt)
+{
+    // Save current tty settings 
+    $ostty = `stty -g`;
+    
+    // Set tty in silent mode
+    system("stty -echo -icanon min 1 time 0 2>/dev/null || " . "stty -echo cbreak");
+
+    echo "$prompt :";
+    // Drop newline at the end of the string
+    $input = substr(fgets(STDIN), 0, -1);
+    echo "\n";
+
+    // Restore tty settings
+    system ("stty $ostty");
+
+    return $input;
+}
+
+// Make sure the script is run from the command line
+if(!(php_sapi_name() === 'cli')) {
+    exit("You are not allowed to run this script from a web browser, but only from the command line");
+} 
+
+// Make sure at least one parameter has been provided
+if( $argc < 2) {
+    echo "\nError: you should provide at least one command\n\n";
+    exit(printUsage());
+}
+
+// Get command from user input 
+switch( $argv[1]) {
+case'help':
+    printUsage();
+    break;
+case 'setupauth':
+    echo "Creating basic user authentication for Apache web server\n\n";
+
+    // Make sure current directory is writable by current user
+    echo "Checking if current directory is writable ...\n";
+
+    if(!is_writable(dirname(__FILE__))) {
+        exit("Error: cannot write into this directory\n");
+    }else{
+        echo "Success: This directory is writable, creating htpasswd file\n";
+    }
+
+    // Get user details from command line
+    $username = readline("Enter your username: ");
+    $username = str_replace(array("\n", "\t"), '', $username);
+
+    $password = getPassword("Enter your password");
+
+    break;
+default:
+    exit("\nError: unknown command, use <php console help> for further informations\n\n");
+}
+
+?>
