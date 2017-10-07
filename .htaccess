@@ -1,0 +1,5 @@
+AuthUserFile /var/www/html/bacula-web/.htpasswd 
+AuthGroupFile /dev/null
+AuthName "Please Enter Password"
+AuthType Basic
+Require valid-user
