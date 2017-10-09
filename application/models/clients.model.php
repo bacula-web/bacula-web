@@ -91,7 +91,7 @@ class Clients_Model extends CModel
                    $uname = explode(',', $uname[2]);
                    $temp = explode('-', $uname[0]);
                    $client['arch'] = $temp[0];
-                   $client['os'] = $uname[1];
+                   $client['os'] = ucfirst($uname[1] . ' ' . $uname[2]);
                }
            }else{
               $client['version'] = 'n/a';
