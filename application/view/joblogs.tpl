@@ -1,6 +1,6 @@
 {include file=header.tpl}
 
-<div class="container-fluid">
+<div class="container">
 
   <div class="page-header">
     <h3>{$page_name} <small>{t}Bacula job log{/t}</small></h3>
