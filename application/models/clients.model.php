@@ -73,15 +73,26 @@ class Clients_Model extends CModel
         $result     = $this->run_query($statment);
             
         foreach ($result->fetchAll() as $client) {
-           $uname = explode(' ',$client['uname']);
+
+           $uname = explode(',',$client['uname']);
 
            // Check if client uname is not empty 
            if (!empty($uname[0])) {
-              $client['version']  = $uname[0];
-              $uname              = explode(',', $uname[2]);
-              $temp               = explode('-', $uname[0]);
-              $client['arch']     = $temp[0];
-              $client['os']       = $uname[1];
+               // Windows Bacula file daemon
+               if(end($uname) == 'Win32' || end($uname) == 'Win64') {
+                   $client['arch'] = $uname[1];
+                   $uname = explode(' ', $uname[0]);
+                   $client['version'] = $uname[0]; 
+                   $uname = array_slice($uname, 2); 
+                   $client['os'] = implode(' ', $uname); 
+               }else{
+                   $uname = explode(' ',$client['uname']);
+                   $client['version'] = $uname[0];
+                   $uname = explode(',', $uname[2]);
+                   $temp = explode('-', $uname[0]);
+                   $client['arch'] = $temp[0];
+                   $client['os'] = $uname[1];
+               }
            }else{
               $client['version'] = 'n/a';
               $client['arch'] = 'n/a';
