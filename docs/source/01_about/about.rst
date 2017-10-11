@@ -17,8 +17,8 @@ The main advantages of this tool are
 
 and what's not ?
 
-If you're looking for a tool able to manage Bacula like bat, you're in the wrong place (for the moment).
-Maybe have a look on bweb, webacula or the bacula's webmin plugin.
+If you're looking for a tool able to manage Bacula like bat, Bacula-Web might not the right tool (yet).
+I'd advise to have a look on Bweb, baculum, Bacula or Bacula Webmin plugin instead.
 
 The project history
 ===================
