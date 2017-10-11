@@ -1,25 +1,20 @@
-
-# Bacula-Web translations 
-# Copyright (C) 2004 - 2016 
+# Bacula-Web translations
+# Copyright (C) 2017 Davide Franco
 # This file is distributed under the same license as the Bacula-Web package.
-# 
-# Translators:
-# Juan-Luis Frances <bacula_list@veloxia.com>, 2004
-# Davide Franco <bacula-dev@dflc.ch, 2004-2010
-msgid ""
-msgstr ""
-"Project-Id-Version: Bacula-Web 7.4.0\n"
-"Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
-"POT-Creation-Date: 2017-07-29 13:13+0200\n"
-"Report-Msgid-Bugs-To: http://bugs.bacula-web.org\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Davide Franco <bacula-dev@dflc.ch>\n"
-"Language-Team: English (United States) (http://www.transifex.com/bacula-web/bacula-web/language/en_US/)\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Language: en_US\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid   ""
+msgstr  "Project-Id-Version: Bacula-Web 8.0.0-RC1\n"
+        "Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
+        "POT-Creation-Date: 2017-10-11 13:16+0200\n"
+        "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+        "Last-Translator: Davide Franco <bacula-dev@dflc.ch>\n"
+        "Language-Team: English (United States) (http://www.transifex.com/bacula-web/bacula-web/language/en_US/)\n"
+        "Language: en_US\n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=UTF-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
 
 #: lang.c:22 messages.c:32
 msgid   "ASC"
