@@ -46,29 +46,4 @@ Major Minor Bugfix
 6     0     0
 ===== ===== ======
 
-*****************
-Others good tools
-*****************
-
-There are a lot of tool which can help you administering, monitoring and configuring Bacula like
-
-   * Bacula module in `Webmin`_ 
-   * `Bacula Status`_
-   * `Reportula`_
-   * `baculum`_
-   * `breport`_ - The Bacula Reporter
-   * bat
-   * `Webacula`_
-   * and many others ...
-
-You can find a complete `list of GUI`_ on the Bacula's web site
-
-
-.. _Webmin: http://www.webmin.com/index.html
-.. _Bacula Status: https://github.com/evaldoprestes/baculastatus
-.. _Reportula: http://www.reportula.org
-.. _baculum: http://www.bacula.org/7.4.x-manuals/en/console/Baculum_Web_GUI_Tool.html
-.. _breport: http://breport.sourceforge.net
-.. _Webacula: http://webacula.sourceforge.net/
-.. _list of GUI: http://www.bacula.org/manuals/en/console/console/GUI_Programs.html
 .. _Mantis bug tracker: http://bugs.bacula-web.org/

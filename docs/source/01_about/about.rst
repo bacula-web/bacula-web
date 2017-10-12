@@ -122,6 +122,23 @@ And many more stuff that I'll not describe there (it's not a resume, it's just a
 
 My preferred Linux distros is `Gentoo`_ and I use `Centos`_ for labs, development and testing
 
+*****************
+Others good tools
+*****************
+
+There are a lot of tool which can help you administering, monitoring and configuring Bacula like
+
+   * Bacula module in `Webmin`_
+   * `Bacula Status`_
+   * `Reportula`_
+   * `baculum`_
+   * `breport`_ - The Bacula Reporter
+   * bat
+   * `Webacula`_
+   * and many others ...
+     
+You can find a complete `list of GUI`_ on the Bacula's web site
+
 .. _PHP: http://www.php.net
 .. _Smarty: http://www.smarty.net/
 .. _NVD3: http://nvd3.org/
@@ -132,3 +149,10 @@ My preferred Linux distros is `Gentoo`_ and I use `Centos`_ for labs, developmen
 .. _Slackware: http://www.slackware.com/
 .. _Gentoo: https://www.gentoo.org/
 .. _Centos: https://www.centos.org/
+.. _Webmin: http://www.webmin.com/index.html
+.. _Bacula Status: https://github.com/evaldoprestes/baculastatus
+.. _Reportula: http://www.reportula.org
+.. _baculum: http://www.bacula.org/7.4.x-manuals/en/console/Baculum_Web_GUI_Tool.html
+.. _breport: http://breport.sourceforge.net
+.. _Webacula: http://webacula.sourceforge.net/
+.. _list of GUI: http://www.bacula.org/manuals/en/console/console/GUI_Programs.html
