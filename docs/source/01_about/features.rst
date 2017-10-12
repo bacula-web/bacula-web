@@ -148,6 +148,7 @@ Pools
 =====
 
 List all configued Bacula pools with informations like
+
    * Volume count
    * Total bytes
 
@@ -160,6 +161,7 @@ Volumes
 =======
 
 List all volumes with details like
+
    * Volume name
    * Bytes
    * Jobs
