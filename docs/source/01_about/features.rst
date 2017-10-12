@@ -57,6 +57,11 @@ Pools and volumes
 
 Pools and volumes provide you a list of all Bacula pools and assigned volumes with details like volume name, Bytes, Media type, expiration date, last written date, status
 
+Directors
+=========
+
+The directors report display basic information about all Bacula catalog you have configured
+
 Test page
 =========
 
@@ -182,6 +187,28 @@ You can choose different periods such as last
    * month
 
 .. image:: /_static/bacula-web-client-report.jpg
+   :scale: 20%
+
+Directors
+=========
+
+The Bacula director(s) report page display useful details of each Bacula director(s) you have set in the configuration
+
+Bacula director details are
+
+   * Number of client(s)
+   * Defined job(s)
+   * Total bytes
+   * Total files
+   * Database size (size of Bacula catalog)
+   * Number of volume(s)
+   * Volume(s) size (used disk space for all volumes)
+   * Number of pools
+   * Number of filesets
+
+.. note:: This is feature is available since version 8.0.0-RC1
+
+.. image:: /_static/bacula-web-directors.png
    :scale: 20%
 
 Test page
