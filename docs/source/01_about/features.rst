@@ -74,7 +74,7 @@ Features list
 Dashboard
 =========
 
-.. image:: /_static/bacula-web-dashboard.jpg
+.. image:: /_static/bacula-web-dashboard.png
    :scale: 20 %
    :align: right
 
