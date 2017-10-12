@@ -95,7 +95,7 @@ Bacula-Web Dashboard provide a lot of informations about your Bacula infrastruct
 Jobs report
 ===========
 
-.. image:: /_static/bacula-web-jobs-report.jpg
+.. image:: /_static/bacula-web-jobs-report.png
    :scale: 20 %
    :align: right
 
