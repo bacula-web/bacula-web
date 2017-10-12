@@ -1,8 +1,8 @@
 .. _about/about:
 
-================
+################
 About Bacula-Web
-================
+################
 
 Bacula-Web is a php web based tool that provide you a summarized view of jobs, pools and volumes.Its obtain his information from your bacula catalog's database.
 
@@ -20,16 +20,18 @@ and what's not ?
 If you're looking for a tool able to manage Bacula like bat, Bacula-Web might not the right tool (yet).
 I'd advise to have a look on Bweb, baculum, Bacula or Bacula Webmin plugin instead.
 
+*******************
 The project history
-===================
+*******************
 
 Bacula-Web was originaly created and developed by Juan-Luis Frances.
 He made a very nice work.
 
 Since the end of 2010, I was officialy designed the official maintener by Kern S. and Eric B. for this project.
 
+*******************************
 Third-party tools and libraries
-===============================
+*******************************
 
 Bacula-Web use the following tools and libraries
 
@@ -40,8 +42,9 @@ Bacula-Web use the following tools and libraries
    * `Font Awesome`_
    * `jQuery`_ 
 
+*****************
 Supported browser
-=================
+*****************
 
 Bacula-Web was succesfully tested with
 
@@ -51,8 +54,9 @@ Bacula-Web was succesfully tested with
 
 Your web browser must have Javascript enabled
 
+*********
 Languages
-=========
+*********
 
 Bacula-Web is translated in 7 languages (english by default)
 
@@ -67,15 +71,17 @@ Bacula-Web is translated in 7 languages (english by default)
 
 If you would like to contribute to a new language or by updating one, have a look on the :ref:`contribute/translations` of the documentation.
 
+************
 About Bacula
-============
+************
 
 Bacula is a set of Open Source, enterprise ready, computer programs that permit you (or the system administrator) to manage backup, recovery, and verification of computer data across a network of computers of different kinds. Bacula is relatively easy to use and efficient, while offering many advanced storage management features that make it easy to find and recover lost or damaged files. In technical terms, it is an Open Source, enterprise ready, network based backup program (source `www.bacula.org`_).
 
 For my point of view, bacula is the best open source backup software I ever used (for professional and private purpose)
 
+************
 About myself
-============
+************
 
 I've discovered Linux with `Slackware`_ maybe around 1995 ( I know, I'm an old guy).
 Since this time, I had some experiences with

@@ -1,11 +1,12 @@
 .. _about/project:
 
-=================
+#################
 About the project
-=================
+#################
 
+*****************
 The project story
------------------
+*****************
 
 **2004 - 2008**
 
@@ -29,13 +30,14 @@ Then, I've found Bacula-Web which at this time, wasn't maintened since few years
 
 After I've submited some patches to Bacula developpers, I proposed to become the official maintainer of this project. So the project revival started on July 2010.
 
+*******
 Roadmap
--------
+*******
 
 The project development roadmap is available into the `Mantis bug tracker`_
 
 Versions numbering
-------------------
+==================
 
 *Releases prior 6.0.0*
 
@@ -70,8 +72,9 @@ Major Minor Bugfix
 6     0     0
 ===== ===== ======
 
+*****************
 Others good tools
------------------
+*****************
 
 There are a lot of tool which can help you administering, monitoring and configuring Bacula like
 
