@@ -42,7 +42,7 @@ Client backup report provide you for each Bacula client the details below
 
    * client os, client architecture, client version
    * display last known completed backup job
-   * last 7 days stored bytes and files graphs
+   * last x days stored bytes and files graphs
 
 Backup job report
 =================
@@ -50,7 +50,7 @@ Backup job report
 Backup job report display useful information about Bacula jobs like
 
    * last completed jobs
-   * last 7 days stored bytes and files graphs
+   * last x days stored bytes and files graphs
 
 Pools and volumes
 =================
@@ -153,7 +153,13 @@ Backup jobs report
 Display usefull information like last 7 days stored bytes and files
 
    * last completed jobs
-   * last 7 days stored bytes and files graphs
+   * last x days stored bytes and files graphs
+
+You can choose different periods such as last
+
+   * week
+   * 2 weeks
+   * month
 
 .. image:: /_static/bacula-web-backupjob-report.jpg
    :scale: 20%
@@ -167,7 +173,13 @@ Show information like
    * Client architecture
    * Client version
    * Last known completed backup job
-   * Last 7 days stored bytes and files graphs
+   * Last x days stored bytes and files graphs
+
+You can choose different periods such as last
+
+   * week
+   * 2 weeks
+   * month
 
 .. image:: /_static/bacula-web-client-report.jpg
    :scale: 20%
