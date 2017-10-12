@@ -12,10 +12,12 @@ Bacula-Web project development roadmap is publicly available on the `Mantis bug 
 
 For example, the roadmap for next major release 8.0.0 is available using `this link`_.
 
+******************
 Versions numbering
-==================
+******************
 
-*Releases prior 6.0.0*
+Releases prior 6.0.0
+====================
 
 Bacula-Web version follow Bacula numbering (see example below)
 
@@ -29,7 +31,8 @@ Bacula-Web version follow Bacula numbering (see example below)
 | 5.2.13         | 5.2.13-3           |
 +----------------+--------------------+
 
-*Since release 6.0.0*
+Since release 6.0.0
+===================
 
 Why changing release numbering ?
 
