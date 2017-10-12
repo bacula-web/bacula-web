@@ -24,10 +24,35 @@ I'd advise to have a look on Bweb, baculum, Bacula or Bacula Webmin plugin inste
 The project history
 *******************
 
+Project timeline
+================
+
 Bacula-Web was originaly created and developed by Juan-Luis Frances.
 He made a very nice work.
 
 Since the end of 2010, I was officialy designed the official maintener by Kern S. and Eric B. for this project.
+
+**2004 - 2008**
+
+Bacula-Web has been firstly created arround 2004 by Juan Luis Frances.
+He made a really fantastic work and provide to the community a very nice tool that provide usefull informations about Bacula backup jobs, pools and volumes.
+
+Then from 2004 to 2008, the  project was maintened by Juan Luis Frances making bug fixes and improvments.
+
+**2010 - the project revival**
+
+*Why reviving this project ?*
+
+Since November 2010, this project got a new official maintener and a new beginning.
+
+Since several years, I use Bacula for personal and professional purpose.
+
+Then I was looking for a web based tool which can provide me usefull information about last backup jobs, pools usage, volumes, etc.
+
+My first look were on webacula and bweb which are very good tool to use and features full but they look maybe pretty much not easy to install and configure.
+Then, I've found Bacula-Web which at this time, wasn't maintened since few years.
+
+After I've submited some patches to Bacula developpers, I proposed to become the official maintainer of this project. So the project revival started on July 2010.
 
 *******************************
 Third-party tools and libraries
