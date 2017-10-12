@@ -214,7 +214,7 @@ You can choose different periods such as last
    * 2 weeks
    * month
 
-.. image:: /_static/bacula-web-client-report.jpg
+.. image:: /_static/bacula-web-client-report.png
    :scale: 20%
 
 Directors
