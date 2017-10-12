@@ -144,14 +144,41 @@ The Job logs page display
 .. image:: /_static/bacula-web-job-logs.jpg
    :scale: 20%
 
-Pools and volumes report
-========================
+Pools
+=====
 
-List all pools and volumes and display useful volumes information like volume name, bytes, media type, expiration date, last written date, status
+List all configued Bacula pools with informations like
+   * Volume count
+   * Total bytes
 
-.. image:: /_static/bacula-web-pools-volumes.jpg
+On each pool, you can click on **Show volumes** button to display all volumes assigned to the pool
+
+.. image:: /_static/bacula-web-pools.png
    :scale: 20%
                                                                                                                                                                                  
+Volumes
+=======
+
+List all volumes with details like
+   * Volume name
+   * Bytes
+   * Jobs
+   * Media Type
+   * Pool
+   * Expire
+   * Last written
+   * Status
+     icon can change based on volume usage (full, append, etc.)
+   * Slot
+     If you use a physical autochanger / library, this could be pretty useful :)
+   * In changer
+     If you use a physical autochanger / library, you will know if the volume is inside or outside the library
+
+The total of bytes and number of volumes is displayed at the bottom of the page
+
+.. image:: /_static/bacula-web-volumes.png
+   :scale: 20%
+
 Backup jobs report
 ==================
 
