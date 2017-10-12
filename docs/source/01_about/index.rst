@@ -9,3 +9,4 @@ About
    about
    project
    features
+   license
