@@ -30,5 +30,8 @@
 			"core",
 			"application"
 		]
-	}
+	},
+    "archive": {
+        "exclude": ["/docs/source", "/docs/theme", ".gitignore", ".eslintrc.yml", ".codeclimate.yml", ".eslintignore", ".csslintrc", ".htpasswd"]
+    }
 }
