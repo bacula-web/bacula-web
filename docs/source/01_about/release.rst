@@ -8,7 +8,9 @@ Releases
 Roadmap
 *******
 
-The project development roadmap is available into the `Mantis bug tracker`_
+Bacula-Web project development roadmap is publicly available on the `Mantis bug tracker`_.
+
+For example, the roadmap for next major release 8.0.0 is available using `this link`_.
 
 Versions numbering
 ==================
@@ -49,3 +51,4 @@ Major Minor Bugfix
 ===== ===== ======
 
 .. _Mantis bug tracker: http://bugs.bacula-web.org/
+.. _this link: http://bugs.bacula-web.org/roadmap_page.php?version_id=26
