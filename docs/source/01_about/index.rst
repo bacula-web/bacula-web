@@ -7,6 +7,6 @@ About
    :maxdepth: 2
 
    about
-   project
    features
+   release 
    license

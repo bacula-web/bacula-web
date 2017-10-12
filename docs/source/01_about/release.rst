@@ -1,8 +1,8 @@
-.. _about/project:
+.. _about/release:
 
-#################
-About the project
-#################
+########
+Releases
+########
 
 *******
 Roadmap
