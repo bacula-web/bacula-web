@@ -24,13 +24,13 @@ I'd advise to have a look on Bweb, baculum, Bacula or Bacula Webmin plugin inste
 The project history
 *******************
 
-Project timeline
-================
-
 Bacula-Web was originaly created and developed by Juan-Luis Frances.
 He made a very nice work.
 
 Since the end of 2010, I was officialy designed the official maintener by Kern S. and Eric B. for this project.
+
+Project timeline
+================
 
 **2004 - 2008**
 
