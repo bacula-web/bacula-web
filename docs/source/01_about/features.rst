@@ -195,21 +195,21 @@ Directors
 The Bacula director(s) report page display useful details of each Bacula director(s) you have set in the configuration
 
 Bacula director details are
-
-   * Number of client(s)
-   * Defined job(s)
-   * Total bytes
-   * Total files
-   * Database size (size of Bacula catalog)
-   * Number of volume(s)
-   * Volume(s) size (used disk space for all volumes)
-   * Number of pools
-   * Number of filesets
-
-.. note:: This is feature is available since version 8.0.0-RC1
+   
+* Number of client(s)
+* Defined job(s)
+* Total bytes
+* Total files
+* Database size (size of Bacula catalog)
+* Number of volume(s)
+* Volume(s) size (used disk space for all volumes)
+* Number of pools
+* Number of filesets
 
 .. image:: /_static/bacula-web-directors.png
    :scale: 20%
+
+.. note:: This is feature is available since version 8.0.0-RC1
 
 Test page
 =========
