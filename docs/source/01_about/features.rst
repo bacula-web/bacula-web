@@ -193,7 +193,7 @@ You can choose different periods such as last
    * 2 weeks
    * month
 
-.. image:: /_static/bacula-web-backupjob-report.jpg
+.. image:: /_static/bacula-web-backupjob-report.png
    :scale: 20%
 
 Clients backup report
