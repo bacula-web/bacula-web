@@ -39,18 +39,16 @@ Client backup report
 ====================
 
 Client backup report provide you for each Bacula client the details below
-
-   * client os, client architecture, client version
-   * display last known completed backup job
-   * last x days stored bytes and files graphs
+* client os, client architecture, client version
+* display last known completed backup job
+* last x days stored bytes and files graphs
 
 Backup job report
 =================
 
 Backup job report display useful information about Bacula jobs like
-
-   * last completed jobs
-   * last x days stored bytes and files graphs
+* last completed jobs
+* last x days stored bytes and files graphs
 
 Pools and volumes
 =================
@@ -79,18 +77,17 @@ Dashboard
    :align: right
 
 Bacula-Web Dashboard provide a lot of informations about your Bacula infrastructure
-
-   * Bacula Director catalog (database) statistics like
-   * Catalog database current size
-   * Total stored Bytes
-   * Total stored files
-   * Number of enabled clients
-   * Used disk space by all volumes
-   * Jobs status, transfered files / bytes over prefedined period (last day, last week, last month, bot aka beginning of time)
-   * Volumes per pool usage graph
-   * Stored bytes graph (last 7 days)
-   * Stored files graph (last 7 days)
-   * Last used volumes (display last 10 used volumes for backup jobs)
+* Bacula Director catalog (database) statistics like
+* Catalog database current size
+* Total stored Bytes
+* Total stored files
+* Number of enabled clients
+* Used disk space by all volumes
+* Jobs status, transfered files / bytes over prefedined period (last day, last week, last month, bot aka beginning of time)
+* Volumes per pool usage graph
+* Stored bytes graph (last 7 days)
+* Stored files graph (last 7 days)
+* Last used volumes (display last 10 used volumes for backup jobs)
 
 Jobs report
 ===========
@@ -102,20 +99,19 @@ Jobs report
 Jobs report page display last 150 Bacula jobs in a table format.
 
 Jobs report display latest Bacula jobs (backup,copy,restore) in a table format containing useful information like
-
-   * Job status
-   * Job ID
-   * Client Name
-   * Job type
-   * Start, end time and elapsed time in a "human" readable format
-   * Level of backup jobs (Full, Incremental, Diff)
-   * Bytes and Files for backup jobs
-   * Speed average for completed backup jobs
-   * Compression rate
-   * Pool
-   * Job logs 
-   * Jobs can be ordered by job id, job bytes, job files, job name, pool name
-   * Jobs can filtered for a specific client or by job status
+* Job status
+* Job ID
+* Client Name
+* Job type
+* Start, end time and elapsed time in a "human" readable format
+* Level of backup jobs (Full, Incremental, Diff)
+* Bytes and Files for backup jobs
+* Speed average for completed backup jobs
+* Compression rate
+* Pool
+* Job logs 
+* Jobs can be ordered by job id, job bytes, job files, job name, pool name
+* Jobs can filtered for a specific client or by job status
 
 Job logs
 ========
@@ -137,9 +133,8 @@ Job logs
 ========
 
 The Job logs page display 
-
-   * logs for all kind of jobs (backup, restore, copy, etc.) available from Job reports page
-   * show time and logs informations (usefull for troubleshooting backup problems)
+* logs for all kind of jobs (backup, restore, copy, etc.) available from Job reports page
+* show time and logs informations (usefull for troubleshooting backup problems)
 
 .. image:: /_static/bacula-web-job-logs.jpg
    :scale: 20%
@@ -156,15 +151,13 @@ Backup jobs report
 ==================
 
 Display usefull information like last 7 days stored bytes and files
-
-   * last completed jobs
-   * last x days stored bytes and files graphs
+* last completed jobs
+* last x days stored bytes and files graphs
 
 You can choose different periods such as last
-
-   * week
-   * 2 weeks
-   * month
+* week
+* 2 weeks
+* month
 
 .. image:: /_static/bacula-web-backupjob-report.jpg
    :scale: 20%
@@ -173,18 +166,17 @@ Clients backup report
 =====================
 
 Show information like 
-   * Client name
-   * Client os
-   * Client architecture
-   * Client version
-   * Last known completed backup job
-   * Last x days stored bytes and files graphs
+* Client name
+* Client os
+* Client architecture
+* Client version
+* Last known completed backup job
+* Last x days stored bytes and files graphs
 
 You can choose different periods such as last
-
-   * week
-   * 2 weeks
-   * month
+* week
+* 2 weeks
+* month
 
 .. image:: /_static/bacula-web-client-report.jpg
    :scale: 20%
@@ -195,7 +187,6 @@ Directors
 The Bacula director(s) report page display useful details of each Bacula director(s) you have set in the configuration
 
 Bacula director details are
-   
 * Number of client(s)
 * Defined job(s)
 * Total bytes
@@ -217,15 +208,14 @@ Test page
 This is the page you'd use after instaling Bacula-Web for the first time or if you need to make sure that your installation will work as epxected.
 
 The test page do the following check for you
-
-   * PHP - gettext support (uses for translation)
-   * PHP - session support (used in the Core php code)
-   * PHP - MySQL support
-   * PHP - postgreSQL support
-   * PHP - sqlite support
-   * PHP - PDO support
-   * Smarty cache template permissions (required for page rendering purpose)
-   * PHP version (version 5.6 at least is supported)
+* PHP - gettext support (uses for translation)
+* PHP - session support (used in the Core php code)
+* PHP - MySQL support
+* PHP - postgreSQL support
+* PHP - sqlite support
+* PHP - PDO support
+* Smarty cache template permissions (required for page rendering purpose)
+* PHP version (version 5.6 at least is supported)
 
 .. image:: /_static/bacula-web-test-page.png
    :scale: 20%
