@@ -141,7 +141,7 @@ The Job logs page display
    * logs for all kind of jobs (backup, restore, copy, etc.) available from Job reports page
    * show time and logs informations (usefull for troubleshooting backup problems)
 
-.. image:: /_static/bacula-web-job-logs.jpg
+.. image:: /_static/bacula-web-job-logs.png
    :scale: 20%
 
 Pools
