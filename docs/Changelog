@@ -44,6 +44,9 @@ Changelog
 	- Improve application exception handling
 	- Add CodeClimate for CI
 	- DateTimePicker updated to version 4.17.47
+	- Bootstrap updated to version 3.3.7
+	- FontAwesome updated to version 4.7.0
+	- Smarty-Gettext updated to version 1.2.0
 
 Fixed bug(s)
 
