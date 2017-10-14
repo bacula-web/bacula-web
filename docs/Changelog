@@ -4,7 +4,46 @@ Changelog
 
 - General
 	- PHPLot has been replaced by nvd3
-	- Uncountable code improvment and cleanup
+	- Use Composer for libs dependencies and installation (Bacula-Web is
+	available on packagist.org
+- Directors report
+	- New directors report page display high level statistics of all
+	configured Bacula directors
+- Console
+	- New console PHP script allow you to create Apache/nGinx basic
+	authentication (more features will come)
+- Dashboard
+	- Last period jobs, stored bytes and stored files on take backup jobs
+	- Jobs completed with errors are now displayed in last period job status
+	widget
+	- Backup job and client report are now available from top drop-down menu
+	- New Clients jobs total widget display statistics for backup and restore
+	jobs
+	- New Weekly jobs statistics widget display stored bytes and files of each
+	day of the week
+- Jobs report
+	- Filter jobs by type
+	- Reset filter and options using the <Reset to defautl> button
+- Pools and volumes report
+	- Split into two specific reports page (pool and volumes)
+- Volumes
+	- Display an icon for each volumes which vary depending volume status
+	- You can sort volumes by name, id, jobs and bytes from now
+- Backup job report
+	- Display only backup jobs (was showing restore or other jobs before)
+	- You can now choose between 1 week, 2 weeks and 1 month for period
+- Client report
+	- You can now choose between 1 week, 2 weeks and 1 month for period
+	- Fixed client details for MS Windows file daemons
+- Documentation
+	- Documentation got cleaned up, restructured and updated
+- Development
+	- Remove static php class with PDO
+	- Large amount of code improvment and cleanup
+	- Use Composer autoloader
+	- Improve application exception handling
+	- Add CodeClimate for CI
+	- DateTimePicker updated to version 4.17.47
 
 Fixed bug(s)
 
