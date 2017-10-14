@@ -1,18 +1,39 @@
-=== Release 8.0.0-RC1 (Oct xx 2017)
+=== Release 8.0.0-RC1 (Oct 15 2017)
 
 Changelog
 
-- General: 
+- General
 	- PHPLot has been replaced by nvd3
 	- Uncountable code improvment and cleanup
 
 Fixed bug(s)
 
+- 0000177 [bug-html] graphing overlap on index.php
+- 0000196 [bug] after install bacula web , the test page is OK but the index page returns errors
+- 0000206 [bug-php] Expired and period fields do not use custom date format
+- 0000212 [bug-php] Backup job report page should only display backup jobs
+- 0000214 [bug-php] Last used volumes widget in Dashboard display unused volumes
+- 0000224 [bug-php] PHP notice in client report for Windows clients
+
 New feature(s)
+
+- 0000002 [feature] Use icon for volume status
+- 0000005 [feature] Volumes sort order
+- 0000088 [feature] View with Multiple Catalog
+- 0000129 [feature] Allow disabling some types of backup jobs
+- 0000155 [feature] Display Completed jobs with errors in Dashboard
+- 0000173 [feature] Choose different period for Backup job report
+- 0000181 [feature] Filter jobs by Type on Job Reports page
+- 0000197 [feature] Add Client and Week size
+- 0000199 [feature] Include a Kind of JobTotals
+- 0000210 [feature] Add a "reset to default" option in Jobs report page
 
 Translations
 
 Documentation
+
+- 0000198 [documentation] Pb with symlink in .tgz ??
+- 0000208 [documentation] Error assinging owner to config.php
 
 === Release 7.4.0 (May 7 2017)
 
