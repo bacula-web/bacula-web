@@ -268,6 +268,6 @@ Here's below how your configuration file (config.php) could look like
    ?>
 
 .. warning:: If you define several Bacula catalog, make sure each catalog connection settings have a different id 
-   example: config[0], config[1], etc.
+   example: $config[0], $config[1], etc.
 
 .. _PHP manual: http://php.net/manual/en/function.date.php
