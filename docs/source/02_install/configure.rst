@@ -68,11 +68,13 @@ General settings
 ================================= ====================================== ================
 Setting                           Description                            Default value
 ================================= ====================================== ================
-$config['language']               Set displayed language                 en_US
+`$config['language']`             Set displayed language                 en_US
 $config['show_inactive_clients']  Show inactive clients or not           true
 $config['datetime_format']        Change default date and time format    Y-m-d H:i:s 
 $config['hide_empty_pools']       Hide empty pools                       true
 ================================= ====================================== ================
+
+.. _$config['language']:
 
 Languages
 =========
