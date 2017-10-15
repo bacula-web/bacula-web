@@ -65,7 +65,7 @@ Settings
 General settings 
 
 ================================= ====================================== ================
-Option                            Description                            Default value
+Setting                           Description                            Default value
 ================================= ====================================== ================
 $config['language']               Set displayed language                 en_US
 $config['show_inactive_clients']  Show inactive clients or not           true
