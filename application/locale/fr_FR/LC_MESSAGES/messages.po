@@ -1,17 +1,17 @@
-# Bacula-Web translations 
-# Copyright (C) 2004 - 2016 
+# Bacula-Web translations
+# Copyright (C) 2017 Davide Franco
 # This file is distributed under the same license as the Bacula-Web package.
 # 
 # Translators:
-# Davide Franco, 2014,2016
+# Davide Franco, 2014,2016-2017
 # Davide Franco, 2012
 # Morgan LEFIEUX <comete@archlinuxfr.org>, 2004
 msgid ""
 msgstr ""
-"Project-Id-Version: Bacula-Web 7.4.0\n"
-"Report-Msgid-Bugs-To: http://bugs.bacula-web.org\n"
-"POT-Creation-Date: 2016-04-24 20:52+0200\n"
-"PO-Revision-Date: 2016-04-24 19:20+0000\n"
+"Project-Id-Version: Bacula-Web\n"
+"Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
+"POT-Creation-Date: 2017-10-11 13:16+0200\n"
+"PO-Revision-Date: 2017-10-14 19:14+0000\n"
 "Last-Translator: Davide Franco\n"
 "Language-Team: French (France) (http://www.transifex.com/bacula-web/bacula-web/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
@@ -36,6 +36,10 @@ msgstr "Appliquer le filtre et les options"
 msgid "Back"
 msgstr "Retour"
 
+#: messages.c:9
+msgid "Back to Dashboard"
+msgstr "Retour au tableau de bord"
+
 #: lang.c:1 lang.c:35 lang.c:50 lang.c:65
 msgid "Back to the dashboard"
 msgstr "Retour au tableau de bord"
@@ -45,7 +49,7 @@ msgid "Backup Job Report"
 msgstr "Rapport du travail de sauvegarde"
 
 #: lang.c:37 lang.c:115 messages.c:86
-msgid "Backup Job name"
+msgid "Backup Job name 7.1.0"
 msgstr "Nom du travail de sauvegarde"
 
 #: lang.c:32 lang.c:103 messages.c:82
@@ -214,6 +218,10 @@ msgstr "Id du travail"
 #: lang.c:80 messages.c:59
 msgid "Job Level (Incr / Diff / Full)"
 msgstr "Niveau du travail (Incr / Diff / Comp)"
+
+#: messages.c:126
+msgid "Job details"
+msgstr "Détails du travail"
 
 #: lang.c:44 messages.c:127
 msgid "Job id"
@@ -384,6 +392,10 @@ msgstr "Afficher l'état des tâches des dernières 24 heures"
 msgid "Show pools and volumes report"
 msgstr "Afficher le rapport des pools et volumes"
 
+#: messages.c:108
+msgid "Slot"
+msgstr "Slot"
+
 #: lang.c:11 lang.c:127 messages.c:21 messages.c:98
 msgid "Speed"
 msgstr "Vitesse"
@@ -440,6 +452,10 @@ msgstr "Page de test"
 #: lang.c:45 messages.c:128
 msgid "Time"
 msgstr "Heure"
+
+#: messages.c:110
+msgid "Total"
+msgstr "Total"
 
 #: lang.c:15 lang.c:65 messages.c:44
 msgid "Total bytes"
@@ -534,18 +550,3 @@ msgstr "jour(s)"
 msgid "last"
 msgstr "dernier"
 
-#: messages.c:9
-msgid "Back to Dashboard"
-msgstr "Retour au tableau de bord"
-
-#: messages.c:108
-msgid "Slot"
-msgstr "Slot"
-
-#: messages.c:110
-msgid "Total"
-msgstr "Total"
-
-#: messages.c:126
-msgid "Job details"
-msgstr "Détails du travail"
