@@ -6,7 +6,7 @@ Configure Bacula-Web
 
 From Bacula-Web root folder, copy the file config.php.sample as below
 
-*Please note that since version 5.1.0, the config file is a PHP script.*
+.. note:: Please note that since version 5.1.0, the config file is a PHP script.*
 
 ::
 
