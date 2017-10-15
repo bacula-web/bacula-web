@@ -104,7 +104,7 @@ Bacula-Web language is by default in english, but it's also translated in not le
 I would like to say **thank you very much** to all people involved in Bacula-Web translations. 
 You're all doing a fantastic job !!! 
 
-.. important:: If you would like to contribute to a new language or maintaining one, have a look on the :ref:`contribute/translations` of the documentation.
+.. important:: If you want to contribute in maintaining translations for a language or add a new one, have a look at the :ref:`contribute/translations` chapter
 
 ************
 About Bacula
@@ -112,7 +112,7 @@ About Bacula
 
 Bacula is a set of Open Source, enterprise ready, computer programs that permit you (or the system administrator) to manage backup, recovery, and verification of computer data across a network of computers of different kinds. Bacula is relatively easy to use and efficient, while offering many advanced storage management features that make it easy to find and recover lost or damaged files. In technical terms, it is an Open Source, enterprise ready, network based backup program (source `www.bacula.org`_).
 
-For my point of view, bacula is the best open source backup software I ever used (for professional and private purpose)
+IMHO, Bacula is a great open source backup tool (for professional and private purpose)
 
 ************
 About myself
