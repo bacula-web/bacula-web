@@ -161,6 +161,10 @@ db_port         database port number                                 - mysql, us
                                                                      - sqlite, leave blank
 =============== ==================================================== ====================================
 
+**Examples**
+
+*Single MySQL Bacula catalog*
+
 ::
 
    // Bacula catalog label (used for catalog selector)
@@ -184,7 +188,7 @@ db_port         database port number                                 - mysql, us
    // Database port
    $config[0]['db_port'] = '3306';
 
-Single catalog (example)
+*Single catalog (example)*
 
 ::
 
@@ -223,7 +227,7 @@ Multiple catalogs (example)
    $config[1]['db_port'] = '5432';
    ?>
 
-Configuration example
+**Full configuration example**
 
 Here's below how your configuration file (config.php) could look like
 
@@ -262,5 +266,7 @@ Here's below how your configuration file (config.php) could look like
    $config[2]['label'] = 'bacula';
    $config[2]['db_name'] = '/path/to/database';
    ?>
+
+.. warning:: If you defined multiple Bacula catalog, make sure each catalog connection settings have a different id
 
 .. _PHP manual: http://php.net/manual/en/function.date.php
