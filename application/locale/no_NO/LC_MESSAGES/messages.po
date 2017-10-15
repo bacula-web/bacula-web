@@ -1,16 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Bacula-Web translations
+# Copyright (C) 2017 Davide Franco
+# This file is distributed under the same license as the Bacula-Web package.
 # 
 # Translators:
 # Georg Herland <georg@herland.org>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Bacula-Web 7.4.0\n"
-"Report-Msgid-Bugs-To: http://bugs.bacula-web.org\n"
-"POT-Creation-Date: 2016-04-24 20:52+0200\n"
-"PO-Revision-Date: 2016-07-12 14:04+0000\n"
-"Last-Translator: Georg Herland <georg@herland.org>\n"
+"Project-Id-Version: Bacula-Web\n"
+"Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
+"POT-Creation-Date: 2017-10-11 13:16+0200\n"
+"PO-Revision-Date: 2017-10-11 11:22+0000\n"
+"Last-Translator: Davide Franco\n"
 "Language-Team: Norwegian (Norway) (http://www.transifex.com/bacula-web/bacula-web/language/no_NO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,6 +34,10 @@ msgstr "Legg til filter alternativer"
 msgid "Back"
 msgstr "Tilbake"
 
+#: messages.c:9
+msgid "Back to Dashboard"
+msgstr "TIlbake til dashboard"
+
 #: lang.c:1 lang.c:35 lang.c:50 lang.c:65
 msgid "Back to the dashboard"
 msgstr "TIlbake til dashboard"
@@ -43,8 +47,8 @@ msgid "Backup Job Report"
 msgstr "Backup jobbrapport"
 
 #: lang.c:37 lang.c:115 messages.c:86
-msgid "Backup Job name"
-msgstr "Backup Jobbnavn"
+msgid "Backup Job name 7.1.0"
+msgstr ""
 
 #: lang.c:32 lang.c:103 messages.c:82
 msgid "Backup Job report"
@@ -212,6 +216,10 @@ msgstr "Jobb id"
 #: lang.c:80 messages.c:59
 msgid "Job Level (Incr / Diff / Full)"
 msgstr "Jobb nivå (Inkr / Diff / Full)"
+
+#: messages.c:126
+msgid "Job details"
+msgstr "Jobbdetaljer"
 
 #: lang.c:44 messages.c:127
 msgid "Job id"
@@ -382,6 +390,10 @@ msgstr "Vis siste 24 timers jobbstatus"
 msgid "Show pools and volumes report"
 msgstr "Vis Volumsamling og volum rapport"
 
+#: messages.c:108
+msgid "Slot"
+msgstr "luke"
+
 #: lang.c:11 lang.c:127 messages.c:21 messages.c:98
 msgid "Speed"
 msgstr "Hastighet"
@@ -438,6 +450,10 @@ msgstr "Testside"
 #: lang.c:45 messages.c:128
 msgid "Time"
 msgstr "Tid"
+
+#: messages.c:110
+msgid "Total"
+msgstr "Total"
 
 #: lang.c:15 lang.c:65 messages.c:44
 msgid "Total bytes"
@@ -532,18 +548,3 @@ msgstr "dag(er)"
 msgid "last"
 msgstr "siste"
 
-#: messages.c:9
-msgid "Back to Dashboard"
-msgstr "TIlbake til dashboard"
-
-#: messages.c:108
-msgid "Slot"
-msgstr "luke"
-
-#: messages.c:110
-msgid "Total"
-msgstr "Total"
-
-#: messages.c:126
-msgid "Job details"
-msgstr "Jobbdetaljer"
