@@ -68,66 +68,78 @@ General settings
 ================================= ====================================== ================
 Setting                           Description                            Default value
 ================================= ====================================== ================
-`$config['language']`             Set displayed language                 en_US
+$config['language']               Set displayed language                 en_US
 $config['show_inactive_clients']  Show inactive clients or not           true
 $config['datetime_format']        Change default date and time format    Y-m-d H:i:s 
 $config['hide_empty_pools']       Hide empty pools                       true
 ================================= ====================================== ================
 
-.. _$config['language']:
+language
+--------
 
-Languages
-=========
+**Description**
 
-Bacula-Web have been translated in different languages (thumbs up to all the contributors for their help).
+As Bacula-Web is translated into not less than 15 languages, the language setting allow you to change the displayed 
+language of Bacula-Web.
 
-   * English (default)
-   * Spanish (last update by Juan Luis Francés Jiménez)
-   * Italian (last update by Gian Domenico Messina (gianni.messina AT c-ict.it)
-   * French (last update by Morgan LEFIEUX - comete AT daknet.org)
-   * German (last update by Florian Heigl)
-   * Swedish - Maintened by Daniel Nylander (po@danielnylander.se)
-   * Portuguese Brazil - Last updated by J. Ritter (condector@gmail.com)
+You can simply change from english to your language by modifying the $config['language'] value.
 
-To change the default displayed language, modify the option in config.php (see below)
+**Example** 
 
 ::
 
-   $config['language'] = 'en_EN'; // (default language)
+   $config['language'] = 'pt_BR'; // For portuguese brazilian 
                              
-   // Other available languages
-                             
-   // en_US (or en_UK)
-   // es_ES
-   // it_IT
-   // fr_FR
-   // de_DE
-   // sv_SV
-   // pt_BR
+hide_empty_pools 
+----------------
 
+**Description**
 
-Hide empty pools & Show_inactive_clients
+Do not display empty pools in Dashbaord (Pools and volumes widget)
 
-As of version 5.2.11, the configuration file contain these two new options
+**Example**
 
 ::
 
-   // Show inactive clients (hidden by default)
-   $config['show_inactive_clients'] = true;
-                             
-   // Hide empty pools (displayed by default)
    $config['hide_empty_pools'] = false;
+                             
+.. note:: this setting is availabe since Bacula-Web 5.2.11
 
-Custom date/time format
+show_inactive_clients
+---------------------
 
-Since version 7.4.0
+**Description**
+
+If disabled (set to *false*), don't list or show inactive clients
+
+**EXample**
 
 ::
 
-   // Custom datetime format (by default: Y-m-d H:i:s)
-   // Examples
-   // $config['datetime_format'] = 'd/m/Y H:i:s';
-   // $config['datetime_format'] = 'm-d-Y H:i:s';
+   $config['show_inactive_clients'] = true;
+
+.. note:: this setting is availabe since Bacula-Web 5.2.11
+
+datetime_format
+---------------
+
+**Description**
+
+Define your customer date & time format (by default Y-m-d H:i:s)
+
+For more information on date format, have a look on date() function in `PHP manual`_
+
+
+
+**Example**
+
+::
+
+   $config['datetime_format'] = 'd/m/Y H:i:s';
+   or
+   $config['datetime_format'] = 'm-d-Y H:i:s';
+
+.. note:: this setting is availabe only since version 7.4.0 
 
 Database connection settings
 
@@ -232,3 +244,5 @@ Here's below how your configuration file (config.php) could look like
    $config[2]['label'] = 'bacula';
    $config[2]['db_name'] = '/path/to/database';
    ?>
+
+.. _PHP manual: http://php.net/manual/en/function.date.php
