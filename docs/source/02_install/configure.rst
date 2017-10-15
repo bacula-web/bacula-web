@@ -59,8 +59,22 @@ on Centos 7
 .. note:: Do not forget the column <:> after apache_user 
 
 *********
-Languages
+Settings
 *********
+
+General settings 
+
+================================= ====================================== ================
+Option                            Description                            Default value
+================================= ====================================== ================
+$config['language']               Set displayed language                 en_US
+$config['show_inactive_clients']  Show inactive clients or not           true
+$config['datetime_format']        Change default date and time format    Y-m-d H:i:s 
+$config['hide_empty_pools']       Hide empty pools                       true
+================================= ====================================== ================
+
+Languages
+=========
 
 Bacula-Web have been translated in different languages (thumbs up to all the contributors for their help).
 
@@ -88,7 +102,6 @@ To change the default displayed language, modify the option in config.php (see b
    // sv_SV
    // pt_BR
 
-Options
 
 Hide empty pools & Show_inactive_clients
 
