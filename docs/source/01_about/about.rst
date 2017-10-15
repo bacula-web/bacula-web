@@ -79,22 +79,32 @@ Bacula-Web was succesfully tested with
 
 Your web browser must have Javascript enabled
 
-*********
-Languages
-*********
+************
+Translations
+************
 
-Bacula-Web is translated in 7 languages (english by default)
+Bacula-Web language is by default in english, but it's also translated in not less than 15 languages 
 
-   * Swedish
-   * Spanish
+   * Belarusian
+   * Catalan
+   * Chinese
+   * Dutch
+   * English
+   * French
    * German
    * Italian
-   * French
+   * Japanese
+   * Norwegian
+   * Polish
    * Portuguese Brazil
-   * Dutch
+   * Russian
+   * Spanish
+   * Swedish
 
+I would like to say **thank you very much** to all people involved in Bacula-Web translations. 
+You're all doing a fantastic job !!! 
 
-If you would like to contribute to a new language or by updating one, have a look on the :ref:`contribute/translations` of the documentation.
+.. important:: If you would like to contribute to a new language or maintaining one, have a look on the :ref:`contribute/translations` of the documentation.
 
 ************
 About Bacula
