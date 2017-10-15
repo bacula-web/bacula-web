@@ -141,7 +141,25 @@ For more information on date format, have a look on date() function in `PHP manu
 
 .. note:: this setting is availabe only since version 7.4.0 
 
+
 Database connection settings
+============================
+
+Each Bacula catalog (database) needs to be defined using the settings below
+
+=============== ======================================================= ====================================
+Setting         Description                                             Example 
+=============== ======================================================= ====================================
+label           label displayed in the catalog drop-down selector       Backup server
+host            hostname of the database server hosting Bacula catalog  localhost, fqdn host or ip address
+db_name         name of the catalog database name                       usualy bacula, unless you changed it
+login           database user                                           bacula, admin, etc.                                            
+password        database password                                       mK3DQLolUV
+db_type         database type                                           mysql, pgsql or sqlite                  
+db_port         database port number                                    - mysql, use 3306
+                                                                        - pgsql, use 5432
+                                                                        - sqlite, leave blank
+=============== ======================================================= ====================================
 
 ::
 
