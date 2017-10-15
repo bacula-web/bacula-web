@@ -20,7 +20,7 @@ All Bacula-Web settings are stored in the file below
 
     application/config/config.php
 
-From Bacula-Web root foler, copy the sample config file and give it the name *config.php*
+From Bacula-Web root folder, copy the sample config file and give it the name *config.php*
     
 ::
 
@@ -50,7 +50,7 @@ For example, on Debian Jessie, use this command
 
    # chown -v www-data: config.php 
 
-on Centos 7 for example
+on Centos 7
 
 ::
 
