@@ -1,8 +1,8 @@
 .. _install/configure:
 
-====================
+####################
 Configure Bacula-Web
-====================
+####################
 
 From Bacula-Web root folder, copy the file config.php.sample as below
 
@@ -25,8 +25,9 @@ From Bacula-Web root folder, copy the file config.php.sample as below
 
    # chown -v www-data: config.php
 
+*********
 Languages
----------
+*********
 
 Bacula-Web have been translated in different languages (thumbs up to all the contributors for their help).
 
