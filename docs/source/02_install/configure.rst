@@ -62,7 +62,8 @@ on Centos 7
 Settings
 *********
 
-General settings 
+General settings
+================
 
 ================================= ====================================== ================
 Setting                           Description                            Default value
