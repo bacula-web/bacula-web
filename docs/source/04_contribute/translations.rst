@@ -4,16 +4,23 @@
 Translations
 ############
 
-Bacula-Web web user interface is by default in english, but it is also available in other languages like
+Bacula-Web web user interface is by default in english, but it is also available in other languages (complete list below)
 
-   * Swedish
-   * Spanish
-   * German
-   * Italian
-   * French
-   * Portuguese Brazil
-   * Dutch
-   * Japanese
+* Belarusian
+* Catalan
+* Chinese
+* Dutch
+* English
+* French
+* German
+* Italian
+* Japanese
+* Norwegian
+* Polish
+* Portuguese Brazil
+* Russian
+* Spanish
+* Swedish
 
 How to help translating Bacula-Web
 ==================================
