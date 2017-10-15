@@ -3,3 +3,4 @@
 /application/view/cache/*.php
 /application/config/config.php
 docs/_build
+.htpasswd
