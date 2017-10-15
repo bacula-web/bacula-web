@@ -95,7 +95,7 @@ hide_empty_pools
 
 **Description**
 
-Do not display empty pools in Dashbaord (Pools and volumes widget)
+Do not display empty pools in Dashboard (Pools and volumes widget)
 
 **Example**
 
