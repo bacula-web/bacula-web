@@ -188,21 +188,6 @@ db_port         database port number                                 - mysql, us
    // Database port
    $config[0]['db_port'] = '3306';
 
-*Single catalog (example)*
-
-::
-
-   $config['language'] = 'en_EN';
-
-   //MySQL bacula catalog
-   $config[0]['label'] = 'Backup Server';
-   $config[0]['host'] = 'localhost';
-   $config[0]['login'] = 'bacula';
-   $config[0]['password'] = 'verystrongpassword';
-   $config[0]['db_name'] = 'bacula';
-   $config[0]['db_type'] = 'mysql';
-   $config[0]['db_port'] = '3306';
-
 Multiple catalogs (example)
 
 ::
