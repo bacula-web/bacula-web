@@ -188,7 +188,7 @@ db_port         database port number                                 - mysql, us
    // Database port
    $config[0]['db_port'] = '3306';
 
-Multiple catalogs (example)
+*Multiple catalogs (example)*
 
 ::
 
@@ -214,7 +214,7 @@ Multiple catalogs (example)
 
 **Full configuration example**
 
-Here's below how your configuration file (config.php) could look like
+*Full config.php example*
 
 ::
 
