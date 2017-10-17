@@ -74,7 +74,7 @@ Features list
 Dashboard
 =========
 
-.. image:: /_static/bacula-web-dashboard.png
+.. image:: /_static/bacula-web-dashboard.jpg
    :scale: 20 %
    :align: right
 
@@ -95,7 +95,7 @@ Bacula-Web Dashboard provide a lot of informations about your Bacula infrastruct
 Jobs report
 ===========
 
-.. image:: /_static/bacula-web-jobs-report.png
+.. image:: /_static/bacula-web-jobs-report.jpg
    :scale: 20 %
    :align: right
 
@@ -122,7 +122,7 @@ Job logs
    
 Job logs can be displayed by clicking on the loop icon off each job (screenshot below)
 
-.. image:: /_static/bacula-web-job-logs-option.png
+.. image:: /_static/bacula-web-job-logs-option.jpg
    :scale: 60 %
 
 Filter and options
@@ -130,7 +130,7 @@ Filter and options
 
 You can use different filter and ordering options (screenshot below)
 
-.. image:: /_static/bacula-web-jobs-report-options.png
+.. image:: /_static/bacula-web-jobs-report-options.jpg
    :scale: 60%
 
 Job logs
@@ -141,7 +141,7 @@ The Job logs page display
    * logs for all kind of jobs (backup, restore, copy, etc.) available from Job reports page
    * show time and logs informations (usefull for troubleshooting backup problems)
 
-.. image:: /_static/bacula-web-job-logs.png
+.. image:: /_static/bacula-web-job-logs.jpg
    :scale: 20%
 
 Pools
@@ -154,7 +154,7 @@ List all configued Bacula pools with informations like
 
 On each pool, you can click on **Show volumes** button to display all volumes assigned to the pool
 
-.. image:: /_static/bacula-web-pools.png
+.. image:: /_static/bacula-web-pools.jpg
    :scale: 20%
                                                                                                                                                                                  
 Volumes
@@ -178,7 +178,7 @@ List all volumes with details like
 
 The total of bytes and number of volumes is displayed at the bottom of the page
 
-.. image:: /_static/bacula-web-volumes.png
+.. image:: /_static/bacula-web-volumes.jpg
    :scale: 20%
 
 Backup jobs report
@@ -195,7 +195,7 @@ You can choose different periods such as last
    * 2 weeks
    * month
 
-.. image:: /_static/bacula-web-backupjob-report.png
+.. image:: /_static/bacula-web-backupjob-report.jpg
    :scale: 20%
 
 Clients backup report
@@ -216,7 +216,7 @@ You can choose different periods such as last
    * 2 weeks
    * month
 
-.. image:: /_static/bacula-web-client-report.png
+.. image:: /_static/bacula-web-client-report.jpg
    :scale: 20%
 
 Directors
@@ -236,7 +236,7 @@ Bacula director details are
    * Number of pools
    * Number of filesets
 
-.. image:: /_static/bacula-web-directors.png
+.. image:: /_static/bacula-web-directors.jpg
    :scale: 20%
 
 .. note:: This is feature is available since version 8.0.0-RC1
@@ -257,5 +257,5 @@ The test page do the following check for you
    * Smarty cache template permissions (required for page rendering purpose)
    * PHP version (version 5.6 at least is supported)
 
-.. image:: /_static/bacula-web-test-page.png
+.. image:: /_static/bacula-web-test-page.jpg
    :scale: 20%
