@@ -259,3 +259,12 @@ The test page do the following check for you
 
 .. image:: /_static/bacula-web-test-page.jpg
    :scale: 20%
+
+*****************
+Known limitations
+*****************
+
+As of now, Bacula-Web is only a reporting and monitoring tool, it only access your Bacula director (read only) to retrieve informations from Bacula catalog.
+
+I have plan to include more features such as starting, canceling backup or restore jobs for example.
+This will come in the future but you'll need to be patient as the whole application code needs to be rewritten.
