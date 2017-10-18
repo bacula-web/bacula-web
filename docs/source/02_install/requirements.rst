@@ -18,20 +18,20 @@ Ability to run shell commands as root or using sudo is also a requirement.
 General requirements
 ********************
 
-=================== ===================================================
-Requirement         Note
-=================== ===================================================
-PHP >= 5.6          Install PHP 5.6 at least
-                    (PHP >= 7.0 known to work)
-PHP modules         
-                    Gettext
-                    GD
-                    Session
-                    PDO
-                    MySQL, postgreSQL or SQLite
-                    CLI
-                    JSON
-=================== ===================================================
++-----------------+-------------------------------------------+
+| Requirement     | Note                                      |
++=================+===========================================+
+| PHP >= 5.6      | Install PHP 5.6 at least                  |
+|                 | (PHP >= 7.0 known to work)                |
++-----------------+-------------------------------------------+
+| PHP modules     | Gettext                                   | 
+|                 | GD                                        |
+|                 | Session                                   |
+|                 | PDO                                       |
+|                 | MySQL, postgreSQL or SQLite               |
+|                 | CLI                                       |
+|                 | JSON                                      |
++-----------------+-------------------------------------------+
 
 Using SELinux
 -------------
