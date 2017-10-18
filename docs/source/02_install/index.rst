@@ -28,20 +28,23 @@ Bacula-Web installation consists only in few steps (see below)
 +----------------------+-------------------------------------------+
 | Download             | Download Bacula-Web pre-built package     |
 +----------------------+-------------------------------------------+
-| Install dependencies | Download Bacula-Web pre-built package     |
+| Install dependencies | Install Bacula-Web dependencies           |
 +----------------------+-------------------------------------------+
 | Configure            | Configure Bacula-Web for your environment |
 +----------------------+-------------------------------------------+
 | Check your setup     | Make sure your Bacula-Web setup is ok     |
 +----------------------+-------------------------------------------+
 
+Installation / upgrade instructions
+-----------------------------------
+
 .. toctree::
    :maxdepth: 2
 
    requirements
-   install
-   download
-   configure
    configwebserver
+   download
+   install
+   configure
    upgrade
    test
