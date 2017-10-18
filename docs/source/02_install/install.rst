@@ -1,13 +1,17 @@
 .. _install/install:
 
-===================
-Install and upgrade
-===================
+#######################
+Web server installation
+#######################
 
-Install required packages on RedHat / Centos / Fedora
------------------------------------------------------
+***********************
+Using Apache web server
+***********************
 
-Install Apache web server
+Install requirements on RedHat / Centos / Fedora
+================================================
+
+Install Apache web server on rpm based Linux distribution like Red Hat, Centos, Fedora, SUSE Linux, Scientific Linux, etc.
 
 ::
 
@@ -44,8 +48,8 @@ Assuming that the bacula database file is located under /var/spool/bacula
    # chmod -v 755 /var/spool/bacula
    # chmod -v 704 /var/spool/bacula/bacula.db
 
-Install on Gentoo
------------------
+Install requirements on Gentoo
+------------------------------
 
 Modify portage configuration
     
@@ -83,8 +87,8 @@ Then restart Apache
 
    # /etc/init.d/apache2 restart
 
-Install on Debian / Ubuntu / Linux Mint
-_______________________________________
+Install requirements on Debian / Ubuntu / Linux Mint
+----------------------------------------------------
 
 Install Apache and PHP
 
@@ -102,8 +106,8 @@ Install Apache and PHP
 
    $ sudo apt-get install apache2 libapache2-mod-php5 php5-sqlite
 
-Install on FreeBSD
-------------------
+Install requirements on FreeBSD
+-------------------------------
 
 You can start with a fresh FreeBSD 9.0 installation, with ports from original CD media, not updated to keep as simple as possible.
 
@@ -139,6 +143,5 @@ With SQLite bacula catalog
    * databases/php5-sqlite
    * databases/php5-pdo_sqlite
 
-**Special note**
 
-A big thanks to Dean E. Weimer who provided me theses useful details for *BSD setup
+.. note:: A big thanks to Dean E. Weimer who provided me Bacula-Web installation instructions for \*BSD setup
