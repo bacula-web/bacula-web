@@ -24,9 +24,7 @@ General requirements
 | PHP >= 5.6      | Install PHP 5.6 at least                  |
 |                 | (PHP >= 7.0 known to work)                |
 +-----------------+-------------------------------------------+
-| PHP modules                                                 | 
-+-----------------+-------------------------------------------+
-|                 | - Gettext                                 | 
+| PHP modules     | - Gettext                                 | 
 |                 | - GD                                      |
 |                 | - Session                                 |
 |                 | - PDO                                     |
