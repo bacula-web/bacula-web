@@ -1,4 +1,4 @@
-.. _install/configwebserver
+.. _install/configwebserver:
 
 ========================
 Web server configuration
