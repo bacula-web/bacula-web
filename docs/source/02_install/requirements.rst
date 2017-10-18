@@ -14,6 +14,8 @@ Before installing Bacula-Web on your server, you must ensure that your system fu
     * TrueType support (optional)
     * PHP PDO and PHP support for MySQL, postgreSQL or SQLite (depend your your Bacula setup)
     * Session support
+    * CLI
+    * JSON
 
   * Valid database connection to your Bacula director catalog (each if you have several)
   * supported database backend are MySQL, postgreSQL or SQLite
