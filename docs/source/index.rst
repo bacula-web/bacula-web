@@ -12,5 +12,5 @@ Bacula-Web documentation
 
    01_about/index
    02_install/index
-   03_contribute/index
-   04_gethelp/index
+   03_gethelp/index
+   04_contribute/index

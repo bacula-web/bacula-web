@@ -18,18 +18,20 @@ $config['language'] = 'en_US';
 // $config['datetime_format'] = 'm-d-Y H:i:s';
 
 // en_US -> English 
-// es_ES -> Spanish 
+// be_BY -> Belarusian
+// ca_ES -> Catalan
+// pl_PL -> Polish
+// ru_RU -> Russian
+// zh_CN -> Chinese
+// no_NO -> Norwegian
+// ja_JP -> Japanese
+// sv_SE -> Swedish
+// es_ES -> Spanish
+// de_DE -> German
 // it_IT -> Italian
 // fr_FR -> French
-// de_DE -> German
-// sv_SV -> Swedish
 // pt_BR -> Portuguese Brazil
-// nl_NL -> Dutch 
-// ja_JP -> Japanese
-// no_NO -> Norvegian
-// ru_RU -> Russian
-// sv_SV -> Swedish
-// zh_CN -> Chinese
+// nl_NL -> Dutch
 
 // Database connection parameters
 // Copy/paste and adjust parameters according to your configuration

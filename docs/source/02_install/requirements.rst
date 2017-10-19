@@ -1,23 +1,40 @@
 .. _install/requirements:
 
-============
+############
 Requirements
-============
+############
 
-Before installing Bacula-Web on your server, you must ensure that your system fullfill Bacula-Web requirements
+********************
+General requirements
+********************
 
-  * ssh (root or sudo access) on your server
-  * Apache Web server (at least version 2)
-  * PHP version >= 5.6 with
-
-    * Gettext support
-    * GD library support (used for graphs)
-    * TrueType support (optional)
-    * PHP PDO and PHP support for MySQL, postgreSQL or SQLite (depend your your Bacula setup)
-    * Session support
-
-  * Valid database connection to your Bacula director catalog (each if you have several)
-  * supported database backend are MySQL, postgreSQL or SQLite
++-----------------+-------------------------------------------+
+| Requirement     | Note                                      |
++=================+===========================================+
+| **Bacula**                                                  |
++-----------------+-------------------------------------------+
+|                 | Community version >= 5.2.9                |
++-----------------+-------------------------------------------+
+| **Web server**                                              |
++-----------------+-------------------------------------------+
+|                 | Apache >= 2.2                             |
++-----------------+-------------------------------------------+
+|                 | Nginx >= 1.10                             |
++-----------------+-------------------------------------------+
+| **PHP version**                                             |
++-----------------+-------------------------------------------+
+|                 | PHP >= 5.6 (up to >= 7.0)                 |
++-----------------+-------------------------------------------+
+| **PHP modules**                                             |
++-----------------+-------------------------------------------+
+|                 | - Gettext                                 |
+|                 | - GD                                      |
+|                 | - Session                                 |
+|                 | - PDO                                     |
+|                 | - MySQL, postgreSQL or SQLite             |
+|                 | - CLI                                     |
+|                 | - JSON                                    |
++-----------------+-------------------------------------------+
 
 Using SELinux
 -------------

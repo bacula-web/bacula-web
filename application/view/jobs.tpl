@@ -2,7 +2,9 @@
 
 <div class="container-fluid" id="jobsreport">
 
-    <h3>{$page_name}</h3>
+  <div class="page-header">
+    <h3>{$page_name} <small>{t}Bacula jobs overview{/t}</small></h3>
+  </div>
 
   <div class="row">
 	  <!-- Filter jobs form -->
@@ -14,44 +16,33 @@
 
 		<div class="form-group">
 		  <label>{t}Job status{/t}</label>
-		  <select name="status" class="form-control">
-			{foreach from=$job_status item=status_name key=status_id}
-			  <option value="{$status_id}" {if $status_id eq $job_status_filter} selected {/if}>{$status_name}</option>
-			{/foreach}
-		  </select>
+        {html_options class="form-control" name=job_status_filter options=$job_status selected=$job_status_filter}
 		</div>
 
 		<div class="form-group">
 		  <label>{t}Level{/t}</label>
-			<select name="level_id" class="form-control">
-			  {foreach from=$levels_list key=level_id item=level_name}
-				<option value="{$level_id}" {if $level_id eq $level_filter}selected{/if}>{$level_name}</option>
-			  {/foreach}
-			</select>
+        {html_options class="form-control" name=job_levelid_filter options=$levels_list selected=$job_level_filter}
 		</div>
+      
+      <div class="form-group">
+		  <label>{t}Type{/t}</label>
+        {html_options class="form-control" name=job_type_filter options=$job_types_list selected=$job_type_filter}
+      </div>
 
 		<div class="form-group">
 		  <label>{t}Client{/t}</label>
-			<select name="client_id" class="form-control">
-			  {foreach from=$clients_list key=client_id item=client_name}
-				<option value="{$client_id}" {if $client_id eq $client_filter}selected{/if}>{$client_name}</option>
-			  {/foreach}
-			</select>
+        {html_options class="form-control" name=job_clientid_filter options=$clients_list selected=$job_clientid_filter}
 		</div>
 
 		<div class="form-group">
 		  <label>{t}Pool{/t}</label>
-			<select name="pool_id" class="form-control">
-			  {foreach from=$pools_list key=pool_id item=pool}
-				<option value="{$pool.poolid}" {if $pool_id eq $pool_filter}selected{/if}>{$pool.name}</option>
-			  {/foreach}
-			</select>
+        {html_options class="form-control" name=jobs_poolid_filter options=$pools_list selected=$job_poolid_filter}
 		</div>
 
 		<div class="form-group">
 		  <label>{t}Start time{/t}</label>
             <div class='input-group date datetimepicker' id='datetimepicker1'>
-                <input name="start_time" type='text' class="form-control" value="{$start_time_filter}" />
+                <input name="job_starttime_filter" type='text' class="form-control" value="{$job_starttime_filter}" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -61,7 +52,7 @@
 		<div class="form-group">
 		  <label>{t}End time{/t}</label>
             <div class='input-group date datetimepicker' id='datetimepicker1'>
-                <input name="end_time" type='text' class="form-control" value="{$end_time_filter}" />
+                <input name="job_endtime_filter" type='text' class="form-control" value="{$job_endtime_filter}" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -71,30 +62,23 @@
 		<span class="help-block">{t}Options{/t}</span>
 
 		<label>{t}Order by{/t}</label>
-
-		<select name="orderby" class="form-control">
-		  {foreach from=$result_order item=label key=id}
-			<option value="{$id}" {if $id eq $result_order_field}selected{/if}>{$label}</option>
-		  {/foreach}
-		</select>
+        {html_options class="form-control" name=job_orderby options=$result_order selected=$result_order_field}
 
 		<div class="checkbox">
 		  <label>
-			<input type="checkbox" name="result_order_asc" value="{t}ASC{/t}" {$result_order_asc_checked}> Up
+			<input type="checkbox" name="job_orderby_asc" value="{t}ASC{/t}" {$result_order_asc_checked}> Up
 		  </label>
 		</div>
 
 		<div class="form-group">
 		  <label>{t}Jobs per Page{/t}</label>
-		  <select class="form-control" name="jobs_per_page">
-			{foreach from=$jobs_per_page item=label key=id}
-			  <option value="{$id}" {if $id eq $jobs_per_page_selected}selected{/if}>{$label}</option>
-			{/foreach}
-		  </select>
+        {html_options class="form-control" name=jobs_per_page options=$jobs_per_page selected=$jobs_per_page_selected}
 		</div>
 
-		<button type="reset" class="btn btn-default btn-sm" title="{t}Reset to default options{/t}">{t}Reset{/t}</button>
+		<button type="reset" class="btn btn-default btn-sm" title="{t}Reset{/t}">{t}Reset{/t}</button>
 		<button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
+
+      <a class="btn btn-link btn-sm" title="{t}Reset to default{/t}" href="jobs.php" role="button">{t}Reset to default{/t}</a>
 	  </form>
 
 	  </div> <!-- div class="col-md-3 cold-lg-3" -->
@@ -109,7 +93,7 @@
 			<th class="text-center">{t}Job ID{/t}</th>
 			<th class="text-left">{t}Name{/t}</th>
 			<th class="text-center">{t}Type{/t}</th>
-      <th class="text-center">{t}Scheduled Time{/t}</th>
+         <th class="text-center">{t}Scheduled Time{/t}</th>
 			<th class="text-center">{t}Start time{/t}</th>
 			<th class="text-center">{t}End time{/t}</th>
 			<th class="text-center">{t}Elapsed time{/t}</th>
@@ -160,7 +144,7 @@
 	  </div>
 
 		<div class="alert alert-info text-center" role="alert">
-		  Found <b>{$jobs_found}</b> of <b>{$total_jobs} Job(s)</b>
+		  {t}Found{/t} <b>{$jobs_found}</b> / <b>{$total_jobs} Job(s)</b>
 		</div>
 	  </div>
   </div> <!-- div class="row" -->

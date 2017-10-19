@@ -109,7 +109,7 @@ class FileConfig extends File
                     $dsn .= 'host=' . $current_catalog['host'] . ';';
                 }
 
-                if (isset($current_catalog['db_port']) and !empty($current_catalog['db_port'])) {
+                if (isset($current_catalog['db_port']) && !empty($current_catalog['db_port'])) {
                     $dsn .= 'port=' . $current_catalog['db_port'] . ';';
                 }
                 break;

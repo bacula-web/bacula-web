@@ -1,8 +1,8 @@
 .. _about/about:
 
-================
+################
 About Bacula-Web
-================
+################
 
 Bacula-Web is a php web based tool that provide you a summarized view of jobs, pools and volumes.Its obtain his information from your bacula catalog's database.
 
@@ -17,73 +17,106 @@ The main advantages of this tool are
 
 and what's not ?
 
-If you're looking for a tool able to manage Bacula like bat, you're in the wrong place (for the moment).
-Maybe have a look on bweb, webacula or the bacula's webmin plugin.
+If you're looking for a tool able to manage Bacula like bat, Bacula-Web might not the right tool (yet).
+I'd advise to have a look on Bweb, baculum, Bacula or Bacula Webmin plugin instead.
 
+*******************
 The project history
-===================
+*******************
 
 Bacula-Web was originaly created and developed by Juan-Luis Frances.
 He made a very nice work.
 
 Since the end of 2010, I was officialy designed the official maintener by Kern S. and Eric B. for this project.
 
-License
-=======
+Project timeline
+================
 
-Bacula-Web source code (PHP, CSS, html, etc...) and documentation are licensed under the `GNU General Public License`_ version 2.
+**2004 - 2008**
 
-They are free (free as a penguin) and will always be ....
+Bacula-Web has been firstly created arround 2004 by Juan Luis Frances.
+He made a really fantastic work and provide to the community a very nice tool that provide usefull informations about Bacula backup jobs, pools and volumes.
 
-Before using this software, you have to agree the full text of the `GNU GPL version 2`_ for details.
+Then from 2004 to 2008, the  project was maintened by Juan Luis Frances making bug fixes and improvments.
 
+**2010 - the project revival**
+
+*Why reviving this project ?*
+
+Since November 2010, this project got a new official maintener and a new beginning.
+
+Since several years, I use Bacula for personal and professional purpose.
+
+Then I was looking for a web based tool which can provide me usefull information about last backup jobs, pools usage, volumes, etc.
+
+My first look were on webacula and bweb which are very good tool to use and features full but they look maybe pretty much not easy to install and configure.
+Then, I've found Bacula-Web which at this time, wasn't maintened since few years.
+
+After I've submited some patches to Bacula developpers, I proposed to become the official maintainer of this project. So the project revival started on July 2010.
+
+*******************************
 Third-party tools and libraries
-===============================
+*******************************
 
 Bacula-Web use the following tools and libraries
 
    * `PHP`_ 
    * `Smarty`_ 
-   * `PHPLot`_
+   * `NVD3`_
    * `Bootstrap`_
    * `Font Awesome`_
    * `jQuery`_ 
 
+*****************
 Supported browser
-=================
+*****************
 
 Bacula-Web was succesfully tested with
 
    * Internet Explorer version 7/8
-   * Mozilla Firefox 3.6.x
+   * Mozilla Firefox (version 54.0.1)
+   * Google Chrome (version 59.0.3071.115)
 
 Your web browser must have Javascript enabled
 
-Languages
-=========
+************
+Translations
+************
 
-Bacula-Web is translated in 7 languages (english by default)
+Bacula-Web language is by default in english, but it's also translated in not less than 15 languages 
 
-   * Swedish
-   * Spanish
+   * Belarusian
+   * Catalan
+   * Chinese
+   * Dutch
+   * English
+   * French
    * German
    * Italian
-   * French
+   * Japanese
+   * Norwegian
+   * Polish
    * Portuguese Brazil
-   * Dutch
+   * Russian
+   * Spanish
+   * Swedish
 
+I would like to say **thank you very much** to all people involved in Bacula-Web translations. 
+You're all doing a fantastic job !!! 
 
-If you would like to contribute to a new language or by updating one, have a look on the :ref:`contribute/translations` of the documentation.
+.. important:: If you want to contribute in maintaining translations for a language or add a new one, have a look at the :ref:`contribute/translations` chapter
 
+************
 About Bacula
-============
+************
 
 Bacula is a set of Open Source, enterprise ready, computer programs that permit you (or the system administrator) to manage backup, recovery, and verification of computer data across a network of computers of different kinds. Bacula is relatively easy to use and efficient, while offering many advanced storage management features that make it easy to find and recover lost or damaged files. In technical terms, it is an Open Source, enterprise ready, network based backup program (source `www.bacula.org`_).
 
-For my point of view, bacula is the best open source backup software I ever used (for professional and private purpose)
+IMHO, Bacula is a great open source backup tool (for professional and private purpose)
 
+************
 About myself
-============
+************
 
 I've discovered Linux with `Slackware`_ maybe around 1995 ( I know, I'm an old guy).
 Since this time, I had some experiences with
@@ -99,16 +132,26 @@ And many more stuff that I'll not describe there (it's not a resume, it's just a
 
 My preferred Linux distros is `Gentoo`_ and I use `Centos`_ for labs, development and testing
 
-Copyright
-=========
+*****************
+Others good tools
+*****************
 
-Bacula-Web source code and documentation are both open source (Free Software) and licensed under GPL v2.
+There are a lot of tool which can help you administering, monitoring and configuring Bacula like
 
-Bacula is a registered trademark of Kern Sibbald
+   * Bacula module in `Webmin`_
+   * `Bacula Status`_
+   * `Reportula`_
+   * `baculum`_
+   * `breport`_ - The Bacula Reporter
+   * bat
+   * `Webacula`_
+   * and many others ...
+     
+You can find a complete `list of GUI`_ on the Bacula's web site
 
 .. _PHP: http://www.php.net
 .. _Smarty: http://www.smarty.net/
-.. _PHPLot: http://phplot.sourceforge.net/
+.. _NVD3: http://nvd3.org/
 .. _Bootstrap: http://getbootstrap.com/
 .. _Font Awesome: http://fontawesome.io/
 .. _jQuery: http://jquery.com
@@ -116,5 +159,10 @@ Bacula is a registered trademark of Kern Sibbald
 .. _Slackware: http://www.slackware.com/
 .. _Gentoo: https://www.gentoo.org/
 .. _Centos: https://www.centos.org/
-.. _GNU General Public License: http://en.wikipedia.org/wiki/GNU_General_Public_License
-.. _GNU GPL version 2: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+.. _Webmin: http://www.webmin.com/index.html
+.. _Bacula Status: https://github.com/evaldoprestes/baculastatus
+.. _Reportula: http://www.reportula.org
+.. _baculum: http://www.bacula.org/7.4.x-manuals/en/console/Baculum_Web_GUI_Tool.html
+.. _breport: http://breport.sourceforge.net
+.. _Webacula: http://webacula.sourceforge.net/
+.. _list of GUI: http://www.bacula.org/manuals/en/console/console/GUI_Programs.html

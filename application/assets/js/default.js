@@ -7,6 +7,7 @@ $(document).ready(function(){
     /* Bootstrap Tooltip */
     $('[data-toggle="tooltip"]').tooltip();
 
+    // Set DateTimePicker locale and date/time format
     $('.datetimepicker').datetimepicker({
         locale: config_language,
         format: 'YYYY-MM-DD HH:mm:ss'

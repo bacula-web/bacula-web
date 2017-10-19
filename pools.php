@@ -2,7 +2,7 @@
 
 /*
  +-------------------------------------------------------------------------+
- | Copyright 2010-2017, Davide Franco			                           |
+ | Copyright 2010-2017, Davide Franco			                   |
  |                                                                         |
  | This program is free software; you can redistribute it and/or           |
  | modify it under the terms of the GNU General Public License             |
@@ -24,11 +24,26 @@
  $dbSql = new Bweb($view);
 
  // Get volumes list (pools.tpl)
- $view->assign('pools', $dbSql->GetVolumeList());
+ $pools = new Pools_Model();
+ $pools_list = array();
+ $plist = $pools->getPools();
+
+ // Add more details to each pool
+ foreach($plist as $pool) {
+
+   // Total bytes for each pool
+   $sql = "SELECT SUM(Media.volbytes) as sumbytes FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
+   $result = $pools->run_query($sql);
+   $result = $result->fetchAll();
+   $pool['totalbytes'] = CUtils::Get_Human_Size($result[0]['sumbytes']);
+
+   $pools_list[] = $pool;
+ }
+
+ $view->assign('pools', $pools_list);
 
  // Set page name
- $current_page = 'Pools and volumes report';
- $view->assign('page_name', $current_page);
+ $view->assign('page_name', 'Pools report');
  
  // Process and display the template
  $view->display('pools.tpl');

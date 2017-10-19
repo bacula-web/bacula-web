@@ -1,16 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Bacula-Web translations
+# Copyright (C) 2017 Davide Franco
+# This file is distributed under the same license as the Bacula-Web package.
 # 
 # Translators:
 # Juan Luis Francés Jiménez <bacula_listATveloxia,com>, 2005
-# Robert López, 2016
+# Robert López, 2016-2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Bacula-Web 7.4.0\n"
-"Report-Msgid-Bugs-To: http://bugs.bacula-web.org\n"
-"POT-Creation-Date: 2016-04-24 20:52+0200\n"
-"PO-Revision-Date: 2016-10-17 16:09+0000\n"
+"Project-Id-Version: Bacula-Web\n"
+"Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
+"POT-Creation-Date: 2017-10-11 13:16+0200\n"
+"PO-Revision-Date: 2017-10-12 09:00+0000\n"
 "Last-Translator: Robert López\n"
 "Language-Team: Spanish (Spain) (http://www.transifex.com/bacula-web/bacula-web/language/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -35,6 +35,10 @@ msgstr "Aplicar filtros y opciones"
 msgid "Back"
 msgstr "Atrás"
 
+#: messages.c:9
+msgid "Back to Dashboard"
+msgstr "Atrás a Tablero"
+
 #: lang.c:1 lang.c:35 lang.c:50 lang.c:65
 msgid "Back to the dashboard"
 msgstr "Atrás al tablero"
@@ -44,8 +48,8 @@ msgid "Backup Job Report"
 msgstr "Informe de Tarea de Respaldo"
 
 #: lang.c:37 lang.c:115 messages.c:86
-msgid "Backup Job name"
-msgstr "Nombre de Tarea de Respaldo"
+msgid "Backup Job name 7.1.0"
+msgstr "Nombre de la Tarea de Copia de Seguridad"
 
 #: lang.c:32 lang.c:103 messages.c:82
 msgid "Backup Job report"
@@ -213,6 +217,10 @@ msgstr "Id de Tarea"
 #: lang.c:80 messages.c:59
 msgid "Job Level (Incr / Diff / Full)"
 msgstr "Nivel de Tarea (Incr / Dif / Completa)"
+
+#: messages.c:126
+msgid "Job details"
+msgstr "Detalles de tarea"
 
 #: lang.c:44 messages.c:127
 msgid "Job id"
@@ -383,6 +391,10 @@ msgstr "Mostrar estados de tareas de últimas 24 horas"
 msgid "Show pools and volumes report"
 msgstr "Mostrar informe de fondos y volúmenes"
 
+#: messages.c:108
+msgid "Slot"
+msgstr "Ranura"
+
 #: lang.c:11 lang.c:127 messages.c:21 messages.c:98
 msgid "Speed"
 msgstr "Velocidad"
@@ -439,6 +451,10 @@ msgstr "Página de prueba"
 #: lang.c:45 messages.c:128
 msgid "Time"
 msgstr "Hora"
+
+#: messages.c:110
+msgid "Total"
+msgstr "Total"
 
 #: lang.c:15 lang.c:65 messages.c:44
 msgid "Total bytes"
@@ -533,18 +549,3 @@ msgstr "día(s)"
 msgid "last"
 msgstr "último"
 
-#: messages.c:9
-msgid "Back to Dashboard"
-msgstr "Atrás a Tahlero"
-
-#: messages.c:108
-msgid "Slot"
-msgstr "Ranura"
-
-#: messages.c:110
-msgid "Total"
-msgstr "Total"
-
-#: messages.c:126
-msgid "Job details"
-msgstr "Detalles de tarea"

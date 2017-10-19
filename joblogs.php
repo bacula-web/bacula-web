@@ -31,8 +31,10 @@ try {
     }
 
     // Prepare and execute SQL statment
-    $statment     = array('table' => 'Log', 'where' => array("JobId = '$jobid'"), 'orderby' => 'Time');
-    $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $dbSql->db_link);
+    $jobs = new Jobs_Model();
+    $statment     = array('table' => 'Log', 'where' => array("JobId = :jobid"), 'orderby' => 'Time');
+    $jobs->addParameter( 'jobid', $jobid);
+    $result     = $jobs->run_query(CDBQuery::get_Select($statment));
 
     // Processing result
     foreach ($result->fetchAll() as $log) {
@@ -45,8 +47,7 @@ try {
     $view->assign('joblogs', $joblogs);
 
     // Set page name
-    $current_page = 'Job logs';
-    $view->assign('page_name', $current_page);
+    $view->assign('page_name', 'Job logs');
 
     // Process and display the template
     $view->render('joblogs.tpl');

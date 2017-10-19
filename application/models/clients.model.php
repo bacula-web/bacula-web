@@ -19,14 +19,14 @@ class Clients_Model extends CModel
 {
 
     // ==================================================================================
-    // Function: 	count()
-    // Parameters:	$pdo_connection - valide pdo object
-    // Return:		Number of clients
+    // Function: 	   count()
+    // Parameters:	$tablename - Client table name
+    // Return:		   Number of clients
     // ==================================================================================
 
-    public static function count($pdo, $tablename = 'Client', $filter = null)
+    public function count( $tablename = 'Client', $filter = null)
     {
-        return CModel::count($pdo, $tablename);
+        return parent::count($tablename);
     }
 
     // ==================================================================================
@@ -35,7 +35,7 @@ class Clients_Model extends CModel
     // Return:		array containing client list or false
     // ==================================================================================
 
-    public static function getClients($pdo)
+    public function getClients()
     {
         $clients      = array();
         $table         = 'Client';
@@ -48,7 +48,7 @@ class Clients_Model extends CModel
             $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
         }
 
-        $result     = CDBUtils::runQuery(CDBQuery::get_Select($statment), $pdo);
+        $result     = $this->run_query(CDBQuery::get_Select($statment));
             
         foreach ($result->fetchAll() as $client) {
             $clients[ $client['clientid'] ] = $client['name'];
@@ -63,22 +63,41 @@ class Clients_Model extends CModel
     // Return:		array containing client information
     // ==================================================================================
 
-    public static function getClientInfos($pdo, $client_id)
+    public function getClientInfos($client_id)
     {
         $client     = array();
         $fields     = array('name','uname');
         $where      = array( "clientid = $client_id" );
         $statment   = CDBQuery::get_Select(array('table'=> 'Client', 'fields' => $fields, 'where' => $where ));
         
-        $result     = CDBUtils::runQuery($statment, $pdo);
+        $result     = $this->run_query($statment);
             
         foreach ($result->fetchAll() as $client) {
-            $uname              = explode(' ', $client['uname']);
-            $client['version']  = $uname[0];
-            $uname              = explode(',', $uname[2]);
-            $temp               = explode('-', $uname[0]);
-            $client['arch']     = $temp[0];
-            $client['os']       = $uname[1];
+
+           $uname = explode(',',$client['uname']);
+
+           // Check if client uname is not empty 
+           if (!empty($uname[0])) {
+               // Windows Bacula file daemon
+               if(end($uname) == 'Win32' || end($uname) == 'Win64') {
+                   $client['arch'] = $uname[1];
+                   $uname = explode(' ', $uname[0]);
+                   $client['version'] = $uname[0]; 
+                   $uname = array_slice($uname, 2); 
+                   $client['os'] = implode(' ', $uname); 
+               }else{
+                   $uname = explode(' ',$client['uname']);
+                   $client['version'] = $uname[0];
+                   $uname = explode(',', $uname[2]);
+                   $temp = explode('-', $uname[0]);
+                   $client['arch'] = $temp[0];
+                   $client['os'] = ucfirst($uname[1] . ' ' . $uname[2]);
+               }
+           }else{
+              $client['version'] = 'n/a';
+              $client['arch'] = 'n/a';
+              $client['os'] = 'n/a';
+           }
         }
         
         return $client;

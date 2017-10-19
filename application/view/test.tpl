@@ -1,8 +1,10 @@
 {include file=header.tpl}
 
-<div class="container-fluid" id="testpage">
+<div class="container" id="testpage">
 
-    <h3>{$page_name} <small>{t}Required components{/t}</small></h3>
+   <div class="page-header">
+     <h3>{$page_name} <small>{t}Check requirements and configuration{/t}</small></h3>
+   </div>
     
 	<table class="table table-striped">
 		<tr>
@@ -22,23 +24,18 @@
 	</table>
 	
 	<!-- Graph testing -->
-	<h4>Graph capabilites <small>(png images format only)</small></h4>
+	<h4>{t}Graph capabilities{/t}</h4>
 	<div class="row">
 		<div class="col-xs-12 col-sm-6"> 
-			<div class="img_loader text-center">
-				<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-				<p>Loading graph</p>
-			</div>
-			<img class="img-responsive center-block" src="{$bar_graph}" alt="Graph 1">
+         <div id="{$pie_graph_id}"> <svg></svg> </div>
+         {$pie_graph} 
 		</div>
 		<div class="col-xs-12 col-sm-6">
-			<div class="img_loader text-center">
-				<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-				<p>Loading graph</p>
-			</div>
-			<img class="img-responsive center-block" src="{$pie_graph}" alt="Graph 2">
+         <div id="{$bar_chart_id}"> <svg></svg> </div>
+         {$bar_chart}
 		</div>
 	</div>
+
 </div> <!-- div class="container" -->
 
 {include file="footer.tpl"}

@@ -16,6 +16,10 @@ div.form-group-sm label {
   font-size: 12px;
 }
 
+div.panel-body {
+  padding: 10px;
+}
+
 /* Test page icons color */
 #testpage .glyphicon-ok { color: #5cb85c; }
 #testpage .glyphicon-remove { color: #d9534f; }
@@ -33,7 +37,9 @@ img {
   margin-bottom: 20px;
 }
 
-.img_loader { 
+[id^="chart"] {
+  height: 300px;
   width: 100%;
-  min-height: 200px;
 }
+
+.page-header { margin-top: 15px; }

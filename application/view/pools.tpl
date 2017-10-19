@@ -1,62 +1,39 @@
 {include file=header.tpl}
 
-<div class="container-fluid">
+<div class="container">
 
-	<h3>{$page_name}</h3>
+  <div class="page-header">
+    <h3>{$page_name} <small>{t}Bacula pool(s) overview{/t}</small></h3>
+  </div>
 
-	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    {foreach from=$pools item=pool key=pool_name name=pools}
-    <div class="panel panel-default">
-	    <div class="panel-heading" role="tab" id="heading{$pool_name}">
-	      <h4 class="panel-title">
-	        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{$pool_name}" aria-expanded="true" aria-controls="collapse{$pool_name}" class="btn-block">
-	          {$pool_name} <span class="hidden-xs">-</span> <br class="hidden-sm hidden-md hidden-lg" /> <small><b>{t}Volumes{/t} / {t}Bytes{/t}:</b> {$pool.volumes|@count} / {$pool.total_used_bytes}</small> <span class="caret"></span>
-	        </a>
-	      </h4>
-	    </div>
-	    <div id="collapse{$pool_name}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{$pool_name}">
-	      <div class="panel-body">
-		  		<div class="table-responsive">
-					<table class="table table-bordered table-striped table-hover text-center">
-						<tr>
-							<th class="text-center">{t}Volume name{/t}</th>
-							<th class="text-center">{t}Bytes{/t}</th>
-							<th class="text-center">{t}Media Type{/t}</th>
-							<th class="text-center"title="{t}Estimated expiration date{/t}">{t}Expire{/t}</th>
-							<th class="text-center">{t}Last written{/t}</th>
-							<th class="text-center">{t}Status{/t}</th>
-							<th class="text-center">{t}Slot{/t}</th>
-							<th class="text-center">{t}In Changer{/t}</th>
-						</tr>
-						{foreach from=$pool.volumes item=volume}
-						<tr>
-							<td class="strong">{$volume.volumename}</td>
-							<td>{$volume.volbytes}</td>
-							<td>{$volume.mediatype}</td>
-							<td>{$volume.expire}</td>
-							<td>{$volume.lastwritten}</td>
-							<td>{$volume.volstatus}</td>
-							<td>{$volume.slot}</td>
-							<td>{$volume.inchanger}</td>
-						</tr>
-						{foreachelse}
-						<tr>
-							<td colspan="7" class="text-center">
-								{t}No volume(s) in this pool{/t}
-							</td>
-						</tr>
-						{/foreach}
-						<tr>
-							<td><b>{t}Total{/t}</b></td>
-							<td>{$pool.total_used_bytes}</td>
-						</tr>
-					</table>
-				</div>
-	      </div>
-	    </div>
-    </div>
-    {/foreach}
-	</div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <table class="table table-condensed table-striped text-center">
+          <tr>
+	    <th class="text-center">{t}Pool name{/t}</th>
+	    <th class="text-center">{t}Volume count{/t}</th>
+	    <th class="text-center">{t}Total bytes{/t}</th>
+	    <th class="text-center">{t}Volumes{/t}</th>
+	  </tr>
+	  {foreach from=$pools item=pool key=pool_name name=pools}
+          <tr>
+	    <td>{$pool.name}</td>
+	    <td>{$pool.numvols}</td>
+	    <td>{$pool.totalbytes}</td>
+	    <td>
+	      <a title="{t}Show volumes{/t}" class="btn btn-primary btn-sm {if $pool.numvols == '0'} disabled {/if}" role="button" href="volumes.php?pool_id={$pool.poolid}">{t}Show Volumes{/t}</a>
+	    </td>
+	  </tr>
+	  {/foreach}
+	</table>
+
+      </div> <!-- end div class=table-responsive -->
+
+    </div> <!-- end div class=col- -->
+
+  </div> <!-- end div class="row" -->
+
 </div> <!-- div class="container-fluid" -->
 
 <!-- End pools.tpl -->

@@ -1,16 +1,16 @@
-# Bacula-Web translations 
-# Copyright (C) 2004 - 2016 
+# Bacula-Web translations
+# Copyright (C) 2017 Davide Franco
 # This file is distributed under the same license as the Bacula-Web package.
 # 
 # Translators:
 # Dion van Adrichem <dvanadrichem@gmail.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: Bacula-Web 7.4.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-24 20:52+0200\n"
-"PO-Revision-Date: 2016-04-24 19:15+0000\n"
-"Last-Translator: Dion van Adrichem\n"
+"Project-Id-Version: Bacula-Web\n"
+"Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
+"POT-Creation-Date: 2017-10-11 13:16+0200\n"
+"PO-Revision-Date: 2017-10-11 11:22+0000\n"
+"Last-Translator: Davide Franco\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/bacula-web/bacula-web/language/nl_NL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,6 +34,10 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+#: messages.c:9
+msgid "Back to Dashboard"
+msgstr ""
+
 #: lang.c:1 lang.c:35 lang.c:50 lang.c:65
 msgid "Back to the dashboard"
 msgstr "Terug naar het dashboard"
@@ -43,8 +47,8 @@ msgid "Backup Job Report"
 msgstr "Backuptaak Rapport"
 
 #: lang.c:37 lang.c:115 messages.c:86
-msgid "Backup Job name"
-msgstr "Backuptaak naam"
+msgid "Backup Job name 7.1.0"
+msgstr ""
 
 #: lang.c:32 lang.c:103 messages.c:82
 msgid "Backup Job report"
@@ -211,6 +215,10 @@ msgstr "Taak nr"
 
 #: lang.c:80 messages.c:59
 msgid "Job Level (Incr / Diff / Full)"
+msgstr ""
+
+#: messages.c:126
+msgid "Job details"
 msgstr ""
 
 #: lang.c:44 messages.c:127
@@ -382,6 +390,10 @@ msgstr ""
 msgid "Show pools and volumes report"
 msgstr ""
 
+#: messages.c:108
+msgid "Slot"
+msgstr ""
+
 #: lang.c:11 lang.c:127 messages.c:21 messages.c:98
 msgid "Speed"
 msgstr ""
@@ -438,6 +450,10 @@ msgstr "Test pagina"
 #: lang.c:45 messages.c:128
 msgid "Time"
 msgstr "Tijd"
+
+#: messages.c:110
+msgid "Total"
+msgstr ""
 
 #: lang.c:15 lang.c:65 messages.c:44
 msgid "Total bytes"
@@ -532,18 +548,3 @@ msgstr ""
 msgid "last"
 msgstr ""
 
-#: messages.c:9
-msgid "Back to Dashboard"
-msgstr ""
-
-#: messages.c:108
-msgid "Slot"
-msgstr ""
-
-#: messages.c:110
-msgid "Total"
-msgstr ""
-
-#: messages.c:126
-msgid "Job details"
-msgstr ""

@@ -1,16 +1,17 @@
 # Bacula-Web translations
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2017 Davide Franco
+# This file is distributed under the same license as the Bacula-Web package.
 # 
 # Translators:
-# sayanvd <sayanvd@yandex.ru>, 2016
+# Igor Zhukovets <zhukovets.igor@gmail.com>, 2017
+# sayanvd <sayanvd@yandex.ru>, 2016-2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Bacula-Web 7.4.0\n"
-"Report-Msgid-Bugs-To: http://bugs.bacula-web.org\n"
-"POT-Creation-Date: 2016-04-24 20:52+0200\n"
-"PO-Revision-Date: 2016-10-12 11:28+0000\n"
-"Last-Translator: sayanvd <sayanvd@yandex.ru>\n"
+"Project-Id-Version: Bacula-Web\n"
+"Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
+"POT-Creation-Date: 2017-10-11 13:16+0200\n"
+"PO-Revision-Date: 2017-10-11 11:58+0000\n"
+"Last-Translator: Igor Zhukovets <zhukovets.igor@gmail.com>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/bacula-web/bacula-web/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 
 #: lang.c:22 messages.c:32
 msgid "ASC"
-msgstr "ASC"
+msgstr "По возрастанию"
 
 #: lang.c:27 messages.c:37
 msgid "Apply"
@@ -28,27 +29,31 @@ msgstr "Применить"
 
 #: lang.c:26 messages.c:36
 msgid "Apply filter and options"
-msgstr "Применяет фильтры и настройки"
+msgstr "Применить фильтры и настройки"
 
 #: lang.c:57
 msgid "Back"
 msgstr "Назад"
 
+#: messages.c:9
+msgid "Back to Dashboard"
+msgstr "Назад к информационной панели"
+
 #: lang.c:1 lang.c:35 lang.c:50 lang.c:65
 msgid "Back to the dashboard"
-msgstr "Назад к dashboard"
+msgstr "Назад к информационной панели"
 
 #: lang.c:36
 msgid "Backup Job Report"
-msgstr "Отчет по задаче резервного копирования"
+msgstr "Отчёт по задаче резервного копирования"
 
 #: lang.c:37 lang.c:115 messages.c:86
-msgid "Backup Job name"
-msgstr "Имя задачи по резервному копированию"
+msgid "Backup Job name 7.1.0"
+msgstr "Имя задачи резервного копирования"
 
 #: lang.c:32 lang.c:103 messages.c:82
 msgid "Backup Job report"
-msgstr "Отчет по задаче резервного копирования"
+msgstr "Отчёт по задаче резервного копирования"
 
 #: lang.c:114 messages.c:85
 msgid "Backup job informations"
@@ -56,7 +61,7 @@ msgstr "Сведения о задаче резервного копирован
 
 #: lang.c:33 lang.c:104 messages.c:83
 msgid "Backup job name"
-msgstr "Имя задачи по резервному копированию"
+msgstr "Имя задачи резервного копирования"
 
 #: lang.c:54 messages.c:7
 msgid "Bug tracker"
@@ -65,11 +70,11 @@ msgstr "Баг трекер"
 #: lang.c:45 lang.c:62 lang.c:77 lang.c:81 lang.c:9 lang.c:37 lang.c:107
 #: lang.c:123 messages.c:19 messages.c:94 messages.c:102 messages.c:120
 msgid "Bytes"
-msgstr "байт"
+msgstr "Байт"
 
 #: lang.c:79 messages.c:58
 msgid "Canceled job(s)"
-msgstr "Отмененные задачи(а) "
+msgstr "Отменённая задача(и) "
 
 #: lang.c:58
 msgid "Catalog"
@@ -81,7 +86,7 @@ msgstr "Статистика каталога"
 
 #: lang.c:74 lang.c:89 messages.c:53 messages.c:68
 msgid "Click here to see the report"
-msgstr "Нажмите здесь, чтобы посмотреть отчет"
+msgstr "Нажмите здесь, чтобы посмотреть отчёт"
 
 #: lang.c:25 lang.c:19 lang.c:97 messages.c:29 messages.c:76
 msgid "Client"
@@ -89,11 +94,11 @@ msgstr "Клиент"
 
 #: lang.c:52
 msgid "Client Report"
-msgstr "Отчет клиента"
+msgstr "Отчёт клиента"
 
 #: lang.c:57 lang.c:32 messages.c:115
 msgid "Client arch"
-msgstr "Архив клиента"
+msgstr "Архитектура клиента"
 
 #: lang.c:53 lang.c:28 messages.c:111
 msgid "Client informations"
@@ -109,7 +114,7 @@ msgstr "ОС клиента"
 
 #: lang.c:96 messages.c:75
 msgid "Client report"
-msgstr "Отчет клиента"
+msgstr "Отчёт клиента"
 
 #: lang.c:55 lang.c:30 messages.c:113
 msgid "Client version"
@@ -121,11 +126,11 @@ msgstr "Клиенты"
 
 #: lang.c:76 messages.c:55
 msgid "Completed job(s)"
-msgstr "Завершенные задач(и)"
+msgstr "Завершённая задача(и)"
 
 #: lang.c:20
 msgid "Completed jobs"
-msgstr "Завершенные задачи"
+msgstr "Завершённые задачи"
 
 #: lang.c:12 lang.c:128 messages.c:22 messages.c:99
 msgid "Compression"
@@ -133,7 +138,7 @@ msgstr "Сжатие"
 
 #: lang.c:51 lang.c:49 messages.c:2
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Информационная панель"
 
 #: lang.c:17 lang.c:67 messages.c:46
 msgid "Database size"
@@ -149,7 +154,7 @@ msgstr "Задаваемые задачи"
 
 #: lang.c:48 lang.c:75 lang.c:7 lang.c:126 messages.c:17 messages.c:97
 msgid "Elapsed time"
-msgstr "Время прошло"
+msgstr "Времени затрачено"
 
 #: lang.c:74
 msgid "End Time"
@@ -162,7 +167,7 @@ msgstr "Время окончания"
 
 #: lang.c:109 messages.c:104
 msgid "Estimated expiration date"
-msgstr "Планируемая дата истечения срока"
+msgstr "Планируемая дата истечения срока действия"
 
 #: lang.c:46 messages.c:129
 msgid "Event"
@@ -174,7 +179,7 @@ msgstr "Истекает"
 
 #: lang.c:78 messages.c:57
 msgid "Failed job(s)"
-msgstr "Ошибка задач(и)"
+msgstr "Неудавшаяся задача(и)"
 
 #: lang.c:19
 msgid "Failed jobs"
@@ -183,7 +188,7 @@ msgstr "Неудавшиеся задачи"
 #: lang.c:44 lang.c:63 lang.c:78 lang.c:10 lang.c:38 lang.c:122 messages.c:20
 #: messages.c:93 messages.c:121
 msgid "Files"
-msgstr "Файлов"
+msgstr "Файлы"
 
 #: lang.c:64 messages.c:43
 msgid "Filesets"
@@ -195,7 +200,7 @@ msgstr "Фильтр"
 
 #: lang.c:3
 msgid "Graph system capabilities (Bacula-web only use PNG image format)"
-msgstr "Графические возможности системы (Bacula-веб использует только формат изображения PNG)"
+msgstr "Графические возможности системы (Bacula-web использует только формат изображения PNG)"
 
 #: lang.c:28 lang.c:98 messages.c:77
 msgid "Interval"
@@ -211,7 +216,11 @@ msgstr "ID задачи"
 
 #: lang.c:80 messages.c:59
 msgid "Job Level (Incr / Diff / Full)"
-msgstr "Уровень задачи (Incr / Diff / Full)"
+msgstr "Уровень задачи (Добавочный / Разностный / Полный)"
+
+#: messages.c:126
+msgid "Job details"
+msgstr "Детали задачи"
 
 #: lang.c:44 messages.c:127
 msgid "Job id"
@@ -227,7 +236,7 @@ msgstr "Задачи"
 
 #: lang.c:67
 msgid "Jobs / Page"
-msgstr "Задачи / Страницы"
+msgstr "Задачи / Страница"
 
 #: lang.c:23 messages.c:33
 msgid "Jobs per Page"
@@ -235,7 +244,7 @@ msgstr "Задач на страницу"
 
 #: lang.c:66
 msgid "Jobs report"
-msgstr "Отчет по задаче"
+msgstr "Отчёт по задаче"
 
 #: lang.c:59 lang.c:34 messages.c:117
 msgid "Jod Id"
@@ -259,7 +268,7 @@ msgstr "Последние задачи"
 
 #: lang.c:31 lang.c:101 messages.c:80
 msgid "Last month"
-msgstr "За последний месяц"
+msgstr "Последний месяц"
 
 #: lang.c:71 messages.c:50
 msgid "Last period job status"
@@ -271,7 +280,7 @@ msgstr "Последние использованные тома"
 
 #: lang.c:29 lang.c:99 messages.c:78
 msgid "Last week"
-msgstr "За последнюю неделю"
+msgstr "Последняя неделя"
 
 #: lang.c:84 lang.c:111 messages.c:106
 msgid "Last written"
@@ -328,7 +337,7 @@ msgstr "Сортировать по"
 
 #: lang.c:13
 msgid "Overall status"
-msgstr "Общий ход"
+msgstr "Общее состояние"
 
 #: lang.c:38 lang.c:116 messages.c:87
 msgid "Period"
@@ -352,7 +361,7 @@ msgstr "Статус пулов и томов"
 
 #: lang.c:24 lang.c:48 messages.c:1
 msgid "Reports"
-msgstr "Отчеты"
+msgstr "Отчёты"
 
 #: lang.c:2 lang.c:43 messages.c:10
 msgid "Required components"
@@ -364,15 +373,15 @@ msgstr "Сброс"
 
 #: lang.c:24 messages.c:34
 msgid "Reset to default options"
-msgstr "Сброс опций в значения по умолчанию"
+msgstr "Сброс опций до значений по умолчанию"
 
 #: lang.c:75 messages.c:54
 msgid "Running jobs"
-msgstr "Выполнение задач"
+msgstr "Запущенные задачи"
 
 #: lang.c:15 messages.c:25
 msgid "Show job logs"
-msgstr "Показать лог задач"
+msgstr "Показать лог задачи"
 
 #: lang.c:10
 msgid "Show last 24 hours jobs status"
@@ -380,7 +389,11 @@ msgstr "Показать статус задач за последние 24 ча
 
 #: lang.c:5
 msgid "Show pools and volumes report"
-msgstr "Показать отчет по пулам и томам"
+msgstr "Показать отчёт по пулам и томам"
+
+#: messages.c:108
+msgid "Slot"
+msgstr "Слот"
 
 #: lang.c:11 lang.c:127 messages.c:21 messages.c:98
 msgid "Speed"
@@ -417,7 +430,7 @@ msgstr "Сохранено байт"
 
 #: lang.c:7
 msgid "Stored bytes for last 7 days (GB)"
-msgstr "Сохранено байт за последние 7 дней (Гб)"
+msgstr "Сохранено байт за последние 7 дней (ГБ)"
 
 #: lang.c:82 lang.c:84 messages.c:61 messages.c:63
 msgid "Stored bytes over the last 7 days"
@@ -429,15 +442,19 @@ msgstr "Сохранено файлов за последние 7 дней"
 
 #: lang.c:73 messages.c:52
 msgid "Submit"
-msgstr "Подтвердить"
+msgstr "Отправить"
 
 #: lang.c:52 messages.c:5
 msgid "Test page"
-msgstr "Submit"
+msgstr "Тестовая страница"
 
 #: lang.c:45 messages.c:128
 msgid "Time"
 msgstr "Время"
+
+#: messages.c:110
+msgid "Total"
+msgstr "Всего"
 
 #: lang.c:15 lang.c:65 messages.c:44
 msgid "Total bytes"
@@ -453,7 +470,7 @@ msgstr "Передано байт"
 
 #: lang.c:49 lang.c:129 messages.c:100
 msgid "Transfered Bytes / Files"
-msgstr "Передано Байт / Файлов"
+msgstr "Передано байт / файлов"
 
 #: lang.c:40 lang.c:118 messages.c:89
 msgid "Transfered Files"
@@ -465,7 +482,7 @@ msgstr "Передано байт"
 
 #: lang.c:81 messages.c:60
 msgid "Transferred Bytes / Files"
-msgstr "Передано Байт / Файлов"
+msgstr "Передано байт / файлов"
 
 #: lang.c:23
 msgid "Transferred Files"
@@ -481,7 +498,7 @@ msgstr "Тип"
 
 #: lang.c:72 messages.c:51
 msgid "Update with selected period"
-msgstr "Обновление за выбранный период"
+msgstr "Обновлять с выбранной периодичностью"
 
 #: lang.c:55 messages.c:8
 msgid "Version"
@@ -490,7 +507,7 @@ msgstr "Версия"
 #: lang.c:6 lang.c:11 lang.c:34 lang.c:102 lang.c:105 messages.c:81
 #: messages.c:84
 msgid "View report"
-msgstr "Просмотреть отчет"
+msgstr "Просмотреть отчёт"
 
 #: lang.c:80 lang.c:91 lang.c:106 messages.c:70 messages.c:101
 msgid "Volume name"
@@ -514,15 +531,15 @@ msgstr "Размер тома(ов)"
 
 #: lang.c:21
 msgid "Waiting jobs"
-msgstr "Ожидание задачи"
+msgstr "Ожидающие задачи"
 
 #: lang.c:77 messages.c:56
 msgid "Waiting jobs(s)"
-msgstr "Ожидание задач(и)"
+msgstr "Ожидающая задача(и)"
 
 #: lang.c:56
 msgid "back to previous page"
-msgstr "Вернуться на предыдущую страницу"
+msgstr "вернуться на предыдущую страницу"
 
 #: lang.c:42 messages.c:125
 msgid "days(s)"
@@ -532,18 +549,3 @@ msgstr "дня(ей)"
 msgid "last"
 msgstr "последний"
 
-#: messages.c:9
-msgid "Back to Dashboard"
-msgstr "Назад к Dashboard"
-
-#: messages.c:108
-msgid "Slot"
-msgstr "Слот"
-
-#: messages.c:110
-msgid "Total"
-msgstr "Всего"
-
-#: messages.c:126
-msgid "Job details"
-msgstr "Детали задачи"

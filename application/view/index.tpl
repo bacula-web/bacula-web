@@ -1,87 +1,11 @@
 {include file=header.tpl}
 
 <div class="container-fluid">
-	<h3>{$page_name}</h3>
+   <div class="page-header">
+     <h3>{$page_name} <small>{t}General overview{/t}</small></h3>
+   </div>
 	
-	<!-- First row with catalog statistics -->
-	<h4>{t}Catalog statistics{/t}</h4>
-	
-	<div class="row">
-	  <!-- Defined clients -->
-	  <div class="col-xs-6 col-sm-4 col-lg-2 col-lg-offset-1">
-	    <div class="panel panel-default">
-	      <div class="panel-heading">{t}Clients{/t}</div>
-		  <div class="panel-body text-right"><h3>{$clients}</h3></div>
-	    </div> <!-- end <div class="panel panel-default"> -->
-	  </div> <!-- end <div class="col-xs-2 col-xs-offset-1"> -->
-	
-	  <!-- Defined Jobs -->
-	  <div class="col-xs-6 col-sm-4 col-lg-2">
-	    <div class="panel panel-default">
-		  <div class="panel-heading">{t}Jobs{/t}</div>
-		  <div class="panel-body text-right"><h3>{$defined_jobs}</h3></div>
-		</div> <!-- end <div class="panel ... -->
-	  </div> <!-- end <div class="col- -->
-	  
-	  <!-- Defined FileSets -->
-	  <div class="col-xs-6 col-sm-4 col-lg-2">
-	    <div class="panel panel-default">
-	      <div class="panel-heading">{t}Filesets{/t}</div>
-		  <div class="panel-body text-right"><h3>{$defined_filesets}</h3></div>
-	    </div>
-	  </div>
-	  
-	  <!-- Stored bytes -->
-	  <div class="col-xs-6 col-sm-4 col-lg-2">
-	    <div class="panel panel-default">
-	      <div class="panel-heading">{t}Total bytes{/t}</div>
-		  <div class="panel-body text-right"><h3>{$stored_bytes}</h3></div>
-		</div>
-	  </div>
-	  
-	  <!-- Stored files -->
-	  <div class="col-xs-12 col-sm-4 col-lg-2">
-	    <div class="panel panel-default">
-	      <div class="panel-heading">{t}Total files{/t}</div>
-		  <div class="panel-body text-right"><h3>{$stored_files}</h3></div>
-		</div>
-	  </div>
-	
-	  <!-- Catalog (database) size -->
-      <div class="col-xs-6 col-sm-4 col-lg-2 col-lg-offset-1">    
-	    <div class="panel panel-default">
-		  <div class="panel-heading">{t}Database size{/t}</div>
-		  <div class="panel-body text-right"><h3>{$database_size}</h3></div>
-		</div> <!-- end <div class="panel ...." -->
-	  </div> <!-- end <div class="col-..." -->
-
-      <!-- Defined pools -->
-	  <div class="col-xs-6 col-sm-4 col-lg-2">
-	    <div class="panel panel-default">
-		  <div class="panel-heading">{t}Pool(s){/t}</div>
-		  <div class="panel-body text-right"><h3>{$pools_nb}</h3></div>
-		</div> <!-- end <div class="panel ...." -->
-	  </div> <!-- end <div class="col-..." -->
-	  
-	  <!-- Defined volumes -->
-	  <div class="col-xs-6 col-sm-4 col-lg-2">
-	    <div class="panel panel-default">
-		  <div class="panel-heading">{t}Volume(s){/t}</div>
-		  <div class="panel-body text-right"><h3>{$volumes_nb}</h3></div>
-		</div> <!-- end <div class="panel ...." -->
-	  </div> <!-- end <div class="col-..." -->
-	  
-	  <!-- Volumes storage usage -->
-	  <div class="col-xs-6 col-sm-4 col-lg-2">
-	    <div class="panel panel-default">
-		  <div class="panel-heading">{t}Volume(s) size{/t}</div>
-		  <div class="panel-body text-right"><h3>{$volumes_size}</h3></div>
-		</div> <!-- end <div class="panel ...." -->
-	  </div> <!-- end <div class="col-..." -->
-
-	</div> <!-- end <div class="row equalwidth"> -->
-	
-	<!-- Second row with Jobs statistics, stored bytes and stored files widgets -->
+	<!-- First row with Jobs statistics, stored bytes and stored files widgets -->
 	<div class="row">
 		<!-- Last period job status -->
 		<div class="col-xs-12 col-md-6">
@@ -91,7 +15,7 @@
 					<div class="panel-body">
 						<form class="form-inline pull-right" method="post" role="form" action="index.php">
 						    <div class="form-group form-group-sm">
-                            	<label class="control-label">Period </label>
+                            	<label class="control-label">{t}Period{/t} </label>
                                 <select class="form-control input-sm" name="period_selector">
                                 {foreach from=$custom_period_list key=period_id item=period_label}
                                 	<option value="{$period_id}"
@@ -106,13 +30,11 @@
 
 					<!-- Last period job status graph -->
 					<div class="panel-body">
-						<!-- Graph pre-loader -->
-						<div class="img_loader text-center"> 
-							<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-							<p>Loading graph</p> 
-						</div>
+                  <div id="{$last_jobs_chart_id}"> <svg></svg> </div>
+                     {$last_jobs_chart}
+
 						<a href="jobs.php" title="{t}Click here to see the report{/t}">
-							<img src="{$graph_jobs}" class="img-responsive center-block" alt="Last period jobs">
+							<!-- <img src="{$graph_jobs}" class="img-responsive center-block" alt="Last period jobs"> -->
 						</a>
 						<table class="table table-condensed">
 							<tr>
@@ -123,6 +45,10 @@
  								<td><h5>{t}Completed job(s){/t}</h5></td>
 								<td class="text-center"> <h4><span class="label label-success">{$completed_jobs}</span></h4> </td>
 							</tr>
+                     <tr>
+                        <td><h5>{t}Completed with errors job(s){/t}
+								<td class="text-center"> <h4><span style="background-color: #FFD700;" class="label label-default">{$completed_with_errors_jobs}</span></h4> </td>
+                     </tr>
  							<tr>
                             	<td> <h5>{t}Waiting jobs(s){/t}</h5></td>
                                 <td class="text-center"> <h4><span class="label label-primary">{$waiting_jobs}</span></h4> </td>
@@ -153,11 +79,8 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" title="{t}Stored bytes over the last 7 days{/t}"><b>{t}Stored Bytes (last 7 days){/t}</b></div>
 					<div class="panel-body">
-                    	<div class="img_loader text-center">
-                    		<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-                        	<p>Loading graph</p>
-                    	</div>						
-						<img src="{$graph_stored_bytes}" class="img-responsive center-block" title="{t}Stored bytes over the last 7 days{/t}" alt="Stored Bytes over last 7 days">
+                  <div id="{$storedbytes_chart_id}"> <svg></svg> </div>
+                  {$storedbytes_chart}
 					</div> <!-- end <div class="panel-body"> -->
 				</div> <!-- end class="panel panel-default" -->
 			</div>
@@ -165,11 +88,8 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" title="{t}Stored files over the last 7 days{/t}"><b>{t}Stored Files (last 7 days){/t}</b></div>
 					<div class="panel-body">
-	                	<div class="img_loader text-center">
-	                    	<i class="fa fa-spinner fa-spin fa-2x"></i>&nbsp;
-	                        <p>Loading graph</p>
-	                    </div>						
-						<img src="{$graph_stored_files}" class="img-responsive center-block" title="{t}Stored files over the last 7 days{/t}" alt="Stored Files over last 7 days">
+                  <div id="{$storedfiles_chart_id}"> <svg></svg> </div>
+                  {$storedfiles_chart}
 					</div>
 				</div> <!-- div class="panel panel-default" -->
 			</div>
@@ -183,9 +103,8 @@
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>{t}Pools and volumes status{/t}</b></div>
 				<div class="panel-body">
-					<a href="pools.php" title="{t}Click here to see the report{/t}">
-						<img src="{$graph_pools}" class="img-responsive center-block" alt="Pools and volumes">
-					</a>
+               <div id="{$pools_usage_chart_id}"> <svg></svg> </div>
+               {$pools_usage_chart}
 				</div>
 			</div> <!-- div class="panel panel-default" -->
 		</div> <!-- end class="col-xs-12 col-md-6" -->
@@ -196,7 +115,7 @@
 				<div class="panel-heading"><b>{t}Last used volumes{/t}</b></div>
 				<div class="panel-body">
 					<div class="table-responsive">
-					<table class="table table-condensed table-stripped">
+					<table class="table table-condensed table-striped">
 						<tr>
 							<th title="{t}Volume name{/t}">Volume</th>
 							<th title="{t}Volume status{/t}">Status</th>
@@ -218,74 +137,110 @@
 					</div>
 				</div> <!-- <div class="panel-body"> -->
 			</div> <!-- <div class="panel panel-default"> -->		
+
 		</div> <!-- end class="col-..."-->
 	</div> <!-- end <div class="row"> -->
 
-	<!-- Fourth row with Client and backup job reports widgets  -->
 	<div class="row">
-		<!-- Client report -->
 		<div class="col-xs-12 col-md-6">
-			<div class="panel panel-default">
-				<div class="panel-heading"><b>{t}Client report{/t}</b></div>
-				<div class="panel-body">
-					<form method="post" action="client-report.php" class="form-horizontal" role="form">
-						<!-- Clients list -->
-						<div class="form-group">
-							<label class="col-sm-2 control-label">{t}Client{/t}</label>
-							<div class="col-sm-10">
-								<select name="client_id" class="form-control">
-									{foreach from=$clients_list key=client_id item=client_name}
-									<option value="{$client_id}">{$client_name}</option>
-									{/foreach}
-								</select>
-							</div>
-						</div>
-						<!-- Intervals -->
-						<div class="form-group">
-							<label class="col-sm-2 control-label">{t}Interval{/t}</label>
-							<div class="col-sm-10">
-								<select name="period" class="form-control">
-									<option value="7">{t}Last week{/t}
-									<option value="14">{t}Last 2 week{/t}
-									<option value="28">{t}Last month{/t}
-								</select>
-							</div>
-						</div>
-						<!-- Submit button -->
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">{t}View report{/t}</button>
-							</div>
-						</div>
-					</form>
-				</div> <!-- end <div class="panel-body"> -->
-			</div> <!-- end <div class="panel panel-default"> -->
-		</div> <!-- end <div class="col-..." -->
-		
-		<div class="col-xs-12 col-md-6">
-			<!-- Backup job report -->
-			<div class="panel panel-default">
-				<div class="panel-heading"><b>{t}Backup Job report{/t}</b></div>
-				<div class="panel-body">
-					<form method="post" action="backupjob-report.php" class="form-horizontal" role="form">
-						<div class="form-group">
-							<label class="col-sm-4 control-label">{t}Backup job name{/t}</label>
-							<div class="col-sm-8">
-								<input type=hidden name="default" value="1">
-								<select name=backupjob_name class="form-control">{html_options values=$jobs_list output=$jobs_list}</select>
-							</div>
-						</div>
-						<!-- Submit button -->
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">{t}View report{/t}</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>		
-		</div> <!-- end <div class="col-..." -->
-	</div> <!-- end <div class="row"> -->
+
+         <!-- Clients jobs total widget -->
+         <div class="panel panel-default">
+            <div class="panel-heading"><b>{t}Clients jobs total{/t}</b></div>
+            <div class="panel-body">
+             <p>{t}Per job name backup and restore jobs statistics{/t}</p>
+            </div> <!-- end div class=panel-body -->
+            <table class="table table-condensed">
+               <tr>
+                  <th>{t}Job name{/t}</th>
+                  <th>{t}Jobs{/t}</th>
+                  <th>{t}Files{/t}</th>
+                  <th>{t}Bytes{/t}</th>
+                  <th>{t}Type{/t}</th>
+               </tr>
+               {foreach from=$jobnames_jobs_stats item=jobname}
+               <tr>
+                  <td>{$jobname.jobname}</td>
+                  <td>{$jobname.jobscount}</td>
+                  <td>{$jobname.jobfiles}</td>
+                  <td>{$jobname.jobbytes}</td>
+                  <td>{$jobname.type}</td>
+               </tr>
+               {/foreach}
+            </table>
+            <div class="panel-body">
+               <p>Per job type backup and restore jobs statistics</p>
+            </div> <!-- end div class=panel-body -->
+            <table class="table table-condensed">
+               <tr>
+                  <th>{t}Type{/t}</th>
+                  <th>{t}Files{/t}</th>
+                  <th>{t}Bytes{/t}</th>
+                  <th>{t}Jobs{/t}</th>
+               </tr>
+               {foreach from=$jobtypes_jobs_stats item=jobtype}
+               <tr>
+                  <td>{$jobtype.type}</td>
+                  <td>{$jobtype.jobfiles}</td>
+                  <td>{$jobtype.jobbytes}</td>
+                  <td>{$jobtype.jobscount}</td>
+               </tr>
+               {/foreach}
+            </table>
+         </div> <!-- end div class=panel... -->
+      </div> <!-- end div class=col-xx -->
+   
+      <!-- Weekly jobs statistics -->
+      <div class="col col-xs-12 col-md-6"> 
+         <div class="panel panel-default">
+            <div class="panel-heading"><b>{t}Weekly jobs statistics{/t}</b></div>
+            <div class="panel-body">
+               <table class="table table-condensed table-striped">
+                  <tr>
+                     <th>{t}Day of week{/t}</th>
+                     <th>{t}Bytes{/t}</th>
+                     <th>{t}Files{/t}</th>
+                  </tr>
+                  {foreach from=$weeklyjobsstats item=day}
+                  <tr>
+                     <td>{$day.dayofweek}</td>
+                     <td>{$day.jobbytes}</td>
+                     <td>{$day.jobfiles}</td>
+                  </tr>
+                  {foreachelse}
+                     <tr> <td colspan="3" class="text-center">{t}Nothing to display{/t}</td> </tr>
+                  {/foreach}
+               </table>
+            </div> <!-- end div class=panel-body -->
+         </div> <!-- end div class=panel -->
+      </div> <!-- end div class=col col-xx -->
+   </div> <!-- end div class=row -->
+
+   <div class="row">
+      <div class="col col-xs-12 col-md-6">
+         <!-- 10th biggest job names -->
+         <div class="panel panel-default">
+            <div class="panel panel-heading"><b>{t}Biggest backup jobs{/t}</b></div>
+            <div class="panel-body">
+               <table class="table table-condensed table-striped">
+                  <tr>
+                     <th>{t}Job name{/t}</th>
+                     <th>{t}Total bytes{/t}</th>
+                     <th>{t}Total files{/t}</th>
+                  </tr>
+                  {foreach from=$biggestjobs item=job}
+                     <tr>
+                        <td>{$job.name}</td>
+                        <td>{$job.jobbytes}</td>
+                        <td>{$job.jobfiles}</td>
+                     </tr>
+                  {foreachelse}
+                     <tr> <td colspan="3" class="text-center">{t}Nothing to display{/t}</td> </tr>
+                  {/foreach}
+               </table>
+      </div>
+   </div>
+  
 </div> <!-- end <div class="container"> -->
 
 {include file="footer.tpl"}

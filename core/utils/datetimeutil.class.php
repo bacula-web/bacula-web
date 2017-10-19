@@ -17,6 +17,23 @@
 
 class DateTimeUtil
 {
+   /*
+    * Function:      checkDate()
+    *
+    * Parameter(s):  $date (date in string format)
+    * Return:        true if $date is a valid date, else otherwise
+    *
+    */
+
+   public static function checkDate($date) {
+      $d = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+
+      if( $d->format('Y-m-d H:i:s') === $date) {
+         return true;
+      }else {
+         return false;
+      }
+   }
 
     // ==================================================================================
     // Function:        get_Timestamp()
@@ -38,17 +55,13 @@ class DateTimeUtil
 
     public static function Get_Elapsed_Time($start_time, $end_time)
     {
-        $start = '';
-        $end   = '';
-	$elapsed_time = '';
-
-        if ($start_time == '0000-00-00 00:00:00' or is_null($start_time) or $start_time == 0) {
+        if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
             return 'n/a';
         } else {
             $start = self::get_Timestamp($start_time);
         }
 
-        if ($end_time == '0000-00-00 00:00:00' or is_null($end_time) or $end_time == 0) {
+        if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
             $end = mktime();
         } else {
             $end = self::get_Timestamp($end_time);

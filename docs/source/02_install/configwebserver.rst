@@ -1,11 +1,11 @@
-.. _install/configwebserver
+.. _install/configwebserver:
 
 ========================
-Configure the web server
+Web server configuration
 ========================
 
-Configure PHP
--------------
+PHP
+---
 
 Update the timezone parameter in your PHP configuration in order to prevent Apache warning messages (see below)
 
@@ -32,14 +32,13 @@ Reload Apache configuration
 
    $ sudo service httpd reload || sudo /etc/init.d/httpd reload
 
-Secure your web server
-----------------------
+Web server security
+-------------------
 
 In order to secure the application folder and avoid exposing sensitive information contained in Bacula-Web configuration.
 
 Edit the Apache configuration file as described below
 Red Hat / Centos / Fedora
-
 
 ::
 
@@ -49,17 +48,24 @@ Debian / Ubuntu
 
 ::
 
-   $ sudo vi /etc/apache2/sites-available/default
+   $ sudo vim /etc/apache2/conf-available/bacula-web.conf
 
-and add the content below
+with the content below
 
 ::
 
    <Directory /var/www/html/bacula-web>
-   AllowOverride All
+     AllowOverride All
    </Directory>
-   
-Then reload Apache to apply the configuration change
+
+
+Enable the configuration
+
+::
+
+    $ sudo a2enconf bacula-web
+
+Then restart Apache to apply the configuration change
 
 Centos / Red Hat
 

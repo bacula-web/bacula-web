@@ -8,13 +8,22 @@
   <title>Bacula-Web - {$page_name}</title>
 
   <!-- Bootstrap front-end framework -->
-  <link rel="stylesheet" href="core/vendor/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="core/vendor/bootstrap/css/bootstrap-theme.min.css"> 
-  <link rel="stylesheet" href="core/vendor/bootstrap-datetimepicker-4.7.14/css/bootstrap-datetimepicker.min.css">
+  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="vendor/components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+
+  <!-- Custom css -->
   <link rel="stylesheet" href="application/assets/css/default.css">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="core/vendor/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="vendor/components/font-awesome/css/font-awesome.min.css">
+
+  <!-- nvd3 javascript -->
+  <script src="vendor/mbostock/d3/d3.min.js" charset="utf-8"></script>
+  <script src="vendor/novus/nvd3/build/nv.d3.js"></script>
+
+  <!-- nvd3 css -->
+  <link href="vendor/novus/nvd3/build/nv.d3.css" rel="stylesheet" type="text/css">
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
@@ -41,7 +50,11 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-text-o fa-fw"></i> {t}Reports{/t} <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="jobs.php">{t}Jobs{/t}</a></li>
-						<li><a href="pools.php">{t}Pools and volumes{/t}</a></li>
+						<li><a href="pools.php">{t}Pools{/t}</a></li>
+						<li><a href="volumes.php">{t}Volumes{/t}</a></li>
+						<li><a href="backupjob-report.php">{t}Backup job{/t}</a></li>
+						<li><a href="client-report.php">{t}Client{/t}</a></li>
+                  <li><a href="directors.php">{t}Director(s){/t}</a></li>
 					</ul>
 				</li>
 			</ul>		
@@ -78,7 +91,7 @@
 						</li>
 						<li role="presentation" class="divider"></li>
 						<li role="presentation" class="dropdown-header">{t}Version{/t}</li>
-						<li class="disabled"><a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 7.4.0</a></li>
+						<li class="disabled"><a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 8.0.0-RC1</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -92,7 +105,6 @@
       <div class="col-xs-12">
         <ol class="breadcrumb">
 			{php}
-				global $current_page;
 				$scriptname = explode( "/", $_SERVER['SCRIPT_FILENAME']);
 				$current = end( $scriptname );
 
@@ -100,7 +112,6 @@
 					echo '<li class="active"> <i class="fa fa-home fa-fw"></i> Dashboard</li>';
 				}else{
 					echo '<li> <a href="index.php" title="{t}Back to Dashboard{/t}"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
-					echo "<li class='active'>$current_page</li>";
 				}
 			{/php}
         </ol>

@@ -1,13 +1,17 @@
 .. _install/install:
 
-===================
-Install and upgrade
-===================
+#######################
+Web server installation
+#######################
 
-Install required packages on RedHat / Centos / Fedora
------------------------------------------------------
+***********************
+Using Apache web server
+***********************
 
-Install Apache web server
+Install requirements on RedHat / Centos / Fedora
+================================================
+
+Install Apache web server on rpm based Linux distribution like Red Hat, Centos, Fedora, SUSE Linux, Scientific Linux, etc.
 
 ::
 
@@ -21,19 +25,19 @@ MySql Bacula catalog
 
 ::
 
-   $ sudo yum install php php-gd php-gettext php-mysql php-pdo
+   $ sudo yum install php php-gettext php-mysql php-pdo
 
 postgreSQL Bacula catalog
 
 ::
 
-   $ sudo yum install php php-gd php-gettext php-pgsql php-pdo
+   $ sudo yum install php php-gettext php-pgsql php-pdo
 
 SQLite database support
 
 ::
 
-   $ sudo yum install php php-gd php-gettext php-pdo
+   $ sudo yum install php php-gettext php-pdo
 
 Change SQLite database file permissions
 
@@ -44,8 +48,8 @@ Assuming that the bacula database file is located under /var/spool/bacula
    # chmod -v 755 /var/spool/bacula
    # chmod -v 704 /var/spool/bacula/bacula.db
 
-Install on Gentoo
------------------
+Install requirements on Gentoo
+------------------------------
 
 Modify portage configuration
     
@@ -54,13 +58,13 @@ Modify portage configuration
    # File: /etc/portage/package.use
  
    # MySQL
-   dev-lang/php mysql gd apache2 truetype cli pcre xml zlib
+   dev-lang/php mysql apache2 truetype cli pcre xml zlib
  
    # postgreSQL
-   dev-lang/php postgres gd apache2 truetype cli pcre xml zlib
+   dev-lang/php postgres apache2 truetype cli pcre xml zlib
  
    # SQLite
-   dev-lang/php sqlite gd apache2 truetype cli pcre xml zlib
+   dev-lang/php sqlite apache2 truetype cli pcre xml zlib
 
 Install Apache and PHP
 
@@ -83,8 +87,8 @@ Then restart Apache
 
    # /etc/init.d/apache2 restart
 
-Install on Debian / Ubuntu / Linux Mint
-_______________________________________
+Install requirements on Debian / Ubuntu / Linux Mint
+----------------------------------------------------
 
 Install Apache and PHP
 
@@ -92,18 +96,18 @@ Install Apache and PHP
 
    With MySQL support
    
-   $ sudo apt-get install apache2 libapache2-mod-php5 php5-mysql php5-gd
+   $ sudo apt-get install apache2 libapache2-mod-php5 php5-mysql
 
    With postgreSQL support
 
-   $ sudo apt-get install apache2 libapache2-mod-php5 php5-pgsql php5-gd
+   $ sudo apt-get install apache2 libapache2-mod-php5 php5-pgsql
 
    With SQLite support
 
-   $ sudo apt-get install apache2 libapache2-mod-php5 php5-sqlite php5-gd
+   $ sudo apt-get install apache2 libapache2-mod-php5 php5-sqlite
 
-Install on FreeBSD
-------------------
+Install requirements on FreeBSD
+-------------------------------
 
 You can start with a fresh FreeBSD 9.0 installation, with ports from original CD media, not updated to keep as simple as possible.
 
@@ -126,7 +130,6 @@ Here's below a list of FreeBSD ports you need to install
    * lang/php5
    * www/php5-session
    * devel/php5-gettext
-   * graphics/php5-gd
 
 With PostgreSQL bacula catalog
    * databases/php5-pdo_pgsql
@@ -140,6 +143,5 @@ With SQLite bacula catalog
    * databases/php5-sqlite
    * databases/php5-pdo_sqlite
 
-**Special note**
 
-A big thanks to Dean E. Weimer who provided me theses useful details for *BSD setup
+.. note:: A big thanks to Dean E. Weimer who provided me Bacula-Web installation instructions for \*BSD setup
