@@ -30,9 +30,9 @@ Bacula-Web installation consists only in few steps (see below)
 +----------------------+---------------------------------------------------------------------------+
 | Install dependencies | :ref:`install/install_deps`                                               |
 +----------------------+---------------------------------------------------------------------------+
-| Configure            | Configure Bacula-Web for your environment                                 |
+| Configure            | :ref:`install/configure` for your environment                             |
 +----------------------+---------------------------------------------------------------------------+
-| Check your setup     | Make sure your Bacula-Web setup is ok                                     |
+| Check your setup     | :ref:`install/test` and make sure your setup is ok                        |
 +----------------------+---------------------------------------------------------------------------+
 
 Installation / upgrade instructions
