@@ -80,17 +80,15 @@ Dashboard
 
 Bacula-Web Dashboard provide a lot of informations about your Bacula infrastructure
 
-   * Bacula Director catalog (database) statistics like
-   * Catalog database current size
-   * Total stored Bytes
-   * Total stored files
-   * Number of enabled clients
-   * Used disk space by all volumes
-   * Jobs status, transfered files / bytes over prefedined period (last day, last week, last month, bot aka beginning of time)
-   * Volumes per pool usage graph
+   * Last period job status (display backup jobs status for the current period)
+   * Jobs status, transfered files / bytes for the current period 
    * Stored bytes graph (last 7 days)
    * Stored files graph (last 7 days)
+   * Pools and volumes usage graph 
    * Last used volumes (display last 10 used volumes for backup jobs)
+   * Client jobs total (backup and restore jobs statistics)
+   * Weekly jobs statitics (backup jobs statistics for each doy of the week)
+   * Biggest backup jobs
 
 Jobs report
 ===========
