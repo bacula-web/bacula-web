@@ -42,9 +42,10 @@ Installation / upgrade instructions
    :maxdepth: 2
 
    requirements
+   install
    configwebserver
    download
-   install
+   install_deps
    configure
-   upgrade
    test
+   upgrade
