@@ -19,3 +19,6 @@ To test your installation of Bacula-Web, follow this link
    http://yourserveroripaddress/bacula-web/test.php
 
 You should got the same result as shown in the screenshot below
+
+.. image:: /_static/bacula-web-test-page.jpg
+   :scale: 20%
