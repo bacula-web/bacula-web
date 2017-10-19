@@ -1,4 +1,4 @@
-.. _install/test
+.. _install/test:
 
 ===============
 Test Bacula-Web
