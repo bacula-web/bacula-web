@@ -67,29 +67,31 @@ try {
       // Generate Backup Job report period string
       $backupjob_period = CHttpRequest::get_value('period');
 
-      if (!is_null($backupjob_period)) {
-         
-         // Set selected period
-         $view->assign( 'selected_period', $backupjob_period);
+      // Set default backup job period to 7 if not set in user request
+      if( $backupjob_period === NULL) {
+          $backupjob_period = '7';
+      }
 
-         switch( $backupjob_period ) {
-         case '7':
-            $backupjob_period = "From " . date( $dbSql->datetime_format_short, (NOW - WEEK)) . " to " . date( $dbSql->datetime_format_short, NOW);
-            $interval[0] = NOW-WEEK;
-            break;
-         case '14':
-            $backupjob_period = "From " . date( $dbSql->datetime_format_short, (NOW - (2 * WEEK))) . " to " . date( $dbSql->datetime_format_short, NOW);
-            $interval[0] = NOW-(2*WEEK);
-            break;
-         case '30':
-            $backupjob_period = "From " . date( $dbSql->datetime_format_short, (NOW - MONTH)) . " to " . date( $dbSql->datetime_format_short, NOW);
-            $interval[0] = NOW-MONTH;
-         }
-      } // end if
-    
+      // Set selected period
+      $view->assign( 'selected_period', $backupjob_period);
+
+      switch( $backupjob_period ) {
+      case '7':
+          $periodDesc = "From " . date( $dbSql->datetime_format_short, (NOW - WEEK)) . " to " . date( $dbSql->datetime_format_short, NOW);
+          $interval[0] = NOW-WEEK;
+          break;
+      case '14':
+          $periodDesc = "From " . date( $dbSql->datetime_format_short, (NOW - (2 * WEEK))) . " to " . date( $dbSql->datetime_format_short, NOW);
+          $interval[0] = NOW-(2*WEEK);
+          break;
+      case '30':
+          $periodDesc = "From " . date( $dbSql->datetime_format_short, (NOW - MONTH)) . " to " . date( $dbSql->datetime_format_short, NOW);
+          $interval[0] = NOW-MONTH;
+      }
+
       // Get start and end datetime for backup jobs report and charts
       $periods = CDBQuery::get_Timestamp_Interval($jobs->get_driver_name(), $interval);
-    
+
       $backupjob_bytes = $jobs->getStoredBytes( $interval, $backupjob_name);
       $backupjob_bytes = CUtils::Get_Human_Size($backupjob_bytes);
     
@@ -98,7 +100,7 @@ try {
       $backupjob_files = CUtils::format_Number($backupjob_files);
     
       // Get the last 7 days interval (start and end)
-      $days = DateTimeUtil::getLastDaysIntervals(CHttpRequest::get_value('period'));
+      $days = DateTimeUtil::getLastDaysIntervals($backupjob_period);
     
       // Last 7 days stored files chart  
       foreach ($days as $day) {
@@ -185,7 +187,7 @@ try {
     
       $view->assign('jobs', $joblist);
       $view->assign('backupjob_name', $backupjob_name);
-      $view->assign('backupjob_period', $backupjob_period);
+      $view->assign('periodDesc', $backupjob_period);
       $view->assign('backupjob_bytes', $backupjob_bytes);
       $view->assign('backupjob_files', $backupjob_files);
    } // end else
