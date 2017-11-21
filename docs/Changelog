@@ -4,6 +4,8 @@ Changelog
 
 Fixed bug(s)
 
+- 0000227 [bug-php] Deprecated split() function with PHP-7.0 in BWeb class
+
 New feature(s)
 
 Translations
