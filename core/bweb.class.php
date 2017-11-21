@@ -45,7 +45,7 @@ class Bweb
                   $this->datetime_format = FileConfig::get_Value('datetime_format');
                   
                   // Get first part of datetime_format
-                  $this->datetime_format_short = split( ' ', $this->datetime_format);
+                  $this->datetime_format_short = explode( ' ', $this->datetime_format);
                   $this->datetime_format_short = $this->datetime_format_short[0];
                }else {
                   // Set default time format
