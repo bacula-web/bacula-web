@@ -44,7 +44,7 @@ class Clients_Model extends CModel
 
         $statment     = array( 'table' => $table, 'fields' => $fields, 'orderby' => $orderby );
 
-        if (FileConfig::get_Value('show_inactive_clients')) {
+        if (FileConfig::get_Value('show_inactive_clients') != NULL) {
             $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
         }
 
