@@ -231,7 +231,7 @@ try {
 
   // Determine how many jobs per page
   // From config file
-    if (FileConfig::get_Value('jobs_per_page') != false) {
+    if (FileConfig::get_Value('jobs_per_page') != NULL) {
         $jobs_per_page = FileConfig::get_Value('jobs_per_page');
     }
 
