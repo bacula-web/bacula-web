@@ -2,6 +2,9 @@
 
 Changelog
 
+- General
+	- Upgrade moment/moment to version 2.19.2
+
 Fixed bug(s)
 
 - 0000227 [bug-php] Deprecated split() function with PHP-7.0 in BWeb class

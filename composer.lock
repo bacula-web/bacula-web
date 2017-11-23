@@ -242,16 +242,16 @@
         },
         {
             "name": "moment/moment",
-            "version": "2.18.1",
+            "version": "2.19.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moment/moment.git",
-                "reference": "b8a7fc310eb3625e83fc0c8f1ea2840fa83c7378"
+                "reference": "328d51e7235b7a2d443bfdf69c1844939c115660"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moment/moment/zipball/b8a7fc310eb3625e83fc0c8f1ea2840fa83c7378",
-                "reference": "b8a7fc310eb3625e83fc0c8f1ea2840fa83c7378",
+                "url": "https://api.github.com/repos/moment/moment/zipball/328d51e7235b7a2d443bfdf69c1844939c115660",
+                "reference": "328d51e7235b7a2d443bfdf69c1844939c115660",
                 "shasum": ""
             },
             "require": {
@@ -292,7 +292,7 @@
                 "time",
                 "validate"
             ],
-            "time": "2017-03-21T22:54:37+00:00"
+            "time": "2017-11-11T20:25:07+00:00"
         },
         {
             "name": "novus/nvd3",
@@ -491,16 +491,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.3.10",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "fdf89e57a723a29baf536e288d6e232c059697b1"
+                "reference": "a56a3989fb762d7b19a0cf8e7693ee99a6ffb78d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/fdf89e57a723a29baf536e288d6e232c059697b1",
-                "reference": "fdf89e57a723a29baf536e288d6e232c059697b1",
+                "url": "https://api.github.com/repos/symfony/process/zipball/a56a3989fb762d7b19a0cf8e7693ee99a6ffb78d",
+                "reference": "a56a3989fb762d7b19a0cf8e7693ee99a6ffb78d",
                 "shasum": ""
             },
             "require": {
@@ -536,7 +536,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-02T06:42:24+00:00"
+            "time": "2017-11-13T15:31:11+00:00"
         },
         {
             "name": "twbs/bootstrap",
