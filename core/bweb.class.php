@@ -41,7 +41,7 @@ class Bweb
                $this->catalog_nb = FileConfig::count_Catalogs();
 
                // Check if datetime_format is defined in configuration
-               if( FileConfig::get_Value('datetime_format') != false) {
+               if( FileConfig::get_Value('datetime_format') != NULL) {
                   $this->datetime_format = FileConfig::get_Value('datetime_format');
                   
                   // Get first part of datetime_format
