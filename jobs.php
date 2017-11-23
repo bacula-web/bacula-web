@@ -362,9 +362,6 @@ try {
     // Set page name
     $view->assign('page_name', 'Jobs report');
     
-    // Language
-    $view->assign('config_language', FileConfig::get_Value('language'));
-    
     // Process and display the template
     $view->render('jobs.tpl');
 
