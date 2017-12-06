@@ -116,6 +116,6 @@ default:
 }
 
 echo "\nGreat !!! Apache authentication setup is now completed\n\n";
-echo "You can now the credentials you've provided to access Bacula-Web\n";
+echo "You can now use the credentials you've provided to access Bacula-Web\n";
 
 ?>
