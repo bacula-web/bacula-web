@@ -7,7 +7,10 @@ Changelog
 
 Fixed bug(s)
 
+- 0000226 [bug] Clicking job name in jobs.php gives http error 500
 - 0000227 [bug-php] Deprecated split() function with PHP-7.0 in BWeb class
+- 0000231 [bug-php] Volume slot number should be set to n/a if not in changer
+- 0000232 [bug-php] Error while ordering volumes
 
 New feature(s)
 
