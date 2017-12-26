@@ -1,4 +1,4 @@
-[![Documentation Status](https://readthedocs.org/projects/bacula-web/badge/?version=master)](http://docs.bacula-web.org/en/master/?badge=master)
+[![Documentation Status](https://readthedocs.org/projects/bacula-web/badge/?version=latest)](http://docs.bacula-web.org/en/master/?badge=latest)
 [![Code Climate](https://codeclimate.com/github/bacula-web/bacula-web/badges/gpa.svg)](https://codeclimate.com/github/bacula-web/bacula-web)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bacula-web/bacula-web/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/bacula-web/bacula-web/?branch=develop)
 
