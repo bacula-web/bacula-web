@@ -45,7 +45,7 @@ try {
    $volume_orderby_asc = 'DESC';
 
    if( !is_null(CHttpRequest::get_Value('orderby')) ) {
-      if( in_array(CHttpRequest::get_Value('orderby'), $orderby) ) {
+      if( array_key_exists(CHttpRequest::get_Value('orderby'), $orderby) ) {
          $volume_orderby_filter = CHttpRequest::get_Value('orderby');
       }else{
          throw new Exception("Critical: Provided orderby parameter is not correct");
