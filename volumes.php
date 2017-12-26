@@ -99,6 +99,7 @@ try {
       // Update volume inchanger
       if ($volume['inchanger'] == '0') {
          $volume['inchanger'] = '-';
+         $volume['slot'] = 'n/a';
       } else {
          $volume['inchanger'] = '<span class="glyphicon glyphicon-ok"></span>';
       }
