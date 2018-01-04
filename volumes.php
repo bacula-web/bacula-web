@@ -83,7 +83,7 @@ try {
       }
 
       // Set lastwritten for the volume
-      if (empty($volume['lastwritten'])) {
+      if( ($volume['lastwritten'] == '0000-00-00 00:00:00') || empty($volume['lastwritten']) ) {
          $volume['lastwritten'] = 'n/a';
       } else {
          // Format lastwritten in custom format if defined in config file
