@@ -84,10 +84,10 @@
 						<li role="presentation" class="divider"></li>
 						<li role="presentation" class="dropdown-header">Help</li>
 						<li> 
-							<a href="http://www.bacula-web.org" title="Visit the official web site" target="_blank"><i class="fa fa-globe fa-fw"></i> {t}Official web site{/t}</a> 
+							<a href="http://www.bacula-web.org" title="Visit the official web site" target="_blank" rel="noopener noreferrer"><i class="fa fa-globe fa-fw"></i> {t}Official web site{/t}</a>
 						</li>
 						<li> 
-							<a href="http://bugs.bacula-web.org" title="Bug and feature request tracker" target="_blank"><i class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a> 
+							<a href="http://bugs.bacula-web.org" title="Bug and feature request tracker" target="_blank" rel="noopener noreferrer"><i class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a>
 						</li>
 						<li role="presentation" class="divider"></li>
 						<li role="presentation" class="dropdown-header">{t}Version{/t}</li>
