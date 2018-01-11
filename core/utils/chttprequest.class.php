@@ -66,14 +66,14 @@ class CHttpRequest
     // ==================================================================================
     // Function: 	get_Value()
     // Parameters:	$var
-    // Return:		value of $var, or null if not defined
+    // Return:		value of $var, or NULL if not defined
     // ==================================================================================
     public static function get_Value($var)
     {
         if (isset(self::$value_list[$var])) {
             return self::$value_list[$var];
         } else {
-            return null;
+            return NULL;
         }
     }
 }
