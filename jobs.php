@@ -91,28 +91,60 @@ try {
   $job_types_list['0'] = 'Any'; 
   $view->assign('job_types_list', $job_types_list);
 
-  // if $_REQUEST is not empty, get user input values
-  if(count($_REQUEST) > 0) {
-     $job_type_filter = CHttpRequest::get_Value('job_type_filter');
-     $job_status_filter = CHttpRequest::get_Value('job_status_filter');
-     $job_level_filter = CHttpRequest::get_Value('job_levelid_filter');
-     $job_poolid_filter = intval(CHttpRequest::get_Value('job_poolid_filter'));
-     $job_clientid_filter = intval(CHttpRequest::get_Value('job_clientid_filter'));
-     $job_starttime_filter = CHttpRequest::get_Value('job_starttime_filter');
-     $job_endtime_filter = CHttpRequest::get_Value('job_endtime_filter');
-     $job_orderby_filter = CHttpRequest::get_Value('job_orderby');
-     $job_orderby_asc_filter = CHttpRequest::get_Value('job_orderby_asc');
-  }else {
-     // if $_REQUEST is empty, define default values for each filter (default = 0)
-     $job_type_filter = '0';
-     $job_status_filter = STATUS_ALL;
-     $job_level_filter = 0;
-     $job_poolid_filter = 0;
-     $job_clientid_filter = 0;
-     $job_starttime_filter = null;
-     $job_endtime_filter = null;
-     $job_orderby_filter = 'jobid';
-     $job_orderby_asc_filter = 'DESC';
+  // Define default values for each filter 
+  $job_type_filter = '0';
+  $job_status_filter = STATUS_ALL;
+  $job_level_filter = 0;
+  $job_poolid_filter = 0;
+  $job_clientid_filter = 0;
+  $job_starttime_filter = null;
+  $job_endtime_filter = null;
+  $job_orderby_filter = 'jobid';
+  $job_orderby_asc_filter = 'DESC';
+
+  // Job client id filter
+  if( CHttpRequest::get_Value('job_clientid_filter') != NULL ){
+      $job_clientid_filter = (int) CHttpRequest::get_Value('job_clientid_filter');
+  }
+
+  // Job type filter
+  if( CHttpRequest::get_Value('job_type_filter') != NULL ){
+      $job_type_filter = CHttpRequest::get_Value('job_type_filter');
+  }
+
+  // Job status filter
+  if( CHttpRequest::get_Value('job_status_filter') != NULL ){
+      $job_status_filter = (int) CHttpRequest::get_Value('job_status_filter');
+  }
+
+  // Job level id filter
+  if( CHttpRequest::get_Value('job_levelid_filter') != NULL ){
+      $job_level_filter = CHttpRequest::get_Value('job_levelid_filter');
+  }
+
+  // Job pool id filter
+  if( CHttpRequest::get_Value('jobs_poolid_filter') != NULL ){
+      $job_poolid_filter = (int) CHttpRequest::get_Value('jobs_poolid_filter');
+  }
+
+  // Job starttime filter
+  if( CHttpRequest::get_Value('job_starttime_filter') != NULL ){
+      $job_starttime_filter = CHttpRequest::get_Value('job_starttime_filter');
+  }
+
+  // Job endtime filter
+  if( CHttpRequest::get_Value('job_endtime_filter') != NULL ){
+      $job_endtime_filter = CHttpRequest::get_Value('job_endtime_filter');
+  }
+
+  // Job orderby filter
+  if( CHttpRequest::get_Value('job_orderby') != NULL ){
+      $job_orderby_filter = CHttpRequest::get_Value('job_orderby');
+  }
+
+  // Job orderby asc filter
+  if( CHttpRequest::get_Value('job_orderby_asc') != NULL ){
+      $job_orderby_asc_filter = CHttpRequest::get_Value('job_orderby_asc');
   }
 
   // Assign variables to template
