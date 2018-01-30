@@ -1,4 +1,4 @@
-=== Release 8.0.0-rc2 (Nov xx 2017)
+=== Release 8.0.0-rc2 (Feb xx 2018)
 
 Changelog
 
@@ -9,8 +9,10 @@ Fixed bug(s)
 
 - 0000226 [bug] Clicking job name in jobs.php gives http error 500
 - 0000227 [bug-php] Deprecated split() function with PHP-7.0 in BWeb class
+- 0000230 [bug-php] Exception message Language translation problem
 - 0000231 [bug-php] Volume slot number should be set to n/a if not in changer
 - 0000232 [bug-php] Error while ordering volumes
+- 0000233 [bug] Wrong empty volume's date
 
 New feature(s)
 
