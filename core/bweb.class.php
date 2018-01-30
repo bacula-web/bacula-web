@@ -67,8 +67,8 @@ class Bweb
                 
      // Initialize smarty gettext function
         $language = FileConfig::get_Value('language');
-        if (!$language) {
-            throw new Exception("Language translation problem");
+        if ($language == NULL) {
+            throw new Exception('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
         }
                 
         $this->translate = new CTranslation($language);
