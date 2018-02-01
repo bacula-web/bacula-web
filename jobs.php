@@ -19,7 +19,7 @@ session_start();
 require_once('core/global.inc.php');
 
 try {
-   $view = new CView();
+   $view = new CView('jobs.tpl');
    $dbSql = new Bweb($view);
    $jobs = new Jobs_Model();  
    $where = null;
@@ -395,7 +395,7 @@ try {
     $view->assign('page_name', 'Jobs report');
     
     // Process and display the template
-    $view->render('jobs.tpl');
+    $view->render();
 
 }catch (Exception $e) {
    CErrorHandler::displayError($e);

@@ -19,7 +19,7 @@ session_start();
 include_once( 'core/global.inc.php' );
 
 // Initialise view and model
-$view = new CView();
+$view = new CView('backupjob-report.tpl');
 $dbSql = new Bweb($view);
     
 require_once('core/const.inc.php');
@@ -200,4 +200,4 @@ try {
 $view->assign('page_name', 'Backup job report');
  
 // Process and display the template
-$view->display('backupjob-report.tpl');
+$view->render();

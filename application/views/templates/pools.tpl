@@ -1,5 +1,3 @@
-{include file=header.tpl}
-
 <div class="container">
 
   <div class="page-header">
@@ -37,5 +35,3 @@
 </div> <!-- div class="container-fluid" -->
 
 <!-- End pools.tpl -->
-
-{include file="footer.tpl"}

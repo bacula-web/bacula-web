@@ -1,5 +1,3 @@
-{include file=header.tpl}
-
 <div class="container">
 
   <div class="page-header">
@@ -134,5 +132,3 @@
 	</div> <!-- div class="row" -->
 
 	</div> <!-- class="container-fluid" -->
-
-{include file="footer.tpl"}

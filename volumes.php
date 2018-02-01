@@ -22,7 +22,7 @@ include_once('core/global.inc.php');
 
 try {
    // Initialise view and model
-   $view = new CView();
+   $view = new CView('volumes.tpl');
    $dbSql = new Bweb($view);
    $volumes = new Volumes_Model();
    $volumes_list = array();
@@ -122,7 +122,7 @@ try {
    $view->assign('page_name', 'Volumes report');
 
    // Process and display the template
-   $view->display('volumes.tpl');
+   $view->render();
 
 } catch (Exception $e) {
    CErrorHandler::displayError($e);

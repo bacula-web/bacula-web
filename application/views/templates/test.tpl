@@ -1,5 +1,3 @@
-{include file=header.tpl}
-
 <div class="container" id="testpage">
 
    <div class="page-header">
@@ -37,5 +35,3 @@
 	</div>
 
 </div> <!-- div class="container" -->
-
-{include file="footer.tpl"}

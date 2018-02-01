@@ -18,9 +18,12 @@
 
 class CView extends Smarty
 {
+    protected $templateName;
 
-    public function __construct()
+    public function __construct($template)
     {
+        $this->templateName = $template;
+
         $this->init();
     }
 
@@ -36,14 +39,17 @@ class CView extends Smarty
 
         // Set to true for debug or dev purpose only
         $this->debugging = false;
-        $this->force_compile = false;
+        $this->force_compile = true;
 
         $this->template_dir = VIEW_DIR;
         $this->compile_dir = VIEW_CACHE_DIR;
     }
 
-    public function render($view = 'index.tpl')
+    public function render()
     {
-        $this->display($view);
+        $this->assign('templateName', $this->templateName);
+
+        // Render using the default layout
+        $this->display('layouts/default.tpl');
     }
 }

@@ -1,5 +1,3 @@
-{include file=header.tpl}
-
 <div class="container">
 
   <div class="page-header">
@@ -33,5 +31,3 @@
 	</table>
 	</div>
 </div> <!-- end div class="container-fluid" -->
-
-{include file="footer.tpl"}

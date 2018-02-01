@@ -19,7 +19,7 @@
  include_once( 'core/global.inc.php' );
  
  // Initialise view and model
- $view     = new CView();
+ $view     = new CView('index.tpl');
  $dbSql     = null;
 
 try {
@@ -271,4 +271,4 @@ try {
  $view->assign('page_name', 'Dashboard');
  
  // Render template
- $view->render('index.tpl');
+ $view->render();
