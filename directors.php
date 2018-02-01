@@ -20,7 +20,7 @@ session_start();
 include_once( 'core/global.inc.php' );
 require_once('core/const.inc.php');
 
-$view = new CView();
+$view = new CView('directors.tpl');
 $dbSql = null;
 $no_period = array(FIRST_DAY, NOW);
 
@@ -84,7 +84,7 @@ try {
    // Set page name
    $view->assign('page_name', 'Directors');
    // // Render template
-   $view->render('directors.tpl');
+   $view->render();
 }catch (Exception $e) {
    CErrorHandler::displayError($e);
 }

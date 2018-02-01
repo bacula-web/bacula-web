@@ -21,8 +21,7 @@ session_start();
 require_once("core/global.inc.php");
 
 // Initialise model and view
-$dbSql = null;
-$view = new CView();
+$view = new CView('test.tpl');
 
 try {
     $catalog = new Database_Model();
@@ -151,4 +150,6 @@ $view->assign('page_name', 'Test page');
  
 // Template rendering
 $view->assign('checks', $check_list);
-$view->display('test.tpl');
+
+// Render the view
+$view->render();

@@ -20,7 +20,7 @@
  include_once('core/global.inc.php');
 
  // Initialise view and model
- $view = new CView();
+ $view = new CView('pools.tpl');
  $dbSql = new Bweb($view);
 
  // Get volumes list (pools.tpl)
@@ -46,4 +46,4 @@
  $view->assign('page_name', 'Pools report');
  
  // Process and display the template
- $view->display('pools.tpl');
+ $view->render();

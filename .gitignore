@@ -1,6 +1,6 @@
 /vendor
-/application/view/cache/*.tpl
-/application/view/cache/*.php
+/application/views/cache/*.tpl
+/application/views/cache/*.php
 /application/config/config.php
 docs/_build
 .htpasswd

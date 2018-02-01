@@ -18,7 +18,7 @@
  require_once('core/global.inc.php');
 
  // Initialise model and view
- $view = new CView();
+ $view = new CView('client-report.tpl');
  $dbSql = new Bweb($view);
  
  require_once('core/const.inc.php');
@@ -156,4 +156,4 @@
  $view->assign('page_name', 'Client report');
 
  // Process and display the template
- $view->render('client-report.tpl');
+ $view->render();

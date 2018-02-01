@@ -1,5 +1,3 @@
-{include file=header.tpl}
-
 <div class="container">
   <div class="page-header">
     <h3>{$page_name} <small>{t}Bacula director(s) overview{/t}</small></h3>
@@ -27,17 +25,4 @@
     </div>
     {/foreach}
   </div>
-<!--
-  <div class="page-header">
-    <h5>Director 1<small>Some details about this Bacula director</small></h5>
-  </div>
-
-  <div class="row"> <div class="col-xs-6">
-    <div class="panel panel-default">
-      <div class="panel-body">Item 1 </div>
-    </div> </div>
-  </div>
-  -->
 </div> <!-- end div class=container -->
-
-{include file=footer.tpl}

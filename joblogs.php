@@ -19,7 +19,7 @@ session_start();
 include_once('core/global.inc.php');
 
 try {
-    $view         = new CView();
+    $view         = new CView('joblogs.tpl');
     $dbSql         = new Bweb($view);
     $joblogs     = array();
 
@@ -50,7 +50,7 @@ try {
     $view->assign('page_name', 'Job logs');
 
     // Process and display the template
-    $view->render('joblogs.tpl');
+    $view->render();
 } catch (Exception $e) {
     CErrorHandler::displayError($e);
 }

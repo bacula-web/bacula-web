@@ -1,5 +1,3 @@
-{include file=header.tpl}
-
 <div class="container">  
   <div class="page-header">
     <h3>{$page_name} <small>{t}Report per Bacula client{/t}</small></h3>
@@ -121,5 +119,3 @@
      <div class="alert alert-info" role="alert">{t}Choose the client name and the period interval, then click on the{/t} <strong>{t}View report{/t}</strong> {t}button{/t}</div>
    {/if}
 </div> <!-- div class="container" -->
-
-{include file="footer.tpl"}
