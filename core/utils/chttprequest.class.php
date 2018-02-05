@@ -70,7 +70,7 @@ class CHttpRequest
     // ==================================================================================
     public static function get_Value($var)
     {
-        if (isset(self::$value_list[$var]) && !empty(self::$value_list[$var]) ) {
+        if (isset(self::$value_list[$var]) && strlen(self::$value_list[$var]) > 0) {
             return self::$value_list[$var];
         } else {
             return NULL;
