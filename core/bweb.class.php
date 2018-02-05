@@ -22,7 +22,6 @@ class Bweb
 {
     public $translate;                    // Translation class instance
     private $view;                        // Template class
-    public $db_link;                    // Database connection
 
     public $catalog_nb;                // Catalog count
     public $catalog_current_id = 0;    // Selected or default catalog id
