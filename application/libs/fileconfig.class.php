@@ -71,7 +71,7 @@ class FileConfig extends File
     {
         // Check if the $global_config have been already set first
         if (!isset(self::$config_file)) {
-            throw new Exception("The configuration is missing or ther's something wrong in it");
+            throw new Exception("The configuration is missing or there's something wrong in it");
         }
 
         // If $catalog_id is not null, get value from this catalog   
