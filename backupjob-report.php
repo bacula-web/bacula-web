@@ -187,7 +187,7 @@ try {
     
       $view->assign('jobs', $joblist);
       $view->assign('backupjob_name', $backupjob_name);
-      $view->assign('periodDesc', $backupjob_period);
+      $view->assign('periodDesc', $periodDesc);
       $view->assign('backupjob_bytes', $backupjob_bytes);
       $view->assign('backupjob_files', $backupjob_files);
    } // end else
