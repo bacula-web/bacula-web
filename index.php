@@ -84,6 +84,10 @@ try {
 
     // Stored files number
     $view->assign('stored_files', CUtils::format_Number($jobs->getStoredFiles($no_period)));
+
+    // Total bytes and files stored over the last 24 hours
+    $view->assign('bytes_last', CUtils::Get_Human_Size($jobs->getStoredBytes($custom_period)));
+    $view->assign('files_last', CUtils::format_Number($jobs->getStoredFiles($custom_period)));
  
     // Incremental, Differential and Full jobs over the last 24 hours
     $view->assign('incr_jobs', $jobs->count_Jobs( $custom_period, null, J_INCR));
