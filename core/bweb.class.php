@@ -31,6 +31,10 @@ class Bweb extends WebApplication
     public function init()
     {
         try {
+
+            // Start new session
+            session_start();
+
             // Loading configuration file parameters
             if (!FileConfig::open(CONFIG_FILE)) {
                 throw new Exception("The configuration file is missing");
@@ -40,15 +44,16 @@ class Bweb extends WebApplication
 
                // Check if datetime_format is defined in configuration
                if( FileConfig::get_Value('datetime_format') != NULL) {
-                  $this->datetime_format = FileConfig::get_Value('datetime_format');
+                   $this->datetime_format = FileConfig::get_Value('datetime_format');
+                   $_SESSION['datetime_format'] = $this->datetime_format;
                   
                   // Get first part of datetime_format
                   $this->datetime_format_short = explode( ' ', $this->datetime_format);
-                  $this->datetime_format_short = $this->datetime_format_short[0];
+                  $_SESSION['datetime_format_short'] = $this->datetime_format_short[0];
                }else {
                   // Set default time format
-                  $this->datetime_format = 'Y-m-d H:i:s';
-                  $this->datetime_format_short = 'Y-m-d';
+                  $_SESSION['datetime_format'] = 'Y-m-d H:i:s';
+                  $_SESSION['datetime_format_short'] = 'Y-m-d';
                }
             }
         } catch (Exception $e) {

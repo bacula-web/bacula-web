@@ -17,8 +17,6 @@
 */
 include_once( 'core/global.inc.php' );
 
-session_start();
-
 class DashboardView extends CView {
 
     public function __construct() {
@@ -229,7 +227,7 @@ class DashboardView extends CView {
 
     foreach ($result as $volume) {
        if($volume['lastwritten'] != '0000-00-00 00:00:00') {
-          $volume['lastwritten'] = date( $dbSql->datetime_format, strtotime($volume['lastwritten']));
+           $volume['lastwritten'] = date( $_SESSION['datetime_format'], strtotime($volume['lastwritten']));
        }else {
           $volume['lastwritten'] = 'n/a';
        }
