@@ -27,7 +27,7 @@ class CView extends Smarty
         $this->init();
     }
 
-    private function init()
+    protected function init()
     {
         // Set to true to force template generation if a template has changed
         $this->compile_check = false;
