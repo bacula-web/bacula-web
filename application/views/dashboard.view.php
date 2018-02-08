@@ -15,20 +15,27 @@
   | GNU General Public License for more details.                            |
   +-------------------------------------------------------------------------+
 */
- session_start();
- include_once( 'core/global.inc.php' );
+include_once( 'core/global.inc.php' );
+
+session_start();
+
+class DashboardView extends CView {
+
+    public function __construct() {
+        
+        $this->templateName = 'dashboard.tpl';
+        $this->name = 'Dashboard';
+        $this->title = 'General overview';
+
+        parent::init();
+    }
+
+    public function prepare() {
  
- // Initialise view and model
- $view     = new CView('index.tpl');
- $dbSql     = null;
-
-try {
-    $dbSql = new Bweb($view);
-
-    $jobs      = new Jobs_Model();
-    $catalog   = new Database_Model();
-    $clients   = new Clients_Model(); 
-    $filesets  = new FileSets_Model();
+    $jobs = new Jobs_Model();
+    $catalog = new Database_Model();
+    $clients = new Clients_Model(); 
+    $filesets = new FileSets_Model();
     $pools = new Pools_Model();
     $volumes = new Volumes_Model();
 
@@ -44,7 +51,7 @@ try {
 
     if (isset($_POST['period_selector'])) {
         $selected_period = CHttpRequest::get_Value('period_selector');
-        $view->assign('custom_period_list_selected', $selected_period);
+        $this->assign('custom_period_list_selected', $selected_period);
 
         switch($selected_period) {
             case 'last_day':
@@ -61,7 +68,7 @@ try {
                 break;
         } // end switch
     } else {
-        $view->assign('custom_period_list_selected', $selected_period);
+        $this->assign('custom_period_list_selected', $selected_period);
     }
 
     $custom_period_list = array( 'last_day' => 'Last 24 hours',
@@ -69,30 +76,30 @@ try {
                                 'last_month' => 'Last month',
                                 'since_bot' => 'Since BOT');
 
-    $view->assign('custom_period_list', $custom_period_list);
+    $this->assign('custom_period_list', $custom_period_list);
 
     // Set period start - end for widget header
-    $view->assign('literal_period', strftime("%a %e %b %Y", $custom_period[0]).' to ' . strftime("%a %e %b %Y", $custom_period[1]));
+    $this->assign('literal_period', strftime("%a %e %b %Y", $custom_period[0]).' to ' . strftime("%a %e %b %Y", $custom_period[1]));
 
     // Running, completed, failed, waiting and canceled jobs status over last 24 hours
-    $view->assign('running_jobs', $jobs->count_Jobs( $custom_period, 'running'));
-    $view->assign('completed_jobs', $jobs->count_Jobs( $custom_period, 'completed'));
-    $view->assign('completed_with_errors_jobs', $jobs->count_Jobs( $custom_period, 'completed with errors'));
-    $view->assign('failed_jobs', $jobs->count_Jobs( $custom_period, 'failed'));
-    $view->assign('waiting_jobs', $jobs->count_Jobs( $custom_period, 'waiting'));
-    $view->assign('canceled_jobs', $jobs->count_Jobs( $custom_period, 'canceled'));
+    $this->assign('running_jobs', $jobs->count_Jobs( $custom_period, 'running'));
+    $this->assign('completed_jobs', $jobs->count_Jobs( $custom_period, 'completed'));
+    $this->assign('completed_with_errors_jobs', $jobs->count_Jobs( $custom_period, 'completed with errors'));
+    $this->assign('failed_jobs', $jobs->count_Jobs( $custom_period, 'failed'));
+    $this->assign('waiting_jobs', $jobs->count_Jobs( $custom_period, 'waiting'));
+    $this->assign('canceled_jobs', $jobs->count_Jobs( $custom_period, 'canceled'));
 
     // Stored files number
-    $view->assign('stored_files', CUtils::format_Number($jobs->getStoredFiles($no_period)));
+    $this->assign('stored_files', CUtils::format_Number($jobs->getStoredFiles($no_period)));
 
     // Total bytes and files stored over the last 24 hours
-    $view->assign('bytes_last', CUtils::Get_Human_Size($jobs->getStoredBytes($custom_period)));
-    $view->assign('files_last', CUtils::format_Number($jobs->getStoredFiles($custom_period)));
+    $this->assign('bytes_last', CUtils::Get_Human_Size($jobs->getStoredBytes($custom_period)));
+    $this->assign('files_last', CUtils::format_Number($jobs->getStoredFiles($custom_period)));
  
     // Incremental, Differential and Full jobs over the last 24 hours
-    $view->assign('incr_jobs', $jobs->count_Jobs( $custom_period, null, J_INCR));
-    $view->assign('diff_jobs', $jobs->count_Jobs( $custom_period, null, J_DIFF));
-    $view->assign('full_jobs', $jobs->count_Jobs( $custom_period, null, J_FULL));
+    $this->assign('incr_jobs', $jobs->count_Jobs( $custom_period, null, J_INCR));
+    $this->assign('diff_jobs', $jobs->count_Jobs( $custom_period, null, J_DIFF));
+    $this->assign('full_jobs', $jobs->count_Jobs( $custom_period, null, J_FULL));
 
     // ==============================================================
     // Last period <Job status graph>
@@ -107,8 +114,8 @@ try {
     }
 
     $last_jobs_chart = new Chart( array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data ) );
-    $view->assign( 'last_jobs_chart_id', $last_jobs_chart->name);
-    $view->assign( 'last_jobs_chart', $last_jobs_chart->render());
+    $this->assign( 'last_jobs_chart_id', $last_jobs_chart->name);
+    $this->assign( 'last_jobs_chart', $last_jobs_chart->render());
     
     unset($last_jobs_chart);     
 
@@ -149,8 +156,8 @@ try {
     }
 
     $pools_usage_chart = new Chart( array( 'type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool ) );
-    $view->assign( 'pools_usage_chart_id', $pools_usage_chart->name);
-    $view->assign( 'pools_usage_chart', $pools_usage_chart->render());
+    $this->assign( 'pools_usage_chart_id', $pools_usage_chart->name);
+    $this->assign( 'pools_usage_chart', $pools_usage_chart->render());
     unset($pools_usage_chart);
 
     // ==============================================================
@@ -165,8 +172,8 @@ try {
 
     $storedbytes_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedbytes', 'data' => $days_stored_bytes, 'ylabel' => 'Stored Bytes', 'uniformize_data' => true ) );
 
-    $view->assign('storedbytes_chart_id', $storedbytes_chart->name);
-    $view->assign('storedbytes_chart', $storedbytes_chart->render());
+    $this->assign('storedbytes_chart_id', $storedbytes_chart->name);
+    $this->assign('storedbytes_chart', $storedbytes_chart->render());
 
     unset($storedbytes_chart);   
 
@@ -182,8 +189,8 @@ try {
 
     $storedfiles_chart = new Chart( array(   'type' => 'bar', 'name' => 'chart_storedfiles', 'data' => $days_stored_files, 'ylabel' => 'Stored files' ) );
 
-    $view->assign('storedfiles_chart_id', $storedfiles_chart->name);
-    $view->assign('storedfiles_chart', $storedfiles_chart->render());
+    $this->assign('storedfiles_chart_id', $storedfiles_chart->name);
+    $this->assign('storedfiles_chart', $storedfiles_chart->render());
 
     unset($storedfiles_chart);
 
@@ -229,7 +236,7 @@ try {
        $last_volumes[] = $volume;
     }
 
-    $view->assign('volumes_list', $last_volumes);
+    $this->assign('volumes_list', $last_volumes);
 
     // Per job name backup and restore statistics
     $job_types = array( 'R' => 'Restore', 'B' => 'Backup' );      // TO IMPROVE
@@ -245,7 +252,7 @@ try {
        $jobs_result[] = $job;
     }
 
-    $view->assign( 'jobnames_jobs_stats', $jobs_result);
+    $this->assign( 'jobnames_jobs_stats', $jobs_result);
 
     // Per job type backup and restore statistics
     $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes FROM Job WHERE Type in ('B','R') GROUP BY Type";
@@ -259,20 +266,15 @@ try {
        $jobs_result[] = $job;
     }
 
-    $view->assign( 'jobtypes_jobs_stats', $jobs_result);
+    $this->assign( 'jobtypes_jobs_stats', $jobs_result);
 
     # Weekly jobs statistics
-    $view->assign( 'weeklyjobsstats', $jobs->getWeeklyJobsStats());
+    $this->assign( 'weeklyjobsstats', $jobs->getWeeklyJobsStats());
 
     # 10 biggest completed backup jobs
-    $view->assign( 'biggestjobs', $jobs->getBiggestJobsStats());
+    $this->assign( 'biggestjobs', $jobs->getBiggestJobsStats());
 
-} catch (Exception $e) {
-    CErrorHandler::displayError($e);
-}
- 
  // Set page name
- $view->assign('page_name', 'Dashboard');
- 
- // Render template
- $view->render();
+ $this->assign('page_name', 'Dashboard');
+    }
+} // end of DashboardView class

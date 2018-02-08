@@ -16,12 +16,11 @@
  +-------------------------------------------------------------------------+ 
 */
 
-    require_once('core/global.inc.php');
+require_once('core/global.inc.php');
 
-class Bweb
+class Bweb extends WebApplication
 {
     public $translate;                    // Translation class instance
-    private $view;                        // Template class
 
     public $catalog_nb;                // Catalog count
     public $catalog_current_id = 0;    // Selected or default catalog id
@@ -29,7 +28,7 @@ class Bweb
     public $datetime_format;
     public $datetime_format_short;
 
-    public function __construct(&$view)
+    public function init()
     {
         try {
             // Loading configuration file parameters
@@ -55,9 +54,6 @@ class Bweb
         } catch (Exception $e) {
             CErrorHandler::displayError($e);
         }
-                
-     // Template engine initalization
-        $this->view = $view;
             
      // Checking template cache permissions
         if (!is_writable(VIEW_CACHE_DIR)) {
