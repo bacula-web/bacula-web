@@ -79,7 +79,7 @@
 					<ul class="dropdown-menu">
 						<li role="presentation" class="dropdown-header">Tools</li>
 						<li> 
-							<a href="test.php" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
+							<a href="index.php?page=test" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
 						</li>
 						<li role="presentation" class="divider"></li>
 						<li role="presentation" class="dropdown-header">Help</li>
