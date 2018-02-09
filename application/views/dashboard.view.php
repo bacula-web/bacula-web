@@ -15,7 +15,6 @@
   | GNU General Public License for more details.                            |
   +-------------------------------------------------------------------------+
 */
-include_once( 'core/global.inc.php' );
 
 class DashboardView extends CView {
 
