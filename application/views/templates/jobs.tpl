@@ -128,7 +128,7 @@
 			<td>{$job.compression}</td>
 			<td>{$job.pool_name}</td>
 			<td>
-			  <a href="joblogs.php?jobid={$job.jobid}" title="{t}Show job logs{/t}">
+			  <a href="index.php?page=joblogs&jobid={$job.jobid}" title="{t}Show job logs{/t}">
 			    <span class="glyphicon glyphicon-search"></span>
                           </a>
 			</td>
