@@ -15,42 +15,45 @@
   +-------------------------------------------------------------------------+
 */
 
-session_start();
-include_once('core/global.inc.php');
+class JobLogsView extends CView {
 
-try {
-    $view         = new CView('joblogs.tpl');
-    $dbSql         = new Bweb($view);
-    $joblogs     = array();
+    public function __construct() {
+        
+        $this->templateName = 'joblogs.tpl';
+        $this->name = 'Job log';
+        $this->title = 'Bacula job log';
 
-    $jobid         = CHttpRequest::get_Value('jobid');
+        parent::init();
+    }
+
+    public function prepare() {
+        
+        $joblogs = array();
+        $jobid = CHttpRequest::get_Value('jobid');
     
-    // If $_GET['jobid'] is null and is not a number, throw an Exception
-    if (is_null($jobid) or !is_numeric($jobid)) {
-        throw new Exception('Invalid job id (invalid or null) provided in Job logs report');
-    }
+        // If $_GET['jobid'] is null and is not a number, throw an Exception
+        if (is_null($jobid) or !is_numeric($jobid)) {
+            throw new Exception('Invalid job id (invalid or null) provided in Job logs report');
+        }
 
-    // Prepare and execute SQL statment
-    $jobs = new Jobs_Model();
-    $statment     = array('table' => 'Log', 'where' => array("JobId = :jobid"), 'orderby' => 'Time');
-    $jobs->addParameter( 'jobid', $jobid);
-    $result     = $jobs->run_query(CDBQuery::get_Select($statment));
+        // Prepare and execute SQL statment
+        $jobs = new Jobs_Model();
+        $statment     = array('table' => 'Log', 'where' => array("JobId = :jobid"), 'orderby' => 'Time');
+        $jobs->addParameter( 'jobid', $jobid);
+        $result     = $jobs->run_query(CDBQuery::get_Select($statment));
 
-    // Processing result
-    foreach ($result->fetchAll() as $log) {
-       $log['logtext']  = nl2br($log['logtext']);
-       $log['time']     = date( $dbSql->datetime_format, strtotime($log['time']) ); 
-       $joblogs[]       = $log;
-    }
+        // Processing result
+        foreach ($result->fetchAll() as $log) {
+            $log['logtext'] = nl2br($log['logtext']);
+            $log['time'] = date( $_SESSION['datetime_format'], strtotime($log['time']) ); 
+            $joblogs[] = $log;
+        }
+        
+        $this->assign('jobid', $jobid);
+        $this->assign('joblogs', $joblogs);
 
-    $view->assign('jobid', $jobid);
-    $view->assign('joblogs', $joblogs);
-
-    // Set page name
-    $view->assign('page_name', 'Job logs');
-
-    // Process and display the template
-    $view->render();
-} catch (Exception $e) {
-    CErrorHandler::displayError($e);
-}
+        // Set page name
+        $this->assign('page_name', 'Job logs');
+    
+    } // end of prepare() method
+} // end of class
