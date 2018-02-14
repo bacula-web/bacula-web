@@ -10,7 +10,7 @@
 
     <div class="col-xs-12 col-md-4">
       <!-- Options -->
-      <form class="form-inline" role="form" action="volumes.php" method="post">
+      <form class="form-inline" role="form" action="index.php?page=volumes" method="post">
         <span class="help-block">{t}Options{/t}</span>
         <div class="form-group">
           <label>{t}Order by{/t}</label>
