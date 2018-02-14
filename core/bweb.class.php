@@ -16,12 +16,11 @@
  +-------------------------------------------------------------------------+ 
 */
 
-    require_once('core/global.inc.php');
+require_once('core/global.inc.php');
 
-class Bweb
+class Bweb extends WebApplication
 {
     public $translate;                    // Translation class instance
-    private $view;                        // Template class
 
     public $catalog_nb;                // Catalog count
     public $catalog_current_id = 0;    // Selected or default catalog id
@@ -29,9 +28,13 @@ class Bweb
     public $datetime_format;
     public $datetime_format_short;
 
-    public function __construct(&$view)
+    public function init()
     {
         try {
+
+            // Start new session
+            session_start();
+
             // Loading configuration file parameters
             if (!FileConfig::open(CONFIG_FILE)) {
                 throw new Exception("The configuration file is missing");
@@ -41,23 +44,21 @@ class Bweb
 
                // Check if datetime_format is defined in configuration
                if( FileConfig::get_Value('datetime_format') != NULL) {
-                  $this->datetime_format = FileConfig::get_Value('datetime_format');
+                   $this->datetime_format = FileConfig::get_Value('datetime_format');
+                   $_SESSION['datetime_format'] = $this->datetime_format;
                   
                   // Get first part of datetime_format
                   $this->datetime_format_short = explode( ' ', $this->datetime_format);
-                  $this->datetime_format_short = $this->datetime_format_short[0];
+                  $_SESSION['datetime_format_short'] = $this->datetime_format_short[0];
                }else {
                   // Set default time format
-                  $this->datetime_format = 'Y-m-d H:i:s';
-                  $this->datetime_format_short = 'Y-m-d';
+                  $_SESSION['datetime_format'] = 'Y-m-d H:i:s';
+                  $_SESSION['datetime_format_short'] = 'Y-m-d';
                }
             }
         } catch (Exception $e) {
             CErrorHandler::displayError($e);
         }
-                
-     // Template engine initalization
-        $this->view = $view;
             
      // Checking template cache permissions
         if (!is_writable(VIEW_CACHE_DIR)) {

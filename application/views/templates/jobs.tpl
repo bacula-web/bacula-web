@@ -114,7 +114,7 @@
 			</td>
 			<td>{$job.jobid}</td>
 			<td class="text-left">
-			  <a href="backupjob-report.php?backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
+			  <a href="index.php?page=backupjob&backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
 			</td>
 			<td>{$job.type}</td>
       <td>{$job.schedtime}</td>
@@ -128,7 +128,7 @@
 			<td>{$job.compression}</td>
 			<td>{$job.pool_name}</td>
 			<td>
-			  <a href="joblogs.php?jobid={$job.jobid}" title="{t}Show job logs{/t}">
+			  <a href="index.php?page=joblogs&jobid={$job.jobid}" title="{t}Show job logs{/t}">
 			    <span class="glyphicon glyphicon-search"></span>
                           </a>
 			</td>

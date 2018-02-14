@@ -49,12 +49,12 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-text-o fa-fw"></i> {t}Reports{/t} <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="jobs.php">{t}Jobs{/t}</a></li>
-						<li><a href="pools.php">{t}Pools{/t}</a></li>
-						<li><a href="volumes.php">{t}Volumes{/t}</a></li>
-						<li><a href="backupjob-report.php">{t}Backup job{/t}</a></li>
-						<li><a href="client-report.php">{t}Client{/t}</a></li>
-                  <li><a href="directors.php">{t}Director(s){/t}</a></li>
+						<li><a href="index.php?page=jobs">{t}Jobs{/t}</a></li>
+						<li><a href="index.php?page=pools">{t}Pools{/t}</a></li>
+						<li><a href="index.php?page=volumes">{t}Volumes{/t}</a></li>
+						<li><a href="index.php?page=backupjob">{t}Backup job{/t}</a></li>
+						<li><a href="index.php?page=client">{t}Client{/t}</a></li>
+                        <li><a href="index.php?page=directors">{t}Director(s){/t}</a></li>
 					</ul>
 				</li>
 			</ul>		
@@ -79,7 +79,7 @@
 					<ul class="dropdown-menu">
 						<li role="presentation" class="dropdown-header">Tools</li>
 						<li> 
-							<a href="test.php" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
+							<a href="index.php?page=test" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
 						</li>
 						<li role="presentation" class="divider"></li>
 						<li role="presentation" class="dropdown-header">Help</li>

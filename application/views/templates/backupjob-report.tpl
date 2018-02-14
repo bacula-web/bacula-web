@@ -8,7 +8,7 @@
     <div class="panel panel-default">
       <div class="panel-heading"><b>{t}Report options{/t}</b></div>
       <div class="panel-body">
-        <form method="post" action="backupjob-report.php" class="form-inline">
+        <form method="post" action="index.php?page=backupjob" class="form-inline">
           <!-- Backup job name -->
           <div class="form-group">
             <label for="backupjobname">{t}Backup job name{/t}</label>

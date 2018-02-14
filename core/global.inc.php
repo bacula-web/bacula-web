@@ -15,7 +15,7 @@
   +-------------------------------------------------------------------------+
 */
 
- // Class autloader instance creation
+ // Include composer autoloader 
  require_once 'vendor/autoload.php';
  
  // Get all $_POST and $_GET values

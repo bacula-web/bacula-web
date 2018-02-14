@@ -19,6 +19,8 @@
 class CView extends Smarty
 {
     protected $templateName;
+    protected $name;
+    protected $title;
 
     public function __construct($template)
     {
@@ -27,7 +29,7 @@ class CView extends Smarty
         $this->init();
     }
 
-    private function init()
+    protected function init()
     {
         // Set to true to force template generation if a template has changed
         $this->compile_check = false;
@@ -47,6 +49,8 @@ class CView extends Smarty
 
     public function render()
     {
+        $this->assign('page_name', $this->name);
+        $this->assign('page_title', $this->title);
         $this->assign('templateName', $this->templateName);
 
         // Render using the default layout
