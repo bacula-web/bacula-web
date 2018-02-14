@@ -20,7 +20,7 @@ class JobLogsView extends CView {
     public function __construct() {
         
         $this->templateName = 'joblogs.tpl';
-        $this->name = 'Job log';
+        $this->name = 'Job logs';
         $this->title = 'Bacula job log';
 
         parent::init();
@@ -52,8 +52,5 @@ class JobLogsView extends CView {
         $this->assign('jobid', $jobid);
         $this->assign('joblogs', $joblogs);
 
-        // Set page name
-        $this->assign('page_name', 'Job logs');
-    
     } // end of prepare() method
 } // end of class

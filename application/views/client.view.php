@@ -155,8 +155,5 @@ class ClientView extends CView {
         
         $this->assign('period', $period);
 
-        // Set page name
-        $this->assign('page_name', 'Client report');
-
     } // end of prepare() method
 } // end of class

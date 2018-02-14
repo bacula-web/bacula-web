@@ -45,9 +45,6 @@ class PoolsView extends CView {
         }
 
         $this->assign('pools', $pools_list);
-
-        // Set page name
-        $this->assign('page_name', 'Pools report');
     
     } // end of preare() method
 } // end of class 

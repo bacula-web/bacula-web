@@ -21,7 +21,7 @@ class DashboardView extends CView {
     public function __construct() {
         
         $this->templateName = 'dashboard.tpl';
-        $this->name = 'Dashboard';
+        $this->name = _('Dashboard');
         $this->title = 'General overview';
 
         parent::init();
@@ -271,7 +271,5 @@ class DashboardView extends CView {
     # 10 biggest completed backup jobs
     $this->assign( 'biggestjobs', $jobs->getBiggestJobsStats());
 
- // Set page name
- $this->assign('page_name', 'Dashboard');
     }
 } // end of DashboardView class

@@ -88,8 +88,5 @@ class DirectorsView extends CView {
 
         $this->assign( 'directors', $directors);
 
-        // Set page name
-        $this->assign('page_name', 'Directors');
-        
     } // end of prepare() method
 } // end of class

@@ -197,9 +197,6 @@ class BackupJobView extends CView {
             $this->assign('backupjob_files', $backupjob_files);
         } // end else
 
-        // Set page name
-        $this->assign('page_name', 'Backup job report');
-
     } // end of prepare() method
 } // end of class
  

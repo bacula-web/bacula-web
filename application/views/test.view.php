@@ -146,9 +146,6 @@ class TestView extends CView {
 
         unset($bar_chart);
 
-        // Set page name
-        $this->assign('page_name', 'Test page');
- 
         // Template rendering
         $this->assign('checks', $check_list);
     }

@@ -20,7 +20,7 @@ class JobsView extends CView {
     public function __construct() {
         
         $this->templateName = 'jobs.tpl';
-        $this->name = 'Jobs';
+        $this->name = 'Jobs report';
         $this->title = 'Bacula jobs overview';
 
         parent::init();
@@ -396,8 +396,6 @@ class JobsView extends CView {
     
         // Count jobs
         $this->assign('jobs_found', count($last_jobs));
-    
-        // Set page name
-        $this->assign('page_name', 'Jobs report');
+
     }
 } // end of class

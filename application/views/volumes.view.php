@@ -21,7 +21,7 @@ class VolumesView extends CView {
     public function __construct() {
         
         $this->templateName = 'volumes.tpl';
-        $this->name = 'Volumes';
+        $this->name = 'Volumes report';
         $this->title = 'Bacula volume(s) overview';
         
         parent::init();
@@ -121,9 +121,6 @@ class VolumesView extends CView {
         $this->assign('volumes', $volumes_list);
         $this->assign('volumes_count', count($volumes_list));
         $this->assign('volumes_total_bytes', CUtils::Get_Human_Size($volumes_total_bytes));
-   
-        // Set page name
-        $this->assign('page_name', 'Volumes report');
 
     } // end of preare() mthod
 } // end of class
