@@ -43,7 +43,7 @@ class Database_Model extends CModel
                     $db_size     = $db_size['dbsize'] * 1024 * 1024;
                     return CUtils::Get_Human_Size($db_size);
                 } else {
-                    echo 'Not supported ('.CDB::getServerVersion().') <br />';
+                    echo 'Not supported ('. $this->cdb->getServerVersion().') <br />';
                 }
                 break;
             case 'pgsql':
