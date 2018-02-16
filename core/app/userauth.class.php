@@ -75,14 +75,16 @@ class UserAuth extends CModel {
     }
 
     public function authUser( $username, $password) {
-
-        $authUserQuery = "SELECT passwordHash FROM Users WHERE username = '$username' LIMIT 1";
+        
+        $authUserQuery = "SELECT passwordHash FROM Users WHERE ";
+        $authUserQuery .= "username = :username LIMIT 1";
+        $this->addParameter( 'username', $username);
 
         $result = $this->run_query($authUserQuery);
         $result = $result->fetchAll();
 
         if(count($result) == 0) {
-            echo "<pre>user username or password incorrect not found</pre>";
+            echo "<pre>username or password incorrect</pre>";
         }else{
             if( password_verify($password, $result[0]['passwordhash']) == TRUE) {
                 return 'yes';
