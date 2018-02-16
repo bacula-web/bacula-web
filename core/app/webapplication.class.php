@@ -22,9 +22,19 @@ class WebApplication
     protected $version;
     protected $view;
     protected $defaultView;
+    protected $userauth;
 
     protected function setup()
     {
+        // Start user session
+        session_start();
+
+        // Prepare users authentication back-end
+        $this->userauth = new UserAuth();
+
+        // Check if database exists and is writable
+        $this->userauth->checkSchema();
+
         // Check application config file
         $appConfigFile = CONFIG_DIR . 'application.php';
         if( file_exists($appConfigFile) && is_readable($appConfigFile) ) {
@@ -38,23 +48,50 @@ class WebApplication
         $this->version = $app['version'];
         $this->defaultView = $app['defaultview']; 
 
-        // Get requested page or set default one
-        if(isset($_REQUEST['page'])) {
-            $pageName = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING);
+        if(isset($_REQUEST['action'])) {
+            switch($_REQUEST['action']) {
+            case 'login':
+                $_SESSION['user_authenticated'] = $this->userauth->authUser($_POST['username'], $_POST['password']);
 
-            // Check if requested page is a known route
-            if( array_key_exists($pageName, $app['routes'])) {
-                $viewName = ucfirst($app['routes'][$pageName]) . 'View';
-                if(class_exists($viewName)) {
-                    $this->view = new $viewName;
-                }else {
-                    throw new Exception("PHP class $viewName not found");
+                if( $_SESSION['user_authenticated'] == 'yes') {
+                    $this->view = new $this->defaultView();
+                    $this->view->assign('user_authenticated', 'yes');
                 }
-            }else {
-                throw new Exception('Requested page does not exist');
+                break;
+            case 'logout':
+                $_SESSION['user_authenticated'] = 'no';
+                $this->userauth->destroySession();
             }
+        }    
+
+        // Check if user is authenticated
+        if( $_SESSION['user_authenticated'] == 'yes') {
+
+            // Get requested page or set default one
+            if(isset($_REQUEST['page'])) {
+                $pageName = filter_input( INPUT_GET, 'page', FILTER_SANITIZE_STRING);
+
+                // Check if requested page is a known route
+                if( array_key_exists($pageName, $app['routes'])) {
+                    $viewName = ucfirst($app['routes'][$pageName]) . 'View';
+
+                    if(class_exists($viewName)) {
+                        $this->view = new $viewName;
+                    }else {
+                        throw new Exception("PHP class $viewName not found");
+                    }
+                }else {
+                    throw new Exception('Requested page does not exist');
+                }
+            }else{
+                $this->view = new $this->defaultView();
+            }
+
+            $this->view->assign('user_authenticated', 'yes');
+
         }else{
-            $this->view = new $this->defaultView();
+            // user not authenticated, moving to login page
+            $this->view = new LoginView();
         }
     }
 
