@@ -42,8 +42,9 @@
 			</button>
 			<a class="navbar-brand" href="index.php">Bacula-Web</a>
 		</div> <!-- div class="navbar-header" -->
-		
+
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {if ( $user_authenticated eq 'yes' ) }		
 			<!-- Reports dropdown menu -->
 			<ul class="nav navbar-nav">
 				<li class="dropdown">
@@ -58,8 +59,10 @@
 					</ul>
 				</li>
 			</ul>		
+            {/if}
 		
 			<ul class="nav navbar-nav navbar-right">
+            {if ( $user_authenticated eq 'yes' ) }		
 				<!-- Catalog selector -->
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-fw"></i> {$catalog_label} <span class="caret"></span></a>
@@ -73,15 +76,21 @@
 					</ul>
 				</li>
 				<!-- end Catalog selector -->
+
+                <!-- User logout -->
+                <li><a href="index.php?action=logout" title="Sign out"> <i class="fa fa-sign-out fa-fw"></i></a></li>
+            {/if}
 				
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-cog fa-fw"></i> <span class="hidden-sm hidden-md hidden-lg">{t}About{/t}</span></a>
 					<ul class="dropdown-menu">
-						<li role="presentation" class="dropdown-header">Tools</li>
+                    {if ( $user_authenticated eq 'yes' ) }		
+                    <li role="presentation" class="dropdown-header">Tools</li> 
 						<li> 
 							<a href="index.php?page=test" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
 						</li>
 						<li role="presentation" class="divider"></li>
+                        {/if}
 						<li role="presentation" class="dropdown-header">Help</li>
 						<li> 
 							<a href="http://www.bacula-web.org" title="Visit the official web site" target="_blank" rel="noopener noreferrer"><i class="fa fa-globe fa-fw"></i> {t}Official web site{/t}</a>
@@ -99,7 +108,8 @@
 	</div> <!-- div class="container-fluid" -->
 </div> <!-- class="navbar" -->
 
-  <div class="container-fluid">
+{if ( $user_authenticated eq 'yes' ) }		
+<div class="container-fluid">
     <!-- Breadcrumb -->
     <div class="row">
       <div class="col-xs-12">
@@ -118,3 +128,5 @@
       </div> <!-- div class="col..." -->
   </div> <!-- div class="row" -->
 </div> <!-- div class="container" -->
+
+{/if}
