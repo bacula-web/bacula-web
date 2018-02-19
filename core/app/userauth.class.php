@@ -94,6 +94,26 @@ class UserAuth extends CModel {
         }
     }
 
+    public function getData( $username) {
+
+        $getUserDataQuery = "SELECT username,email FROM Users WHERE username = :username LIMIT 1";
+        $this->addParameter( 'username', $username);
+
+        $result = $this->run_query($getUserDataQuery);
+        $result = $result->fetchAll();
+        
+        return $result[0];
+    }
+
+    public function setPassword( $username, $password) {
+
+        $hashedPassword = password_hash( $password, CRYPT_BLOWFISH);
+        $updateUserQuery = "UPDATE Users SET passwordHash = '$hashedPassword' WHERE username = :username;";
+        echo $updateUserQuery;
+        $this->addParameter( 'username', $username);
+        $this->run_query($updateUserQuery);
+    }
+
     public function destroySession() {
         
         $_SESSION = array();
@@ -107,4 +127,4 @@ class UserAuth extends CModel {
         session_destroy();
     }
 
-}
+} // end of class
