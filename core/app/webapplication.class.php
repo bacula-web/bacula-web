@@ -54,6 +54,10 @@ class WebApplication
                 $_SESSION['user_authenticated'] = $this->userauth->authUser($_POST['username'], $_POST['password']);
 
                 if( $_SESSION['user_authenticated'] == 'yes') {
+                    $user = $this->userauth->getData( filter_input( INPUT_POST, 'username', FILTER_SANITIZE_STRING));
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['email'] = $user['email'];
+
                     $this->view = new $this->defaultView();
                     $this->view->assign('user_authenticated', 'yes');
                 }
