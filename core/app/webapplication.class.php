@@ -69,7 +69,7 @@ class WebApplication
         }    
 
         // Check if user is authenticated
-        if( $_SESSION['user_authenticated'] == 'yes') {
+        if( isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') {
 
             // Get requested page or set default one
             if(isset($_REQUEST['page'])) {
