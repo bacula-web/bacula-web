@@ -4,8 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c57d10147ec15348d52d43946d1d7f3",
+    "content-hash": "f3056bdf0f26d3b1873de8fe13e0e4a1",
     "packages": [
+        {
+            "name": "1000hz/bootstrap-validator",
+            "version": "v0.11.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EvilFreelancer/bootstrap-validator.git",
+                "reference": "dfa97d6cbde5255010ac398fa4628d62ed2b1f67"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EvilFreelancer/bootstrap-validator/zipball/dfa97d6cbde5255010ac398fa4628d62ed2b1f67",
+                "reference": "dfa97d6cbde5255010ac398fa4628d62ed2b1f67",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/"
+        },
         {
             "name": "components/font-awesome",
             "version": "4.7.0",
@@ -242,16 +259,16 @@
         },
         {
             "name": "moment/moment",
-            "version": "2.19.2",
+            "version": "2.20.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moment/moment.git",
-                "reference": "328d51e7235b7a2d443bfdf69c1844939c115660"
+                "reference": "03073778ec18ee38e179208cd1af899e8d1848dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moment/moment/zipball/328d51e7235b7a2d443bfdf69c1844939c115660",
-                "reference": "328d51e7235b7a2d443bfdf69c1844939c115660",
+                "url": "https://api.github.com/repos/moment/moment/zipball/03073778ec18ee38e179208cd1af899e8d1848dc",
+                "reference": "03073778ec18ee38e179208cd1af899e8d1848dc",
                 "shasum": ""
             },
             "require": {
@@ -292,7 +309,7 @@
                 "time",
                 "validate"
             ],
-            "time": "2017-11-11T20:25:07+00:00"
+            "time": "2017-12-19T04:36:30+00:00"
         },
         {
             "name": "novus/nvd3",
@@ -491,16 +508,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.3.13",
+            "version": "v3.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "a56a3989fb762d7b19a0cf8e7693ee99a6ffb78d"
+                "reference": "09a5172057be8fc677840e591b17f385e58c7c0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/a56a3989fb762d7b19a0cf8e7693ee99a6ffb78d",
-                "reference": "a56a3989fb762d7b19a0cf8e7693ee99a6ffb78d",
+                "url": "https://api.github.com/repos/symfony/process/zipball/09a5172057be8fc677840e591b17f385e58c7c0d",
+                "reference": "09a5172057be8fc677840e591b17f385e58c7c0d",
                 "shasum": ""
             },
             "require": {
@@ -509,7 +526,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.3-dev"
+                    "dev-master": "3.4-dev"
                 }
             },
             "autoload": {
@@ -536,7 +553,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-13T15:31:11+00:00"
+            "time": "2018-01-29T09:03:43+00:00"
         },
         {
             "name": "twbs/bootstrap",
@@ -595,7 +612,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "novus/nvd3": 0,
-        "eonasdan/bootstrap-datetimepicker": 0
+        "eonasdan/bootstrap-datetimepicker": 0,
+        "1000hz/bootstrap-validator": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -1,0 +1,5 @@
+Options -Indexes -MultiViews
+<Files "application.db">
+  Order Allow,Deny
+  Deny from all
+</Files>

@@ -2,5 +2,5 @@
 /application/views/cache/*.tpl
 /application/views/cache/*.php
 /application/config/config.php
+/application/assets/protected/application.db
 docs/_build
-.htpasswd

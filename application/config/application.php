@@ -9,5 +9,7 @@ $app = [ 'name' => 'Bacula-Web', 'version' => '8.0.0-rc1',
                         'pools' => 'Pools',
                         'client' => 'Client',
                         'backupjob' => 'BackupJob',
+                        'login' => 'Login',
+                        'usersettings' => 'UserSettings',
                         'directors' => 'Directors'],
     'defaultview' => 'DashboardView' ];

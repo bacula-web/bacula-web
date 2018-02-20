@@ -23,7 +23,8 @@
       "eonasdan/bootstrap-datetimepicker": "@stable",
       "smarty/smarty": "2.6.28",
       "smarty-gettext/smarty-gettext": "1.2",
-      "components/font-awesome": "4.*"
+      "components/font-awesome": "4.*",
+      "1000hz/bootstrap-validator": "@stable"
 	},
 	"autoload": {
 		"classmap": [

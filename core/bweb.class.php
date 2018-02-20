@@ -32,9 +32,6 @@ class Bweb extends WebApplication
     {
         try {
 
-            // Start new session
-            session_start();
-
             // Loading configuration file parameters
             if (!FileConfig::open(CONFIG_FILE)) {
                 throw new Exception("The configuration file is missing");
