@@ -26,7 +26,7 @@ Download the source tarball
    # curl -O http://www.bacula-web.org/files/bacula-web.org/downloads/bacula-web-latest.tgz
 
 Verify archive signature (optional)
-----------------------------------
+-----------------------------------
 
 Download sha256 or sha512 signature file from the download page, and run one of these command to verify the signature
 
