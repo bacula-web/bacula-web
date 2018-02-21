@@ -30,7 +30,7 @@ Install, upgrade, configure and troubleshoot
 
   * I've installed Bacula-Web without issue but I get only :ref:`a blank page <troubleshoot-blank-page>`, what's wrong ?
   * Why I cannot connect :ref:`to remote db server with SELinux enforced <troubleshoot-selinux>` ?
-  * Does Bacula-Web can run on a system having :ref:`SELinux enforced <troubleshoot-selinux-enforced` ?
+  * Does Bacula-Web can run on a system having :ref:`SELinux enforced <troubleshoot-selinux-enforced>` ?
 
 Developpment
 ------------
