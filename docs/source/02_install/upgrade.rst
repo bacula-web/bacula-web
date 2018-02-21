@@ -1,4 +1,4 @@
-.. _install/upgrade
+.. _install/upgrade:
 
 =======
 Upgrade
