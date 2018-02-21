@@ -8,7 +8,7 @@
 	  <!-- Filter jobs form -->
 	  <div class="col-xs-12 col-sm-3 col-sm-push-9 col-lg-2 col-lg-push-10">
 
-	  <form class="form" role="form" action="jobs.php" method="post">
+	  <form class="form" role="form" action="index.php?page=jobs" method="post">
 
 		<span class="help-block">{t}Filter{/t}</span>
 
@@ -76,7 +76,7 @@
 		<button type="reset" class="btn btn-default btn-sm" title="{t}Reset{/t}">{t}Reset{/t}</button>
 		<button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
 
-      <a class="btn btn-link btn-sm" title="{t}Reset to default{/t}" href="jobs.php" role="button">{t}Reset to default{/t}</a>
+      <a class="btn btn-link btn-sm" title="{t}Reset to default{/t}" href="index.php?page=jobs" role="button">{t}Reset to default{/t}</a>
 	  </form>
 
 	  </div> <!-- div class="col-md-3 cold-lg-3" -->
