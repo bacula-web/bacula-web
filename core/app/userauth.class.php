@@ -109,7 +109,7 @@ class UserAuth extends CModel {
 
         $hashedPassword = password_hash( $password, CRYPT_BLOWFISH);
         $updateUserQuery = "UPDATE Users SET passwordHash = '$hashedPassword' WHERE username = :username;";
-        echo $updateUserQuery;
+
         $this->addParameter( 'username', $username);
         $this->run_query($updateUserQuery);
     }
