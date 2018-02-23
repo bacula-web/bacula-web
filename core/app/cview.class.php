@@ -53,6 +53,11 @@ class CView extends Smarty
         $this->assign('page_title', $this->title);
         $this->assign('templateName', $this->templateName);
 
+        // Set username, if user is connected
+        if( isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') {
+            $this->assign('username', $_SESSION['username']);
+        }
+
         // Render using the default layout
         $this->display('layouts/default.tpl');
     }

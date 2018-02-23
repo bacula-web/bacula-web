@@ -79,7 +79,7 @@
 
                 <!-- User options -->
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toogle" data-toggle="dropdown" role="button"> <i class="fa fa-user fa-fw"></i></a>
+                  <a href="#" class="dropdown-toogle" data-toggle="dropdown" role="button">{$username} <i class="fa fa-user fa-fw"></i></a>
                   <ul class="dropdown-menu">
                     <li><a href="index.php?page=usersettings" title="User settings"> <i class="fa fa-wrench fa-fw"></i> {t}User settings{/t}</a></li>
                     <li><a href="index.php?action=logout" title="Sign out"> <i class="fa fa-sign-out fa-fw"></i> {t}Sign out{/t}</a></li>
