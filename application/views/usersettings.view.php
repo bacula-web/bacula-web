@@ -43,14 +43,18 @@ class UserSettingsView extends CView {
                 if( $this->userauth->authUser( $_SESSION['username'], $_POST['oldpassword']) == 'yes') {
 
                     // Update user password with new one
-                    $this->userauth->setPassword($_SESSION['username'], $_POST['newpassword']);
+                    if($this->userauth->setPassword($_SESSION['username'], $_POST['newpassword'])) {
+                        $this->userAlert = 'Password successfuly updated';
+                        $this->userAlertType = 'success';
+                    }
                 }else {
+                    $this->userAlert = 'Current password do not match';
+                    $this->userAlertType = 'danger';
                 }
                 break;
             }
         }
 
-        $this->assign('userfeedback', $this->userFeedback);
     }
 
 } // end of class
