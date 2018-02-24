@@ -49,7 +49,7 @@ class UserAuth extends CModel {
             $this->createSchema();
             
             // Create default user
-            $this->addUser( 'admin', 'bacula');
+            $this->addUser( 'admin', 'admin@domain.com', 'bacula');
         }
 
     }
@@ -67,10 +67,10 @@ class UserAuth extends CModel {
         $this->run_query($createSchemaQuery);
     }
 
-    protected function addUser($username, $password) {
+    public function addUser($username, $email, $password) {
         
         $hashedPassword = password_hash( $password, CRYPT_BLOWFISH);
-        $addUserQuery = "INSERT INTO Users (username,passwordHash) VALUES ('$username','$hashedPassword');";
+        $addUserQuery = "INSERT INTO Users (username,email,passwordHash) VALUES ('$username','$email', '$hashedPassword');";
         $this->run_query($addUserQuery);
     }
 
@@ -111,7 +111,13 @@ class UserAuth extends CModel {
         $updateUserQuery = "UPDATE Users SET passwordHash = '$hashedPassword' WHERE username = :username;";
 
         $this->addParameter( 'username', $username);
-        $this->run_query($updateUserQuery);
+        $result = $this->run_query($updateUserQuery);
+
+        if( is_a( $result, 'CDBResult')) {
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public function destroySession() {
@@ -125,6 +131,16 @@ class UserAuth extends CModel {
         
         // Destroy the session.
         session_destroy();
+    }
+
+    public function getUsers() {
+
+        $getUsersQuery = "SELECT username,email FROM Users";
+
+        $result = $this->run_query($getUsersQuery);
+        $result = $result->fetchAll();
+        
+        return $result;
     }
 
 } // end of class
