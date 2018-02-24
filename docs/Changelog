@@ -4,6 +4,7 @@ Changelog
 
 - General
 	- Upgrade moment/moment to version 2.19.2
+	- Add Bootstrap validator to Composer's requirements
 
 Fixed bug(s)
 
