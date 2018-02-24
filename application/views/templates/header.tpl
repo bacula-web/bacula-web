@@ -92,6 +92,9 @@
 					<ul class="dropdown-menu">
                     {if ( $user_authenticated eq 'yes' ) }		
                     <li role="presentation" class="dropdown-header">Tools</li> 
+                        <li>
+                            <a href="index.php?page=settings" title="Settings"><i class="fa fa-cogs fa-fw"></i> {t}Settings{/t}</a>
+                        </li>
 						<li> 
 							<a href="index.php?page=test" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
 						</li>
