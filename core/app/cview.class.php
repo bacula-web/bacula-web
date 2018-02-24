@@ -22,6 +22,9 @@ class CView extends Smarty
     protected $name;
     protected $title;
 
+    protected $userAlert;
+    protected $userAlertType;
+
     public function __construct($template)
     {
         $this->templateName = $template;
@@ -57,6 +60,10 @@ class CView extends Smarty
         if( isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') {
             $this->assign('username', $_SESSION['username']);
         }
+
+        // Give user some feedback
+        $this->assign('userAlert', $this->userAlert);
+        $this->assign('userAlertType', $this->userAlertType);
 
         // Render using the default layout
         $this->display('layouts/default.tpl');
