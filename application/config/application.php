@@ -11,5 +11,6 @@ $app = [ 'name' => 'Bacula-Web', 'version' => '8.0.0-rc1',
                         'backupjob' => 'BackupJob',
                         'login' => 'Login',
                         'usersettings' => 'UserSettings',
+                        'settings' => 'Settings',
                         'directors' => 'Directors'],
     'defaultview' => 'DashboardView' ];
