@@ -105,6 +105,7 @@ Install Apache and PHP
    $ sudo apt-get install php7.0-pgsql
 
 .. note:: On older Debian or Ubuntu versions, you need to use PHP 5
+
    $ sudo apt-get install apache2 libapache2-mod-php5 php5-sqlite 
 
 Install requirements on FreeBSD
