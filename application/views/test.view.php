@@ -55,7 +55,7 @@ class TestView extends CView {
                     'check_descr' => 'PHP PostgreSQL support must be installed in order to run bacula-web with PostgreSQL bacula catalog'),
             array(  'check_cmd' => 'php-sqlite',
                     'check_label' => 'PHP - SQLite support',
-                    'check_descr' => 'PHP SQLite support musts be installed in order to run bacula-web with SQLite bacula catalog'),
+                    'check_descr' => 'PHP SQLite support must be installed in order to run bacula-web with SQLite bacula catalog'),
             array(  'check_cmd' => 'php-pdo',
                     'check_label' => 'PHP - PDO support',
                     'check_descr' => 'PHP PDO support is required, please compile PHP with this option'),
