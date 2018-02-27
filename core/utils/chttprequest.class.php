@@ -32,7 +32,7 @@ class CHttpRequest
     }
     
     // ==================================================================================
-    // Function: 	getSaveValue( $value )
+    // Function: 	getSafeValue( $value )
     // Parameters:	$value
     // Return:		secured value
     // ==================================================================================
