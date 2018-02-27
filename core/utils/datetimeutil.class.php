@@ -25,14 +25,20 @@ class DateTimeUtil
     *
     */
 
-   public static function checkDate($date) {
-      $d = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+    public static function checkDate($date) {
 
-      if( $d->format('Y-m-d H:i:s') === $date) {
-         return true;
-      }else {
-         return false;
-      }
+        //echo "<pre>date: $date</pre>";
+        $d = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+
+        if($d != FALSE) {
+            if( $d->format('Y-m-d H:i:s') === $date) {
+                return true;
+            }else {
+                return false;
+            }
+        }else {
+            return false;
+        }
    }
 
     // ==================================================================================
