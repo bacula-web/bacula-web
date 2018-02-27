@@ -39,7 +39,7 @@ class CHttpRequest
 
     private static function getSafeValue($value)
     {
-        return strip_tags($value);
+        return htmlspecialchars(strip_tags($value));
     }
 
     // ==================================================================================
