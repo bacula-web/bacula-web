@@ -17,10 +17,6 @@ Let's start by installing Composer on your system
 Install Composer
 ****************
 
-First, make sure you've already downloaded Bacula-Web archive. 
-
-If it's not the case, please follow the :ref:`install/download` instruction first.
-
 To install Composer, open a shell on your server and run these command
 
 Move in Bacula-Web root folder (adapt the command line to your setup)
