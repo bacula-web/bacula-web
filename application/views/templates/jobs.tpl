@@ -108,9 +108,7 @@
 		  {foreach from=$last_jobs item=job}
 		  <tr>
 			<td>
-				<a href="joblogs.php?jobid={$job.jobid}" title="{t}Show job logs{/t}">
-		          <span class="glyphicon glyphicon-{$job.Job_icon}" title="{$job.jobstatuslong}"></span>
-				</a>
+		      <span class="glyphicon glyphicon-{$job.Job_icon}" title="{$job.jobstatuslong}"></span>
 			</td>
 			<td>{$job.jobid}</td>
 			<td class="text-left">
