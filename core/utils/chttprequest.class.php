@@ -32,14 +32,14 @@ class CHttpRequest
     }
     
     // ==================================================================================
-    // Function: 	getSaveValue( $value )
+    // Function: 	getSafeValue( $value )
     // Parameters:	$value
     // Return:		secured value
     // ==================================================================================
 
     private static function getSafeValue($value)
     {
-        return strip_tags($value);
+        return htmlspecialchars(strip_tags($value));
     }
 
     // ==================================================================================
