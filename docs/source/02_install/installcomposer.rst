@@ -1,8 +1,8 @@
-.. _install/install_deps:
+.. _install/installcomposer:
 
-###############################
-Install Bacula-Web dependencies
-###############################
+#################################
+Install Bacula-Web using Composer
+#################################
 
 Since version 8.0.0, Bacula-Web dependencies management is performed using `Composer`_.
 
