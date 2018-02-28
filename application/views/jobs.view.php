@@ -116,7 +116,10 @@ class JobsView extends CView {
 
         // Job type filter
         if( CHttpRequest::get_Value('job_type_filter') != NULL ){
-            $job_type_filter = CHttpRequest::get_Value('job_type_filter');
+            // if provided job_type_filter is not part of valid job type, we simply ignore it
+            if(array_key_exists( CHttpRequest::get_Value('job_type_filter'), $job_types)){
+                $job_type_filter = CHttpRequest::get_Value('job_type_filter');
+            }
         }
 
         // Job status filter
