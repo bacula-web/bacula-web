@@ -1,8 +1,11 @@
-.. _install/download:
+.. _install/installarchive:
 
-========
-Download
-========
+===============================
+Install Bacula-Web from archive
+===============================
+
+Download the source tarball
+---------------------------
 
 Move into Apache directory
 
@@ -17,9 +20,6 @@ On Debian / Ubuntu
 ::
    
    # cd /var/www/
-
-Download the source tarball
----------------------------
 
 ::
 
@@ -83,3 +83,5 @@ Change files/folders permissions
 
    # chown -Rv www-data: /var/www/bacula-web
    # chmod -Rv u=rx,g=rx,o=rx /var/www/bacula-web
+
+Once you're ready, it's now time to :ref:`install/configure`
