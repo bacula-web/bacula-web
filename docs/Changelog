@@ -1,4 +1,4 @@
-=== Release 8.0.0-rc2 (Feb xx 2018)
+=== Release 8.0.0-rc2 (Feb 28 2018)
 
 Changelog
 
@@ -8,18 +8,22 @@ Changelog
 
 Fixed bug(s)
 
+- 0000211 [security-issue] SQL Injection in jobs.php
 - 0000226 [bug] Clicking job name in jobs.php gives http error 500
 - 0000227 [bug-php] Deprecated split() function with PHP-7.0 in BWeb class
 - 0000230 [bug-php] Exception message Language translation problem
 - 0000231 [bug-php] Volume slot number should be set to n/a if not in changer
 - 0000232 [bug-php] Error while ordering volumes
 - 0000233 [bug] Wrong empty volume's date
+- 0000236 [security-issue] - XSS vulnerabilities in jobs page
 
 New feature(s)
 
 - 0000092 Implement user authentication
 
 Translations
+
+none
 
 Documentation
 
