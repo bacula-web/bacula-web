@@ -64,7 +64,7 @@ On Debian / Ubuntu
     $ sudo chown -Rv www-data: /var/www/bacula-web
     $ sudo chmod -Rv 755 /var/www/bacula-web
 
-.. note:: Dependening on your distro, Apache root folder can be /var/www or /var/www/html
+.. note:: Depending on your distro, Apache root folder can be /var/www or /var/www/html
 
 ********************
 Install dependencies
