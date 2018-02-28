@@ -33,6 +33,7 @@ You have two different options to install Bacula-Web
 | Install options      | Instructions                                                              |
 +======================+==================+========================================================+
 | From archive         | Instruction to :ref:`install/installarchive`                              |
++----------------------+---------------------------------------------------------------------------+
 | Using Composer       | Instruction to :ref:`install/installcomposer`                             |
 +----------------------+---------------------------------------------------------------------------+
 
