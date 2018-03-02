@@ -40,6 +40,18 @@ class JobsView extends CView {
             'Pool.Name', 'Job.JobStatus', 'Pool.Name AS Pool_name', 'Status.JobStatusLong',
         );
    
+        // Order result by
+        $result_order = array(
+            'SchedTime' => 'Job Scheduled Time',
+            'starttime' => 'Job Start Date',
+            'endtime'   => 'Job End Date',
+            'jobid'     => 'Job Id',
+            'Job.Name'  => 'Job Name',
+            'jobbytes'  => 'Job Bytes',
+            'jobfiles'  => 'Job Files',
+            'Pool.Name' => 'Pool Name'
+        );
+
         // Global variables
         $job_levels = array( 'D' => 'Differential',
             'I' => 'Incremental',
@@ -149,7 +161,10 @@ class JobsView extends CView {
 
         // Job orderby filter
         if( CHttpRequest::get_Value('job_orderby') != NULL ){
-            $job_orderby_filter = CHttpRequest::get_Value('job_orderby');
+            // if provided job_orderby is not part of valid job order field, we simply ignore it
+            if(array_key_exists( CHttpRequest::get_Value('job_orderby'), $result_order)){
+                $job_orderby_filter = CHttpRequest::get_Value('job_orderby');
+            }
         }
 
         // Job orderby asc filter
@@ -245,17 +260,6 @@ class JobsView extends CView {
             }
         }
 
-        // Order result by
-        $result_order = array(
-            'SchedTime' => 'Job Scheduled Time',
-            'starttime' => 'Job Start Date',
-            'endtime'   => 'Job End Date',
-            'jobid'     => 'Job Id',
-            'Job.Name'  => 'Job Name',
-            'jobbytes'  => 'Job Bytes',
-            'jobfiles'  => 'Job Files',
-            'Pool.Name' => 'Pool Name'
-        );
 
         $this->assign('result_order', $result_order);
         $orderby = "$job_orderby_filter $job_orderby_asc_filter ";
