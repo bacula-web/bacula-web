@@ -61,3 +61,4 @@ Installation / upgrade instructions
    configure
    test
    upgrade
+   finalize
