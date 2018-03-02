@@ -109,7 +109,7 @@
 						</li>
 						<li role="presentation" class="divider"></li>
 						<li role="presentation" class="dropdown-header">{t}Version{/t}</li>
-						<li class="disabled"><a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 8.0.0-RC1</a></li>
+						<li class="disabled"><a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 8.0.0-rc2</a></li>
 					</ul>
 				</li>
 			</ul>
