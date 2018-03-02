@@ -1,8 +1,22 @@
-=== Release 8.0.0-rc2 (Feb 28 2018)
+=== Release 8.0.0-rc2 (Mar 2 2018)
 
 Changelog
 
 - General
+	- Users authentication feature added
+
+- Test page
+	- Check if application/assets/protected is writable
+
+- User and general settings
+	- Users can reset their password
+	- Possibility to add more users from general settings page
+
+- Security
+	- Fixed many SQL injection and XSS vulnerabilities (see fixed bugs)
+
+- Development
+	- Large amount of code improvment and cleanup
 	- Upgrade moment/moment to version 2.19.2
 	- Add Bootstrap validator to Composer's requirements
 
@@ -19,13 +33,15 @@ Fixed bug(s)
 
 New feature(s)
 
-- 0000092 Implement user authentication
+- 0000092 [feature] Implement user authentication
 
 Translations
 
 none
 
 Documentation
+	- Bacula-Web can be installed using the archive, or via Composer
+	- Documentation got cleaned up, restructured and updated
 
 === Release 8.0.0-rc1 (Oct 19 2017)
 
