@@ -13,13 +13,13 @@ Change admin password
 
 Starting from version 8.0.0, users informations are stored in SQLite database. This database is created automatically after installation.
 
-.. note:: The users database is stored in <install folder>/application/assets/protected/application.db
-
 The default user is **admin**, with the password **bacula**.
 
 I strongly recommend you to change the password as soon as possible.
 
-The password can be changed very easily by using the "User settings" menu at the top of the page.
+The password can be changed very easily by using the **User settings** menu at the top of the page.
+
+.. note:: The users database is stored in <install folder>/application/assets/protected/application.db
 
 Simply use **Password management** form to reset current user password
 
