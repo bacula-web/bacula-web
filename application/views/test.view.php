@@ -65,6 +65,9 @@ class TestView extends CView {
             array(  'check_cmd' => 'smarty-cache',
                     'check_label' => 'Smarty cache folder write permission',
                     'check_descr' => realpath(VIEW_CACHE_DIR) . ' must be writable by Apache'),
+            array(  'check_cmd' => 'users-db',
+                    'check_label' => 'Protected assets folder write permission',
+                    'check_descr' => 'application/assets/protected folder must be writable by Apache'),
             array(  'check_cmd' => 'php-version',
                     'check_label' => 'PHP version',
                     'check_descr' => 'PHP version must be at least 5.6 (current version = ' . PHP_VERSION . ')'),
@@ -99,6 +102,9 @@ class TestView extends CView {
                 break;
             case 'smarty-cache':
                 $check['check_result'] = $icon_result[is_writable(VIEW_CACHE_DIR)];
+                break;
+            case'users-db':
+                $check['check_result'] = $icon_result[is_writable('application/assets/protected')];
                 break;
             case 'php-version':
                 $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '5.6', '>=')];
