@@ -1,7 +1,7 @@
 <?php
  /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2017, Davide Franco			                    	          |
+  | Copyright 2010-2018, Davide Franco			                    	    |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -64,27 +64,28 @@ class FileConfig extends File
         // Function: 	get_Value()
         // Parameters:	configuration parameter or false (if not defined)
         //				$catalog_id (optional)
-        // Return:		parameter value
+        // Return:		parameter value or NULL if does not exist
         // ==================================================================================
 
     public static function get_Value($parameter, $catalog_id = null)
     {
         // Check if the $global_config have been already set first
         if (!isset(self::$config_file)) {
-            throw new Exception("The configuration is missing or ther's something wrong in it");
+            throw new Exception("The configuration is missing or there's something wrong in it");
         }
-            
+
+        // If $catalog_id is not null, get value from this catalog   
         if (!is_null($catalog_id)) {
             if (is_array(parent::$config[$catalog_id])) {
                 return parent::$config[$catalog_id][$parameter];
             } else {
-                throw new Exception("Configuration error: the catalog id <$catalog_id> do not exist");
+                throw new Exception("Configuration error: catalog id <$catalog_id> is empty or does not exist");
             }
         } else {
             if (isset(parent::$config[$parameter])) {
                 return parent::$config[$parameter];
             } else {
-                return false;
+                return NULL;
             }
         }
     } // end function

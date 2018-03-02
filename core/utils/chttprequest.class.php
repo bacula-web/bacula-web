@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2017, Davide Franco                                      |
+  | Copyright 2010-2018, Davide Franco                                      |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -32,14 +32,14 @@ class CHttpRequest
     }
     
     // ==================================================================================
-    // Function: 	getSaveValue( $value )
+    // Function: 	getSafeValue( $value )
     // Parameters:	$value
     // Return:		secured value
     // ==================================================================================
 
     private static function getSafeValue($value)
     {
-        return strip_tags($value);
+        return htmlspecialchars(strip_tags($value));
     }
 
     // ==================================================================================
@@ -66,14 +66,14 @@ class CHttpRequest
     // ==================================================================================
     // Function: 	get_Value()
     // Parameters:	$var
-    // Return:		value of $var, or null if not defined
+    // Return:		value of $var, or NULL if not defined
     // ==================================================================================
     public static function get_Value($var)
     {
-        if (isset(self::$value_list[$var])) {
+        if (isset(self::$value_list[$var]) && strlen(self::$value_list[$var]) > 0) {
             return self::$value_list[$var];
         } else {
-            return null;
+            return NULL;
         }
     }
 }

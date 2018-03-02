@@ -2,7 +2,7 @@
 
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2017, Davide Franco			                               |
+  | Copyright 2010-2018, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -18,13 +18,21 @@
 
 class CView extends Smarty
 {
+    protected $templateName;
+    protected $name;
+    protected $title;
 
-    public function __construct()
+    protected $userAlert;
+    protected $userAlertType;
+
+    public function __construct($template)
     {
+        $this->templateName = $template;
+
         $this->init();
     }
 
-    private function init()
+    protected function init()
     {
         // Set to true to force template generation if a template has changed
         $this->compile_check = false;
@@ -36,14 +44,28 @@ class CView extends Smarty
 
         // Set to true for debug or dev purpose only
         $this->debugging = false;
-        $this->force_compile = false;
+        $this->force_compile = true;
 
         $this->template_dir = VIEW_DIR;
         $this->compile_dir = VIEW_CACHE_DIR;
     }
 
-    public function render($view = 'index.tpl')
+    public function render()
     {
-        $this->display($view);
+        $this->assign('page_name', $this->name);
+        $this->assign('page_title', $this->title);
+        $this->assign('templateName', $this->templateName);
+
+        // Set username, if user is connected
+        if( isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') {
+            $this->assign('username', $_SESSION['username']);
+        }
+
+        // Give user some feedback
+        $this->assign('userAlert', $this->userAlert);
+        $this->assign('userAlertType', $this->userAlertType);
+
+        // Render using the default layout
+        $this->display('layouts/default.tpl');
     }
 }

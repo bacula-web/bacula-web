@@ -4,21 +4,23 @@
 About Bacula-Web
 ################
 
-Bacula-Web is a php web based tool that provide you a summarized view of jobs, pools and volumes.Its obtain his information from your bacula catalog's database.
+Bacula-Web is a php web based tool that provide you a summarized view of jobs, pools and volumes. Its obtain his information from your bacula catalog database.
 
-This tool provide you informations on the last day jobs status, medias and pool usage, catalog size usage, etc.
+This tool provide you informations on the last day jobs status, medias and pool usage, catalog size usage, and even more ...
+
 All features are described in the :ref:`about/features` page.
 
-The main advantages of this tool are
+The main advantages of Bacula-Web are
 
    * it's web based, so you can reach it simply through your preferred browser from anywhere
-   * it's easy to install (you just need a LAMP server with a valid database connection)
+   * it's easy to install (you just need a LAMP server and a valid connection to your Bacula catalog)
    * it contain a lot of information into a single page (have a look on your last jobs for example)
 
 and what's not ?
 
 If you're looking for a tool able to manage Bacula like bat, Bacula-Web might not the right tool (yet).
-I'd advise to have a look on Bweb, baculum, Bacula or Bacula Webmin plugin instead.
+
+I'd advise to have a look on Bweb, baculum, BAT or Bacula Webmin plugin instead.
 
 *******************
 The project history
@@ -77,7 +79,7 @@ Bacula-Web was succesfully tested with
    * Mozilla Firefox (version 54.0.1)
    * Google Chrome (version 59.0.3071.115)
 
-Your web browser must have Javascript enabled
+.. note:: Your web browser must have Javascript enabled
 
 ************
 Translations

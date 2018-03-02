@@ -36,6 +36,8 @@ General requirements
 |                 | - JSON                                    |
 +-----------------+-------------------------------------------+
 
+.. important:: As of version 8.0.0-rc2, PHP SQLite is required as it's used by the application back-end.
+
 Using SELinux
 -------------
 

@@ -3,7 +3,7 @@
 /*
   +-------------------------------------------------------------------------+
   | Copyright (C) 2004 Juan Luis Frances Jimenez						    |
-  | Copyright 2010-2017, Davide Franco                                      |
+  | Copyright 2010-2018, Davide Franco                                      |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -116,6 +116,6 @@ default:
 }
 
 echo "\nGreat !!! Apache authentication setup is now completed\n\n";
-echo "You can now the credentials you've provided to access Bacula-Web\n";
+echo "You can now use the credentials you've provided to access Bacula-Web\n";
 
 ?>

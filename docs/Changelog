@@ -1,3 +1,48 @@
+=== Release 8.0.0-rc2 (Mar 2 2018)
+
+Changelog
+
+- General
+	- Users authentication feature added
+
+- Test page
+	- Check if application/assets/protected is writable
+
+- User and general settings
+	- Users can reset their password
+	- Possibility to add more users from general settings page
+
+- Security
+	- Fixed many SQL injection and XSS vulnerabilities (see fixed bugs)
+
+- Development
+	- Large amount of code improvment and cleanup
+	- Upgrade moment/moment to version 2.19.2
+	- Add Bootstrap validator to Composer's requirements
+
+Fixed bug(s)
+
+- 0000211 [security-issue] SQL Injection in jobs.php
+- 0000226 [bug] Clicking job name in jobs.php gives http error 500
+- 0000227 [bug-php] Deprecated split() function with PHP-7.0 in BWeb class
+- 0000230 [bug-php] Exception message Language translation problem
+- 0000231 [bug-php] Volume slot number should be set to n/a if not in changer
+- 0000232 [bug-php] Error while ordering volumes
+- 0000233 [bug] Wrong empty volume's date
+- 0000236 [security-issue] - XSS vulnerabilities in jobs page
+
+New feature(s)
+
+- 0000092 [feature] Implement user authentication
+
+Translations
+
+none
+
+Documentation
+	- Bacula-Web can be installed using the archive, or via Composer
+	- Documentation got cleaned up, restructured and updated
+
 === Release 8.0.0-rc1 (Oct 19 2017)
 
 Changelog

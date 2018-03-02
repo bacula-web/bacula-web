@@ -1,8 +1,8 @@
 <?php
 /* 
  +-------------------------------------------------------------------------+
- | Copyright (C) 2004 Juan Luis Francés Jiménez				                  |
- | Copyright 2010-2017, Davide Franco			       		                  |
+ | Copyright (C) 2004 Juan Luis Francés Jiménez				               |
+ | Copyright 2010-2018, Davide Franco			       	                   |
  |                                                                         |
  | This program is free software; you can redistribute it and/or           |
  | modify it under the terms of the GNU General Public License             |
@@ -16,13 +16,11 @@
  +-------------------------------------------------------------------------+ 
 */
 
-    require_once('core/global.inc.php');
+require_once('core/global.inc.php');
 
-class Bweb
+class Bweb extends WebApplication
 {
     public $translate;                    // Translation class instance
-    private $view;                        // Template class
-    public $db_link;                    // Database connection
 
     public $catalog_nb;                // Catalog count
     public $catalog_current_id = 0;    // Selected or default catalog id
@@ -30,9 +28,10 @@ class Bweb
     public $datetime_format;
     public $datetime_format_short;
 
-    public function __construct(&$view)
+    public function init()
     {
         try {
+
             // Loading configuration file parameters
             if (!FileConfig::open(CONFIG_FILE)) {
                 throw new Exception("The configuration file is missing");
@@ -41,24 +40,22 @@ class Bweb
                $this->catalog_nb = FileConfig::count_Catalogs();
 
                // Check if datetime_format is defined in configuration
-               if( FileConfig::get_Value('datetime_format') != false) {
-                  $this->datetime_format = FileConfig::get_Value('datetime_format');
+               if( FileConfig::get_Value('datetime_format') != NULL) {
+                   $this->datetime_format = FileConfig::get_Value('datetime_format');
+                   $_SESSION['datetime_format'] = $this->datetime_format;
                   
                   // Get first part of datetime_format
-                  $this->datetime_format_short = split( ' ', $this->datetime_format);
-                  $this->datetime_format_short = $this->datetime_format_short[0];
+                  $this->datetime_format_short = explode( ' ', $this->datetime_format);
+                  $_SESSION['datetime_format_short'] = $this->datetime_format_short[0];
                }else {
                   // Set default time format
-                  $this->datetime_format = 'Y-m-d H:i:s';
-                  $this->datetime_format_short = 'Y-m-d';
+                  $_SESSION['datetime_format'] = 'Y-m-d H:i:s';
+                  $_SESSION['datetime_format_short'] = 'Y-m-d';
                }
             }
         } catch (Exception $e) {
             CErrorHandler::displayError($e);
         }
-                
-     // Template engine initalization
-        $this->view = $view;
             
      // Checking template cache permissions
         if (!is_writable(VIEW_CACHE_DIR)) {
@@ -67,8 +64,8 @@ class Bweb
                 
      // Initialize smarty gettext function
         $language = FileConfig::get_Value('language');
-        if (!$language) {
-            throw new Exception("Language translation problem");
+        if ($language == NULL) {
+            throw new Exception('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
         }
                 
         $this->translate = new CTranslation($language);

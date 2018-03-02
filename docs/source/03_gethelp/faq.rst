@@ -30,7 +30,7 @@ Install, upgrade, configure and troubleshoot
 
   * I've installed Bacula-Web without issue but I get only :ref:`a blank page <troubleshoot-blank-page>`, what's wrong ?
   * Why I cannot connect :ref:`to remote db server with SELinux enforced <troubleshoot-selinux>` ?
-  * Does Bacula-Web can run on a system having :ref:`SELinux enforced <troubleshoot-selinux-enforced` ?
+  * Does Bacula-Web can run on a system having :ref:`SELinux enforced <troubleshoot-selinux-enforced>` ?
 
 Developpment
 ------------
@@ -144,7 +144,7 @@ So, first, ensure that running the test page, everything is ok (use the link bel
 
 ::
 
-http://yourserver/bacula-web/test.php
+  http://yourserver/bacula-web/test.php
 
 If it doesn't solve the problem, verify your Apache's error log and search for an error message.
 
@@ -159,20 +159,20 @@ Check your log file (/var/log/audit/audit.log on RedHat/Centos) for the error be
 
 ::
 
-type=AVC msg=audit(1346832664.222:2491): avc:  denied  { name_connect } for  pid=3427 comm="httpd" dest=3306 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:mysqld_port_t:s0 tclass=tcp_socket
-type=SYSCALL msg=audit(1346832664.222:2491): arch=40000003 syscall=102 success=no exit=-13 a0=3 a1=bfb94dd0 a2=b63d80c0 a3=c items=0 ppid=3421 pid=3427 auid=0 uid=48 gid=48 euid=48 suid=48 fsuid=48 egid=48 sgid=48 fsgid=48 tty=(none) ses=32 comm="httpd" exe="/usr/sbin/httpd" subj=unconfined_u:system_r:httpd_t:s0 key=(null)
+  type=AVC msg=audit(1346832664.222:2491): avc:  denied  { name_connect } for  pid=3427 comm="httpd" dest=3306 scontext=unconfined_u:system_r:httpd_t:s0 tcontext=system_u:object_r:mysqld_port_t:s0 tclass=tcp_socket
+  type=SYSCALL msg=audit(1346832664.222:2491): arch=40000003 syscall=102 success=no exit=-13 a0=3 a1=bfb94dd0 a2=b63d80c0 a3=c items=0 ppid=3421 pid=3427 auid=0 uid=48 gid=48 euid=48 suid=48 fsuid=48 egid=48 sgid=48 fsgid=48 tty=(none) ses=32 comm="httpd" exe="/usr/sbin/httpd" subj=unconfined_u:system_r:httpd_t:s0 key=(null)
 
 and disable SELinux on your server
 
 ::
 
-$ sudo setenforce permissive
+  $ sudo setenforce permissive
 
 or
 
 ::
 
-$sudo setenforce disabled
+  $ sudo setenforce disabled
 
 .. _troubleshoot-selinux-enforced:
 
@@ -187,13 +187,13 @@ If nothing seems to be working and you are using SELinux, please remember that y
 
 :: 
 
-/var/www/html/bacula-web
+  /var/www/html/bacula-web
 
 you can fix the SELinux context by running the command below
 
 ::
 
-$ sudo chcon -t httpd_sys_content_t /var/www/html/bacula-web/ -R
+  $ sudo chcon -t httpd_sys_content_t /var/www/html/bacula-web/ -R
 
 Otherwise, the simpliest would be to set SELinux to Permissive or Disabled
 

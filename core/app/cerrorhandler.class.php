@@ -2,7 +2,7 @@
 
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2017, Davide Franco                                      |
+  | Copyright 2010-2018, Davide Franco                                      |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -51,7 +51,7 @@ class CErrorHandler
         $output .= "<td colspan='2'> \n";
         $output .= "Have you tried to run the <a href='test.php'>test page</a> ?<br />";
         $output .= "Check the online documentation on <a href='http://www.bacula-web.org' target='_blank'>Bacula-Web project site</a> <br />";
-        $output .= "Rebort a bug or suggest a new feature in the <a href='http://bugs.bacula-web.org' target='_blank'>Bacula-Web\'s bugtracking tool</a> <br />";
+        $output .= "Rebort a bug or suggest a new feature in the <a href='http://bugs.bacula-web.org' target='_blank'>Bacula-Web's bugtracking tool</a> <br />";
         $output .= "</td> \n";
         $output .= " \n</tr> \n </tfoot>";
         

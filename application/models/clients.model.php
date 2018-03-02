@@ -1,7 +1,7 @@
 <?php
  /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2017, Davide Franco			                               |
+  | Copyright 2010-2018, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -44,7 +44,7 @@ class Clients_Model extends CModel
 
         $statment     = array( 'table' => $table, 'fields' => $fields, 'orderby' => $orderby );
 
-        if (FileConfig::get_Value('show_inactive_clients')) {
+        if (FileConfig::get_Value('show_inactive_clients') != NULL) {
             $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
         }
 

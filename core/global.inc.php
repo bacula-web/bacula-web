@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2017, Davide Franco			                    		       |
+  | Copyright 2010-2018, Davide Franco			                    		|
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -15,7 +15,7 @@
   +-------------------------------------------------------------------------+
 */
 
- // Class autloader instance creation
+ // Include composer autoloader 
  require_once 'vendor/autoload.php';
  
  // Get all $_POST and $_GET values
@@ -23,8 +23,8 @@
  
  // Views path
  define('BW_ROOT', getcwd());
- define('VIEW_DIR', BW_ROOT . "/application/view/");
- define('VIEW_CACHE_DIR', BW_ROOT . "/application/view/cache");
+ define('VIEW_DIR', BW_ROOT . "/application/views/templates");
+ define('VIEW_CACHE_DIR', BW_ROOT . "/application/views/cache");
  
  // Configuration
  define('CONFIG_DIR', BW_ROOT . "/application/config/");

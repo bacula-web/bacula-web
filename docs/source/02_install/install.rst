@@ -94,17 +94,19 @@ Install Apache and PHP
 
 ::
 
+   $ sudo apt-get install apache2 libapache2-mod-php7.0 php7-sqlite 
+
    With MySQL support
    
-   $ sudo apt-get install apache2 libapache2-mod-php5 php5-mysql
+   $ sudo apt-get install php7.0-mysql
 
    With postgreSQL support
 
-   $ sudo apt-get install apache2 libapache2-mod-php5 php5-pgsql
+   $ sudo apt-get install php7.0-pgsql
 
-   With SQLite support
+.. note:: On older Debian or Ubuntu versions, you need to use PHP 5
 
-   $ sudo apt-get install apache2 libapache2-mod-php5 php5-sqlite
+   $ sudo apt-get install apache2 libapache2-mod-php5 php5-sqlite 
 
 Install requirements on FreeBSD
 -------------------------------

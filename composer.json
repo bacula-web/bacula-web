@@ -4,7 +4,7 @@
    "description": "The open source web based reporting and monitoring tool for Bacula",
    "keywords": ["php","reporting","monitoring","bacula"],
    "homepage": "http://www.bacula-web.org",
-   "license": "GPL-2.0",
+   "license": "GPL-2.0-only",
    "authors": [
       {
          "name": "Davide Franco",
@@ -23,7 +23,8 @@
       "eonasdan/bootstrap-datetimepicker": "@stable",
       "smarty/smarty": "2.6.28",
       "smarty-gettext/smarty-gettext": "1.2",
-      "components/font-awesome": "4.*"
+      "components/font-awesome": "4.*",
+      "1000hz/bootstrap-validator": "@stable"
 	},
 	"autoload": {
 		"classmap": [

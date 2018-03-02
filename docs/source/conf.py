@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Bacula-Web'
-copyright = u'2017, Davide Franco'
+copyright = u'2010-2018, Davide Franco'
 author = u'Davide Franco'
 
 # The version info for the project you're documenting, acts as replacement for
