@@ -8,16 +8,20 @@ Change admin password
 ---------------------
 
 .. image:: /_static/bacula-web-user-settings-menu.jpg
-   :scale: 60 %
+   :scale: 30 %
    :align: right
 
-Starting from version 8.0.0, the database of users and created automatically after installation.
+Starting from version 8.0.0, users informations are stored in SQLite database. This database is created automatically after installation.
+
+.. note:: The users database is stored in <install folder>/application/assets/protected/application.db
 
 The default user is **admin**, with the password **bacula**.
 
-I recommend that you change the password as soon as possible.
+I strongly recommend you to change the password as soon as possible.
 
-The password change can be done very easily by using the "User settings" menu at the top of the page.
+The password can be changed very easily by using the "User settings" menu at the top of the page.
+
+Simply use **Password management** form to reset current user password
 
 .. image:: /_static/bacula-web-user-settings.jpg
    :scale: 60 %
@@ -26,7 +30,7 @@ Manage users
 ------------
 
 .. image:: /_static/bacula-web-settings-menu.jpg
-   :scale: 20 %
+   :scale: 30 %
    :align: right
 
 You can manage users from the **Genral settings** dropdown menu.
