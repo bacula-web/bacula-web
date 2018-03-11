@@ -61,8 +61,6 @@ Fix files ownership
 Test your setup
 ---------------
 
-Test the installation using the test page (example of url below)
+Follow instructions mentioned in the link below to test Bacula-Web
 
-::
-
-   http://yourserver/bacula-web/index.php?page=test
+:ref:`install/requirements`
