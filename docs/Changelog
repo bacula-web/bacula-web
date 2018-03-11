@@ -6,6 +6,11 @@ Fixed bugs
 
 - 0000242 [bug] Wrong link to test page in Exception page
 
+Documentation
+
+- 0000238 [documentation] Unable to install Bacula-Web using Composer
+- 0000240 [documentation] Unable to install via Composer
+
 === Release 8.0.0-rc2 (Mar 2 2018)
 
 Changelog
