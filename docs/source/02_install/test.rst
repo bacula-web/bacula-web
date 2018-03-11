@@ -22,3 +22,5 @@ You should got the same result as shown in the screenshot below
 
 .. image:: /_static/bacula-web-test-page.jpg
    :scale: 20%
+
+.. note:: Default username and password are (admin/bacula)
