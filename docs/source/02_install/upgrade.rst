@@ -61,6 +61,4 @@ Fix files ownership
 Test your setup
 ---------------
 
-Follow instructions mentioned in the link below to test Bacula-Web
-
-:ref:`install/requirements`
+It's now time to :ref:`install/test`
