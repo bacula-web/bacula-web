@@ -38,16 +38,15 @@ For more details, please have a look on `this page <https://getcomposer.org/down
 
 .. warning:: Never use composer as a super-user or root, use the web server user or the one who own Bacula-Web files and folders
 
-********************************
-Use Git to clone Bacula-Web repo
-********************************
+**********************************
+Use Composer to install Bacula-Web 
+**********************************
 
-Run the command below to get latest Bacula-Web source code
+From your $HOME folder, run the command below
 
 ::
 
-   $ git clone https://github.com/bacula-web/bacula-web.git <install folder>
-
+    $ composer create-project --prefer-dist bacula-web/bacula-web:*@RC bacula-web
 
 Fix files/folders ownership and permissions
 
@@ -55,27 +54,20 @@ On Centos / Red Hat / Fedora
 
 ::
 
+    $ sudo mv -v bacula-web /var/www/html/
     $ sudo chown -Rv apache: /var/www/html/bacula-web
 
 On Debian / Ubuntu 
 
 ::
 
+    $ sudo mv -v bacula-web /var/www/
     $ sudo chown -Rv www-data: /var/www/bacula-web
     $ sudo chmod -Rv 755 /var/www/bacula-web
+    $ sudo chmod -v 775 /var/www/bacula-web/application/views/cache
+    $ sudo chmod -v 775 /var/www/bacula-web/application/assets/protected
 
 .. note:: Depending on your distro, Apache root folder can be /var/www or /var/www/html
-
-********************
-Install dependencies
-********************
-
-From Bacula-Web folder, run the command below
-
-::
-  
-    $ cd <install folder>
-    $ sudo -u <apache user> php composer.phar composer require bacula-web/bacula-web 
 
 Once you're done, it's time to :ref:`install/configure`
 
