@@ -54,19 +54,3 @@ Final steps
 +----------------------+---------------------------------------------------------------------------+
 | Finalize your setup  | :ref:`install/finalize`                                                   |
 +----------------------+---------------------------------------------------------------------------+
-
-Installation / upgrade instructions
------------------------------------
-
-.. toctree::
-   :maxdepth: 2
-
-   requirements
-   install
-   configwebserver
-   installarchive
-   installcomposer
-   configure
-   test
-   upgrade
-   finalize
