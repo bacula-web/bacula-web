@@ -4,23 +4,21 @@
 Configure Bacula-Web
 ####################
 
-From Bacula-Web root folder, copy the file config.php.sample as below
+This section explain how to create the configuration file which contain your custom settings.
 
-.. note:: Please note that since version 5.1.0, the config file is a PHP script.*
+.. note:: Please note that since version 5.1.0, the config file is a PHP script (it was a .conf file before this version).
 
 *************************
 Create configuration file
 *************************
 
-This section explain how to create the configuration which contain your custom settings.
-
-All Bacula-Web settings are stored in the file below
+Bacula-Web settings are stored in the file below
 
 ::
 
     application/config/config.php
 
-From Bacula-Web root folder, copy the sample config file and give it the name *config.php*
+From Bacula-Web root folder, copy the sample config file and give it the name **config.php**
     
 ::
 
@@ -28,15 +26,12 @@ From Bacula-Web root folder, copy the sample config file and give it the name *c
    # cp -v config.php.sample config.php
 
 Now you need to make sure config.php has the correct permissions.
+
 The configuration file needs to be at least readable by the user owning the web server process.
 
-**On Red Hat / Centos / Fedora**
+On **Red Hat / Centos / Fedora**, the user running Apache is **apache**
 
-Apache user is **apache**
-
-**On Debian / Ubuntu**
-
-Apache user is **www-data**
+On **Debian / Ubuntu**, the user running Apache is **www-data**
 
 So depending on which system you have installed Bacula-Web, run the command below
 
