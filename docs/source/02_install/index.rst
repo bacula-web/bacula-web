@@ -22,7 +22,7 @@ Bacula-Web installation consists only in few steps (see below)
 +----------------------+---------------------------------------------------------------------------------------+
 | Step                 | Instructions                                                                          |
 +======================+==================+====================================================================+
-| Requirements         | Ensure your server met all :ref:`install/requirements`                                |
+| Requirements         | Ensure your server met all :ref:`requirements <install/requirements>`                                |
 +----------------------+---------------------------------------------------------------------------------------+
 | Web server setup     | :ref:`install/install` and :ref:`configure your web server <install/configwebserver>` |
 +----------------------+---------------------------------------------------------------------------------------+
