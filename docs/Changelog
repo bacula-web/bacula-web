@@ -2,6 +2,9 @@
 
 Changelog
 
+- User and general settings
+	- Configuration settings are now visible in General settings
+
 Fixed bugs
 
 - 0000242 [bug] Wrong link to test page in Exception page
