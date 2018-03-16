@@ -40,7 +40,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.php">Bacula-Web</a>
+			<a class="navbar-brand" href="index.php">{$app_name}</a>
 		</div> <!-- div class="navbar-header" -->
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -109,7 +109,7 @@
 						</li>
 						<li role="presentation" class="divider"></li>
 						<li role="presentation" class="dropdown-header">{t}Version{/t}</li>
-						<li class="disabled"><a href="#"><i class="fa fa-info fa-fw"></i> Bacula-Web 8.0.0-rc2</a></li>
+						<li class="disabled"><a href="#"><i class="fa fa-info fa-fw"></i> {$app_name} {$app_version}</a></li>
 					</ul>
 				</li>
 			</ul>
