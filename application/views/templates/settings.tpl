@@ -23,7 +23,54 @@
         <div class="col-xs-8">
             <!-- Tab panes -->
             <div class="tab-content">
-                <div class="tab-pane active" id="general"> <h4>General settings</h4> </div>
+                <div class="tab-pane active" id="general"> <h4>General settings</h4> 
+
+                  <br />
+
+                  <form class="form-horizontal">
+
+                    <!-- Date / Time format -->
+                    <div class="form-group">
+                      <label class="col-xs-4 control-label" for="config_datetime_format">Date / Time format</label>
+                      <div class="col-xs-8">
+                        <input type="text" class="form-control" id="config_datetime_format" value="{$config_datetime_format}" readonly>
+                      </div>
+                    </div> <!-- end div class=form-group -->
+
+                    <!-- Language -->
+                    <div class="form-group">
+                      <label class="col-xs-4 control-label" for="config_language">Language</label>
+                      <div class="col-xs-8">
+                        <input type="text" class="form-control" id="config_language" value="{$config_language}" readonly>
+                      </div>
+                    </div> <!-- end div class=form-group -->
+                    <div class="form-group">
+
+                    <!-- Jobs / page -->
+                      <label class="col-xs-4 control-label" for="config_jobsperpage">Jobs / page</label>
+                      <div class="col-xs-8">
+                        <input type="text" class="form-control" id="config_jobsperpage" value="{$config_jobsperpage}" readonly>
+                      </div>
+                    </div> <!-- end div class=form-group -->
+
+                    <!-- Show inactive clients -->
+                    <div class="form-group">
+                      <label class="col-xs-4 control-label" for="config_show_inactive_clients">Show inactive clients</label>
+                      <div class="col-xs-8">
+                        <input type="checkbox" id="config_show_inactive_clients" {$config_show_inactive_clients} disabled>
+                      </div>
+                    </div> <!-- end div class=form-group -->
+
+                    <!-- Hide empty pools -->
+                    <div class="form-group">
+                      <label class="col-xs-4 control-label" for="config_hide_empty_pools_">Hide empty pools</label>
+                      <div class="col-xs-8">
+                        <input type="checkbox" id="config_hide_empty_pools" {$config_hide_empty_pools} disabled>
+                      </div>
+                    </div> <!-- end div class=form-group -->
+
+                  </form>
+                </div>
 
                 <!-- Users tab -->
                 <div class="tab-pane" id="users"> 

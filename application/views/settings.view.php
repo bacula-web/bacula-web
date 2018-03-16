@@ -44,6 +44,46 @@ class SettingsView extends CView {
         // Get users list
         $this->assign('users', $userauth->getUsers());
 
+        // Get parameters set in configuration file 
+        if (!FileConfig::open(CONFIG_FILE)) {
+            throw new Exception("The configuration file is missing");
+        } else {
+
+            // Check if datetime_format is set
+            if( FileConfig::get_Value('datetime_format') != NULL) {
+                $this->assign( 'config_datetime_format',  FileConfig::get_Value('datetime_format'));
+            }
+
+            // Check if language is set
+            if( FileConfig::get_Value('language') != NULL) {
+                $this->assign( 'config_language',  FileConfig::get_Value('language'));
+            }
+
+            // Check if jobs_per_page is set
+            if( FileConfig::get_Value('jobs_per_page') != NULL) {
+                $this->assign( 'config_jobsperpage',  FileConfig::get_Value('jobs_per_page'));
+            }
+
+            // Check if show_inactive_clients is set
+            if( FileConfig::get_Value('show_inactive_clients') != NULL) {
+
+                $config_show_inactive_clients = FileConfig::get_Value('show_inactive_clients');
+
+                if($config_show_inactive_clients == true) {
+                    $this->assign( 'config_show_inactive_clients', 'checked');
+                }
+            }
+
+            // Check if hide_empty_pools is set
+            if( FileConfig::get_Value('hide_empty_pools') != NULL) {
+
+                $config_hide_empty_pools = FileConfig::get_Value('hide_empty_pools');
+
+                if($config_hide_empty_pools == true) {
+                    $this->assign( 'config_hide_empty_pools', 'checked');
+                }
+            }
+        }
     }
 } // end of class
         
