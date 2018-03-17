@@ -17,24 +17,39 @@ Let's start by installing Composer on your system
 Install Composer
 ****************
 
-To install Composer, open a shell on your server and run these command
-
-Move in Bacula-Web root folder (adapt the command line to your setup)
-
-:: 
-
-    $ cd /var/www/html/bacula-web
-    $ curl -sS https://getcomposer.org/installer | php
-
-If you want to install composer in a globaly available path, I suggest to install it like this
+Most Linux distro povides Composer as package, so to install it run this command
 
 ::
 
-    $ cd /usr/local/bin/
-    $ curl -sS https://getcomposer.org/installer | php
+    On Debian / Ubuntu
+    $ sudo apt-get install composer
 
+    On Red Hat, Centos, Fedora
+    $ sudo yum install composer
 
-For more details, please have a look on `this page <https://getcomposer.org/download/>`_.
+If your distro doesn't provide Composer package, you can install Composer manually
+
+Open a shell (as root) on your server and run these command
+
+::
+
+    # cd /usr/local/bin/
+    # curl -sS https://getcomposer.org/installer | php
+    # mv composer.phar composer
+
+Make sure $PATH contain /usr/loca/bin
+
+::
+
+    $ echo $PATH
+
+If it's not the case, fix it
+
+::
+
+    $ export PATH=$PATH:/usr/loca/bin
+
+For more detailled instructions, check `this page <https://getcomposer.org/download/>`_.
 
 .. warning:: Never use composer as a super-user or root, use the web server user or the one who own Bacula-Web files and folders
 
