@@ -26,6 +26,8 @@ Bacula-Web installation consists only in few steps (see below)
 +----------------------+-----------------------------------------------------------------------------------------------------------------+
 | Web server setup     | :ref:`Setup <install/install>` and :ref:`configure <install/configwebserver>` Apache web server                 |
 +----------------------+-----------------------------------------------------------------------------------------------------------------+
+| (optional)           | :ref:`Setup and configure <install/installnginx>` Nginx web server                                              |
++----------------------+-----------------------------------------------------------------------------------------------------------------+
 
 You have two different options to install Bacula-Web
 
