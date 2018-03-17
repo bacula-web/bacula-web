@@ -1,3 +1,27 @@
+=== Release 8.0.0-rc3 (Mar 17 2018)
+
+Changelog
+
+- User and general settings
+	- Configuration settings are now visible in General settings
+
+- Documentation
+	- Composer installation have been fixed and updated
+	- Nginx web server setup have been added
+
+- Development
+	- Code cleanup and few improvments
+
+Fixed bugs
+
+- 0000242 [bug] Wrong link to test page in Exception page
+
+Documentation
+
+- 0000217 [documentation] Update documentation with Nginx and Apache server configuration
+- 0000238 [documentation] Unable to install Bacula-Web using Composer
+- 0000240 [documentation] Unable to install via Composer
+
 === Release 8.0.0-rc2 (Mar 2 2018)
 
 Changelog

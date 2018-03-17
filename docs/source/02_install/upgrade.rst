@@ -61,8 +61,4 @@ Fix files ownership
 Test your setup
 ---------------
 
-Test the installation using the test page (example of url below)
-
-::
-
-   http://yourserver/bacula-web/index.php?page=test
+It's now time to :ref:`install/test`
