@@ -4,9 +4,11 @@ Changelog
 
 - User and general settings
 	- Configuration settings are now visible in General settings
+
 - Documentation
 	- Composer installation have been fixed and updated
 	- Nginx web server setup have been added
+
 - Development
 	- Code cleanup and few improvments
 
