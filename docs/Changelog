@@ -1,4 +1,4 @@
-=== Release 8.0.0-rc3 (Mar xx 2018)
+=== Release 8.0.0-rc3 (Mar 17 2018)
 
 Changelog
 
@@ -11,6 +11,7 @@ Fixed bugs
 
 Documentation
 
+- 0000217 [documentation] Update documentation with Nginx and Apache server configuration
 - 0000238 [documentation] Unable to install Bacula-Web using Composer
 - 0000240 [documentation] Unable to install via Composer
 
