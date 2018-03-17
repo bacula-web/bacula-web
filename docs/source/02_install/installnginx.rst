@@ -82,5 +82,5 @@ Once your web server is ready, you can process with Bacula-Web installation.
 
 You have two different options
 
-   * Install :ref:`using the archive`<install/installarchive>`
-   * Install :ref:`using Composer`<install/installcomposer>`
+   * Install :ref:`using the archive<install/installarchive>`
+   * Install :ref:`using Composer<install/installcomposer>`
