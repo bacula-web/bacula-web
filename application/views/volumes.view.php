@@ -43,12 +43,34 @@ class VolumesView extends CView {
             'Error' => 'fa-times-circle',
             'Busy' => 'fa-clock-o' );
 
-        $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
+        $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs', 'InChanger' => 'InChanger');
         $this->assign( 'orderby', $orderby);
         
         $volume_orderby_filter = 'Name';
         $volume_orderby_asc = 'DESC';
 
+        $orderby_extra = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs', 'InChanger' => 'InChanger', '' => 'null');
+        $this->assign ( 'orderby_extra', $orderby);
+        
+        $volume_orderby_filter_extra = '';
+        $volume_orderby_asc_extra = 'DESC';
+        
+
+        if( !is_null(CHttpRequest::get_Value('orderby_extra')) ) {
+            if( array_key_exists(CHttpRequest::get_Value('orderby_extra'), $orderby_extra) ) {
+                $volume_orderby_filter_extra = CHttpRequest::get_Value('orderby_extra');
+            }else{
+                throw new Exception("Critical: Provided orderby_extra parameter is not correct");
+            }
+        }
+ 
+        if( !is_null(CHttpRequest::get_Value('orderby_asc_extra')) ) {
+            $volume_orderby_asc_extra = 'ASC';
+            $this->assign( 'orderby_asc_extra_checked', 'checked');
+        }
+   
+        $this->assign( 'orderby_extra_selected', $volume_orderby_filter_extra);
+   
         if( !is_null(CHttpRequest::get_Value('orderby')) ) {
             if( array_key_exists(CHttpRequest::get_Value('orderby'), $orderby) ) {
                 $volume_orderby_filter = CHttpRequest::get_Value('orderby');
@@ -61,9 +83,9 @@ class VolumesView extends CView {
             $volume_orderby_asc = 'ASC';
             $this->assign( 'orderby_asc_checked', 'checked');
         }
-   
+
         $this->assign( 'orderby_selected', $volume_orderby_filter);
-   
+
         $poolid = CHttpRequest::get_Value('pool_id');
    
         // If pool_id have been passed in GET request 
@@ -71,7 +93,7 @@ class VolumesView extends CView {
             throw new Exception('Invalid pool id (not numeric) provided in Volumes report page');
         }
 
-        foreach ($volumes->getVolumes( $poolid, $volume_orderby_filter, $volume_orderby_asc) as $volume) {
+        foreach ($volumes->getVolumes( $poolid, $volume_orderby_filter, $volume_orderby_asc, $volume_orderby_filter_extra, $volume_orderby_asc_extra) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {

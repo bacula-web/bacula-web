@@ -54,9 +54,15 @@ class Volumes_Model extends CModel
     // Return:	        list of volumes (array)	
     // ==================================================================================
 
-    public function getVolumes( $pool_id = null, $orderby = 'Name', $orderasc = 'DESC') {
+    public function getVolumes( $pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $orderby_extra = '', $orderasc_extra='DESC' ) {
        $volumes_list = array();
        $where = '';
+       
+       if ( !empty($orderby_extra) && $orderby != $orderby_extra ) {
+         $order = $orderby .' '. $orderasc . ',' . $orderby_extra . ' ' . $orderasc_extra;
+       } else {
+         $order = $orderby .' '. $orderasc;
+       }
 
        if( !is_null($pool_id) ) {
           $this->addParameter( 'pool_id', $pool_id);
@@ -65,8 +71,8 @@ class Volumes_Model extends CModel
 
 	    $query    = "SELECT Media.volumename, Media.volbytes, Media.voljobs, Media.volstatus, Media.mediatype, Media.lastwritten, 
 			           Media.volretention, Media.slot, Media.inchanger, Pool.Name AS pool_name
-                    FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid $where ORDER BY $orderby $orderasc";
-
+                    FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid $where ORDER BY $order";
+       
        $result = $this->run_query($query);
 
        foreach ($result->fetchAll() as $volume) {

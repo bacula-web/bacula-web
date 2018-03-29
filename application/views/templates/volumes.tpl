@@ -5,20 +5,30 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-12 col-md-8">
+    <div class="col-xs-12 col-md-6">
     </div>
 
-    <div class="col-xs-12 col-md-4">
+    <div class="col-xs-12 col-md-6">
       <!-- Options -->
-      <form class="form-inline" role="form" action="index.php?page=volumes" method="post">
+      <form class="form-inline" role="form" action="index.php" method="get">
+        <input type="hidden" name="page" value="volumes" />
         <span class="help-block">{t}Options{/t}</span>
         <div class="form-group">
           <label>{t}Order by{/t}</label>
           {html_options class="form-control input-sm" name=orderby options=$orderby selected=$orderby_selected}
-        </div>
+        <!--/div>-->
         <div class="checkbox">
           <label>
           <input type="checkbox" name="orderby_asc" value="{t}Asc{/t}" {$orderby_asc_checked}> Asc 
+          </label>
+        </div>
+        <!--div class="form-group">-->
+          <label>{t}Order by Extra{/t}</label>
+          {html_options class="form-control input-sm" name=orderby_extra options=$orderby_extra selected=$orderby_extra_selected}
+        </div>
+        <div class="checkbox">
+          <label>
+          <input type="checkbox" name="orderby_asc_extra" value="{t}Asc{/t}" {$orderby_asc_extra_checked}> Asc
           </label>
         </div>
         <button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
