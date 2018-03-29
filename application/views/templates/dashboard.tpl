@@ -36,27 +36,27 @@
 						</a>
 						<table class="table table-condensed">
 							<tr>
-								<td><h5>{t}Running jobs{/t}</h5></td>
+								<td><h5><a href="index.php?page=jobs&job_status_filter=1">{t}Running jobs{/t}</a></h5></td>
 								<td class="text-center"> <h4><span class="label label-default">{$running_jobs}</span></h4> </td>
 							</tr>
 							<tr>
- 								<td><h5>{t}Completed job(s){/t}</h5></td>
+ 								<td><h5><a href="index.php?page=jobs&job_status_filter=3">{t}Completed job(s){/t}</a></h5></td>
 								<td class="text-center"> <h4><span class="label label-success">{$completed_jobs}</span></h4> </td>
 							</tr>
                      <tr>
-                        <td><h5>{t}Completed with errors job(s){/t}
+                        <td><h5><a href="index.php?page=jobs&job_status_filter=4">{t}Completed with errors job(s){/t}</a>
 								<td class="text-center"> <h4><span style="background-color: #FFD700;" class="label label-default">{$completed_with_errors_jobs}</span></h4> </td>
                      </tr>
  							<tr>
-                            	<td> <h5>{t}Waiting jobs(s){/t}</h5></td>
+                            	<td> <h5><a href="index.php?page=jobs&job_status_filter=2">{t}Waiting jobs(s){/t}</a></h5></td>
                                 <td class="text-center"> <h4><span class="label label-primary">{$waiting_jobs}</span></h4> </td>
                             </tr>
 							<tr>
-                            	<td> <h5>{t}Failed job(s){/t}</h5></td>
+                            	<td> <h5><a href="index.php?page=jobs&job_status_filter=5">{t}Failed job(s){/t}</a></h5></td>
                                 <td class="text-center"> <h4><span class="label label-danger">{$failed_jobs}</span></h4> </td>
                             </tr>
 							<tr>
-                            	<td> <h5>{t}Canceled job(s){/t}</h5></td>
+                            	<td> <h5><a href="index.php?page=jobs&job_status_filter=6">{t}Canceled job(s){/t}</a></h5></td>
                                 <td class="text-center"> <h4><span class="label label-warning">{$canceled_jobs}</span></h4> </td>
                             </tr>
 							<tr>

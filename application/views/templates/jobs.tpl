@@ -8,7 +8,8 @@
 	  <!-- Filter jobs form -->
 	  <div class="col-xs-12 col-sm-3 col-sm-push-9 col-lg-2 col-lg-push-10">
 
-	  <form class="form" role="form" action="index.php?page=jobs" method="post">
+	  <form class="form" role="form" action="index.php" method="get">
+                <input type="hidden" name="page" value="jobs" />
 
 		<span class="help-block">{t}Filter{/t}</span>
 
