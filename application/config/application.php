@@ -12,5 +12,7 @@ $app = [ 'name' => 'Bacula-Web', 'version' => '8.0.0-rc3',
                         'login' => 'Login',
                         'usersettings' => 'UserSettings',
                         'settings' => 'Settings',
-                        'directors' => 'Directors'],
+                        'directors' => 'Directors',
+						'historyfiles' => 'HistoryFiles'
+			],
     'defaultview' => 'DashboardView' ];

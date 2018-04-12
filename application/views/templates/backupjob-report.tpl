@@ -62,7 +62,13 @@
 		<tr> 
 			<td>{$job.jobid}</td>
 			<td>{$job.joblevel}</td>
-			<td>{$job.jobfiles}</td>
+			<td>
+				{if ($job.jobfiles > 0) }
+					<a href="index.php?page=historyfiles&jobId={$job.jobid}">{$job.jobfiles}</a>
+				{else}
+					{$job.jobfiles}
+				{/if}
+			</td>
 			<td>{$job.jobbytes}</td>
 			<td>{$job.starttime}</td>
 			<td>{$job.endtime}</td>
