@@ -47,7 +47,7 @@ If it's not the case, fix it
 
 ::
 
-    $ export PATH=$PATH:/usr/loca/bin
+    $ export PATH=$PATH:/usr/local/bin
 
 For more detailled instructions, check `this page <https://getcomposer.org/download/>`_.
 
