@@ -1,3 +1,14 @@
+=== Release 8.0.0 (dd May 2018)
+
+Changelog
+
+- General
+	- Breacrumbs navigation has been fixed
+
+Fixed bugs
+
+- 0000241 [bug-php] Breadcrumbs navigation is broken 
+
 === Release 8.0.0-rc3 (Mar 17 2018)
 
 Changelog
