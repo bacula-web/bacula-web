@@ -4,10 +4,16 @@ Changelog
 
 - General
 	- Breacrumbs navigation has been fixed
+	- Application error/exception look and feel have been improved
 
 Fixed bugs
 
 - 0000241 [bug-php] Breadcrumbs navigation is broken 
+
+New feature(s)
+
+- 0000161 [enhancement] Improve application errors/warnings exception message
+- 0000222 [enhancement] Improve exception handling
 
 === Release 8.0.0-rc3 (Mar 17 2018)
 
