@@ -35,7 +35,7 @@ class CErrorHandler
 
         $output = '';
 
-        // Header
+        // Display PHP exception details
         $output .= '<br />';
         $output .= '<div class="panel panel-default">';
         $output .= '<div class="panel-heading">';
@@ -54,6 +54,7 @@ class CErrorHandler
         $output .= '<b>File: </b>' . $exception->getFile() . '<br />';
         $output .= '<b>Line: </b>' . $exception->getLine() . '<br />';
         $output .= '<b>Code: </b>' . $exception->getCode() . '<br />';
+        $output .= '<h5>Exception trace</h5>';
         $output .= self::getFormatedTrace($exception);
         $output .= '</div> </div>';
 
@@ -65,8 +66,7 @@ class CErrorHandler
 
     public static function getFormatedTrace($e)
     {
-        $formated_trace  = '<table style="margin: 10px; width: 900px; border: 1px solid #c0c0c0;">';
-        $formated_trace .= '<tr> <th>Exception trace</th> </tr>';
+        $formated_trace  = '<table class="table">';
         
         foreach ($e->getTrace() as $exception) {
             $formated_trace .= '<tr>';
