@@ -34,37 +34,39 @@ class CErrorHandler
         } // end switch
 
         $output = '';
-        // Display Exception trace
-        $output .= self::getFormatedTrace($exception);
-        
-        // Header
-        $output .= '<table>';
-        $output .= "<tr> <th colspan='2'>" . self::$header . "</th> \n </tr> \n";
-        
-        // Exception details
-        $output .= "<tr> <td width='200'><b>File</b> </td> <td>" . $exception->getFile() . "</td> \n</tr> \n";
-        $output .= "<tr> <td><b>Line</b> </td> <td>" . $exception->getLine() . "</td> \n </tr> \n";
-        $output .= "<tr> <td><b>Exception code</b> </td> <td>" . $exception->getCode() . "</td> \n </tr> \n";
-        $output .= "<tr> <td><b>Exception message</b> </td> <td>" . $exception->getMessage() . "</td> \n </tr> \n";
-        
-        $output .= "<tfoot> \n <tr> \n";
-        $output .= "<td colspan='2'> \n";
+
+        // Display PHP exception details
+        $output .= '<br />';
+        $output .= '<div class="panel panel-default">';
+        $output .= '<div class="panel-heading">';
+        $output .= '<h3 class="panel-title">';
+        $output .= '<i class="fa fa-exclamation-triangle fa-lg"></i> ';
+        $output .= self::$header . '</h3> </div>';
+        $output .= '<div class="panel-body">';
+        $output .= '<h4>Details</h4>';
+        $output .= '<p>A problem with the description below happen</p>';
+        $output .= '<b>Problem: </b>' . $exception->getMessage() . '<br />';
+        $output .= '<h4>Help</h4>';
         $output .= "Have you tried to run the <a href='index.php?page=test'>test page</a> ?<br />";
         $output .= "Check the online documentation on <a href='http://www.bacula-web.org' target='_blank'>Bacula-Web project site</a> <br />";
         $output .= "Rebort a bug or suggest a new feature in the <a href='http://bugs.bacula-web.org' target='_blank'>Bacula-Web's bugtracking tool</a> <br />";
-        $output .= "</td> \n";
-        $output .= " \n</tr> \n </tfoot>";
-        
-        $output .= "</table>";
-        
+        $output .= '<h4>Debug</h4>';
+        $output .= '<b>File: </b>' . $exception->getFile() . '<br />';
+        $output .= '<b>Line: </b>' . $exception->getLine() . '<br />';
+        $output .= '<b>Code: </b>' . $exception->getCode() . '<br />';
+        $output .= '<h5>Exception trace</h5>';
+        $output .= self::getFormatedTrace($exception);
+        $output .= '</div> </div>';
+
+        // Render Exception page
+        $output = HtmlHelper::getHtmlHeader() . HtmlHelper::getNavBar() . '<div class="container">' . $output . '</div>' . HtmlHelper::getHtmlFooter();        
         echo $output;
-        //die();
+
     } // end function displayError
 
     public static function getFormatedTrace($e)
     {
-        $formated_trace  = '<table style="margin: 10px; width: 900px; border: 1px solid #c0c0c0;">';
-        $formated_trace .= '<tr> <th>Exception trace</th> </tr>';
+        $formated_trace  = '<table class="table">';
         
         foreach ($e->getTrace() as $exception) {
             $formated_trace .= '<tr>';

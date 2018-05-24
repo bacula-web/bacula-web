@@ -104,12 +104,11 @@ class WebApplication
             $this->setup();
             $this->init();
             $this->view->prepare();
+            $this->view->render();
         }catch( Exception $e) {
             // Display application error here
             CErrorHandler::displayError($e);
             // Render the view
-        }finally {
-            $this->view->render();
         }
     }
 }
