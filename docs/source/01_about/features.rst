@@ -237,7 +237,7 @@ Bacula director details are
 .. image:: /_static/bacula-web-directors.jpg
    :scale: 20%
 
-.. note:: This is feature is available since version 8.0.0-RC1
+.. note:: This feature is available since version 8.0.0-RC1
 
 Test page
 =========
@@ -260,6 +260,32 @@ The test page do the following check for you
 
 .. image:: /_static/bacula-web-test-page.jpg
    :scale: 20%
+
+General settings
+================
+
+The genral settings page shows you current settings defined in application/config.php
+
+For now, it's in read only mode but you might be able to update the configuration using this
+page in a future version.
+
+.. image:: /_static/bacula-web-settings.jpg
+   :scale: 20%
+
+.. note:: This feature is available since version 8.0.0-RC3
+
+User settings
+=============
+
+The user settings page display in read-only mode current user settings and details.
+
+It also allow each users to reset their own password.
+
+.. image:: /_static/bacula-web-user-settings.jpg
+
+   :scale: 20%
+
+.. note:: This feature is available since version 8.0.0-RC3
 
 *****************
 Known limitations
