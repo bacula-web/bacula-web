@@ -61,7 +61,7 @@ From your $HOME folder, run the command below
 
 ::
 
-    $ composer create-project --prefer-dist bacula-web/bacula-web:*@RC bacula-web
+    $ composer create-project --prefer-dist bacula-web/bacula-web bacula-web
 
 Fix files/folders ownership and permissions
 
