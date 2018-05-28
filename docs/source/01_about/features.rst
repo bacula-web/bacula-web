@@ -264,7 +264,7 @@ The test page do the following check for you
 General settings
 ================
 
-The genral settings page shows you current settings defined in application/config.php
+The general settings page shows you current settings defined in **application/config.php**
 
 For now, it's in read only mode but you might be able to update the configuration using this
 page in a future version.
@@ -282,7 +282,6 @@ The user settings page display in read-only mode current user settings and detai
 It also allow each users to reset their own password.
 
 .. image:: /_static/bacula-web-user-settings.jpg
-
    :scale: 20%
 
 .. note:: This feature is available since version 8.0.0-RC3
