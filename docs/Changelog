@@ -7,6 +7,9 @@ Changelog
 	- Application error/exception look and feel have been improved
 - Development
 	- Large amount of code improvement and cleanup
+- Documentation
+	- Add user settings and general settings in features
+	- Documentation got cleaned up, restructured and updated
 
 Fixed bugs
 
