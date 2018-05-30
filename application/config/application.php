@@ -1,6 +1,6 @@
 <?php
 
-$app = [ 'name' => 'Bacula-Web', 'version' => '8.0.0-rc3',
+$app = [ 'name' => 'Bacula-Web', 'version' => '8.0.0',
         'routes' => [   'home' => 'Dashboard', 
                         'test' => 'Test',
                         'jobs' => 'Jobs',
