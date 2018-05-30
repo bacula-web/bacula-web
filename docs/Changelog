@@ -1,16 +1,19 @@
-=== Release 8.0.0 (dd May 2018)
+=== Release 8.0.0 (May 30 2018)
 
 Changelog
 
 - General
 	- Breacrumbs navigation has been fixed
 	- Application error/exception look and feel have been improved
+- Development
+	- Large amount of code improvement and cleanup
 
 Fixed bugs
 
+- 0000234 [bug-php] Directors report page problem if a Bacula catalog is unreachable
 - 0000241 [bug-php] Breadcrumbs navigation is broken 
 
-New feature(s)
+Improvement(s)
 
 - 0000161 [enhancement] Improve application errors/warnings exception message
 - 0000222 [enhancement] Improve exception handling
@@ -57,7 +60,7 @@ Changelog
 	- Fixed many SQL injection and XSS vulnerabilities (see fixed bugs)
 
 - Development
-	- Large amount of code improvment and cleanup
+	- Large amount of code improvement and cleanup
 	- Upgrade moment/moment to version 2.19.2
 	- Add Bootstrap validator to Composer's requirements
 
