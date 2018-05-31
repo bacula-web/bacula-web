@@ -23,12 +23,19 @@ class UserAuth extends CModel {
 
     public function __construct() {
 
-        $this->cdb  = new CDB();
+       $this->cdb  = new CDB();
 
-        $this->appDbBackend = 'application/assets/protected/application.db';
-        $this->dsn = "sqlite:$this->appDbBackend";
+       // Throw an exception if PHP SQLite is not installed
+       $pdoDrivers = PDO::getAvailableDrivers();
+       
+       if( ! in_array('sqlite', $pdoDrivers) ) {
+          throw new Exception('PHP SQLite support not found');
+       }
 
-        $this->db_link = $this->cdb->connect($this->dsn);
+       $this->appDbBackend = 'application/assets/protected/application.db';
+       $this->dsn = "sqlite:$this->appDbBackend";
+
+       $this->db_link = $this->cdb->connect($this->dsn);
     }
 
     public function checkSchema() {
