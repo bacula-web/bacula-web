@@ -32,6 +32,17 @@ class UserAuth extends CModel {
           throw new Exception('PHP SQLite support not found');
        }
 
+       // Check protected assets folder permissions$
+       $webUser = '';
+       exec('whoami', $webUser);
+       $webUser = reset($webUser);
+       
+       $assetsOwner = posix_getpwuid(fileowner('application/assets/protected'));
+      
+       if($webUser != $assetsOwner['name']) {
+          throw new Exception('Bad ownership / permissions for protected assets folder (application/assets/protected)');
+       }
+
        $this->appDbBackend = 'application/assets/protected/application.db';
        $this->dsn = "sqlite:$this->appDbBackend";
 
