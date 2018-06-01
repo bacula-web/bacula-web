@@ -59,6 +59,9 @@ class TestView extends CView {
             array(  'check_cmd' => 'php-pdo',
                     'check_label' => 'PHP - PDO support',
                     'check_descr' => 'PHP PDO support is required, please compile PHP with this option'),
+            array(  'check_cmd' => 'php-posix',
+                    'check_label' => 'PHP - Posix support',
+                    'check_descr' => 'PHP Posix support is required, please compile PHP with this option'),
             array(  'check_cmd' => 'db-connection',
                     'check_label' => 'Database connection status (MySQL and postgreSQL only)',
                     'check_descr' => 'Current status: ' . $catalog->getConnectionStatus() ),
@@ -99,6 +102,9 @@ class TestView extends CView {
                 break;
             case 'php-pdo':
                 $check['check_result'] = $icon_result[class_exists('PDO')];
+                break;
+            case 'php-posix':
+                $check['check_result'] = $icon_result[function_exists('posix_getpwuid')];
                 break;
             case 'smarty-cache':
                 $check['check_result'] = $icon_result[is_writable(VIEW_CACHE_DIR)];

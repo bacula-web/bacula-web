@@ -34,9 +34,14 @@ General requirements
 |                 | - MySQL, postgreSQL or SQLite             |
 |                 | - CLI                                     |
 |                 | - JSON                                    |
+|                 | - Posix                                   |
 +-----------------+-------------------------------------------+
 
-.. important:: As of version 8.0.0-rc2, PHP SQLite is required as it's used by the application back-end.
+.. important::
+
+   PHP SQLite is required since verions 8.0.0-rc2
+
+   PHP Posix is required since version 8.0.0
 
 Using SELinux
 -------------

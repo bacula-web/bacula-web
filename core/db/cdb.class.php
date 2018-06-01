@@ -39,20 +39,16 @@ class CDB
 
     public function connect($dsn, $user = null, $password = null)
     {
-        try {
-            $this->connection = new PDO($dsn, $user, $password);
+        $this->connection = new PDO($dsn, $user, $password);
 
-            // Set PDO connection options
-            $this->connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->connection->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('CDBResult', array($this)));
+        // Set PDO connection options
+        $this->connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
+        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->connection->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('CDBResult', array($this)));
         
-            // MySQL connection specific parameter
-            if ($this->getDriverName() == 'mysql') {
-               $this->connection->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
-            }
-        } catch (PDOException $e) {
-            CErrorHandler::displayError($e);
+        // MySQL connection specific parameter
+        if ($this->getDriverName() == 'mysql') {
+            $this->connection->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
         }
         
         return $this->connection;

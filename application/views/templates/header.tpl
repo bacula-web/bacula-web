@@ -124,14 +124,12 @@
       <div class="col-xs-12">
         <ol class="breadcrumb">
 			{php}
-				$scriptname = explode( "/", $_SERVER['SCRIPT_FILENAME']);
-				$current = end( $scriptname );
-
-				if( $current === 'index.php' ) {
-					echo '<li class="active"> <i class="fa fa-home fa-fw"></i> Dashboard</li>';
-				}else{
-					echo '<li> <a href="index.php" title="{t}Back to Dashboard{/t}"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
-				}
+                if( isset($_GET['page'] ) ) {
+					echo '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
+				    echo '<li class="active">' . $this->name . '</li>';
+                }else {
+				    echo '<li class="active"> <i class="fa fa-home fa-fw"></i> ' . $this->name . '</li>';
+                }
 			{/php}
         </ol>
       </div> <!-- div class="col..." -->

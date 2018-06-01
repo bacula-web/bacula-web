@@ -30,39 +30,34 @@ class Bweb extends WebApplication
 
     public function init()
     {
-        try {
+        // Loading configuration file parameters
+        if (!FileConfig::open(CONFIG_FILE)) {
+            throw new Exception("The configuration file is missing");
+        }else {
+            // Count defined Bacula catalogs
+            $this->catalog_nb = FileConfig::count_Catalogs();
 
-            // Loading configuration file parameters
-            if (!FileConfig::open(CONFIG_FILE)) {
-                throw new Exception("The configuration file is missing");
-            } else {
-               // Count defined Bacula catalogs
-               $this->catalog_nb = FileConfig::count_Catalogs();
-
-               // Check if datetime_format is defined in configuration
-               if( FileConfig::get_Value('datetime_format') != NULL) {
-                   $this->datetime_format = FileConfig::get_Value('datetime_format');
-                   $_SESSION['datetime_format'] = $this->datetime_format;
+            // Check if datetime_format is defined in configuration
+            if( FileConfig::get_Value('datetime_format') != NULL) {
+                $this->datetime_format = FileConfig::get_Value('datetime_format');
+                $_SESSION['datetime_format'] = $this->datetime_format;
                   
-                  // Get first part of datetime_format
-                  $this->datetime_format_short = explode( ' ', $this->datetime_format);
-                  $_SESSION['datetime_format_short'] = $this->datetime_format_short[0];
-               }else {
-                  // Set default time format
-                  $_SESSION['datetime_format'] = 'Y-m-d H:i:s';
-                  $_SESSION['datetime_format_short'] = 'Y-m-d';
-               }
+                // Get first part of datetime_format
+                $this->datetime_format_short = explode( ' ', $this->datetime_format);
+                $_SESSION['datetime_format_short'] = $this->datetime_format_short[0];
+            }else {
+                // Set default time format
+                $_SESSION['datetime_format'] = 'Y-m-d H:i:s';
+                $_SESSION['datetime_format_short'] = 'Y-m-d';
             }
-        } catch (Exception $e) {
-            CErrorHandler::displayError($e);
         }
             
-     // Checking template cache permissions
+        // Checking template cache permissions
         if (!is_writable(VIEW_CACHE_DIR)) {
             throw new Exception("The template cache folder <b>" . VIEW_CACHE_DIR . "</b> must be writable by Apache user");
         }
                 
-     // Initialize smarty gettext function
+        // Initialize smarty gettext function
         $language = FileConfig::get_Value('language');
         if ($language == NULL) {
             throw new Exception('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');

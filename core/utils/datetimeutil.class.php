@@ -27,7 +27,6 @@ class DateTimeUtil
 
     public static function checkDate($date) {
 
-        //echo "<pre>date: $date</pre>";
         $d = DateTime::createFromFormat('Y-m-d H:i:s', $date);
 
         if($d != FALSE) {
