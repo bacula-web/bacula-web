@@ -1,10 +1,11 @@
-=== Release 8.0.0 (May 30 2018)
+=== Release 8.0.0 (June 1 2018)
 
 Changelog
 
 - General
 	- Breacrumbs navigation has been fixed
 	- Application error/exception look and feel have been improved
+	- PHP Posix support is now required
 - Development
 	- Large amount of code improvement and cleanup
 - Documentation
