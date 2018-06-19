@@ -8,7 +8,7 @@ Bacula-Web documentation
 ========================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    01_about/index
    02_install/index
