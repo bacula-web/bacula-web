@@ -1,3 +1,14 @@
+=== Release 8.0.1 (June 21 2018)
+
+Changelog
+
+- Documentation
+	- Fix issue with ReadTheDocs theme conflict
+
+Fixed bugs
+
+- 0000248 [documentation] Documentation issue
+
 === Release 8.0.0 (June 1 2018)
 
 Changelog
