@@ -7,7 +7,7 @@
 Bacula-Web documentation
 ========================
 
-**Version:** |release|
+**Version:** 8.0.1
 
 .. toctree::
    :maxdepth: 2
