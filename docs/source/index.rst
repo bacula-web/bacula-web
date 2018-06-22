@@ -7,6 +7,14 @@
 Bacula-Web documentation
 ========================
 
+.. image:: _static/bacula-web-logo.png
+  :scale: 100%
+  :align: center
+  :target: https://github.com/bacula-web/bacula-web
+  :alt: Bacula-Web logo
+
+**Version:** 8.0.1
+
 .. toctree::
    :maxdepth: 2
 

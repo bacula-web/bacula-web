@@ -33,7 +33,7 @@ class UserAuth extends CModel {
        }
 
        // Check protected assets folder permissions$
-       $webUser = '';
+       $webUser = array();
        exec('whoami', $webUser);
        $webUser = reset($webUser);
        
