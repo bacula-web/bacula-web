@@ -1,3 +1,14 @@
+=== Release 8.x.x (July dd 2018)
+
+Changelog
+
+- Documentation
+	- Add missing permissions steps in Install from archive chapter
+
+Fixed bugs
+
+- 0000252 [documentation] Missing permissions steps in Install from archive chapter
+
 === Release 8.0.1 (June 22 2018)
 
 Changelog
