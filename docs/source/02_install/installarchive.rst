@@ -86,4 +86,4 @@ Change files/folders permissions
    $ sudo chmod -v 775 /var/www/bacula-web/application/views/cache
    $ sudo chmod -v 775 /var/www/bacula-web/application/assets/protected
 
-Once you're ready, it's now time to :ref:`install/configure`
+It's now time to :ref:`install/configure`
