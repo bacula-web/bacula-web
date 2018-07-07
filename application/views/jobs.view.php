@@ -63,9 +63,6 @@ class JobsView extends CView {
             'A' => 'Data'
         );
 
-        // Set tatal jobs first
-        $this->assign('total_jobs', $jobs->count());
-        
         // Levels list filter
         $levels_list = $jobs->getLevels($job_levels);
         $levels_list['0']  = 'Any';
@@ -271,23 +268,6 @@ class JobsView extends CView {
             $this->assign('result_order_asc_checked', 'checked');
         }
 
-        // Jobs per page options
-        $jobs_per_page = 25;
-        $this->assign('jobs_per_page', array( 25 => '25', 50 => '50', 75 => '75', 100 => '100', 150 => '150'));
-
-        // Determine how many jobs per page
-        // From config file
-        if (FileConfig::get_Value('jobs_per_page') != NULL) {
-            $jobs_per_page = FileConfig::get_Value('jobs_per_page');
-        }
-
-        // From $_POST form
-        if (!is_null(CHttpRequest::get_Value('jobs_per_page'))) {
-            $jobs_per_page = CHttpRequest::get_Value('jobs_per_page');
-        }
-
-        $this->assign('jobs_per_page_selected', $jobs_per_page);
-
         // Parsing jobs result
         $sqlQuery = CDBQuery::get_Select( array('table' => 'Job', 
             'fields' => $fields, 
@@ -295,9 +275,8 @@ class JobsView extends CView {
             'orderby' => $orderby,
             'join' => array( 
                 array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
-                array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus'),
-            ), 
-            'limit' => $jobs_per_page));
+                array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
+            ) ) );
 
         $jobsresult = $jobs->run_query($sqlQuery);
 

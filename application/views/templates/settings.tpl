@@ -46,13 +46,6 @@
                     </div> <!-- end div class=form-group -->
                     <div class="form-group">
 
-                    <!-- Jobs / page -->
-                      <label class="col-xs-4 control-label" for="config_jobsperpage">Jobs / page</label>
-                      <div class="col-xs-8">
-                        <input type="text" class="form-control" id="config_jobsperpage" value="{$config_jobsperpage}" readonly>
-                      </div>
-                    </div> <!-- end div class=form-group -->
-
                     <!-- Show inactive clients -->
                     <div class="form-group">
                       <label class="col-xs-4 control-label" for="config_show_inactive_clients">Show inactive clients</label>
