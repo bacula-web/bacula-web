@@ -68,6 +68,7 @@ Bacula-Web use the following tools and libraries
    * `Bootstrap`_
    * `Font Awesome`_
    * `jQuery`_ 
+   * `DataTables`_
 
 *****************
 Supported browser
@@ -168,3 +169,4 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _breport: http://breport.sourceforge.net
 .. _Webacula: http://webacula.sourceforge.net/
 .. _list of GUI: http://www.bacula.org/manuals/en/console/console/GUI_Programs.html
+.. _DataTables: https://datatables.net/
