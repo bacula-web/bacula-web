@@ -18,6 +18,7 @@ Changelog
 
 Fixed bugs
 
+- 0000220 [bug-php] Pie charts values should not use decimal
 - 0000252 [documentation] Missing permissions steps in Install from archive chapter
 
 New feature(s)
