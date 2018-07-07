@@ -24,7 +24,8 @@
       "smarty/smarty": "2.6.28",
       "smarty-gettext/smarty-gettext": "1.2",
       "components/font-awesome": "4.*",
-      "1000hz/bootstrap-validator": "@stable"
+      "1000hz/bootstrap-validator": "@stable",
+      "datatables/datatables": "@stable"
 	},
 	"autoload": {
 		"classmap": [
