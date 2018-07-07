@@ -135,6 +135,7 @@ class Chart {
          $blob .= '.labelsOutside(true)'."\n";
          $blob .= '.growOnHover(true)'."\n";
          $blob .= '.labelType("percent")'."\n";
+         $blob .= '.valueFormat(d3.format(",.0d"))'."\n";
       }
       // Set animation duration an staggerLabels for bar chart
       if($this->type == 'bar') { 
