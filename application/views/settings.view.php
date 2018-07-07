@@ -59,11 +59,6 @@ class SettingsView extends CView {
                 $this->assign( 'config_language',  FileConfig::get_Value('language'));
             }
 
-            // Check if jobs_per_page is set
-            if( FileConfig::get_Value('jobs_per_page') != NULL) {
-                $this->assign( 'config_jobsperpage',  FileConfig::get_Value('jobs_per_page'));
-            }
-
             // Check if show_inactive_clients is set
             if( FileConfig::get_Value('show_inactive_clients') != NULL) {
 
