@@ -9,6 +9,7 @@
 
   <!-- Bootstrap front-end framework -->
   <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/datatables/datatables/media/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="vendor/components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
 
