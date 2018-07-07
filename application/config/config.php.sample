@@ -6,9 +6,6 @@ $config['show_inactive_clients'] = true;
 // Hide empty pools (displayed by default)
 $config['hide_empty_pools'] = false;
 
-// Jobs per page (Jobs report page)
-$config['jobs_per_page'] = 25;
-
 // Translations
 $config['language'] = 'en_US';
 
