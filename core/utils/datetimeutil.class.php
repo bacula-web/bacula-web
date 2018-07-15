@@ -51,12 +51,12 @@ class DateTimeUtil
         return strtotime($time);
     }
 
-    // ==================================================================================
-    // Function: 	    Get_Elapsed_Time()
-    // Parameters:	    $start_time (start time in date format)
-    //            	    $end_time (end time in date format)
-    // Return:		    Job elapsed time (day) HH:MM:ss
-    // ==================================================================================
+    /*
+     * Return elapsed time for a job
+     * @param string $start_time
+     * @param string $end_time
+     * @return string
+     */
 
     public static function Get_Elapsed_Time($start_time, $end_time)
     {
