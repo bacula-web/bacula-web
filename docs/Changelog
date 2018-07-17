@@ -8,7 +8,7 @@ Changelog
 	visible anymore in General settings page
 
 - Documentation
-	- Add missing permissions steps in Install from archive chapter
+	- Add missing permissions steps in "Install from archive" chapter
 
 - Development
 	- Add datatables/datables Composer requirement
@@ -19,6 +19,7 @@ Changelog
 Fixed bugs
 
 - 0000220 [bug-php] Pie charts values should not use decimal
+- 0000251 [bug-php] Job duration > 1 day looking weird
 - 0000252 [documentation] Missing permissions steps in Install from archive chapter
 
 New feature(s)
