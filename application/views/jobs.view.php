@@ -312,11 +312,6 @@ class JobsView extends CView {
                 break;
             } // end switch
        
-            // Job start time, end time and scheduled time in custom format (if defined)
-            $job['starttime'] = date( $_SESSION['datetime_format'], strtotime($job['starttime']));
-            $job['endtime'] = date( $_SESSION['datetime_format'], strtotime($job['endtime'])); 
-            $job['schedtime'] = date( $_SESSION['datetime_format'], strtotime($job['schedtime'])); 
-       
             $start_time = $job['starttime'];
             $end_time   = $job['endtime'];
        
@@ -330,6 +325,11 @@ class JobsView extends CView {
        
             // Get the job elapsed time completion
             $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
+
+            // Job start time, end time and scheduled time in custom format (if defined)
+            $job['starttime'] = date( $_SESSION['datetime_format'], strtotime($job['starttime']));
+            $job['endtime'] = date( $_SESSION['datetime_format'], strtotime($job['endtime'])); 
+            $job['schedtime'] = date( $_SESSION['datetime_format'], strtotime($job['schedtime'])); 
        
             // Job Level
             $job['level'] = $job_levels[$job['level']];
