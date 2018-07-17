@@ -40,17 +40,6 @@ class DateTimeUtil
         }
    }
 
-    // ==================================================================================
-    // Function:        get_Timestamp()
-    // Parameters:      $time (UNIX date string)
-    // Return:          UNIX timestamp
-    // ==================================================================================
-
-    public static function get_Timestamp($time)
-    {
-        return strtotime($time);
-    }
-
     /*
      * Return elapsed time for a job
      * @param string $start_time
