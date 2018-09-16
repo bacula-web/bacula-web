@@ -48,11 +48,15 @@ class Volumes_Model extends CModel
         return $result['bytes_size'];
     }
 
-    // ==================================================================================
-    // Function: 	getVolumes()
-    // Parameters: 	$pool_id
-    // Return:	        list of volumes (array)	
-    // ==================================================================================
+    /**
+     * This method return a list of volumes
+     *
+     * @param int $pool_id
+     * @param string $orderby
+     * @param string $orderasc
+     *
+     * @return @array
+     */
 
     public function getVolumes( $pool_id = null, $orderby = 'Name', $orderasc = 'DESC') {
        $volumes_list = array();
