@@ -5,31 +5,8 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-12 col-md-8">
-    </div>
 
-    <div class="col-xs-12 col-md-4">
-      <!-- Options -->
-      <form class="form-inline" role="form" action="index.php?page=volumes" method="post">
-        <span class="help-block">{t}Options{/t}</span>
-        <div class="form-group">
-          <label>{t}Order by{/t}</label>
-          {html_options class="form-control input-sm" name=orderby options=$orderby selected=$orderby_selected}
-        </div>
-        <div class="checkbox">
-          <label>
-          <input type="checkbox" name="orderby_asc" value="{t}Asc{/t}" {$orderby_asc_checked}> Asc 
-          </label>
-        </div>
-        <button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
-      </form>
-     </div> <!-- end div class="col-x... -->
-   </div> <!-- end div=class=row -->
-
-   &nbsp;
-
-   <div class="row">
-     <div class="col-xs-12">
+     <div class="col-xs-12 col-md-10">
       <div class="table-responsive">
         <table class="table table-condensed table-striped text-center paginate">
           <thead>
@@ -71,6 +48,29 @@
     </table>
   </div> <!-- end div class="table-responsive" -->
   </div> <!-- end div class=col-xxx -->
+
+    <div class="col-xs-12 col-md-2">
+      <!-- Options -->
+      <form class="form" role="form" action="index.php?page=volumes" method="post">
+        <span class="help-block">{t}Filter{/t}</span>
+        <div class="form-group">
+          <label>{t}Pool{/t}</label>
+          {html_options class="form-control input-sm" name=pool_id options=$pools_list selected=$poolid_selected}
+        </div> <!-- end div form-group -->
+        <span class="help-block">{t}Options{/t}</span>
+        <div class="form-group">
+          <label>{t}Order by{/t}</label>
+          {html_options class="form-control input-sm" name=orderby options=$orderby selected=$orderby_selected}
+        </div>
+        <div class="checkbox">
+          <label>
+          <input type="checkbox" name="orderby_asc" value="{t}Asc{/t}" {$orderby_asc_checked}> Asc 
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
+      </form>
+     </div> <!-- end div class="col-x... -->
+
 </div> <!-- end div class=row -->
 
 &nbsp;

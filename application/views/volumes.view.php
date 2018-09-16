@@ -49,6 +49,37 @@ class VolumesView extends CView {
         $volume_orderby_filter = 'Name';
         $volume_orderby_asc = 'DESC';
 
+        // Pools list filter
+        $pools = new Pools_Model();
+        $pools_list = array();
+        
+        // Create pools list
+        foreach( $pools->getPools() as $pool ) {
+           $pools_list[$pool['poolid']] = $pool['name'];
+        }
+         
+        // Add defautl pool filter
+        $pools_list = array( 0 => 'Any') + $pools_list;
+
+        $this->assign('pools_list', $pools_list);
+
+        $pool_id = 0;         // default pool_id value
+        $poolid_filter = 0;   // default poolid_filter value
+
+        if( CHttpRequest::get_Value('pool_id') != NULL ){
+           $pool_id = CHttpRequest::get_Value('pool_id');
+           $poolid_filter = $pool_id;
+        }
+
+        // Ensure pool_id value is numeric
+        if (!is_numeric($pool_id) && !is_null($pool_id)) {
+            throw new Exception('Invalid pool id (not numeric) provided in Volumes report page');
+        }
+
+        $this->assign('poolid_selected', $poolid_filter); 
+
+        if( $pool_id == 0 ) { $pool_id = Null; }
+
         if( !is_null(CHttpRequest::get_Value('orderby')) ) {
             if( array_key_exists(CHttpRequest::get_Value('orderby'), $orderby) ) {
                 $volume_orderby_filter = CHttpRequest::get_Value('orderby');
@@ -63,15 +94,9 @@ class VolumesView extends CView {
         }
    
         $this->assign( 'orderby_selected', $volume_orderby_filter);
-   
-        $poolid = CHttpRequest::get_Value('pool_id');
-   
-        // If pool_id have been passed in GET request 
-        if (!is_numeric($poolid) && !is_null($poolid)) {
-            throw new Exception('Invalid pool id (not numeric) provided in Volumes report page');
-        }
 
-        foreach ($volumes->getVolumes( $poolid, $volume_orderby_filter, $volume_orderby_asc) as $volume) {
+        // Get volumes list
+        foreach ($volumes->getVolumes( $pool_id, $volume_orderby_filter, $volume_orderby_asc) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
