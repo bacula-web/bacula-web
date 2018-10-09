@@ -41,7 +41,9 @@ class VolumesView extends CView {
             'Read-Only' => 'fa-lock',
             'Disabled' => 'fa-ban',
             'Error' => 'fa-times-circle',
-            'Busy' => 'fa-clock-o' );
+            'Busy' => 'fa-clock-o',
+            'Used' => 'fa-battery-quarter',
+            'Purged' => 'fa-battery-empty' );
 
         $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
         $this->assign( 'orderby', $orderby);
