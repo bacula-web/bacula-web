@@ -57,6 +57,26 @@ function getPassword($prompt)
     return $input;
 }
 
+/*
+ * Display provided string in different color
+ * @param string $string
+ * @param string $type 
+ */
+
+function hightlight( $string, $type = 'error' ) {
+
+/* shell colors
+ * red : 31
+ * green :  32
+ * orange: 33
+ */
+    $colors = array( 'error' => '31', 'ok' => '32', 'warning' => '33', 'information' => '34');
+    
+    $color = $colors[$type];
+    echo "\033[01;33m" . $string . "\033[0m";
+    echo "\033[01;".$color."m" . $string . "\033[0m";
+}
+
 // Make sure the script is run from the command line
 if(!(php_sapi_name() === 'cli')) {
     exit("You are not allowed to run this script from a web browser, but only from the command line");
