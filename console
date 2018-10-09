@@ -170,48 +170,90 @@ case 'check':
 
     break;
 case 'setupauth':
-    echo "Creating basic user authentication for Apache web server\n\n";
 
-    // Make sure current directory is writable by current user
-    echo "Checking if current directory is writable ...\n";
+    echo "It's now time to setup the application back-end database" . PHP_EOL;
+    echo PHP_EOL . "Please note that all informations stored in the user database will be destroyed" . PHP_EOL;
+    echo "Can we proceed ? " . PHP_EOL;
+    echo "\nAnswer (Yes/No): ";
+    $answer = substr(fgets(STDIN), 0, -1);
 
-    if(!is_writable(dirname(__FILE__))) {
-        exit("Error: cannot write into this directory\n");
-    }else{
-        echo "Success: This directory is writable, creating htpasswd file\n";
+    switch(strtolower($answer)) {
+    case "yes":
+        echo "Let's go !" . PHP_EOL;
+        break;
+    case "no":
+        exit("Setup aborted" . PHP_EOL);
+        break;
+    default:
+        exit("Wrong answer, aborting" . PHP_EOL);
     }
 
-    // Get user details from command line
-    $username = readline("Enter your username: ");
-    $username = str_replace(array("\n", "\t"), '', $username);
+    echo "Deleting application back-end database" . PHP_EOL;
 
-    $password = getPassword("Enter your password");
-
-    // Hash the password
-    $options = ['cost' => 12];
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT, $options);
-
-    $htpwdFile = '.htpasswd';
-
-    // Check if .htpasswd already exists
-    if(file_exists($htpwdFile)) {
-        exit("\nError: file $htpwdFile already exists, please remove it and run this command again\n");
+    if( file_exists('application/assets/protected/application.db')){
+        if(unlink('application/assets/protected/application.db')) {
+            echo "\tDatabase file removed" . hightlight( 'Ok', 'ok') . PHP_EOL;
+        }else{
+            die("\tFail to remove database file" . hightlight( 'Error', 'error') . PHP_EOL);
+        }
     }
 
-    $handle = @fopen($htpwdFile, 'w');
-    if($handle !== FALSE) {
-        $data = "$username:$hashedPassword";
-        fwrite($handle, $data);
-        fclose($handle);
-    }else{
-        exit("\nError: unable to create file $htpwdFile, please check permissions\n");
+    // Create SQLite database
+    try {
+        $pdo = new PDO('sqlite:application/assets/protected/application.db');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        echo "\tDatabase created" . hightlight( 'Ok', 'ok') . PHP_EOL;
+
+        // Create database schema
+        echo "Creating database schema" . PHP_EOL;
+    
+        $createSchemaQuery = 'CREATE TABLE IF NOT EXISTS Users (
+            user_id INTEGER PRIMARY KEY,
+            username TEXT NOT NULL UNIQUE,
+            passwordHash TEXT NOT NULL,
+            email TEXT
+        );
+        CREATE INDEX IF NOT EXISTS User_ix_username ON Users (username);';
+
+        $rows = $pdo->exec($createSchemaQuery);
+
+        if($rows === FALSE) {
+            echo "\tDatabase schema not created" . hightlight( 'Error', 'error') . PHP_EOL;
+        }else{
+            echo "\tDatabase schema created" . hightlight( 'Ok', 'ok') . PHP_EOL;
+        }
+
+        echo "User creation" . PHP_EOL;
+
+        echo "Username: ";
+        $username = substr(fgets(STDIN), 0, -1);
+
+        echo "Email address: ";
+        $email = substr(fgets(STDIN), 0, -1);
+
+        $password = getPassword("Password");
+
+        if(strlen($password) < 6){
+              die("\tPassword must be at least 6 characters long, aborting" . hightlight( 'Error', 'error') . PHP_EOL);
+        }
+
+        $hashedPassword = password_hash( $password, CRYPT_BLOWFISH);
+        $addUserQuery = "INSERT INTO Users (username,email,passwordHash) VALUES ('$username','$email', '$hashedPassword');";
+        $createdUser = $pdo->exec($addUserQuery);
+
+        if($createdUser > 0) {
+                echo "\tUser created" . hightlight( 'Ok', 'ok') . PHP_EOL;
+        }
+
+        echo PHP_EOL . "You can now connect to your Bacula-Web instance using provided credentials" . PHP_EOL;
+
+    }catch(PDOException $e){
+          die( 'Database error ' . $e->getMessage() . ' code(' . $e->getCode() . ')');
     }
     break;
 default:
     exit("\nError: unknown command, use <php console help> for further informations\n\n");
 }
-
-echo "\nGreat !!! Apache authentication setup is now completed\n\n";
-echo "You can now use the credentials you've provided to access Bacula-Web\n";
 
 ?>
