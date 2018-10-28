@@ -26,6 +26,7 @@ Fixed bugs
 New feature(s)
 
 - 0000141 [feature] Pagination in report pages
+- 0000244 [feature] Filter volumes in changer
 - 0000263 [feature] Filter volumes by pool on Volumes report
 
 === Release 8.0.1 (June 22 2018)
