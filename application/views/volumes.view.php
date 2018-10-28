@@ -97,8 +97,15 @@ class VolumesView extends CView {
    
         $this->assign( 'orderby_selected', $volume_orderby_filter);
 
+        $inchanger_filter = false;
+
+        if( !is_null(CHttpRequest::get_Value('inchanger')) ) {
+            $inchanger_filter = true;
+            $this->assign( 'inchanger_checked', 'checked');
+        }
+
         // Get volumes list
-        foreach ($volumes->getVolumes( $pool_id, $volume_orderby_filter, $volume_orderby_asc) as $volume) {
+        foreach ($volumes->getVolumes( $pool_id, $volume_orderby_filter, $volume_orderby_asc, $inchanger_filter) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {

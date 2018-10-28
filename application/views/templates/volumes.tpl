@@ -57,6 +57,11 @@
           <label>{t}Pool{/t}</label>
           {html_options class="form-control input-sm" name=pool_id options=$pools_list selected=$poolid_selected}
         </div> <!-- end div form-group -->
+        <div class="checkbox">
+          <label>
+          <input type="checkbox" name="inchanger" value="{t}In changer{/t}" {$inchanger_checked}> In changer 
+          </label>
+        </div> <!-- end div checkbox -->
         <span class="help-block">{t}Options{/t}</span>
         <div class="form-group">
           <label>{t}Order by{/t}</label>
@@ -66,7 +71,7 @@
           <label>
           <input type="checkbox" name="orderby_asc" value="{t}Asc{/t}" {$orderby_asc_checked}> Asc 
           </label>
-        </div>
+        </div> <!-- end div checkbox -->
         <button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
       </form>
      </div> <!-- end div class="col-x... -->
