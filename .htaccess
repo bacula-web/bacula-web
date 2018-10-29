@@ -1,0 +1,4 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteRule ^bwc|console.php(.*) - [R=404,L]
+</IfModule>
