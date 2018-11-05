@@ -108,6 +108,9 @@
 						<li> 
 							<a href="http://bugs.bacula-web.org" title="Bug and feature request tracker" target="_blank" rel="noopener noreferrer"><i class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a>
 						</li>
+                  <li> <a href="https://github.com/bacula-web/bacula-web" title="Bacula-Web project on GitHub" target="_blank" rel="noopener noreferrer">
+                    <i class="fa fa-github fa-fw"></i>{t}Project on GitHub{/t}</a>
+                  </li>
 						<li role="presentation" class="divider"></li>
 						<li role="presentation" class="dropdown-header">{t}Version{/t}</li>
 						<li class="disabled"><a href="#"><i class="fa fa-info fa-fw"></i> {$app_name} {$app_version}</a></li>
