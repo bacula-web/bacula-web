@@ -1,15 +1,14 @@
 .. _install/install:
 
-#######################
+=======================
 Web server installation
-#######################
+=======================
 
-***********************
 Using Apache web server
-***********************
+=======================
 
 Install requirements on RedHat / Centos / Fedora
-================================================
+------------------------------------------------
 
 Install Apache web server on rpm based Linux distribution like Red Hat, Centos, Fedora, SUSE Linux, Scientific Linux, etc.
 

@@ -1,12 +1,13 @@
 .. _install/index:
 
+============
 Installation
 ============
 
 This section all the information you'll need in order to install, configure, test and upgrade Bacula-Web on your system.
 
 Introduction
-------------
+============
 
 Bacula-Web is a web application written in PHP and should be run on Apache httpd server (Nginx works fine too).
 

@@ -1,8 +1,8 @@
 .. _install/installcomposer:
 
-#################################
+=================================
 Install Bacula-Web using Composer
-#################################
+=================================
 
 Since version 8.0.0, Bacula-Web dependencies management is performed using `Composer`_.
 
@@ -13,9 +13,8 @@ It allows you to declare the libraries your project depends on and it will manag
 
 Let's start by installing Composer on your system
 
-****************
 Install Composer
-****************
+================
 
 Most Linux distro povides Composer as package, so to install it run this command
 
@@ -53,9 +52,8 @@ For more detailled instructions, check `this page <https://getcomposer.org/downl
 
 .. warning:: Never use composer as a super-user or root, use the web server user or the one who own Bacula-Web files and folders
 
-**********************************
 Use Composer to install Bacula-Web 
-**********************************
+==================================
 
 From your $HOME folder, run the command below
 

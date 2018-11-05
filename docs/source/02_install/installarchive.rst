@@ -5,7 +5,7 @@ Install Bacula-Web from archive
 ===============================
 
 Download the source tarball
----------------------------
+===========================
 
 Move into Apache directory
 
@@ -26,7 +26,7 @@ On Debian / Ubuntu
    # curl -O http://www.bacula-web.org/files/bacula-web.org/downloads/bacula-web-latest.tgz
 
 Verify archive signature (optional)
------------------------------------
+===================================
 
 Download sha256 or sha512 signature file from the download page, and run one of these command to verify the signature
 
@@ -39,7 +39,7 @@ Download sha256 or sha512 signature file from the download page, and run one of 
    # cat sha512sum.txt | sha512sum -c
 
 Create Bacula-Web folder
-------------------------
+========================
 
 **On Centos / Fedora / RHEL**
 
@@ -54,7 +54,7 @@ Create Bacula-Web folder
    # mkdir -v /var/www/bacula-web
 
 Decompress the archive
-----------------------
+======================
 
 **On Red Hat / Centos / Fedora**
 
@@ -69,7 +69,7 @@ Decompress the archive
    # tar -xzf bacula-web-latest.tgz -C /var/www/bacula-web
 
 Change files/folders permissions
---------------------------------
+================================
 
 **On Centos / Red Hat / RHEL**
 

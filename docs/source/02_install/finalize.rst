@@ -5,7 +5,7 @@ Finalize your setup
 ==============================
 
 Change admin password
----------------------
+=====================
 
 .. image:: /_static/bacula-web-user-settings-menu.jpg
    :scale: 30 %
@@ -27,7 +27,7 @@ Simply use **Password management** form to reset current user password
    :scale: 60 %
 
 Manage users
-------------
+============
 
 .. image:: /_static/bacula-web-settings-menu.jpg
    :scale: 30 %

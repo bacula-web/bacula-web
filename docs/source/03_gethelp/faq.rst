@@ -1,12 +1,11 @@
 .. _gethelp/faq:
 
-####
+====
 FAQ
-####
+====
 
-*******
 Summary
-*******
+=======
 
 Here's below a summary of most frequently asked questions that might help you to install, upgrade, troubleshoot or contribute to Bacula-Web project
 

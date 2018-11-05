@@ -1,8 +1,8 @@
 .. _contribute/translations:
 
-############
+============
 Translations
-############
+============
 
 Bacula-Web web user interface is by default in english, but it is also available in other languages (complete list below)
 

@@ -33,7 +33,7 @@ Reload Apache configuration
    $ sudo service httpd reload || sudo /etc/init.d/httpd reload
 
 Web server security
--------------------
+===================
 
 In order to secure the application folder and avoid exposing sensitive information contained in Bacula-Web configuration.
 

@@ -7,7 +7,7 @@ Upgrade
 Upgrading Bacula-Web installation is very easy, you only need basic linux administration skills.
 
 Backup your setup first 
------------------------
+=======================
 
 Do a copy of the config file and users database
 
@@ -20,12 +20,12 @@ Do a copy of the config file and users database
    # cp -v application/assets/protected/application.db $HOME/
 
 Check the requirements
-----------------------
+======================
 
 Ensure that you meet all system requirements (more informations in the :ref:`install/requirements` page).
 
 Empty the current folder
-------------------------
+========================
 
 On Centos / Fedora / RHEL
 
@@ -59,6 +59,6 @@ Fix files ownership
    # chown -v www-data: appilcation/config/config.php
 
 Test your setup
----------------
+===============
 
 It's now time to :ref:`install/test`
