@@ -48,13 +48,18 @@ class Volumes_Model extends CModel
         return $result['bytes_size'];
     }
 
-    // ==================================================================================
-    // Function: 	getVolumes()
-    // Parameters: 	$pool_id
-    // Return:	        list of volumes (array)	
-    // ==================================================================================
+    /**
+     * This method return a list of volumes
+     *
+     * @param int $pool_id
+     * @param string $orderby
+     * @param string $orderasc
+     * @param boolean $inchanger
+     *
+     * @return @array
+     */
 
-    public function getVolumes( $pool_id = null, $orderby = 'Name', $orderasc = 'DESC') {
+    public function getVolumes( $pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $inchanger = false) {
        $volumes_list = array();
        $where = '';
 
@@ -62,6 +67,16 @@ class Volumes_Model extends CModel
           $this->addParameter( 'pool_id', $pool_id);
           $where = 'WHERE Media.PoolId = :pool_id';
        }
+
+       if( $inchanger == true ) {
+          $this->addParameter( 'inchanger', 1);
+          if( !empty($where)) { 
+             $where .= ' AND '; 
+          }else {
+             $where .= 'WHERE ';
+          }
+          $where .= ' Media.inchanger = :inchanger';
+       } // end if
 
 	    $query    = "SELECT Media.volumename, Media.volbytes, Media.voljobs, Media.volstatus, Media.mediatype, Media.lastwritten, 
 			           Media.volretention, Media.slot, Media.inchanger, Pool.Name AS pool_name

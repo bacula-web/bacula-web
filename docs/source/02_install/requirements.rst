@@ -1,12 +1,11 @@
 .. _install/requirements:
 
-############
+============
 Requirements
-############
+============
 
-********************
 General requirements
-********************
+====================
 
 +-----------------+-------------------------------------------+
 | Requirement     | Note                                      |
@@ -17,7 +16,7 @@ General requirements
 +-----------------+-------------------------------------------+
 | **Web server**                                              |
 +-----------------+-------------------------------------------+
-|                 | Apache >= 2.2                             |
+|                 | Apache >= 2.2 (mod_rewrite enabled)       |
 +-----------------+-------------------------------------------+
 |                 | Nginx >= 1.10                             |
 +-----------------+-------------------------------------------+
@@ -44,7 +43,7 @@ General requirements
    PHP Posix is required since version 8.0.0
 
 Using SELinux
--------------
+=============
 
 To install Bacula-Web with SELinux enforced, please use instructions below
 

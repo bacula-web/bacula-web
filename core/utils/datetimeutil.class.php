@@ -40,63 +40,37 @@ class DateTimeUtil
         }
    }
 
-    // ==================================================================================
-    // Function:        get_Timestamp()
-    // Parameters:      $time (UNIX date string)
-    // Return:          UNIX timestamp
-    // ==================================================================================
-
-    public static function get_Timestamp($time)
-    {
-        return strtotime($time);
-    }
-
-    // ==================================================================================
-    // Function: 	    Get_Elapsed_Time()
-    // Parameters:	    $start_time (start time in date format)
-    //            	    $end_time (end time in date format)
-    // Return:		    Job elapsed time (day) HH:MM:ss
-    // ==================================================================================
+    /*
+     * Return elapsed time for a job
+     * @param string $start_time
+     * @param string $end_time
+     * @return string
+     */
 
     public static function Get_Elapsed_Time($start_time, $end_time)
     {
+        $dateFormat = 'Y-m-d H:m:i';
+        $dateInputFormat = 'Y-m-d H:i:s';
+
         if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
             return 'n/a';
         } else {
-            $start = self::get_Timestamp($start_time);
+            $start = DateTime::createFromFormat($dateInputFormat, $start_time);
         }
 
         if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
-            $end = mktime();
+            $end = DateTime::createFromFormat( $dateInputFormat, date( $dateFormat));
         } else {
-            $end = self::get_Timestamp($end_time);
+            $end = DateTime::createFromFormat( $dateInputFormat, $end_time);
         }
 
-        $diff = $end - $start;
+        $diff = $start->diff($end);
 
-        $daysDiff = sprintf("%02d", floor($diff / 60 / 60 / 24));
-        $diff -= $daysDiff * 60 * 60 * 24;
-
-        $hrsDiff = sprintf("%02d", floor($diff / 60 / 60));
-        $diff -= $hrsDiff * 60 * 60;
-
-        $minsDiff = sprintf("%02d", floor($diff / 60));
-        $diff -= $minsDiff * 60;
-        $secsDiff = sprintf("%02d", $diff);
-
-	// If elapsed time is more than 24 hours, return a string with days
-        if ($daysDiff > 0) {
-            $elapsed_time = "$daysDiff day(s) $hrsDiff:$minsDiff$secsDiff";
-        } else {
-          $elapsed_time = "$hrsDiff:$minsDiff:$secsDiff";
-
-          // Quick fix as Bacula has a bug with startdate and enddate when using pre nor post scripts
-          if( $elapsed_time == "00:00:00" ) {
-            $elapsed_time = "00:00:01";
-          }
+        if( $diff->d > 0 ) {
+            return $diff->format('%d day(s), %H:%I:%S'); 
+        }else {
+            return $diff->format('%H:%I:%S'); 
         }
-
-  	return $elapsed_time;
     }
 
     // ==================================================================================

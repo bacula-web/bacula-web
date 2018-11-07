@@ -1,21 +1,19 @@
 .. _gethelp/support:
 
-#########################
+=========================
 Bugs and features request
-#########################
+=========================
 
-***************
 How to get help
-***************
+===============
 
 If you're in trouble while installing, upgrading, configuring or using Bacula-Web ?
 No problem, feel free to register and submit a bug report and features request in the dedicated `bug tracker`_.
 
 .. _bug tracker: http://bugs.bacula-web.org
 
-********************
 Bug report guideline
-********************
+====================
 
 Before submiting a bug report, please make sure that ...
 

@@ -88,9 +88,6 @@ class TestView extends CView {
             case 'php-gettext':
                 $check['check_result'] = $icon_result[function_exists('gettext')];
                 break;
-            case 'pear-db':
-                $check['check_result'] = $icon_result[class_exists('DB')];
-                break;
             case 'php-mysql':
                 $check['check_result'] = $icon_result[in_array('mysql', $pdo_drivers)];
                 break;

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3056bdf0f26d3b1873de8fe13e0e4a1",
+    "content-hash": "639cdfa9c105c79f2a2e2ec4267bab2d",
     "packages": [
         {
             "name": "1000hz/bootstrap-validator",
@@ -60,16 +60,16 @@
         },
         {
             "name": "components/jquery",
-            "version": "3.2.1",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "e5534d4ab8e80c159553d507e358ed20a806d3bf"
+                "reference": "459648cda77875519c5da3ae1dd0ed5d170aa649"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/e5534d4ab8e80c159553d507e358ed20a806d3bf",
-                "reference": "e5534d4ab8e80c159553d507e358ed20a806d3bf",
+                "url": "https://api.github.com/repos/components/jquery/zipball/459648cda77875519c5da3ae1dd0ed5d170aa649",
+                "reference": "459648cda77875519c5da3ae1dd0ed5d170aa649",
                 "shasum": ""
             },
             "type": "component",
@@ -98,7 +98,30 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2017-03-21T07:01:49+00:00"
+            "time": "2018-03-04T13:23:48+00:00"
+        },
+        {
+            "name": "datatables/datatables",
+            "version": "1.10.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DataTables/DataTables.git",
+                "reference": "156faa83386460c578e00c460eca9766e38a0c5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DataTables/DataTables/zipball/156faa83386460c578e00c460eca9766e38a0c5f",
+                "reference": "156faa83386460c578e00c460eca9766e38a0c5f",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool, based upon the foundations of progressive enhancement, which will add advanced interaction controls to any HTML table.",
+            "homepage": "http://www.datatables.net/",
+            "time": "2018-06-22T15:34:14+00:00"
         },
         {
             "name": "eonasdan/bootstrap-datetimepicker",
@@ -259,16 +282,16 @@
         },
         {
             "name": "moment/moment",
-            "version": "2.20.1",
+            "version": "2.22.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moment/moment.git",
-                "reference": "03073778ec18ee38e179208cd1af899e8d1848dc"
+                "reference": "2e2a5b35439665d4b0200143d808a7c26d6cd30f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moment/moment/zipball/03073778ec18ee38e179208cd1af899e8d1848dc",
-                "reference": "03073778ec18ee38e179208cd1af899e8d1848dc",
+                "url": "https://api.github.com/repos/moment/moment/zipball/2e2a5b35439665d4b0200143d808a7c26d6cd30f",
+                "reference": "2e2a5b35439665d4b0200143d808a7c26d6cd30f",
                 "shasum": ""
             },
             "require": {
@@ -309,7 +332,7 @@
                 "time",
                 "validate"
             ],
-            "time": "2017-12-19T04:36:30+00:00"
+            "time": "2018-06-01T06:45:43+00:00"
         },
         {
             "name": "novus/nvd3",
@@ -508,16 +531,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.4",
+            "version": "v3.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "09a5172057be8fc677840e591b17f385e58c7c0d"
+                "reference": "acc5a37c706ace827962851b69705b24e71ca17c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/09a5172057be8fc677840e591b17f385e58c7c0d",
-                "reference": "09a5172057be8fc677840e591b17f385e58c7c0d",
+                "url": "https://api.github.com/repos/symfony/process/zipball/acc5a37c706ace827962851b69705b24e71ca17c",
+                "reference": "acc5a37c706ace827962851b69705b24e71ca17c",
                 "shasum": ""
             },
             "require": {
@@ -553,7 +576,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2018-01-29T09:03:43+00:00"
+            "time": "2018-05-30T04:24:30+00:00"
         },
         {
             "name": "twbs/bootstrap",
@@ -613,7 +636,8 @@
     "stability-flags": {
         "novus/nvd3": 0,
         "eonasdan/bootstrap-datetimepicker": 0,
-        "1000hz/bootstrap-validator": 0
+        "1000hz/bootstrap-validator": 0,
+        "datatables/datatables": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,

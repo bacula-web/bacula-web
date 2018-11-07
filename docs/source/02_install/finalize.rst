@@ -4,22 +4,39 @@
 Finalize your setup
 ==============================
 
-Change admin password
----------------------
+Overview
+========
 
 .. image:: /_static/bacula-web-user-settings-menu.jpg
    :scale: 30 %
    :align: right
 
-Starting from version 8.0.0, users informations are stored in SQLite database. This database is created automatically after installation.
+Starting from version 8.0.0, users informations are stored in SQLite database.
 
-The default user is **admin**, with the password **bacula**.
+To be able to sign in into Bacula-Web, you'll need to create the first user
 
-I strongly recommend you to change the password as soon as possible.
+.. note:: The users database is stored in <install folder>/application/assets/protected/application.db
+
+User creation
+=============
+
+::
+
+   $ cd /var/www/html/bacula-web
+
+   On Debian/Ubuntu
+   $ sudo -u www-data php bwc setupauth
+
+   On Red Hat, Fedora, etc.
+   $ sudo -u apache php bwc setupauth
+
+Answer the questions, and if everything goes fine, you should be able to sign in
+
+Reset user password
+===================
 
 The password can be changed very easily by using the **User settings** menu at the top of the page.
 
-.. note:: The users database is stored in <install folder>/application/assets/protected/application.db
 
 Simply use **Password management** form to reset current user password
 
@@ -27,7 +44,7 @@ Simply use **Password management** form to reset current user password
    :scale: 60 %
 
 Manage users
-------------
+============
 
 .. image:: /_static/bacula-web-settings-menu.jpg
    :scale: 30 %

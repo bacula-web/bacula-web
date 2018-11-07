@@ -1,12 +1,11 @@
 .. _install/installnginx:
 
-#############################
+=============================
 Nginx web server installation
-#############################
+=============================
 
-*************************
 Install required packages
-*************************
+=========================
 
 Follow instructions below to setup Bacula-Web with Nginx instead of Apache www
 
@@ -37,9 +36,8 @@ If you use postgreSQL Bacula catalog
     $ sudo apt-get install php-pgsql
 
 
-*****************
 Configure PHP-FPM
-*****************
+=================
 
 Modify PHP-FPM configuration
 
@@ -57,9 +55,8 @@ Restart PHP-FPM service
     /etc/init.d/php7.1-fpm restart
 
 
-***************
 Configure Nginx
-***************
+===============
 
 Modify Nginx default site configuration
 

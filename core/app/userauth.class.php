@@ -64,10 +64,11 @@ class UserAuth extends CModel {
 
         // Users table do not exist, let's create it
         if( count($res) == 0) {
-            $this->createSchema();
+            # TO FIX !!!
+            # $this->createSchema();
             
-            // Create default user
-            $this->addUser( 'admin', 'admin@domain.com', 'bacula');
+            # // Create default user
+            # $this->addUser( 'admin', 'admin@domain.com', 'bacula');
         }
 
     }

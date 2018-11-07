@@ -1,16 +1,15 @@
 .. _install/configure:
 
-####################
+====================
 Configure Bacula-Web
-####################
+====================
 
 This section explain how to create the configuration file which contain your custom settings.
 
 .. note:: Please note that since version 5.1.0, the config file is a PHP script (it was a .conf file before this version).
 
-*************************
 Create configuration file
-*************************
+=========================
 
 Bacula-Web settings are stored in the file below
 
@@ -53,12 +52,11 @@ on Centos 7
 
 .. note:: Do not forget the column <:> after apache_user 
 
-*********
 Settings
-*********
+========
 
 General settings
-================
+----------------
 
 ================================= ====================================== ================
 Setting                           Description                            Default value

@@ -2,6 +2,8 @@
         <script src="vendor/components/jquery/jquery.min.js"></script>
         <script src="vendor/moment/moment/min/moment-with-locales.js"></script>
         <script src="vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="vendor/datatables/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/datatables/media/js/dataTables.bootstrap.min.js"></script>
         <script src="vendor/components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
         <script src="vendor/1000hz/bootstrap-validator/dist/validator.min.js"></script>
 

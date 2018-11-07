@@ -68,11 +68,6 @@
 		  </label>
 		</div>
 
-		<div class="form-group">
-		  <label>{t}Jobs per Page{/t}</label>
-        {html_options class="form-control" name=jobs_per_page options=$jobs_per_page selected=$jobs_per_page_selected}
-		</div>
-
 		<button type="reset" class="btn btn-default btn-sm" title="{t}Reset{/t}">{t}Reset{/t}</button>
 		<button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
 
@@ -85,13 +80,14 @@
 
 	  <div class="col-xs-12 col-sm-9 col-sm-pull-3 col-lg-10 col-lg-pull-2">
 	  <div class="table-responsive">
-		<table class="table table-condensed table-striped text-center">
+		<table class="table table-condensed table-striped text-center paginate">
+          <thead>
 		  <tr>
 			<th class="text-center">{t}Status{/t}</th>
 			<th class="text-center">{t}Job ID{/t}</th>
 			<th class="text-left">{t}Name{/t}</th>
 			<th class="text-center">{t}Type{/t}</th>
-         <th class="text-center">{t}Scheduled Time{/t}</th>
+            <th class="text-center">{t}Scheduled Time{/t}</th>
 			<th class="text-center">{t}Start time{/t}</th>
 			<th class="text-center">{t}End time{/t}</th>
 			<th class="text-center">{t}Elapsed time{/t}</th>
@@ -103,6 +99,7 @@
 			<th class="text-center">{t}Pool{/t}</th>
 			<th class="text-center">{t}Log{/t}</th>
 		  </tr>
+        </thead>
 
 		  <!-- <div class="listbox"> -->
 		  {foreach from=$last_jobs item=job}
@@ -112,10 +109,14 @@
 			</td>
 			<td>{$job.jobid}</td>
 			<td class="text-left">
-			  <a href="index.php?page=backupjob&backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
+           {if $job.type == 'B'}
+			    <a href="index.php?page=backupjob&backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
+           {else}
+			    {$job.job_name}
+           {/if}
 			</td>
 			<td>{$job.type}</td>
-      <td>{$job.schedtime}</td>
+         <td>{$job.schedtime}</td>
 			<td>{$job.starttime}</td>
 			<td>{$job.endtime}</td>
 			<td>{$job.elapsed_time}</td>
@@ -139,9 +140,6 @@
 		</table>
 	  </div>
 
-		<div class="alert alert-info text-center" role="alert">
-		  {t}Found{/t} <b>{$jobs_found}</b> / <b>{$total_jobs} Job(s)</b>
-		</div>
 	  </div>
   </div> <!-- div class="row" -->
 </div> <!-- div class="container-fluid" -->

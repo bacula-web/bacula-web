@@ -44,14 +44,6 @@
                         <input type="text" class="form-control" id="config_language" value="{$config_language}" readonly>
                       </div>
                     </div> <!-- end div class=form-group -->
-                    <div class="form-group">
-
-                    <!-- Jobs / page -->
-                      <label class="col-xs-4 control-label" for="config_jobsperpage">Jobs / page</label>
-                      <div class="col-xs-8">
-                        <input type="text" class="form-control" id="config_jobsperpage" value="{$config_jobsperpage}" readonly>
-                      </div>
-                    </div> <!-- end div class=form-group -->
 
                     <!-- Show inactive clients -->
                     <div class="form-group">
@@ -74,6 +66,7 @@
 
                 <!-- Users tab -->
                 <div class="tab-pane" id="users"> 
+               
                   <h4>Users</h4>
 
                   <div class="table-responsive">
