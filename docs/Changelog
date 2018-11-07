@@ -41,7 +41,7 @@ Changelog
 	- Update JQuery from version 3.2.1 to 3.3.1
 	- Update moment/moment from version 2.20.1 to 2.22.2
 	- Update symfony/process from version 3.4.4 to 3.4.12
-	- General code improvments
+	- General code improvements
 
 Fixed bugs
 
@@ -108,7 +108,7 @@ Changelog
 	- Nginx web server setup have been added
 
 - Development
-	- Code cleanup and few improvments
+	- Code cleanup and few improvements
 
 Fixed bugs
 
@@ -206,7 +206,7 @@ Changelog
 	- Documentation got cleaned up, restructured and updated
 - Development
 	- Remove static php class with PDO
-	- Large amount of code improvment and cleanup
+	- Large amount of code improvments and cleanup
 	- Use Composer autoloader
 	- Improve application exception handling
 	- Add CodeClimate for CI
