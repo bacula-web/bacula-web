@@ -48,6 +48,7 @@
  define('J_WAITING_MAX_JOBS', 'd');
  define('J_WAITING_START_TIME', 't');
  define('J_WAITING_HIGH_PR_JOB', 'p');
+ define('J_VERIFY_FOUND_DIFFERENCES', 'D');
 
  // Job levels
  define('J_FULL', 'F');
