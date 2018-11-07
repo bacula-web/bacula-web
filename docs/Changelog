@@ -1,4 +1,4 @@
-=== Release 8.1.0 (October dd 2018)
+=== Release 8.1.0 (November 7 2018)
 
 Changelog
 
@@ -6,15 +6,42 @@ Changelog
 	- Jobs overview, volumes and pools report pages can now be paginated
 	- the config option <jobs_per_page> is not used anymore, it will not be
 	visible anymore in General settings page
+	- Link to GitHub project added to header menu
+	- New tool bwc (Bacula-Web console). User authentication back-end is now setup by the user after installation
+	  More details here http://docs.bacula-web.org/en/latest/02_install/finalize.html#install-finalize
+	- For people using Apache web server, mod_rewrite is part of requirement
+	- Jobs, Pools and Volumes report pages are now paginated
+	- Pie charts now does not display value with decimal
+
+- Jobs report page
+	- Jobs with duration > 1 day now display correct duration
+	- Disabled link to backup job report if job type is not backup
+	- Add missing status (Verify found differences) for Verify jobs
+
+- Test page
+	- Remove useless test for pear-db
+
+- Volumes report
+	- Add missing status icon for "Used" and "Purged" volumes
+	- New: Filter volumes which are in the changer (library)
+	- New: Filter volumes by pool
+
+- Settings
+	- Fixed "General" and "Users" tabs
 
 - Documentation
 	- Add missing permissions steps in "Install from archive" chapter
+	- General improvements and content update
+	- Update final step (use of Bacula-Web console)
+	- Fixed/updated instruction for permissions in <Install from archive>
+	chapter
 
 - Development
 	- Add datatables/datables Composer requirement
 	- Update JQuery from version 3.2.1 to 3.3.1
 	- Update moment/moment from version 2.20.1 to 2.22.2
 	- Update symfony/process from version 3.4.4 to 3.4.12
+	- General code improvments
 
 Fixed bugs
 
@@ -31,6 +58,8 @@ New feature(s)
 - 0000141 [feature] Pagination in report pages
 - 0000244 [feature] Filter volumes in changer
 - 0000263 [feature] Filter volumes by pool on Volumes report
+
+This release fix 7 bugs and add 3 new features
 
 === Release 8.0.1 (June 22 2018)
 
