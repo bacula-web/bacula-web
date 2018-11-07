@@ -109,10 +109,14 @@
 			</td>
 			<td>{$job.jobid}</td>
 			<td class="text-left">
-			  <a href="index.php?page=backupjob&backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
+           {if $job.type == 'B'}
+			    <a href="index.php?page=backupjob&backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
+           {else}
+			    {$job.job_name}
+           {/if}
 			</td>
 			<td>{$job.type}</td>
-      <td>{$job.schedtime}</td>
+         <td>{$job.schedtime}</td>
 			<td>{$job.starttime}</td>
 			<td>{$job.endtime}</td>
 			<td>{$job.elapsed_time}</td>
