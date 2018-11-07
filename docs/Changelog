@@ -24,6 +24,7 @@ Fixed bugs
 - 0000264 [bug-php] Only see volume status icon when status is append
 - 0000268 [bug] Problem using job name link if not backup job
 - 0000269 [bug-php] Status icon not displayed for verify jobs
+- 0000270 [bug-html] Tabs doesn't work in Settings page
 
 New feature(s)
 
