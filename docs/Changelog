@@ -22,6 +22,7 @@ Fixed bugs
 - 0000251 [bug-php] Job duration > 1 day looking weird
 - 0000252 [documentation] Missing permissions steps in Install from archive chapter
 - 0000264 [bug-php] Only see volume status icon when status is append
+- 0000268 [bug] Problem using job name link if not backup job
 
 New feature(s)
 
