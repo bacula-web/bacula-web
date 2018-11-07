@@ -292,6 +292,7 @@ class JobsView extends CView {
             case J_CANCELED:
                 $job['Job_icon'] = "off";
                 break;
+            case J_VERIFY_FOUND_DIFFERENCES:
             case J_COMPLETED_ERROR:
                 $job['Job_icon'] = "warning-sign";
                 break;
