@@ -64,13 +64,10 @@ class UserAuth extends CModel {
 
         // Users table do not exist, let's create it
         if( count($res) == 0) {
-            # TO FIX !!!
-            # $this->createSchema();
-            
-            # // Create default user
-            # $this->addUser( 'admin', 'admin@domain.com', 'bacula');
+           # If Users table not found, raise an exception
+           throw new Exception('Users authentication database not found, 
+              have a look at the chapter <b>Installation / Finalize your setup</b> in the <a href="http://docs.bacula-web.org" target="_blank">documentation</a>');
         }
-
     }
 
     public function createSchema() {
