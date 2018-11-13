@@ -1,3 +1,14 @@
+=== Release 8.1.1 (November xx 2018)
+
+Changelog
+
+Fixed bugi(s)
+
+- 0000273 [documentation] Instructions to download archive not accurate
+- 0000274: [bug-design] Warn users if authentication back-end db does not exist
+
+New feature(s)
+
 === Release 8.1.0 (November 7 2018)
 
 Changelog
