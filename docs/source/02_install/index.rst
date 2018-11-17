@@ -1,5 +1,8 @@
 .. _install/index:
 
+.. toctree::
+   :maxdepth: 3
+
 ============
 Installation
 ============
