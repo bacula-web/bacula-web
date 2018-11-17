@@ -47,7 +47,7 @@ Once you are done, copy Bacula-Web config file and users database back to their 
 ::
 
    # cp -v $HOME/config.php <install folder>/application/config/
-   # cp -v $HOME/appication.db <install folder>/application/assets/protected/
+   # cp -v $HOME/application.db <install folder>/application/assets/protected/
 
 Fix files ownership
 
@@ -56,7 +56,7 @@ Fix files ownership
    On Red Hat / Centos / Fedora
    # chown -v apache: application/config/config.php
    On Debian / Ubuntu
-   # chown -v www-data: appilcation/config/config.php
+   # chown -v www-data: application/config/config.php
 
 Test your setup
 ===============
