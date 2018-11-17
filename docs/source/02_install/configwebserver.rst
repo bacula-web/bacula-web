@@ -39,13 +39,13 @@ In order to secure the application folder and avoid exposing sensitive informati
 
 Edit the Apache configuration file as described below
 
-Red Hat / Centos / Fedora
+**Red Hat / Centos / Fedora**
 
 ::
 
    $ sudo vim /etc/httpd/conf.d/bacula-web.conf
 
-Debian / Ubuntu
+**Debian / Ubuntu**
 
 ::
 
@@ -68,13 +68,13 @@ Enable the configuration
 
 Then restart Apache to apply the configuration change
 
-Centos / Red Hat
+**Red Hat / Centos / Fedora**
 
 ::
 
    $ sudo /etc/init.d/httpd restart
 
-Debian / Ubuntu
+**Debian / Ubuntu**
 
 ::
 
