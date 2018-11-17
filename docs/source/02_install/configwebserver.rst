@@ -59,6 +59,7 @@ with the content below
      AllowOverride All
    </Directory>
 
+.. important:: You might need to adapt Bacula-Web installation path in the above configuration according to your setup
 
 Enable the configuration
 
