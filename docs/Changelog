@@ -2,11 +2,12 @@
 
 Changelog
 
-Fixed bugi(s)
+Fixed bug(s)
 
 - 0000273 [documentation] Instructions to download archive not accurate
 - 0000274 [bug-design] Warn users if authentication back-end db does not exist
 - 0000275 [documentation] Fix incomplete documentation for upgrade
+- 0000276 [security-issue] Smarty - Fix CVE-2018-13982
 
 New feature(s)
 
@@ -482,7 +483,7 @@ Fixed bugs / New features
 - 0000121 [feature] Job log not using <br> for EOL
 - 0000123 [bug-html] Job summary shows as single line in joblogs.php
 - 0000126 [bug-php] Wrong value for Total files and Total bytes in Dashboard
-- 0000127 [security] XSS and SQL injection security issue
+- 0000127 [security-issue] XSS and SQL injection security issue
 - 0000116 [bug-php] division by zero after update to 6.0.0
 - 0000111 [bug-php] Problem with Jobs Report page and PHP prior 5.2 - Call to undefined function date_parse()
 - 0000120 [feature] Display Jobs speed and compression in Backup Job report page
@@ -514,7 +515,7 @@ Fixed bugs / New features
 - 0000098 [bug] gitignore included in tarball
 - 0000052 [feature] Database connection through unix socket
 - 0000099 [bug] Default graph colors hides legends
-- 0000069 [security] Prevent to browse some directories
+- 0000069 [security-issue] Prevent to browse some directories
 - 0000102 [bug-pgsql] error on get information from remote postgresql server 
 - 0000076 [design] Add noscript submit button where ever it does not exist (example provided)
 - 0000043 [feature] Job Status Report for a specific client 
