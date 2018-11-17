@@ -30,13 +30,9 @@ class BackupJobView extends CView {
         
         require_once('core/const.inc.php');
         
-        $backupjob_name = "";
-        $backupjob_bytes = 0;
-        $backupjob_files = 0;
         $interval = array();
         $interval[1] = NOW;
    
-        $days = array();
         $days_stored_bytes = array();
         $days_stored_files = array();
 
