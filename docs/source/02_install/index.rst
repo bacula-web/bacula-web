@@ -15,10 +15,15 @@ Before starting the installation of Bacula-Web, please make sure you have a vali
 
 .. important:: Ability to run shell commands as root or using sudo is also a requirement.
 
-Installation overview
-=====================
+Overview
+========
 
-Bacula-Web installation consists only in few steps (see below)
+Here below you'll find a quick overview of each steps required to install, conifgure and upgrade Bacula-Web
+
+Install requirements
+--------------------
+
+Install required packages and setup and configure the web server (you have the choice between Apache httpd or Nginx web servers)
 
 +----------------------+-----------------------------------------------------------------------------------------------------------------+
 | Step                 | Instructions                                                                                                    |
@@ -33,7 +38,7 @@ Bacula-Web installation consists only in few steps (see below)
 Installation
 ------------
 
-You have two different options to install Bacula-Web
+You have two different options to install Bacula-Web, use the archive available on `Bacula-Web`_ web site or use `Composer`_
 
 +----------------------+---------------------------------------------------------------------------+
 | Install options      | Instructions                                                              |
@@ -62,3 +67,6 @@ Final steps
 +----------------------+---------------------------------------------------------------------------+
 | Finalize your setup  | :ref:`install/finalize` (required step)                                   |
 +----------------------+---------------------------------------------------------------------------+
+
+.. _Bacula-Web: https://www.bacula-web.org
+.. _Composer: https://getcomposer.org
