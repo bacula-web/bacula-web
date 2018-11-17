@@ -18,8 +18,6 @@
 class CDB
 {
     private $connection;
-    private $options;
-    private $result;
 
     // ==================================================================================
     // Function: 	__construct()
