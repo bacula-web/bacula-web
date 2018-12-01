@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * This config file contains Bacula-Web application settings
+ * Do not modify it unless you know what you're doing.
+ */
+
 $app = [ 'name' => 'Bacula-Web', 'version' => '8.1.0',
         'routes' => [   'home' => 'Dashboard', 
                         'test' => 'Test',
