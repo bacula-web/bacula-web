@@ -6,13 +6,16 @@ $config['show_inactive_clients'] = true;
 // Hide empty pools (displayed by default)
 $config['hide_empty_pools'] = false;
 
-// Translations
-$config['language'] = 'en_US';
-
 // Custom datetime format (by default: Y-m-d H:i:s)
 // Examples 
 // $config['datetime_format'] = 'd/m/Y H:i:s';
 // $config['datetime_format'] = 'm-d-Y H:i:s';
+
+// Security
+$config['enable_users_auth'] = true;
+
+// Translations
+$config['language'] = 'en_US';
 
 // en_US -> English 
 // be_BY -> Belarusian
