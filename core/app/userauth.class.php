@@ -102,7 +102,7 @@ class UserAuth extends CModel {
         if(count($result) == 0) {
             echo "<pre>username or password incorrect</pre>";
         }else{
-            if( password_verify($password, $result[0]['passwordhash']) == TRUE) {
+            if( password_verify($password, $result[0]['passwordhash']) === TRUE) {
                 return 'yes';
             }else{
                 return 'no';
