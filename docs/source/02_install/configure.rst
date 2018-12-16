@@ -134,25 +134,46 @@ For more information on date format, have a look on date() function in `PHP manu
 
 .. note:: this setting is availabe only since version 7.4.0 
 
+users_auth_enabled
+------------------
+
+**Description**
+
+Enable or disable users authentication.
+
+This settings is useful if you already authenticate users on Web server side, using .htpasswd 
+or LDAP authentication (mod_auth_ldap or any other).
+
+**Example**
+
+::
+
+    // By default, users authentication is enabled
+    $config['enable_users_auth'] = true
+
+    // Disable it using config below
+    $config['enable_users_auth'] = false
+
+.. important:: Use this settings with caution, don't disable users authentication unless you already authenticated users.
 
 Database connection settings
 ============================
 
 Each Bacula catalog (database) needs to be defined using the settings below
 
-=============== ==================================================== ====================================
-Setting         Description                                          Example
-=============== ==================================================== ====================================
-label           label displayed in the catalog drop-down selector    Backup server
-host            hostname of the db server hosting Bacula catalog     localhost, fqdn host or ip address
-db_name         name of the catalog database name                    usualy bacula, unless you changed it
-login           database user                                        bacula, admin, etc.
-password        database password                                    mK3DQLolUV
-db_type         database type                                        mysql, pgsql or sqlite
-db_port         database port number                                 - mysql, use 3306
-                                                                     - pgsql, use 5432
-                                                                     - sqlite, leave blank
-=============== ==================================================== ====================================
+================= ==================================================== ====================================
+Setting           Description                                          Example
+================= ==================================================== ====================================
+label             label displayed in the catalog drop-down selector    Backup server
+host              hostname of the db server hosting Bacula catalog     localhost, fqdn host or ip address
+db_name           name of the catalog database name                    usualy bacula, unless you changed it
+login             database user                                        bacula, admin, etc.
+password          database password                                    mK3DQLolUV
+db_type           database type                                        mysql, pgsql or sqlite
+db_port           database port number                                  - mysql, use 3306
+                                                                        - pgsql, use 5432
+                                                                        - sqlite, leave blank
+================= ==================================================== ====================================
 
 **Examples**
 
