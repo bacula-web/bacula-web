@@ -6,13 +6,16 @@ $config['show_inactive_clients'] = true;
 // Hide empty pools (displayed by default)
 $config['hide_empty_pools'] = false;
 
-// Translations
-$config['language'] = 'en_US';
-
 // Custom datetime format (by default: Y-m-d H:i:s)
 // Examples 
 // $config['datetime_format'] = 'd/m/Y H:i:s';
 // $config['datetime_format'] = 'm-d-Y H:i:s';
+
+// Security
+$config['enable_users_auth'] = true;
+
+// Translations
+$config['language'] = 'en_US';
 
 // en_US -> English 
 // be_BY -> Belarusian
@@ -35,7 +38,7 @@ $config['language'] = 'en_US';
 
 // For Unix socket connection, use parameters decribed below
 // MySQL: use localhost for $config[0]['host']
-// postGresql: do not define $config[0]['host']
+// postgreSQL: do not define $config[0]['host']
 
 // MySQL bacula catalog
 // $config[0]['label'] = 'Backup Server';
@@ -46,7 +49,7 @@ $config['language'] = 'en_US';
 // $config[0]['db_type'] = 'mysql';
 // $config[0]['db_port'] = '3306';
 
-// PostgreSQL bacula catalog
+// postgreSQL bacula catalog
 // $config[0]['label'] = 'Prod Server';
 // $config[0]['host'] = 'db-server.domain.com';
 // $config[0]['login'] = 'bacula';
@@ -70,4 +73,3 @@ $config['language'] = 'en_US';
 // $config[1]['db_name'] = 'bacula';
 // $config[1]['db_type'] = 'mysql';
 // $config[1]['db_port'] = '3306';
-?>
