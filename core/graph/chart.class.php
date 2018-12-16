@@ -58,7 +58,6 @@ class Chart {
    private function uniformizeData()
    {
       $array_sum = 0;
-      $best_unit = '';
 
       // Uniformize data array element based on best unit
       foreach ($this->data as $key => $data) {
