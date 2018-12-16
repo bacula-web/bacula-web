@@ -68,7 +68,7 @@ class Volumes_Model extends CModel
           $where = 'WHERE Media.PoolId = :pool_id';
        }
 
-       if( $inchanger == true ) {
+       if( $inchanger === TRUE ) {
           $this->addParameter( 'inchanger', 1);
           if( !empty($where)) { 
              $where .= ' AND '; 
