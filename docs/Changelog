@@ -1,4 +1,4 @@
-=== Release 8.1.1 (November xx 2018)
+=== Release 8.1.1 (December xx 2018)
 
 Changelog
 
@@ -11,6 +11,8 @@ Fixed bug(s)
 - 0000276 [security-issue] Smarty - Fix CVE-2018-13982
 
 New feature(s)
+
+- 0000239 [feature] Disable user authentication
 
 === Release 8.1.0 (November 7 2018)
 
