@@ -142,7 +142,7 @@ class TestView extends CView {
         $this->assign( 'pie_graph_id', $pie_chart->name);
         $this->assign( 'pie_graph', $pie_chart->render());
         
-        unset($pie_graph);
+        unset($pie_chart);
         
         // Dummy bar graph
         $bar_chart = new Chart( array(   'type' => 'bar', 
