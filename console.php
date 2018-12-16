@@ -85,7 +85,8 @@ if(!(php_sapi_name() === 'cli')) {
 // Make sure at least one parameter has been provided
 if( $argc < 2) {
     echo "\nError: you should provide at least one command\n\n";
-    exit(printUsage());
+    printUsage();
+    exit();
 }
 
 // Get command from user input 
