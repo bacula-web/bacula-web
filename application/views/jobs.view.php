@@ -102,7 +102,6 @@ class JobsView extends CView {
         );
  
         // Jobs type filter
-        $job_type_filter = '0';
         $job_types_list = $jobs->getUsedJobTypes($job_types);
         $job_types_list['0'] = 'Any'; 
         $this->assign('job_types_list', $job_types_list);
