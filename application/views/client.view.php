@@ -31,7 +31,6 @@ class ClientView extends CView {
         require_once('core/const.inc.php');
 
         $period = 7;
-        $client = '';
         $client_jobs = array();
         $backup_jobs = array();
         $days_stored_bytes = array();
