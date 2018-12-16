@@ -30,7 +30,6 @@ class DashboardView extends CView {
     public function prepare() {
  
     $jobs = new Jobs_Model();
-    $clients = new Clients_Model(); 
     $filesets = new FileSets_Model();
     $pools = new Pools_Model();
     $volumes = new Volumes_Model();
