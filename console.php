@@ -74,7 +74,7 @@ function hightlight( $string, $type = 'error' ) {
     $colors = array( 'error' => '31', 'ok' => '32', 'warning' => '33', 'information' => '34');
     
     $color = $colors[$type];
-    echo "\033[$color"."m" . $string . "\033[0m";
+    return " \033[$color"."m" . $string . "\033[0m";
 }
 
 // Make sure the script is run from the command line
