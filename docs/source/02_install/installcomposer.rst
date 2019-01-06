@@ -26,31 +26,8 @@ Most Linux distro povides Composer as package, so to install it run this command
     On Red Hat, Centos, Fedora
     $ sudo yum install composer
 
-If your distro doesn't provide Composer package, you can install Composer manually
-
-Open a shell (as root) on your server and run these command
-
-::
-
-    # cd /usr/local/bin/
-    # curl -sS https://getcomposer.org/installer | php
-    # mv composer.phar composer
-
-Make sure $PATH contain /usr/loca/bin
-
-::
-
-    $ echo $PATH
-
-If it's not the case, fix it
-
-::
-
-    $ export PATH=$PATH:/usr/local/bin
-
-For more detailled instructions, check `this page <https://getcomposer.org/download/>`_.
-
-.. warning:: Never use composer as a super-user or root, use the web server user or the one who own Bacula-Web files and folders
+If your distro doesn't provide Composer package, Composer website contains all informations 
+you need to install Composer manually. Please see `this page <https://getcomposer.org/download/>`_.
 
 Use Composer to install Bacula-Web 
 ==================================
