@@ -37,6 +37,14 @@ class Bweb extends WebApplication
             // Count defined Bacula catalogs
             $this->catalog_nb = FileConfig::count_Catalogs();
 
+            // Check if debug is enabled
+            if( FileConfig::get_Value('debug') != NULL && is_bool(FileConfig::get_Value('debug'))) {
+                ini_set( 'error_reporting', E_ALL);
+                ini_set( 'display_errors', 'On');
+                ini_set( 'display_startup_errors', 'Off');
+            }
+
+
             // Check if datetime_format is defined in configuration
             if( FileConfig::get_Value('datetime_format') != NULL) {
                 $this->datetime_format = FileConfig::get_Value('datetime_format');
