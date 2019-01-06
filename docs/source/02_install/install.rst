@@ -47,6 +47,8 @@ Assuming that the bacula database file is located under /var/spool/bacula
    # chmod -v 755 /var/spool/bacula
    # chmod -v 704 /var/spool/bacula/bacula.db
 
+.. note:: RedHat / Centos 6 users might need to install php-posix or php-process packages
+
 Install requirements on Gentoo
 ------------------------------
 
