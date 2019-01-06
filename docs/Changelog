@@ -1,4 +1,4 @@
-=== Release 8.1.1 (December xx 2018)
+=== Release 8.2.0 (Januray 6 2019)
 
 Changelog
 
@@ -9,6 +9,8 @@ Fixed bug(s)
 - 0000274 [bug-design] Warn users if authentication back-end db does not exist
 - 0000275 [documentation] Fix incomplete documentation for upgrade
 - 0000276 [security-issue] Smarty - Fix CVE-2018-13982
+- 0000282 [documentation] Update outdated Composer installation
+- 0000283 [documentation] Update PHP package instructions for RHEL/Centos 6 users
 
 New feature(s)
 
