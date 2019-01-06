@@ -15,6 +15,7 @@ Fixed bug(s)
 New feature(s)
 
 - 0000239 [feature] Disable user authentication
+- 0000271 [feature] Add debug mode on application level
 
 === Release 8.1.0 (November 7 2018)
 
