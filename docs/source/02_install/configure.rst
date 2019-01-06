@@ -156,6 +156,25 @@ or LDAP authentication (mod_auth_ldap or any other).
 
 .. important:: Use this settings with caution, don't disable users authentication unless you already authenticated users.
 
+
+debug
+-----
+
+**Description**
+
+Enable or disable debug mode
+
+Debug mode could be helpful to troubleshoot Bacula-Web setup problem. Debug mode is disabled by default
+
+**Example**
+
+::
+
+    // Enable debug mode
+    $config['debug'] = true
+
+.. important:: Use debug mode with caution, sensitive informations can be disclosed if your Bacula-Web setup is exposed to unsecure network.
+
 Database connection settings
 ============================
 

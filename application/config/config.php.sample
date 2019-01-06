@@ -14,6 +14,9 @@ $config['hide_empty_pools'] = false;
 // Security
 $config['enable_users_auth'] = true;
 
+// Debug mode 
+$config['debug'] = false;
+
 // Translations
 $config['language'] = 'en_US';
 
