@@ -4,51 +4,47 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/db37b493624cee584d85/maintainability)](https://codeclimate.com/github/bacula-web/bacula-web/maintainability)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bacula-web/bacula-web/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/bacula-web/bacula-web/?branch=develop)
 
-Bacula-Web is a web based tool written in PHP that provide you a summarized view of your Bacula backup infrastructure. 
+Bacula-Web is a web based tool written in PHP that provide you a summarized view of your [Bacula](https://www.bacula.org) backup infrastructure. 
 It obtain his information from the Bacula catalog database.
 
-This is my little contribution to Bacula Open Source Backup Software project (http://www.bacula.org).
+This is my little contribution to [Bacula Community](http://www.bacula.org) project.
 
-## Website
-Official website
- http://www.bacula-web.org
+### Features
 
-Bacula wiki
- http://wiki.bacula.org/doku.php?id=3rd_party_addons
+Bacula-Web main features
 
-Bacula website
- http://www.bacula.org
+* **easy to setup**
+* **Install once** and monitor as much Bacula directors you need
+* **Dasboard**: keep an eye on all Bacula resources like backup jobs result, pools, volumes, etc. in one shot
+* **Translations**: use Bacula-Web in your language (more than 15 languages available)
+* **Jobs report**: monitor backup jobs from a single page (filter and options available)
+* **Directors report**: high-level report pages for all configured directors
+* **Pools and volumes**: keep an eye on all your Bacula pools and volumes
 
-## Documentation
+### Documentation
 
-If you are looking for informations on installing, configuring, upgrading, troubleshooting, etc. Bacula-Web, the link below would be helpful
- http://docs.bacula-web.org
+Visit [Bacula-Web documentation](http://docs.bacula-web.org) for more informations about installation, configuration, upgrade, etc.
 
-## Support
+### Installation
 
-Submit your bug / feature request to the official bug tracker
- http://bugs.bacula-web.org
+Bacula-Web can be installed using tarball or Composer, check [Installation page](http://docs.bacula-web.org/en/latest/02_install/index.html) for more details
 
-## Contribute
+### Support
+
+Submit a bug report or feature request to the [bug tracker](https://bugs.bacula-web.org)
+
+### Contribute
 
 #### Translations
-You will find useful informations on how to help translating Bacula-Web in your own language
- http://docs.bacula-web.org/en/master/03_contribute/translations.html 
+
+If you want to help translating Bacula-Web in your language, please check the **[Contribute to translation](http://docs.bacula-web.org/en/latest/04_contribute/translations.html)** page
 
 #### Developpment
-If you want to contribute in adding new features or fixing bugs, please read the developper guidance
- http://docs.bacula-web.org/en/master/03_contribute/development.html
 
-## License
+You can contribute by submitting a GitHub pull request, please have a look the [contribution guide](http://docs.bacula-web.org/en/latest/04_contribute/development.html) first.
 
-Bacula-Web is proudly powered by open source softwares and is free (like a bird) to download and use (and will always be) ...  
-Both source code and documentations are released under the <b>GNU GPLv2</b> license.  
-For more details, please read the file <b>LICENSE</b> included in the archive or directly on the GNU project website ([www.gnu.org: GNU GPL v2](http://www.gnu.org/licenses/gpl-2.0.html))
+### License
 
-## Authors
+Bacula-Web source code, web site and documentation are licensed under **BNU GPLv2**
 
-Original author 
-> Juan Luis Frances (bacula_list AT veloxia dot com)
-
-Official current maintainer
-> Davide Franco (bacula-dev AT dflc dot ch)
+For more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/master/LICENSE) 
