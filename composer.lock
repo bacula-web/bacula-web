@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "639cdfa9c105c79f2a2e2ec4267bab2d",
+    "content-hash": "ea03a4f9af79e2883f3aeb746947f801",
     "packages": [
         {
             "name": "1000hz/bootstrap-validator",
@@ -433,22 +433,30 @@
         },
         {
             "name": "smarty-gettext/smarty-gettext",
-            "version": "1.2.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-gettext/smarty-gettext.git",
-                "reference": "bc3978d07165c62cd9f6e1c41e9196e5b90166f2"
+                "reference": "2e20e71e82346a5d244f8bd7d3c4e2c0f2b18a5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-gettext/smarty-gettext/zipball/bc3978d07165c62cd9f6e1c41e9196e5b90166f2",
-                "reference": "bc3978d07165c62cd9f6e1c41e9196e5b90166f2",
+                "url": "https://api.github.com/repos/smarty-gettext/smarty-gettext/zipball/2e20e71e82346a5d244f8bd7d3c4e2c0f2b18a5e",
+                "reference": "2e20e71e82346a5d244f8bd7d3c4e2c0f2b18a5e",
                 "shasum": ""
             },
             "require": {
                 "ext-gettext": "*",
                 "ext-pcre": "*",
-                "php": ">=5.2.1"
+                "php": "~5.3|~7.0"
+            },
+            "require-dev": {
+                "azatoth/php-pgettext": "~1.0",
+                "phpunit/phpunit": ">=4.8.36",
+                "smarty/smarty": "3.1.*"
+            },
+            "suggest": {
+                "azatoth/php-pgettext": "Support msgctxt for {t} via context parameter"
             },
             "bin": [
                 "tsmarty2c.php"
@@ -462,7 +470,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-2.1+"
+                "LGPL-2.1"
             ],
             "authors": [
                 {
@@ -476,20 +484,20 @@
             ],
             "description": "Gettext plugin enabling internationalization in Smarty Package files",
             "homepage": "https://github.com/smarty-gettext/smarty-gettext",
-            "time": "2015-05-11T16:00:56+00:00"
+            "time": "2018-10-13T15:42:29+00:00"
         },
         {
             "name": "smarty/smarty",
-            "version": "v2.6.28",
+            "version": "v2.6.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-php/smarty.git",
-                "reference": "0ecdd6c41d0de08cba846087abd02a9adb5218e5"
+                "reference": "4ab9757b492f08a38f68123a6e7c1df7110bbc49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/0ecdd6c41d0de08cba846087abd02a9adb5218e5",
-                "reference": "0ecdd6c41d0de08cba846087abd02a9adb5218e5",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/4ab9757b492f08a38f68123a6e7c1df7110bbc49",
+                "reference": "4ab9757b492f08a38f68123a6e7c1df7110bbc49",
                 "shasum": ""
             },
             "require": {
@@ -527,20 +535,20 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-10-31T00:07:20+00:00"
+            "time": "2017-11-03T06:39:13+00:00"
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.12",
+            "version": "v3.4.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "acc5a37c706ace827962851b69705b24e71ca17c"
+                "reference": "abb46b909dd6ba0b50e10d4c10ffe6ee96dd70f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/acc5a37c706ace827962851b69705b24e71ca17c",
-                "reference": "acc5a37c706ace827962851b69705b24e71ca17c",
+                "url": "https://api.github.com/repos/symfony/process/zipball/abb46b909dd6ba0b50e10d4c10ffe6ee96dd70f2",
+                "reference": "abb46b909dd6ba0b50e10d4c10ffe6ee96dd70f2",
                 "shasum": ""
             },
             "require": {
@@ -576,7 +584,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2018-05-30T04:24:30+00:00"
+            "time": "2018-11-20T16:10:26+00:00"
         },
         {
             "name": "twbs/bootstrap",
@@ -636,6 +644,7 @@
     "stability-flags": {
         "novus/nvd3": 0,
         "eonasdan/bootstrap-datetimepicker": 0,
+        "smarty-gettext/smarty-gettext": 0,
         "1000hz/bootstrap-validator": 0,
         "datatables/datatables": 0
     },

@@ -5,7 +5,7 @@ Web server configuration
 ========================
 
 PHP
----
+===
 
 Update the timezone parameter in your PHP configuration in order to prevent Apache warning messages (see below)
 
@@ -38,13 +38,14 @@ Web server security
 In order to secure the application folder and avoid exposing sensitive information contained in Bacula-Web configuration.
 
 Edit the Apache configuration file as described below
-Red Hat / Centos / Fedora
+
+**Red Hat / Centos / Fedora**
 
 ::
 
    $ sudo vim /etc/httpd/conf.d/bacula-web.conf
 
-Debian / Ubuntu
+**Debian / Ubuntu**
 
 ::
 
@@ -58,6 +59,7 @@ with the content below
      AllowOverride All
    </Directory>
 
+.. important:: You might need to adapt Bacula-Web installation path in the above configuration according to your setup
 
 Enable the configuration
 
@@ -67,13 +69,13 @@ Enable the configuration
 
 Then restart Apache to apply the configuration change
 
-Centos / Red Hat
+**Red Hat / Centos / Fedora**
 
 ::
 
    $ sudo /etc/init.d/httpd restart
 
-Debian / Ubuntu
+**Debian / Ubuntu**
 
 ::
 

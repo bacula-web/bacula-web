@@ -45,7 +45,7 @@
 		</div> <!-- div class="navbar-header" -->
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            {if ( $user_authenticated eq 'yes' ) }		
+            {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }		
 			<!-- Reports dropdown menu -->
 			<ul class="nav navbar-nav">
 				<li class="dropdown">
@@ -63,7 +63,7 @@
             {/if}
 		
 			<ul class="nav navbar-nav navbar-right">
-            {if ( $user_authenticated eq 'yes' ) }		
+            {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }		
 				<!-- Catalog selector -->
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-fw"></i> {$catalog_label} <span class="caret"></span></a>
@@ -77,21 +77,23 @@
 					</ul>
 				</li>
 				<!-- end Catalog selector -->
+            {/if}
 
-                <!-- User options -->
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toogle" data-toggle="dropdown" role="button">{$username} <i class="fa fa-user fa-fw"></i></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="index.php?page=usersettings" title="User settings"> <i class="fa fa-wrench fa-fw"></i> {t}User settings{/t}</a></li>
-                    <li><a href="index.php?action=logout" title="Sign out"> <i class="fa fa-sign-out fa-fw"></i> {t}Sign out{/t}</a></li>
-                  </ul>
-                </li>
+            <!-- Authenticated user options -->
+            {if $enable_users_auth eq 'true' and $user_authenticated eq 'yes' }		
+              <li class="dropdown">
+                <a href="#" class="dropdown-toogle" data-toggle="dropdown" role="button">{$username} <i class="fa fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a href="index.php?page=usersettings" title="User settings"> <i class="fa fa-wrench fa-fw"></i> {t}User settings{/t}</a></li>
+                  <li><a href="index.php?action=logout" title="Sign out"> <i class="fa fa-sign-out fa-fw"></i> {t}Sign out{/t}</a></li>
+                </ul>
+              </li>
             {/if}
 				
-				<li class="dropdown">
+			<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-cog fa-fw"></i> <span class="hidden-sm hidden-md hidden-lg">{t}About{/t}</span></a>
 					<ul class="dropdown-menu">
-                    {if ( $user_authenticated eq 'yes' ) }		
+                    {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }		
                     <li role="presentation" class="dropdown-header">Tools</li> 
                         <li>
                             <a href="index.php?page=settings" title="Settings"><i class="fa fa-cogs fa-fw"></i> {t}Settings{/t}</a>
@@ -121,7 +123,7 @@
 	</div> <!-- div class="container-fluid" -->
 </div> <!-- class="navbar" -->
 
-{if ( $user_authenticated eq 'yes' ) }		
+{if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }		
 <div class="container-fluid">
     <!-- Breadcrumb -->
     <div class="row">

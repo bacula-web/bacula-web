@@ -55,9 +55,17 @@
 
                     <!-- Hide empty pools -->
                     <div class="form-group">
-                      <label class="col-xs-4 control-label" for="config_hide_empty_pools_">Hide empty pools</label>
+                      <label class="col-xs-4 control-label" for="config_hide_empty_pools">Hide empty pools</label>
                       <div class="col-xs-8">
                         <input type="checkbox" id="config_hide_empty_pools" {$config_hide_empty_pools} disabled>
+                      </div>
+                    </div> <!-- end div class=form-group -->
+
+                    <!-- Enable users authentication -->
+                    <div class="form-group">
+                      <label class="col-xs-4 control-label" for="config_enable_users_auth">Users authentication</label>
+                      <div class="col-xs-8">
+                        <input type="checkbox" id="config_eanble_users_auth" {$config_enable_users_auth} disabled>
                       </div>
                     </div> <!-- end div class=form-group -->
 

@@ -2,7 +2,7 @@
 /*
   +-------------------------------------------------------------------------+
   | Copyright (C) 2004 Juan Luis Frances Jimenez						    |
-  | Copyright 2010-2018, Davide Franco                                      |
+  | Copyright 2010-2019, Davide Franco                                      |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -30,8 +30,6 @@ class DashboardView extends CView {
     public function prepare() {
  
     $jobs = new Jobs_Model();
-    $catalog = new Database_Model();
-    $clients = new Clients_Model(); 
     $filesets = new FileSets_Model();
     $pools = new Pools_Model();
     $volumes = new Volumes_Model();

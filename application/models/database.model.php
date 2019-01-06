@@ -1,7 +1,7 @@
 <?php
  /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2018, Davide Franco			                            |
+  | Copyright 2010-2019, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -51,7 +51,6 @@ class Database_Model extends CModel
                 $result        = $this->run_query( $statment);
                 $db_size    = $result->fetch();
                 return CUtils::Get_Human_Size($db_size['dbsize']);
-            break;
             case 'sqlite':
                 $db_size     = filesize(FileConfig::get_Value('db_name', $catalog_id));
                 return CUtils::Get_Human_Size($db_size);

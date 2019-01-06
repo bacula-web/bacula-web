@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2018, Davide Franco                                      |
+  | Copyright 2010-2019, Davide Franco                                      |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -30,10 +30,7 @@ class ClientView extends CView {
         
         require_once('core/const.inc.php');
 
-        $clientid = '';
         $period = 7;
-        $client = '';
-        $client_jobs = array();
         $backup_jobs = array();
         $days_stored_bytes = array();
         $days_stored_files = array();

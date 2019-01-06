@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2018, Davide Franco			                            |
+  | Copyright 2010-2019, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -102,7 +102,6 @@ class JobsView extends CView {
         );
  
         // Jobs type filter
-        $job_type_filter = '0';
         $job_types_list = $jobs->getUsedJobTypes($job_types);
         $job_types_list['0'] = 'Any'; 
         $this->assign('job_types_list', $job_types_list);

@@ -2,7 +2,7 @@
 
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2018, Davide Franco	                                    |
+  | Copyright 2010-2019, Davide Franco	                                    |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -64,13 +64,10 @@ class UserAuth extends CModel {
 
         // Users table do not exist, let's create it
         if( count($res) == 0) {
-            # TO FIX !!!
-            # $this->createSchema();
-            
-            # // Create default user
-            # $this->addUser( 'admin', 'admin@domain.com', 'bacula');
+           # If Users table not found, raise an exception
+           throw new Exception('Users authentication database not found, 
+              have a look at the chapter <b>Installation / Finalize your setup</b> in the <a href="http://docs.bacula-web.org" target="_blank">documentation</a>');
         }
-
     }
 
     public function createSchema() {
@@ -105,7 +102,7 @@ class UserAuth extends CModel {
         if(count($result) == 0) {
             echo "<pre>username or password incorrect</pre>";
         }else{
-            if( password_verify($password, $result[0]['passwordhash']) == TRUE) {
+            if( password_verify($password, $result[0]['passwordhash']) === TRUE) {
                 return 'yes';
             }else{
                 return 'no';

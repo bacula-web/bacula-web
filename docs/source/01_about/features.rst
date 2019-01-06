@@ -32,8 +32,8 @@ Translations are a work in progress, if you want to contribute, please read the 
 Jobs report page 
 ================
 
-The jobs report page show you last 150 Bacula jobs with several ordering and filtering options.
-Another useful option allow you to see logs for each job in the report page
+The jobs report page shows you Bacula jobs with several ordering and filtering options.
+Another useful feature is that you can check log or each jobs and jump to **Backup job report** page from any backup job.
 
 Client backup report
 ====================
@@ -97,7 +97,7 @@ Jobs report
    :scale: 20 %
    :align: right
 
-Jobs report page display last 150 Bacula jobs in a table format.
+Jobs report page display Bacula jobs in a paginated table format.
 
 Jobs report display latest Bacula jobs (backup,copy,restore) in a table format containing useful information like
 
@@ -147,10 +147,11 @@ Pools
 
 List all configued Bacula pools with informations like
 
-   * Volume count
+   * Pool name
+   * Volume(s) count
    * Total bytes
 
-On each pool, you can click on **Show volumes** button to display all volumes assigned to the pool
+You can display associated volumes of each pool by clicking on **Show volumes** button.
 
 .. image:: /_static/bacula-web-pools.jpg
    :scale: 20%

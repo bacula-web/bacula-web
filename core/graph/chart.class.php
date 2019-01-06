@@ -2,7 +2,7 @@
 
  /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2018, Davide Franco			                            |
+  | Copyright 2010-2019, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -58,7 +58,6 @@ class Chart {
    private function uniformizeData()
    {
       $array_sum = 0;
-      $best_unit = '';
 
       // Uniformize data array element based on best unit
       foreach ($this->data as $key => $data) {

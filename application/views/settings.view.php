@@ -2,7 +2,7 @@
 
 /*
  +-------------------------------------------------------------------------+
- | Copyright 2010-2018, Davide Franco			                           |
+ | Copyright 2010-2019, Davide Franco			                           |
  |                                                                         |
  | This program is free software; you can redistribute it and/or           |
  | modify it under the terms of the GNU General Public License             |
@@ -77,6 +77,18 @@ class SettingsView extends CView {
                 if($config_hide_empty_pools == true) {
                     $this->assign( 'config_hide_empty_pools', 'checked');
                 }
+            }
+
+            // Parameter <enable_users_auth> is enabled by default (in case is not specified in config file)
+            $config_enable_users_auth = true;
+
+            // If enable_users_auth is defined in config file, take the value 
+            if( FileConfig::get_Value('enable_users_auth') !== NULL && is_bool(FileConfig::get_Value('enable_users_auth')) ) {
+                $config_enable_users_auth = FileConfig::get_Value('enable_users_auth');
+            }
+            
+            if($config_enable_users_auth == true){
+                $this->assign( 'config_enable_users_auth', 'checked');
             }
         }
     }

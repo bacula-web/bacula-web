@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2018, Davide Franco                                      |
+  | Copyright 2010-2019, Davide Franco                                      |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -74,7 +74,7 @@ function hightlight( $string, $type = 'error' ) {
     $colors = array( 'error' => '31', 'ok' => '32', 'warning' => '33', 'information' => '34');
     
     $color = $colors[$type];
-    echo "\033[$color"."m" . $string . "\033[0m";
+    return " \033[$color"."m" . $string . "\033[0m";
 }
 
 // Make sure the script is run from the command line
@@ -85,7 +85,8 @@ if(!(php_sapi_name() === 'cli')) {
 // Make sure at least one parameter has been provided
 if( $argc < 2) {
     echo "\nError: you should provide at least one command\n\n";
-    exit(printUsage());
+    printUsage();
+    exit();
 }
 
 // Get command from user input 
