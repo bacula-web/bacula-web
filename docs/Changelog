@@ -2,6 +2,30 @@
 
 Changelog
 
+- General
+	- Updated .htaccess adding Options +FollowSymLinks
+	- Debug mode is now available (see #0271)
+	- Error message arise if user auth backend is not ready and user
+	authentication is enabled (see #0274) 
+
+- Security
+	- Smarty 3.x security issue - CVE-2018-13982 (see #0276)
+	Bacula-Web is not impacted by this security issue
+	- User authentication can now be disabled (see #0239)
+
+- Documentation
+	- Fixed instructions to download tar.gz archive
+	- Documentation have been impproved with a good amount of fixes and
+	improvments
+	- Updated Composer manual installation (redirect to Composer.org web site)
+	- Upgrade paragraph has been fixed (see #0275)
+	- Add missing package installation for RHEL/Centos 6 users (see #0283)
+
+- Development
+	- Upgraded symfony/process to version 3.4.19
+	- Upgraded Smarty and Smarty-Gettext components
+	- Huge ammount ot of PHP code improvments and fixes
+
 Fixed bug(s)
 
 - 0000254 [bug-php] Warnings with PHP 7.0.27
