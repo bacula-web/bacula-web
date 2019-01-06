@@ -1,8 +1,8 @@
+## Bacula-Web
+
 [![Documentation Status](https://readthedocs.org/projects/bacula-web/badge/?version=latest)](http://docs.bacula-web.org/en/master/?badge=latest)
 [![Maintainability](https://api.codeclimate.com/v1/badges/db37b493624cee584d85/maintainability)](https://codeclimate.com/github/bacula-web/bacula-web/maintainability)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bacula-web/bacula-web/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/bacula-web/bacula-web/?branch=develop)
-
-## About
 
 Bacula-Web is a web based tool written in PHP that provide you a summarized view of your Bacula backup infrastructure. 
 It obtain his information from the Bacula catalog database.
