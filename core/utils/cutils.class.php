@@ -64,6 +64,11 @@ class CUtils
     {
         // Getting localized numeric formating information
         $locale = localeconv();
+        
+        // Check if thousands_sep is set
+        if (empty($locale['thousands_sep'])) {
+           $locale['thousands_sep'] = '.';
+        }
 
         // Return formated number
         return number_format($number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
