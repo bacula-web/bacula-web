@@ -4,7 +4,7 @@ Changelog
 
 - General
 	- Fixed missing bootstrap-validator package using Composer (#0288)
-	- Fixed issue with missing formating information while using Bacula-Web in
+	- Fixed issue with missing formatting information while using Bacula-Web in
 	a different language (#0286)
 	
 - User settings
