@@ -1,16 +1,22 @@
-=== Release 8.x.x (mmm dd yyyy)
+=== Release 8.2.1 (Jan 28 2019)
 
 Changelog
 
 - General
+	- Fixed missing bootstrap-validator package using Composer (#0288)
+	- Fixed issue with missing formating information while using Bacula-Web in
+	a different language (#0286)
 
-- Security
+- User settings
+	- Fixed missing email address in user settings (#0287)
 
 - Documentation
 
 - Fixed bug(s)
 
 - 0000286 [bug-php] Handle missing localized numeric and monetary formatting information
+- 0000287 [bug-php] Email address not displayed in user settings page
+- 0000288 [packaging] Fix missing bootstrap-validator using Composer
 
 === Release 8.2.0 (January 6 2019)
 
