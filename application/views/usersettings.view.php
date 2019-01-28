@@ -24,6 +24,7 @@ class UserSettingsView extends CView {
         $this->templateName = 'usersettings.tpl';
         $this->name = 'User settings';
         $this->title = '';
+        $this->username = '';
 
         $this->userauth = new UserAuth();
 
