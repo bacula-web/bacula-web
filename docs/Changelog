@@ -6,11 +6,14 @@ Changelog
 	- Fixed missing bootstrap-validator package using Composer (#0288)
 	- Fixed issue with missing formating information while using Bacula-Web in
 	a different language (#0286)
-
+	
 - User settings
 	- Fixed missing email address in user settings (#0287)
 
 - Documentation
+
+- Development
+	- Minor PHP code improvements and fixes
 
 - Fixed bug(s)
 
