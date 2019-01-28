@@ -24,6 +24,7 @@ class UserSettingsView extends CView {
         $this->templateName = 'usersettings.tpl';
         $this->name = 'User settings';
         $this->title = '';
+        $this->username = '';
 
         $this->userauth = new UserAuth();
 
@@ -32,7 +33,11 @@ class UserSettingsView extends CView {
 
     public function prepare() {
 
-        $this->assign( 'username', $_SESSION['username']);
+        $this->username = $_SESSION['username'];
+        $this->assign( 'username', $this->username);
+
+        $user = $this->userauth->getData($this->username);
+        $this->assign( 'email', $user['email']);
 
         // Check if password reset have been requested
         if( isset( $_REQUEST['action'])) {
