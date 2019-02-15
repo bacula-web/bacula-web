@@ -45,6 +45,6 @@ You can contribute by submitting a GitHub pull request, please have a look the [
 
 ### License
 
-Bacula-Web source code, web site and documentation are licensed under **BNU GPLv2**
+Bacula-Web source code, web site and documentation are licensed under **GNU GPLv2**
 
 For more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/master/LICENSE) 
