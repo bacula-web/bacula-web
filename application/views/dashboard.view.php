@@ -30,7 +30,6 @@ class DashboardView extends CView {
     public function prepare() {
  
     $jobs = new Jobs_Model();
-    $filesets = new FileSets_Model();
     $pools = new Pools_Model();
     $volumes = new Volumes_Model();
 
@@ -121,7 +120,6 @@ class DashboardView extends CView {
     $vols_by_pool = array();
     $max_pools = '9';
     $table_pool = 'Pool';
-    $limit = '';
     $sum_vols = '';
 
     // Count defined pools in catalog
