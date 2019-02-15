@@ -133,9 +133,7 @@ class DashboardView extends CView {
           'groupby' => 'name');
        $result = $pools->run_query(CDBQuery::get_Select($query, $pools->get_driver_name()));
        $sum_vols = $result->fetch();
-    } else {
-       $limit = $pools_count;
-    }
+    } 
 
     $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools);
     $result = $pools->run_query(CDBQuery::get_Select($query));
