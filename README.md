@@ -15,6 +15,7 @@ Bacula-Web main features
 
 * **easy to setup**
 * **Install once** and monitor as much Bacula directors you need
+* **Secure**: Users authentication is enabled by default, so no Bacula's information disclosed :)
 * **Dasboard**: keep an eye on all Bacula resources like backup jobs result, pools, volumes, etc. in one shot
 * **Translations**: use Bacula-Web in your language (more than 15 languages available)
 * **Jobs report**: monitor backup jobs from a single page (filter and options available)
