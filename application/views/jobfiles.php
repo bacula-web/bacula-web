@@ -11,7 +11,7 @@ class JobFilesView extends CView {
         
         $this->templateName = 'jobfiles.tpl';
 		$this->name = 'Job files';
-        $this->title = 'Job files';
+        $this->title = 'Bacula Job Files';
 
         parent::init();
     }
@@ -19,13 +19,25 @@ class JobFilesView extends CView {
 	public function prepare() {
 		$rows_per_page = 10;
 		
-		$jobFiles = new JobFiles_Model();
-		$jobId = $_GET['jobId'];
-		$this->assign('jobid', $jobId);
+        $jobFiles = new JobFiles_Model();
+        if( CHttpRequest::get_Value('jobId') != NULL ){
+
+            // Ensure pool_id value is numeric
+            $jobId = $_GET['jobId'];
+
+            if (!is_numeric($jobId) && !is_null($jobId)) {
+                throw new Exception('Invalid Job Id (not numeric) provided in ' . $this->title);
+            }
+
+            $this->assign('jobid', $jobId);
+        }else{
+            throw new Exception('Missing Job Id parameter in' . $this->title);
+        }
+
 		$jobInfo = $jobFiles->getJobNameAndJobStatusByJobId($jobId);
 		$this->assign('job_info', $jobInfo);
 		$files_count = $jobFiles->countJobFiles($jobId);
-		$this->assign('job_files_count', $files_count);
+		$this->assign('job_files_count', CUtils::format_Number($files_count));
 		
 		//pagination
 		$pagination_active = FALSE;
