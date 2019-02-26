@@ -24,7 +24,7 @@
 					<th class="text-center">{t}File Index{/t}</th>
 					<th class="text-center">{t}File Path{/t}</th>
 				</tr>
-				{foreach from=$history_files item=file}
+				{foreach from=$job_files item=file}
 				<tr>
 					<td>#{$file.fileindex}</td>
 					<td class="text-left">{$file.path}</td>
@@ -47,13 +47,13 @@
 							{if $pagination_current_page == 0}
 								<a class="disabled">Previous</a>
 							{else}
-								<a href="index.php?page=historyfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page-1}">Previous</a>
+								<a href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page-1}">Previous</a>
 							{/if}
 						</li>
-						<li>Found <b>{$history_files_count}</b> File(s)</b></li>
+						<li>Found <b>{$job_files_count}</b> File(s)</b></li>
 						<li>
-							{if $history_files_count_paging == $pagination_rows_per_page}
-								<a href="index.php?page=historyfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page+1}">Next</a>
+							{if $job_files_count_paging == $pagination_rows_per_page}
+								<a href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page+1}">Next</a>
 							{else}
 								<a class="disabled">Next</a>
 							{/if}							

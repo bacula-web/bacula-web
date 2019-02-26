@@ -5,13 +5,13 @@
  *
  * @author gorlando
  */
-class HistoryFilesView extends CView {
+class JobFilesView extends CView {
 	
 	public function __construct() {
         
-        $this->templateName = 'historyfiles.tpl';
-		$this->name = 'History Files';
-        $this->title = 'History Files';
+        $this->templateName = 'jobfiles.tpl';
+		$this->name = 'Job files';
+        $this->title = 'Job files';
 
         parent::init();
     }
@@ -19,13 +19,13 @@ class HistoryFilesView extends CView {
 	public function prepare() {
 		$rows_per_page = 10;
 		
-		$historyFiles = new HistoryFiles_Model();
+		$jobFiles = new JobFiles_Model();
 		$jobId = $_GET['jobId'];
 		$this->assign('jobid', $jobId);
-		$jobInfo = $historyFiles->getJobNameAndJobStatusByJobId($jobId);
+		$jobInfo = $jobFiles->getJobNameAndJobStatusByJobId($jobId);
 		$this->assign('job_info', $jobInfo);
-		$files_count = $historyFiles->getCountHistoryFiles($jobId);
-		$this->assign('history_files_count', $files_count);
+		$files_count = $jobFiles->countJobFiles($jobId);
+		$this->assign('job_files_count', $files_count);
 		
 		//pagination
 		$pagination_active = FALSE;
@@ -40,8 +40,8 @@ class HistoryFilesView extends CView {
 		$this->assign('pagination_current_page', $current_page);
 		$this->assign('pagination_rows_per_page', $rows_per_page);
 		
-		$files = $historyFiles->getHistoryFiles($jobId, $rows_per_page, $current_page);
-		$this->assign('history_files', $files);
-		$this->assign('history_files_count_paging', count($files));
+		$files = $jobFiles->getJobFiles($jobId, $rows_per_page, $current_page);
+		$this->assign('job_files', $files);
+		$this->assign('job_files_count_paging', count($files));
 	}
 }

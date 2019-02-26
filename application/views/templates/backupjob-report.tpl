@@ -64,7 +64,7 @@
 			<td>{$job.joblevel}</td>
 			<td>
 				{if ($job.jobfiles > 0) }
-					<a href="index.php?page=historyfiles&jobId={$job.jobid}">{$job.jobfiles}</a>
+					<a href="index.php?page=jobfiles&jobId={$job.jobid}">{$job.jobfiles}</a>
 				{else}
 					{$job.jobfiles}
 				{/if}

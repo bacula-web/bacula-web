@@ -11,9 +11,9 @@
  *
  * @author gorlando
  */
-class HistoryFiles_Model extends CModel {
+class JobFiles_Model extends CModel {
 	
-	public function getHistoryFiles($jobId, $limit, $offset){
+	public function getJobFiles($jobId, $limit, $offset){
 		$used_types = array();
         $sql_query = "SELECT `Job`.`Name`, `Job`.`JobStatus`, `File`.`FileIndex`, CONCAT(`Path`.`Path`, `Filename`.`Name`) as Path 
 			FROM `File`, `Path`, `Filename`, `Job` 
@@ -21,16 +21,17 @@ class HistoryFiles_Model extends CModel {
 			AND  `Path`.`PathId` = `File`.`PathId` 
 			AND  `Filename`.`FilenameId` = `File`.`FilenameId` 
 			AND  `Job`.`JobId` = `File`.`JobId` 
-			ORDER BY `File`.`FileIndex` ASC 
-			LIMIT ".($offset*$limit).",$limit ;";
+			ORDER BY `File`.`FileIndex` ASC
+            LIMIT ".($offset*$limit).",$limit ;";
+
         $result = $this->run_query($sql_query);
 
-		$used_types = $result->fetchAll();
+        $used_types = $result->fetchAll();
 
         return $used_types;
 	}
 	
-	public function getCountHistoryFiles($jobId){
+	public function countJobFiles($jobId){
 		$used_types = array();
         $sql_query = "SELECT COUNT(*) as count
 			FROM `File`, `Path`, `Filename`, `Job` 
