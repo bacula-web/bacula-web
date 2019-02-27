@@ -1,3 +1,13 @@
+=== Release 8.x.x (MMM dd YYYY)
+
+Changelog
+
+Fixed bug(s)
+
+New feature(s)
+
+- 0000289 [feature] Implement file listing within a job
+
 === Release 8.2.1 (Jan 28 2019)
 
 Changelog
