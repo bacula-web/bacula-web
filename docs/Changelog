@@ -4,6 +4,8 @@ Changelog
 
 Fixed bug(s)
 
+- 0000291 [bug] Language translations doesn't work anymore
+
 New feature(s)
 
 - 0000289 [feature] Implement file listing within a job
