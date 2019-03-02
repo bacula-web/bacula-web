@@ -4,6 +4,7 @@ Changelog
 
 Fixed bug(s)
 
+- 0000290 [bug-php] Division by zero with backup job compression
 - 0000291 [bug] Language translations doesn't work anymore
 
 New feature(s)
