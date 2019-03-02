@@ -358,7 +358,7 @@ class JobsView extends CView {
                 }
           
                 // Job compression
-                if($job['jobbytes'] > 0 && $job['type'] == 'B') {
+                if($job['jobbytes'] > 0 && $job['type'] == 'B' && $job['jobstatus'] != J_CANCELED) {
                     $compression        = (1-($job['jobbytes'] / $job['readbytes']));
                     $job['compression'] = number_format($compression, 2);
                 } else {
