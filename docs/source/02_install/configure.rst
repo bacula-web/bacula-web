@@ -134,8 +134,8 @@ For more information on date format, have a look on date() function in `PHP manu
 
 .. note:: this setting is availabe only since version 7.4.0 
 
-users_auth_enabled
-------------------
+enable_users_auth
+-----------------
 
 **Description**
 
