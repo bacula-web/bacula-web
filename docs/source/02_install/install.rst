@@ -30,6 +30,8 @@ MySql Bacula catalog
 
    $ sudo yum install php php-gettext php-mysql php-pdo
 
+.. important:: On Fedora 29, install php-mysqlnd instead of php-mysql
+
 postgreSQL Bacula catalog
 
 ::
