@@ -12,6 +12,10 @@ Install requirements on RedHat / Centos / Fedora
 
 Install Apache web server on rpm based Linux distribution like Red Hat, Centos, Fedora, SUSE Linux, Scientific Linux, etc.
 
+.. hint:: On latest Red Hat, Centos, Fedora, etc. systems, note the changes below
+    - On Fedora, yum has been replaced by dnf
+    - On Red Hat, Centos, Fedora, etc, service and chkfconfig command has been replaced by systemctl
+
 ::
 
 $ sudo yum install httpd
