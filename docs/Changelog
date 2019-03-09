@@ -9,6 +9,7 @@ Fixed bug(s)
 
 New feature(s)
 
+- 0000255 [feature] Dashboard: Clicking on numbers and graphs should display report
 - 0000289 [feature] Implement file listing within a job
 
 === Release 8.2.1 (Jan 28 2019)
