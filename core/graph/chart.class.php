@@ -24,6 +24,7 @@ class Chart {
    protected $margin = 30;
    protected $ylabel = null;
    protected $uniformize_data = false;
+   protected $linkedReport;
 
    /*
     * Function:      __construct()
@@ -33,6 +34,7 @@ class Chart {
     *                type              'bar' or 'pie' (string)
     *                name              name of the chart (string)
     *                uniformize_data   do we normalize data ? (boolean)
+    *                linked_report     linked report page
     *
     */
 
@@ -46,6 +48,7 @@ class Chart {
          if( isset($chart_data['type']) ) { $this->type = $chart_data['type']; }
          if( isset($chart_data['ylabel']) ) { $this->ylabel = $chart_data['ylabel']; }
          if( isset($chart_data['uniformize_data']) ) { $this->uniformize_data = $chart_data['uniformize_data']; }
+         if( isset($chart_data['linked_report']) ) { $this->linkedReport = $chart_data['linked_report']; }
       }
    }
 
@@ -178,6 +181,14 @@ class Chart {
       $blob .= '.call(chart);' . "\n";
               
       $blob .= 'nv.utils.windowResize(chart.update);';
+
+      // Handle click event
+      if($this->type == 'pie') {
+          if(!empty($this->linkedReport)) {
+              $blob .= 'chart.pie.dispatch.on("elementClick", function(e) { window.location = "index.php?page=' . $this->linkedReport . '"; });';
+          }
+      }
+
       $blob .= 'return chart;';
       $blob .= ' });';
       

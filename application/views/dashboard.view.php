@@ -107,7 +107,7 @@ class DashboardView extends CView {
         $jobs_status_data[] = array($status, $jobs_count );
     }
 
-    $last_jobs_chart = new Chart( array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data ) );
+    $last_jobs_chart = new Chart( array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data, 'linked_report' => 'jobs' ) );
     $this->assign( 'last_jobs_chart_id', $last_jobs_chart->name);
     $this->assign( 'last_jobs_chart', $last_jobs_chart->render());
     
@@ -146,7 +146,7 @@ class DashboardView extends CView {
         $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
     }
 
-    $pools_usage_chart = new Chart( array( 'type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool ) );
+    $pools_usage_chart = new Chart( array( 'type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool, 'linked_report' => 'pools' ) );
     $this->assign( 'pools_usage_chart_id', $pools_usage_chart->name);
     $this->assign( 'pools_usage_chart', $pools_usage_chart->render());
     unset($pools_usage_chart);
