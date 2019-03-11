@@ -232,7 +232,7 @@
                   </tr>
                   {foreach from=$biggestjobs item=job}
                      <tr>
-                        <td>{$job.name}</td>
+                        <td><a href="index.php?page=backupjob&backupjob_name={$job.name}">{$job.name}</a></td>
                         <td>{$job.jobbytes}</td>
                         <td>{$job.jobfiles}</td>
                      </tr>
