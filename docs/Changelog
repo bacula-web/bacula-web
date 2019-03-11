@@ -1,9 +1,10 @@
-=== Release 8.x.x (MMM dd YYYY)
+=== Release 8.3.0 (March dd 2019)
 
 Changelog
 
 Fixed bug(s)
 
+- 0000262 [bug-php] Biggest jobs size is total job size
 - 0000290 [bug-php] Division by zero with backup job compression
 - 0000291 [bug] Language translations doesn't work anymore
 - 0000293 [documentation] Update documentation for Fedora
