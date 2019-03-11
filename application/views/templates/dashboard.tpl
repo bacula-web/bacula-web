@@ -227,8 +227,8 @@
                <table class="table table-condensed table-striped">
                   <tr>
                      <th>{t}Job name{/t}</th>
-                     <th>{t}Total bytes{/t}</th>
-                     <th>{t}Total files{/t}</th>
+                     <th>{t}Bytes{/t}</th>
+                     <th>{t}Files{/t}</th>
                   </tr>
                   {foreach from=$biggestjobs item=job}
                      <tr>
