@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+    /* Initialize tooltips */
+    $('[data-toggle="tooltip"]').tooltip()
+
     /* DataTable */
     $('table.paginate').DataTable( {
             searching: false,
