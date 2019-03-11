@@ -218,7 +218,11 @@
       <div class="col col-xs-12 col-md-6">
          <!-- 10th biggest job names -->
          <div class="panel panel-default">
-            <div class="panel panel-heading"><b>{t}Biggest backup jobs{/t}</b></div>
+            <div class="panel panel-heading">
+              <b>{t}Biggest backup jobs{/t}</b>
+              <span class="glyphicon glyphicon-info-sign pull-right" aria-hidden="true" data-toggle="tooltip" data-placement="auto" 
+                data-original-title="Displays the 10 biggest (Bytes) Bacula backup jobs"></span>
+            </div>
             <div class="panel-body">
                <table class="table table-condensed table-striped">
                   <tr>
