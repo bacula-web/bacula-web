@@ -14,6 +14,3 @@
    configure
    test
    finalize
-
-.. _Bacula-Web: https://www.bacula-web.org
-.. _Composer: https://getcomposer.org
