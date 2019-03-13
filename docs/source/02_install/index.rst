@@ -6,6 +6,7 @@
    overview
    requirements
    install
+   configwebserver
    installnginx
    installarchive
    installcomposer
