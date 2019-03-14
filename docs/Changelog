@@ -1,6 +1,28 @@
-=== Release 8.3.0 (March dd 2019)
+=== Release 8.3.0 (March 14 2019)
 
 Changelog
+
+- Dashboard
+	- Biggest backup job widget is fixed (#0262)
+	- Clicking on pie charts now leads to the related reports page (#0255)
+
+- Backup job report
+	- You can now list folders and files from a backup job (#0289)
+
+- Job report
+	- Fixed PHP warning (division by zero) with canceled jobs (#0290)
+
+- Translations
+	- Fixed language translations (#0291)
+
+- Documentation
+	- Installation page index has bee reviewed and shows now the whole table
+	of content
+	- Updated documentation for Fedora (#0293) 
+	- Small fixes and improvements
+
+- Development
+	- Usual PHP code improvements and fixes
 
 Fixed bug(s)
 
