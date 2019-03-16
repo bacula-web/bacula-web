@@ -13,7 +13,8 @@ Install once, monitor several directors
 
 You just need to Install Bacula-Web once, then monitor as much Bacula directors you have.
 
-Bacula-Web give you the ability to keep an eye on all your Bacula directors from a single point. Install it on a dedicated server and manage all your Bacula instances
+Bacula-Web give you the ability to keep an eye on all your Bacula directors from a single point. 
+You can Install it on a dedicated server and manage all your Bacula instances from a single Bacula-Web instance.
 
 Keep an eye on Bacula events and ressources
 ===========================================
@@ -25,9 +26,26 @@ You can choose within predefined period like last 24 hours, last week, last mont
 Bacula-Web in your language
 ===========================
 
-Bacula-Web have been translated in several languages like French, German, Polish, etc.
+Bacula-Web come by default in english but, with the help of the community, it has been translated in several languages listed below
+
+   * Belarusian
+   * Catalan
+   * German
+   * Spanish 
+   * French
+   * Italian 
+   * Japanese
+   * Dutch
+   * Norvegian  
+   * Polish
+   * Portuguese (Brazil) 
+   * Russian
+   * Swedish
+   * Chinese 
 
 Translations are a work in progress, if you want to contribute, please read the "How to contribute to :ref:`contribute/translations`" page
+
+.. note:: A huge thanks to the community for his help translating Bacula-Web :)
 
 Jobs report page 
 ================
@@ -194,6 +212,8 @@ You can choose different periods such as last
    * 2 weeks
    * month
 
+.. note:: Since Bacula-Web 8.3.0, if you click on backup job files value, it will display the job files report (list backup job files)
+
 .. image:: /_static/bacula-web-backupjob-report.jpg
    :scale: 20%
 
@@ -239,6 +259,16 @@ Bacula director details are
    :scale: 20%
 
 .. note:: This feature is available since version 8.0.0-RC1
+
+Job files
+=========
+
+This report list all files of a Bacula backup job with pagination.
+
+.. image:: /_static/bacula-web-jobfiles.jpg
+   :scale: 20%
+
+.. note:: This report is available since Bacula-Web 8.3.0
 
 Test page
 =========
