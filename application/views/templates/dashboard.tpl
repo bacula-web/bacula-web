@@ -37,27 +37,27 @@
 						<table class="table table-condensed">
 							<tr>
 								<td><h5>{t}Running jobs{/t}</h5></td>
-								<td class="text-center"> <h4><span class="label label-default">{$running_jobs}</span></h4> </td>
+								<td class="text-center"> <a href="index.php?page=jobs&job_status_filter=1"><h4><span class="label label-default">{$running_jobs}</span></h4></a> </td>
 							</tr>
 							<tr>
  								<td><h5>{t}Completed job(s){/t}</h5></td>
-								<td class="text-center"> <h4><span class="label label-success">{$completed_jobs}</span></h4> </td>
+								<td class="text-center"> <a href="index.php?page=jobs&job_status_filter=3"><h4><span class="label label-success">{$completed_jobs}</span></h4></a> </td>
 							</tr>
                      <tr>
                         <td><h5>{t}Completed with errors job(s){/t}
-								<td class="text-center"> <h4><span style="background-color: #FFD700;" class="label label-default">{$completed_with_errors_jobs}</span></h4> </td>
+								<td class="text-center"> <a href="index.php?page=jobs&job_status_filter=4"><h4><span style="background-color: #FFD700;" class="label label-default">{$completed_with_errors_jobs}</span></h4></a> </td>
                      </tr>
  							<tr>
                             	<td> <h5>{t}Waiting jobs(s){/t}</h5></td>
-                                <td class="text-center"> <h4><span class="label label-primary">{$waiting_jobs}</span></h4> </td>
+                                <td class="text-center"> <a href="index.php?page=jobs&job_status_filter=2"><h4><span class="label label-primary">{$waiting_jobs}</span></h4></a> </td>
                             </tr>
 							<tr>
                             	<td> <h5>{t}Failed job(s){/t}</h5></td>
-                                <td class="text-center"> <h4><span class="label label-danger">{$failed_jobs}</span></h4> </td>
+                                <td class="text-center"> <a href="index.php?page=jobs&job_status_filter=5"><h4><span class="label label-danger">{$failed_jobs}</span></h4></a> </td>
                             </tr>
 							<tr>
                             	<td> <h5>{t}Canceled job(s){/t}</h5></td>
-                                <td class="text-center"> <h4><span class="label label-warning">{$canceled_jobs}</span></h4> </td>
+                                <td class="text-center"> <a href="index.php?page=jobs&job_status_filter=6"><h4><span class="label label-warning">{$canceled_jobs}</span></h4></a> </td>
                             </tr>
 							<tr>
 								<td> <h5>{t}Job Level (Incr / Diff / Full){/t}</h5> </td>
@@ -218,17 +218,21 @@
       <div class="col col-xs-12 col-md-6">
          <!-- 10th biggest job names -->
          <div class="panel panel-default">
-            <div class="panel panel-heading"><b>{t}Biggest backup jobs{/t}</b></div>
+            <div class="panel panel-heading">
+              <b>{t}Biggest backup jobs{/t}</b>
+              <span class="glyphicon glyphicon-info-sign pull-right" aria-hidden="true" data-toggle="tooltip" data-placement="auto" 
+                data-original-title="Displays the 10 biggest (Bytes) Bacula backup jobs"></span>
+            </div>
             <div class="panel-body">
                <table class="table table-condensed table-striped">
                   <tr>
                      <th>{t}Job name{/t}</th>
-                     <th>{t}Total bytes{/t}</th>
-                     <th>{t}Total files{/t}</th>
+                     <th>{t}Bytes{/t}</th>
+                     <th>{t}Files{/t}</th>
                   </tr>
                   {foreach from=$biggestjobs item=job}
                      <tr>
-                        <td>{$job.name}</td>
+                        <td><a href="index.php?page=backupjob&backupjob_name={$job.name}">{$job.name}</a></td>
                         <td>{$job.jobbytes}</td>
                         <td>{$job.jobfiles}</td>
                      </tr>

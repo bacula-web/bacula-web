@@ -19,13 +19,13 @@
 class UserSettingsView extends CView {
 
     protected $userauth;
+    protected $username;
 
     public function __construct() {
         $this->templateName = 'usersettings.tpl';
         $this->name = 'User settings';
         $this->title = '';
         $this->username = '';
-
         $this->userauth = new UserAuth();
 
         parent::init();

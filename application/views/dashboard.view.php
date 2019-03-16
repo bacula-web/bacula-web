@@ -30,7 +30,6 @@ class DashboardView extends CView {
     public function prepare() {
  
     $jobs = new Jobs_Model();
-    $filesets = new FileSets_Model();
     $pools = new Pools_Model();
     $volumes = new Volumes_Model();
 
@@ -108,7 +107,7 @@ class DashboardView extends CView {
         $jobs_status_data[] = array($status, $jobs_count );
     }
 
-    $last_jobs_chart = new Chart( array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data ) );
+    $last_jobs_chart = new Chart( array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data, 'linked_report' => 'jobs' ) );
     $this->assign( 'last_jobs_chart_id', $last_jobs_chart->name);
     $this->assign( 'last_jobs_chart', $last_jobs_chart->render());
     
@@ -121,7 +120,6 @@ class DashboardView extends CView {
     $vols_by_pool = array();
     $max_pools = '9';
     $table_pool = 'Pool';
-    $limit = '';
     $sum_vols = '';
 
     // Count defined pools in catalog
@@ -135,9 +133,7 @@ class DashboardView extends CView {
           'groupby' => 'name');
        $result = $pools->run_query(CDBQuery::get_Select($query, $pools->get_driver_name()));
        $sum_vols = $result->fetch();
-    } else {
-       $limit = $pools_count;
-    }
+    } 
 
     $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools);
     $result = $pools->run_query(CDBQuery::get_Select($query));
@@ -150,7 +146,7 @@ class DashboardView extends CView {
         $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
     }
 
-    $pools_usage_chart = new Chart( array( 'type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool ) );
+    $pools_usage_chart = new Chart( array( 'type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool, 'linked_report' => 'pools' ) );
     $this->assign( 'pools_usage_chart_id', $pools_usage_chart->name);
     $this->assign( 'pools_usage_chart', $pools_usage_chart->render());
     unset($pools_usage_chart);

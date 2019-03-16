@@ -43,7 +43,7 @@ Open a shell command prompt and move to Bacula-Web installation folder
 
 ::
    
-   $ mv /var/www/html/bacula-web
+   $ cd /var/www/html/bacula-web
 
    # On Debian/Ubuntu
    $ sudo -u www-data php bwc check
@@ -51,4 +51,4 @@ Open a shell command prompt and move to Bacula-Web installation folder
    On Red Hat, Fedora, etc.
    $ sudo -u apache php bwc check
 
-..note:: Bacula-Web console is available since version 8.1.0
+.. note:: Bacula-Web console is available since version 8.1.0

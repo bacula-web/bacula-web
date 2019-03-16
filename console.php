@@ -254,5 +254,3 @@ case 'setupauth':
 default:
     exit("\nError: unknown command, use <php console help> for further informations\n\n");
 }
-
-?>
