@@ -4,6 +4,8 @@ Changelog
 
 Fixed bug(s)
 
+- 0000296 [bug-php] NOTICE type error after user sign out
+
 === Release 8.3.0 (March 16 2019)
 
 Changelog
