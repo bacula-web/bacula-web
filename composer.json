@@ -26,6 +26,11 @@
       "components/font-awesome": "4.*",
       "datatables/datatables": "@stable"
 	},
+    "require-dev": {
+      "sebastian/phpcpd": "@stable",
+      "phpmd/phpmd": "@stable",
+      "squizlabs/php_codesniffer": "@stable"
+    },
 	"autoload": {
 		"classmap": [
 			"core",
