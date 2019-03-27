@@ -125,7 +125,9 @@ class WebApplication
             $this->view->assign('enable_users_auth', 'false');
         }
         
-        $this->view->assign('user_authenticated', $_SESSION['user_authenticated']);
+        if( isset($_SESSION['user_authenticated'])) {
+            $this->view->assign('user_authenticated', $_SESSION['user_authenticated']);
+        }
 
     } // end function setup() 
 
