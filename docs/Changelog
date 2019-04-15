@@ -5,6 +5,7 @@ Changelog
 Fixed bug(s)
 
 - 0000296 [bug-php] NOTICE type error after user sign out
+- 0000297 [bug-php] Errors on restore jobs level in jobs report page
 
 === Release 8.3.0 (March 16 2019)
 
