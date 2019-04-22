@@ -1,15 +1,15 @@
 .. _contribute/development:
 
 ============
-Developpment
+Development
 ============
 
 Bacula-Web source git repository is publicly available and kindly hosted by GitHub `here`_
 
-Guidance for developpers
+Guidance for developers
 ========================
 
-Please find below some guidance for developpers
+Please find below some guidance for developers
 
    * create a bug / feature report in `Mantis`_ first (important for me to track changes in the code)
    * clone the **develop** git branch and give it a useful name such as

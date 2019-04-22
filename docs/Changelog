@@ -1,4 +1,33 @@
-=== Release 8.3.0 (March 14 2019)
+=== Release 8.3.1 (April 22 2019)
+
+Changelog
+
+- General
+	- Fixed PHP warning on user signout (#0296)
+
+- Dashboard
+	- Added tooltip info on some widgets
+
+- Jobs report
+	- Fix error on some restore jobs level (#0297)
+
+- Backup job report
+	- Now display job status in last backup jobs list (#0299)
+
+- Security
+	- Fixed XSS security issue in Bootstrap (#0298)
+
+Fixed bug(s)
+
+- 0000296 [bug-php] NOTICE type error after user sign out
+- 0000297 [bug-php] Errors on restore jobs level in jobs report page
+- 0000298 [security-issue] Upgrade Bootstrap to version 3.4.1
+
+Feature(s)
+
+- 0000299 [feature] Display job status in last backup job (Backup job report)
+
+=== Release 8.3.0 (March 16 2019)
 
 Changelog
 

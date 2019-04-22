@@ -49,6 +49,7 @@
 	<table class="table table-condensed table-hover table-striped table-bordered text-center">
 		<tr>
 			<th class="text-center">{t}Job Id{/t}</th>
+			<th class="text-center">{t}Status{/t}</th>
 			<th class="text-center">{t}Level{/t}</th>
 			<th class="text-center">{t}Files{/t}</th>
 			<th class="text-center">{t}Bytes{/t}</th>
@@ -61,6 +62,7 @@
 		{foreach from=$jobs item=job}
 		<tr> 
 			<td>{$job.jobid}</td>
+            <td>{$job.jobstatuslong}</td>
 			<td>{$job.joblevel}</td>
 			<td>
 				{if ($job.jobfiles > 0) }

@@ -332,7 +332,12 @@ class JobsView extends CView {
             $job['schedtime'] = date( $_SESSION['datetime_format'], strtotime($job['schedtime'])); 
        
             // Job Level
-            $job['level'] = $job_levels[$job['level']];
+            if(isset($job_levels[$job['level']])) {
+                $job['level'] = $job_levels[$job['level']];
+            }else
+            {
+                $job['level'] = 'n/a';
+            }
        
             // Job files
             $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);

@@ -50,6 +50,8 @@ class BackupJobView extends CView {
         // Check backup job name from $_POST request
         $backupjob_name = CHttpRequest::get_value('backupjob_name');
 
+        $where = array();
+
         if (($backupjob_name === NULL) && (empty($backupjob_name)) ) {
             $this->assign( 'no_report_options', 'true');
 
@@ -137,12 +139,17 @@ class BackupJobView extends CView {
             $this->assign('stored_bytes_chart', $stored_bytes_chart->render());
             unset($stored_bytes_chart);   
     
-            // Get last jobs list
-            $query = "SELECT JobId, Level, JobFiles, JobBytes, ReadBytes, JobStatus, StartTime, EndTime, Name ";
-            $query .= "FROM Job ";
-            $query .= "WHERE Name = '$backupjob_name' AND Type = 'B' AND ";
-            $query .= '(EndTime BETWEEN ' . $periods['starttime'] . ' AND ' . $periods['endtime'] . ') ';
-            $query .= "ORDER BY EndTime DESC ";
+            $where[] = "Name = '$backupjob_name'";
+            $where[] = "Type = 'B'";
+            $where[] = '(EndTime BETWEEN ' . $periods['starttime'] . ' AND ' . $periods['endtime'] . ')';
+
+            $query = CDBQuery::get_Select( array('table' => 'Job',
+            'fields' => array( 'JobId', 'Level', 'JobFiles', 'JobBytes', 'ReadBytes', 'Job.JobStatus', 'StartTime', 'EndTime', 'Name', 'Status.JobStatusLong'),
+            'where' => $where,
+            'orderby' => 'EndTime DESC',
+            'join' => array(
+                array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
+            ) ) );
     
             $joblist      = array();
             $joblevel     = array('I' => 'Incr', 'D' => 'Diff', 'F' => 'Full');
@@ -185,7 +192,8 @@ class BackupJobView extends CView {
        
                 $joblist[] = $job;
             } // end while
-    
+
+            // Assign vars to template
             $this->assign('jobs', $joblist);
             $this->assign('backupjob_name', $backupjob_name);
             $this->assign('periodDesc', $periodDesc);
