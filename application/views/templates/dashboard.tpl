@@ -111,6 +111,9 @@
 			<!-- Last used volumes -->
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>{t}Last used volumes{/t}</b></div>
+                  <span class="glyphicon glyphicon-info-sign pull-right" aria-hidden="true" data-toggle="tooltip" data-placement="auto" 
+                    data-original-title="{t}Displays the last 10 volumes used during backups{/t}">
+                  </span>
 				<div class="panel-body">
 					<div class="table-responsive">
 					<table class="table table-condensed table-striped">
