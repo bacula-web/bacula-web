@@ -50,6 +50,8 @@ class BackupJobView extends CView {
         // Check backup job name from $_POST request
         $backupjob_name = CHttpRequest::get_value('backupjob_name');
 
+        $where = array();
+
         if (($backupjob_name === NULL) && (empty($backupjob_name)) ) {
             $this->assign( 'no_report_options', 'true');
 
