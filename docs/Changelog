@@ -8,6 +8,10 @@ Fixed bug(s)
 - 0000297 [bug-php] Errors on restore jobs level in jobs report page
 - 0000298 [security-issue] Upgrade Bootstrap to version 3.4.1
 
+Feature(s)
+
+- 0000299 [feature] Display job status in last backup job (Backup job report)
+
 === Release 8.3.0 (March 16 2019)
 
 Changelog
