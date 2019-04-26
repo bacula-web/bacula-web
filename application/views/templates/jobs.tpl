@@ -76,8 +76,6 @@
 
 	  </div> <!-- div class="col-md-3 cold-lg-3" -->
 
-	  <div class="visible-xs-block"><p>&nbsp;</p></div>
-
 	  <div class="col-xs-12 col-sm-9 col-sm-pull-3 col-lg-10 col-lg-pull-2">
 	  <div class="table-responsive">
 		<table class="table table-condensed table-striped text-center paginate">
