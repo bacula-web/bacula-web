@@ -1,3 +1,18 @@
+=== Release 8.4.0 (Month Day 2019)
+
+Changelog
+
+- Jobs report
+	- Fix Bootlint warning about temlplate html code
+
+Fixed bug(s)
+
+-
+
+New feature(s)
+
+-
+
 === Release 8.3.1 (April 22 2019)
 
 Changelog
@@ -23,7 +38,7 @@ Fixed bug(s)
 - 0000297 [bug-php] Errors on restore jobs level in jobs report page
 - 0000298 [security-issue] Upgrade Bootstrap to version 3.4.1
 
-Feature(s)
+New feature(s)
 
 - 0000299 [feature] Display job status in last backup job (Backup job report)
 
