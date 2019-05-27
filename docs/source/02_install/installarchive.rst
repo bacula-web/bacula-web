@@ -76,6 +76,7 @@ Change files/folders permissions
 ::
 
    # chown -Rv apache: /var/www/html/bacula-web
+   # sudo chmod -Rv 755 /var/www/html/bacula-web
  
 **On Debian / Ubuntu**
 
@@ -83,7 +84,5 @@ Change files/folders permissions
 
    $ sudo chown -Rv www-data: /var/www/bacula-web
    $ sudo chmod -Rv 755 /var/www/bacula-web
-   $ sudo chmod -v 775 /var/www/bacula-web/application/views/cache
-   $ sudo chmod -v 775 /var/www/bacula-web/application/assets/protected
 
 It's now time to :ref:`install/configure`
