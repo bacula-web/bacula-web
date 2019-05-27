@@ -38,21 +38,6 @@ Download sha256 or sha512 signature file from the download page, and run one of 
 
    # cat sha512sum.txt | sha512sum -c
 
-Create Bacula-Web folder
-========================
-
-**On Centos / Fedora / RHEL**
-
-::
-
-   # mkdir -v /var/www/html/bacula-web
- 
-**On Debian / Ubuntu**
-
-::
-
-   # mkdir -v /var/www/bacula-web
-
 Decompress the archive
 ======================
 
@@ -60,13 +45,13 @@ Decompress the archive
 
 ::
 
-   # tar -xzf bacula-web-latest.tgz -C /var/www/html/bacula-web
+   # tar xvf bacula-web-latest.tgz
  
 **On Debian / Ubuntu**
 
 ::
 
-   # tar -xzf bacula-web-latest.tgz -C /var/www/bacula-web
+   # tar xvf bacula-web-latest.tgz
 
 Change files/folders permissions
 ================================
