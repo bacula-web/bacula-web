@@ -34,7 +34,7 @@ You'll find latest stable release [here](https://www.bacula-web.org/download-lat
 
 ### Support
 
-Submit a bug report or feature request to the [bug tracker](https://bugs.bacula-web.org)
+Submit a bug report or feature request using [GitHub project issues](https://github.com/bacula-web/bacula-web/issues)
 
 ### Contribute
 
