@@ -1,4 +1,4 @@
-=== Release 8.4.0 (Month Day 2019)
+=== Release 8.3.2 (Month Day 2019)
 
 Changelog
 
@@ -7,7 +7,7 @@ Changelog
 
 Fixed bug(s)
 
--
+- #39 Error with postgreSQL using JobFiles report page
 
 New feature(s)
 
