@@ -7,7 +7,7 @@ Changelog
 
 Fixed bug(s)
 
-- #39 Error with postgreSQL using JobFiles report page
+- #39 [bug] Error with postgreSQL using JobFiles report page
 
 New feature(s)
 
