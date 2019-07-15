@@ -26,9 +26,9 @@ class JobFiles_Model extends CModel {
                                 array('table' => 'Job', 'condition' => 'Job.JobId = File.JobId') ),
             'where' => $where,
             'orderby' => $orderby,
-            'limit' => array( 'count' => $limit, 'offset' => $offset*$limit),
+            'limit' => array( 'count' => $limit, 'offset' => $offset*$limit), 
             'offset' => ($offset*$limit)
-        ), $this->driver );
+         ), $this->driver );
 
         $result = $this->run_query($sqlQuery);
 
