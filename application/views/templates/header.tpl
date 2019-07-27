@@ -108,7 +108,7 @@
 							<a href="http://www.bacula-web.org" title="Visit the official web site" target="_blank" rel="noopener noreferrer"><i class="fa fa-globe fa-fw"></i> {t}Official web site{/t}</a>
 						</li>
 						<li> 
-							<a href="http://bugs.bacula-web.org" title="Bug and feature request tracker" target="_blank" rel="noopener noreferrer"><i class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a>
+							<a href="https://github.com/bacula-web/bacula-web/issues" title="Bug and feature request tracker" target="_blank" rel="noopener noreferrer"><i class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a>
 						</li>
                   <li> <a href="https://github.com/bacula-web/bacula-web" title="Bacula-Web project on GitHub" target="_blank" rel="noopener noreferrer">
                     <i class="fa fa-github fa-fw"></i>{t}Project on GitHub{/t}</a>
