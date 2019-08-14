@@ -149,10 +149,10 @@ or LDAP authentication (mod_auth_ldap or any other).
 ::
 
     // By default, users authentication is enabled
-    $config['enable_users_auth'] = true
+    $config['enable_users_auth'] = true;
 
     // Disable it using config below
-    $config['enable_users_auth'] = false
+    $config['enable_users_auth'] = false;
 
 .. important:: Use this settings with caution, don't disable users authentication unless you already authenticated users.
 
@@ -171,7 +171,7 @@ Debug mode could be helpful to troubleshoot Bacula-Web setup problem. Debug mode
 ::
 
     // Enable debug mode
-    $config['debug'] = true
+    $config['debug'] = true;
 
 .. important:: Use debug mode with caution, sensitive informations can be disclosed if your Bacula-Web setup is exposed to unsecure network.
 
