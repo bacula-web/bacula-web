@@ -1,17 +1,35 @@
-=== Release 8.3.2 (Month Day 2019)
+=== Release 8.3.2 (August 14 2019)
 
 Changelog
 
+- General
+	- Fixed bwc (console) usage command
+	- Fixed displayed version in console
+
+- General settings
+	- Fixed missing debug mode value in general settings
+
 - Jobs report
-	- Fix Bootlint warning about temlplate html code
+	- Fixed Bootlint warning about temlplate html code
+	- Fixed division by zero while not using compression
+
+- Job files report
+	- Fixed postgreSQL support
+
+- Documentation
+	- Fixed bug tracker information (using Github issues now)
+	- Minor fixes
 
 Fixed bug(s)
 
+- #36 [bug] Division by zero in Jobs report
 - #39 [bug] Error with postgreSQL using JobFiles report page
+- #40 [bug] Missing debug mode value in general settings
+- Ç41 [bug] Wrong version displayed in console
 
 New feature(s)
 
--
+- none
 
 === Release 8.3.1 (April 22 2019)
 
