@@ -69,6 +69,14 @@
                       </div>
                     </div> <!-- end div class=form-group -->
 
+                    <!-- Debug mode -->
+                    <div class="form-group">
+                      <label class="col-xs-4 control-label" for="config_debug">Debug mode</label>
+                      <div class="col-xs-8">
+                        <input type="checkbox" id="config_debug" {$config_debug} disabled>
+                      </div>
+                    </div> <!-- end div class=form-group -->
+
                   </form>
                 </div>
 
