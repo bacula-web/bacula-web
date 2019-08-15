@@ -40,7 +40,7 @@ Submit a bug report or feature request using [GitHub project issues](https://git
 
 #### Translations
 
-If you want to help translating Bacula-Web in your language, please check the **[Contribute to translation](http://docs.bacula-web.org/en/latest/04_contribute/translations.html)** page
+If you want to help translating Bacula-Web in your language, please check the [Contribute to translation](http://docs.bacula-web.org/en/latest/04_contribute/translations.html) page
 
 #### Developpment
 
