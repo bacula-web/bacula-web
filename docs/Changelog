@@ -25,7 +25,7 @@ Fixed bug(s)
 - #36 [bug] Division by zero in Jobs report
 - #39 [bug] Error with postgreSQL using JobFiles report page
 - #40 [bug] Missing debug mode value in general settings
-- Ç41 [bug] Wrong version displayed in console
+- #41 [bug] Wrong version displayed in console
 
 New feature(s)
 
