@@ -19,6 +19,7 @@ Bacula-Web main features
 * **Dashboard**: keep an eye on all Bacula resources like backup jobs result, pools, volumes, etc. in one shot
 * **Translations**: use Bacula-Web in your language (more than 15 languages available)
 * **Jobs report**: monitor backup jobs from a single page (filter and options available)
+* **Job Files report**: list files and folders of a backup job
 * **Directors report**: high-level report pages for all configured directors
 * **Pools and volumes**: keep an eye on all your Bacula pools and volumes
 
