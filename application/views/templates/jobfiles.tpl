@@ -22,12 +22,13 @@
 			<table class="table table-condensed table-hover table-striped table-bordered text-center">
 				<tr>
 					<th class="text-center">{t}File Index{/t}</th>
-					<th class="text-center">{t}File Path{/t}</th>
+					<th class="text-center">{t}Filename{/t}</th>
+                
 				</tr>
 				{foreach from=$job_files item=file}
 				<tr>
 					<td>#{$file.fileindex}</td>
-					<td class="text-left">{$file.path}</td>
+					<td class="text-left">{$file.path}{$file.name}</td>
 				</tr>
 				{foreachelse}
 				<tr>

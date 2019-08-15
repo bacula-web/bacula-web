@@ -1,3 +1,36 @@
+=== Release 8.3.2 (August 15 2019)
+
+Changelog
+
+- General
+	- Fixed bwc (console) usage command
+	- Fixed displayed version in console
+
+- General settings
+	- Fixed missing debug mode value in general settings
+
+- Jobs report
+	- Fixed Bootlint warning about temlplate html code
+	- Fixed division by zero while not using compression
+
+- Job files report
+	- Fixed postgreSQL support
+
+- Documentation
+	- Fixed bug tracker information (using Github issues now)
+	- Minor fixes
+
+Fixed bug(s)
+
+- #36 [bug] Division by zero in Jobs report
+- #39 [bug] Error with postgreSQL using JobFiles report page
+- #40 [bug] Missing debug mode value in general settings
+- Ç41 [bug] Wrong version displayed in console
+
+New feature(s)
+
+- none
+
 === Release 8.3.1 (April 22 2019)
 
 Changelog
@@ -23,7 +56,7 @@ Fixed bug(s)
 - 0000297 [bug-php] Errors on restore jobs level in jobs report page
 - 0000298 [security-issue] Upgrade Bootstrap to version 3.4.1
 
-Feature(s)
+New feature(s)
 
 - 0000299 [feature] Display job status in last backup job (Backup job report)
 

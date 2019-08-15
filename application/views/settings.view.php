@@ -90,6 +90,18 @@ class SettingsView extends CView {
             if($config_enable_users_auth == true){
                 $this->assign( 'config_enable_users_auth', 'checked');
             }
+
+            // Parameter <debug> is disabled by default (in case is not specified in config file)
+            $config_debug = false; 
+
+            // If debug is defined in config file, take the value 
+            if( FileConfig::get_Value('debug') !== NULL && is_bool(FileConfig::get_Value('debug')) ) {
+                $config_debug = FileConfig::get_Value('debug');
+            }
+
+            if($config_debug == true){
+                $this->assign( 'config_debug', 'checked');
+            }
         }
     }
 } // end of class

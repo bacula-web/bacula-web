@@ -24,9 +24,9 @@ require_once( 'core/global.inc.php' );
  */
 
 function printUsage() {
-    echo "Bacula-Web version 8.1.0\n\n";
+    echo "Bacula-Web version 8.3.2\n\n";
     echo "Usage:\n";
-    echo "   php console [command]\n\n";
+    echo "   php bwc [command]\n\n";
     echo "Available commands:\n";
     echo "   help\t\t\tPrint this help summary\n";
     echo "   check\t\tCheck requirements and permissions\n";
