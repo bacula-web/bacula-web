@@ -49,7 +49,6 @@ class DateTimeUtil
 
     public static function Get_Elapsed_Time($start_time, $end_time)
     {
-        $dateFormat = 'Y-m-d H:m:i';
         $dateInputFormat = 'Y-m-d H:i:s';
 
         if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
@@ -59,7 +58,7 @@ class DateTimeUtil
         }
 
         if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
-            $end = DateTime::createFromFormat( $dateInputFormat, date( $dateFormat));
+            $end = new DateTime();
         } else {
             $end = DateTime::createFromFormat( $dateInputFormat, $end_time);
         }
