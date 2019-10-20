@@ -7,7 +7,7 @@ layout: home
 
 ## Welcome to Bacula-Web project
 
-![dashboard](/assets/Bacula-Web-Dashboard.png)
+![Bacula-Web Dashboard](/assets/Bacula-Web-Dashboard.png)
 
 ## About
 
