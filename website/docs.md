@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Documentation
+title: Docs
 description: Bacula-Web documentation
 permalink: /docs/
 ---
