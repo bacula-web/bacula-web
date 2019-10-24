@@ -1,18 +1,20 @@
 ---
-layout: page
+layout: default
 title: Download
 permalink: /download/
 ---
 
-#### Latest stable version
+### Latest stable version 
 
-This is latest stable Bacula-Web version
+Here below you can download Bacula-Web 8.3.2 compressed archive.
 
-Bacula-Web version 8.3.2
+This tar.gz contain Bacula-Web with pre-installed Composer libraries and is hosted on the [GitHub project](https://github.com/bacula-web/bacula-web)
 
-| Version | Release date | Changelog | sha256 | 
+Release date: 15th August 2019 ( [changelog](https://github.com/bacula-web/bacula-web/releases/tag/v8.3.2){:target='_blank'} )
+
+| Version | sha256 | 
 | ------- | ------------ | --------- |
-| [8.3.2](https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/bacula-web-8.3.2.tgz){:target='_blank'} | August 15th 2019 | [Changelog](https://github.com/bacula-web/bacula-web/releases/tag/v8.3.2) | ``05be91a30a0937d097fc20518cb849e919230f6f6acf82787faf7c4b891128fb`` |
+| [Bacula-Web 8.3.2](https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/bacula-web-8.3.2.tgz){:target='_blank'} | ``05be91a30a0937d097fc20518cb849e919230f6f6acf82787faf7c4b891128fb`` |
 
 **Important note**
 
