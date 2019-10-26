@@ -26,6 +26,8 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://www.bacula-web.org" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: 
 github_username: bacula-web
+paginate: 5
+paginate_path: "/news/page:num/"
 
 # Build settings
 theme: minima
@@ -33,6 +35,7 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-paginate
 
 header_pages:
   - docs.md
