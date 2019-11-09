@@ -4,6 +4,7 @@ Changelog
 
 Fixed bug(s)
 
+- #37 [bug] Fix installation from archive in documentation
 - #42 [bug] Invalid date format inside DateTimeUtil::Get_Elapsed_Time
 
 New feature(2)
