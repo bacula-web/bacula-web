@@ -21,9 +21,9 @@ On Debian / Ubuntu
    
    # cd /var/www/
 
-::
-
 and download the archive by running this command
+
+::
 
    # curl -O -L https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/bacula-web-8.3.2.tgz
 
