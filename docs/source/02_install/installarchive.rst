@@ -27,12 +27,22 @@ and download the archive by running this command
 
    # curl -O -L https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/bacula-web-8.3.2.tgz
 
-.. important:: Since Bacula-Web version 8.3.2, both compressed archive and signature files are hosted on GitHub.
+.. important:: Since Bacula-Web version 8.3.2, compressed archive and signature files are hosted on GitHub.
 
 Verify archive signature (optional)
 ===================================
 
-Download sha256 or sha512 signature file from the download page, and run one of these command to verify the signature
+Both SHA 256 and 512 signature files are available from Bacula-Web project release page
+
+I'd strongly suggest to verify the integrity of the compressed archive you downloaded before proceeding to the installation.
+
+[**SHA 256** signature file](https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/sha256sum.txt)
+
+[**SHA 512** signature file](https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/sha512sum.txt)
+
+Download the SHA sum file using the link above (adapt the version, the links are just examples).
+
+Once downloaded, run one the command below from the same path where you've downloaded the bacula-web-<version>.tgz
 
 ::
 
@@ -41,6 +51,12 @@ Download sha256 or sha512 signature file from the download page, and run one of 
    or
 
    # cat sha512sum.txt | sha512sum -c
+
+Both command should output something like below
+
+::
+
+  bacula-web-8.3.2.tgz: OK
 
 Decompress the archive
 ======================
