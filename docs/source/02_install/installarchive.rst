@@ -37,7 +37,6 @@ Both SHA 256 and 512 signature files are available from Bacula-Web project relea
 I'd strongly suggest to verify the integrity of the compressed archive you downloaded before proceeding to the installation.
 
 **SHA256**
-
 `https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/sha256sum.txt <https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/sha256sum.txt>`_
 
 **SHA512**
