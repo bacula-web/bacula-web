@@ -23,7 +23,7 @@ On Debian / Ubuntu
 
 ::
 
-   # curl -O -L https://www.bacula-web.org/files/bacula-web.org/downloads/bacula-web-latest.tgz
+   # curl -O -L https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/bacula-web-8.3.2.tgz
 
 Verify archive signature (optional)
 ===================================
