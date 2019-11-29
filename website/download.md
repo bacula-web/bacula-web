@@ -20,7 +20,7 @@ Release date: 15th August 2019 ( [changelog](https://github.com/bacula-web/bacul
 
 Bacula-Web prior version 8.0.0 suffer several SQL injection and XSS vulnerabilities (see [CVE-2017-15367](https://www.cvedetails.com/cve/CVE-2017-15367/){:target='_blank'} and [CVE-2014-8295](https://www.cvedetails.com/cve/CVE-2014-8295/){:target='_blank'} for more details). 
 
-I **strongly** recommend you to use at least Bacula-Web version 8.0.1.
+Due to security issue mentioned above, I'd **strongly** recommend you to use at least Bacula-Web version 8.0.1.
 
 A big thanks to *Gustavo Sorondo* for his help to fix those security issues.
 
