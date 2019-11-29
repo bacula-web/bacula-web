@@ -17,8 +17,8 @@ Bacula-Web is a web based reporting and monitoring tool which provides you usefu
 
 Bacula-Web have the advantages to be
 
-- [x] User friendly
 - [x] 100% Open source
+- [x] User friendly
 - [x] Easy to setup and maintain
 - [x] 100% web based
 - [x] Safe and secure
