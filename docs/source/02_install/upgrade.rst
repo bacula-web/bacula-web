@@ -116,4 +116,4 @@ Fix files ownership
 Test your setup
 ===============
 
-Once the upgrade proess is completd, It is time to :ref:`install/test`
+Once the upgrade process is completed, It is time to :ref:`install/test`

@@ -5,7 +5,7 @@
  * Do not modify it unless you know what you're doing.
  */
 
-$app = [ 'name' => 'Bacula-Web', 'version' => '8.3.2',
+$app = [ 'name' => 'Bacula-Web', 'version' => '8.3.3',
         'routes' => [   'home' => 'Dashboard', 
                         'test' => 'Test',
                         'jobs' => 'Jobs',

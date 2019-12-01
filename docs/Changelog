@@ -1,3 +1,29 @@
+=== Release 8.3.3 (December 1 2019)
+
+Changelog
+
+- General
+	- Bacula-Web tar.gz and SHA sums are now hosted by GitHub
+	  Please read latest documentation (http://docs.bacula-web.org)
+
+- Documentation
+	- Fix installation from archive (thanks to @Gabrielsc)
+	- Add Contributing page (CONTRIBUTING.md) 
+	- Minor fixes and improvements 
+
+- Development
+	- Improve code in DateTimeUtil::Get_Elapsed_Time() (thanks to @bulanh)
+	- Usual PHP code improvements and fixes
+
+Fixed bug(s)
+
+- #37 [bug] Fix installation from archive in documentation
+- #42 [bug] Invalid date format inside DateTimeUtil::Get_Elapsed_Time
+
+New feature(2)
+
+ - none
+
 === Release 8.3.2 (August 15 2019)
 
 Changelog
@@ -25,7 +51,7 @@ Fixed bug(s)
 - #36 [bug] Division by zero in Jobs report
 - #39 [bug] Error with postgreSQL using JobFiles report page
 - #40 [bug] Missing debug mode value in general settings
-- Ç41 [bug] Wrong version displayed in console
+- #41 [bug] Wrong version displayed in console
 
 New feature(s)
 

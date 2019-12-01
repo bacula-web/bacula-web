@@ -38,7 +38,7 @@ General requirements
 
 .. important::
 
-   PHP SQLite is required since verison 8.0.0-rc2
+   PHP SQLite is required since version 8.0.0-rc2
 
    PHP Posix is required since version 8.0.0
 
