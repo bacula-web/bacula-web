@@ -2,6 +2,10 @@
 
 Changelog
 
+- Documentation
+	- Add Contributing page (CONTRIBUTING.md) 
+	- Minor fixes
+
 Fixed bug(s)
 
 - #37 [bug] Fix installation from archive in documentation
