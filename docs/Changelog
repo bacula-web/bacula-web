@@ -2,9 +2,18 @@
 
 Changelog
 
+- General
+	- Bacula-Web tar.gz and SHA sums are now hosted by GitHub
+	  Please read latest documentation (http://docs.bacula-web.org)
+
 - Documentation
+	- Fix installation from archive (thanks to @Gabrielsc)
 	- Add Contributing page (CONTRIBUTING.md) 
 	- Minor fixes and improvements 
+
+- Development
+	- Improve code in DateTimeUtil::Get_Elapsed_Time() (thanks to @bulanh)
+	- Usual PHP code improvements and fixes
 
 Fixed bug(s)
 
