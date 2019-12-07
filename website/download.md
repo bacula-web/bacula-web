@@ -8,7 +8,7 @@ permalink: /download/
 
 This tar.gz contain Bacula-Web with pre-installed Composer libraries and is hosted on the [GitHub project](https://github.com/bacula-web/bacula-web)
 
-Version **8.3.3** released on **1st December 2019** ([changelog](https://github.com/bacula-web/bacula-web/releases/tag/v8.3.3){:target='_blank'})
+Version **8.3.3** released on **December 1st 2019** ([changelog](https://github.com/bacula-web/bacula-web/releases/tag/v8.3.3){:target='_blank'})
 
 | Status | Archive | 
 | ------ | ------- | 
@@ -23,7 +23,7 @@ Version **8.3.3** released on **1st December 2019** ([changelog](https://github.
 
 ## Previous release
 
-Version **8.3.2** released on **15th August 2019** ([changelog](https://github.com/bacula-web/bacula-web/releases/tag/v8.3.2){:target='_blank'})
+Version **8.3.2** released on **August 15th 2019** ([changelog](https://github.com/bacula-web/bacula-web/releases/tag/v8.3.2){:target='_blank'})
 
 | Status | Archive | 
 | ------ | ------- | 
