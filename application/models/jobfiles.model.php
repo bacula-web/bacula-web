@@ -1,16 +1,13 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Description of JobFiles_Model class
+ *
+ * @author Gabriele Orlando
+ * @author Davide Franco
+ * @copyright 2018-2020 Gabriele Orlando
  */
 
-/**
- * Description of historyfiles
- *
- * @author gorlando
- */
 class JobFiles_Model extends CModel {
 	
 	public function getJobFiles($jobId, $limit, $offset){
