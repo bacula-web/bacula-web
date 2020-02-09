@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Bacula-Web application config file
+ *
+ * @copyright 2010-2020 Davide Franco
+ * @author Davide Franco
+ * @since 5.1.0-alpha
+ */
+
 // Show inactive clients (false by default)
 $config['show_inactive_clients'] = true;
 
