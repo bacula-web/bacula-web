@@ -4,7 +4,7 @@
  * Bacula-Web Core Web App config file
  *
  * This config file contains Bacula-Web core web application settings
- * Do not modify it unless you know what you're doing.
+ * Important: This file should NOT be modified, except for developpment purpose
  *
  * @copyright 2010-2020 Davide Franco
  * @author Davide Franco
