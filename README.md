@@ -31,7 +31,7 @@ Visit [Bacula-Web documentation](http://docs.bacula-web.org) for more informatio
 
 Bacula-Web can be installed using the provided compressed archive or using Composer, check [Installation page](http://docs.bacula-web.org/en/latest/02_install/index.html) for more details
 
-You'll find latest stable release [here](https://www.bacula-web.org/download-latest-version/)
+You'll find latest stable release [here](https://www.bacula-web.org/download/)
 
 ### Support
 
