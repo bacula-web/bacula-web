@@ -1,10 +1,13 @@
 <?php
 
 /**
- * Description of historyfiles
+ * Description of JobFilesView class
  *
- * @author gorlando
+ * @author Gabriele Orlando
+ * @author Davide Franco
+ * @copyright 2018 Gavriele Orlando
  */
+
 class JobFilesView extends CView {
 	
 	public function __construct() {
