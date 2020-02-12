@@ -1,13 +1,15 @@
-=== Release 8.x.x (Month Day Year)
+=== Release 8.x.x (Month Day 2020)
 
 Changelog
 
 - Documentation
 	- Fix broken download link in Readme.md
+	- Update owenership and permission chapter 
 
 Fixed bug(s)
 
 - #49 [doc] - Broken dowload link in Readme.md 
+- #52 [doc] - Update documentation related to ownership and permissions
 
 New feature(s)
 
