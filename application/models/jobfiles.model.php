@@ -10,11 +10,16 @@
 
 class JobFiles_Model extends CModel {
 	
-	public function getJobFiles($jobId, $limit, $offset){
+	public function getJobFiles($jobId, $limit, $offset, $filename = ''){
         $used_types = array();
 
         $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'Filename.Name');
         $where = array("File.JobId = $jobId");
+
+        if( !empty($filename) ) {
+           $where[] = "Filename.Name LIKE '%$filename%'";
+        }
+        
         $orderby = 'File.FileIndex ASC';
         $sqlQuery = CDBQuery::get_Select( array('table' => 'File',
             'fields' => $fields,
@@ -34,7 +39,7 @@ class JobFiles_Model extends CModel {
         return $used_types;
 	}
 	
-	public function countJobFiles($jobId){
+	public function countJobFiles($jobId, $filename = ''){
 		$used_types = array();
         $sql_query = "SELECT COUNT(*) as count
 			FROM File, Path, Filename, Job 
@@ -43,11 +48,16 @@ class JobFiles_Model extends CModel {
 			AND  Filename.FilenameId = File.FilenameId 
             AND  Job.JobId = File.JobId; ";
 
-        $result = $this->run_query($sql_query);
+      // Filter by filename if requested
+      if( !empty($filename)) {
+         $sql_query .= "AND Filename.Name LIKE '%$filename%' ";
+      }
+
+      $result = $this->run_query($sql_query);
 
 		$used_types = $result->fetchAll();
 
-        return $used_types[0]['count'];
+      return $used_types[0]['count'];
 	}
 	
 	public function getJobNameAndJobStatusByJobId($jobId){
