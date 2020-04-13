@@ -39,10 +39,9 @@
 			</table>
 		</div>
 			
-		<div class="alert alert-info text-center" role="alert">
-			
-			{if $pagination_active}
-			<div class="bs-example" data-example-id="simple-pager">
+		<div class="panel panel-info">
+		  <div class="panel-heading">	
+			 {if $pagination_active}
 				<nav aria-label="...">
 					<ul class="pager">
 						<li>
@@ -62,7 +61,8 @@
 						</li>
 					</ul>
 				</nav>
-			</div>
+           </div> <!-- end div class="panel-heading ... -->
+			</div> <!-- end div class="panel-->
 			{/if}
 		</div>
      </div> <!-- end div class="col... -->
