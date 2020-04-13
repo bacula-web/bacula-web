@@ -1,13 +1,14 @@
-<div class="container-fluid" id="jobsreport">
+<div class="container" id="jobsreport">
 
 	<div class="page-header">
 		<h3>{$page_name} <small>{t}Bacula History Files{/t}</small></h3>
 	</div>
 
 	<div class="row">
+     <div class="col-md-12">
 		
-		<!-- Backup job report -->
-		<div class="panel panel-default">
+		 <!-- Backup job report -->
+		 <div class="panel panel-default">
 			<div class="panel-heading"><b>{t}Job Info{/t}</b></div>
 			<div class="panel-body">
 				<div>
@@ -64,6 +65,6 @@
 			</div>
 			{/if}
 		</div>
-	</div>
-  
+     </div> <!-- end div class="col... -->
+	</div> <!-- end div class="row... -->
 </div>
