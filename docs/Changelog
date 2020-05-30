@@ -11,6 +11,7 @@ Changelog
 - Documentation
 	- Fix broken download link in Readme.md (#49)
 	- Update ownership and permissions chapter (#52)
+	- Update supported PHP version (up to 7.3)
 
 Fixed bug(s)
 
