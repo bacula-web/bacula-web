@@ -1,4 +1,4 @@
-=== Release 8.4.0 (May 30 2020)
+=== Release 8.4.0 (June 1 2020)
 
 Changelog
 
@@ -12,11 +12,13 @@ Changelog
 	- Fix broken download link in Readme.md (#49)
 	- Update ownership and permissions chapter (#52)
 	- Update supported PHP version (up to 7.3) (#47)
+	- Update documentation for Linux Mint (#48)
 
 Fixed bug(s)
 
 - #46 [bug] - Wrong start time and end time for waiting and running jobs
 - #47 [bug] - PHP 7.2 support
+- #48 [doc] - PHP SQLite support not found on Linux Mint
 - #49 [doc] - Broken dowload link in Readme.md 
 - #52 [doc] - Update documentation related to ownership and permissions
 
