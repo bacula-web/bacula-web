@@ -4,6 +4,11 @@
 Nginx web server installation
 =============================
 
+Before you start
+================
+
+Before proceeding to Nginx / fpm / PHP installation and configuration, read the :ref:`install/requirements` page.
+
 Install required packages
 =========================
 
