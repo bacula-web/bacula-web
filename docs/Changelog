@@ -3,10 +3,11 @@
 Changelog
 
 - Jobs report
-	- Fix start time and end time for waiting and running jobss (#46)
+	- Fix start time and end time for waiting and running jobs (#46)
 
 - Job files report
 	- Add file/folder search form (#54)
+	  You can now filter job file/folder list using search field
 
 - Documentation
 	- Fix broken download link in Readme.md (#49)
@@ -24,6 +25,7 @@ Fixed bug(s)
 
 New feature(s)
 
+- #44 [feature] - List of files too short, not configurable
 - #54 [feature] - Add search form in Job files report
 
 === Release 8.3.3 (December 1 2019)
