@@ -4,6 +4,11 @@
 Web server installation
 =======================
 
+Before you start
+================
+
+Before proceeding to Apache / PHP installation and configuration, read the :ref:`install/requirements` page.
+
 Using Apache web server
 =======================
 
