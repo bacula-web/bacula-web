@@ -1,3 +1,33 @@
+=== Release 8.4.0 (June 1 2020)
+
+Changelog
+
+- Jobs report
+	- Fix start time and end time for waiting and running jobs (#46)
+
+- Job files report
+	- Add file/folder search form (#54)
+	  You can now filter job file/folder list using search field
+
+- Documentation
+	- Fix broken download link in Readme.md (#49)
+	- Update ownership and permissions chapter (#52)
+	- Update supported PHP version (up to 7.3) (#47)
+	- Update documentation for Linux Mint (#48)
+
+Fixed bug(s)
+
+- #46 [bug] - Wrong start time and end time for waiting and running jobs
+- #47 [bug] - PHP 7.2 support
+- #48 [doc] - PHP SQLite support not found on Linux Mint
+- #49 [doc] - Broken dowload link in Readme.md 
+- #52 [doc] - Update documentation related to ownership and permissions
+
+New feature(s)
+
+- #44 [feature] - List of files too short, not configurable
+- #54 [feature] - Add search form in Job files report
+
 === Release 8.3.3 (December 1 2019)
 
 Changelog
@@ -20,7 +50,7 @@ Fixed bug(s)
 - #37 [bug] Fix installation from archive in documentation
 - #42 [bug] Invalid date format inside DateTimeUtil::Get_Elapsed_Time
 
-New feature(2)
+New feature(s)
 
  - none
 

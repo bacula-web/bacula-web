@@ -70,6 +70,13 @@ Backup job report display useful information about Bacula jobs like
    * last completed jobs
    * last x days stored bytes and files graphs
 
+Job files report
+================
+
+Job files report list all files and folder backed up by a backup job
+
+.. note:: Since Bacula-Web 8.4.0, you can filter the file(s)/folder(s) list using a search box
+
 Pools and volumes
 =================
 

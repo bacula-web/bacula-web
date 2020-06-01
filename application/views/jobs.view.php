@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2019, Davide Franco			                            |
+  | Copyright 2010-2020, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -283,7 +283,7 @@ class JobsView extends CView {
             // Determine icon for job status
             switch($job['jobstatus']) {
             case J_RUNNING:
-                $job['Job_icon'] = "play";
+               $job['Job_icon'] = "play";
                 break;
             case J_COMPLETED:
                $job['Job_icon'] = "ok";
@@ -316,19 +316,20 @@ class JobsView extends CView {
             $end_time   = $job['endtime'];
        
             if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
-                $job['starttime'] = 'n/a';
+               $job['starttime'] = 'n/a';
+            }else {
+               $job['starttime'] = date( $_SESSION['datetime_format'], strtotime($job['starttime']));
             }
        
             if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
-                $job['endtime'] = 'n/a';
+               $job['endtime'] = 'n/a';
+            }else {
+               $job['endtime'] = date( $_SESSION['datetime_format'], strtotime($job['endtime'])); 
             }
        
             // Get the job elapsed time completion
             $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
 
-            // Job start time, end time and scheduled time in custom format (if defined)
-            $job['starttime'] = date( $_SESSION['datetime_format'], strtotime($job['starttime']));
-            $job['endtime'] = date( $_SESSION['datetime_format'], strtotime($job['endtime'])); 
             $job['schedtime'] = date( $_SESSION['datetime_format'], strtotime($job['schedtime'])); 
        
             // Job Level

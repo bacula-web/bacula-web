@@ -8,9 +8,9 @@ Releases
 Roadmap
 *******
 
-Bacula-Web project development roadmap is publicly available on the `Mantis bug tracker`_.
+You can track the project milestones on `Bacula-Web GitHub project page`
 
-For example, the roadmap for next major release 8.0.0 is available using `this link`_.
+.. important:: For many reasons, Bacula-Web project uses GitHub issues instead of MantisBT since March 2019.
 
 ******************
 Versions numbering
@@ -53,5 +53,4 @@ Major Minor Bugfix
 6     0     0
 ===== ===== ======
 
-.. _Mantis bug tracker: http://bugs.bacula-web.org/
-.. _this link: http://bugs.bacula-web.org/roadmap_page.php?version_id=26
+.. _Bacula-Web GitHub project page : https://github.com/bacula-web/bacula-web/milestones

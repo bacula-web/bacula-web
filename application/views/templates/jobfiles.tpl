@@ -1,13 +1,14 @@
-<div class="container-fluid" id="jobsreport">
+<div class="container" id="jobsreport">
 
 	<div class="page-header">
 		<h3>{$page_name} <small>{t}Bacula History Files{/t}</small></h3>
 	</div>
 
 	<div class="row">
-		
-		<!-- Backup job report -->
-		<div class="panel panel-default">
+  <div class="col-md-7">
+   
+		 <!-- Backup job report -->
+		 <div class="panel panel-default">
 			<div class="panel-heading"><b>{t}Job Info{/t}</b></div>
 			<div class="panel-body">
 				<div>
@@ -15,9 +16,29 @@
 					<br>
 					<b>{t}Job Status{/t}</b>: {$job_info.jobstatus}
 				</div>
-			</div> <!-- end div class=panel-body -->
-		</div> <!-- end div class=panel ... -->
-		
+		    </div> <!-- end div class=panel-body -->
+		  </div> <!-- end div class=panel ... -->
+      </div> <!-- div class="col... -->
+
+      <!-- Search box -->
+      <div class="col-md-5">
+        <div class="panel panel-default">
+          <div class="panel-heading"><b>Search</b></div>
+          <div class="panel-body"> 
+            <form class="form-inline" action="index.php?page=jobfiles" method="post">
+              <div class="form-group">
+                <label for="InputFilename">Filename</label>
+                <input type="text" class="form-control" name="InputFilename" id="InputFilename" placeholder="{$filename}">
+                <input type="hidden" name="jobId" value="{$jobid}">
+                <button type="submit" class="btn btn-default">Search</button>
+                <button type="reset" class="btn btn-default" title="{t}Reset{/t}">{t}Reset{/t}</button>
+              </div> <!-- end div class="form-group -->
+            </form>
+          </div> <!-- end div class="panel-body -->
+        </div> <!-- end div class="panel -->
+      </div> <!-- end div class="col..." -->
+	
+    <div class="col-md-12">	
 		<div class="table-responsive">
 			<table class="table table-condensed table-hover table-striped table-bordered text-center">
 				<tr>
@@ -38,32 +59,32 @@
 			</table>
 		</div>
 			
-		<div class="alert alert-info text-center" role="alert">
-			
-			{if $pagination_active}
-			<div class="bs-example" data-example-id="simple-pager">
+		<div class="panel panel-info">
+		  <div class="panel-heading">	
+			 {if $pagination_active}
 				<nav aria-label="...">
 					<ul class="pager">
 						<li>
 							{if $pagination_current_page == 0}
 								<a class="disabled">Previous</a>
 							{else}
-								<a href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page-1}">Previous</a>
+								<a href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page-1}&InputFilename={$filename}">Previous</a>
 							{/if}
 						</li>
 						<li>Found <b>{$job_files_count}</b> File(s)</b></li>
 						<li>
 							{if $job_files_count_paging == $pagination_rows_per_page}
-								<a href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page+1}">Next</a>
+								<a href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page+1}&InputFilename={$filename}">Next</a>
 							{else}
 								<a class="disabled">Next</a>
 							{/if}							
 						</li>
 					</ul>
 				</nav>
-			</div>
+           </div> <!-- end div class="panel-heading ... -->
+			</div> <!-- end div class="panel-->
 			{/if}
 		</div>
-	</div>
-  
+     </div> <!-- end div class="col... -->
+	</div> <!-- end div class="row... -->
 </div>
