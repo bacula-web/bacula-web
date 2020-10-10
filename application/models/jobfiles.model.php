@@ -17,7 +17,7 @@ class JobFiles_Model extends CModel {
         $where = array("File.JobId = $jobId");
 
         if( !empty($filename) ) {
-           $where[] = "Filename.Name LIKE '%$filename%'";
+           $where[] = "(Filename.Name LIKE '%$filename%' OR Path.Path LIKE '%$filename%' OR concat(Path.Path, '', Filename.Name) = '$filename')";
         }
         
         $orderby = 'File.FileIndex ASC';
@@ -46,12 +46,14 @@ class JobFiles_Model extends CModel {
 			WHERE File.JobId = $jobId 
 			AND  Path.PathId = File.PathId 
 			AND  Filename.FilenameId = File.FilenameId 
-            AND  Job.JobId = File.JobId; ";
+            AND  Job.JobId = File.JobId ";
 
       // Filter by filename if requested
       if( !empty($filename)) {
-         $sql_query .= "AND Filename.Name LIKE '%$filename%' ";
+         $sql_query .= "AND (Filename.Name LIKE '%$filename%' OR Path.Path LIKE '%$filename%' OR concat(Path.Path, '', Filename.Name) = '$filename') ";
       }
+
+      $sql_query .= ";";
 
       $result = $this->run_query($sql_query);
 
