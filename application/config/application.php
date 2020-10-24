@@ -12,7 +12,7 @@
  */
 
 
-$app = [ 'name' => 'Bacula-Web', 'version' => '8.4.0',
+$app = [ 'name' => 'Bacula-Web', 'version' => '8.4.1',
         'routes' => [   'home' => 'Dashboard', 
                         'test' => 'Test',
                         'jobs' => 'Jobs',

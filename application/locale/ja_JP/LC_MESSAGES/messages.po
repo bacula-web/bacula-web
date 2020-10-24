@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the Bacula-Web package.
 # 
 # Translators:
+# Davide Franco, 2019
 # Juan-Luis Frances <bacula_list@veloxia.com>, 2004
 msgid ""
 msgstr ""
 "Project-Id-Version: Bacula-Web\n"
 "Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
 "POT-Creation-Date: 2017-10-11 13:16+0200\n"
-"PO-Revision-Date: 2017-10-11 11:22+0000\n"
+"PO-Revision-Date: 2019-02-28 07:36+0000\n"
 "Last-Translator: Davide Franco\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/bacula-web/bacula-web/language/ja_JP/)\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +37,7 @@ msgstr "Back"
 
 #: messages.c:9
 msgid "Back to Dashboard"
-msgstr ""
+msgstr "ダッシュボードに戻る"
 
 #: lang.c:1 lang.c:35 lang.c:50 lang.c:65
 msgid "Back to the dashboard"
@@ -547,4 +548,3 @@ msgstr "days(s)"
 #: lang.c:41 messages.c:124
 msgid "last"
 msgstr "last"
-

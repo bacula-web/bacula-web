@@ -548,4 +548,3 @@ msgstr "дня(ей)"
 #: lang.c:41 messages.c:124
 msgid "last"
 msgstr "последний"
-

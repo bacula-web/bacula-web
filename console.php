@@ -24,7 +24,7 @@ require_once( 'core/global.inc.php' );
  */
 
 function printUsage() {
-    echo "Bacula-Web version 8.3.3\n\n";
+    echo "Bacula-Web version 8.4.1\n\n";
     echo "Usage:\n";
     echo "   php bwc [command]\n\n";
     echo "Available commands:\n";

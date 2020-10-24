@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the Bacula-Web package.
 # 
 # Translators:
-# Davide Franco, 2014,2016-2017
+# Davide Franco, 2014,2016-2017,2019
 # Davide Franco, 2012
 # Morgan LEFIEUX <comete@archlinuxfr.org>, 2004
 msgid ""
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Bacula-Web\n"
 "Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
 "POT-Creation-Date: 2017-10-11 13:16+0200\n"
-"PO-Revision-Date: 2017-10-14 19:14+0000\n"
+"PO-Revision-Date: 2019-02-28 07:31+0000\n"
 "Last-Translator: Davide Franco\n"
 "Language-Team: French (France) (http://www.transifex.com/bacula-web/bacula-web/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
@@ -516,7 +516,7 @@ msgstr "Nom du Volume"
 
 #: lang.c:93 messages.c:72
 msgid "Volume pool"
-msgstr ""
+msgstr "Set de volume"
 
 #: lang.c:92 messages.c:71
 msgid "Volume status"
@@ -549,4 +549,3 @@ msgstr "jour(s)"
 #: lang.c:41 messages.c:124
 msgid "last"
 msgstr "dernier"
-

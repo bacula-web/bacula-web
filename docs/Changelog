@@ -1,3 +1,23 @@
+=== Release 8.4.1 (October 24 2020)
+
+Changelog
+
+- Job file report
+	- Fix files count (#55)
+	- Search form looks for path or filename matches
+
+- Translations
+	- Update translations (#56)
+
+Fixed bug(s)
+
+- #55 [bug] - Job files search returns SQL syntax error
+- #56 [translation] - Update translations
+
+New feature(s)
+
+- none
+
 === Release 8.4.0 (June 1 2020)
 
 Changelog
@@ -52,7 +72,7 @@ Fixed bug(s)
 
 New feature(s)
 
- - none
+- none
 
 === Release 8.3.2 (August 15 2019)
 
