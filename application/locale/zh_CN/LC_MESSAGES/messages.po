@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the Bacula-Web package.
 # 
 # Translators:
-# cxl nh <nhcxl@tom.com>, 2016
+# cxl nh <nhcxl@tom.com>, 2016,2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Bacula-Web\n"
 "Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
 "POT-Creation-Date: 2017-10-11 13:16+0200\n"
-"PO-Revision-Date: 2017-10-11 11:22+0000\n"
-"Last-Translator: Davide Franco\n"
+"PO-Revision-Date: 2018-03-31 04:23+0000\n"
+"Last-Translator: cxl nh <nhcxl@tom.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/bacula-web/bacula-web/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,7 +48,7 @@ msgstr "备份任务报告"
 
 #: lang.c:37 lang.c:115 messages.c:86
 msgid "Backup Job name 7.1.0"
-msgstr ""
+msgstr "备份任务名称"
 
 #: lang.c:32 lang.c:103 messages.c:82
 msgid "Backup Job report"
@@ -547,4 +547,3 @@ msgstr "日"
 #: lang.c:41 messages.c:124
 msgid "last"
 msgstr "最后"
-
