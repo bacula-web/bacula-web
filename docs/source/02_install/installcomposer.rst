@@ -29,6 +29,10 @@ Most Linux distro povides Composer as package, so to install it run this command
 If your distro doesn't provide Composer package, Composer website contains all informations 
 you need to install Composer manually. Please see `this page <https://getcomposer.org/download/>`_.
 
+.. important::
+
+   Make sure you're using latest Composer version. Read more on `Packagist.com website <https://getcomposer.org/2>`_
+
 Use Composer to install Bacula-Web 
 ==================================
 
