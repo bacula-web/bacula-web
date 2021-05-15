@@ -6,7 +6,7 @@ Install Bacula-Web using Composer
 
 Since version 8.0.0, Bacula-Web dependencies management is performed using `Composer`_.
 
-As stated on `Composer's official website <https://getcomposer.org/doc/00-intro.md#dependency-management>`_, 
+As stated on `Composer's official website <https://getcomposer.org/doc/00-intro.md#dependency-management>`_
 
 *Composer is a tool for dependency management in PHP. 
 It allows you to declare the libraries your project depends on and it will manage (install/update) them for you.*
