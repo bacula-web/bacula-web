@@ -10,7 +10,7 @@ permalink: /support/
 
 I'd be happy to help you fixing your Bacula-Web installation, configuration or any other issue.
 
-But before submitting a bug or feature request, please have a look at [bugs and features request guideline](http://docs.bacula-web.org/en/v8.3.2/03_gethelp/support.html#bug-report-guideline) first.
+But before submitting a bug or feature request, please have a look at [bugs and features request guideline](http://docs.bacula-web.org/en/latest/03_gethelp/support.html#bug-report-guideline) first.
 
 To submit a bug report or feature request, please use [GitHub issues](https://github.com/bacula-web/bacula-web/issues) on Bacula-Web project.
 
