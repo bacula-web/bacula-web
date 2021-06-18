@@ -16,4 +16,4 @@ To submit a bug report or feature request, please use [GitHub issues](https://gi
 
 #### FAQ
 
-You can find more the most often questions answered into the [FAQ](http://docs.bacula-web.org/en/v8.3.2/03_gethelp/faq.html)
+You can find more the most often questions answered into the [FAQ](http://docs.bacula-web.org/en/latest/03_gethelp/faq.html)
