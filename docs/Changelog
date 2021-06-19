@@ -1,9 +1,12 @@
-=== Release 8.4.2 (May 15 2021)
+=== Release 8.4.2 (June dd 2021)
 
 Changelog
 
 - General
 	- Upgrade Composer dependencies
+
+- Documentation
+	- Fix copyright
 
 Fixed bug(s)
 
