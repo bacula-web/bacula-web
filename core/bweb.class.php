@@ -111,5 +111,8 @@ class Bweb extends WebApplication
         $this->view->assign('app_name', $this->name);
         $this->view->assign('app_version', $this->version);
 
+        // Set language
+        $this->view->assign('language', $language);
+
     }
 } // end class Bweb

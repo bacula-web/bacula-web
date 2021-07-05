@@ -11,7 +11,7 @@
 
         <!-- Set language variable for DateTimePicker -->
         <script>
-            var config_language = "{php}echo FileConfig::get_Value('language');{/php};"
+            var config_language = "{$language}"
         </script>
 
         <!-- Bootstrap validator -->
