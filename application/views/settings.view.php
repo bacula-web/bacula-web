@@ -19,11 +19,12 @@
 class SettingsView extends CView {
 
     public function __construct() {
+
+        parent::__construct();
+
         $this->templateName = 'settings.tpl';
         $this->name = 'Settings';
         $this->title = 'General settings';
-
-        parent::init();
     }
 
     public function prepare() {

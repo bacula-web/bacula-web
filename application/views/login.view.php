@@ -19,11 +19,12 @@
 class LoginView extends CView {
 
     public function __construct() {
+
+        parent::__construct();
+
         $this->templateName = 'login.tpl';
         $this->name = 'Login';
         $this->title = '';
-
-        parent::init();
     }
 
     public function prepare() {

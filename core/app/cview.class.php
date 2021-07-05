@@ -16,7 +16,7 @@
   +-------------------------------------------------------------------------+
  */
 
-class CView extends Smarty
+class CView extends SmartyBC
 {
     protected $templateName;
     protected $name;
@@ -25,33 +25,20 @@ class CView extends Smarty
     protected $userAlert;
     protected $userAlertType;
 
-    public function __construct($template)
+    public function __construct()
     {
-        $this->templateName = $template;
+        parent::__construct();
 
-        $this->init();
-    }
+        $this->setTemplateDir(VIEW_DIR);
+        $this->setCompileDir(VIEW_CACHE_DIR);
+        $this->setCacheDir(VIEW_CACHE_DIR);
 
-    protected function init()
-    {
-        // Set to true to force template generation if a template has changed
-        $this->compile_check = false;
-
-        // Template caching
-        $this->cache_dir = VIEW_CACHE_DIR;
-        $this->caching = 0;
-        $this->cache_lifetime = 60;
-
-        // Set to true for debug or dev purpose only
-        $this->debugging = false;
         $this->force_compile = true;
-
-        $this->template_dir = VIEW_DIR;
-        $this->compile_dir = VIEW_CACHE_DIR;
+        $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
     }
 
     public function render()
-    {
+    {   
         $this->assign('page_name', $this->name);
         $this->assign('page_title', $this->title);
         $this->assign('templateName', $this->templateName);

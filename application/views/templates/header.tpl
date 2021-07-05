@@ -129,6 +129,7 @@
     <div class="row">
       <div class="col-xs-12">
         <ol class="breadcrumb">
+		{*
 			{php}
                 if( isset($_GET['page'] ) ) {
 					echo '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
@@ -137,6 +138,7 @@
 				    echo '<li class="active"> <i class="fa fa-home fa-fw"></i> ' . $this->name . '</li>';
                 }
 			{/php}
+		*}
         </ol>
       </div> <!-- div class="col..." -->
   </div> <!-- div class="row" -->

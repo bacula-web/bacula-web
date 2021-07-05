@@ -19,12 +19,12 @@
 class VolumesView extends CView {
     
     public function __construct() {
+
+        parent::__construct();
         
         $this->templateName = 'volumes.tpl';
         $this->name = 'Volumes report';
         $this->title = 'Bacula volume(s) overview';
-        
-        parent::init();
     }
     
     public function prepare() {

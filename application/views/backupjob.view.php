@@ -19,11 +19,11 @@ class BackupJobView extends CView {
 
     public function __construct() {
 
+        parent::__construct();
+
         $this->templateName = 'backupjob-report.tpl';
         $this->name = 'Backup job report';
         $this->title = 'Report per Bacula backup job name';
-
-        parent::init();
     }
 
     public function prepare() {
