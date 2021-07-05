@@ -16,7 +16,7 @@
   +-------------------------------------------------------------------------+
  */
 
-class CView extends Smarty
+class CView extends SmartyBC
 {
     protected $templateName;
     protected $name;
@@ -25,33 +25,20 @@ class CView extends Smarty
     protected $userAlert;
     protected $userAlertType;
 
-    public function __construct($template)
+    public function __construct()
     {
-        $this->templateName = $template;
+        parent::__construct();
 
-        $this->init();
-    }
+        $this->setTemplateDir(VIEW_DIR);
+        $this->setCompileDir(VIEW_CACHE_DIR);
+        $this->setCacheDir(VIEW_CACHE_DIR);
 
-    protected function init()
-    {
-        // Set to true to force template generation if a template has changed
-        $this->compile_check = false;
-
-        // Template caching
-        $this->cache_dir = VIEW_CACHE_DIR;
-        $this->caching = 0;
-        $this->cache_lifetime = 60;
-
-        // Set to true for debug or dev purpose only
-        $this->debugging = false;
         $this->force_compile = true;
-
-        $this->template_dir = VIEW_DIR;
-        $this->compile_dir = VIEW_CACHE_DIR;
+        $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
     }
 
     public function render()
-    {
+    {   
         $this->assign('page_name', $this->name);
         $this->assign('page_title', $this->title);
         $this->assign('templateName', $this->templateName);
@@ -64,6 +51,16 @@ class CView extends Smarty
         // Give user some feedback
         $this->assign('userAlert', $this->userAlert);
         $this->assign('userAlertType', $this->userAlertType);
+
+        // Build breadcrumb
+        $breadcrumb = '';
+        if( isset($_GET['page'] ) ) {
+            $breadcrumb = '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
+            $breadcrumb .= '<li class="active">' . $this->name . '</li>';
+        }else {
+            $breadcrumb = '<li class="active"> <i class="fa fa-home fa-fw"></i> ' . $this->name . '</li>';
+        }
+        $this->assign( 'breadcrumb', $breadcrumb);
 
         // Render using the default layout
         $this->display('layouts/default.tpl');

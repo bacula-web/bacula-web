@@ -20,12 +20,12 @@
 class TestView extends CView {
     
     public function __construct() {
+
+        parent::__construct();
         
         $this->templateName = 'test.tpl';
         $this->name = 'Test page';
         $this->title = 'Check requirements and configuration';
-
-        parent::init();
     }
 
     public function prepare() {

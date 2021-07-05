@@ -19,11 +19,11 @@ class ClientView extends CView {
 
     public function __construct() {
 
+        parent::__construct();
+
         $this->templateName = 'client-report.tpl';
         $this->name = 'Client report';
         $this->title = 'Report per Bacula client';
-
-        parent::init();
     }
 
     public function prepare() {

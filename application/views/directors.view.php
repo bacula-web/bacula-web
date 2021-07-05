@@ -20,12 +20,12 @@
 class DirectorsView extends CView {
     
     public function __construct() {
+
+        parent::__construct();
         
         $this->templateName = 'directors.tpl';
         $this->name = 'Directors';
         $this->title = 'Bacula director(s) overview';
-
-        parent::init();
     }
 
     public function prepare() {

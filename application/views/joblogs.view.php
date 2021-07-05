@@ -18,12 +18,12 @@
 class JobLogsView extends CView {
 
     public function __construct() {
+
+        parent::__construct();
         
         $this->templateName = 'joblogs.tpl';
         $this->name = 'Job logs';
         $this->title = 'Bacula job log';
-
-        parent::init();
     }
 
     public function prepare() {

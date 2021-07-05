@@ -19,12 +19,12 @@
 class DashboardView extends CView {
 
     public function __construct() {
+
+        parent::__construct();
         
         $this->templateName = 'dashboard.tpl';
         $this->name = _('Dashboard');
         $this->title = 'General overview';
-
-        parent::init();
     }
 
     public function prepare() {

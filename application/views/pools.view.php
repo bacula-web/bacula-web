@@ -19,11 +19,12 @@
 class PoolsView extends CView {
 
     public function __construct() {
+
+        parent::__construct();
+
         $this->templateName = 'pools.tpl';
         $this->name = 'Pools report';
         $this->title = 'Bacula pool(s) overview';
-
-        parent::init();
     }
 
     public function prepare() {
