@@ -52,6 +52,16 @@ class CView extends SmartyBC
         $this->assign('userAlert', $this->userAlert);
         $this->assign('userAlertType', $this->userAlertType);
 
+        // Build breadcrumb
+        $breadcrumb = '';
+        if( isset($_GET['page'] ) ) {
+            $breadcrumb = '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
+            $breadcrumb .= '<li class="active">' . $this->name . '</li>';
+        }else {
+            $breadcrumb = '<li class="active"> <i class="fa fa-home fa-fw"></i> ' . $this->name . '</li>';
+        }
+        $this->assign( 'breadcrumb', $breadcrumb);
+
         // Render using the default layout
         $this->display('layouts/default.tpl');
     }
