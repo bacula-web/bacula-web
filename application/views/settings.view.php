@@ -2,7 +2,7 @@
 
 /*
  +-------------------------------------------------------------------------+
- | Copyright 2010-2020, Davide Franco			                           |
+ | Copyright 2010-2021, Davide Franco			                           |
  |                                                                         |
  | This program is free software; you can redistribute it and/or           |
  | modify it under the terms of the GNU General Public License             |
@@ -19,11 +19,12 @@
 class SettingsView extends CView {
 
     public function __construct() {
+
+        parent::__construct();
+
         $this->templateName = 'settings.tpl';
         $this->name = 'Settings';
         $this->title = 'General settings';
-
-        parent::init();
     }
 
     public function prepare() {

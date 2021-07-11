@@ -2,7 +2,7 @@
 /* 
  +-------------------------------------------------------------------------+
  | Copyright (C) 2004 Juan Luis Francés Jiménez				               |
- | Copyright 2010-2020, Davide Franco			       	                   |
+ | Copyright 2010-2021, Davide Franco			       	                   |
  |                                                                         |
  | This program is free software; you can redistribute it and/or           |
  | modify it under the terms of the GNU General Public License             |
@@ -98,18 +98,17 @@ class Bweb extends WebApplication
         $this->view->assign('catalog_label', FileConfig::get_Value('label', $this->catalog_current_id));
             
         
-        // Bacula catalog selection
-        if ($this->catalog_nb > 1) {
-
-            // Catalogs list
-            $this->view->assign('catalogs', FileConfig::get_Catalogs());
-            // Catalogs count
-            $this->view->assign('catalog_nb', $this->catalog_nb);
-        }
+        // Get Bacula catalog list
+        $this->view->assign('catalogs', FileConfig::get_Catalogs());
+        // Get catalogs count
+        $this->view->assign('catalog_nb', $this->catalog_nb);
 
         // Set app name and version in view
         $this->view->assign('app_name', $this->name);
         $this->view->assign('app_version', $this->version);
+
+        // Set language
+        $this->view->assign('language', $language);
 
     }
 } // end class Bweb

@@ -1,7 +1,7 @@
 <?php
  /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2020, Davide Franco			                    	    |
+  | Copyright 2010-2021, Davide Franco			                    	    |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -127,7 +127,7 @@ class FileConfig extends File
         // Return:		an array containing all catalogs labels define in the configuration
         // ==================================================================================
 
-    public function get_Catalogs()
+    public static function get_Catalogs()
     {
         $catalogs = array();
 

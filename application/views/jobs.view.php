@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2020, Davide Franco			                            |
+  | Copyright 2010-2021, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -18,12 +18,12 @@
 class JobsView extends CView {
 
     public function __construct() {
+
+        parent::__construct();
         
         $this->templateName = 'jobs.tpl';
         $this->name = 'Jobs report';
         $this->title = 'Bacula jobs overview';
-
-        parent::init();
     }
 
     public function prepare() {
@@ -265,6 +265,8 @@ class JobsView extends CView {
 
         if($job_orderby_asc_filter == 'ASC') {
             $this->assign('result_order_asc_checked', 'checked');
+        }else {
+            $this->assign('result_order_asc_checked', '');
         }
 
         // Parsing jobs result

@@ -2,7 +2,7 @@
 
 /*
  +-------------------------------------------------------------------------+
- | Copyright 2010-2020, Davide Franco			                           |
+ | Copyright 2010-2021, Davide Franco			                           |
  |                                                                         |
  | This program is free software; you can redistribute it and/or           |
  | modify it under the terms of the GNU General Public License             |
@@ -22,13 +22,14 @@ class UserSettingsView extends CView {
     protected $username;
 
     public function __construct() {
+
+        parent::__construct();
+        
         $this->templateName = 'usersettings.tpl';
         $this->name = 'User settings';
         $this->title = '';
         $this->username = '';
         $this->userauth = new UserAuth();
-
-        parent::init();
     }
 
     public function prepare() {

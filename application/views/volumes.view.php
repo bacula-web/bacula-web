@@ -2,7 +2,7 @@
 
 /*
  +-------------------------------------------------------------------------+
- | Copyright 2010-2020, Davide Franco			                           |
+ | Copyright 2010-2021, Davide Franco			                           |
  |                                                                         |
  | This program is free software; you can redistribute it and/or           |
  | modify it under the terms of the GNU General Public License             |
@@ -19,12 +19,12 @@
 class VolumesView extends CView {
     
     public function __construct() {
+
+        parent::__construct();
         
         $this->templateName = 'volumes.tpl';
         $this->name = 'Volumes report';
         $this->title = 'Bacula volume(s) overview';
-        
-        parent::init();
     }
     
     public function prepare() {
@@ -90,6 +90,9 @@ class VolumesView extends CView {
             }
         }
  
+        // Set order by filter and checkbox status
+        $this->assign( 'orderby_asc_checked', '');
+
         if( !is_null(CHttpRequest::get_Value('orderby_asc')) ) {
             $volume_orderby_asc = 'ASC';
             $this->assign( 'orderby_asc_checked', 'checked');
@@ -97,7 +100,9 @@ class VolumesView extends CView {
    
         $this->assign( 'orderby_selected', $volume_orderby_filter);
 
+        // Set inchanger filter and checkbox status
         $inchanger_filter = false;
+        $this->assign( 'inchanger_checked', '');
 
         if( !is_null(CHttpRequest::get_Value('inchanger')) ) {
             $inchanger_filter = true;

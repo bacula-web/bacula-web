@@ -1,3 +1,36 @@
+=== Release 8.4.2 (July 11 2021)
+
+Changelog
+
+- General
+	- Upgrade Composer dependencies
+
+- Documentation
+	- Fix copyright
+	- Minor fixes
+	- Add notice about latest Composer version
+
+- Miscelanous
+	- Fix homepage in composer.json to use https
+	- Fix several PHP notices
+	- General code improvements
+	- Upgrade jquery to version 3.5.1
+	- Upgrade datatables/datatables to version 1.10.21
+	- Upgrade smarty-gettext/smarty-gettext to version 1.6.2
+	- phpmd/phpmd to version 2.10.1
+	- squizlabs/php_codesniffer to version 3.6.
+
+Security
+	- Upgrade Smarty to version v3.1.39 to fix CVE-2021-26119 and CVE-2021-26120 (see #58)
+
+Fixed bug(s)
+
+- #58 [security] - Upgrade Smarty to latest stable version
+
+New feature(s)
+
+- none
+
 === Release 8.4.1 (October 24 2020)
 
 Changelog

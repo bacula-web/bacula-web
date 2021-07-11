@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2020, Davide Franco			                            |
+  | Copyright 2010-2021, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -19,11 +19,11 @@ class BackupJobView extends CView {
 
     public function __construct() {
 
+        parent::__construct();
+
         $this->templateName = 'backupjob-report.tpl';
         $this->name = 'Backup job report';
         $this->title = 'Report per Bacula backup job name';
-
-        parent::init();
     }
 
     public function prepare() {
@@ -53,6 +53,7 @@ class BackupJobView extends CView {
         $where = array();
 
         if (($backupjob_name === NULL) && (empty($backupjob_name)) ) {
+            $this->assign( 'selected_jobname', '');
             $this->assign( 'no_report_options', 'true');
 
             // Set selected period

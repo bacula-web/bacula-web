@@ -6,13 +6,13 @@
  * This config file contains Bacula-Web core web application settings
  * Important: This file should NOT be modified, except for developpment purpose
  *
- * @copyright 2010-2020 Davide Franco
+ * @copyright 2010-2021 Davide Franco
  * @author Davide Franco
  * @since 8.0.0-rc.1
  */
 
 
-$app = [ 'name' => 'Bacula-Web', 'version' => '8.4.1',
+$app = [ 'name' => 'Bacula-Web', 'version' => '8.4.2',
         'routes' => [   'home' => 'Dashboard', 
                         'test' => 'Test',
                         'jobs' => 'Jobs',

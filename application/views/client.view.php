@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2020, Davide Franco                                      |
+  | Copyright 2010-2021, Davide Franco                                      |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -19,17 +19,17 @@ class ClientView extends CView {
 
     public function __construct() {
 
+        parent::__construct();
+
         $this->templateName = 'client-report.tpl';
         $this->name = 'Client report';
         $this->title = 'Report per Bacula client';
-
-        parent::init();
     }
 
     public function prepare() {
         
         require_once('core/const.inc.php');
-
+        
         $period = 7;
         $backup_jobs = array();
         $days_stored_bytes = array();
@@ -66,6 +66,8 @@ class ClientView extends CView {
             }
 
             $period = CHttpRequest::get_Value('period');
+
+            $this->assign('selected_period', CHttpRequest::get_Value('period'));
 
             // Check if period is an integer and listed in known periods
             if(!array_key_exists( $period, $periods_list)) {
@@ -147,7 +149,8 @@ class ClientView extends CView {
        
             unset($stored_files_chart);
         }else {
-            $this->assign( 'no_report_options', 'true');
+            $this->assign('selected_period', '');
+            $this->assign('no_report_options', 'true');
         }
         
         $this->assign('period', $period);

@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2020, Davide Franco			                            |
+  | Copyright 2010-2021, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -18,12 +18,12 @@
 class JobLogsView extends CView {
 
     public function __construct() {
+
+        parent::__construct();
         
         $this->templateName = 'joblogs.tpl';
         $this->name = 'Job logs';
         $this->title = 'Bacula job log';
-
-        parent::init();
     }
 
     public function prepare() {

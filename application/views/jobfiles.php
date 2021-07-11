@@ -11,12 +11,12 @@
 class JobFilesView extends CView {
 	
 	public function __construct() {
+
+      parent::__construct();
         
       $this->templateName = 'jobfiles.tpl';
 		$this->name = 'Job files';
       $this->title = 'Bacula Job Files';
-
-      parent::init();
    }
 	
    public function prepare() {
