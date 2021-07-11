@@ -90,6 +90,9 @@ class VolumesView extends CView {
             }
         }
  
+        // Set order by filter and checkbox status
+        $this->assign( 'orderby_asc_checked', '');
+
         if( !is_null(CHttpRequest::get_Value('orderby_asc')) ) {
             $volume_orderby_asc = 'ASC';
             $this->assign( 'orderby_asc_checked', 'checked');
