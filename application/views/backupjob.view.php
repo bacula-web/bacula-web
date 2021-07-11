@@ -53,6 +53,7 @@ class BackupJobView extends CView {
         $where = array();
 
         if (($backupjob_name === NULL) && (empty($backupjob_name)) ) {
+            $this->assign( 'selected_jobname', '');
             $this->assign( 'no_report_options', 'true');
 
             // Set selected period
