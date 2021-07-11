@@ -147,7 +147,8 @@ class ClientView extends CView {
        
             unset($stored_files_chart);
         }else {
-            $this->assign( 'no_report_options', 'true');
+            $this->assign('selected_period', '');
+            $this->assign('no_report_options', 'true');
         }
         
         $this->assign('period', $period);
