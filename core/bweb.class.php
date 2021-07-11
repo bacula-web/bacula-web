@@ -98,14 +98,10 @@ class Bweb extends WebApplication
         $this->view->assign('catalog_label', FileConfig::get_Value('label', $this->catalog_current_id));
             
         
-        // Bacula catalog selection
-        if ($this->catalog_nb > 1) {
-
-            // Catalogs list
-            $this->view->assign('catalogs', FileConfig::get_Catalogs());
-            // Catalogs count
-            $this->view->assign('catalog_nb', $this->catalog_nb);
-        }
+        // Get Bacula catalog list
+        $this->view->assign('catalogs', FileConfig::get_Catalogs());
+        // Get catalogs count
+        $this->view->assign('catalog_nb', $this->catalog_nb);
 
         // Set app name and version in view
         $this->view->assign('app_name', $this->name);
