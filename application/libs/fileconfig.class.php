@@ -127,7 +127,7 @@ class FileConfig extends File
         // Return:		an array containing all catalogs labels define in the configuration
         // ==================================================================================
 
-    public function get_Catalogs()
+    public static function get_Catalogs()
     {
         $catalogs = array();
 
