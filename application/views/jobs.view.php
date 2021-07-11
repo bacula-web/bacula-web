@@ -265,6 +265,8 @@ class JobsView extends CView {
 
         if($job_orderby_asc_filter == 'ASC') {
             $this->assign('result_order_asc_checked', 'checked');
+        }else {
+            $this->assign('result_order_asc_checked', '');
         }
 
         // Parsing jobs result
