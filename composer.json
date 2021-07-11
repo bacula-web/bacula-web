@@ -3,7 +3,7 @@
    "type": "library",
    "description": "The open source web based reporting and monitoring tool for Bacula",
    "keywords": ["php","reporting","monitoring","bacula"],
-   "homepage": "http://www.bacula-web.org",
+   "homepage": "https://www.bacula-web.org",
    "license": "GPL-2.0-only",
    "authors": [
       {
