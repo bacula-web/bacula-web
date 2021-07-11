@@ -29,7 +29,7 @@ class ClientView extends CView {
     public function prepare() {
         
         require_once('core/const.inc.php');
-
+        
         $period = 7;
         $backup_jobs = array();
         $days_stored_bytes = array();
@@ -66,6 +66,8 @@ class ClientView extends CView {
             }
 
             $period = CHttpRequest::get_Value('period');
+
+            $this->assign('selected_period', CHttpRequest::get_Value('period'));
 
             // Check if period is an integer and listed in known periods
             if(!array_key_exists( $period, $periods_list)) {
