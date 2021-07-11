@@ -97,7 +97,6 @@ class VolumesView extends CView {
    
         $this->assign( 'orderby_selected', $volume_orderby_filter);
 
-        $inchanger_filter = false;
         // Set inchanger filter and checkbox status
         $inchanger_filter = false;
         $this->assign( 'inchanger_checked', '');
