@@ -8,6 +8,21 @@ permalink: /download/
 
 This tar.gz contain Bacula-Web with pre-installed Composer libraries and is hosted on the [GitHub project](https://github.com/bacula-web/bacula-web)
 
+Version **8.4.2** released on **July 11th 2021** ([changelog](https://github.com/bacula-web/bacula-web/releases/tag/v8.4.2){:target='_blank'})
+
+| Status | Archive | 
+| ------ | ------- | 
+| Stable | [Bacula-Web 8.4.2](https://github.com/bacula-web/bacula-web/releases/download/v8.4.2/bacula-web-8.4.2.tgz) |
+
+*Signatures*
+
+| length | link (hosted on GitHub) |
+| ------ | ----------------------- | 
+| SHA256 | [sha256sum.txt](https://github.com/bacula-web/bacula-web/releases/download/v8.4.2/sha256sum.txt) |
+| SHA512 | [sha512sum.txt](https://github.com/bacula-web/bacula-web/releases/download/v8.4.2/sha512sum.txt) |
+
+## Previous release(s)
+
 Version **8.4.1** released on **October 24th 2020** ([changelog](https://github.com/bacula-web/bacula-web/releases/tag/v8.4.1){:target='_blank'})
 
 | Status | Archive | 
@@ -20,8 +35,6 @@ Version **8.4.1** released on **October 24th 2020** ([changelog](https://github.
 | ------ | ----------------------- | 
 | SHA256 | [sha256sum.txt](https://github.com/bacula-web/bacula-web/releases/download/v8.4.1/sha256sum.txt) |
 | SHA512 | [sha512sum.txt](https://github.com/bacula-web/bacula-web/releases/download/v8.4.1/sha512sum.txt) |
-
-## Previous release(s)
 
 Version **8.4.0** released on **June 1st 2020** ([changelog](https://github.com/bacula-web/bacula-web/releases/tag/v8.4.0){:target='_blank'})
 
