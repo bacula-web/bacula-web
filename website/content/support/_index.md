@@ -1,7 +1,6 @@
 ---
-layout: page
 title: Support
-permalink: /support/
+description: "How to get help"
 ---
 
 ### How to get support
