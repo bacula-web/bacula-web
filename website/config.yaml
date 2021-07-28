@@ -1,3 +1,21 @@
-baseURL: http://example.org/
+baseURL: https://www.bacula-web.org/
 languageCode: en-us
-title: My New Hugo Site
+title: Bacula-Web
+theme: ananke
+
+enableRobotsTXT: true
+SectionPagesMenu: "main"
+Paginate: "3"
+
+sitemap:
+  changefreq: "monthly"
+  priority: 0.5
+  filename: "sitemap.xml"
+
+params:
+  favicon: "favicon.ico"
+  site_logo: ""
+  description: "Open source web based reporting and monitoring tool for Bacula"
+  rss: "index.xml"
+  github: "https://github.com/bacula-web/bacula-web"
+  featured_image: "bacula-web-dashboard.png"
