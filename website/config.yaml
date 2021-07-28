@@ -14,7 +14,7 @@ sitemap:
 
 params:
   favicon: "favicon.ico"
-  site_logo: ""
+  site_logo: "/bacula-web-logo.png"
   description: "Open source web based reporting and monitoring tool for Bacula"
   rss: "index.xml"
   github: "https://github.com/bacula-web/bacula-web"
