@@ -1,8 +1,7 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
-layout: home
+title: "Bacula-Web"
+featured_image: 'bacula-web-dashboard.png'
+description: "Open source web based reporting and monitoring tool for Bacula"
 ---
 
 ## Welcome to Bacula-Web project
