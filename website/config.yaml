@@ -5,7 +5,7 @@ theme: ananke
 
 enableRobotsTXT: true
 SectionPagesMenu: "main"
-Paginate: "3"
+Paginate: "6"
 
 sitemap:
   changefreq: "monthly"
