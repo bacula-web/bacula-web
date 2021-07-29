@@ -57,4 +57,4 @@ Bacula-Web is know to work well on the platform listed below
 
 ## Documentation
 
-More feature details can be found in [Bacula-Web documentation](https://docs.bacula-web.org)
+Latest documentation is available at https://docs.bacula-web.org
