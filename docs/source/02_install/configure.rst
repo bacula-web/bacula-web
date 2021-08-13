@@ -82,6 +82,16 @@ You can simply change from english to your language by modifying the $config['la
 ::
 
    $config['language'] = 'pt_BR'; // For portuguese brazilian 
+
+.. note:: Important note
+
+Before changing default language, please make sure the locale is available.
+To verify this you can run this command on the server running Bacula-Web.
+
+::
+   $ locale -a
+
+also make sure you've restarted Apache/Nginx service.
                              
 hide_empty_pools 
 ----------------
