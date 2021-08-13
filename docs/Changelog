@@ -6,14 +6,17 @@ Changelog
 
 - Documentation
 	- Add "support the project" section to README.md
+	- Update documentation about non-default language configuration
+ 	- Remove old Mantis bug tracker from contribution guide
 
 - Miscelanous
 
-- Fixed bug(s)
+Fixed bug(s)
 
+- #64 [documentation] - Update documentation related to translations
 - #65 [documentation] - Update contribution guide
 
-- New feature(s)
+New feature(s)
 
 === Release 8.4.2 (July 11 2021)
 
