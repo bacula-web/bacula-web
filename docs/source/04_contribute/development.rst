@@ -11,7 +11,7 @@ Guidance for developers
 
 Please find below some guidance for developers
 
-   * First, please open a bug on `github_issues`_ (important for me to track changes in the code)
+   * First, please open a bug on `GitHub issues`_ (important for me to track changes in the code)
    * clone the **develop** git branch and give it a useful name such as
       * bugfix-xxx to fix a bug
       * feature-yyy for a new feature
@@ -29,4 +29,4 @@ Thanks for your help.
 Shall you have any questions, feel free to get back to me by mail.
 
 .. _here : https://github.com/bacula-web/bacula-web
-.. _github_issues GitHub issues: https://github.com/bacula-web/bacula-web/issues
+.. _GitHub issues: https://github.com/bacula-web/bacula-web/issues
