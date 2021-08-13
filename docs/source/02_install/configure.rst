@@ -89,6 +89,7 @@ Before changing default language, please make sure the locale is available.
 To verify this you can run this command on the server running Bacula-Web.
 
 ::
+   
    $ locale -a
 
 also make sure you've restarted Apache/Nginx service.
