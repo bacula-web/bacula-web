@@ -108,7 +108,7 @@ class CDBQuery
         return $query;
     }
     
-  // ==================================================================================
+    // ==================================================================================
     // Function: 	get_Timestamp_Interval()
     // Parameters:	$period array containing start and end timestamp
     // Return:		return table with correct case
