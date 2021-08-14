@@ -85,7 +85,7 @@
 			<th class="text-center">{t}Job ID{/t}</th>
 			<th class="text-left">{t}Name{/t}</th>
 			<th class="text-center">{t}Type{/t}</th>
-         <th class="text-center">{t}Scheduled Time{/t}</th>
+			<th class="text-center">{t}Scheduled Time{/t}</th>
 			<th class="text-center">{t}Start time{/t}</th>
 			<th class="text-center">{t}End time{/t}</th>
 			<th class="text-center">{t}Elapsed time{/t}</th>
