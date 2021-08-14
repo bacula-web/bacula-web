@@ -99,7 +99,7 @@ class CDBQuery
               }
            }
 
-           // we passwd limit as an integer
+           // we passed limit as an integer
            if( is_numeric($limit) ) {
               $query .= 'LIMIT ' . $param['limit'];
            }
