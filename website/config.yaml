@@ -12,6 +12,12 @@ sitemap:
   priority: 0.5
   filename: "sitemap.xml"
 
+menu:
+  main:
+  - identifier: Documentations
+    name: Docs
+    url: https://docs.bacula-web.org
+
 params:
   favicon: "favicon.ico"
   site_logo: "/bacula-web-logo.png"
