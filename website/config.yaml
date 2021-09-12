@@ -6,6 +6,7 @@ theme: ananke
 enableRobotsTXT: true
 SectionPagesMenu: "main"
 Paginate: "6"
+enableRobotsTXT: true
 
 sitemap:
   changefreq: "monthly"
