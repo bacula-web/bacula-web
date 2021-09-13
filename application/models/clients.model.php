@@ -24,7 +24,7 @@ class Clients_Model extends CModel
     // Return:		   Number of clients
     // ==================================================================================
 
-    public function count( $tablename = 'Client', $filter = null)
+    public function count( $tablename = 'Client')
     {
         return parent::count($tablename);
     }
