@@ -17,10 +17,10 @@
  */
 
 
-class DirectorsView extends CView {
-    
-    public function __construct() {
-
+class DirectorsView extends CView
+{
+    public function __construct()
+    {
         parent::__construct();
         
         $this->templateName = 'directors.tpl';
@@ -28,8 +28,8 @@ class DirectorsView extends CView {
         $this->title = 'Bacula director(s) overview';
     }
 
-    public function prepare() {
-        
+    public function prepare()
+    {
         require_once('core/const.inc.php');
         
         $no_period = array(FIRST_DAY, NOW);
@@ -41,9 +41,9 @@ class DirectorsView extends CView {
         FileConfig::open(CONFIG_FILE);
         $directors_count = FileConfig::count_Catalogs();
         
-        $this->assign( 'directors_count', $directors_count);
+        $this->assign('directors_count', $directors_count);
 
-        for( $d=0; $d < $directors_count; $d++) {
+        for ($d=0; $d < $directors_count; $d++) {
             // Create new instance of Database_Model with the correct catalog_id
             $_SESSION['catalog_id'] = $d;
 
@@ -67,12 +67,12 @@ class DirectorsView extends CView {
                 'jobs' => $jobs->count_Job_Names(),
                 'totalbytes' => CUtils::Get_Human_Size($jobs->getStoredBytes($no_period)),
                 'totalfiles' => CUtils::format_Number($jobs->getStoredFiles($no_period)),
-                'dbsize' => $catalog->get_Size( $d ),
+                'dbsize' => $catalog->get_Size($d),
                 'volumes' => $volumes->count(),
                 'volumesize' => CUtils::Get_Human_Size($volumes->getDiskUsage()),
                 'pools' => $pools->count(),
                 'filesets' => $filesets->count()
-            ); 
+            );
 
             // Destroy Database_Model object
             unset($clients);
@@ -86,7 +86,6 @@ class DirectorsView extends CView {
         // Set previous catalog_id in user session
         $_SESSION['catalog_id'] = $prev_catalog_id;
 
-        $this->assign( 'directors', $directors);
-
+        $this->assign('directors', $directors);
     } // end of prepare() method
 } // end of class

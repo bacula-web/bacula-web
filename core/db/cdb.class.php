@@ -75,5 +75,4 @@ class CDB
         $server_version = explode(':', $server_version);
         return $server_version[0];
     }
-
 }

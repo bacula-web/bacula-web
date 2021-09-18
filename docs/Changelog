@@ -10,8 +10,11 @@ Changelog
  	- Remove old Mantis bug tracker from contribution guide
 
 - Miscelanous
-
 	- General code refactoring and improvments
+
+- Development
+	- Add friendsofphp/php-cs-fixer to Composer require-dev
+	- Update Composer dependencies
 
 Fixed bug(s)
 

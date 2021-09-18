@@ -15,10 +15,10 @@
   +-------------------------------------------------------------------------+
  */
 
-class ClientView extends CView {
-
-    public function __construct() {
-
+class ClientView extends CView
+{
+    public function __construct()
+    {
         parent::__construct();
 
         $this->templateName = 'client-report.tpl';
@@ -26,8 +26,8 @@ class ClientView extends CView {
         $this->title = 'Report per Bacula client';
     }
 
-    public function prepare() {
-        
+    public function prepare()
+    {
         require_once('core/const.inc.php');
         
         $period = 7;
@@ -57,11 +57,10 @@ class ClientView extends CView {
 
         // Check client_id and period received by POST request
         if (!is_null(CHttpRequest::get_Value('client_id'))) {
-
             $clientid = CHttpRequest::get_Value('client_id');
 
             // Verify if client_id is a valid integer
-            if( !filter_var( $clientid, FILTER_VALIDATE_INT)) {
+            if (!filter_var($clientid, FILTER_VALIDATE_INT)) {
                 throw new Exception('Critical: provided parameter (client_id) is not valid');
             }
 
@@ -70,15 +69,15 @@ class ClientView extends CView {
             $this->assign('selected_period', CHttpRequest::get_Value('period'));
 
             // Check if period is an integer and listed in known periods
-            if(!array_key_exists( $period, $periods_list)) {
+            if (!array_key_exists($period, $periods_list)) {
                 throw new Exception('Critical: provided value for (period) is unknown or not valid');
             }
 
-            if(!filter_var($period, FILTER_VALIDATE_INT)) {
+            if (!filter_var($period, FILTER_VALIDATE_INT)) {
                 throw new Exception('Critical: provided value for (period) is unknown or not valid');
             }
 
-            $this->assign( 'no_report_options', 'false');
+            $this->assign('no_report_options', 'false');
 
             // Client informations
             $client_info  = $client->getClientInfos($clientid);
@@ -105,7 +104,7 @@ class ClientView extends CView {
                     $job['level']     = $job_levels[$job['level']];
                     $job['jobfiles']  = CUtils::format_Number($job['jobfiles']);
                     $job['jobbytes']  = CUtils::Get_Human_Size($job['jobbytes']);
-                    $job['endtime']   = date( $_SESSION['datetime_format'], strtotime($job['endtime']));
+                    $job['endtime']   = date($_SESSION['datetime_format'], strtotime($job['endtime']));
              
                     $backup_jobs[] = $job;
                 } // end foreach
@@ -122,11 +121,11 @@ class ClientView extends CView {
                 $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
             } // end foreach
        
-            $stored_bytes_chart = new Chart( array( 'type' => 'bar', 
+            $stored_bytes_chart = new Chart(array( 'type' => 'bar',
                 'name' => 'chart_storedbytes',
-                'data' => $days_stored_bytes, 
-                'ylabel' => 'Bytes', 
-                'uniformize_data' => true ) );
+                'data' => $days_stored_bytes,
+                'ylabel' => 'Bytes',
+                'uniformize_data' => true ));
        
             $this->assign('stored_bytes_chart_id', $stored_bytes_chart->name);
             $this->assign('stored_bytes_chart', $stored_bytes_chart->render());
@@ -139,21 +138,20 @@ class ClientView extends CView {
                 $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
             }
        
-            $stored_files_chart = new Chart( array( 'type' => 'bar', 
-                'name' => 'chart_storedfiles', 
-                'data' => $days_stored_files, 
-                'ylabel' => 'Files' ) );
+            $stored_files_chart = new Chart(array( 'type' => 'bar',
+                'name' => 'chart_storedfiles',
+                'data' => $days_stored_files,
+                'ylabel' => 'Files' ));
        
             $this->assign('stored_files_chart_id', $stored_files_chart->name);
             $this->assign('stored_files_chart', $stored_files_chart->render());
        
             unset($stored_files_chart);
-        }else {
+        } else {
             $this->assign('selected_period', '');
             $this->assign('no_report_options', 'true');
         }
         
         $this->assign('period', $period);
-
     } // end of prepare() method
 } // end of class

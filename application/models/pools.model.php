@@ -31,7 +31,7 @@ class Pools_Model extends CModel
   
     // ==================================================================================
     // Function: 	getPools()
-    // Parameters: 	none	
+    // Parameters: 	none
     // Return:	pools list in a array
     // ==================================================================================
 
@@ -47,8 +47,8 @@ class Pools_Model extends CModel
         }
         
         $fields = array( 'poolid', 'name', 'numvols');
-        $result = $this->run_query(CDBQuery::get_Select( array( 'table' => $table, 
-                                                                  'fields' => $fields, 
+        $result = $this->run_query(CDBQuery::get_Select(array( 'table' => $table,
+                                                                  'fields' => $fields,
                                                                   'where' => $where,
                                                                   'orderby' => $orderby )));
             

@@ -16,10 +16,10 @@
  +-------------------------------------------------------------------------+
 */
 
-class LoginView extends CView {
-
-    public function __construct() {
-
+class LoginView extends CView
+{
+    public function __construct()
+    {
         parent::__construct();
 
         $this->templateName = 'login.tpl';
@@ -27,6 +27,7 @@ class LoginView extends CView {
         $this->title = '';
     }
 
-    public function prepare() {
+    public function prepare()
+    {
     }
 } // end of class

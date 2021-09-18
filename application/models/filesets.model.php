@@ -30,7 +30,7 @@ class FileSets_Model extends CModel
         $fields    = array( "COUNT(DISTINCT $tablename) as filesets_count" );
         $table    = 'FileSet';
 
-     // Prepare and execute query
+        // Prepare and execute query
         $statment     = CDBQuery::get_Select(array( 'table' => $table, 'fields' => $fields ));
         $result     = $this->run_query($statment);
 

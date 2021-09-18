@@ -1,7 +1,7 @@
 <?php
 /*
   +-------------------------------------------------------------------------+
-  | Copyright 2010-2021, Davide Franco			                            | 
+  | Copyright 2010-2021, Davide Franco			                            |
   |                                                                         |
   | This program is free software; you can redistribute it and/or           |
   | modify it under the terms of the GNU General Public License             |
@@ -17,28 +17,28 @@
 
 class DateTimeUtil
 {
-   /*
-    * Function:      checkDate()
-    *
-    * Parameter(s):  $date (date in string format)
-    * Return:        true if $date is a valid date, else otherwise
-    *
-    */
+    /*
+     * Function:      checkDate()
+     *
+     * Parameter(s):  $date (date in string format)
+     * Return:        true if $date is a valid date, else otherwise
+     *
+     */
 
-    public static function checkDate($date) {
-
+    public static function checkDate($date)
+    {
         $d = DateTime::createFromFormat('Y-m-d H:i:s', $date);
 
-        if($d != FALSE) {
-            if( $d->format('Y-m-d H:i:s') === $date) {
+        if ($d != false) {
+            if ($d->format('Y-m-d H:i:s') === $date) {
                 return true;
-            }else {
+            } else {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
-   }
+    }
 
     /*
      * Return elapsed time for a job
@@ -60,15 +60,15 @@ class DateTimeUtil
         if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
             $end = new DateTime();
         } else {
-            $end = DateTime::createFromFormat( $dateInputFormat, $end_time);
+            $end = DateTime::createFromFormat($dateInputFormat, $end_time);
         }
 
         $diff = $start->diff($end);
 
-        if( $diff->d > 0 ) {
-            return $diff->format('%d day(s), %H:%I:%S'); 
-        }else {
-            return $diff->format('%H:%I:%S'); 
+        if ($diff->d > 0) {
+            return $diff->format('%d day(s), %H:%I:%S');
+        } else {
+            return $diff->format('%H:%I:%S');
         }
     }
 
@@ -85,12 +85,12 @@ class DateTimeUtil
             $seconds = strtotime($end) - strtotime($start);
 
             // Quick fix as Bacula has a bug with startdate and enddate when using pre nor post scripts
-	    if($seconds == 0) {
-	      return 1;
-            }else {
-              return $seconds;
- 	    }
-        }else {
+            if ($seconds == 0) {
+                return 1;
+            } else {
+                return $seconds;
+            }
+        } else {
             return false;
         }
     }
