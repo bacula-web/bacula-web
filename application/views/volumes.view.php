@@ -16,10 +16,10 @@
  +-------------------------------------------------------------------------+
 */
 
-class VolumesView extends CView {
-    
-    public function __construct() {
-
+class VolumesView extends CView
+{
+    public function __construct()
+    {
         parent::__construct();
         
         $this->templateName = 'volumes.tpl';
@@ -27,8 +27,8 @@ class VolumesView extends CView {
         $this->title = 'Bacula volume(s) overview';
     }
     
-    public function prepare() {
-        
+    public function prepare()
+    {
         $volumes = new Volumes_Model();
         $volumes_list = array();
         $volumes_total_bytes = 0;
@@ -46,7 +46,7 @@ class VolumesView extends CView {
             'Purged' => 'fa-battery-empty' );
 
         $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
-        $this->assign( 'orderby', $orderby);
+        $this->assign('orderby', $orderby);
         
         $volume_orderby_filter = 'Name';
         $volume_orderby_asc = 'DESC';
@@ -56,8 +56,8 @@ class VolumesView extends CView {
         $pools_list = array();
         
         // Create pools list
-        foreach( $pools->getPools() as $pool ) {
-           $pools_list[$pool['poolid']] = $pool['name'];
+        foreach ($pools->getPools() as $pool) {
+            $pools_list[$pool['poolid']] = $pool['name'];
         }
          
         // Add defautl pool filter
@@ -68,9 +68,9 @@ class VolumesView extends CView {
         $pool_id = 0;         // default pool_id value
         $poolid_filter = 0;   // default poolid_filter value
 
-        if( CHttpRequest::get_Value('pool_id') != NULL ){
-           $pool_id = CHttpRequest::get_Value('pool_id');
-           $poolid_filter = $pool_id;
+        if (CHttpRequest::get_Value('pool_id') != null) {
+            $pool_id = CHttpRequest::get_Value('pool_id');
+            $poolid_filter = $pool_id;
         }
 
         // Ensure pool_id value is numeric
@@ -78,59 +78,61 @@ class VolumesView extends CView {
             throw new Exception('Invalid pool id (not numeric) provided in Volumes report page');
         }
 
-        $this->assign('poolid_selected', $poolid_filter); 
+        $this->assign('poolid_selected', $poolid_filter);
 
-        if( $pool_id == 0 ) { $pool_id = Null; }
+        if ($pool_id == 0) {
+            $pool_id = null;
+        }
 
-        if( !is_null(CHttpRequest::get_Value('orderby')) ) {
-            if( array_key_exists(CHttpRequest::get_Value('orderby'), $orderby) ) {
+        if (!is_null(CHttpRequest::get_Value('orderby'))) {
+            if (array_key_exists(CHttpRequest::get_Value('orderby'), $orderby)) {
                 $volume_orderby_filter = CHttpRequest::get_Value('orderby');
-            }else{
+            } else {
                 throw new Exception("Critical: Provided orderby parameter is not correct");
             }
         }
  
         // Set order by filter and checkbox status
-        $this->assign( 'orderby_asc_checked', '');
+        $this->assign('orderby_asc_checked', '');
 
-        if( !is_null(CHttpRequest::get_Value('orderby_asc')) ) {
+        if (!is_null(CHttpRequest::get_Value('orderby_asc'))) {
             $volume_orderby_asc = 'ASC';
-            $this->assign( 'orderby_asc_checked', 'checked');
+            $this->assign('orderby_asc_checked', 'checked');
         }
    
-        $this->assign( 'orderby_selected', $volume_orderby_filter);
+        $this->assign('orderby_selected', $volume_orderby_filter);
 
         // Set inchanger filter and checkbox status
         $inchanger_filter = false;
-        $this->assign( 'inchanger_checked', '');
+        $this->assign('inchanger_checked', '');
 
-        if( !is_null(CHttpRequest::get_Value('inchanger')) ) {
+        if (!is_null(CHttpRequest::get_Value('inchanger'))) {
             $inchanger_filter = true;
-            $this->assign( 'inchanger_checked', 'checked');
+            $this->assign('inchanger_checked', 'checked');
         }
 
         // Get volumes list
-        foreach ($volumes->getVolumes( $pool_id, $volume_orderby_filter, $volume_orderby_asc, $inchanger_filter) as $volume) {
+        foreach ($volumes->getVolumes($pool_id, $volume_orderby_filter, $volume_orderby_asc, $inchanger_filter) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
                 // Calculate expiration date only if volume status is Full or Used
                 if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
                     $expire_date = strtotime($volume['lastwritten']) + $volume['volretention'];
-                    $volume['expire'] = date( $_SESSION['datetime_format_short'], $expire_date);
+                    $volume['expire'] = date($_SESSION['datetime_format_short'], $expire_date);
                 } else {
                     $volume['expire'] = 'n/a';
                 }
-            }else {
+            } else {
                 $volume['expire'] = 'n/a';
             }
 
             // Set lastwritten for the volume
-            if( ($volume['lastwritten'] == '0000-00-00 00:00:00') || empty($volume['lastwritten']) ) {
+            if (($volume['lastwritten'] == '0000-00-00 00:00:00') || empty($volume['lastwritten'])) {
                 $volume['lastwritten'] = 'n/a';
             } else {
                 // Format lastwritten in custom format if defined in config file
-                $volume['lastwritten'] = date( $_SESSION['datetime_format'], strtotime($volume['lastwritten']));
+                $volume['lastwritten'] = date($_SESSION['datetime_format'], strtotime($volume['lastwritten']));
             }
 
             // Sum volumes bytes
@@ -160,6 +162,5 @@ class VolumesView extends CView {
         $this->assign('volumes', $volumes_list);
         $this->assign('volumes_count', count($volumes_list));
         $this->assign('volumes_total_bytes', CUtils::Get_Human_Size($volumes_total_bytes));
-
     } // end of preare() mthod
 } // end of class

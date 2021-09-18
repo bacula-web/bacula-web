@@ -17,7 +17,6 @@
 
 class CTranslation
 {
-
     private $language;
     private $charset;
     private $locale_path;

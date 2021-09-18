@@ -17,7 +17,7 @@
  
 // Time intervals in secondes
  $db = new Database_Model();
- define('NOW', $db->getServerTimestamp() );
+ define('NOW', $db->getServerTimestamp());
 
  define('FIRST_DAY', mktime(0, 0, 0, 1, 1, 1970));
  define('DAY', 86400);

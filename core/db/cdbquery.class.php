@@ -18,16 +18,16 @@
 
 class CDBQuery
 {
-   /* Function: get_Select()
-    * Parameters: array with elemets below
-    *             table    name of the table for FROM
-    *             fields   array of fields (SELECT field1, field2, field3 as var, etc.)
-    *             where    array of condition (WHERE condition1 AND condition2 ...)
-    *             join     array which contain 1 to several array with fields table and condition for each jointure
-    *             groupby  add GROUP BY field
-    *             orderby  add ORDER BY field
-    *             limit    add LIMIT (might change depending on used DMBS)
-    */
+    /* Function: get_Select()
+     * Parameters: array with elemets below
+     *             table    name of the table for FROM
+     *             fields   array of fields (SELECT field1, field2, field3 as var, etc.)
+     *             where    array of condition (WHERE condition1 AND condition2 ...)
+     *             join     array which contain 1 to several array with fields table and condition for each jointure
+     *             groupby  add GROUP BY field
+     *             orderby  add ORDER BY field
+     *             limit    add LIMIT (might change depending on used DMBS)
+     */
  
     public static function get_Select($param = array(), $driver = null)
     {
@@ -58,9 +58,9 @@ class CDBQuery
 
         // Join
         if (isset($param['join']) && !is_null($param['join']) && is_array($param['join'])) {
-           foreach($param['join'] as $join) {
-              $query .= 'LEFT JOIN ' . $join['table'] . ' ON ' . $join['condition'] . ' ';
-           }
+            foreach ($param['join'] as $join) {
+                $query .= 'LEFT JOIN ' . $join['table'] . ' ON ' . $join['condition'] . ' ';
+            }
         }
 
         // Where
@@ -88,21 +88,21 @@ class CDBQuery
 
         // Limit
         if (isset($param['limit']) && !is_null($param['limit'])) {
-           $limit = $param['limit'];
+            $limit = $param['limit'];
          
-           // we passed an array( 'count' => $count, 'offset' => $offset)
-           if( is_array($limit)) {
-              if (($driver == 'pgsql') || ($driver == 'mysql')) {
-                 $query .= 'LIMIT ' . $limit['count'] . ' OFFSET ' . $limit['offset'];
-              } else {
-                 $query .= 'LIMIT ' . $limit['count'] . ',' . $limit['offset'];
-              }
-           }
+            // we passed an array( 'count' => $count, 'offset' => $offset)
+            if (is_array($limit)) {
+                if (($driver == 'pgsql') || ($driver == 'mysql')) {
+                    $query .= 'LIMIT ' . $limit['count'] . ' OFFSET ' . $limit['offset'];
+                } else {
+                    $query .= 'LIMIT ' . $limit['count'] . ',' . $limit['offset'];
+                }
+            }
 
-           // we passed limit as an integer
-           if( is_numeric($limit) ) {
-              $query .= 'LIMIT ' . $param['limit'];
-           }
+            // we passed limit as an integer
+            if (is_numeric($limit)) {
+                $query .= 'LIMIT ' . $param['limit'];
+            }
         }
 
         return $query;
@@ -113,7 +113,7 @@ class CDBQuery
     // Parameters:	$period array containing start and end timestamp
     // Return:		return table with correct case
     // ==================================================================================
-    public static function get_Timestamp_Interval( $driver, $period_timestamp = array())
+    public static function get_Timestamp_Interval($driver, $period_timestamp = array())
     {
         $period = array();
         

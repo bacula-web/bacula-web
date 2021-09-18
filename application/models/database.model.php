@@ -48,7 +48,7 @@ class Database_Model extends CModel
                 break;
             case 'pgsql':
                 $statment    = "SELECT pg_database_size('$db_name') AS dbsize";
-                $result        = $this->run_query( $statment);
+                $result        = $this->run_query($statment);
                 $db_size    = $result->fetch();
                 return CUtils::Get_Human_Size($db_size['dbsize']);
             case 'sqlite':

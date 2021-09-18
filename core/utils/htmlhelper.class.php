@@ -15,16 +15,16 @@
   +-------------------------------------------------------------------------+
 */
 
-class HtmlHelper 
+class HtmlHelper
 {
 
     /**
-    * Return html header 
-    * @return string 
+    * Return html header
+    * @return string
     */
 
-    public static function getHtmlHeader() {
-
+    public static function getHtmlHeader()
+    {
         $htmlHeader = '<!DOCTYPE html>
                         <html lang="en">
 
@@ -57,7 +57,8 @@ class HtmlHelper
      * @return string
      */
 
-    public static function getNavBar() {
+    public static function getNavBar()
+    {
         $navbar = '<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                    <div class="container-fluid">
                    <div class="navbar-header">
@@ -78,12 +79,12 @@ class HtmlHelper
     }
 
     /**
-    * Return html footer 
-    * @return string 
+    * Return html footer
+    * @return string
     */
 
-    public static function getHtmlFooter() {
-
+    public static function getHtmlFooter()
+    {
         $htmlFooter = '<!-- JQuery and Bootstrap Javascript -->
                     <script src="vendor/components/jquery/jquery.min.js"></script>
                     <script src="vendor/moment/moment/min/moment-with-locales.js"></script>

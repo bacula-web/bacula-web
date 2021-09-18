@@ -19,11 +19,11 @@ class Jobs_Model extends CModel
 {
     
    // ==================================================================================
-   // Function: 	count()
-   // Parameters: $tablename = Job by default
-   //             $filter (actualy unused, need to fix this
-   // Return:		Number of clients
-   // ==================================================================================
+    // Function: 	count()
+    // Parameters: $tablename = Job by default
+    //             $filter (actualy unused, need to fix this
+    // Return:		Number of clients
+    // ==================================================================================
 
     public function count($tablename = 'Job', $filter = null)
     {
@@ -44,15 +44,15 @@ class Jobs_Model extends CModel
         $tablename    = 'Job';
         $fields        = array('COUNT(*) as job_count');
         
-     // Check PDO object
-        if (!is_a( $this->db_link, 'PDO' ) && is_null( $this->db_link) ) {
+        // Check PDO object
+        if (!is_a($this->db_link, 'PDO') && is_null($this->db_link)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
         }
 
         // Getting timestamp interval
         $intervals = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
         
-     // Defining interval depending on job status
+        // Defining interval depending on job status
         if (!is_null($job_status)) {
             switch ($job_status) {
                 // Using Bacula version 5.0.3, waiting jobs have both starttime and endtime set 0000-00-00 00:00:00
@@ -68,7 +68,7 @@ class Jobs_Model extends CModel
             $where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         }
         
-     // Job status
+        // Job status
         if (!is_null($job_status)) {
             switch ($job_status) {
                 case 'running':
@@ -91,16 +91,16 @@ class Jobs_Model extends CModel
             } // end switch
         }
         
-     // Job level
+        // Job level
         if (!is_null($job_level)) {
             $where[] = "Level = '$job_level' ";
         }
         
-     // Building SQL statment
+        // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
         
-     // Execute SQL statment
+        // Execute SQL statment
         $result = $this->run_query($statment);
         $result = $result->fetch();
         return $result['job_count'];
@@ -120,12 +120,12 @@ class Jobs_Model extends CModel
         $fields     = array( 'SUM(JobFiles) AS stored_files' );
         $tablename    = 'Job';
         
-     // Check PDO object
+        // Check PDO object
         if (!is_a($this->db_link, 'PDO') or is_null($this->db_link)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
         }
         
-     // Defined period
+        // Defined period
         $intervals     = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
@@ -139,20 +139,20 @@ class Jobs_Model extends CModel
         // Get stored files only for Bacula job type <Backup>
         $where[] = "Type = 'B'";
         
-     // Building SQL statment
+        // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
 
-     // Execute query
+        // Execute query
         $result = $this->run_query($statment);
         $result = $result->fetch();
         
-		// If result == null, return 0 instead
-		if( is_null($result['stored_files']) ) {
-			return 0;
-		}else {
-			return $result['stored_files'];
-		}
+        // If result == null, return 0 instead
+        if (is_null($result['stored_files'])) {
+            return 0;
+        } else {
+            return $result['stored_files'];
+        }
     }
 
     // ==================================================================================
@@ -174,8 +174,8 @@ class Jobs_Model extends CModel
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
-           $this->addParameter( 'jobname', $job_name);
-           $where[] = "name = :jobname";
+            $this->addParameter('jobname', $job_name);
+            $where[] = "name = :jobname";
         }
         
         if ($client_id != 'ALL') {
@@ -193,17 +193,17 @@ class Jobs_Model extends CModel
         $result = $this->run_query($statment);
         $result = $result->fetch();
 
-		// If result == null, return 0 instead
-		if( is_null($result['stored_bytes']) ) {
-			return 0;
-		}else {
-			return $result['stored_bytes'];
-		}
+        // If result == null, return 0 instead
+        if (is_null($result['stored_bytes'])) {
+            return 0;
+        } else {
+            return $result['stored_bytes'];
+        }
     }
 
     // ==================================================================================
     // Function: 	 count_Job_Names()
-    // Parameters: none	
+    // Parameters: none
     // Return:		 total of defined jobs name
     // ==================================================================================
 
@@ -211,7 +211,7 @@ class Jobs_Model extends CModel
     {
         $fields        = array( 'COUNT(DISTINCT Name) AS job_name_count' );
 
-     // Prepare and execute query
+        // Prepare and execute query
         $statment     = CDBQuery::get_Select(array( 'table' => 'Job', 'fields' => $fields ));
         $result     = $this->run_query($statment);
 
@@ -226,7 +226,7 @@ class Jobs_Model extends CModel
     // Return:		 List of defined jobs name
     // ==================================================================================
 
-    public function get_Jobs_List( $client_id = null, $job_type = null)
+    public function get_Jobs_List($client_id = null, $job_type = null)
     {
         $jobs   = array();
         $fields = array( 'Name');
@@ -234,12 +234,12 @@ class Jobs_Model extends CModel
 
         // Prepare and execute query
         if (!is_null($client_id)) {
-           $where[] = "clientid = '$client_id'";
+            $where[] = "clientid = '$client_id'";
         }
 
         // Job type filter
-        if( !is_null( $job_type ) ) {
-           $where[] = "type = '$job_type'";
+        if (!is_null($job_type)) {
+            $where[] = "type = '$job_type'";
         }
 
         $statment   = array( 'table' => 'Job', 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
@@ -267,8 +267,7 @@ class Jobs_Model extends CModel
         foreach ($result->fetchAll() as $level) {
             if (array_key_exists($level['level'], $levels_name)) {
                 $levels[$level['level']] = $levels_name[$level['level']];
-            }
-            else {
+            } else {
                 $levels[$level['level']] = $level['level'];
             }
         }
@@ -278,20 +277,20 @@ class Jobs_Model extends CModel
 
     // ==================================================================================
     // Function: 	   getUsedJobTypes()
-    // Parameters:   array of available Bacula job types 
+    // Parameters:   array of available Bacula job types
     // Return:		   array containing distinct list of jobs type
     // ==================================================================================
 
-    public function getUsedJobTypes( $job_types )
+    public function getUsedJobTypes($job_types)
     {
         $used_types = array();
         $sql_query = "SELECT DISTINCT Type from Job";
         $result = $this->run_query($sql_query);
 
         foreach ($result->fetchAll() as $job_type) {
-           if( array_key_exists( $job_type['type'], $job_types) ) {
-              $used_types[ $job_type['type'] ] = $job_types[ $job_type['type']];
-           }
+            if (array_key_exists($job_type['type'], $job_types)) {
+                $used_types[ $job_type['type'] ] = $job_types[ $job_type['type']];
+            }
         }
 
         return $used_types;
@@ -299,19 +298,19 @@ class Jobs_Model extends CModel
 
     // ==================================================================================
     // Function: 	   getWeeklyJobsStats()
-    // Parameters:   none 
+    // Parameters:   none
     // Return:		   array containing stored bytes and files of completed backup jobs for each day of the week
     // ==================================================================================
 
-    public function getWeeklyJobsStats() 
+    public function getWeeklyJobsStats()
     {
-       $fields = array( 'SUM(Job.Jobbytes) as jobbytes' , 'SUM(Job.Jobfiles) as jobfiles');
-       $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
-       $orderby = 'JobBytes DESC';
-       $groupby = 'dayofweek';
-       $res = array();
+        $fields = array( 'SUM(Job.Jobbytes) as jobbytes' , 'SUM(Job.Jobfiles) as jobfiles');
+        $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
+        $orderby = 'JobBytes DESC';
+        $groupby = 'dayofweek';
+        $res = array();
 
-       switch($this->driver) {
+        switch ($this->driver) {
        case 'mysql':
           $fields[] = "FROM_UNIXTIME(Job.JobTDate, '%W') AS dayofweek";
           break;
@@ -322,58 +321,58 @@ class Jobs_Model extends CModel
           return null;
        } // end switch
 
-       $query = CDBQuery::get_Select( array( 'table' => 'Job',
+        $query = CDBQuery::get_Select(array( 'table' => 'Job',
           'fields' => $fields,
           'where' => $where,
           'groupby' => $groupby,
           'orderby' => $orderby));
 
-       $result = $this->run_query($query);
+        $result = $this->run_query($query);
 
-       $week = array( 0 => 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        $week = array( 0 => 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
 
-       foreach( $result->fetchAll() as $day ) {
-          $day['jobbytes'] = CUtils::Get_Human_Size($day['jobbytes']);
-          $day['jobfiles'] = CUtils::format_Number($day['jobfiles']);
+        foreach ($result->fetchAll() as $day) {
+            $day['jobbytes'] = CUtils::Get_Human_Size($day['jobbytes']);
+            $day['jobfiles'] = CUtils::format_Number($day['jobfiles']);
           
-          // Simply fix day name for postgreSQL
-          // It could be improved but I lack some SQL (postgreSQL skills)
-          if( $this->driver == 'pgsql' ) {
-             $day['dayofweek'] = $week[ $day['dayofweek'] ];
-          }
+            // Simply fix day name for postgreSQL
+            // It could be improved but I lack some SQL (postgreSQL skills)
+            if ($this->driver == 'pgsql') {
+                $day['dayofweek'] = $week[ $day['dayofweek'] ];
+            }
           
-          $res[] = $day;
-       } 
+            $res[] = $day;
+        }
 
-       return $res;
+        return $res;
     }
 
     // ==================================================================================
     // Function: 	   getBiggestJobsStats()
-    // Parameters:   none 
-    // Return:		   array containing 10 biggest backup jobs (stored bytes) 
+    // Parameters:   none
+    // Return:		   array containing 10 biggest backup jobs (stored bytes)
     // ==================================================================================
 
-    public function getBiggestJobsStats() 
+    public function getBiggestJobsStats()
     {
-       $fields = array( 'Job.Jobbytes', 'Job.Jobfiles', 'Job.Name');
-       $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
-       $res = array();
+        $fields = array( 'Job.Jobbytes', 'Job.Jobfiles', 'Job.Name');
+        $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
+        $res = array();
 
-       $query = CDBQuery::get_Select( array( 'table' => 'Job',
+        $query = CDBQuery::get_Select(array( 'table' => 'Job',
           'fields' => $fields,
           'where' => $where,
           'orderby' => 'jobbytes DESC',
           'limit' => '10'));
 
-       $result = $this->run_query($query);
+        $result = $this->run_query($query);
 
-       foreach( $result->fetchAll() as $job) {
-          $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
-          $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
-          $res[] = $job;
-       } 
+        foreach ($result->fetchAll() as $job) {
+            $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
+            $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
+            $res[] = $job;
+        }
       
-       return $res;
+        return $res;
     }
 }

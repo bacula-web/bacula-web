@@ -17,10 +17,10 @@
  +-------------------------------------------------------------------------+
 */
 
-class TestView extends CView {
-    
-    public function __construct() {
-
+class TestView extends CView
+{
+    public function __construct()
+    {
         parent::__construct();
         
         $this->templateName = 'test.tpl';
@@ -28,9 +28,9 @@ class TestView extends CView {
         $this->title = 'Check requirements and configuration';
     }
 
-    public function prepare() {
-
-        $catalog = new Database_Model(); 
+    public function prepare()
+    {
+        $catalog = new Database_Model();
         
         // Installed PDO drivers
         $pdo_drivers = PDO::getAvailableDrivers();
@@ -132,23 +132,23 @@ class TestView extends CView {
             array('test2', 180),
             array('test3', 270),
             array('test4', 456)
-        ); 
+        );
         
         // Dummy Pie chart
-        $pie_chart = new Chart( array(   'type' => 'pie', 
-            'name' => 'chart_pie_test', 
-            'data' => $data ) );
+        $pie_chart = new Chart(array(   'type' => 'pie',
+            'name' => 'chart_pie_test',
+            'data' => $data ));
         
-        $this->assign( 'pie_graph_id', $pie_chart->name);
-        $this->assign( 'pie_graph', $pie_chart->render());
+        $this->assign('pie_graph_id', $pie_chart->name);
+        $this->assign('pie_graph', $pie_chart->render());
         
         unset($pie_chart);
         
         // Dummy bar graph
-        $bar_chart = new Chart( array(   'type' => 'bar', 
-            'name' => 'chart_bar_test', 
+        $bar_chart = new Chart(array(   'type' => 'bar',
+            'name' => 'chart_bar_test',
             'data' => $data,
-            'ylabel' => 'Coffee cups' ) );
+            'ylabel' => 'Coffee cups' ));
 
         $this->assign('bar_chart_id', $bar_chart->name);
         $this->assign('bar_chart', $bar_chart->render());

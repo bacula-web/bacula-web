@@ -41,7 +41,7 @@ class Volumes_Model extends CModel
         $fields        = array('SUM(Media.VolBytes) as bytes_size');
         $statment     = array( 'table' => 'Media', 'fields' => $fields );
         
-     	// Run SQL query
+        // Run SQL query
         $result     = $this->run_query(CDBQuery::get_Select($statment));
     
         $result     = $result->fetch();
@@ -59,32 +59,33 @@ class Volumes_Model extends CModel
      * @return @array
      */
 
-    public function getVolumes( $pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $inchanger = false) {
-       $volumes_list = array();
-       $where = '';
+    public function getVolumes($pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $inchanger = false)
+    {
+        $volumes_list = array();
+        $where = '';
 
-       if( !is_null($pool_id) ) {
-          $this->addParameter( 'pool_id', $pool_id);
-          $where = 'WHERE Media.PoolId = :pool_id';
-       }
+        if (!is_null($pool_id)) {
+            $this->addParameter('pool_id', $pool_id);
+            $where = 'WHERE Media.PoolId = :pool_id';
+        }
 
-       if( $inchanger === TRUE ) {
-          $this->addParameter( 'inchanger', 1);
-          if( !empty($where)) { 
-             $where .= ' AND '; 
-          }else {
-             $where .= 'WHERE ';
-          }
-          $where .= ' Media.inchanger = :inchanger';
-       } // end if
+        if ($inchanger === true) {
+            $this->addParameter('inchanger', 1);
+            if (!empty($where)) {
+                $where .= ' AND ';
+            } else {
+                $where .= 'WHERE ';
+            }
+            $where .= ' Media.inchanger = :inchanger';
+        } // end if
 
-	    $query    = "SELECT Media.volumename, Media.volbytes, Media.voljobs, Media.volstatus, Media.mediatype, Media.lastwritten, 
+        $query    = "SELECT Media.volumename, Media.volbytes, Media.voljobs, Media.volstatus, Media.mediatype, Media.lastwritten, 
 			           Media.volretention, Media.slot, Media.inchanger, Pool.Name AS pool_name
                     FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid $where ORDER BY $orderby $orderasc";
 
-       $result = $this->run_query($query);
+        $result = $this->run_query($query);
 
-       foreach ($result->fetchAll() as $volume) {
+        foreach ($result->fetchAll() as $volume) {
             $volumes_list[] = $volume;
         }
 

@@ -15,10 +15,10 @@
   +-------------------------------------------------------------------------+
  */
 
-class JobsView extends CView {
-
-    public function __construct() {
-
+class JobsView extends CView
+{
+    public function __construct()
+    {
         parent::__construct();
         
         $this->templateName = 'jobs.tpl';
@@ -26,17 +26,17 @@ class JobsView extends CView {
         $this->title = 'Bacula jobs overview';
     }
 
-    public function prepare() {
-        
+    public function prepare()
+    {
         $jobs = new Jobs_Model();
         $where = null;
 
         // That's horrible, it must be improved
         require_once('core/const.inc.php');
 
-        $fields = array( 'Job.JobId', 'Job.Name AS Job_name', 'Job.Type', 
-            'Job.SchedTime', 'Job.StartTime', 'Job.EndTime', 'Job.Level', 
-            'Job.ReadBytes', 'Job.JobBytes', 'Job.JobFiles', 
+        $fields = array( 'Job.JobId', 'Job.Name AS Job_name', 'Job.Type',
+            'Job.SchedTime', 'Job.StartTime', 'Job.EndTime', 'Job.Level',
+            'Job.ReadBytes', 'Job.JobBytes', 'Job.JobFiles',
             'Pool.Name', 'Job.JobStatus', 'Pool.Name AS Pool_name', 'Status.JobStatusLong',
         );
    
@@ -98,15 +98,15 @@ class JobsView extends CView {
             'D' => 'Admin',
             'A' => 'Archive',
             'C' => 'Copy',
-            'g' => 'Migration' 
+            'g' => 'Migration'
         );
  
         // Jobs type filter
         $job_types_list = $jobs->getUsedJobTypes($job_types);
-        $job_types_list['0'] = 'Any'; 
+        $job_types_list['0'] = 'Any';
         $this->assign('job_types_list', $job_types_list);
 
-        // Define default values for each filter 
+        // Define default values for each filter
         $job_type_filter = '0';
         $job_status_filter = STATUS_ALL;
         $job_level_filter = 0;
@@ -118,64 +118,64 @@ class JobsView extends CView {
         $job_orderby_asc_filter = 'DESC';
 
         // Job client id filter
-        if( CHttpRequest::get_Value('job_clientid_filter') != NULL ){
+        if (CHttpRequest::get_Value('job_clientid_filter') != null) {
             $job_clientid_filter = (int) CHttpRequest::get_Value('job_clientid_filter');
         }
 
         // Job type filter
-        if( CHttpRequest::get_Value('job_type_filter') != NULL ){
+        if (CHttpRequest::get_Value('job_type_filter') != null) {
             // if provided job_type_filter is not part of valid job type, we simply ignore it
-            if(array_key_exists( CHttpRequest::get_Value('job_type_filter'), $job_types)){
+            if (array_key_exists(CHttpRequest::get_Value('job_type_filter'), $job_types)) {
                 $job_type_filter = CHttpRequest::get_Value('job_type_filter');
             }
         }
 
         // Job status filter
-        if( CHttpRequest::get_Value('job_status_filter') != NULL ){
+        if (CHttpRequest::get_Value('job_status_filter') != null) {
             $job_status_filter = (int) CHttpRequest::get_Value('job_status_filter');
         }
 
         // Job level id filter
-        if( CHttpRequest::get_Value('job_levelid_filter') != NULL ){
+        if (CHttpRequest::get_Value('job_levelid_filter') != null) {
             $job_level_filter = CHttpRequest::get_Value('job_levelid_filter');
         }
 
         // Job pool id filter
-        if( CHttpRequest::get_Value('jobs_poolid_filter') != NULL ){
+        if (CHttpRequest::get_Value('jobs_poolid_filter') != null) {
             $job_poolid_filter = (int) CHttpRequest::get_Value('jobs_poolid_filter');
         }
 
         // Job starttime filter
-        if( CHttpRequest::get_Value('job_starttime_filter') != NULL ){
+        if (CHttpRequest::get_Value('job_starttime_filter') != null) {
             $job_starttime_filter = CHttpRequest::get_Value('job_starttime_filter');
         }
 
         // Job endtime filter
-        if( CHttpRequest::get_Value('job_endtime_filter') != NULL ){
+        if (CHttpRequest::get_Value('job_endtime_filter') != null) {
             $job_endtime_filter = CHttpRequest::get_Value('job_endtime_filter');
         }
 
         // Job orderby filter
-        if( CHttpRequest::get_Value('job_orderby') != NULL ){
+        if (CHttpRequest::get_Value('job_orderby') != null) {
             // if provided job_orderby is not part of valid job order field, we simply ignore it
-            if(array_key_exists( CHttpRequest::get_Value('job_orderby'), $result_order)){
+            if (array_key_exists(CHttpRequest::get_Value('job_orderby'), $result_order)) {
                 $job_orderby_filter = CHttpRequest::get_Value('job_orderby');
             }
         }
 
         // Job orderby asc filter
-        if( CHttpRequest::get_Value('job_orderby_asc') != NULL ){
+        if (CHttpRequest::get_Value('job_orderby_asc') != null) {
             $job_orderby_asc_filter = CHttpRequest::get_Value('job_orderby_asc');
         }
 
         // Assign variables to template
-        $this->assign( 'job_type_filter', $job_type_filter);
-        $this->assign( 'job_status_filter', $job_status_filter);
-        $this->assign( 'job_level_filter', $job_level_filter);
-        $this->assign( 'job_poolid_filter', $job_poolid_filter);
-        $this->assign( 'job_clientid_filter', $job_clientid_filter);
-        $this->assign( 'job_starttime_filter', $job_starttime_filter);
-        $this->assign( 'job_endtime_filter', $job_endtime_filter);
+        $this->assign('job_type_filter', $job_type_filter);
+        $this->assign('job_status_filter', $job_status_filter);
+        $this->assign('job_level_filter', $job_level_filter);
+        $this->assign('job_poolid_filter', $job_poolid_filter);
+        $this->assign('job_clientid_filter', $job_clientid_filter);
+        $this->assign('job_starttime_filter', $job_starttime_filter);
+        $this->assign('job_endtime_filter', $job_endtime_filter);
 
         // Clients list filter
         $clients = new Clients_Model();
@@ -187,7 +187,7 @@ class JobsView extends CView {
         $pools = new Pools_Model();
         $pools_list = array();
 
-        foreach( $pools->getPools() as $pool ) {
+        foreach ($pools->getPools() as $pool) {
             $pools_list[$pool['poolid']] = $pool['name'];
         }
 
@@ -197,7 +197,7 @@ class JobsView extends CView {
         // Check job status filter
         // Selected job status filter
   
-        switch($job_status_filter) {
+        switch ($job_status_filter) {
         case STATUS_RUNNING:
             $where[] = "Job.JobStatus = 'R' ";
             break;
@@ -222,37 +222,37 @@ class JobsView extends CView {
         } // end switch
 
         // Selected level filter
-        if( $job_level_filter != '0' ) {
-            $jobs->addParameter( 'job_level', $job_level_filter);
+        if ($job_level_filter != '0') {
+            $jobs->addParameter('job_level', $job_level_filter);
             $where[] .= "Job.Level = :job_level ";
         }
  
         // Selected pool filter
-        if( $job_poolid_filter != '0') {
-            $jobs->addParameter( 'pool_id', $job_poolid_filter);
+        if ($job_poolid_filter != '0') {
+            $jobs->addParameter('pool_id', $job_poolid_filter);
             $where[] .= "Job.PoolId = :pool_id ";
         }
 
-        // Selected job type filter 
-        if($job_type_filter != '0') {
+        // Selected job type filter
+        if ($job_type_filter != '0') {
             $where[] = "Job.Type = '" . $job_type_filter . "'";
         }
 
         // Selected client filter
-        if( $job_clientid_filter != '0') {
+        if ($job_clientid_filter != '0') {
             $where[] .= "Job.ClientId = '$job_clientid_filter'";
         }
 
         // Selected start time filter
-        if(!is_null($job_starttime_filter) && !empty($job_starttime_filter)) {
-            if(DateTimeUtil::checkDate($job_starttime_filter)) { 
-                $where[] = "Job.StartTime >= '$job_starttime_filter'"; 
+        if (!is_null($job_starttime_filter) && !empty($job_starttime_filter)) {
+            if (DateTimeUtil::checkDate($job_starttime_filter)) {
+                $where[] = "Job.StartTime >= '$job_starttime_filter'";
             }
         }
         
-        if(!is_null($job_endtime_filter) && !empty($job_starttime_filter)) {
-            if(DateTimeUtil::checkDate($job_endtime_filter)) { 
-                $where[] = "Job.EndTime <= '$job_endtime_filter'"; 
+        if (!is_null($job_endtime_filter) && !empty($job_starttime_filter)) {
+            if (DateTimeUtil::checkDate($job_endtime_filter)) {
+                $where[] = "Job.EndTime <= '$job_endtime_filter'";
             }
         }
 
@@ -263,27 +263,27 @@ class JobsView extends CView {
         // Set selected option in template for Job order and Job order asc (ascendant order)
         $this->assign('result_order_field', $job_orderby_filter);
 
-        if($job_orderby_asc_filter == 'ASC') {
+        if ($job_orderby_asc_filter == 'ASC') {
             $this->assign('result_order_asc_checked', 'checked');
-        }else {
+        } else {
             $this->assign('result_order_asc_checked', '');
         }
 
         // Parsing jobs result
-        $sqlQuery = CDBQuery::get_Select( array('table' => 'Job', 
-            'fields' => $fields, 
-            'where' => $where, 
+        $sqlQuery = CDBQuery::get_Select(array('table' => 'Job',
+            'fields' => $fields,
+            'where' => $where,
             'orderby' => $orderby,
-            'join' => array( 
+            'join' => array(
                 array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
-            ) ) );
+            ) ));
 
         $jobsresult = $jobs->run_query($sqlQuery);
 
         foreach ($jobsresult as $job) {
             // Determine icon for job status
-            switch($job['jobstatus']) {
+            switch ($job['jobstatus']) {
             case J_RUNNING:
                $job['Job_icon'] = "play";
                 break;
@@ -318,27 +318,26 @@ class JobsView extends CView {
             $end_time   = $job['endtime'];
        
             if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
-               $job['starttime'] = 'n/a';
-            }else {
-               $job['starttime'] = date( $_SESSION['datetime_format'], strtotime($job['starttime']));
+                $job['starttime'] = 'n/a';
+            } else {
+                $job['starttime'] = date($_SESSION['datetime_format'], strtotime($job['starttime']));
             }
        
             if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
-               $job['endtime'] = 'n/a';
-            }else {
-               $job['endtime'] = date( $_SESSION['datetime_format'], strtotime($job['endtime'])); 
+                $job['endtime'] = 'n/a';
+            } else {
+                $job['endtime'] = date($_SESSION['datetime_format'], strtotime($job['endtime']));
             }
        
             // Get the job elapsed time completion
             $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
 
-            $job['schedtime'] = date( $_SESSION['datetime_format'], strtotime($job['schedtime'])); 
+            $job['schedtime'] = date($_SESSION['datetime_format'], strtotime($job['schedtime']));
        
             // Job Level
-            if(isset($job_levels[$job['level']])) {
+            if (isset($job_levels[$job['level']])) {
                 $job['level'] = $job_levels[$job['level']];
-            }else
-            {
+            } else {
                 $job['level'] = 'n/a';
             }
        
@@ -349,7 +348,7 @@ class JobsView extends CView {
             $job['speed'] = '0 Mb/s';
             $job['compression'] = 'n/a';
        
-            switch($job['jobstatus']) {
+            switch ($job['jobstatus']) {
             case J_COMPLETED:
             case J_COMPLETED_ERROR:
             case J_NO_FATAL_ERROR:
@@ -357,16 +356,16 @@ class JobsView extends CView {
                 // Job speed
                 $seconds = DateTimeUtil::get_ElaspedSeconds($end_time, $start_time);
 
-                if($seconds !== false && $seconds > 0) {
+                if ($seconds !== false && $seconds > 0) {
                     $speed     = $job['jobbytes'] / $seconds;
                     $speed     = CUtils::Get_Human_Size($speed, 2) . '/s';
                     $job['speed'] = $speed;
-                }else {
+                } else {
                     $job['speed'] = 'n/a';
                 }
           
                 // Job compression
-                if($job['jobbytes'] > 0 && $job['type'] == 'B' && $job['jobstatus'] != J_CANCELED && ($job['jobbytes'] < $job['readbytes'])) {
+                if ($job['jobbytes'] > 0 && $job['type'] == 'B' && $job['jobstatus'] != J_CANCELED && ($job['jobbytes'] < $job['readbytes'])) {
                     $compression        = (1-($job['jobbytes'] / $job['readbytes']));
                     $job['compression'] = number_format($compression, 2);
                 } else {
@@ -379,7 +378,7 @@ class JobsView extends CView {
             $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
        
             // Job Pool
-            if(is_null($job['pool_name'])) {
+            if (is_null($job['pool_name'])) {
                 $job['pool_name'] = 'n/a';
             }
        
@@ -390,6 +389,5 @@ class JobsView extends CView {
     
         // Count jobs
         $this->assign('jobs_found', count($last_jobs));
-
     }
 } // end of class

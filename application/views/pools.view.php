@@ -16,10 +16,10 @@
  +-------------------------------------------------------------------------+
 */
 
-class PoolsView extends CView {
-
-    public function __construct() {
-
+class PoolsView extends CView
+{
+    public function __construct()
+    {
         parent::__construct();
 
         $this->templateName = 'pools.tpl';
@@ -27,7 +27,8 @@ class PoolsView extends CView {
         $this->title = 'Bacula pool(s) overview';
     }
 
-    public function prepare() {
+    public function prepare()
+    {
         
         // Get volumes list (pools.tpl)
         $pools = new Pools_Model();
@@ -35,7 +36,7 @@ class PoolsView extends CView {
         $plist = $pools->getPools();
 
         // Add more details to each pool
-        foreach($plist as $pool) {
+        foreach ($plist as $pool) {
             // Total bytes for each pool
             $sql = "SELECT SUM(Media.volbytes) as sumbytes FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
             $result = $pools->run_query($sql);
@@ -46,6 +47,5 @@ class PoolsView extends CView {
         }
 
         $this->assign('pools', $pools_list);
-    
     } // end of preare() method
-} // end of class 
+} // end of class
