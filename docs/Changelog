@@ -11,6 +11,8 @@ Changelog
 
 - Miscelanous
 
+	- General code refactoring and improvments
+
 Fixed bug(s)
 
 - #64 [documentation] - Update documentation related to translations
