@@ -11,6 +11,7 @@ Changelog
 
 - Miscelanous
 	- General code refactoring and improvments
+	- Make code PSR-2 compliant
 
 - Development
 	- Add friendsofphp/php-cs-fixer to Composer require-dev
@@ -20,6 +21,7 @@ Fixed bug(s)
 
 - #64 [documentation] - Update documentation related to translations
 - #65 [documentation] - Update contribution guide
+- #69 [improvement] - Make code PSR-2 compliant
 
 New feature(s)
 
