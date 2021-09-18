@@ -64,4 +64,3 @@ class UserSettingsView extends CView {
     }
 
 } // end of class
-        

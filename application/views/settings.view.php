@@ -106,4 +106,3 @@ class SettingsView extends CView {
         }
     }
 } // end of class
-        

@@ -30,4 +30,3 @@ class LoginView extends CView {
     public function prepare() {
     }
 } // end of class
-        
