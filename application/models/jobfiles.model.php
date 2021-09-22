@@ -10,30 +10,13 @@
 
 class JobFiles_Model extends CModel
 {
-    protected $dbVersionId;
-
-    protected function getDbVersionId()
-    {
-        if ($this->dbVersionId) {
-            return $this->dbVersionId;
-        }
-        $sqlQuery = CDBQuery::get_Select(array('table' => 'Version',
-            'fields' => array('VersionId'),
-            'limit' => array( 'count' => 1, 'offset' => 0)
-        ), $this->driver);
-        $result = $this->run_query($sqlQuery);
-        $dbVersionId = $result->fetchColumn();
-        if ($dbVersionId) {
-            $this->dbVersionId = $dbVersionId;
-            return $this->dbVersionId;
-        }
-    }
-
     public function getJobFiles($jobId, $limit, $offset, $filename = '')
     {
         $used_types = array();
 
-        if ($this->getDbVersionId()<1016) {
+        $catalog = new Database_Model();
+
+        if ($catalog->getCatalogVersion() < 1016) {
             $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'Filename.Name');
             $where = array("File.JobId = $jobId");
             if (! empty($filename)) {
@@ -82,7 +65,9 @@ class JobFiles_Model extends CModel
     {
         $used_types = array();
 
-        if ($this->getDbVersionId()<1016) {
+        $catalog = new Database_Model();
+
+        if ($catalog->getCatalogVersion() < 1016) {
             $sql_query = "SELECT COUNT(*) as count
     			FROM File, Path, Filename, Job
     			WHERE File.JobId = $jobId
