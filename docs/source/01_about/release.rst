@@ -8,7 +8,7 @@ Releases
 Roadmap
 *******
 
-You can track the project milestones on `Bacula-Web GitHub project page`
+The bacula-web project roadmap is available on the `GitHub project page <https://github.com/bacula-web/bacula-web/milestones>`_
 
 .. important:: For many reasons, Bacula-Web project uses GitHub issues instead of MantisBT since March 2019.
 
@@ -52,5 +52,3 @@ Major Minor Bugfix
 ===== ===== ======
 6     0     0
 ===== ===== ======
-
-.. _Bacula-Web GitHub project page : https://github.com/bacula-web/bacula-web/milestones

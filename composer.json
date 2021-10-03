@@ -29,7 +29,8 @@
     "require-dev": {
       "sebastian/phpcpd": "@stable",
       "phpmd/phpmd": "@stable",
-      "squizlabs/php_codesniffer": "@stable"
+      "squizlabs/php_codesniffer": "@stable",
+      "friendsofphp/php-cs-fixer": "@stable"
     },
 	"autoload": {
 		"classmap": [

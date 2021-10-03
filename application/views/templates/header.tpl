@@ -45,6 +45,7 @@
 		</div> <!-- div class="navbar-header" -->
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          {if isset($user_authenticated) }
             {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }		
 			<!-- Reports dropdown menu -->
 			<ul class="nav navbar-nav">
@@ -61,78 +62,86 @@
 				</li>
 			</ul>		
             {/if}
+          {/if}
 		
 			<ul class="nav navbar-nav navbar-right">
-            {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }		
-				<!-- Catalog selector -->
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-fw"></i> {$catalog_label} <span class="caret"></span></a>
+            {if isset($user_authenticated) }
+              {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }		
+				  <!-- Catalog selector -->
+				  <li class="dropdown">
+					 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database fa-fw"></i> {$catalog_label} <span class="caret"></span></a>
 						
-					<ul class="dropdown-menu">
+					 <ul class="dropdown-menu">
 						{foreach from=$catalogs key=catalog_id item=catalog_name}
-						<li><a href="index.php?catalog_id={$catalog_id}">
-						{if $catalog_id eq $catalog_current_id} <i class="fa fa-check fa-fw"></i> {else} <i class="fa fa-fake fa-fw"></i> {/if}{$catalog_name}</a>
-						</li>
+						  <li><a href="index.php?catalog_id={$catalog_id}">
+						  {if $catalog_id eq $catalog_current_id} <i class="fa fa-check fa-fw"></i> {else} <i class="fa fa-fake fa-fw"></i> {/if}{$catalog_name}</a>
+						  </li>
 						{/foreach}
-					</ul>
-				</li>
+					 </ul>
+				  </li>
+              {/if}
 				<!-- end Catalog selector -->
             {/if}
 
             <!-- Authenticated user options -->
-            {if $enable_users_auth eq 'true' and $user_authenticated eq 'yes' }		
-              <li class="dropdown">
-                <a href="#" class="dropdown-toogle" data-toggle="dropdown" role="button">{$username} <i class="fa fa-user fa-fw"></i></a>
-                <ul class="dropdown-menu">
-                  <li><a href="index.php?page=usersettings" title="User settings"> <i class="fa fa-wrench fa-fw"></i> {t}User settings{/t}</a></li>
-                  <li><a href="index.php?action=logout" title="Sign out"> <i class="fa fa-sign-out fa-fw"></i> {t}Sign out{/t}</a></li>
-                </ul>
-              </li>
+            {if isset($user_authenticated) }
+              {if $enable_users_auth eq 'true' and $user_authenticated eq 'yes' }		
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toogle" data-toggle="dropdown" role="button">{$username} <i class="fa fa-user fa-fw"></i></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="index.php?page=usersettings" title="User settings"> <i class="fa fa-wrench fa-fw"></i> {t}User settings{/t}</a></li>
+                    <li><a href="index.php?action=logout" title="Sign out"> <i class="fa fa-sign-out fa-fw"></i> {t}Sign out{/t}</a></li>
+                  </ul>
+                </li>
+              {/if}
             {/if}
 				
 			<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-cog fa-fw"></i> <span class="hidden-sm hidden-md hidden-lg">{t}About{/t}</span></a>
 					<ul class="dropdown-menu">
+                  {if isset($user_authenticated) }
                     {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }		
-                    <li role="presentation" class="dropdown-header">Tools</li> 
+                      <li role="presentation" class="dropdown-header">Tools</li> 
                         <li>
-                            <a href="index.php?page=settings" title="Settings"><i class="fa fa-cogs fa-fw"></i> {t}Settings{/t}</a>
+                          <a href="index.php?page=settings" title="Settings"><i class="fa fa-cogs fa-fw"></i> {t}Settings{/t}</a>
                         </li>
-						<li> 
-							<a href="index.php?page=test" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
-						</li>
-						<li role="presentation" class="divider"></li>
-                        {/if}
-						<li role="presentation" class="dropdown-header">Help</li>
-						<li> 
-							<a href="https://www.bacula-web.org" title="Visit the official web site" target="_blank" rel="noopener noreferrer"><i class="fa fa-globe fa-fw"></i> {t}Official web site{/t}</a>
-						</li>
-						<li> 
-							<a href="https://github.com/bacula-web/bacula-web/issues" title="Bug and feature request tracker" target="_blank" rel="noopener noreferrer"><i class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a>
-						</li>
-                  <li> <a href="https://github.com/bacula-web/bacula-web" title="Bacula-Web project on GitHub" target="_blank" rel="noopener noreferrer">
-                    <i class="fa fa-github fa-fw"></i>{t}Project on GitHub{/t}</a>
-                  </li>
-						<li role="presentation" class="divider"></li>
-						<li role="presentation" class="dropdown-header">{t}Version{/t}</li>
-						<li class="disabled"><a href="#"><i class="fa fa-info fa-fw"></i> {$app_name} {$app_version}</a></li>
-					</ul>
+						    <li> 
+							   <a href="index.php?page=test" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
+						    </li>
+						    <li role="presentation" class="divider"></li>
+                    {/if}
+                  {/if}
+						    <li role="presentation" class="dropdown-header">Help</li>
+						    <li> 
+							   <a href="https://www.bacula-web.org" title="Visit the official web site" target="_blank" rel="noopener noreferrer"><i class="fa fa-globe fa-fw"></i> {t}Official web site{/t}</a>
+						    </li>
+						    <li> 
+							   <a href="https://github.com/bacula-web/bacula-web/issues" title="Bug and feature request tracker" target="_blank" rel="noopener noreferrer"><i class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a>
+						    </li>
+                      <li> <a href="https://github.com/bacula-web/bacula-web" title="Bacula-Web project on GitHub" target="_blank" rel="noopener noreferrer">
+                        <i class="fa fa-github fa-fw"></i>{t}Project on GitHub{/t}</a>
+                      </li>
+						    <li role="presentation" class="divider"></li>
+						    <li role="presentation" class="dropdown-header">{t}Version{/t}</li>
+						    <li class="disabled"><a href="#"><i class="fa fa-info fa-fw"></i> {$app_name} {$app_version}</a></li>
+					    </ul>
 				</li>
 			</ul>
 		</div> <!-- div class="collapse navbar-collapse"-->
 	</div> <!-- div class="container-fluid" -->
 </div> <!-- class="navbar" -->
 
-{if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }		
-<div class="container-fluid">
+{if isset($user_authenticated) }
+  {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }		
+  <div class="container-fluid">
     <!-- Breadcrumb -->
-    <div class="row">
-      <div class="col-xs-12">
-        <ol class="breadcrumb">
-		{$breadcrumb}
-        </ol>
-      </div> <!-- div class="col..." -->
-  </div> <!-- div class="row" -->
-</div> <!-- div class="container" -->
-
+      <div class="row">
+        <div class="col-xs-12">
+          <ol class="breadcrumb">
+		    {$breadcrumb}
+          </ol>
+        </div> <!-- div class="col..." -->
+      </div> <!-- div class="row" -->
+  </div> <!-- div class="container" -->
+  {/if}
 {/if}

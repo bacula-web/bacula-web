@@ -16,43 +16,44 @@
   +-------------------------------------------------------------------------+
  */
 
-class UserAuth extends CModel { 
-
+class UserAuth extends CModel
+{
     protected $appDbBackend;
     protected $dsn;
 
-    public function __construct() {
+    public function __construct()
+    {
+        $this->cdb  = new CDB();
 
-       $this->cdb  = new CDB();
-
-       // Throw an exception if PHP SQLite is not installed
-       $pdoDrivers = PDO::getAvailableDrivers();
+        // Throw an exception if PHP SQLite is not installed
+        $pdoDrivers = PDO::getAvailableDrivers();
        
-       if( ! in_array('sqlite', $pdoDrivers) ) {
-          throw new Exception('PHP SQLite support not found');
-       }
+        if (! in_array('sqlite', $pdoDrivers)) {
+            throw new Exception('PHP SQLite support not found');
+        }
 
-       // Check protected assets folder permissions$
-       $webUser = array();
-       exec('whoami', $webUser);
-       $webUser = reset($webUser);
+        // Check protected assets folder permissions$
+        $webUser = array();
+        exec('whoami', $webUser);
+        $webUser = reset($webUser);
        
-       $assetsOwner = posix_getpwuid(fileowner('application/assets/protected'));
+        $assetsOwner = posix_getpwuid(fileowner('application/assets/protected'));
       
-       if($webUser != $assetsOwner['name']) {
-          throw new Exception('Bad ownership / permissions for protected assets folder (application/assets/protected)');
-       }
+        if ($webUser != $assetsOwner['name']) {
+            throw new Exception('Bad ownership / permissions for protected assets folder (application/assets/protected)');
+        }
 
-       $this->appDbBackend = 'application/assets/protected/application.db';
-       $this->dsn = "sqlite:$this->appDbBackend";
+        $this->appDbBackend = 'application/assets/protected/application.db';
+        $this->dsn = "sqlite:$this->appDbBackend";
 
-       $this->db_link = $this->cdb->connect($this->dsn);
+        $this->db_link = $this->cdb->connect($this->dsn);
     }
 
-    public function checkSchema() {
+    public function checkSchema()
+    {
         
         // Check if sqlite db file is writable
-        if(!is_writable($this->appDbBackend)) {
+        if (!is_writable($this->appDbBackend)) {
             throw new Exception('Application backend database file is not writable, please fix it');
         }
 
@@ -63,15 +64,15 @@ class UserAuth extends CModel {
         $res = $res->fetchAll();
 
         // Users table do not exist, let's create it
-        if( count($res) == 0) {
-           # If Users table not found, raise an exception
-           throw new Exception('Users authentication database not found, 
+        if (count($res) == 0) {
+            # If Users table not found, raise an exception
+            throw new Exception('Users authentication database not found, 
               have a look at the chapter <b>Installation / Finalize your setup</b> in the <a href="http://docs.bacula-web.org" target="_blank">documentation</a>');
         }
     }
 
-    public function createSchema() {
-
+    public function createSchema()
+    {
         $createSchemaQuery = 'CREATE TABLE IF NOT EXISTS Users (
                         user_id INTEGER PRIMARY KEY,
                         username TEXT NOT NULL UNIQUE,
@@ -83,37 +84,37 @@ class UserAuth extends CModel {
         $this->run_query($createSchemaQuery);
     }
 
-    public function addUser($username, $email, $password) {
-        
-        $hashedPassword = password_hash( $password, CRYPT_BLOWFISH);
+    public function addUser($username, $email, $password)
+    {
+        $hashedPassword = password_hash($password, CRYPT_BLOWFISH);
         $addUserQuery = "INSERT INTO Users (username,email,passwordHash) VALUES ('$username','$email', '$hashedPassword');";
         $this->run_query($addUserQuery);
     }
 
-    public function authUser( $username, $password) {
-        
+    public function authUser($username, $password)
+    {
         $authUserQuery = "SELECT passwordHash FROM Users WHERE ";
         $authUserQuery .= "username = :username LIMIT 1";
-        $this->addParameter( 'username', $username);
+        $this->addParameter('username', $username);
 
         $result = $this->run_query($authUserQuery);
         $result = $result->fetchAll();
 
-        if(count($result) == 0) {
+        if (count($result) == 0) {
             echo "<pre>username or password incorrect</pre>";
-        }else{
-            if( password_verify($password, $result[0]['passwordhash']) === TRUE) {
+        } else {
+            if (password_verify($password, $result[0]['passwordhash']) === true) {
                 return 'yes';
-            }else{
+            } else {
                 return 'no';
             }
         }
     }
 
-    public function getData( $username) {
-
+    public function getData($username)
+    {
         $getUserDataQuery = "SELECT username,email FROM Users WHERE username = :username LIMIT 1";
-        $this->addParameter( 'username', $username);
+        $this->addParameter('username', $username);
 
         $result = $this->run_query($getUserDataQuery);
         $result = $result->fetchAll();
@@ -121,36 +122,36 @@ class UserAuth extends CModel {
         return $result[0];
     }
 
-    public function setPassword( $username, $password) {
-
-        $hashedPassword = password_hash( $password, CRYPT_BLOWFISH);
+    public function setPassword($username, $password)
+    {
+        $hashedPassword = password_hash($password, CRYPT_BLOWFISH);
         $updateUserQuery = "UPDATE Users SET passwordHash = '$hashedPassword' WHERE username = :username;";
 
-        $this->addParameter( 'username', $username);
+        $this->addParameter('username', $username);
         $result = $this->run_query($updateUserQuery);
 
-        if( is_a( $result, 'CDBResult')) {
+        if (is_a($result, 'CDBResult')) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
-    public function destroySession() {
-        
+    public function destroySession()
+    {
         $_SESSION = array();
         
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"] );
+            setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
         }
         
         // Destroy the session.
         session_destroy();
     }
 
-    public function getUsers() {
-
+    public function getUsers()
+    {
         $getUsersQuery = "SELECT username,email FROM Users";
 
         $result = $this->run_query($getUsersQuery);
@@ -158,5 +159,4 @@ class UserAuth extends CModel {
         
         return $result;
     }
-
 } // end of class

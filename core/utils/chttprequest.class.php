@@ -17,7 +17,6 @@
 
 class CHttpRequest
 {
-
     private static $value_list;
     
     // ==================================================================================
@@ -73,7 +72,7 @@ class CHttpRequest
         if (isset(self::$value_list[$var]) && strlen(self::$value_list[$var]) > 0) {
             return self::$value_list[$var];
         } else {
-            return NULL;
+            return null;
         }
     }
 }

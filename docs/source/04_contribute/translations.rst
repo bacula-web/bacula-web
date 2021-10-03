@@ -43,4 +43,3 @@ Using this tool is pretty easy but if you need a bit of help, do not hesitate to
 
 .. _Bacula-Web project at Transifex: https://www.transifex.com/bacula-web/bacula-web/
 .. _Transifex.com: https://www.transifex.com
-.. _Mantis bug tracker: https://bugs.bacula-web.org

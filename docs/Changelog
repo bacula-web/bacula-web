@@ -1,3 +1,29 @@
+=== Release 8.4.3 (October 3 2021)
+
+Changelog
+
+- Documentation
+	- Add "support the project" section to README.md
+	- Update documentation about non-default language configuration
+	- Remove old Mantis bug tracker from contribution guide
+	- Several updates and fixes
+
+- Miscelanous
+	- General code refactoring and improvments
+	- Make PHP code PSR-2 compliant
+
+- Development
+	- Add friendsofphp/php-cs-fixer to Composer require-dev
+	- Update Composer dependencies
+
+Fixed bug(s)
+
+- #64 [documentation] - Update documentation related to translations
+- #65 [documentation] - Update contribution guide
+- #69 [improvement] - Make code PSR-2 compliant
+
+New feature(s)
+
 === Release 8.4.2 (July 11 2021)
 
 Changelog

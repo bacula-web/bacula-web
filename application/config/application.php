@@ -12,8 +12,8 @@
  */
 
 
-$app = [ 'name' => 'Bacula-Web', 'version' => '8.4.2',
-        'routes' => [   'home' => 'Dashboard', 
+$app = [ 'name' => 'Bacula-Web', 'version' => '8.4.3',
+        'routes' => [   'home' => 'Dashboard',
                         'test' => 'Test',
                         'jobs' => 'Jobs',
                         'joblogs' => 'JobLogs',
@@ -25,6 +25,6 @@ $app = [ 'name' => 'Bacula-Web', 'version' => '8.4.2',
                         'usersettings' => 'UserSettings',
                         'settings' => 'Settings',
                         'directors' => 'Directors',
-						'jobfiles' => 'JobFiles'
-			],
+                        'jobfiles' => 'JobFiles'
+            ],
     'defaultview' => 'DashboardView' ];

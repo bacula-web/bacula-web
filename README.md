@@ -51,4 +51,10 @@ You can contribute by submitting a GitHub pull request, please have a look the [
 
 Bacula-Web source code, web site and documentation are licensed under **GNU GPLv2**
 
-For more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/master/LICENSE) 
+For more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/master/LICENSE)
+
+### Support the project
+
+If you :heart: Bacula-Web project and wants to encourage the efforts, or think that it deserve a little help, please consider doing a small donation using the link below. :hugs:
+
+[Support Bacula-Web project](https://www.paypal.com/donate?hosted_button_id=DUU89L5HAGSAS)

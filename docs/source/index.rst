@@ -13,8 +13,6 @@ Bacula-Web documentation
   :target: https://github.com/bacula-web/bacula-web
   :alt: Bacula-Web logo
 
-**Version:** 8.4.2
-
 .. toctree::
    :maxdepth: 2
 

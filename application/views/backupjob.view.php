@@ -15,10 +15,10 @@
   +-------------------------------------------------------------------------+
  */
 
-class BackupJobView extends CView {
-
-    public function __construct() {
-
+class BackupJobView extends CView
+{
+    public function __construct()
+    {
         parent::__construct();
 
         $this->templateName = 'backupjob-report.tpl';
@@ -26,8 +26,8 @@ class BackupJobView extends CView {
         $this->title = 'Report per Bacula backup job name';
     }
 
-    public function prepare() {
-        
+    public function prepare()
+    {
         require_once('core/const.inc.php');
         
         $interval = array();
@@ -52,105 +52,107 @@ class BackupJobView extends CView {
 
         $where = array();
 
-        if (($backupjob_name === NULL) && (empty($backupjob_name)) ) {
-            $this->assign( 'selected_jobname', '');
-            $this->assign( 'no_report_options', 'true');
+        if (($backupjob_name === null) && (empty($backupjob_name))) {
+            $this->assign('selected_jobname', '');
+            $this->assign('no_report_options', 'true');
 
             // Set selected period
-            $this->assign( 'selected_period', 7);
-        }else{
-            $this->assign( 'no_report_options', 'false');
+            $this->assign('selected_period', 7);
+        } else {
+            $this->assign('no_report_options', 'false');
 
             // Make sure provided backupjob_name exist
-            if( !in_array( $backupjob_name, $jobslist)) {
+            if (!in_array($backupjob_name, $jobslist)) {
                 throw new Exception("Critical: provided backupjob_name is not valid");
             }
 
-            $this->assign( 'selected_jobname', $backupjob_name);
+            $this->assign('selected_jobname', $backupjob_name);
 
             // Generate Backup Job report period string
             $backupjob_period = CHttpRequest::get_value('period');
 
             // Set default backup job period to 7 if not set in user request
-            if( $backupjob_period === NULL) {
-               $backupjob_period = '7';
+            if ($backupjob_period === null) {
+                $backupjob_period = '7';
             }
 
             // Set selected period
-            $this->assign( 'selected_period', $backupjob_period);
+            $this->assign('selected_period', $backupjob_period);
 
-            switch( $backupjob_period ) {
+            switch ($backupjob_period) {
             case '7':
-                $periodDesc = "From " . date( $_SESSION['datetime_format_short'], (NOW - WEEK)) . " to " . date( $_SESSION['datetime_format_short'], NOW);
+                $periodDesc = "From " . date($_SESSION['datetime_format_short'], (NOW - WEEK)) . " to " . date($_SESSION['datetime_format_short'], NOW);
                 $interval[0] = NOW-WEEK;
                 break;
             case '14':
-                $periodDesc = "From " . date( $_SESSION['datetime_format_short'], (NOW - (2 * WEEK))) . " to " . date( $_SESSION['datetime_format_short'], NOW);
+                $periodDesc = "From " . date($_SESSION['datetime_format_short'], (NOW - (2 * WEEK))) . " to " . date($_SESSION['datetime_format_short'], NOW);
                 $interval[0] = NOW-(2*WEEK);
                 break;
             case '30':
-                $periodDesc = "From " . date( $_SESSION['datetime_format_short'], (NOW - MONTH)) . " to " . date( $_SESSION['datetime_format_short'], NOW);
+                $periodDesc = "From " . date($_SESSION['datetime_format_short'], (NOW - MONTH)) . " to " . date($_SESSION['datetime_format_short'], NOW);
                 $interval[0] = NOW-MONTH;
             }
 
             // Get start and end datetime for backup jobs report and charts
             $periods = CDBQuery::get_Timestamp_Interval($jobs->get_driver_name(), $interval);
 
-            $backupjob_bytes = $jobs->getStoredBytes( $interval, $backupjob_name);
+            $backupjob_bytes = $jobs->getStoredBytes($interval, $backupjob_name);
             $backupjob_bytes = CUtils::Get_Human_Size($backupjob_bytes);
     
             // Stored files on the defined period
-            $backupjob_files = $jobs->getStoredFiles( $interval, $backupjob_name);
+            $backupjob_files = $jobs->getStoredFiles($interval, $backupjob_name);
             $backupjob_files = CUtils::format_Number($backupjob_files);
     
             // Get the last 7 days interval (start and end)
             $days = DateTimeUtil::getLastDaysIntervals($backupjob_period);
     
-            // Last 7 days stored files chart  
+            // Last 7 days stored files chart
             foreach ($days as $day) {
                 $stored_files = $jobs->getStoredFiles(array($day['start'], $day['end']), $backupjob_name);
                 $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
             }
     
-            $stored_files_chart = new Chart( array( 'type' => 'bar', 
+            $stored_files_chart = new Chart(
+                array( 'type' => 'bar',
                 'name' => 'chart_storedfiles',
-                'data' => $days_stored_files, 
-                'ylabel' => 'Files' ) 
+                'data' => $days_stored_files,
+                'ylabel' => 'Files' )
             );
     
             $this->assign('stored_files_chart_id', $stored_files_chart->name);
             $this->assign('stored_files_chart', $stored_files_chart->render());
     
-            unset($stored_files_chart);   
+            unset($stored_files_chart);
     
-            // Last 7 days stored bytes chart  
+            // Last 7 days stored bytes chart
             foreach ($days as $day) {
                 $stored_bytes = $jobs->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
                 $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
             }
     
-            $stored_bytes_chart = new Chart( array( 'type' => 'bar', 
-                'name' => 'chart_storedbytes', 
+            $stored_bytes_chart = new Chart(
+                array( 'type' => 'bar',
+                'name' => 'chart_storedbytes',
                 'uniformize_data' => true,
-                'data' => $days_stored_bytes, 
-                'ylabel' => 'Bytes' ) 
+                'data' => $days_stored_bytes,
+                'ylabel' => 'Bytes' )
             );
     
             $this->assign('stored_bytes_chart_id', $stored_bytes_chart->name);
             $this->assign('stored_bytes_chart', $stored_bytes_chart->render());
-            unset($stored_bytes_chart);   
+            unset($stored_bytes_chart);
     
             $where[] = "Name = '$backupjob_name'";
             $where[] = "Type = 'B'";
             $where[] = '(EndTime BETWEEN ' . $periods['starttime'] . ' AND ' . $periods['endtime'] . ')';
 
-            $query = CDBQuery::get_Select( array('table' => 'Job',
+            $query = CDBQuery::get_Select(array('table' => 'Job',
             'fields' => array( 'JobId', 'Level', 'JobFiles', 'JobBytes', 'ReadBytes', 'Job.JobStatus', 'StartTime', 'EndTime', 'Name', 'Status.JobStatusLong'),
             'where' => $where,
             'orderby' => 'EndTime DESC',
             'join' => array(
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
-            ) ) );
+            ) ));
     
             $joblist      = array();
             $joblevel     = array('I' => 'Incr', 'D' => 'Diff', 'F' => 'Full');
@@ -167,7 +169,7 @@ class BackupJobView extends CView {
                 if ($job['jobbytes'] > 0) {
                     $compression = (1-($job['jobbytes'] / $job['readbytes']));
                     $job['compression'] = number_format($compression, 2);
-                }else{
+                } else {
                     $job['compression'] = 'N/A';
                 }
        
@@ -188,8 +190,8 @@ class BackupJobView extends CView {
                 $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
        
                 // Format date/time
-                $job['starttime'] = date( $_SESSION['datetime_format'], strtotime($job['starttime']));
-                $job['endtime'] = date( $_SESSION['datetime_format'], strtotime($job['endtime']));
+                $job['starttime'] = date($_SESSION['datetime_format'], strtotime($job['starttime']));
+                $job['endtime'] = date($_SESSION['datetime_format'], strtotime($job['endtime']));
        
                 $joblist[] = $job;
             } // end while
@@ -201,7 +203,5 @@ class BackupJobView extends CView {
             $this->assign('backupjob_bytes', $backupjob_bytes);
             $this->assign('backupjob_files', $backupjob_files);
         } // end else
-
     } // end of prepare() method
 } // end of class
- 

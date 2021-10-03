@@ -18,7 +18,6 @@
 
 class CErrorHandler
 {
-
     private static $header;
 
     public static function displayError($exception)
@@ -59,9 +58,8 @@ class CErrorHandler
         $output .= '</div> </div>';
 
         // Render Exception page
-        $output = HtmlHelper::getHtmlHeader() . HtmlHelper::getNavBar() . '<div class="container">' . $output . '</div>' . HtmlHelper::getHtmlFooter();        
+        $output = HtmlHelper::getHtmlHeader() . HtmlHelper::getNavBar() . '<div class="container">' . $output . '</div>' . HtmlHelper::getHtmlFooter();
         echo $output;
-
     } // end function displayError
 
     public static function getFormatedTrace($e)

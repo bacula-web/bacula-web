@@ -16,13 +16,13 @@
  +-------------------------------------------------------------------------+
 */
 
-class UserSettingsView extends CView {
-
+class UserSettingsView extends CView
+{
     protected $userauth;
     protected $username;
 
-    public function __construct() {
-
+    public function __construct()
+    {
         parent::__construct();
         
         $this->templateName = 'usersettings.tpl';
@@ -32,36 +32,32 @@ class UserSettingsView extends CView {
         $this->userauth = new UserAuth();
     }
 
-    public function prepare() {
-
+    public function prepare()
+    {
         $this->username = $_SESSION['username'];
-        $this->assign( 'username', $this->username);
+        $this->assign('username', $this->username);
 
         $user = $this->userauth->getData($this->username);
-        $this->assign( 'email', $user['email']);
+        $this->assign('email', $user['email']);
 
         // Check if password reset have been requested
-        if( isset( $_REQUEST['action'])) {
-
-            switch($_REQUEST['action']) {
+        if (isset($_REQUEST['action'])) {
+            switch ($_REQUEST['action']) {
             case 'passwordreset':
                 // Check if provided current password is correct
-                if( $this->userauth->authUser( $_SESSION['username'], $_POST['oldpassword']) == 'yes') {
+                if ($this->userauth->authUser($_SESSION['username'], $_POST['oldpassword']) == 'yes') {
 
                     // Update user password with new one
-                    if($this->userauth->setPassword($_SESSION['username'], $_POST['newpassword'])) {
+                    if ($this->userauth->setPassword($_SESSION['username'], $_POST['newpassword'])) {
                         $this->userAlert = 'Password successfuly updated';
                         $this->userAlertType = 'success';
                     }
-                }else {
+                } else {
                     $this->userAlert = 'Current password do not match';
                     $this->userAlertType = 'danger';
                 }
                 break;
             }
         }
-
     }
-
 } // end of class
-        

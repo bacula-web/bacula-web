@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  +-------------------------------------------------------------------------+
  | Copyright (C) 2004 Juan Luis Francés Jiménez				               |
  | Copyright 2010-2021, Davide Franco			       	                   |
@@ -13,7 +13,7 @@
  | but WITHOUT ANY WARRANTY; without even the implied warranty of          |
  | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           |
  | GNU General Public License for more details.                            |
- +-------------------------------------------------------------------------+ 
+ +-------------------------------------------------------------------------+
 */
 
 require_once('core/global.inc.php');
@@ -33,27 +33,27 @@ class Bweb extends WebApplication
         // Loading configuration file parameters
         if (!FileConfig::open(CONFIG_FILE)) {
             throw new Exception("The configuration file is missing");
-        }else {
+        } else {
             // Count defined Bacula catalogs
             $this->catalog_nb = FileConfig::count_Catalogs();
 
             // Check if debug is enabled
-            if( FileConfig::get_Value('debug') != NULL && is_bool(FileConfig::get_Value('debug'))) {
-                ini_set( 'error_reporting', E_ALL);
-                ini_set( 'display_errors', 'On');
-                ini_set( 'display_startup_errors', 'Off');
+            if (FileConfig::get_Value('debug') != null && is_bool(FileConfig::get_Value('debug'))) {
+                ini_set('error_reporting', E_ALL);
+                ini_set('display_errors', 'On');
+                ini_set('display_startup_errors', 'Off');
             }
 
 
             // Check if datetime_format is defined in configuration
-            if( FileConfig::get_Value('datetime_format') != NULL) {
+            if (FileConfig::get_Value('datetime_format') != null) {
                 $this->datetime_format = FileConfig::get_Value('datetime_format');
                 $_SESSION['datetime_format'] = $this->datetime_format;
                   
                 // Get first part of datetime_format
-                $this->datetime_format_short = explode( ' ', $this->datetime_format);
+                $this->datetime_format_short = explode(' ', $this->datetime_format);
                 $_SESSION['datetime_format_short'] = $this->datetime_format_short[0];
-            }else {
+            } else {
                 // Set default time format
                 $_SESSION['datetime_format'] = 'Y-m-d H:i:s';
                 $_SESSION['datetime_format_short'] = 'Y-m-d';
@@ -67,14 +67,14 @@ class Bweb extends WebApplication
                 
         // Initialize smarty gettext function
         $language = FileConfig::get_Value('language');
-        if ($language == NULL) {
+        if ($language == null) {
             throw new Exception('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
         }
                 
         $this->translate = new CTranslation($language);
         $this->translate->set_Language($this->view);
             
-     // Get catalog_id from http $_GET request
+        // Get catalog_id from http $_GET request
         if (!is_null(CHttpRequest::get_Value('catalog_id'))) {
             if (FileConfig::catalogExist(CHttpRequest::get_Value('catalog_id'))) {
                 $this->catalog_current_id = CHttpRequest::get_Value('catalog_id');
@@ -86,14 +86,14 @@ class Bweb extends WebApplication
             }
         } else {
             if (isset($_SESSION['catalog_id'])) {
-               // Stick with previously selected catalog_id
-               $this->catalog_current_id = $_SESSION['catalog_id'];
-            }else{
-               $_SESSION['catalog_id'] = $this->catalog_current_id;
+                // Stick with previously selected catalog_id
+                $this->catalog_current_id = $_SESSION['catalog_id'];
+            } else {
+                $_SESSION['catalog_id'] = $this->catalog_current_id;
             }
         }
             
-            // Define catalog id and catalog label
+        // Define catalog id and catalog label
         $this->view->assign('catalog_current_id', $this->catalog_current_id);
         $this->view->assign('catalog_label', FileConfig::get_Value('label', $this->catalog_current_id));
             
@@ -109,6 +109,5 @@ class Bweb extends WebApplication
 
         // Set language
         $this->view->assign('language', $language);
-
     }
 } // end class Bweb

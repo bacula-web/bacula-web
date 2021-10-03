@@ -26,25 +26,24 @@ class FileConfig extends File
      */
     public function __construct()
     {
-
     }
 
-         // ==================================================================================
-         // Function: 	check()
-         // Parameters:	none
-         // Return:		false if something is wrong in the configuration file
-         // ==================================================================================
+    // ==================================================================================
+    // Function: 	check()
+    // Parameters:	none
+    // Return:		false if something is wrong in the configuration file
+    // ==================================================================================
 
     public function check()
     {
         // Check if all parameters ... to be completed
     }
         
-         // ==================================================================================
-         // Function: 	count_Catalogs()
-         // Parameters:	none
-         // Return:		configured catalog count number or false if something goes wrong
-         // ==================================================================================
+    // ==================================================================================
+    // Function: 	count_Catalogs()
+    // Parameters:	none
+    // Return:		configured catalog count number or false if something goes wrong
+    // ==================================================================================
 
     public static function count_Catalogs()
     {
@@ -59,12 +58,12 @@ class FileConfig extends File
         return $catalog_count;
     }
 
-        // ==================================================================================
-        // Function: 	get_Value()
-        // Parameters:	configuration parameter or false (if not defined)
-        //				$catalog_id (optional)
-        // Return:		parameter value or NULL if does not exist
-        // ==================================================================================
+    // ==================================================================================
+    // Function: 	get_Value()
+    // Parameters:	configuration parameter or false (if not defined)
+    //				$catalog_id (optional)
+    // Return:		parameter value or NULL if does not exist
+    // ==================================================================================
 
     public static function get_Value($parameter, $catalog_id = null)
     {
@@ -73,7 +72,7 @@ class FileConfig extends File
             throw new Exception("The configuration is missing or there's something wrong in it");
         }
 
-        // If $catalog_id is not null, get value from this catalog   
+        // If $catalog_id is not null, get value from this catalog
         if (!is_null($catalog_id)) {
             if (is_array(parent::$config[$catalog_id])) {
                 return parent::$config[$catalog_id][$parameter];
@@ -84,16 +83,16 @@ class FileConfig extends File
             if (isset(parent::$config[$parameter])) {
                 return parent::$config[$parameter];
             } else {
-                return NULL;
+                return null;
             }
         }
     } // end function
 
-        // ==================================================================================
-        // Function: 	get_DataSourceName()
-        // Parameters:	$catalog_id
-        // Return:		dsn string
-        // ==================================================================================
+    // ==================================================================================
+    // Function: 	get_DataSourceName()
+    // Parameters:	$catalog_id
+    // Return:		dsn string
+    // ==================================================================================
     public static function get_DataSourceName($catalog_id)
     {
         $dsn             = '';
@@ -121,11 +120,11 @@ class FileConfig extends File
         return $dsn;
     }
 
-        // ==================================================================================
-        // Function: 	get_Catalogs()
-        // Parameters:	none
-        // Return:		an array containing all catalogs labels define in the configuration
-        // ==================================================================================
+    // ==================================================================================
+    // Function: 	get_Catalogs()
+    // Parameters:	none
+    // Return:		an array containing all catalogs labels define in the configuration
+    // ==================================================================================
 
     public static function get_Catalogs()
     {
@@ -140,11 +139,11 @@ class FileConfig extends File
         return $catalogs;
     }
 
-        // ==================================================================================
-        // Function: 	catalogExist()
-        // Parameters:	$catalog_id
-        // Return:		true or false (depending if catalog exist or not in the configuration)
-        // ==================================================================================
+    // ==================================================================================
+    // Function: 	catalogExist()
+    // Parameters:	$catalog_id
+    // Return:		true or false (depending if catalog exist or not in the configuration)
+    // ==================================================================================
 
     public function catalogExist($catalog_id)
     {

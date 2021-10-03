@@ -24,7 +24,7 @@ class Clients_Model extends CModel
     // Return:		   Number of clients
     // ==================================================================================
 
-    public function count( $tablename = 'Client', $filter = null)
+    public function count($tablename = 'Client', $filter = null)
     {
         return parent::count($tablename);
     }
@@ -44,7 +44,7 @@ class Clients_Model extends CModel
 
         $statment     = array( 'table' => $table, 'fields' => $fields, 'orderby' => $orderby );
 
-        if (FileConfig::get_Value('show_inactive_clients') != NULL) {
+        if (FileConfig::get_Value('show_inactive_clients') != null) {
             $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
         }
 
@@ -73,31 +73,30 @@ class Clients_Model extends CModel
         $result     = $this->run_query($statment);
             
         foreach ($result->fetchAll() as $client) {
+            $uname = explode(',', $client['uname']);
 
-           $uname = explode(',',$client['uname']);
-
-           // Check if client uname is not empty 
-           if (!empty($uname[0])) {
-               // Windows Bacula file daemon
-               if(end($uname) == 'Win32' || end($uname) == 'Win64') {
-                   $client['arch'] = $uname[1];
-                   $uname = explode(' ', $uname[0]);
-                   $client['version'] = $uname[0]; 
-                   $uname = array_slice($uname, 2); 
-                   $client['os'] = implode(' ', $uname); 
-               }else{
-                   $uname = explode(' ',$client['uname']);
-                   $client['version'] = $uname[0];
-                   $uname = explode(',', $uname[2]);
-                   $temp = explode('-', $uname[0]);
-                   $client['arch'] = $temp[0];
-                   $client['os'] = ucfirst($uname[1] . ' ' . $uname[2]);
-               }
-           }else{
-              $client['version'] = 'n/a';
-              $client['arch'] = 'n/a';
-              $client['os'] = 'n/a';
-           }
+            // Check if client uname is not empty
+            if (!empty($uname[0])) {
+                // Windows Bacula file daemon
+                if (end($uname) == 'Win32' || end($uname) == 'Win64') {
+                    $client['arch'] = $uname[1];
+                    $uname = explode(' ', $uname[0]);
+                    $client['version'] = $uname[0];
+                    $uname = array_slice($uname, 2);
+                    $client['os'] = implode(' ', $uname);
+                } else {
+                    $uname = explode(' ', $client['uname']);
+                    $client['version'] = $uname[0];
+                    $uname = explode(',', $uname[2]);
+                    $temp = explode('-', $uname[0]);
+                    $client['arch'] = $temp[0];
+                    $client['os'] = ucfirst($uname[1] . ' ' . $uname[2]);
+                }
+            } else {
+                $client['version'] = 'n/a';
+                $client['arch'] = 'n/a';
+                $client['os'] = 'n/a';
+            }
         }
         
         return $client;

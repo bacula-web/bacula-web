@@ -38,13 +38,13 @@ class CView extends SmartyBC
     }
 
     public function render()
-    {   
+    {
         $this->assign('page_name', $this->name);
         $this->assign('page_title', $this->title);
         $this->assign('templateName', $this->templateName);
 
         // Set username, if user is connected
-        if( isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') {
+        if (isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') {
             $this->assign('username', $_SESSION['username']);
         }
 
@@ -54,13 +54,13 @@ class CView extends SmartyBC
 
         // Build breadcrumb
         $breadcrumb = '';
-        if( isset($_GET['page'] ) ) {
+        if (isset($_GET['page'])) {
             $breadcrumb = '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
             $breadcrumb .= '<li class="active">' . $this->name . '</li>';
-        }else {
+        } else {
             $breadcrumb = '<li class="active"> <i class="fa fa-home fa-fw"></i> ' . $this->name . '</li>';
         }
-        $this->assign( 'breadcrumb', $breadcrumb);
+        $this->assign('breadcrumb', $breadcrumb);
 
         // Render using the default layout
         $this->display('layouts/default.tpl');

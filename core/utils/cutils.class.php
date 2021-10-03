@@ -17,7 +17,6 @@
 
 class CUtils
 {
-
     public static function Get_Human_Size($size, $decimal = 2, $unit = 'auto', $display_unit = true)
     {
         $unit_id = 0;
@@ -26,7 +25,7 @@ class CUtils
         $hsize = $size;
 
         switch ($unit) {
-            case 'auto';
+            case 'auto':
                 while (!$lisible) {
                     if ($hsize >= 1024) {
                         $hsize = $hsize / 1024;
@@ -67,7 +66,7 @@ class CUtils
         
         // Check if thousands_sep is set
         if (empty($locale['thousands_sep'])) {
-           $locale['thousands_sep'] = '.';
+            $locale['thousands_sep'] = '.';
         }
 
         // Return formated number
