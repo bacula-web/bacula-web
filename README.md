@@ -35,7 +35,7 @@ You'll find latest stable release [here](https://www.bacula-web.org/download/)
 
 ### Support
 
-Submit a bug report or feature request using [GitHub project issues](https://github.com/bacula-web/bacula-web/issues)
+You can submit a bug report or a feature request using [GitHub project issues](https://github.com/bacula-web/bacula-web/issues)
 
 ### Contribute
 
