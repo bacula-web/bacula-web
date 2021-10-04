@@ -1,4 +1,11 @@
-=== Release 8.4.3 (October 3 2021)
+## Bacula-Web 8.4.3 (October 3rd 2021)
+
+**Important note**
+
+There's a known regression with JobFile and BackupJob reports page for users using Bacula >= 11.0.0 and a bug is already open (see #71 ). 
+I'v already started to work on fixes, which should be available in a next release.
+
+Thanks to @tolland for submitting the bug report.
 
 Changelog
 
