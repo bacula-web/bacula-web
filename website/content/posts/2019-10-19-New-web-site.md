@@ -1,7 +1,7 @@
 ---
-title:  "Web site is now back"
+title: "Web site is now back"
 description: Bacula-Web.org web site is now back after few days of downtime
-date:   2019-10-19 09:25:00 +0000
+date: '2019-10-19 09:25:00 +0000'
 tags: ["news"]
 ---
 
