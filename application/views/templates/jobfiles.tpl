@@ -49,7 +49,7 @@
 				{foreach from=$job_files item=file}
 				<tr>
 					<td>#{$file.fileindex}</td>
-					<td class="text-left">{$file.path}{$file.name}</td>
+					<td class="text-left">{$file.path}{$file.filename}</td>
 				</tr>
 				{foreachelse}
 				<tr>
