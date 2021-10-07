@@ -1,3 +1,15 @@
+## Bacula-Web 8.4.4 (October ddd 2021)
+
+### Changelog
+
+### Fixed bug(s)
+
+- #71 [bug] - Fix bacula 11.0 database schema compatibility
+
+### New feature(s)
+
+- none
+
 ## Bacula-Web 8.4.3 (October 3rd 2021)
 
 **Important note**
