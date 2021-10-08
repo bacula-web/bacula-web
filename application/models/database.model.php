@@ -17,6 +17,7 @@
 
 class Database_Model extends CModel
 {
+    private $dbVersionId = '';
  
     // ==================================================================================
     // Function: 	get_Size()
