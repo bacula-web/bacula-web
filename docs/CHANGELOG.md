@@ -5,6 +5,7 @@
 ### Fixed bug(s)
 
 - #71 [bug] - Fix bacula 11.0 database schema compatibility
+- #73 [bug] - Fix pagination in JobFiles report
 
 ### New feature(s)
 
