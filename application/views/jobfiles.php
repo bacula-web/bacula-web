@@ -41,7 +41,6 @@ class JobFilesView extends CView
 
         if (CHttpRequest::get_Value('InputFilename') != null) {
             $filename = CHttpRequest::get_Value('InputFilename');
-            $this->assign('filename', $filename);
         }
 
         $jobInfo = $jobFiles->getJobNameAndJobStatusByJobId($jobId);
@@ -59,6 +58,7 @@ class JobFilesView extends CView
         if (array_key_exists('paginationCurrentPage', $_GET)) {
             $current_page = $_GET['paginationCurrentPage'];
         }
+
         $this->assign('pagination_current_page', $current_page);
         $this->assign('pagination_rows_per_page', $rows_per_page);
 
@@ -72,5 +72,7 @@ class JobFilesView extends CView
 
         $this->assign('job_files', $files);
         $this->assign('job_files_count_paging', count($files));
+
+        $this->assign('filename', $filename);
     }
 }
