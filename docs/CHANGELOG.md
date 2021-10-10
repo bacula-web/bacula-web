@@ -1,6 +1,34 @@
-=== Release 8.4.3 (October 3 2021)
+## Bacula-Web 8.4.4 (October 10th 2021)
 
-Changelog
+### Changelog
+
+- Job files report
+   - Job files report now works using latest Bacula version (<= 11.0.x)
+   - Pagination while browsing backup job file(s= have been fixed
+
+- Development
+   - Several fixes and refactoring
+
+### Fixed bug(s)
+
+- #71 [bug] - Fix bacula 11.0 database schema compatibility
+- #73 [bug] - Fix pagination in JobFiles report
+- #74 [bug] - Deprecated error while using several Bacula catalog
+
+### New feature(s)
+
+- none
+
+## Bacula-Web 8.4.3 (October 3rd 2021)
+
+**Important note**
+
+There's a known regression with JobFile and BackupJob reports page for users using Bacula >= 11.0.0 and a bug is already open (see #71 ). 
+I'v already started to work on fixes, which should be available in a next release.
+
+Thanks to @tolland for submitting the bug report.
+
+### Changelog
 
 - Documentation
 	- Add "support the project" section to README.md
@@ -16,17 +44,19 @@ Changelog
 	- Add friendsofphp/php-cs-fixer to Composer require-dev
 	- Update Composer dependencies
 
-Fixed bug(s)
+### Fixed bug(s)
 
 - #64 [documentation] - Update documentation related to translations
 - #65 [documentation] - Update contribution guide
 - #69 [improvement] - Make code PSR-2 compliant
 
-New feature(s)
+### New feature(s)
 
-=== Release 8.4.2 (July 11 2021)
+- none
 
-Changelog
+## Bacula-Web 8.4.2 (July 11th 2021)
+
+### Changelog
 
 - General
 	- Upgrade Composer dependencies
@@ -46,20 +76,20 @@ Changelog
 	- phpmd/phpmd to version 2.10.1
 	- squizlabs/php_codesniffer to version 3.6.
 
-Security
+### Security
 	- Upgrade Smarty to version v3.1.39 to fix CVE-2021-26119 and CVE-2021-26120 (see #58)
 
-Fixed bug(s)
+### Fixed bug(s)
 
 - #58 [security] - Upgrade Smarty to latest stable version
 
-New feature(s)
+### New feature(s)
 
 - none
 
-=== Release 8.4.1 (October 24 2020)
+## Bacula-Web 8.4.1 (October 24th 2020)
 
-Changelog
+### Changelog
 
 - Job file report
 	- Fix files count (#55)
@@ -68,18 +98,18 @@ Changelog
 - Translations
 	- Update translations (#56)
 
-Fixed bug(s)
+### Fixed bug(s)
 
 - #55 [bug] - Job files search returns SQL syntax error
 - #56 [translation] - Update translations
 
-New feature(s)
+### New feature(s)
 
 - none
 
-=== Release 8.4.0 (June 1 2020)
+## Bacula-Web Release 8.4.0 (June 1st 2020)
 
-Changelog
+### Changelog
 
 - Jobs report
 	- Fix start time and end time for waiting and running jobs (#46)
@@ -94,7 +124,7 @@ Changelog
 	- Update supported PHP version (up to 7.3) (#47)
 	- Update documentation for Linux Mint (#48)
 
-Fixed bug(s)
+### Fixed bug(s)
 
 - #46 [bug] - Wrong start time and end time for waiting and running jobs
 - #47 [bug] - PHP 7.2 support
@@ -102,14 +132,14 @@ Fixed bug(s)
 - #49 [doc] - Broken dowload link in Readme.md 
 - #52 [doc] - Update documentation related to ownership and permissions
 
-New feature(s)
+### New feature(s)
 
 - #44 [feature] - List of files too short, not configurable
 - #54 [feature] - Add search form in Job files report
 
-=== Release 8.3.3 (December 1 2019)
+## Bacula-Web 8.3.3 (December 1st 2019)
 
-Changelog
+### Changelog
 
 - General
 	- Bacula-Web tar.gz and SHA sums are now hosted by GitHub
@@ -124,18 +154,18 @@ Changelog
 	- Improve code in DateTimeUtil::Get_Elapsed_Time() (thanks to @bulanh)
 	- Usual PHP code improvements and fixes
 
-Fixed bug(s)
+### Fixed bug(s)
 
 - #37 [bug] Fix installation from archive in documentation
 - #42 [bug] Invalid date format inside DateTimeUtil::Get_Elapsed_Time
 
-New feature(s)
+### New feature(s)
 
 - none
 
-=== Release 8.3.2 (August 15 2019)
+## Bacula-Web 8.3.2 (August 15th 2019)
 
-Changelog
+### Changelog
 
 - General
 	- Fixed bwc (console) usage command
@@ -155,20 +185,20 @@ Changelog
 	- Fixed bug tracker information (using Github issues now)
 	- Minor fixes
 
-Fixed bug(s)
+### Fixed bug(s)
 
 - #36 [bug] Division by zero in Jobs report
 - #39 [bug] Error with postgreSQL using JobFiles report page
 - #40 [bug] Missing debug mode value in general settings
 - #41 [bug] Wrong version displayed in console
 
-New feature(s)
+### New feature(s)
 
 - none
 
-=== Release 8.3.1 (April 22 2019)
+## Bacula-Web 8.3.1 (April 22nd 2019)
 
-Changelog
+### Changelog
 
 - General
 	- Fixed PHP warning on user signout (#0296)
@@ -185,19 +215,19 @@ Changelog
 - Security
 	- Fixed XSS security issue in Bootstrap (#0298)
 
-Fixed bug(s)
+### Fixed bug(s)
 
 - 0000296 [bug-php] NOTICE type error after user sign out
 - 0000297 [bug-php] Errors on restore jobs level in jobs report page
 - 0000298 [security-issue] Upgrade Bootstrap to version 3.4.1
 
-New feature(s)
+### New feature(s)
 
 - 0000299 [feature] Display job status in last backup job (Backup job report)
 
-=== Release 8.3.0 (March 16 2019)
+## Bacula-Web 8.3.0 (March 16th 2019)
 
-Changelog
+### Changelog
 
 - Dashboard
 	- Biggest backup job widget is fixed (#0262)
@@ -221,21 +251,21 @@ Changelog
 - Development
 	- Usual PHP code improvements and fixes
 
-Fixed bug(s)
+### Fixed bug(s)
 
 - 0000262 [bug-php] Biggest jobs size is total job size
 - 0000290 [bug-php] Division by zero with backup job compression
 - 0000291 [bug] Language translations doesn't work anymore
 - 0000293 [documentation] Update documentation for Fedora
 
-New feature(s)
+### New feature(s)
 
 - 0000255 [feature] Dashboard: Clicking on numbers and graphs should display report
 - 0000289 [feature] Implement file listing within a job
 
-=== Release 8.2.1 (Jan 28 2019)
+## Bacula-Web 8.2.1 (Jan 28th 2019)
 
-Changelog
+### Changelog
 
 - General
 	- Fixed missing bootstrap-validator package using Composer (#0288)
@@ -256,9 +286,9 @@ Changelog
 - 0000287 [bug-php] Email address not displayed in user settings page
 - 0000288 [packaging] Fix missing bootstrap-validator using Composer
 
-=== Release 8.2.0 (January 6 2019)
+## Bacula-Web 8.2.0 (January 6th 2019)
 
-Changelog
+## Changelog
 
 - General
 	- Updated .htaccess adding Options +FollowSymLinks
@@ -284,7 +314,7 @@ Changelog
 	- Upgraded Smarty and Smarty-Gettext components
 	- Huge amount of PHP code improvements and fixes
 
-Fixed bug(s)
+### Fixed bug(s)
 
 - 0000254 [bug-php] Warnings with PHP 7.0.27
 - 0000273 [documentation] Instructions to download archive not accurate
@@ -294,14 +324,14 @@ Fixed bug(s)
 - 0000282 [documentation] Update outdated Composer installation
 - 0000283 [documentation] Update PHP package instructions for RHEL/Centos 6 users
 
-New feature(s)
+### New feature(s)
 
 - 0000239 [feature] Disable user authentication
 - 0000271 [feature] Add debug mode on application level
 
-=== Release 8.1.0 (November 7 2018)
+## Bacula-Web 8.1.0 (November 7 2018)
 
-Changelog
+### Changelog
 
 - General
 	- Jobs overview, volumes and pools report pages can now be paginated
@@ -344,7 +374,7 @@ Changelog
 	- Update symfony/process from version 3.4.4 to 3.4.12
 	- General code improvements
 
-Fixed bugs
+### Fixed bugs
 
 - 0000220 [bug-php] Pie charts values should not use decimal
 - 0000251 [bug-php] Job duration > 1 day looking weird
@@ -354,17 +384,17 @@ Fixed bugs
 - 0000269 [bug-php] Status icon not displayed for verify jobs
 - 0000270 [bug-html] Tabs doesn't work in Settings page
 
-New feature(s)
+### New feature(s)
 
 - 0000141 [feature] Pagination in report pages
 - 0000244 [feature] Filter volumes in changer
 - 0000263 [feature] Filter volumes by pool on Volumes report
 
-This release fix 7 bugs and add 3 new features
+This release fixes 7 bugs and add 3 new features
 
-=== Release 8.0.1 (June 22 2018)
+## Bacula-Web 8.0.1 (June 22nd 2018)
 
-Changelog
+### Changelog
 
 - Documentation
 	- Fix issue with ReadTheDocs theme conflict
@@ -373,9 +403,9 @@ Fixed bugs
 
 - 0000248 [documentation] Documentation issue
 
-=== Release 8.0.0 (June 1 2018)
+## Bacula-Web 8.0.0 (June 1st 2018)
 
-Changelog
+### Changelog
 
 - General
 	- Breacrumbs navigation has been fixed
@@ -387,19 +417,19 @@ Changelog
 	- Add user settings and general settings in features
 	- Documentation got cleaned up, restructured and updated
 
-Fixed bugs
+### Fixed bugs
 
 - 0000234 [bug-php] Directors report page problem if a Bacula catalog is unreachable
 - 0000241 [bug-php] Breadcrumbs navigation is broken 
 
-Improvement(s)
+### Improvement(s)
 
 - 0000161 [enhancement] Improve application errors/warnings exception message
 - 0000222 [enhancement] Improve exception handling
 
-=== Release 8.0.0-rc3 (Mar 17 2018)
+## Bacula-Web 8.0.0-rc3 (March 17 2018)
 
-Changelog
+### Changelog
 
 - User and general settings
 	- Configuration settings are now visible in General settings
@@ -411,19 +441,19 @@ Changelog
 - Development
 	- Code cleanup and few improvements
 
-Fixed bugs
+### Fixed bugs
 
 - 0000242 [bug] Wrong link to test page in Exception page
 
-Documentation
+### Documentation
 
 - 0000217 [documentation] Update documentation with Nginx and Apache server configuration
 - 0000238 [documentation] Unable to install Bacula-Web using Composer
 - 0000240 [documentation] Unable to install via Composer
 
-=== Release 8.0.0-rc2 (Mar 2 2018)
+## Bacula-Web 8.0.0-rc2 (March 2nd 2018)
 
-Changelog
+### Changelog
 
 - General
 	- Users authentication feature added
@@ -443,7 +473,7 @@ Changelog
 	- Upgrade moment/moment to version 2.19.2
 	- Add Bootstrap validator to Composer's requirements
 
-Fixed bug(s)
+### Fixed bug(s)
 
 - 0000211 [security-issue] SQL Injection in jobs.php
 - 0000226 [bug] Clicking job name in jobs.php gives http error 500
@@ -454,21 +484,22 @@ Fixed bug(s)
 - 0000233 [bug] Wrong empty volume's date
 - 0000236 [security-issue] - XSS vulnerabilities in jobs page
 
-New feature(s)
+### New feature(s)
 
 - 0000092 [feature] Implement user authentication
 
-Translations
+### Translations
 
 none
 
-Documentation
+### Documentation
+
 	- Bacula-Web can be installed using the archive, or via Composer
 	- Documentation got cleaned up, restructured and updated
 
-=== Release 8.0.0-rc1 (Oct 19 2017)
+## Bacula-Web 8.0.0-rc1 (October 19th 2017)
 
-Changelog
+### Changelog
 
 - General
 	- PHPLot has been replaced by nvd3
@@ -516,7 +547,7 @@ Changelog
 	- FontAwesome updated to version 4.7.0
 	- Smarty-Gettext updated to version 1.2.0
 
-Fixed bug(s)
+### Fixed bug(s)
 
 - 0000177 [bug-html] graphing overlap on index.php
 - 0000196 [bug] after install bacula web , the test page is OK but the index page returns errors
@@ -525,7 +556,7 @@ Fixed bug(s)
 - 0000214 [bug-php] Last used volumes widget in Dashboard display unused volumes
 - 0000224 [bug-php] PHP notice in client report for Windows clients
 
-New feature(s)
+### New feature(s)
 
 - 0000002 [feature] Use icon for volume status
 - 0000005 [feature] Volumes sort order
@@ -538,19 +569,19 @@ New feature(s)
 - 0000199 [feature] Include a Kind of JobTotals
 - 0000210 [feature] Add a "reset to default" option in Jobs report page
 
-Translations
+### Translations
 
 - New Catalan, Belorusian and Polish languages
 - All languages have been updated from Transifex
 
-Documentation
+### Documentation
 
 - 0000198 [documentation] Pb with symlink in .tgz ??
 - 0000208 [documentation] Error assinging owner to config.php
 
-=== Release 7.4.0 (May 7 2017)
+## Bacula-Web 7.4.0 (May 7th 2017)
 
-Changelog
+### Changelog
 
 - General: Minimum PHP version is now 5.6, the test page have been updated accordingly
 - Jobs report: Include more Levels InitCatalog=V, Catalog=C, VolumeToCatalog=O, DiskToCatalog=d and Data=A (wanderleihuttel)
@@ -558,22 +589,22 @@ Changelog
 - Jobs report: Add Job scheduled time (sgargel)
 - Backup job report: Fix "Backup job name" to "Job name" as there's not only backup jobs in Bacula
 
-Fixed bugs
+### Fixed bugs
 
 - 0000203 [bug-php] Ubuntu PHP version string problem
 
-New features
+### New features
 
 - 0000176 [feature] Custom date time format in config.php
 - 0000186 [feature] Add column "InChanger" in Volumes/Pool
 - 0000204 [enhancement] Provide SHA checksum for Bacula-Web compressed archive
 - 0000205 [feature] Filtering by pool on jobs report page
 
-Translations
+### Translations
 
 none
 
-=== Release 7.3.0 (December 4 2016 ===
+## Bacula-Web 7.3.0 (December 4th 2016)
 
 Changelog
 
@@ -581,20 +612,20 @@ Changelog
 - Pool and volumes: Add accordion for each pool
 - Pool and volumes: Used and Full volume status shows expiration date (thanks to wanderleihuttel)
 
-Fixed bugs
+### Fixed bugs
 
 none
 
-Translations
+### Translations
 
 - Added Russian translation (thanks to sayanvd) 
 - Added Chinese translation (thanks to cxl nh)
 - Added Norvegian translation (thanks to Georg Herland)
 - Updated Spanish translation (thanks to Robert López)
 
-=== Release 7.2.0 (June 28 2016) ===
+## Bacula-Web 7.2.0 (June 28th 2016)
 
-Changelog
+### Changelog
 
 - General: The catalog dropdown is now displayed even if you have only one catalog defined 
 	   I tought it would be much better to always see on which bacula instance your are monitoring
@@ -604,25 +635,25 @@ Changelog
 - Dashboard: Improved dashboard layout by moving catalog statistics on top of the page
 - Test page: As of now, you should run at least PHP version 5.4 to have Bacula-Web running smoothly 
 
-Fixed bugs
+### Fixed bugs
 
 - 0000180 [bug-php] DrawGraph No data array error in http logs
 - 0000187 [bug-php] Total of bytes per pool problem in Pool and volumes report
 - 0000190 [bug-php] Some backup jobs in Jobs report page shows a duration of 0 second
 
-New features
+### New features
 
 - 0000142 [feature] Filter Job Report by Backup Level
 - 0000192 [feature] Add filter by Start/End Time in Jobs report
  
-Translations
+### Translations
 
 - As of Bacula-Web 7.1.1, all language translations are hosted on Tranifex.com)
   If you want to help translating in your language, please follow Bacula-Web documentation
 
-=== Release 7.1.0 (April 4 2016) ===
+## Bacula-Web 7.1.0 (April 4th 2016)
 
-Changelog
+### Changelog
 
 - Dashboard: Fixed problem with jobs running since more than 24 hours
 - Pools and volumes: 
@@ -635,7 +666,7 @@ Changelog
 - Jobs report: you can filter jobs with status "Terminated with errors"
 - Translation: Portuguese brazilian have been updated and added Japanese
 
-Fixed bugs
+### Fixed bugs
 
 - 0000170 [bug] Warning: Division by zero in jobs.php
 - 0000171 [bug] Running and Waiting jobs older than 24 hours are not visible in Dashboard
@@ -643,25 +674,25 @@ Fixed bugs
 - 0000174 [bug-php] PHP issues with non-static methods call
 - 0000185 [bug-php] Wrong backup job speed in Backup Job report
 
-New features
+### New features
 
 - 0000157 [feature] Add missing job status filter (Terminated with errors) in Jobs report page
 - 0000159 [feature] Volume report slot in tape robot
 - 0000175 [feature] Display total of Bytes for each Pool
 
-Translations
+### Translations
 
 - Added Japanese translation (thanks to Ken Sawada)
 - 0000169 [translation] Updated Portugues Brazilian translation (thanks to Brivaldo Junior)
 
-=== Release 7.0.3 (March 26th 2015) ===
+## Bacula-Web 7.0.3 (March 26th 2015)
 
-Changelog
+### Changelog
 
 - General: Fixed several security issues and bugs in the code
 - General: Upgraded Twitter Bootstrap framework from 3.3.1 to version 3.3.4
 
-Fixed bugs
+### Fixed bugs
 
 - 0000162 [bug] Client jobs filter does not work in Jobs report page
 - 0000163 [bug-php] Dashboard: Selected period in period selector do not reflect user's choice
@@ -670,17 +701,17 @@ Fixed bugs
 - 0000167 [bug] Problem enabling Smarty template cache
 - 0000168 [bug-php] Division by zero warning in Jobs report page (bacula-dev)
 
-New features
+### New features
 
 none
 
-Translations
+### Translations
 
 none
 
-=== Release 7.0.2 (January 22nd 2015) ===
+## Bacula-Web 7.0.2 (January 22nd 2015)
 
-Changelog
+### Changelog
 
 - General: Catalog selector now display current catalog label
 - General: Web UI look and feel improvements
@@ -693,7 +724,7 @@ Changelog
 - Translations: Update messages.po file for all languages
 - Requirements: Minimal supported PHP version have been raised to >= 5.3
 
-Fixed bugs
+### Fixed bugs
 
 - 0000100 [bug-pgsql] Wrong SQL to make 'Pools and volumes status' graph
 - 0000137 [bug-php] Pie graph empty if there's no value
@@ -709,34 +740,34 @@ Fixed bugs
 - 0000158 [bug-php] Catalog id stored in user session should not take precedence over default catalog
 - 0000160 [bug-html] Graphs loaded randomly (issue 146 not yet fixed)
 
-New features
+### New features
 
- none
+none
 
-Translations
+### Translations
 
 - Updated French translations
 
-=== Release 7.0.1 (November 23rd 2014) ===
+## Bacula-Web 7.0.1 (November 23rd 2014)
 
-Changelog
+### Changelog
 
 - General: Upgrade Twitter Bootstrap from version 3.2.0 to 3.3.1
 - General: Fix html code issue in some templates using Bootlint (https://github.com/twbs/bootlint)
 
-Fixed bugs
+### Fixed bugs
 
 - 0000143 [documentation] bacula-web 7.0.0 and the latest version of wget
 - 0000144 [bug-php] Backup job report - php errors in logs
 - 0000146 [bug] Graphs sometimes disappear on Firefox 33.0
 
-New features
+### New features
 
- none
+none
 
-=== Release 7.0.0 (November 19th 2014) ===
+## Bacula-Web 7.0.0 (November 19th 2014)
 
-Changelog
+### Changelog
 
 - General: Several code improvements
 - General: Web UI have been reworked using Twitter Bootstrap, JQuery and FontAwesome
@@ -744,7 +775,7 @@ Changelog
 - Updated Smarty to version 2.6.28
 - Updated PHPLot from version 5.8.0 to 6.1.0
 
-Fixed bugs
+### Fixed bugs
 
 - 0000083 [bug] Bacula-web dashboard queries to *sql does not take into account timezone differences
 - 0000138 [bug-php] Display job compression rate only for Backup jobs
@@ -753,18 +784,18 @@ Fixed bugs
 - 0000091 [design] Visibility long volume-names
 - 0000077 [design] "Pools and volumes status" pie and legend overlap with long names
 
-New features
+### New features
 
 - 0000135 [feature] Add Stored Files graph in Dashboard
 - 0000134 [feature] Add compression rate into Jobs report page
 
-=== Release 6.0.1 (July 29th 2014) ===
+## Bacula-Web 6.0.1 (July 29th 2014)
 
-Changelog
+### Changelog
 
 - Updated copyright header in all PHP scripts
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - 0000130 [bug-php] Y axis title is missing on some bar graphs
 - 0000113 [bug-php] Bar plot graphs display data based on 1GB only
@@ -779,9 +810,9 @@ Fixed bugs / New features
 - 0000114 [feature] Order jobs by date in Jobs report pag
 - 0000115 [design] Add a "reset" in Jobs report option box 
 
-=== Release 6.0.0 (November 11th 2013) ===
+## Bacula-Web 6.0.0 (November 11th 2013)
 
-Changelog
+### Changelog
 
 - General php code improvements
 - Renamed docs folder to DOCS - General CSS code cleanup and improvements
@@ -792,37 +823,40 @@ Changelog
 - General: Fixed problem for users having an javascript disabled (or noscript
 - Dashboard: Implemented period selection in dashboard (last day, last week, last month, since beginning of time)
 
-Fixed bugs / New features
+### Fixed bugs
 
-- 0000067 [feature] Dashboard date range selector
-- 0000073 [feature] Widget "Last 24 hours status" should be switchable to LAST_WEEK and LAST_MONTH
-- 0000101 [bug-pgsql] Wrong SQL to make 'Last used volumes graph'
-- 0000107 [feature] Jobs average speed in Jobs and backup job report
-- 0000106 [feature] Default jobs number settings in configuration
+- 0000069 [security-issue] Prevent to browse some directories
+- 0000076 [design] Add noscript submit button where ever it does not exist (example provided)
 - 0000089 [bug-mysql] Bypass database size information in Dashboard for MySQL version 4.x.x
 - 0000098 [bug] gitignore included in tarball
-- 0000052 [feature] Database connection through unix socket
 - 0000099 [bug] Default graph colors hides legends
-- 0000069 [security-issue] Prevent to browse some directories
+- 0000101 [bug-pgsql] Wrong SQL to make 'Last used volumes graph'
 - 0000102 [bug-pgsql] error on get information from remote postgresql server 
-- 0000076 [design] Add noscript submit button where ever it does not exist (example provided)
+
+### New features
+
 - 0000043 [feature] Job Status Report for a specific client 
+- 0000052 [feature] Database connection through unix socket
+- 0000067 [feature] Dashboard date range selector
+- 0000073 [feature] Widget "Last 24 hours status" should be switchable to LAST_WEEK and LAST_MONTH
+- 0000106 [feature] Default jobs number settings in configuration
+- 0000107 [feature] Jobs average speed in Jobs and backup job report
 
-=== Release 5.2.13-1 (April 21st 2013) ===
+## Bacula-Web 5.2.13-1 (April 21st 2013)
 
-Changelog
+### Changelog
 
 - Dashboard: Fixed bug with MySQL database size sql query
 
-Fixed bugs / new features
+### Fixed bugs
 
 - 0000097 [bug] Trouble when doing a fresh install
 - 0000096 [bug-mysql] SQLSTATE[22003]: Numeric value out of range: 1690 BIGINT UNSIGNED value is out of range
 - 0000095 [bug-mysql] Obtaining db size fails for large catalogs databases
 
-=== Release 5.2.13 (April 1st 2013) ===
+## Bacula-Web 5.2.13 (April 1st 2013)
 
-Changelog
+### Changelog
 
 - General: code cleanup and improvement
 - General: improved header look and feel (cleaned up html and css)
@@ -835,7 +869,7 @@ Changelog
 - Test page: fixed a bug with database connection status (was showing wrong connection status)
 - Jobs report page: moved display options box on the right
 
-Fixed bugs / new features
+### Fixed bugs
 
 - 0000086 [bug] Wrong waiting jobs count in Dashboard widgets
 - 0000075 [bug-pgsql] Special Character in db_name results in "database does not exist"
@@ -844,9 +878,9 @@ Fixed bugs / new features
 - 0000090 [bug-html] Remove the top white bar on the main page
 - 0000079 [bug] Slow graphs generation
 
-=== Release 5.2.12 (January 24th 2013) ===
+## Bacula-Web 5.2.12 (January 24th 2013)
 
-Changelog
+### Changelog
 
 - Some internal php code cleanup
 - Cleaned up CSS code for header
@@ -856,7 +890,7 @@ Changelog
 - General: Header look and feel improvements
 - General: Updated bug tracker url in header
 
-Fixed bugs / new features
+### Fixed bugs
 
 - 0000066 [bug-pgsql] new bacula-web install reports SQL error
 - 0000068 [bug-pgsql] pgsql bug with Pools graph in dashboard 
@@ -865,11 +899,14 @@ Fixed bugs / new features
 - 0000081 [bug-php] Wrong FileSets information in Catalog statistics widget
 - 0000078 [bug-php] Last 24 hour summary is reporting the runnign jobs incorrectly
 - 0000080 [bug] Wrong jobs count value in last used volumes widget (Dashboard)
+
+### Translations
+
 - 0000084 [translation] Dutch translation updated
 
-=== Release 5.2.11 (December 15th 2012) ===
+## Bacula-Web 5.2.11 (December 15th 2012)
 
-Changelog
+### Changelog
 
 - improved look and feel in general
 - improved look and feel of grids in all pages
@@ -894,7 +931,7 @@ Changelog
 - Dashboard: total of volumes is now displayed in a Dashboard widget 
 - Jobs report: from now, a "No job(s) to display" message is displayed if there's no job result
 
-Fixed bugs / New features
+### Fixed bugs
 
 - 0000047 [bug-php] index.php is blank
 - 0000050 [bug-php] Unable to access to the interface "Blank page"
@@ -902,11 +939,14 @@ Fixed bugs / New features
 - 0000066 [bug-pgsql] ]new bacula-web install reports SQL error
 - 0000071 [design] Missleading colors in dashboard
 - 0000063 [bug-sqlite] Jobs list - Elapsed time incorrect for running jobs
+
+### New features
+
 - 0000044 [feature] Job status report - Sort job list by different column
 - 0000039 [feature] multiple catalogs: shows all pools from all catalogs
 - 0000003 [feature] Display total for stored volumes
 
-=== Release 5.2.10 (August 9th 2012) ===
+## Bacula-Web 5.2.10 (August 9th 2012)
 
 - upgraded Smarty gettext plugin to version 0.9.1
 - many CSS code improvements
@@ -925,7 +965,7 @@ Fixed bugs / New features
 - numbers are now formated regarding choosen language in the configuration
 - documentation have been moved into /docs folder
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - 0000045 [feature] Backup job - ability to see logs
 - 0000057 [bug-html] Bacula-web does not display a version string in the web interface
@@ -938,9 +978,9 @@ Fixed bugs / New features
 - 0000059 [bug-html] Large numbers showing apostrophes instead of commas for thousands separator
 - 0000058 [bug-html] client-report.php is reporting deprecated notice errors about split()
 
-=== Release 5.2.6 (March 30th 2012) ===
+## Bacula-Web 5.2.6 (March 30th 2012)
 
-Changelog
+### Changelog
 
 - Updated french translation (thanks to Guillaume Delacour)
 - Fixed client sort order in Client report form (dashboard)
@@ -952,14 +992,14 @@ Changelog
 - Fixed bug with last used volume in dashboard (not used volumes not displayed)
 - PHP code improvement
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - 0000049 [bug] Port setting for database not picked up
 - 0000048 [translation] Updated French translation
 
-=== Release 5.2.2 (December 11th 2011) ===
+## Bacula-Web 5.2.2 (December 11th 2011)
 
-Changelog
+### Changelog
 
 - New layout for dashboard
 - Updated last day status with canceled jobs (dashboard)
@@ -970,14 +1010,14 @@ Changelog
 - Database and application exception handling
 - Upgraded PHPLot to latest version (version 5.5.0)
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - 0000036 [bug] No localisation (bacula-dev) - resolved.
 - 0000010 [bug] Improve postgreSQL (bacula-dev) - resolved.
 
-=== Release 5.1.0 (July 25th 2010) ===
+## Bacula-Web 5.1.0 (July 25th 2010)
 
-Changelog
+### Changelog
 
 - Improved dashboard statistics
 - Improved database support
@@ -989,7 +1029,7 @@ Changelog
 - New Pools and volumes page
 - Fixed security issue reported by Leonardo Rota Botelho
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - 0000023 [design] Problem with graph in the General report with more than 12 Backup jobs (bacula-dev) - resolved
 - 0000034 [bug-php] Useless PEAR:DB include in global.inc.php file (bacula-dev) - resolved
@@ -1008,9 +1048,9 @@ Fixed bugs / New features
 - 0000022 [bug-php] List of jobs are no more display as expected (bacula-dev) - resolved
 - 0000007 [feature] Use JPgraph instead of phplot (bacula-dev) - closed
 
-=== Release 5.0.3 (November 2nd 2010) ===
+## Bacula-Web 5.0.3 (November 2nd 2010)
 
-Changelog
+### Changelog
 
 - Changed content of README file
 - Added new email address in CONTACT file
@@ -1046,24 +1086,24 @@ Changelog
 - New style folder
 - Ignore Smarty cache files
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - none
 
-=== Release 1.3 (January 26th 2006) ===
+## Bacula-Web 1.3 (January 26th 2006)
 
-Changelog
+### Changelog
 
 - 0000019,0000021 Fixed psql querys.
 - Fixed XTicks (Graphs).
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - (0000019,0000021) Fixed psql querys.
 
-=== Release 1.2 (October 6th 2005) ===
+## Bacula-Web 1.2 (October 6th 2005)
 
-Changelog
+### Changelog
 
 - Human readable Y-axis of graphs
 - Updated French translation
@@ -1076,50 +1116,50 @@ Changelog
 - Upgraded Smarty to 2.6.10 version.
 - Added multicatalog support
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - none
 
-=== Release 1.1 (October 25th 2004) ===
+## Bacula-Web 1.1 (October 25th 2004)
 
-Changelog
+### Changelog
 
 - Add array_fill function (as Mikael suggested)
 - Fix url encode of links. (reported by Phil Stracchino)
 - Upgraded Smarty to 2.6.6 version.
 - Add French translation
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - none
 
-=== Release 1.0 (August 4th 2004) ===
+## Bacula-Web 1.0 (August 4th 2004)
 
-Changelog
+### Changelog
 
 - Add Italian translation
 - Change some colors of graphs. More clear now (I hope).
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - (0000012) Fix, don't load config in report.php
 - (0000015) Fix, error date in When expire? field.
 
-=== Release 1.0 Beta2 (June 14th 2004) ===
+## Bacula-Web 1.0 Beta2 (June 14th 2004)
 
-Changelog
+### Changelog
 
 - none
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - (0000009) Fix incorrect date of â€œselect report.
 - (0000010) Fix incorrect symbolic link (Add paths.php).
 - (0000008) Fix elapsed time of execution of jobs more than 24h in Lite mode.
 
-=== Release 1.0 (June 11th 2004) ===
+## Bacula-Web 1.0 (June 11th 2004)
 
-Changelog
+### Changelog
 
 - Check connection error (reported by Thomas Contamine)
 - Register_globals on/off compatible (reported by Thomas Contamine)
@@ -1128,6 +1168,6 @@ Changelog
 - Very internal fixes
 - Unordered List ItemAdd at last report
 
-Fixed bugs / New features
+### Fixed bugs / New features
 
 - none

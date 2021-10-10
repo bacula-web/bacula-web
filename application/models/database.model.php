@@ -17,6 +17,7 @@
 
 class Database_Model extends CModel
 {
+    private $dbVersionId = '';
  
     // ==================================================================================
     // Function: 	get_Size()
@@ -54,6 +55,26 @@ class Database_Model extends CModel
             case 'sqlite':
                 $db_size     = filesize(FileConfig::get_Value('db_name', $catalog_id));
                 return CUtils::Get_Human_Size($db_size);
+        }
+    }
+
+    /**
+     * Return Bacula catalog id
+     * @author Tom Hodder <tom@limepepper.co.uk>
+     * @return string VersionId value from Bacula catalog
+     *
+     */
+    public function getCatalogVersion()
+    {
+        $sqlQuery = CDBQuery::get_Select(array('table' => 'Version',
+            'fields' => array('VersionId'),
+            'limit' => array( 'count' => 1, 'offset' => 0)
+        ), $this->driver);
+        $result = $this->run_query($sqlQuery);
+        $dbVersionId = $result->fetchColumn();
+        if ($dbVersionId) {
+            $this->dbVersionId = $dbVersionId;
+            return $this->dbVersionId;
         }
     }
 }

@@ -145,7 +145,7 @@ class FileConfig extends File
     // Return:		true or false (depending if catalog exist or not in the configuration)
     // ==================================================================================
 
-    public function catalogExist($catalog_id)
+    public static function catalogExist($catalog_id)
     {
         return array_key_exists($catalog_id, parent::$config);
     }

@@ -49,7 +49,7 @@
 				{foreach from=$job_files item=file}
 				<tr>
 					<td>#{$file.fileindex}</td>
-					<td class="text-left">{$file.path}{$file.name}</td>
+					<td class="text-left">{$file.path}{$file.filename}</td>
 				</tr>
 				{foreachelse}
 				<tr>
@@ -65,16 +65,26 @@
 				<nav aria-label="...">
 					<ul class="pager">
 						<li>
+                     {* if we are on first page *}
 							{if $pagination_current_page == 0}
 								<a class="disabled">Previous</a>
 							{else}
-								<a href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page-1}&InputFilename={$filename}">Previous</a>
+								<a href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page-1}
+                        {if $filename != ''}
+                          &InputFilename={$filename}
+                        {/if}
+                        ">Previous</a>
 							{/if}
 						</li>
 						<li>Found <b>{$job_files_count}</b> File(s)</b></li>
 						<li>
+                     {* if there is only one page *}
 							{if $job_files_count_paging == $pagination_rows_per_page}
-								<a href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page+1}&InputFilename={$filename}">Next</a>
+								<a href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page+1}
+                        {if $filename != ''}
+                          &InputFilename={$filename}
+                        {/if}
+                        ">Next</a>
 							{else}
 								<a class="disabled">Next</a>
 							{/if}							
