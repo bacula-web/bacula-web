@@ -1,11 +1,19 @@
-## Bacula-Web 8.4.4 (October ddd 2021)
+## Bacula-Web 8.4.4 (October 10th 2021)
 
 ### Changelog
+
+- Job files report
+   - Job files report now works using latest Bacula version (<= 11.0.x)
+   - Pagination while browsing backup job file(s= have been fixed
+
+- Development
+   - Several fixes and refactoring
 
 ### Fixed bug(s)
 
 - #71 [bug] - Fix bacula 11.0 database schema compatibility
 - #73 [bug] - Fix pagination in JobFiles report
+- #74 [bug] - Deprecated error while using several Bacula catalog
 
 ### New feature(s)
 
