@@ -25,7 +25,7 @@ I'd advise to have a look on Bweb, baculum, BAT or Bacula Webmin plugin instead.
 The project history
 ===================
 
-Bacula-Web was originaly created and developed by Juan-Luis Frances.
+Bacula-Web was originaly created and developed by Juan-Luis Frances Jimenez.
 He made a very nice work.
 
 Since the end of 2010, I was officialy designed the official maintener by Kern S. and Eric B. for this project.
