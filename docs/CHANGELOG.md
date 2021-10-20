@@ -1,3 +1,14 @@
+## Bacula-Web 8.4.5 (October ddd 2021)
+
+### Changelog
+
+- General
+  - README.md have been updated with more information, screenshots, etc.
+
+### Fixed bug(s)
+
+### New feature(s)
+
 ## Bacula-Web 8.4.4 (October 10th 2021)
 
 ### Changelog
