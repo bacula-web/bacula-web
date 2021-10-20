@@ -59,6 +59,8 @@ For more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/ma
 
 ### Support the project
 
-If you :heart: Bacula-Web project and wants to encourage the efforts, or think that it deserve a little help, please consider doing a small donation using the link below. :hugs:
+As you probably already know, developpers does needs a lot of coffee :coffee: to be more efficient :wink:, so if you think Bacula-Web project desearve a little help, please consider buying me a coffee using the link below.
 
-[Support Bacula-Web project](https://www.paypal.com/donate?hosted_button_id=DUU89L5HAGSAS)
+<a href="https://www.buymeacoffee.com/baculaweb"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=baculaweb&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff"></a>
+
+Thanks for using and supporting Bacula-Web project :heart:
