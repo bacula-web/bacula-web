@@ -57,6 +57,12 @@ Bacula-Web source code, web site and documentation are licensed under **GNU GPLv
 
 For more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/master/LICENSE)
 
+### Credits
+
+- Original author: Juan Luis Francés Jimenez
+- Current maintainer: Davide Franco ([@dfranco](https://github.com/dfranco))
+- Contributors: [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/badges.svg)](https://GitHub.com/bacula-web/bacula-web/badges/graphs/contributors/)
+
 ### Support the project
 
 As you probably already know, developpers does needs a lot of coffee :coffee: to be more efficient :wink:, so if you think Bacula-Web project desearve a little help, please consider buying me a coffee using the link below.
