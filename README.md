@@ -15,17 +15,24 @@ This is my little contribution to [Bacula Community](http://www.bacula.org) proj
 
 ### Features
 
-Bacula-Web main features
-
-* **easy to setup**
-* **Install once** and monitor as much Bacula directors you need
-* **Secure**: Users authentication is enabled by default, so no Bacula's information disclosed :)
-* **Dashboard**: keep an eye on all Bacula resources like backup jobs result, pools, volumes, etc. in one shot
-* **Translations**: use Bacula-Web in your language (more than 15 languages available)
-* **Jobs report**: monitor backup jobs from a single page (filter and options available)
-* **Job Files report**: list files and folders of a backup job
-* **Directors report**: high-level report pages for all configured directors
-* **Pools and volumes**: keep an eye on all your Bacula pools and volumes
+* **Easy to setup**
+  > It takes only few minutes to setup Bacula-Web, read the [documentation](https://docs.bacula-web.org/en/latest/02_install/index.html)
+* **Install once**
+  > Install Bacula-Web once, then monitor as many Bacula directors you have in your infrastructure
+* **Secure**
+  > Users authentication is enabled by default, no Bacula's information are disclosed
+* **Dashboard**
+  > Bacula-Web dashboard gives you a general overview of your [Bacula](https://www.bacula.org) backup jobs, pools, volumes, etc.
+* **Use it in your native language**
+  > Bacula-Web has been translated in [more than 15 languages](https://www.transifex.com/bacula-web/public/) by the community users ❤️
+* **Jobs report**
+  > Monitor backup jobs from a single one page (filter and options are also available)
+* **Job Files report**
+  > List files and folders from backup job(s)
+* **Directors report**
+  > High-level report pages for all configured [Bacula](https://www.bacula.org) directors
+* **Pools and volumes**
+  > Display all your [Bacula](https://www.bacula.org) pools and volumes
 
 ### Documentation
 
