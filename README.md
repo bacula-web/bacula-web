@@ -9,6 +9,10 @@ It obtain his information from the Bacula catalog database.
 
 This is my little contribution to [Bacula Community](http://www.bacula.org) project.
 
+<p align="center">
+<img src="https://www.bacula-web.org/bacula-web-dashboard.png" width="500px" alt="Bacula-Web dashboard"/>
+</p>
+
 ### Features
 
 Bacula-Web main features
