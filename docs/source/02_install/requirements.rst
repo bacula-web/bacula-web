@@ -97,13 +97,19 @@ For users using Centos/Red Hat version 7, use the command below to set the right
 
 If you are running Apache web server, make sure the PHP session path (see path below) have the correct SELinux context.
 
+::
+
     /var/lib/php/session
 
 To check it, run this command on your server
+
+::
   
     php -i | grep session.save_path
 
 and if needed, restore the correct SELinux context
+
+::
 
     # retorecon -Rv /var/lib/php/session
 
