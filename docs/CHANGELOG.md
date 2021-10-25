@@ -5,7 +5,16 @@
 - General
   - README.md have been updated with more information, screenshots, etc.
 
+- Documentation
+  - Add instructions about PHP session path on server running with SELinux enforced
+
+- Development
+  - Upgraded smarty/smarty to version 3.1.40
+
 ### Fixed bug(s)
+
+- #63 [documentation] - Update SELinux related's documentation
+- #75 [enhancement] - Upgrade Smarty to latest release
 
 ### New feature(s)
 
