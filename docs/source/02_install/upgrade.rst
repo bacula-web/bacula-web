@@ -116,4 +116,4 @@ Fix files ownership
 Test your setup
 ===============
 
-Once the upgrade process is completed, It is time to :ref:i`test your Bacula-Web installation <install/test>`
+Once the upgrade process is completed, It is time to :ref:`test your Bacula-Web installation <install/test>`
