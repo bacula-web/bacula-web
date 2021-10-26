@@ -95,4 +95,4 @@ Change files/folders permissions
 
 .. note:: For those who are using php-fpm, or any other web server stack, the basic idea to ensure Bacula-Web will properly, is to give the right ownership and permission to the cache folder. So make sure the user running the web server process is the owner of the **application/views/cache** folder, or have enough permissions to write into this folder. 
 
-It's now time to :ref:`install/configure`
+It's now time to :ref:`configure Bacula-Web <install/configure>`
