@@ -24,8 +24,7 @@ class CModel
 
     public function __construct()
     {
-        $user = '';
-        $pwd  = '';
+       $user = '';
         $this->cdb  = new CDB();
 
         // Open config file
