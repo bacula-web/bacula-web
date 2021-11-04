@@ -4,14 +4,30 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/db37b493624cee584d85/maintainability)](https://codeclimate.com/github/bacula-web/bacula-web/maintainability)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bacula-web/bacula-web/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/bacula-web/bacula-web/?branch=develop)
 
-Bacula-Web is a web based tool written in PHP that provide you a summarized view of your [Bacula](https://www.bacula.org) backup infrastructure. 
-It obtain his information from the Bacula catalog database.
+Bacula-Web is a web based tool written in [PHP](https://php.net) which provides a summarized view of your [Bacula](https://www.bacula.org) backup infrastructure.
 
-This is my little contribution to [Bacula Community](http://www.bacula.org) project.
+Metrics and informations displayed in Bacula-Web are taken from [Bacula](https://www.bacula.org) catalog database, no need to setup bconsole, bvfs, etc.
+
+In addition, the access to the database is made read-only, so your Bacula catalog database remains safe :)
+
+---
+
+### Why this project ?
+
+Bacula-Web project has been revived since 2010.
+
+I tought that having an easy and useful web UI to monitor Bacula backup jobs, volumes, pools, etc. would be nice.
+So I decided to take care of this project which was almost abandonned since more than 4 years.
+
+You can find more information about the project timeline in the official documentation [here](https://docs.bacula-web.org/en/latest/01_about/about.html#the-project-history)
+
+*This is my little contribution to [Bacula](http://www.bacula.org) community project. Hope you enjoy it !*
 
 <p align="center">
 <img src="https://www.bacula-web.org/bacula-web-dashboard.png" width="500px" alt="Bacula-Web dashboard"/>
 </p>
+
+---
 
 ### Features
 
@@ -34,21 +50,37 @@ This is my little contribution to [Bacula Community](http://www.bacula.org) proj
 * **Pools and volumes**
   > Display all your [Bacula](https://www.bacula.org) pools and volumes
 
+---
+
 ### Documentation
 
 Visit [Bacula-Web documentation](http://docs.bacula-web.org) for more informations about installation, configuration, upgrade, etc.
 
+---
+
 ### Installation
+
+Bacula-Web could be installed [from the source archive](https://docs.bacula-web.org/en/latest/02_install/installarchive.html), but the easiest and recommanded way to install it is by using [Composer](https://getcomposer.org/).
+
+To proceeed, make sure you have Composer installed using [these instructions](https://getcomposer.org/download/)
+
+Then run the command below to install Bacula-Web
+
+```
+$ composer create-project --prefer-dist bacula-web/bacula-web bacula-web
+```
 
 Bacula-Web can be installed using the provided compressed archive or using Composer, check [Installation page](http://docs.bacula-web.org/en/latest/02_install/index.html) for more details
 
 You'll find latest stable release [here](https://www.bacula-web.org/download/)
 
-### Support
+---
 
-You can submit a bug report or a feature request using [GitHub project issues](https://github.com/bacula-web/bacula-web/issues)
+### How to get help ?
 
-### Contribute
+Best way to get help or ask a question is to submit a bug report using [GitHub project issues](https://github.com/bacula-web/bacula-web/issues)
+
+### How to contribute ?
 
 #### Translations
 
@@ -58,17 +90,23 @@ If you want to help translating Bacula-Web in your language, please check the [C
 
 You can contribute by submitting a GitHub pull request, please have a look the [contribution guide](http://docs.bacula-web.org/en/latest/04_contribute/development.html) first.
 
+---
+
 ### License
 
 Bacula-Web source code, web site and documentation are licensed under **GNU GPLv2**
 
 For more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/master/LICENSE)
 
+---
+
 ### Credits
 
 - Original author: Juan Luis Francés Jimenez
 - Current maintainer: Davide Franco ([@dfranco](https://github.com/dfranco))
 - Contributors: [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/badges.svg)](https://GitHub.com/bacula-web/bacula-web/badges/graphs/contributors/)
+
+---
 
 ### Support the project
 
