@@ -95,6 +95,11 @@ class UserAuth extends CModel
     {
         $authUserQuery = "SELECT passwordHash FROM Users WHERE ";
         $authUserQuery .= "username = :username LIMIT 1";
+
+        // Sanitize username
+        $username = filter_var($username, FILTER_SANITIZE_STRING, array( 'flags' => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH));
+        $username = str_replace(' ', '', $username);
+
         $this->addParameter('username', $username);
 
         $result = $this->run_query($authUserQuery);
