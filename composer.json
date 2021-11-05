@@ -39,6 +39,6 @@
 		]
 	},
     "archive": {
-        "exclude": ["/docs/source", "/docs/theme", ".gitignore", ".eslintrc.yml", ".codeclimate.yml", ".eslintignore", ".csslintrc", ".htpasswd", "sonar-project.properties", ".github"]
+        "exclude": ["/docs/source", "/docs/theme", ".gitignore", ".eslintrc.yml", ".codeclimate.yml", ".eslintignore", ".csslintrc", ".htpasswd", "sonar-project.properties", ".github", ".readthedocs.yaml", "docs/requirements.txt"]
     }
 }
