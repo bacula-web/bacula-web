@@ -1,4 +1,4 @@
-## Bacula-Web 8.4.5 (October ddd 2021)
+## Bacula-Web 8.5.0 (November 7th 2021)
 
 ### Changelog
 
@@ -6,16 +6,17 @@
   - PHP >= 7.3 is now the minimal versin required (see #79)
   - Updated README.md with more information, screenshots, etc.
   - Fixed Composer dependencies (see #80)
+  - Fixed bwc error message while using unknow sub-command (see #81)
 
 - Documentation
   - Added instructions about PHP session path on server running with SELinux enforced (see #63)
   - Fixed ReadTheDocs builds (see #78)
 
 - Development
-  - Upgraded smarty/smarty to version 3.1.40
+  - Upgraded smarty/smarty to version 3.1.40 (see #75)
 
 - Security
-  - Improved how user input from Login form are sanitized
+  - Improved how user input from Login form are sanitized (see #77)
 
 ### Fixed bug(s)
 
@@ -25,8 +26,11 @@
 - #78 [documentation] - Fix documentation builds
 - #79 [security] - Deprecate PHP versions prior to 7.3
 - #80 [bug] - Update Composer dependencies
+- #81 [bug] - Wrong command file name in bwc
 
 ### New feature(s)
+
+- none
 
 ## Bacula-Web 8.4.4 (October 10th 2021)
 
