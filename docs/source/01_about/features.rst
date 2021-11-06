@@ -294,7 +294,7 @@ The test page do the following check for you
    * Bacula catalog database connection (must be improved)
    * Smarty cache template permissions (required for page rendering purpose)
    * Protected assets folder permissions
-   * PHP version (version 5.6 at least is supported)
+   * PHP version (version 7.3 at least is supported)
 
 .. image:: /_static/bacula-web-test-page.jpg
    :scale: 20%
