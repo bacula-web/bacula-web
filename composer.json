@@ -18,6 +18,11 @@
 	},
    "require": {
       "php": ">=5.6.0",
+      "ext-gettext": "*",
+      "ext-mbstring": "*",
+      "ext-openssl": "*",
+      "ext-sqlite3": "*",
+      "ext-posix": "*",
       "novus/nvd3": "@stable",
       "twbs/bootstrap": "3.4.1",
       "eonasdan/bootstrap-datetimepicker": "@stable",
