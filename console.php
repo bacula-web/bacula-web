@@ -255,5 +255,5 @@ case 'setupauth':
     }
     break;
 default:
-    exit("\nError: unknown command, use <php console help> for further informations\n\n");
+    exit("\nError: unknown command, use <php bwc help> for further informations\n\n");
 }
