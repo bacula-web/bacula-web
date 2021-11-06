@@ -3,6 +3,7 @@
 ### Changelog
 
 - General
+  - PHP >= 7.3 is now the minimal versin required (see #79)
   - Updated README.md with more information, screenshots, etc.
   - Fixed Composer dependencies (see #80)
 
@@ -22,6 +23,7 @@
 - #75 [enhancement] - Upgrade Smarty to latest release
 - #77 [security] - Improve user input sanitisation in login form
 - #78 [documentation] - Fix documentation builds
+- #79 [security] - Deprecate PHP versions prior to 7.3
 - #80 [bug] - Update Composer dependencies
 
 ### New feature(s)
