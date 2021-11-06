@@ -73,7 +73,7 @@ class TestView extends CView
                     'check_descr' => 'application/assets/protected folder must be writable by Apache'),
             array(  'check_cmd' => 'php-version',
                     'check_label' => 'PHP version',
-                    'check_descr' => 'PHP version must be at least 5.6 (current version = ' . PHP_VERSION . ')'),
+                    'check_descr' => 'PHP version must be at least 7.3 (current version = ' . PHP_VERSION . ')'),
             array(  'check_cmd' => 'php-timezone',
                     'check_label' => 'PHP timezone',
                     'check_descr' => 'Timezone must be configured in php.ini (current timezone = ' . ini_get('date.timezone') . ')')
@@ -110,7 +110,7 @@ class TestView extends CView
                 $check['check_result'] = $icon_result[is_writable('application/assets/protected')];
                 break;
             case 'php-version':
-                $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '5.6', '>=')];
+                $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '7.3', '>=')];
                 break;
             case 'db-connection':
                 $check['check_result'] = $icon_result[$catalog->isConnected()];

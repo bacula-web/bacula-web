@@ -15,7 +15,7 @@
   +-------------------------------------------------------------------------+
  */
 
-require_once( 'core/global.inc.php' );
+require_once('core/global.inc.php');
 
 /*
  * Function:    printUsage
@@ -23,7 +23,8 @@ require_once( 'core/global.inc.php' );
  *
  */
 
-function printUsage() {
+function printUsage()
+{
     echo "Bacula-Web version 8.4.4\n\n";
     echo "Usage:\n";
     echo "   php bwc [command]\n\n";
@@ -41,7 +42,7 @@ function printUsage() {
 
 function getPassword($prompt)
 {
-    // Save current tty settings 
+    // Save current tty settings
     $ostty = `stty -g`;
     
     // Set tty in silent mode
@@ -53,7 +54,7 @@ function getPassword($prompt)
     echo "\n";
 
     // Restore tty settings
-    system ("stty $ostty");
+    system("stty $ostty");
 
     return $input;
 }
@@ -61,10 +62,11 @@ function getPassword($prompt)
 /*
  * Display provided string in different color
  * @param string $string
- * @param string $type 
+ * @param string $type
  */
 
-function hightlight( $string, $type = 'error' ) {
+function hightlight($string, $type = 'error')
+{
 
 /* shell colors
  * red : 31
@@ -78,19 +80,19 @@ function hightlight( $string, $type = 'error' ) {
 }
 
 // Make sure the script is run from the command line
-if(!(php_sapi_name() === 'cli')) {
+if (!(php_sapi_name() === 'cli')) {
     exit("You are not allowed to run this script from a web browser, but only from the command line");
-} 
+}
 
 // Make sure at least one parameter has been provided
-if( $argc < 2) {
+if ($argc < 2) {
     echo "\nError: you should provide at least one command\n\n";
     printUsage();
     exit();
 }
 
-// Get command from user input 
-switch( $argv[1]) {
+// Get command from user input
+switch ($argv[1]) {
 case'help':
     printUsage();
     break;
@@ -100,71 +102,73 @@ case 'check':
     echo '=======================' . PHP_EOL . PHP_EOL;
 
     // Check PHP version
-    if(version_compare(PHP_VERSION, '5.6', '>=')) {
-          echo "\tPHP version" . hightlight( 'Ok', 'ok') . PHP_EOL;
-    }else{
-          echo "PHP version" . hightlight( 'Error', 'error') . ']' . PHP_EOL;
+    if (version_compare(PHP_VERSION, '7.3', '>=')) {
+        echo "\tPHP version" . hightlight('Ok', 'ok') . PHP_EOL;
+    } else {
+        echo "PHP version" . hightlight('Error', 'error') . ']' . PHP_EOL;
     }
 
     // Check PHP timezone
     $timezone = ini_get('date.timezone');
-    if (!empty($timezone)){
-          echo "\tPHP timezone" . hightlight( 'Ok', 'ok') . PHP_EOL;
-    }else{
-          echo "\tPHP timezone" . hightlight( 'Warning', 'warning') . PHP_EOL;
+    if (!empty($timezone)) {
+        echo "\tPHP timezone" . hightlight('Ok', 'ok') . PHP_EOL;
+    } else {
+        echo "\tPHP timezone" . hightlight('Warning', 'warning') . PHP_EOL;
     }
 
     // Check assets folder permissions
-    if( is_writable('application/assets/protected')) {
-          echo "\tProtected assets folder is writable" . hightlight( 'Ok', 'ok') . PHP_EOL;
-    }else{
-          echo "\tProtected assets folder is writable" . hightlight( 'Error', 'error') . PHP_EOL;
+    if (is_writable('application/assets/protected')) {
+        echo "\tProtected assets folder is writable" . hightlight('Ok', 'ok') . PHP_EOL;
+    } else {
+        echo "\tProtected assets folder is writable" . hightlight('Error', 'error') . PHP_EOL;
     }
 
     // Check Smarty cache folder permissions
-    if(is_writable(VIEW_CACHE_DIR)) {
-          echo "\tSmarty cache folder write permission" . hightlight( 'Ok', 'ok') . PHP_EOL;
-    }else{
-          echo "\tSmarty cache folder write permission" . hightlight( 'Error', 'error') . PHP_EOL;
+    if (is_writable(VIEW_CACHE_DIR)) {
+        echo "\tSmarty cache folder write permission" . hightlight('Ok', 'ok') . PHP_EOL;
+    } else {
+        echo "\tSmarty cache folder write permission" . hightlight('Error', 'error') . PHP_EOL;
     }
 
     // Check PHP Posix support
-    if(function_exists('posix_getpwuid')) {
-          echo "\tPHP Posix support" . hightlight( 'Ok', 'ok') . PHP_EOL;
-    }else{
-          echo "\tPHP Posix support" . hightlight( 'Error', 'error') . PHP_EOL;
+    if (function_exists('posix_getpwuid')) {
+        echo "\tPHP Posix support" . hightlight('Ok', 'ok') . PHP_EOL;
+    } else {
+        echo "\tPHP Posix support" . hightlight('Error', 'error') . PHP_EOL;
     }
 
     // Check PHP PDO support
-    if(class_exists('PDO')) {
-          echo "\tPHP PDO support" . hightlight( 'Ok', 'ok') . PHP_EOL;
-    }else{
-          echo "\tPHP PDO support" . hightlight( 'Error', 'error') . PHP_EOL;
+    if (class_exists('PDO')) {
+        echo "\tPHP PDO support" . hightlight('Ok', 'ok') . PHP_EOL;
+    } else {
+        echo "\tPHP PDO support" . hightlight('Error', 'error') . PHP_EOL;
     }
 
     // Check PHP SQLite support
-    if( in_array('sqlite', PDO::getAvailableDrivers() )) {
-          echo "\tPHP SQLite support" . hightlight( 'Ok', 'ok') . PHP_EOL;
-    }else{
-          echo "\tPHP SQLite support" . hightlight( 'Error', 'error') . PHP_EOL;
+    if (in_array('sqlite', PDO::getAvailableDrivers())) {
+        echo "\tPHP SQLite support" . hightlight('Ok', 'ok') . PHP_EOL;
+    } else {
+        echo "\tPHP SQLite support" . hightlight('Error', 'error') . PHP_EOL;
     }
 
     // List available PHP PDO drivers
     echo PHP_EOL . hightlight('PDO drivers (available):', 'information');
-    foreach ($pdo_drivers = PDO::getAvailableDrivers() as $driver) { echo "\t driver: $driver" . PHP_EOL; }
+    foreach ($pdo_drivers = PDO::getAvailableDrivers() as $driver) {
+        echo "\t driver: $driver" . PHP_EOL;
+    }
 
     // Check PHP Gettext support
-    if(function_exists('gettext')) {
-          echo "\tPHP Gettext support" . hightlight( 'Ok', 'ok') . PHP_EOL;
-    }else{
-          echo "\tPHP Gettext support" . hightlight( 'Error', 'error') . PHP_EOL;
+    if (function_exists('gettext')) {
+        echo "\tPHP Gettext support" . hightlight('Ok', 'ok') . PHP_EOL;
+    } else {
+        echo "\tPHP Gettext support" . hightlight('Error', 'error') . PHP_EOL;
     }
 
     // Check PHP Session support
-    if(function_exists('session_start')) {
-          echo "\tPHP Session support" . hightlight( 'Ok', 'ok') . PHP_EOL;
-    }else{
-          echo "\tPHP Session support" . hightlight( 'Error', 'error') . PHP_EOL;
+    if (function_exists('session_start')) {
+        echo "\tPHP Session support" . hightlight('Ok', 'ok') . PHP_EOL;
+    } else {
+        echo "\tPHP Session support" . hightlight('Error', 'error') . PHP_EOL;
     }
 
     break;
@@ -176,7 +180,7 @@ case 'setupauth':
     echo "\nAnswer (Yes/No): ";
     $answer = substr(fgets(STDIN), 0, -1);
 
-    switch(strtolower($answer)) {
+    switch (strtolower($answer)) {
     case "yes":
         echo "Let's go !" . PHP_EOL;
         break;
@@ -189,11 +193,11 @@ case 'setupauth':
 
     echo "Deleting application back-end database" . PHP_EOL;
 
-    if( file_exists('application/assets/protected/application.db')){
-        if(unlink('application/assets/protected/application.db')) {
-            echo "\tDatabase file removed" . hightlight( 'Ok', 'ok') . PHP_EOL;
-        }else{
-            die("\tFail to remove database file" . hightlight( 'Error', 'error') . PHP_EOL);
+    if (file_exists('application/assets/protected/application.db')) {
+        if (unlink('application/assets/protected/application.db')) {
+            echo "\tDatabase file removed" . hightlight('Ok', 'ok') . PHP_EOL;
+        } else {
+            die("\tFail to remove database file" . hightlight('Error', 'error') . PHP_EOL);
         }
     }
 
@@ -202,7 +206,7 @@ case 'setupauth':
         $pdo = new PDO('sqlite:application/assets/protected/application.db');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        echo "\tDatabase created" . hightlight( 'Ok', 'ok') . PHP_EOL;
+        echo "\tDatabase created" . hightlight('Ok', 'ok') . PHP_EOL;
 
         // Create database schema
         echo "Creating database schema" . PHP_EOL;
@@ -217,10 +221,10 @@ case 'setupauth':
 
         $rows = $pdo->exec($createSchemaQuery);
 
-        if($rows === FALSE) {
-            echo "\tDatabase schema not created" . hightlight( 'Error', 'error') . PHP_EOL;
-        }else{
-            echo "\tDatabase schema created" . hightlight( 'Ok', 'ok') . PHP_EOL;
+        if ($rows === false) {
+            echo "\tDatabase schema not created" . hightlight('Error', 'error') . PHP_EOL;
+        } else {
+            echo "\tDatabase schema created" . hightlight('Ok', 'ok') . PHP_EOL;
         }
 
         echo "User creation" . PHP_EOL;
@@ -233,22 +237,21 @@ case 'setupauth':
 
         $password = getPassword("Password");
 
-        if(strlen($password) < 6){
-              die("\tPassword must be at least 6 characters long, aborting" . hightlight( 'Error', 'error') . PHP_EOL);
+        if (strlen($password) < 6) {
+            die("\tPassword must be at least 6 characters long, aborting" . hightlight('Error', 'error') . PHP_EOL);
         }
 
-        $hashedPassword = password_hash( $password, CRYPT_BLOWFISH);
+        $hashedPassword = password_hash($password, CRYPT_BLOWFISH);
         $addUserQuery = "INSERT INTO Users (username,email,passwordHash) VALUES ('$username','$email', '$hashedPassword');";
         $createdUser = $pdo->exec($addUserQuery);
 
-        if($createdUser > 0) {
-                echo "\tUser created" . hightlight( 'Ok', 'ok') . PHP_EOL;
+        if ($createdUser > 0) {
+            echo "\tUser created" . hightlight('Ok', 'ok') . PHP_EOL;
         }
 
         echo PHP_EOL . "You can now connect to your Bacula-Web instance using provided credentials" . PHP_EOL;
-
-    }catch(PDOException $e){
-          die( 'Database error ' . $e->getMessage() . ' code(' . $e->getCode() . ')');
+    } catch (PDOException $e) {
+        die('Database error ' . $e->getMessage() . ' code(' . $e->getCode() . ')');
     }
     break;
 default:
