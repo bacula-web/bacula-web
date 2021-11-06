@@ -3,11 +3,12 @@
 ### Changelog
 
 - General
-  - README.md have been updated with more information, screenshots, etc.
+  - Updated README.md with more information, screenshots, etc.
+  - Fixed Composer dependencies (see #80)
 
 - Documentation
-  - Added instructions about PHP session path on server running with SELinux enforced
-  - Fixed ReadTheDocs builds
+  - Added instructions about PHP session path on server running with SELinux enforced (see #63)
+  - Fixed ReadTheDocs builds (see #78)
 
 - Development
   - Upgraded smarty/smarty to version 3.1.40
@@ -21,6 +22,7 @@
 - #75 [enhancement] - Upgrade Smarty to latest release
 - #77 [security] - Improve user input sanitisation in login form
 - #78 [documentation] - Fix documentation builds
+- #80 [bug] - Update Composer dependencies
 
 ### New feature(s)
 
