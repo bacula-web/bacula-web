@@ -27,6 +27,7 @@
 - #79 [security] - Deprecate PHP versions prior to 7.3
 - #80 [bug] - Update Composer dependencies
 - #81 [bug] - Wrong command file name in bwc
+- #82 [bug] - PHP Notice about undefined index graph_jobs
 
 ### New feature(s)
 
