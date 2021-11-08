@@ -16,8 +16,10 @@ class JobFiles_Model extends CModel
 
         $catalog = new Database_Model();
 
+        // Catalog version prior to Bacula 11.0.x
         if ($catalog->getCatalogVersion() < 1016) {
-            $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'Filename.Name');
+            
+            $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'Filename.Name AS Filename');
             $where = array("File.JobId = $jobId");
             if (! empty($filename)) {
                 $where[] = "(Filename.Name LIKE '%$filename%' OR Path.Path LIKE '%$filename%' OR concat(Path.Path, '', Filename.Name) = '$filename')";
@@ -35,7 +37,7 @@ class JobFiles_Model extends CModel
                   'offset' => ($offset*$limit)
               ), $this->driver);
         } else {
-            $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'File.Filename');
+            $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'File.Filename AS Filename');
             $where = array("File.JobId = $jobId");
 
             if (!empty($filename)) {
