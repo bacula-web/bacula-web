@@ -1,22 +1,25 @@
-## Bacula-Web 8.5.0 (November 7th 2021)
+## Bacula-Web 8.5.0 (November 9th 2021)
 
 ### Changelog
 
 - General
-  - PHP >= 7.3 is now the minimal versin required (see #79)
-  - Updated README.md with more information, screenshots, etc.
-  - Fixed Composer dependencies (see #80)
-  - Fixed bwc error message while using unknow sub-command (see #81)
+	- PHP >= 7.3 is now the minimal versin required (see #79)
+  	- Updated README.md with more information, screenshots, etc.
+  	- Fixed Composer dependencies (see #80)
+  	- Fixed bwc error message while using unknow sub-command (see #81)
+
+- Job files report
+  	- Fixed regression browsing backup job files with older Bacula catalog (see #83)
 
 - Documentation
-  - Added instructions about PHP session path on server running with SELinux enforced (see #63)
-  - Fixed ReadTheDocs builds (see #78)
+  	- Added instructions about PHP session path on server running with SELinux enforced (see #63)
+  	- Fixed ReadTheDocs builds (see #78)
 
 - Development
-  - Upgraded smarty/smarty to version 3.1.40 (see #75)
+  	- Upgraded smarty/smarty to version 3.1.40 (see #75)
 
 - Security
-  - Improved how user input from Login form are sanitized (see #77)
+  	- Improved how user input from Login form are sanitized (see #77)
 
 ### Fixed bug(s)
 
@@ -28,6 +31,7 @@
 - #80 [bug] - Update Composer dependencies
 - #81 [bug] - Wrong command file name in bwc
 - #82 [bug] - PHP Notice about undefined index graph_jobs
+- #83 [bug] - Broken job files pagination using older Bacula catalog
 
 ### New feature(s)
 
