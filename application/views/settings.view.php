@@ -50,9 +50,11 @@ class SettingsView extends CView
             throw new Exception("The configuration file is missing");
         } else {
 
-            // Check if datetime_format is set
+            // Check if datetime_format is set, otherwise, set default datetime_format
             if (FileConfig::get_Value('datetime_format') != null) {
                 $this->assign('config_datetime_format', FileConfig::get_Value('datetime_format'));
+            }else {
+                $this->assign('config_datetime_format', 'Y-m-d H:i:s');
             }
 
             // Check if language is set
@@ -76,6 +78,8 @@ class SettingsView extends CView
                 if ($config_hide_empty_pools == true) {
                     $this->assign('config_hide_empty_pools', 'checked');
                 }
+            }else{
+                $this->assign('config_hide_empty_pools', '');
             }
 
             // Parameter <enable_users_auth> is enabled by default (in case is not specified in config file)
@@ -100,6 +104,8 @@ class SettingsView extends CView
 
             if ($config_debug == true) {
                 $this->assign('config_debug', 'checked');
+            }else {
+                $this->assign('config_debug', '');
             }
         }
     }
