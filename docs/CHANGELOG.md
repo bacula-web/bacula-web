@@ -1,4 +1,4 @@
-## Bacula-Web 8.5.0 (November 9th 2021)
+## Bacula-Web 8.5.0 (November 10th 2021)
 
 ### Changelog
 
@@ -32,6 +32,7 @@
 - #81 [bug] - Wrong command file name in bwc
 - #82 [bug] - PHP Notice about undefined index graph_jobs
 - #83 [bug] - Broken job files pagination using older Bacula catalog
+- #84 [bug] - PHP notices in Settings page 
 
 ### New feature(s)
 
