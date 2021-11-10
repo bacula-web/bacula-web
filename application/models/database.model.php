@@ -70,11 +70,10 @@ class Database_Model extends CModel
             'fields' => array('VersionId'),
             'limit' => array( 'count' => 1, 'offset' => 0)
         ), $this->driver);
+        
         $result = $this->run_query($sqlQuery);
-        $dbVersionId = $result->fetchColumn();
-        if ($dbVersionId) {
-            $this->dbVersionId = $dbVersionId;
-            return $this->dbVersionId;
-        }
+        $this->dbVersionId = intval($result->fetchColumn()); 
+        
+        return $this->dbVersionId;
     }
 }
