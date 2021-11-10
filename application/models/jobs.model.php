@@ -121,7 +121,7 @@ class Jobs_Model extends CModel
         $tablename    = 'Job';
         
         // Check PDO object
-        if (!is_a($this->db_link, 'PDO') or is_null($this->db_link)) {
+        if (!is_a($this->db_link, 'PDO') || is_null($this->db_link)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
         }
         
