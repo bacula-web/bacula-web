@@ -3,7 +3,6 @@
 ### Changelog
 
 - General
-	- PHP >= 7.3 is now the minimal versin required (see #79)
   	- Updated README.md with more information, screenshots, etc.
   	- Fixed Composer dependencies (see #80)
   	- Fixed bwc error message while using unknow sub-command (see #81)
@@ -20,6 +19,8 @@
 
 - Security
   	- Improved how user input from Login form are sanitized (see #77)
+	- PHP >= 7.3 is now the minimal versin required (see #79)
+	- Prevent directory listing (see #85)
 
 ### Fixed bug(s)
 
@@ -33,6 +34,7 @@
 - #82 [bug] - PHP Notice about undefined index graph_jobs
 - #83 [bug] - Broken job files pagination using older Bacula catalog
 - #84 [bug] - PHP notices in Settings page 
+- #85 [security] - Prevent directory listing
 
 ### New feature(s)
 
