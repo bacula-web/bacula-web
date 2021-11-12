@@ -47,8 +47,8 @@ class CErrorHandler
         $output .= '<b>Problem: </b>' . $exception->getMessage() . '<br />';
         $output .= '<h4>Help</h4>';
         $output .= "Have you tried to run the <a href='index.php?page=test'>test page</a> ?<br />";
-        $output .= "Check the online documentation on <a href='http://www.bacula-web.org' target='_blank'>Bacula-Web project site</a> <br />";
-        $output .= "Rebort a bug or suggest a new feature in the <a href='http://bugs.bacula-web.org' target='_blank'>Bacula-Web's bugtracking tool</a> <br />";
+        $output .= "Have a look at latest <a href='https://docs.bacula-web.org/' target='_blank'>Bacula-Web documentation</a> <br />";
+        $output .= "You found a bug ? Submit a <a href='https://github.com/bacula-web/bacula-web/issues' target='_blank'>bug or suggest a new feature</a> <br />";
         $output .= '<h4>Debug</h4>';
         $output .= '<b>File: </b>' . $exception->getFile() . '<br />';
         $output .= '<b>Line: </b>' . $exception->getLine() . '<br />';

@@ -6,6 +6,7 @@
   	- Updated README.md with more information, screenshots, etc.
   	- Fixed Composer dependencies (see #80)
   	- Fixed bwc error message while using unknow sub-command (see #81)
+	- Fixed links in error page (see #89)
 
 - Job files report
   	- Fixed regression browsing backup job files with older Bacula catalog (see #83)
@@ -37,6 +38,7 @@
 - #84 [bug] - PHP notices in Settings page 
 - #85 [security] - Prevent directory listing
 - #88 [documentation] - Fix link to bug tracker
+- #89 [bug] - Fix links in error page
 
 ### New feature(s)
 
