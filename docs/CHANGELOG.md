@@ -13,6 +13,7 @@
 - Documentation
   	- Added instructions about PHP session path on server running with SELinux enforced (see #63)
   	- Fixed ReadTheDocs builds (see #78)
+	- Fixed a dead link to the old bug tracker (see #88)
 
 - Development
   	- Upgraded smarty/smarty to version 3.1.40 (see #75)
@@ -35,6 +36,7 @@
 - #83 [bug] - Broken job files pagination using older Bacula catalog
 - #84 [bug] - PHP notices in Settings page 
 - #85 [security] - Prevent directory listing
+- #88 [documentation] - Fix link to bug tracker
 
 ### New feature(s)
 

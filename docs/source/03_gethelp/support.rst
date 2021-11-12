@@ -8,9 +8,12 @@ How to get help
 ===============
 
 If you're in trouble while installing, upgrading, configuring or using Bacula-Web ?
-No problem, feel free to register and submit a bug report and features request in the dedicated `bug tracker`_.
 
-.. _bug tracker: http://bugs.bacula-web.org
+No problem, I'm here to help !
+
+If you want to submit a bug report, feel free to submit a bug report on `Github issues`_.
+
+.. _Github issues: https://github.com/bacula-web/bacula-web/issues
 
 Bug report guideline
 ====================
@@ -33,6 +36,6 @@ Then make sure you include those details in the bug report
   * PHP version
   * Which database you're using (SQLite, MySQL or postgreSQL)
   * Apache (or any web server) logs
-  * Screenshot(s) are useful too
+  * Screenshot(s) are useful too sometime
 
-.. note:: As much details you provide, as fast I will be able to help you and fix bugs
+.. note:: As many details you'll provide, as fast I could help you :)
