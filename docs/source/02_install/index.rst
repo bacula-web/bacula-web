@@ -10,7 +10,7 @@ Installation
    overview
    requirements
    apache-installation
-   configwebserver
+   apache-configuration
    installnginx
    installarchive
    installcomposer

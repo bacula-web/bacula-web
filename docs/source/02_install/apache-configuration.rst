@@ -1,7 +1,7 @@
-.. _install/configwebserver:
+.. _install/apache-configuration:
 
 ========================
-Web server configuration
+Apache web server configuration
 ========================
 
 PHP
