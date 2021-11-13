@@ -1,7 +1,7 @@
-.. _install/install:
+.. _install/apache-installation:
 
 =======================
-Web server installation
+Apache web server installation
 =======================
 
 Before you start
