@@ -9,7 +9,7 @@ Installation
 
    overview
    requirements
-   install
+   apache-installation
    configwebserver
    installnginx
    installarchive
