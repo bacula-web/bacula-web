@@ -4,8 +4,8 @@
 Apache web server configuration
 ========================
 
-PHP
-===
+PHP configuration
+=================
 
 Update the timezone parameter in your PHP configuration in order to prevent Apache warning messages (see below)
 
