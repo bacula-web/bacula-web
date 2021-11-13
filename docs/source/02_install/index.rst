@@ -11,7 +11,7 @@ Installation
    requirements
    apache-installation
    apache-configuration
-   installnginx
+   nginx-installation
    installarchive
    installcomposer
    upgrade
