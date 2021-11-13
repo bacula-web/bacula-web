@@ -160,8 +160,6 @@ With SQLite bacula catalog
 
 .. note:: A big thanks to Dean E. Weimer who provided me Bacula-Web installation instructions for \*BSD setup
 
-.. _install/apache-configuration:
-
 Apache web server configuration
 ===============================
 
