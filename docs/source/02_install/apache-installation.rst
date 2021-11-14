@@ -208,15 +208,22 @@ Edit the Apache configuration file as described below
 
 ::
 
-   $ sudo vim /etc/apache2/conf-available/bacula-web.conf
+   $ sudo vim /etc/apache2/sites-available/bacula-web.conf
 
 with the content below
 
 ::
 
-   <Directory /var/www/html/bacula-web>
-     AllowOverride All
-   </Directory>
+   <VirtualHost *:80>
+     DocumentRoot "/var/www/html/bacula-web"
+     ServerName bacula-web.domain.com
+         
+     <Directory /var/www/html/bacula-web>
+       AllowOverride All
+     </Directory>
+
+     # More directives here ...
+   </VirtualHost>
 
 .. important:: You might need to adapt Bacula-Web installation path in the above configuration according to your setup
 
@@ -224,7 +231,7 @@ Enable the configuration
 
 ::
 
-    $ sudo a2enconf bacula-web
+    $ sudo a2ensite bacula-web
 
 Then restart Apache to apply the configuration change
 
