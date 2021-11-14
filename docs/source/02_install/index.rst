@@ -9,9 +9,8 @@ Installation
 
    overview
    requirements
-   install
-   configwebserver
-   installnginx
+   apache-installation
+   nginx-installation
    installarchive
    installcomposer
    upgrade

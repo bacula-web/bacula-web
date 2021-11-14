@@ -14,6 +14,7 @@
 - Documentation
   	- Added instructions about PHP session path on server running with SELinux enforced (see #63)
   	- Fixed ReadTheDocs builds (see #78)
+	- Updated Apache and Nginx configuration
 	- Fixed a dead link to the old bug tracker (see #88)
 
 - Development
@@ -37,6 +38,7 @@
 - #83 [bug] - Broken job files pagination using older Bacula catalog
 - #84 [bug] - PHP notices in Settings page 
 - #85 [security] - Prevent directory listing
+- #87 [documentation] - Update Apache and Nginx documentation
 - #88 [documentation] - Fix link to bug tracker
 - #89 [bug] - Fix links in error page
 
