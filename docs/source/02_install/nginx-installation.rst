@@ -48,7 +48,7 @@ Modify PHP-FPM configuration
 
 ::
 
-    $ sudo vim /etc/php/7.1/fpm/php.ini
+    $ sudo vim /etc/php/7.3/fpm/php.ini
     
     cgi.fix_pathinfo=0
     date.timezeone = Europe/Zurich
@@ -57,7 +57,7 @@ Restart PHP-FPM service
 
 ::
 
-    /etc/init.d/php7.1-fpm restart
+    /etc/init.d/php7.3-fpm restart
 
 
 Configure Nginx
