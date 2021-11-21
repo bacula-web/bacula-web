@@ -8,7 +8,7 @@
 
      <div class="col-xs-12 col-md-10">
       <div class="table-responsive">
-        <table class="table table-condensed table-striped text-center paginate">
+        <table class="table table-condensed table-striped text-center">
           <thead>
             <tr>
 	          <th class="text-center">{t}Volume name{/t}</th>
@@ -78,7 +78,9 @@
 
 </div> <!-- end div class=row -->
 
-&nbsp;
+{include file="pagination.tpl"}
+
+<hr/>
 
 <!-- Found volumes footer -->
 <div class="row">
