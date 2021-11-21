@@ -79,9 +79,16 @@ class Volumes_Model extends CModel
             $where .= ' Media.inchanger = :inchanger';
         } // end if
 
-        $query    = "SELECT Media.volumename, Media.volbytes, Media.voljobs, Media.volstatus, Media.mediatype, Media.lastwritten, 
-			           Media.volretention, Media.slot, Media.inchanger, Pool.Name AS pool_name
-                    FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid $where ORDER BY $orderby $orderasc";
+        $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten',
+        'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
+
+        $query = CDBQuery::get_Select(array('table'=>'Media',
+                                            'fields' => $fields,
+                                            'orderby' => "$orderby $orderasc",
+                                            'join' => array(
+                                                array('table' => 'Pool', 'condition'=> 'Media.poolid = Pool.poolid')
+                                            ),
+                                            'where' => $where));
 
         $result = $this->run_query($query);
 
