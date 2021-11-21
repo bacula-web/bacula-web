@@ -27,16 +27,13 @@
                     {for $page=$pagination_start to $pagination_end}
                         {if $page eq $pagination_current}
                             <li class="active">
-                            <a href="">{$page}
-                             <span class="sr-only">(current)</span>
-                           </a>
+                                <span>{$page} <span class="sr-only">(current)</span></span>
+                            </li>
                         {else}
                          <li>
-                         <a href="{$pagination_link}&pagination_page={$page}">{$page}
-                             <span class="sr-only">(current)</span>
-                         </a>
+                            <a href="{$pagination_link}&pagination_page={$page}">{$page}</a>
+                         </li>
                         {/if}
-                      </li>                    
                    {/for}
 
                 <li class="{$next_enabled}">
