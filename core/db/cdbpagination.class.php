@@ -81,6 +81,7 @@ class CDBPagination
 
         $this->currentView->assign('pagination_range', ($this->offset).' to '. ($this->offset+$this->limit));
         $this->currentView->assign('pagination_max', $this->paginationMax);
+        $this->currentView->assign('pagination_steps', $this->paginationSteps);
 
         return ['limit' => $this->limit, 'offset' => $this->offset];
     }
