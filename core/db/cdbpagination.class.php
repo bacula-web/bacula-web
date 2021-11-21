@@ -20,17 +20,33 @@ class CDBPagination
         $this->limit = (FileConfig::get_Value('row_per_page') !== null) ? FileConfig::get_Value('row_per_page') : 25;
         $this->offset = (CHttpRequest::get_Value('pagination_page') !==null) ? ((CHttpRequest::get_Value('pagination_page')*$this->limit)-$this->limit) : 0;
     }
-
+    
+    /**
+     * getOffset
+     *
+     * @return int offset
+     */
     public function getOffset()
     {
         return $this->offset;
     }
-     
+         
+    /**
+     * getLimit
+     *
+     * @return int limit
+     */
     public function getLimit()
     {
         return $this->limit;
     }
-
+    
+    /**
+     * paginate
+     *
+     * @param  mixed $dbResult
+     * @return void
+     */
     public function paginate($dbResult)
     {
         $this->currentView->assign('count', $dbResult->count());
