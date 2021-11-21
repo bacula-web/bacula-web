@@ -13,28 +13,34 @@
                 </li>
 
                 <li class="{$previous_enabled}">
-                    <a href="{$pagination_link}&pagination_page={$previous}" aria-label="Previous">
-                        <span aria-hidden="true" title="{t}Previous pages{/t}">&lang;</span>
-                    </a>
-                </li>
-                    {if $pagination_current lt $pagination_max-4}
-                        {assign var="pagination_start" value=$pagination_current}
-                        {assign var="pagination_end" value=$pagination_current+4}
+                    {if $previous_enabled eq "disabled"}
+                        <span>
+                            <span title="{t}Previous pages{/t} aria-hidden="true">&lang;</span>
+                        </span>
                     {else}
+                        <a href="{$pagination_link}&pagination_page={$previous}" aria-label="Previous">
+                            <span aria-hidden="true" title="{t}Previous pages{/t}">&lang;</span>
+                        </a>
+                    {/if}
+                </li>
+                {if $pagination_current lt $pagination_max-4}
+                    {assign var="pagination_start" value=$pagination_current}
+                        {assign var="pagination_end" value=$pagination_current+4}
+                {else}
                         {assign var="pagination_start" value=$pagination_max-4}
                         {assign var="pagination_end" value=$pagination_max}
-                    {/if}
-                    {for $page=$pagination_start to $pagination_end}
-                        {if $page eq $pagination_current}
-                            <li class="active">
-                                <span>{$page} <span class="sr-only">(current)</span></span>
-                            </li>
-                        {else}
+                {/if}
+                {for $page=$pagination_start to $pagination_end}
+                    {if $page eq $pagination_current}
+                        <li class="active">
+                            <span>{$page} <span class="sr-only">(current)</span></span>
+                        </li>
+                    {else}
                          <li>
                             <a href="{$pagination_link}&pagination_page={$page}">{$page}</a>
                          </li>
-                        {/if}
-                   {/for}
+                    {/if}
+                {/for}
 
                 <li class="{$next_enabled}">
                     <a href="{$pagination_link}&pagination_page={$next}" aria-label="Next">
