@@ -7,9 +7,15 @@
         <nav aria-label="">
             <ul class="pagination">
                 <li class="{$first}">
+                {if $first eq "disabled"}
+                    <span>
+                        <span title="{t}First page{/t} aria-hidden="true">&laquo;</span>
+                    </span>
+                {else}
                     <a href="{$pagination_link}&pagination_page=1" aria-label="First">
                         <span aria-hidden="true" title="{t}First page{/t}">&laquo;</span>
                     </a>
+                {/if}
                 </li>
 
                 <li class="{$previous_enabled}">
@@ -55,9 +61,15 @@
                 </li>
 
                 <li class="{$last}">
+                {if $last eq "disabled"}
+                    <span>
+                        <span title="{t}Last page{/t} aria-hidden="true">&raquo;</span>
+                    </span>
+                {else}
                     <a href="{$pagination_link}&pagination_page={$pagination_max}" aria-label="">
                             <span aria-hidden="true" title="{t}Last page{/t}">&raquo;</span>
                     </a>
+                {/if}
                 </li>
             </ul>
         </nav>
