@@ -93,9 +93,11 @@ class CDBQuery
             // we passed an array( 'count' => $count, 'offset' => $offset)
             if (is_array($limit)) {
                 if (($driver == 'pgsql') || ($driver == 'mysql')) {
+                    // postgreSQL query
                     $query .= 'LIMIT ' . $limit['count'] . ' OFFSET ' . $limit['offset'];
                 } else {
-                    $query .= 'LIMIT ' . $limit['count'] . ',' . $limit['offset'];
+                    // MySQL query
+                    $query .= 'LIMIT ' . $limit['offset'] . ',' . $limit['count'];
                 }
             }
 
