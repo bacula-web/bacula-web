@@ -46,8 +46,9 @@ class VolumesView extends CView
             'Purged' => 'fa-battery-empty' );
 
         $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
-        $this->assign('orderby', $orderby);
         
+        // Set order by
+        $this->assign('orderby', $orderby);
         $volume_orderby_filter = 'Name';
         $volume_orderby_asc = 'DESC';
 
@@ -110,9 +111,12 @@ class VolumesView extends CView
             $inchanger_filter = true;
             $this->assign('inchanger_checked', 'checked');
         }
-
+        
         // Get volumes list
-        foreach ($volumes->getVolumes($pool_id, $volume_orderby_filter, $volume_orderby_asc, $inchanger_filter) as $volume) {
+        foreach ($volumes->getVolumes($pool_id, 
+                        $volume_orderby_filter, 
+                        $volume_orderby_asc, 
+                        $inchanger_filter, $this) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {

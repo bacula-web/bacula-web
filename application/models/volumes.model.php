@@ -55,14 +55,18 @@ class Volumes_Model extends CModel
      * @param string $orderby
      * @param string $orderasc
      * @param boolean $inchanger
+     * @param  mixed $view
      *
      * @return @array
      */
-
-    public function getVolumes($pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $inchanger = false)
+    
+    public function getVolumes($pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $inchanger = false, $view = null)
     {
         $volumes_list = array();
         $where = '';
+
+        $pagination = new CDBPagination($view);
+        $limit = [ 'count' => $pagination->getLimit(), 'offset' => $pagination->getOffset()];
 
         if (!is_null($pool_id)) {
             $this->addParameter('pool_id', $pool_id);
@@ -77,24 +81,28 @@ class Volumes_Model extends CModel
                 $where .= 'WHERE ';
             }
             $where .= ' Media.inchanger = :inchanger';
-        } // end if
+        }
 
-        $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten',
+        $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
         'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
 
-        $query = CDBQuery::get_Select(array('table'=>'Media',
+        $query = CDBQuery::get_Select( array('table'=>'Media',
                                             'fields' => $fields,
                                             'orderby' => "$orderby $orderasc",
                                             'join' => array(
-                                                array('table' => 'Pool', 'condition'=> 'Media.poolid = Pool.poolid')
+                                                array('table' => 'Pool', 'condition' => 'Media.poolid = Pool.poolid')
                                             ),
-                                            'where' => $where));
+                                            'where' => $where,
+                                            'limit' => $limit
+                                            ));
 
         $result = $this->run_query($query);
 
         foreach ($result->fetchAll() as $volume) {
             $volumes_list[] = $volume;
         }
+
+        $pagination->paginate($this);
 
         return $volumes_list;
     }
