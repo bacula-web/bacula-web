@@ -43,9 +43,15 @@
                 {/for}
 
                 <li class="{$next_enabled}">
+                {if $next_enabled eq "disabled"}
+                    <span>
+                        <span title="{t}Next pages{/t} aria-hidden="true">&rang;</span>
+                    </span>
+                {else}
                     <a href="{$pagination_link}&pagination_page={$next}" aria-label="Next">
                         <span aria-hidden="true" title="{t}Next pages{/t}">&rang;</span>
                     </a>
+                {/if}
                 </li>
 
                 <li class="{$last}">
