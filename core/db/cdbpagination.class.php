@@ -93,6 +93,7 @@ class CDBPagination
             $this->currentView->assign('next', $this->paginationSteps+1);
             $this->currentView->assign('next_enabled', '');
             $this->currentView->assign('first', 'disabled');
+            $this->currentView->assign('last', '');
         }
 
         $this->currentView->assign('pagination_range', ($this->offset).' to '. ($this->offset+$this->limit));
