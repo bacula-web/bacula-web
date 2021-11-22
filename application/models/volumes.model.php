@@ -63,24 +63,19 @@ class Volumes_Model extends CModel
     public function getVolumes($pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $inchanger = false, $view = null)
     {
         $volumes_list = array();
-        $where = '';
+        $where = null;
 
         $pagination = new CDBPagination($view);
         $limit = [ 'count' => $pagination->getLimit(), 'offset' => $pagination->getOffset()];
 
         if (!is_null($pool_id)) {
             $this->addParameter('pool_id', $pool_id);
-            $where = 'WHERE Media.PoolId = :pool_id';
+            $where[] = 'Media.PoolId = :pool_id';
         }
 
         if ($inchanger === true) {
             $this->addParameter('inchanger', 1);
-            if (!empty($where)) {
-                $where .= ' AND ';
-            } else {
-                $where .= 'WHERE ';
-            }
-            $where .= ' Media.inchanger = :inchanger';
+            $where[] = 'Media.inchanger = :inchanger';
         }
 
         $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
