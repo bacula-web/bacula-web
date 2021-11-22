@@ -51,7 +51,12 @@
 
     <div class="col-xs-12 col-md-2">
       <!-- Options -->
-      <form class="form" role="form" action="index.php?page=volumes" method="post">
+      {if $pagination_current neq ''}
+        <form class="form" role="form" action="index.php?page=volumes&pagination_page={$pagination_current}"
+      {else}
+        <form class="form" role="form" action="index.php?page=volumes"
+      {/if}
+      method="post">
         <span class="help-block">{t}Filter{/t}</span>
         <div class="form-group">
           <label>{t}Pool{/t}</label>
