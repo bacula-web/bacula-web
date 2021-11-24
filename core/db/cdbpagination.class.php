@@ -13,12 +13,14 @@ class CDBPagination
     private $limit;
     private $paginationMax;
     private $paginationSteps = 4;
+    private $paginationLink;
     
     public function __construct($view)
     {
         $this->currentView = $view;
         $this->limit = (FileConfig::get_Value('row_per_page') !== null) ? FileConfig::get_Value('row_per_page') : 25;
         $this->offset = (CHttpRequest::get_Value('pagination_page') !==null) ? ((CHttpRequest::get_Value('pagination_page')*$this->limit)-$this->limit) : 0;
+        $this->paginationLink = 'index.php?page='.CHttpRequest::get_Value('page');
     }
     
     /**
@@ -51,7 +53,7 @@ class CDBPagination
     {
         $this->currentView->assign('count', $dbResult->count());
         $this->paginationMax = (int)($dbResult->count() / $this->limit);
-        $this->currentView->assign('pagination_link', 'index.php?page='.CHttpRequest::get_Value('page'));
+        $this->currentView->assign('pagination_link', $this->paginationLink);
 
         if (!is_null(filter_input(INPUT_GET, 'pagination_page'))) {
             $this->currentView->assign('pagination_current', CHttpRequest::get_Value('pagination_page'));
