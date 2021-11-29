@@ -1,7 +1,7 @@
 <hr />
 <div class="row">
     <div class="col-xs-6">
-        <p class="pagination">{$pagination_range} / {$count}</p>
+        <p class="pagination">{$pagination_range} / {$count} (out of {$rowcount})</p>
     </div>
     <div class="col-xs-6">
         <nav aria-label="">
@@ -29,13 +29,22 @@
                         </a>
                     {/if}
                 </li>
-                {if $pagination_current lt $pagination_max-4}
+                {* pagination current page is on last 4 *}
+                {if $pagination_current lte ($pagination_max-4) }
                     {assign var="pagination_start" value=$pagination_current}
-                        {assign var="pagination_end" value=$pagination_current+4}
+                    {assign var="pagination_end" value=$pagination_current+3}
+                {* there is only 1 pagination page *}
+                {elseif $pagination_max eq 1}
+                    {assign var="pagination_start" value=1}
+                    {assign var="pagination_end" value=1}
+                {elseif $pagination_max lte 4}
+                    {assign var="pagination_start" value=1}
+                    {assign var="pagination_end" value=$pagination_max}
                 {else}
-                        {assign var="pagination_start" value=$pagination_max-4}
+                        {assign var="pagination_start" value=$pagination_max-3}
                         {assign var="pagination_end" value=$pagination_max}
                 {/if}
+
                 {for $page=$pagination_start to $pagination_end}
                     {if $page eq $pagination_current}
                         <li class="active">
