@@ -27,7 +27,7 @@ class Volumes_Model extends CModel
 
     public function count($tablename = 'Media', $filter = null)
     {
-        return CModel::count($tablename);
+        return parent::count($tablename, $filter);
     }
 
     // ==================================================================================
@@ -96,8 +96,6 @@ class Volumes_Model extends CModel
         foreach ($result->fetchAll() as $volume) {
             $volumes_list[] = $volume;
         }
-
-        $pagination->paginate($this);
 
         return $volumes_list;
     }
