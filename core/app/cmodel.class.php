@@ -63,11 +63,11 @@ class CModel
         $fields        = array( 'COUNT(*) as row_count' );
 
         // Prepare and execute query
-        $statment   = CDBQuery::get_Select(array( 'table' => $tablename, 'fields' => $fields, $filter));
+        $statment   = CDBQuery::get_Select(array( 'table' => $tablename, 'fields' => $fields, 'where' => $filter));
         $result     = $this->run_query($statment);
 
         $result     = $result->fetch();
-        
+
         // If SQL count result is null, return 0 instead (much better when plotting data)
         if (is_null($result['row_count'])) {
             return 0;
@@ -111,8 +111,7 @@ class CModel
 
     public function run_query($query)
     {
-
-      // Prepare PDO statment
+        // Prepare PDO statment
         $statment    = $this->db_link->prepare($query);
 
         if ($statment == false) {
@@ -122,7 +121,7 @@ class CModel
         // Bind PHP variables with named placeholders
         if (isset($this->parameters)) {
             foreach ($this->parameters as $name => $value) {
-                if ($statment->bindParam(":$name", $value) != true) {
+                if ($statment->bindValue(":$name", $value) != true) {
                     throw new PDOException("Something went wrong with PDO_Statment::bindParam()");
                 }
             }
@@ -134,7 +133,7 @@ class CModel
             throw new PDOException("Failed to execute PDOStatment <br />$query");
         } else {
             // Erase parameters to bind to avoid problem on next CModel::run_query() call
-            $this->parameters = null;
+            //$this->parameters = null;
             return $statment;
         }
     }
