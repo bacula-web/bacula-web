@@ -27,7 +27,7 @@ class Jobs_Model extends CModel
 
     public function count($tablename = 'Job', $filter = null)
     {
-        return parent::count($tablename);
+        return parent::count($tablename, $filter);
     }
     
     // ==================================================================================
