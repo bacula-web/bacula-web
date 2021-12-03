@@ -1,4 +1,4 @@
-## Bacula-Web 8.5.0 (November 10th 2021)
+## Bacula-Web 8.5.0 (December 3rd 2021)
 
 ### Changelog
 
@@ -7,6 +7,8 @@
   	- Fixed Composer dependencies (see #80)
   	- Fixed bwc error message while using unknow sub-command (see #81)
 	- Fixed links in error page (see #89)
+	- Pagination on Volumes and Jobs report pages are now performed on server side (see #66)
+	  Thanks to @ibowen for the bug report
 
 - Job files report
   	- Fixed regression browsing backup job files with older Bacula catalog (see #83)
@@ -28,6 +30,8 @@
 ### Fixed bug(s)
 
 - #63 [documentation] - Update SELinux related's documentation
+- #60 [bug] - On paginations of job and volume views
+- #66 [bug] - Fix volumes and jobs pagination
 - #75 [enhancement] - Upgrade Smarty to latest release
 - #77 [security] - Improve user input sanitisation in login form
 - #78 [documentation] - Fix documentation builds
