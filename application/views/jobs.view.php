@@ -31,7 +31,10 @@ class JobsView extends CView
         $jobs = new Jobs_Model();
         $where = null;
 
-        // That's horrible, it must be improved
+        // Paginate database query result
+        $pagination = new CDBPagination($this);
+
+        // This is horrible, it must be improved :(
         require_once('core/const.inc.php');
 
         $fields = array( 'Job.JobId', 'Job.Name AS Job_name', 'Job.Type',
@@ -107,52 +110,52 @@ class JobsView extends CView
         $this->assign('job_types_list', $job_types_list);
 
         // Define default values for each filter
-        $job_type_filter = '0';
-        $job_status_filter = STATUS_ALL;
-        $job_level_filter = 0;
-        $job_poolid_filter = 0;
-        $job_clientid_filter = 0;
-        $job_starttime_filter = null;
-        $job_endtime_filter = null;
+        $filter_jobtype = '0';
+        $filter_jobstatus = STATUS_ALL;
+        $filter_joblevel = 0;
+        $filter_poolid = 0;
+        $filter_clientid = 0;
+        $filter_job_starttime = null;
+        $filter_job_endtime = null;
         $job_orderby_filter = 'jobid';
         $job_orderby_asc_filter = 'DESC';
 
         // Job client id filter
-        if (CHttpRequest::get_Value('job_clientid_filter') != null) {
-            $job_clientid_filter = (int) CHttpRequest::get_Value('job_clientid_filter');
+        if (CHttpRequest::get_Value('filter_clientid') != null) {
+            $filter_clientid = (int) CHttpRequest::get_Value('filter_clientid');
         }
 
         // Job type filter
-        if (CHttpRequest::get_Value('job_type_filter') != null) {
-            // if provided job_type_filter is not part of valid job type, we simply ignore it
-            if (array_key_exists(CHttpRequest::get_Value('job_type_filter'), $job_types)) {
-                $job_type_filter = CHttpRequest::get_Value('job_type_filter');
+        if (CHttpRequest::get_Value('filter_jobtype') !== null) {
+            // if provided filter_jobtype is not part of valid job type, we simply ignore it
+            if (array_key_exists(CHttpRequest::get_Value('filter_jobtype'), $job_types)) {
+                $filter_jobtype = CHttpRequest::get_Value('filter_jobtype');
             }
         }
 
         // Job status filter
-        if (CHttpRequest::get_Value('job_status_filter') != null) {
-            $job_status_filter = (int) CHttpRequest::get_Value('job_status_filter');
+        if (CHttpRequest::get_Value('filter_jobstatus') != null) {
+            $filter_jobstatus = (int) CHttpRequest::get_Value('filter_jobstatus');
         }
 
         // Job level id filter
-        if (CHttpRequest::get_Value('job_levelid_filter') != null) {
-            $job_level_filter = CHttpRequest::get_Value('job_levelid_filter');
+        if (CHttpRequest::get_Value('filter_joblevel') != null) {
+            $filter_joblevel = CHttpRequest::get_Value('filter_joblevel');
         }
 
         // Job pool id filter
-        if (CHttpRequest::get_Value('jobs_poolid_filter') != null) {
-            $job_poolid_filter = (int) CHttpRequest::get_Value('jobs_poolid_filter');
+        if (CHttpRequest::get_Value('filter_poolid') != null) {
+            $filter_poolid = (int) CHttpRequest::get_Value('filter_poolid');
         }
 
         // Job starttime filter
-        if (CHttpRequest::get_Value('job_starttime_filter') != null) {
-            $job_starttime_filter = CHttpRequest::get_Value('job_starttime_filter');
+        if (CHttpRequest::get_Value('filter_job_starttime') != null) {
+            $filter_job_starttime = CHttpRequest::get_Value('filter_job_starttime');
         }
 
         // Job endtime filter
-        if (CHttpRequest::get_Value('job_endtime_filter') != null) {
-            $job_endtime_filter = CHttpRequest::get_Value('job_endtime_filter');
+        if (CHttpRequest::get_Value('filter_job_endtime') != null) {
+            $filter_job_endtime = CHttpRequest::get_Value('filter_job_endtime');
         }
 
         // Job orderby filter
@@ -169,13 +172,13 @@ class JobsView extends CView
         }
 
         // Assign variables to template
-        $this->assign('job_type_filter', $job_type_filter);
-        $this->assign('job_status_filter', $job_status_filter);
-        $this->assign('job_level_filter', $job_level_filter);
-        $this->assign('job_poolid_filter', $job_poolid_filter);
-        $this->assign('job_clientid_filter', $job_clientid_filter);
-        $this->assign('job_starttime_filter', $job_starttime_filter);
-        $this->assign('job_endtime_filter', $job_endtime_filter);
+        $this->assign('filter_jobtype', $filter_jobtype);
+        $this->assign('filter_jobstatus', $filter_jobstatus);
+        $this->assign('filter_joblevel', $filter_joblevel);
+        $this->assign('filter_poolid', $filter_poolid);
+        $this->assign('filter_clientid', $filter_clientid);
+        $this->assign('filter_job_starttime', $filter_job_starttime);
+        $this->assign('filter_job_endtime', $filter_job_endtime);
 
         // Clients list filter
         $clients = new Clients_Model();
@@ -194,10 +197,10 @@ class JobsView extends CView
         $pools_list[0] = 'Any';
         $this->assign('pools_list', $pools_list);
 
-        // Check job status filter
-        // Selected job status filter
-  
-        switch ($job_status_filter) {
+        /**
+         * Job status filter
+         */
+        switch ($filter_jobstatus) {
         case STATUS_RUNNING:
             $where[] = "Job.JobStatus = 'R' ";
             break;
@@ -222,40 +225,41 @@ class JobsView extends CView
         } // end switch
 
         // Selected level filter
-        if ($job_level_filter != '0') {
-            $jobs->addParameter('job_level', $job_level_filter);
+        if ($filter_joblevel != '0') {
+            $jobs->addParameter('job_level', $filter_joblevel);
             $where[] .= "Job.Level = :job_level ";
         }
  
         // Selected pool filter
-        if ($job_poolid_filter != '0') {
-            $jobs->addParameter('pool_id', $job_poolid_filter);
+        if ($filter_poolid != '0') {
+            $jobs->addParameter('pool_id', $filter_poolid);
             $where[] .= "Job.PoolId = :pool_id ";
         }
 
-        // Selected job type filter
-        if ($job_type_filter != '0') {
-            $where[] = "Job.Type = '" . $job_type_filter . "'";
+        if($filter_jobtype !== '0') {
+            $jobs->addParameter('job_type', $filter_jobtype);
+            $where[] = "Job.Type = :job_type";
         }
 
         // Selected client filter
-        if ($job_clientid_filter != '0') {
-            $where[] .= "Job.ClientId = '$job_clientid_filter'";
+        if ($filter_clientid != '0') {
+            $jobs->addParameter('client_id', $filter_clientid);
+            $where[] .= "Job.ClientId = :client_id";
         }
 
-        // Selected start time filter
-        if (!is_null($job_starttime_filter) && !empty($job_starttime_filter)) {
-            if (DateTimeUtil::checkDate($job_starttime_filter)) {
-                $where[] = "Job.StartTime >= '$job_starttime_filter'";
+        // Selected job start time filter
+        if (!is_null($filter_job_starttime) && !empty($filter_job_starttime)) {
+            if (DateTimeUtil::checkDate($filter_job_starttime)) {
+                $where[] = "Job.StartTime >= '$filter_job_starttime'";
             }
         }
         
-        if (!is_null($job_endtime_filter) && !empty($job_starttime_filter)) {
-            if (DateTimeUtil::checkDate($job_endtime_filter)) {
-                $where[] = "Job.EndTime <= '$job_endtime_filter'";
+        // Selected job end time filter
+        if (!is_null($filter_job_endtime) && !empty($filter_job_starttime)) {
+            if (DateTimeUtil::checkDate($filter_job_endtime)) {
+                $where[] = "Job.EndTime <= '$filter_job_endtime'";
             }
         }
-
 
         $this->assign('result_order', $result_order);
         $orderby = "$job_orderby_filter $job_orderby_asc_filter ";
@@ -274,14 +278,16 @@ class JobsView extends CView
             'fields' => $fields,
             'where' => $where,
             'orderby' => $orderby,
+            'limit' => [
+                'count' => $pagination->getLimit(), 
+                'offset' => $pagination->getOffset() 
+            ],
             'join' => array(
                 array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
             ) ));
-
-        $jobsresult = $jobs->run_query($sqlQuery);
-
-        foreach ($jobsresult as $job) {
+ 
+        foreach( $pagination->paginate($jobs->run_query($sqlQuery), $jobs->count(), $jobs->count('Job', $where)) as $job) {
             // Determine icon for job status
             switch ($job['jobstatus']) {
             case J_RUNNING:
