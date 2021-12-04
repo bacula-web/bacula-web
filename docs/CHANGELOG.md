@@ -1,4 +1,4 @@
-## Bacula-Web 8.5.0 (December 3rd 2021)
+## Bacula-Web 8.5.0 (December 4th 2021)
 
 ### Changelog
 
@@ -24,7 +24,8 @@
 
 - Security
   	- Improved how user input from Login form are sanitized (see #77)
-	- PHP >= 7.3 is now the minimal versin required (see #79)
+	- PHP >= 7.3 is the minimal supported version (see #79)
+	  For more informations, see [Supported PHP version](https://www.php.net/supported-versions.php) on https://php.net
 	- Prevent directory listing (see #85)
 
 ### Fixed bug(s)
