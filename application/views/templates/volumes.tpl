@@ -8,12 +8,12 @@
 
      <div class="col-xs-12 col-md-10">
       <div class="table-responsive">
-        <table class="table table-condensed table-striped text-center paginate">
+        <table class="table table-condensed table-striped text-center">
           <thead>
             <tr>
 	          <th class="text-center">{t}Volume name{/t}</th>
 	          <th class="text-center">{t}Bytes{/t}</th>
-              <th class="text-center">{t}Jobs{/t}</th>
+            <th class="text-center">{t}Jobs{/t}</th>
 	          <th class="text-center">{t}Media Type{/t}</th>
 	          <th class="text-center">{t}Pool{/t}</th>
 	          <th class="text-center">{t}Expire{/t}</th>
@@ -55,11 +55,11 @@
         <span class="help-block">{t}Filter{/t}</span>
         <div class="form-group">
           <label>{t}Pool{/t}</label>
-          {html_options class="form-control input-sm" name=pool_id options=$pools_list selected=$poolid_selected}
+          {html_options class="form-control input-sm" name=filter_pool_id options=$pools_list selected=$pool_id}
         </div> <!-- end div form-group -->
         <div class="checkbox">
           <label>
-          <input type="checkbox" name="inchanger" value="{t}In changer{/t}" {$inchanger_checked}> In changer 
+          <input type="checkbox" name="filter_inchanger" {$inchanger_checked}>{t}In changer{/t}
           </label>
         </div> <!-- end div checkbox -->
         <span class="help-block">{t}Options{/t}</span>
@@ -78,7 +78,9 @@
 
 </div> <!-- end div class=row -->
 
-&nbsp;
+{include file="pagination.tpl"}
+
+<hr/>
 
 <!-- Found volumes footer -->
 <div class="row">

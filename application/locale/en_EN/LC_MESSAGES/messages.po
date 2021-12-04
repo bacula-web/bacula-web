@@ -1,14 +1,14 @@
 # Bacula-Web translations
-# Copyright (C) 2017 Davide Franco
+# Copyright (C) 2021 Davide Franco
 # This file is distributed under the same license as the Bacula-Web package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Davide Franco <bacula-dev@dflc.ch>, 2012-2021.
 #
 #, fuzzy
 msgid   ""
-msgstr  "Project-Id-Version: Bacula-Web 8.0.0-RC1\n"
+msgstr  "Project-Id-Version: Bacula-Web 8.5.0\n"
         "Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
-        "POT-Creation-Date: 2017-10-11 13:16+0200\n"
-        "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+        "POT-Creation-Date: 2012-07-26 18:49+0200\n"
+        "PO-Revision-Date: 2021-12-04 10:12+0200\n"
         "Last-Translator: Davide Franco <bacula-dev@dflc.ch>\n"
         "Language-Team: English (United States) (http://www.transifex.com/bacula-web/bacula-web/language/en_US/)\n"
         "Language: en_US\n"

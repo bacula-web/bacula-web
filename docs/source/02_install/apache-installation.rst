@@ -1,16 +1,16 @@
-.. _install/install:
+.. _install/apache-installation:
 
-=======================
-Web server installation
-=======================
+==============================
+Apache web server
+==============================
+
+Installation
+============
 
 Before you start
-================
+----------------
 
 Before proceeding to Apache / PHP installation and configuration, read the :ref:`install/requirements` page.
-
-Using Apache web server
-=======================
 
 Install requirements on RedHat / Centos / Fedora
 ------------------------------------------------
@@ -159,3 +159,90 @@ With SQLite bacula catalog
 
 
 .. note:: A big thanks to Dean E. Weimer who provided me Bacula-Web installation instructions for \*BSD setup
+
+Apache web server configuration
+===============================
+
+PHP configuration
+=================
+
+Update the timezone parameter in your PHP configuration in order to prevent Apache warning messages (see below)
+
+::
+
+   Warning: mktime(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected 'Europe/Berlin' for 'CEST/2.0/DST' instead in /var/www/html/bacula-web/config/global.inc.php on line 62
+
+Modify php.ini configuration file
+
+::
+
+   File: /etc/php.ini
+   # For *BSD users, the file is located /usr/local/etc/php.ini
+    
+   # Locate and modify the line below
+   date.timezone = 
+    
+   # with this value (for example)
+   date.timezone = Europe/Zurich
+
+Reload Apache configuration
+
+::
+
+   $ sudo service httpd reload || sudo /etc/init.d/httpd reload
+
+Apache virtualhost
+==================
+
+In order to secure the application folder and avoid exposing sensitive information contained in Bacula-Web configuration.
+
+Edit the Apache configuration file as described below
+
+**Red Hat / Centos / Fedora**
+
+::
+
+   $ sudo vim /etc/httpd/conf.d/bacula-web.conf
+
+**Debian / Ubuntu**
+
+::
+
+   $ sudo vim /etc/apache2/sites-available/bacula-web.conf
+
+with the content below
+
+::
+
+   <VirtualHost *:80>
+     DocumentRoot "/var/www/html/bacula-web"
+     ServerName bacula-web.domain.com
+         
+     <Directory /var/www/html/bacula-web>
+       AllowOverride All
+     </Directory>
+
+     # More directives here ...
+   </VirtualHost>
+
+.. important:: You might need to adapt Bacula-Web installation path in the above configuration according to your setup
+
+Enable the configuration
+
+::
+
+    $ sudo a2ensite bacula-web
+
+Then restart Apache to apply the configuration change
+
+**Red Hat / Centos / Fedora**
+
+::
+
+   $ sudo /etc/init.d/httpd restart
+
+**Debian / Ubuntu**
+
+::
+
+   $ sudo /etc/init.d/apache2 restart

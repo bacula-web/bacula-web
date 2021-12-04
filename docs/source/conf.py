@@ -158,7 +158,3 @@ texinfo_documents = [
      author, 'Bacula-Webdocumentation', 'One line description of project.',
      'Miscellaneous'),
 ]
-
-def setup(app):
-        app.add_javascript("js/custom.js")
-

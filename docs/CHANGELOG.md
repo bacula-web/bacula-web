@@ -1,3 +1,57 @@
+## Bacula-Web 8.5.0 (December 4th 2021)
+
+### Changelog
+
+- General
+  	- Updated README.md with more information, screenshots, etc.
+  	- Fixed Composer dependencies (see #80)
+  	- Fixed bwc error message while using unknow sub-command (see #81)
+	- Fixed links in error page (see #89)
+	- Pagination on Volumes and Jobs report pages are now performed on server side (see #66)
+	  Thanks to @ibowen for the bug report
+	- Improved Error page design
+
+- Job files report
+  	- Fixed regression browsing backup job files with older Bacula catalog (see #83)
+
+- Documentation
+  	- Added instructions about PHP session path on server running with SELinux enforced (see #63)
+  	- Fixed ReadTheDocs builds (see #78)
+	- Updated Apache and Nginx configuration
+	- Fixed a dead link to the old bug tracker (see #88)
+
+- Development
+  	- Upgraded smarty/smarty to version 3.1.40 (see #75)
+
+- Security
+  	- Improved how user input from Login form are sanitized (see #77)
+	- PHP >= 7.3 is the minimal supported version (see #79)
+	  For more informations, see [Supported PHP version](https://www.php.net/supported-versions.php) on https://php.net
+	- Prevent directory listing (see #85)
+
+### Fixed bug(s)
+
+- #63 [documentation] - Update SELinux related's documentation
+- #60 [bug] - On paginations of job and volume views
+- #66 [bug] - Fix volumes and jobs pagination
+- #75 [enhancement] - Upgrade Smarty to latest release
+- #77 [security] - Improve user input sanitisation in login form
+- #78 [documentation] - Fix documentation builds
+- #79 [security] - Deprecate PHP versions prior to 7.3
+- #80 [bug] - Update Composer dependencies
+- #81 [bug] - Wrong command file name in bwc
+- #82 [bug] - PHP Notice about undefined index graph_jobs
+- #83 [bug] - Broken job files pagination using older Bacula catalog
+- #84 [bug] - PHP notices in Settings page 
+- #85 [security] - Prevent directory listing
+- #87 [documentation] - Update Apache and Nginx documentation
+- #88 [documentation] - Fix link to bug tracker
+- #89 [bug] - Fix links in error page
+
+### New feature(s)
+
+- none
+
 ## Bacula-Web 8.4.4 (October 10th 2021)
 
 ### Changelog

@@ -32,6 +32,11 @@ class VolumesView extends CView
         $volumes = new Volumes_Model();
         $volumes_list = array();
         $volumes_total_bytes = 0;
+        $where = null;
+        $pool_id = 0;
+
+        // Paginate database query result
+        $pagination = new CDBPagination($this);
 
         // Volumes status icon
         $volume_status = array( 'Full' => 'fa-battery-full',
@@ -45,12 +50,6 @@ class VolumesView extends CView
             'Used' => 'fa-battery-quarter',
             'Purged' => 'fa-battery-empty' );
 
-        $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
-        $this->assign('orderby', $orderby);
-        
-        $volume_orderby_filter = 'Name';
-        $volume_orderby_asc = 'DESC';
-
         // Pools list filter
         $pools = new Pools_Model();
         $pools_list = array();
@@ -60,29 +59,29 @@ class VolumesView extends CView
             $pools_list[$pool['poolid']] = $pool['name'];
         }
          
-        // Add defautl pool filter
-        $pools_list = array( 0 => 'Any') + $pools_list;
-
+        $pools_list = array( 0 => 'Any') + $pools_list; // Add defautl pool filter
         $this->assign('pools_list', $pools_list);
 
-        $pool_id = 0;         // default pool_id value
-        $poolid_filter = 0;   // default poolid_filter value
-
-        if (CHttpRequest::get_Value('pool_id') != null) {
-            $pool_id = CHttpRequest::get_Value('pool_id');
-            $poolid_filter = $pool_id;
+        if (CHttpRequest::get_Value('filter_pool_id') != null) {
+            // Ensure pool_id value is an integer
+            if (!is_numeric(CHttpRequest::get_Value('filter_pool_id')) && !is_null(CHttpRequest::get_Value('filter_pool_id'))) {
+                throw new Exception('Invalid pool id (not numeric) provided in Volumes report page');
+            }
+            
+            if (CHttpRequest::get_Value('filter_pool_id') !== '0') {
+                $pool_id = CHttpRequest::get_Value('filter_pool_id');
+                $volumes->addParameter('pool_id', $pool_id);
+                $where[] = 'Media.PoolId = :pool_id';
+            }
         }
-
-        // Ensure pool_id value is numeric
-        if (!is_numeric($pool_id) && !is_null($pool_id)) {
-            throw new Exception('Invalid pool id (not numeric) provided in Volumes report page');
-        }
-
-        $this->assign('poolid_selected', $poolid_filter);
-
-        if ($pool_id == 0) {
-            $pool_id = null;
-        }
+        
+        // Order by
+        $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
+        
+        // Set order by
+        $this->assign('orderby', $orderby);
+        $volume_orderby_filter = 'Name';
+        $volume_orderby_asc = 'DESC';
 
         if (!is_null(CHttpRequest::get_Value('orderby'))) {
             if (array_key_exists(CHttpRequest::get_Value('orderby'), $orderby)) {
@@ -102,17 +101,31 @@ class VolumesView extends CView
    
         $this->assign('orderby_selected', $volume_orderby_filter);
 
-        // Set inchanger filter and checkbox status
-        $inchanger_filter = false;
+        // Set inchanger checkbox to unchecked by default
         $this->assign('inchanger_checked', '');
 
-        if (!is_null(CHttpRequest::get_Value('inchanger'))) {
-            $inchanger_filter = true;
+        if (!is_null(CHttpRequest::get_Value('filter_inchanger'))) {
+            $volumes->addParameter('inchanger', 1);
+            $where[] = 'Media.inchanger = :inchanger';
             $this->assign('inchanger_checked', 'checked');
         }
 
-        // Get volumes list
-        foreach ($volumes->getVolumes($pool_id, $volume_orderby_filter, $volume_orderby_asc, $inchanger_filter) as $volume) {
+        $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
+        'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
+
+        $sqlQuery = CDBQuery::get_Select(array('table' => 'Media',
+                                            'fields' => $fields,
+                                            'orderby' => "$volume_orderby_filter $volume_orderby_asc",
+                                            'join' => array(
+                                                array('table' => 'Pool', 'condition' => 'Media.poolid = Pool.poolid')
+                                            ),
+                                            'where' => $where,
+                                            'limit' => [
+                                                'count' => $pagination->getLimit(), 
+                                                'offset' => $pagination->getOffset() ]
+                                            ));
+
+        foreach($pagination->paginate($volumes->run_query($sqlQuery), $volumes->count(), $volumes->count('Media', $where)) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
@@ -159,8 +172,10 @@ class VolumesView extends CView
             $volumes_list[] = $volume;
         } // end foreach
    
+        $this->assign('pool_id', $pool_id);
         $this->assign('volumes', $volumes_list);
-        $this->assign('volumes_count', count($volumes_list));
+
+        $this->assign('volumes_count', $volumes->count());
         $this->assign('volumes_total_bytes', CUtils::Get_Human_Size($volumes_total_bytes));
-    } // end of preare() mthod
+    } // end of preare() method
 } // end of class

@@ -40,7 +40,29 @@ From your $HOME folder, run the command below
 
 ::
 
-    $ composer create-project --prefer-dist bacula-web/bacula-web bacula-web
+    $ composer create-project --no-dev --prefer-dist bacula-web/bacula-web bacula-web
+
+Once done, you can check Bacula-Web installation by running the command below
+
+::
+
+    $ cd bacula-web && composer check
+
+    Checking platform requirements for packages in the vendor dir
+    composer-plugin-api  2.1.0       success
+    ext-dom              20031129    success
+    ext-gettext          7.3.32      success
+    ext-json             1.7.0       success
+    ext-mbstring         7.3.32      success
+    ext-openssl          7.3.32      success
+    ext-pcre             7.3.32      success
+    ext-posix            7.3.32      success
+    ext-simplexml        7.3.32      success
+    ext-sqlite3          7.3.32      success
+    ext-tokenizer        7.3.32      success
+    ext-xml              7.3.32      success
+    ext-xmlwriter        7.3.32      success
+    php                  7.3.32      success
 
 Fix files/folders ownership and permissions
 

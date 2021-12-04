@@ -31,9 +31,6 @@
                   <div id="{$last_jobs_chart_id}"> <svg></svg> </div>
                      {$last_jobs_chart}
 
-						<a href="jobs.php" title="{t}Click here to see the report{/t}">
-							<!-- <img src="{$graph_jobs}" class="img-responsive center-block" alt="Last period jobs"> -->
-						</a>
 						<table class="table table-condensed">
 							<tr>
 								<td><h5>{t}Running jobs{/t}</h5></td>

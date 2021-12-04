@@ -75,6 +75,10 @@ class CHttpRequest
             return null;
         }
     }
+
+    public static function getAll() {
+        return self::$value_list;
+    }
 }
 
 // end class

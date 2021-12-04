@@ -62,9 +62,12 @@ General settings
 Setting                           Description                            Default value
 ================================= ====================================== ================
 $config['language']               Set displayed language                 en_US
+$config['hide_empty_pools']       Hide empty pools                       true
 $config['show_inactive_clients']  Show inactive clients or not           true
 $config['datetime_format']        Change default date and time format    Y-m-d H:i:s 
-$config['hide_empty_pools']       Hide empty pools                       true
+$config['enable_users_auth']      Enable or disable users authentication true
+$config['rows_per_page']          Rows per pagination page               25
+$config['debug']                  Enable or disable debug mode           false
 ================================= ====================================== ================
 
 language
@@ -133,8 +136,6 @@ Define your customer date & time format (by default Y-m-d H:i:s)
 
 For more information on date format, have a look on date() function in `PHP manual`_
 
-
-
 **Example**
 
 ::
@@ -167,6 +168,20 @@ or LDAP authentication (mod_auth_ldap or any other).
 
 .. important:: Use this settings with caution, don't disable users authentication unless you already authenticated users.
 
+rows_per_page
+-------------
+
+**Description**
+
+Define how many rows per pagination page will be displayed.
+
+**Example**
+
+::
+
+   $config['rows_per_page'] = 25;
+
+.. note:: this setting is availabe since version 8.5.0
 
 debug
 -----

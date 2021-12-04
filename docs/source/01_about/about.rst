@@ -25,7 +25,7 @@ I'd advise to have a look on Bweb, baculum, BAT or Bacula Webmin plugin instead.
 The project history
 ===================
 
-Bacula-Web was originaly created and developed by Juan-Luis Frances.
+Bacula-Web was originaly created and developed by Juan-Luis Frances Jimenez.
 He made a very nice work.
 
 Since the end of 2010, I was officialy designed the official maintener by Kern S. and Eric B. for this project.
@@ -73,11 +73,12 @@ Supported browser
 
 Bacula-Web was succesfully tested with
 
-   * Internet Explorer version 7/8
-   * Mozilla Firefox (version 54.0.1)
-   * Google Chrome (version 59.0.3071.115)
+   * Mozilla Firefox 94.0.1
+   * Google Chrome 95.0.4638.69
+   * Brave version 1.31.88
+   * Microsoft Edge 95.0.1020.44
 
-.. note:: Your web browser must have Javascript enabled
+.. important:: Bacula-Web needs Javascript and Cookies to run well in your web browser, do not disable one of those.
 
 Translations
 ============

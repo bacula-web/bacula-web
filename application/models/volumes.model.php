@@ -27,7 +27,7 @@ class Volumes_Model extends CModel
 
     public function count($tablename = 'Media', $filter = null)
     {
-        return CModel::count($tablename);
+        return parent::count($tablename, $filter);
     }
 
     // ==================================================================================
@@ -55,33 +55,41 @@ class Volumes_Model extends CModel
      * @param string $orderby
      * @param string $orderasc
      * @param boolean $inchanger
+     * @param  mixed $view
      *
      * @return @array
      */
-
-    public function getVolumes($pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $inchanger = false)
+    
+    public function getVolumes($pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $inchanger = false, $view = null)
     {
         $volumes_list = array();
-        $where = '';
+        $where = null;
+
+        $pagination = new CDBPagination($view);
+        $limit = [ 'count' => $pagination->getLimit(), 'offset' => $pagination->getOffset()];
 
         if (!is_null($pool_id)) {
             $this->addParameter('pool_id', $pool_id);
-            $where = 'WHERE Media.PoolId = :pool_id';
+            $where[] = 'Media.PoolId = :pool_id';
         }
 
         if ($inchanger === true) {
             $this->addParameter('inchanger', 1);
-            if (!empty($where)) {
-                $where .= ' AND ';
-            } else {
-                $where .= 'WHERE ';
-            }
-            $where .= ' Media.inchanger = :inchanger';
-        } // end if
+            $where[] = 'Media.inchanger = :inchanger';
+        }
 
-        $query    = "SELECT Media.volumename, Media.volbytes, Media.voljobs, Media.volstatus, Media.mediatype, Media.lastwritten, 
-			           Media.volretention, Media.slot, Media.inchanger, Pool.Name AS pool_name
-                    FROM Media LEFT JOIN Pool ON Media.poolid = Pool.poolid $where ORDER BY $orderby $orderasc";
+        $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
+        'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
+
+        $query = CDBQuery::get_Select( array('table'=>'Media',
+                                            'fields' => $fields,
+                                            'orderby' => "$orderby $orderasc",
+                                            'join' => array(
+                                                array('table' => 'Pool', 'condition' => 'Media.poolid = Pool.poolid')
+                                            ),
+                                            'where' => $where,
+                                            'limit' => $limit
+                                            ));
 
         $result = $this->run_query($query);
 

@@ -108,14 +108,14 @@
 
                 <form action="index.php?page=settings" method="post" data-toggle="validator">
                   <label for="inputUsername">Username</label>
-                  <input name="username"  type="text" id="inputUsername" class="form-control" placeholder="Username" aria-describedby="username_helpblock" required>
+                  <input name="username"  type="text" id="inputUsername" class="form-control" placeholder="username" aria-describedby="username_helpblock" required>
 
                   <label for="inputEmail">Email</label>
-                  <input name="email" value="{$email}" type="email" id="inputEmail" class="form-control" placeholder="Email address" data-error="Invalid email address"required>
+                  <input name="email" value="" type="email" id="inputEmail" class="form-control" placeholder="email address" data-error="Invalid email address"required>
                   <div class="help-block with-errors"></div>
 
                   <label for="password">Password</label>
-                  <input name="password" type="password" id="inputpassword" class="form-control" placeholder="New password" data-minlength="6" required>
+                  <input name="password" type="password" id="inputpassword" class="form-control" placeholder="password" data-minlength="6" required>
                   <div class="help-block">Password must be at least 6 characters</div>                  
         
                   <input type="hidden" name="action" value="createuser">

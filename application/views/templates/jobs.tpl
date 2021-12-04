@@ -14,33 +14,33 @@
 
 		<div class="form-group">
 		  <label>{t}Job status{/t}</label>
-        {html_options class="form-control" name=job_status_filter options=$job_status selected=$job_status_filter}
+		{html_options class="form-control" name=filter_jobstatus options=$job_status selected=$filter_jobstatus}
 		</div>
 
 		<div class="form-group">
 		  <label>{t}Level{/t}</label>
-        {html_options class="form-control" name=job_levelid_filter options=$levels_list selected=$job_level_filter}
+        {html_options class="form-control" name=filter_joblevel options=$levels_list selected=$filter_joblevel}
 		</div>
       
       <div class="form-group">
 		  <label>{t}Type{/t}</label>
-        {html_options class="form-control" name=job_type_filter options=$job_types_list selected=$job_type_filter}
+          {html_options class="form-control" name=filter_jobtype options=$job_types_list selected=$filter_jobtype}
       </div>
 
 		<div class="form-group">
 		  <label>{t}Client{/t}</label>
-        {html_options class="form-control" name=job_clientid_filter options=$clients_list selected=$job_clientid_filter}
+		{html_options class="form-control" name=filter_clientid options=$clients_list selected=$filter_clientid}
 		</div>
 
 		<div class="form-group">
 		  <label>{t}Pool{/t}</label>
-        {html_options class="form-control" name=jobs_poolid_filter options=$pools_list selected=$job_poolid_filter}
+		{html_options class="form-control" name=filter_poolid options=$pools_list selected=$filter_poolid}
 		</div>
 
 		<div class="form-group">
 		  <label>{t}Start time{/t}</label>
             <div class='input-group date datetimepicker' id='datetimepicker1'>
-                <input name="job_starttime_filter" type='text' class="form-control" value="{$job_starttime_filter}" />
+				<input name="filter_job_starttime" type='text' class="form-control" value="{$filter_job_starttime}" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -50,7 +50,7 @@
 		<div class="form-group">
 		  <label>{t}End time{/t}</label>
             <div class='input-group date datetimepicker' id='datetimepicker1'>
-                <input name="job_endtime_filter" type='text' class="form-control" value="{$job_endtime_filter}" />
+				<input name="filter_job_endtime" type='text' class="form-control" value="{$filter_job_endtime}" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -78,7 +78,7 @@
 
 	  <div class="col-xs-12 col-sm-9 col-sm-pull-3 col-lg-10 col-lg-pull-2">
 	  <div class="table-responsive">
-		<table class="table table-condensed table-striped text-center paginate">
+		<table class="table table-condensed table-striped text-center">
           <thead>
 		  <tr>
 			<th class="text-center">{t}Status{/t}</th>
@@ -138,6 +138,8 @@
 		</table>
 	  </div>
 
+	  {include file="pagination.tpl"}
+	  
 	  </div>
   </div> <!-- div class="row" -->
 </div> <!-- div class="container-fluid" -->

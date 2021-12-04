@@ -45,3 +45,13 @@ img {
 .page-header { margin-top: 15px; }
 
 .form-signin { margin-top: 100px; }
+
+.pagination { 
+  margin: 2px 0 45px 0;
+}
+
+p.pagination {
+  text-align: right;
+  display: block;
+  margin: 10px 0;
+}

@@ -34,31 +34,48 @@ class CErrorHandler
 
         $output = '';
 
+        $output .= '<div class="row"> <div class="col-xs-9">';
+
+        // Error page header
+        $output .= '<div class="page-header">
+              <h3> <i class="fa fa-exclamation-triangle fa-lg"></i> '.self::$header.'<small> Oops, looks like something went wrong :(</small></h3>
+              </div>';
+
         // Display PHP exception details
-        $output .= '<br />';
-        $output .= '<div class="panel panel-default">';
-        $output .= '<div class="panel-heading">';
-        $output .= '<h3 class="panel-title">';
-        $output .= '<i class="fa fa-exclamation-triangle fa-lg"></i> ';
-        $output .= self::$header . '</h3> </div>';
-        $output .= '<div class="panel-body">';
+
         $output .= '<h4>Details</h4>';
         $output .= '<p>A problem with the description below happen</p>';
         $output .= '<b>Problem: </b>' . $exception->getMessage() . '<br />';
-        $output .= '<h4>Help</h4>';
-        $output .= "Have you tried to run the <a href='index.php?page=test'>test page</a> ?<br />";
-        $output .= "Check the online documentation on <a href='http://www.bacula-web.org' target='_blank'>Bacula-Web project site</a> <br />";
-        $output .= "Rebort a bug or suggest a new feature in the <a href='http://bugs.bacula-web.org' target='_blank'>Bacula-Web's bugtracking tool</a> <br />";
+
         $output .= '<h4>Debug</h4>';
         $output .= '<b>File: </b>' . $exception->getFile() . '<br />';
         $output .= '<b>Line: </b>' . $exception->getLine() . '<br />';
         $output .= '<b>Code: </b>' . $exception->getCode() . '<br />';
         $output .= '<h5>Exception trace</h5>';
         $output .= self::getFormatedTrace($exception);
-        $output .= '</div> </div>';
+
+        $output .= "<hr /> <div class='well'> <h4>Found a bug, or need a new feature ?</h4> Feel free to submit a <a href='https://github.com/bacula-web/bacula-web/issues/new/choose' target='_blank' class='btn btn-default btn-warning btn-sm active'>bug report</a> or a <a href='https://github.com/bacula-web/bacula-web/issues' target='_blank' class='btn btn-default btn-primary btn-sm active'>feature request</a> </div>";
+
+        $output .= '</div> ';
+
+        // Right pane
+        $output .= '<div class="col-xs-3">';
+        $output .= '<div class="page-header"><h3>Need help ?</h3></div>';
+        $output .= '<ul class="list-group">
+                    <li class="list-group-item">
+                    Using the <b>test page</b> could be helpful <br /><br />
+                    <a class="btn btn-default btn-sm btn-info" href="index.php?page=test.php" target="_blank" rel="noopener noreferrer" role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a>
+                    </li>';
+        $output .= '<li class="list-group-item">
+                    Official documentation <br /><br />
+                    <a href="https://docs.bacula-web.org" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-default btn-sm active" role="button">Bacula-Web documentation</a>
+                    </li>';
+        $output .= '</ul>';
+        $output .= '</div>';
 
         // Render Exception page
         $output = HtmlHelper::getHtmlHeader() . HtmlHelper::getNavBar() . '<div class="container">' . $output . '</div>' . HtmlHelper::getHtmlFooter();
+
         echo $output;
     } // end function displayError
 

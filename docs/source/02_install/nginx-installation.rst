@@ -48,7 +48,7 @@ Modify PHP-FPM configuration
 
 ::
 
-    $ sudo vim /etc/php/7.1/fpm/php.ini
+    $ sudo vim /etc/php/7.3/fpm/php.ini
     
     cgi.fix_pathinfo=0
     date.timezeone = Europe/Zurich
@@ -57,24 +57,42 @@ Restart PHP-FPM service
 
 ::
 
-    /etc/init.d/php7.1-fpm restart
+    /etc/init.d/php7.3-fpm restart
 
 
 Configure Nginx
 ===============
 
-Modify Nginx default site configuration
+Define a new virtual server configuration like below.
 
 ::
 
-    $ sudo vim /etc/nginx/sites-enables/default
-    
-    # Add index.php to the list if you are using PHP
-    index index.php index.html index.htm index.nginx-debian.html;
+    server {
+      server_name bacula-web.domain.com;
 
-    fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+      listen 80;
+      listen [::]:80;
 
-Restart Nginx to apply conifguration changes
+      root /var/www/html/bacula-web;
+
+      index index.php;
+
+      location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php-fpm.sock;
+      }
+
+      location / {
+        try_files $uri $uri/ /index.php?$query_string;
+      }
+    }
+
+Test your configuration
+
+::
+
+    $ sudo nginx -t && echo "Nginx is ok"
+
+Restart Nginx to apply configuration changes
 
 ::
 
@@ -82,7 +100,7 @@ Restart Nginx to apply conifguration changes
 
 Once your web server is ready, you can process with Bacula-Web installation.
 
-You have two different options
+You have now two different options
 
    * Install :ref:`using the archive<install/installarchive>`
    * Install :ref:`using Composer<install/installcomposer>`

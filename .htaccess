@@ -1,4 +1,4 @@
-Options +FollowSymLinks
+Options +FollowSymLinks -Indexes
 
 <IfModule mod_rewrite.c>
   RewriteEngine on
