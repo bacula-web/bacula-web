@@ -44,6 +44,9 @@ $config['language'] = 'en_US';
 // pt_BR -> Portuguese Brazil
 // nl_NL -> Dutch
 
+// Rows per page
+$config['rows_per_page'] = 25;
+
 // Database connection parameters
 // Copy/paste and adjust parameters according to your configuration
 

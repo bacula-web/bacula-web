@@ -22,7 +22,7 @@ class CDBPagination
     public function __construct($view)
     {
         $this->currentView = $view;
-        $this->limit = (FileConfig::get_Value('row_per_page') !== null) ? FileConfig::get_Value('row_per_page') : 25;
+        $this->limit = (FileConfig::get_Value('rows_per_page') !== null) ? FileConfig::get_Value('rows_per_page') : 25;
         $this->offset = (CHttpRequest::get_Value('pagination_page') !==null) ? ((CHttpRequest::get_Value('pagination_page')*$this->limit)-$this->limit) : 0;
         $this->paginationLink = 'index.php?page='.CHttpRequest::get_Value('page');
 
