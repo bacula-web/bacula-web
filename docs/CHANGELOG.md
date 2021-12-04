@@ -9,6 +9,7 @@
 	- Fixed links in error page (see #89)
 	- Pagination on Volumes and Jobs report pages are now performed on server side (see #66)
 	  Thanks to @ibowen for the bug report
+	- Improved Error page design
 
 - Job files report
   	- Fixed regression browsing backup job files with older Bacula catalog (see #83)
