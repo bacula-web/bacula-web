@@ -45,10 +45,11 @@ class CErrorHandler
         $output .= '<h4>Details</h4>';
         $output .= '<p>A problem with the description below happen</p>';
         $output .= '<b>Problem: </b>' . $exception->getMessage() . '<br />';
-        $output .= '<h4>Help</h4>';
-        $output .= "Have you tried to run the <a href='index.php?page=test'>test page</a> ?<br />";
-        $output .= "Have a look at latest <a href='https://docs.bacula-web.org/' target='_blank'>Bacula-Web documentation</a> <br />";
-        $output .= "You found a bug ? Submit a <a href='https://github.com/bacula-web/bacula-web/issues' target='_blank'>bug or suggest a new feature</a> <br />";
+        $output .= '<h4>How to get help ?</h4>';
+        $output .= '<b>Hint:</b>Looking at the <a class="btn btn-default btn-sm btn-info" href="index.php?page=test.php" target="_blank"role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a> could be helpful <br />';
+        $output .= '<b>Hint:</b>Looking at the <a href="index.php?page=test" target="_blank">test page</a> could be helpful.<br />';
+        $output .= "Then, if the test page was not helpful, you can still look at <a href='https://docs.bacula-web.org' target='_blank' class='btn btn-primary btn-default btn-sm active' role='button'>Bacula-Web documentation</a> <br />";
+        $output .= "<h4>You found a bug, or need a new feature ?</h4> Feel free to submit a <a href='https://github.com/bacula-web/bacula-web/issues/new/choose' target='_blank' class='btn btn-default btn-warning btn-sm active'>bug report</a> or a <a href='https://github.com/bacula-web/bacula-web/issues' target='_blank' class='btn btn-default btn-primary btn-sm active'>feature request</a><br />";
         $output .= '<h4>Debug</h4>';
         $output .= '<b>File: </b>' . $exception->getFile() . '<br />';
         $output .= '<b>Line: </b>' . $exception->getLine() . '<br />';
