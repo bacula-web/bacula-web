@@ -34,8 +34,6 @@ class CErrorHandler
 
         $output = '';
 
-        //$output .= '<div class="container">';
-
         $output .= '<div class="row"> <div class="col-xs-9">';
 
         // Error page header
@@ -66,11 +64,11 @@ class CErrorHandler
         $output .= '<ul class="list-group">
                     <li class="list-group-item">
                     Using the <b>test page</b> could be helpful <br /><br />
-                    <a class="btn btn-default btn-sm btn-info" href="index.php?page=test.php" target="_blank"role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a>
+                    <a class="btn btn-default btn-sm btn-info" href="index.php?page=test.php" target="_blank" rel="noopener noreferrer" role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a>
                     </li>';
         $output .= '<li class="list-group-item">
                     Official documentation <br /><br />
-                    <a href="https://docs.bacula-web.org" target="_blank" class="btn btn-primary btn-default btn-sm active" role="button">Bacula-Web documentation</a>
+                    <a href="https://docs.bacula-web.org" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-default btn-sm active" role="button">Bacula-Web documentation</a>
                     </li>';
         $output .= '</ul>';
         $output .= '</div>';
