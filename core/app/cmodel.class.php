@@ -120,10 +120,18 @@ class CModel
 
         // Bind PHP variables with named placeholders
         if (isset($this->parameters)) {
-            foreach ($this->parameters as $name => $value) {
-                if ($statment->bindValue(":$name", $value) != true) {
-                    throw new PDOException("Something went wrong with PDO_Statment::bindParam()");
+            try{
+                foreach ($this->parameters as $name => $value) {
+                    if(is_string($value)) {
+                        $statment->bindValue(":$name", $value, PDO::PARAM_STR);
+                    }elseif( is_int($value)) {
+                        $statment->bindValue(":$name", $value, PDO::PARAM_INT);
+                    }elseif( is_bool($value)) {
+                        $statment->bindValue(":$name", $value, PDO::PARAM_BOOL);
+                    }
                 }
+            }catch(PDOException $pdoException) {
+                $pdoException->getMessage();
             }
         }
 
@@ -132,19 +140,17 @@ class CModel
         if ($result == false) {
             throw new PDOException("Failed to execute PDOStatment <br />$query");
         } else {
-            // Erase parameters to bind to avoid problem on next CModel::run_query() call
-            //$this->parameters = null;
             return $statment;
         }
     }
-
-    /*
-      Function: addParameter
-      Parameters:  $name
-                   $value
-      Return:	   nothing
-    */
-
+    
+    /**
+     * addParameter
+     *
+     * @param  string $name
+     * @param  mixed $value
+     * @return void
+     */
     public function addParameter($name, $value)
     {
         $this->parameters[$name] = $value;
