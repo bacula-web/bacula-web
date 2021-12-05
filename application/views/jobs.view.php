@@ -285,8 +285,8 @@ class JobsView extends CView
             'join' => array(
                 array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
-            ) ));
- 
+            ) ),$jobs->get_driver_name());
+        
         foreach( $pagination->paginate($jobs->run_query($sqlQuery), $jobs->count(), $jobs->count('Job', $where)) as $job) {
             // Determine icon for job status
             switch ($job['jobstatus']) {
