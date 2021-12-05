@@ -135,7 +135,7 @@ class DashboardView extends CView
             $sum_vols = $result->fetch();
         }
 
-        $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools);
+        $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools, $pools->get_driver_name());
         $result = $pools->run_query(CDBQuery::get_Select($query));
 
         foreach ($result as $pool) {
@@ -216,7 +216,7 @@ class DashboardView extends CView
                        'limit' => '10');
 
         // Run the query
-        $result     = $volumes->run_query(CDBQuery::get_Select($statment));
+        $result     = $volumes->run_query(CDBQuery::get_Select($statment,$volumes->get_driver_name()));
 
         foreach ($result as $volume) {
             if ($volume['lastwritten'] != '0000-00-00 00:00:00') {

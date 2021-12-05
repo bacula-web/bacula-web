@@ -48,7 +48,7 @@ class Clients_Model extends CModel
             $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
         }
 
-        $result     = $this->run_query(CDBQuery::get_Select($statment));
+        $result     = $this->run_query(CDBQuery::get_Select($statment), $this->get_driver_name());
             
         foreach ($result->fetchAll() as $client) {
             $clients[ $client['clientid'] ] = $client['name'];
@@ -68,7 +68,7 @@ class Clients_Model extends CModel
         $client     = array();
         $fields     = array('name','uname');
         $where      = array( "clientid = $client_id" );
-        $statment   = CDBQuery::get_Select(array('table'=> 'Client', 'fields' => $fields, 'where' => $where ));
+        $statment   = CDBQuery::get_Select(array('table'=> 'Client', 'fields' => $fields, 'where' => $where ), $this->get_driver_name());
         
         $result     = $this->run_query($statment);
             

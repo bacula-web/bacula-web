@@ -159,7 +159,7 @@ class BackupJobView extends CView
             'orderby' => 'EndTime DESC',
             'join' => array(
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
-            ) ));
+            ) ), $jobs->get_driver_name());
     
             $joblist      = array();
             $joblevel     = array('I' => 'Incr', 'D' => 'Diff', 'F' => 'Full');
