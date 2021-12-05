@@ -130,14 +130,18 @@ class Jobs_Model extends CModel
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
-            $where[] = "name = '$job_name'";
+            $this->addParameter('jobname', $job_name);
+            $where[] = "name = :jobname";
         }
         
         if ($client_id != 'ALL') {
-            $where[] = "clientid = '$client_id'";
+            $this->addParameter('clientid', $client_id);
+            $where[] = "clientid = :client_id";
         }
         // Get stored files only for Bacula job type <Backup>
-        $where[] = "Type = 'B'";
+        
+        $this->addParameter('jobtype', 'B');
+        $where[] = "Type = :jobtype";
         
         // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
@@ -168,6 +172,7 @@ class Jobs_Model extends CModel
         $where      = array();
         $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
         $tablename    = 'Job';
+        $jobtype = 'B';
         
         // Defined period
         $intervals     = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
@@ -177,13 +182,15 @@ class Jobs_Model extends CModel
             $this->addParameter('jobname', $job_name);
             $where[] = "name = :jobname";
         }
-        
+
         if ($client_id != 'ALL') {
-            $where[] = "clientid = '$client_id'";
+            $this->addParameter('clientid', $client_id);
+            $where[] = "clientid = :client_id";
         }
         
-        // Get stored files only for Bacula job type <Backup>
-        $where[] = "Type = 'B'";
+        // // Get stored files only for Bacula job with type = 'B'
+        $this->addParameter('jobtype', $jobtype);
+        $where[] = 'Type = :jobtype';
 
         // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
