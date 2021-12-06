@@ -67,8 +67,14 @@ class Clients_Model extends CModel
     {
         $client     = array();
         $fields     = array('name','uname');
-        $where      = array( "clientid = $client_id" );
-        $statment   = CDBQuery::get_Select(array('table'=> 'Client', 'fields' => $fields, 'where' => $where ), $this->get_driver_name());
+
+        // Filter by clientid
+        $this->addParameter('clientid', $client_id);
+        $where[]    = 'clientid = :clientid';
+
+        $statment   = CDBQuery::get_Select(array(   'table'=> 'Client', 
+                                                    'fields' => $fields, 
+                                                    'where' => $where ), $this->get_driver_name());
         
         $result     = $this->run_query($statment);
             
