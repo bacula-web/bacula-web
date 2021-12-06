@@ -1,3 +1,40 @@
+## Bacula-Web 8.5.1 (December 6th 2021)
+
+### Changelog
+
+- General
+	- Fixed / Improved PostgreSQL Bacula catalog support (see #93, #94 and #95)
+
+- Jobs report
+	- Fixed regression using PostgreSQL bacula catalog (see #93)
+	  Thanks to @lrosenman for the bug report
+	- Improved PostgreSQL Bacula catalog support
+
+- Client report
+	- Fixed / Improved PostgreSQL Bacula catalog support (see #95)
+
+- Backup job report
+	- Fixed / Improved PostgreSQL Bacula catalog support (#94)
+	- Completed backup jobs list are now displayed within the selected period (#96)
+	  Previous versions were only displaying the last completed job for a specific client
+
+- Documentation
+	- Update Client report page screenshot
+
+- Security
+	- Enforced use of PHP PDO bind parameters for user input
+
+### Fixed bug(s)
+
+- #93 [bug] - Bad sql query on Jobs report page using version 8.5.0
+- #94 [bug] - BackupJob report error using PostgreSQL catalog
+- #95 [bug] - Bad SQL query on Clients report page using PostgreSQL
+- #96 [bug] - Backup jobs are not displayed for the selected period
+
+### New feature(s)
+
+- none
+
 ## Bacula-Web 8.5.0 (December 4th 2021)
 
 ### Changelog
