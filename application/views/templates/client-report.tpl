@@ -10,7 +10,7 @@
           <!-- Backup job name -->
           <div class="form-group">
             <label for="clientname">{t}Client{/t}</label>
-              {html_options class="form-control" name=client_id options=$clients_list values=$clients_list} 
+              {html_options class="form-control" name=client_id options=$clients_list values=$clients_list selected=$selected_client} 
           </div>
           <!-- Period -->
           <div class="form-group">
