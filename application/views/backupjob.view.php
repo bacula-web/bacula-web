@@ -142,8 +142,15 @@ class BackupJobView extends CView
             $this->assign('stored_bytes_chart', $stored_bytes_chart->render());
             unset($stored_bytes_chart);
     
-            $where[] = "Name = '$backupjob_name'";
-            $where[] = "Type = 'B'";
+            // Backup job name
+            $jobs->addParameter('jobname', $backupjob_name);
+            $where[] = 'Name = :jobname';
+
+            // Backup job type
+            $jobs->addParameter('jobtype', 'B');
+            $where[] = "Type = :jobtype";
+
+            // Backup job starttime and endtime
             $where[] = '(EndTime BETWEEN ' . $periods['starttime'] . ' AND ' . $periods['endtime'] . ')';
 
             $query = CDBQuery::get_Select(array('table' => 'Job',
@@ -152,7 +159,7 @@ class BackupJobView extends CView
             'orderby' => 'EndTime DESC',
             'join' => array(
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
-            ) ));
+            ) ), $jobs->get_driver_name());
     
             $joblist      = array();
             $joblevel     = array('I' => 'Incr', 'D' => 'Diff', 'F' => 'Full');

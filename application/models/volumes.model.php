@@ -89,7 +89,7 @@ class Volumes_Model extends CModel
                                             ),
                                             'where' => $where,
                                             'limit' => $limit
-                                            ));
+                                        ), $this->get_driver_name());
 
         $result = $this->run_query($query);
 

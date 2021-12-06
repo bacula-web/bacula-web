@@ -123,7 +123,7 @@ class VolumesView extends CView
                                             'limit' => [
                                                 'count' => $pagination->getLimit(), 
                                                 'offset' => $pagination->getOffset() ]
-                                            ));
+                                            ),$volumes->get_driver_name());
 
         foreach($pagination->paginate($volumes->run_query($sqlQuery), $volumes->count(), $volumes->count('Media', $where)) as $volume) {
             // Calculate volume expiration

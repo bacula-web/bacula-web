@@ -18,17 +18,23 @@
 
 class CDBQuery
 {
-    /* Function: get_Select()
-     * Parameters: array with elemets below
-     *             table    name of the table for FROM
-     *             fields   array of fields (SELECT field1, field2, field3 as var, etc.)
-     *             where    array of condition (WHERE condition1 AND condition2 ...)
-     *             join     array which contain 1 to several array with fields table and condition for each jointure
-     *             groupby  add GROUP BY field
-     *             orderby  add ORDER BY field
-     *             limit    add LIMIT (might change depending on used DMBS)
+    /**
+     * get_Select
+     *
+     * @param array $param array which could contain key listed below
+     *  $param = [
+     *      'table'     => (string) name of the table for FROM
+     *      'fields'    => (array) array of fields
+     *      'where'     => (array) array of key/pair conditions (separated by AND if several)
+     *      'join'      => (array) array ['table' => table name to LEFT JOIN, 'condition' => JOIN condition]
+     *      'groupby'   => (string) add GROUP BY field
+     *      'orderby'   => (string) add ORDER BY field
+     *      'limit'     => (array) array ['count' => define the limit, 'offset' => define the OFFSET]
+     *  ]      
+     * @param  string $driver
+     * @return string computed SQL query
      */
- 
+
     public static function get_Select($param = array(), $driver = null)
     {
         $query = 'SELECT ';

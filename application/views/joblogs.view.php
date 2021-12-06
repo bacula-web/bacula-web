@@ -40,7 +40,7 @@ class JobLogsView extends CView
         $jobs = new Jobs_Model();
         $statment     = array('table' => 'Log', 'where' => array("JobId = :jobid"), 'orderby' => 'Time');
         $jobs->addParameter('jobid', $jobid);
-        $result     = $jobs->run_query(CDBQuery::get_Select($statment));
+        $result     = $jobs->run_query(CDBQuery::get_Select($statment),$jobs->get_driver_name());
 
         // Processing result
         foreach ($result->fetchAll() as $log) {

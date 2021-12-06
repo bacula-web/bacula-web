@@ -130,14 +130,18 @@ class Jobs_Model extends CModel
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
-            $where[] = "name = '$job_name'";
+            $this->addParameter('jobname', $job_name);
+            $where[] = "name = :jobname";
         }
         
         if ($client_id != 'ALL') {
-            $where[] = "clientid = '$client_id'";
+            $this->addParameter('clientid', $client_id);
+            $where[] = "clientid = :clientid";
         }
         // Get stored files only for Bacula job type <Backup>
-        $where[] = "Type = 'B'";
+        
+        $this->addParameter('jobtype', 'B');
+        $where[] = "Type = :jobtype";
         
         // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
@@ -165,9 +169,10 @@ class Jobs_Model extends CModel
 
     public function getStoredBytes($period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
     {
-        $where      = array();
+        $where      = [];
         $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
-        $tablename    = 'Job';
+        $tablename  = 'Job';
+        $jobtype    = 'B';
         
         // Defined period
         $intervals     = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
@@ -177,13 +182,15 @@ class Jobs_Model extends CModel
             $this->addParameter('jobname', $job_name);
             $where[] = "name = :jobname";
         }
-        
+
         if ($client_id != 'ALL') {
-            $where[] = "clientid = '$client_id'";
+            $this->addParameter('clientid', $client_id);
+            $where[] = "clientid = :clientid";
         }
         
-        // Get stored files only for Bacula job type <Backup>
-        $where[] = "Type = 'B'";
+        // // Get stored files only for Bacula job with type = 'B'
+        $this->addParameter('jobtype', $jobtype);
+        $where[] = 'Type = :jobtype';
 
         // Building SQL statment
         $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
@@ -234,12 +241,16 @@ class Jobs_Model extends CModel
 
         // Prepare and execute query
         if (!is_null($client_id)) {
-            $where[] = "clientid = '$client_id'";
+            $this->addParameter('clientid', $client_id);
+            $where[] = 'clientid = :clientid';
+            //$where[] = "clientid = '$client_id'";
         }
 
         // Job type filter
         if (!is_null($job_type)) {
-            $where[] = "type = '$job_type'";
+            $this->addParameter('jobtype', $job_type);
+            $where[] = 'type = :jobtype';
+            //$where[] = "type = '$job_type'";
         }
 
         $statment   = array( 'table' => 'Job', 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
