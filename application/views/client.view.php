@@ -82,6 +82,21 @@ class ClientView extends CView
                 throw new Exception('Critical: provided value for (period) is unknown or not valid');
             }
 
+            /**
+             * Filter jobs per requested period 
+             */
+            
+            // Get the last n days interval (start and end timestamps)
+            $days = DateTimeUtil::getLastDaysIntervals($period);
+
+            $startTime = date($_SESSION['datetime_format'], $days[0]['start']);
+            $endTime = date($_SESSION['datetime_format'], $days[array_key_last($days)]['end']);
+
+            $jobs->addParameter('job_starttime', $startTime);
+            $where[] = 'Job.endtime >= :job_starttime';
+            $jobs->addParameter('job_endtime', $endTime);
+            $where[] = 'Job.endtime <= :job_endtime';
+
             $this->assign('no_report_options', 'false');
 
             // Client informations
@@ -125,9 +140,6 @@ class ClientView extends CView
             } // end foreach
        
             $this->assign('backup_jobs', $backup_jobs);
-       
-            // Get the last n days interval (start and end)
-            $days = DateTimeUtil::getLastDaysIntervals($period);
        
             $jobsStats = new Jobs_Model();
             // Last n days stored Bytes graph
