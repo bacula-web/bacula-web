@@ -4,6 +4,7 @@
 
 - General
     - Fixed SQL Error using PHP 8.0 and latest version of MariaDB (see #97 and #98)
+    - Updated Composer dependencies to latest version
 
 ### Fixed bug(s)
 
