@@ -1,3 +1,20 @@
+## Bacula-Web 8.5.2 (December 15th 2021)
+
+### Changelog
+
+- General
+    - Fixed SQL Error using PHP 8.0 and latest version of MariaDB (see #97 and #98)
+    - Updated Composer dependencies to latest version
+
+### Fixed bug(s)
+
+- #97 [bug] - SQL Error HY093 on first page load (thanks to @dandrzejewski)
+- #98 [bug] - CModel::run_query() does not reset PHP PDO bind parameters
+
+### New Feature(s)
+
+- none
+
 ## Bacula-Web 8.5.1 (December 6th 2021)
 
 ### Changelog
