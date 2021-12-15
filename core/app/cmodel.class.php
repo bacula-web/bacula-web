@@ -137,6 +137,12 @@ class CModel
 
         $result = $statment->execute();
 
+ 	    /**
+ 	    * Reset $this->parameters to an empty array
+ 	    * Otherwise, next call to CModel::run_query() will fail if CModel::addParameters() is not called and CModel::parameters is not empty
+ 	    */
+ 	    $this->parameters = [];
+
         if ($result == false) {
             throw new PDOException("Failed to execute PDOStatment <br />$query");
         } else {
