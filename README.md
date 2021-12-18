@@ -54,7 +54,7 @@ You can find more information about the project timeline in the official documen
 
 ### Documentation
 
-Visit [Bacula-Web documentation](http://docs.bacula-web.org) for more informations about installation, configuration, upgrade, etc.
+Have a look at [Bacula-Web documentation](http://docs.bacula-web.org) hosted by [Read The Docs](https://readthedocs.org/) to get more informations about installation, configuration, upgrade, etc.
 
 ---
 
