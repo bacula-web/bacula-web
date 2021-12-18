@@ -60,7 +60,7 @@ Visit [Bacula-Web documentation](http://docs.bacula-web.org) for more informatio
 
 ### Installation
 
-Bacula-Web could be installed [from the source archive](https://docs.bacula-web.org/en/latest/02_install/installarchive.html), but the easiest and recommanded way to install it is by using [Composer](https://getcomposer.org/).
+Bacula-Web can be installed [from the source archive](https://docs.bacula-web.org/en/latest/02_install/installarchive.html), but the easiest and recommanded way to install it is by using [Composer](https://getcomposer.org/).
 
 To proceeed, make sure you have Composer installed using [these instructions](https://getcomposer.org/download/)
 
@@ -70,9 +70,9 @@ Then run the command below to install Bacula-Web
 $ composer create-project --prefer-dist bacula-web/bacula-web bacula-web
 ```
 
-Bacula-Web can be installed using the provided compressed archive or using Composer, check [Installation page](http://docs.bacula-web.org/en/latest/02_install/index.html) for more details
+Otherwise, Bacula-Web can be installed using the provided compressed archive or using Composer, check [Installation page](http://docs.bacula-web.org/en/latest/02_install/index.html) for more details
 
-You'll find latest stable release [here](https://www.bacula-web.org/download/)
+Latest stable release compressed archive can be found in [latest GitHub release](https://github.com/bacula-web/bacula-web/releases)
 
 ---
 
