@@ -67,7 +67,7 @@ To proceeed, make sure you have Composer installed using [these instructions](ht
 Then run the command below to install Bacula-Web
 
 ```
-$ composer create-project --prefer-dist bacula-web/bacula-web bacula-web
+$ composer create-project --no-dev bacula-web/bacula-web bacula-web
 ```
 
 Otherwise, Bacula-Web can be installed using the provided compressed archive or using Composer, check [Installation page](http://docs.bacula-web.org/en/latest/02_install/index.html) for more details
