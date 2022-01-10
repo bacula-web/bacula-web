@@ -110,7 +110,9 @@ class JobFiles_Model extends CModel
         $result = $this->run_query($sql_query);
 
         $used_types = $result->fetchAll();
-        if (count($used_types) != 0) {
+
+        if(!empty($used_types)) 
+        {
             $used_types = $used_types[0];
 
             switch ($used_types['jobstatus']) {
