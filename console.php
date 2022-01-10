@@ -80,7 +80,7 @@ function hightlight($string, $type = 'error')
 }
 
 // Make sure the script is run from the command line
-if (!(php_sapi_name() === 'cli')) {
+if ((php_sapi_name() !== 'cli')) {
     exit("You are not allowed to run this script from a web browser, but only from the command line");
 }
 
