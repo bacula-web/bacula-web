@@ -58,9 +58,7 @@ class JobFiles_Model extends CModel
 
         $result = $this->run_query($sqlQuery);
 
-        $used_types = $result->fetchAll();
-
-        return $used_types;
+        return $result->fetchAll();
     }
 
     public function countJobFiles($jobId, $filename = '')
