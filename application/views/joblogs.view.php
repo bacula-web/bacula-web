@@ -32,7 +32,7 @@ class JobLogsView extends CView
         $jobid = CHttpRequest::get_Value('jobid');
     
         // If $_GET['jobid'] is null and is not a number, throw an Exception
-        if (is_null($jobid) or !is_numeric($jobid)) {
+        if (is_null($jobid) || !is_numeric($jobid)) {
             throw new Exception('Invalid job id (invalid or null) provided in Job logs report');
         }
 
