@@ -243,14 +243,12 @@ class Jobs_Model extends CModel
         if (!is_null($client_id)) {
             $this->addParameter('clientid', $client_id);
             $where[] = 'clientid = :clientid';
-            //$where[] = "clientid = '$client_id'";
         }
 
         // Job type filter
         if (!is_null($job_type)) {
             $this->addParameter('jobtype', $job_type);
             $where[] = 'type = :jobtype';
-            //$where[] = "type = '$job_type'";
         }
 
         $statment   = array( 'table' => 'Job', 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
