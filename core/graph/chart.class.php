@@ -197,10 +197,8 @@ class Chart
         $blob .= 'nv.utils.windowResize(chart.update);';
 
         // Handle click event
-        if ($this->type == 'pie') {
-            if (!empty($this->linkedReport)) {
-                $blob .= 'chart.pie.dispatch.on("elementClick", function(e) { window.location = "index.php?page=' . $this->linkedReport . '"; });';
-            }
+        if ($this->type === 'pie' && !empty($this->linkedReport)) {
+            $blob .= 'chart.pie.dispatch.on("elementClick", function(e) { window.location = "index.php?page=' . $this->linkedReport . '"; });';
         }
 
         $blob .= 'return chart;';
