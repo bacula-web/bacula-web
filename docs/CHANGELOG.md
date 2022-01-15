@@ -5,6 +5,9 @@
 - General
   - GPL license notice has been updated in all files
 
+- Security
+  - Smarty template engine has been updated to version 3.1.43 (see #104)
+
 ### Fixed bug(s)
 
 - #104 [security] - Upgrade Smarty to version 3.1.43
