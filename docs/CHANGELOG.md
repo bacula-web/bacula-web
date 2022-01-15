@@ -1,3 +1,11 @@
+## Bacula-Web 8.x.x (January dd 2022)
+
+### Changelog
+
+### Fixed bug(s)
+
+### New feature(s)
+
 ## Bacula-Web 8.5.2 (December 15th 2021)
 
 ### Changelog
