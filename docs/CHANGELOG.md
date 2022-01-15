@@ -2,7 +2,12 @@
 
 ### Changelog
 
+- General
+  - GPL license notice has been updated in all files
+
 ### Fixed bug(s)
+
+- #104 [security] - Upgrade Smarty to version 3.1.43
 
 ### New feature(s)
 
