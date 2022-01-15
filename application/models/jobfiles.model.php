@@ -12,8 +12,6 @@ class JobFiles_Model extends CModel
 {
     public function getJobFiles($jobId, $limit, $offset, $filename = '')
     {
-        $used_types = array();
-
         $catalog = new Database_Model();
 
         // Catalog version prior to Bacula 11.0.x
