@@ -181,12 +181,11 @@ class Chart
 
         $blob .= "\n";
 
-        if ($this->type == 'bar') {
-            if (!is_null($this->ylabel)) {
+        if ($this->type == 'bar' && !is_null($this->ylabel))
+        {
                 $blob .= "\n".'chart.yAxis'."\n";
                 $blob .= ".axisLabelDistance(25)\n";
                 $blob .= ".axisLabel('".$this->ylabel."');\n";
-            }
         }
 
         $blob .= 'd3.select(\'#'.$this->name . ' svg\')' . "\n";
