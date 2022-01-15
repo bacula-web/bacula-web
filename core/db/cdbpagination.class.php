@@ -17,8 +17,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-use PHP_CodeSniffer\Tokenizers\PHP;
-
 /**
  * CDBPagination helps creating pagination from database queries results
  *
