@@ -4,7 +4,7 @@ featured_image: 'bacula-web-dashboard.png'
 description: "Open source web based reporting and monitoring tool for Bacula"
 ---
 
-Bacula-Web is a web based reporting and monitoring tool which provides you useful informations about your Bacula infrastructure like jobs, pools, volumes, jobs logs, clients and backup jobs reports and even more ...
+Bacula-Web is a web based reporting and monitoring tool which provides you useful information about your Bacula infrastructure like jobs, pools, volumes, jobs logs, clients and backup jobs reports and even more ...
 
 # Features
 
