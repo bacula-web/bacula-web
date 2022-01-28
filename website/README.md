@@ -43,10 +43,17 @@ cd www.bacula-web.org
 docker exec -i -t bacula-web-website bash
 ```
 
-then start  Hugo builtin web server
+then start Hugo builtin web server
 ```shell
 hugo server
 
 # To show content in draft, run this command
 hugo server -D
 ```
+
+**Quick note**
+
+> After cloning this Git repository, as Hugo theme is setup as a git submodule, you need to run the command below
+> `git submodule update --init --recursive`
+>
+> For more details, see https://git-scm.com/book/en/v2/Git-Tools-Submodules
