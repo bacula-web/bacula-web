@@ -31,6 +31,7 @@ class VolumesView extends CView
     public function prepare()
     {
         $volumes = new Volumes_Model();
+        $filteredVolumes = new Volumes_Model();
         $volumes_list = array();
         $volumes_total_bytes = 0;
         $where = null;
@@ -38,6 +39,9 @@ class VolumesView extends CView
 
         // Paginate database query result
         $pagination = new CDBPagination($this);
+
+        // Count volumes
+        $volumesTotal = $volumes->count('Media');
 
         // Volumes status icon
         $volume_status = array( 'Full' => 'fa-battery-full',
@@ -72,6 +76,7 @@ class VolumesView extends CView
             if (CHttpRequest::get_Value('filter_pool_id') !== '0') {
                 $pool_id = CHttpRequest::get_Value('filter_pool_id');
                 $volumes->addParameter('pool_id', $pool_id);
+                $filteredVolumes->addParameter('pool_id', $pool_id);
                 $where[] = 'Media.PoolId = :pool_id';
             }
         }
@@ -107,6 +112,7 @@ class VolumesView extends CView
 
         if (!is_null(CHttpRequest::get_Value('filter_inchanger'))) {
             $volumes->addParameter('inchanger', 1);
+            $filteredVolumes->addParameter('inchanger', 1);
             $where[] = 'Media.inchanger = :inchanger';
             $this->assign('inchanger_checked', 'checked');
         }
@@ -126,7 +132,7 @@ class VolumesView extends CView
                                                 'offset' => $pagination->getOffset() ]
                                             ),$volumes->get_driver_name());
 
-        foreach($pagination->paginate($volumes->run_query($sqlQuery), $volumes->count(), $volumes->count('Media', $where)) as $volume) {
+        foreach($pagination->paginate($volumes->run_query($sqlQuery), $volumesTotal, $filteredVolumes->count('Media', $where)) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
