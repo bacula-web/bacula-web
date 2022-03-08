@@ -1,18 +1,33 @@
-## Bacula-Web 8.x.x (January dd 2022)
+## Bacula-Web 8.5.3 (March 8th 2022)
 
 ### Changelog
 
 - General
   - GPL license notice has been updated in all files
+  - Minor code refactoring and code smell improvments
+  - Fixed type and requirements in composer.json
+
+- Jobs report
+  - Fixed bug while using several filter in jobs report page (see #99)
+
+- Volumes report
+  - Fixed bug while using several filter in volume report page (see #101)
 
 - Security
   - Smarty template engine has been updated to version 3.1.43 (see #104)
 
+- Documentation
+  - Fixed composer install command by adding --no-dev and removing --prefer-dist (by default)
+
 ### Fixed bug(s)
 
+- #99 [bug] - Database error while using filters in Jobs report
+- #101 [bug] - Query error while filtering volumes
 - #104 [security] - Upgrade Smarty to version 3.1.43
 
 ### New feature(s)
+
+- none
 
 ## Bacula-Web 8.5.2 (December 15th 2021)
 
