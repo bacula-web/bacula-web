@@ -31,7 +31,12 @@ class JobsView extends CView
     public function prepare()
     {
         $jobs = new Jobs_Model();
+        $filteredJobs = new Jobs_Model();
+
         $where = null;
+
+        // Total of Jobs
+        $totalJobs = $jobs->count();
 
         // Paginate database query result
         $pagination = new CDBPagination($this);
@@ -229,23 +234,27 @@ class JobsView extends CView
         // Selected level filter
         if ($filter_joblevel != '0') {
             $jobs->addParameter('job_level', $filter_joblevel);
+            $filteredJobs->addParameter('job_level', $filter_joblevel);
             $where[] .= "Job.Level = :job_level ";
         }
  
         // Selected pool filter
         if ($filter_poolid != '0') {
             $jobs->addParameter('pool_id', $filter_poolid);
+            $filteredJobs->addParameter('pool_id', $filter_poolid);
             $where[] .= "Job.PoolId = :pool_id ";
         }
 
         if($filter_jobtype !== '0') {
             $jobs->addParameter('job_type', $filter_jobtype);
+            $filteredJobs->addParameter('job_type', $filter_jobtype);
             $where[] = "Job.Type = :job_type";
         }
 
         // Selected client filter
         if ($filter_clientid != '0') {
             $jobs->addParameter('client_id', $filter_clientid);
+            $filteredJobs->addParameter('client_id', $filter_clientid);
             $where[] .= "Job.ClientId = :client_id";
         }
 
@@ -289,7 +298,7 @@ class JobsView extends CView
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
             ) ),$jobs->get_driver_name());
         
-        foreach( $pagination->paginate($jobs->run_query($sqlQuery), $jobs->count(), $jobs->count('Job', $where)) as $job) {
+        foreach( $pagination->paginate($jobs->run_query($sqlQuery), $totalJobs, $filteredJobs->count('Job', $where)) as $job) {
             // Determine icon for job status
             switch ($job['jobstatus']) {
             case J_RUNNING:
