@@ -1,6 +1,6 @@
 {
    "name": "bacula-web/bacula-web",
-   "type": "library",
+   "type": "project",
    "description": "The open source web based reporting and monitoring tool for Bacula",
    "keywords": ["php","reporting","monitoring","bacula"],
    "homepage": "https://www.bacula-web.org",

@@ -1,18 +1,20 @@
 <?php
-/*
-  +-------------------------------------------------------------------------+
-  | Copyright 2010-2021, Davide Franco                                      |
-  |                                                                         |
-  | This program is free software; you can redistribute it and/or           |
-  | modify it under the terms of the GNU General Public License             |
-  | as published by the Free Software Foundation; either version 2          |
-  | of the License, or (at your option) any later version.                  |
-  |                                                                         |
-  | This program is distributed in the hope that it will be useful,         |
-  | but WITHOUT ANY WARRANTY; without even the implied warranty of          |
-  | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           |
-  | GNU General Public License for more details.                            |
-  +-------------------------------------------------------------------------+
+
+/**
+ * Copyright (C) 2010-2022 Davide Franco
+ * 
+ * This file is part of Bacula-Web.
+ * 
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ * (at your option) any later version.
+ * 
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ * See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ * <https://www.gnu.org/licenses/>.
  */
 
 require_once('core/global.inc.php');
@@ -25,7 +27,7 @@ require_once('core/global.inc.php');
 
 function printUsage()
 {
-    echo "Bacula-Web version 8.5.2\n\n";
+    echo "Bacula-Web version 8.5.3\n\n";
     echo "Usage:\n";
     echo "   php bwc [command]\n\n";
     echo "Available commands:\n";
@@ -80,7 +82,7 @@ function hightlight($string, $type = 'error')
 }
 
 // Make sure the script is run from the command line
-if (!(php_sapi_name() === 'cli')) {
+if (php_sapi_name() !== 'cli') {
     exit("You are not allowed to run this script from a web browser, but only from the command line");
 }
 

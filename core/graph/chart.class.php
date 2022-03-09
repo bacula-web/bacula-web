@@ -1,19 +1,20 @@
 <?php
 
- /*
-  +-------------------------------------------------------------------------+
-  | Copyright 2010-2021, Davide Franco			                            |
-  |                                                                         |
-  | This program is free software; you can redistribute it and/or           |
-  | modify it under the terms of the GNU General Public License             |
-  | as published by the Free Software Foundation; either version 2          |
-  | of the License, or (at your option) any later version.                  |
-  |                                                                         |
-  | This program is distributed in the hope that it will be useful,         |
-  | but WITHOUT ANY WARRANTY; without even the implied warranty of          |
-  | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           |
-  | GNU General Public License for more details.                            |
-  +-------------------------------------------------------------------------+
+/**
+ * Copyright (C) 2010-2022 Davide Franco
+ * 
+ * This file is part of Bacula-Web.
+ * 
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ * (at your option) any later version.
+ * 
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ * See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ * <https://www.gnu.org/licenses/>.
  */
 
 class Chart
@@ -181,12 +182,11 @@ class Chart
 
         $blob .= "\n";
 
-        if ($this->type == 'bar') {
-            if (!is_null($this->ylabel)) {
+        if ($this->type == 'bar' && !is_null($this->ylabel))
+        {
                 $blob .= "\n".'chart.yAxis'."\n";
                 $blob .= ".axisLabelDistance(25)\n";
                 $blob .= ".axisLabel('".$this->ylabel."');\n";
-            }
         }
 
         $blob .= 'd3.select(\'#'.$this->name . ' svg\')' . "\n";
@@ -197,10 +197,8 @@ class Chart
         $blob .= 'nv.utils.windowResize(chart.update);';
 
         // Handle click event
-        if ($this->type == 'pie') {
-            if (!empty($this->linkedReport)) {
-                $blob .= 'chart.pie.dispatch.on("elementClick", function(e) { window.location = "index.php?page=' . $this->linkedReport . '"; });';
-            }
+        if ($this->type === 'pie' && !empty($this->linkedReport)) {
+            $blob .= 'chart.pie.dispatch.on("elementClick", function(e) { window.location = "index.php?page=' . $this->linkedReport . '"; });';
         }
 
         $blob .= 'return chart;';

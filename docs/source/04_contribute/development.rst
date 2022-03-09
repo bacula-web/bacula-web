@@ -17,7 +17,7 @@ Please find below some guidance for developers
       * feature-yyy for a new feature
    * do not create "huge" pull request, I do prefer as small as possible pull request
    * do not change the code indentation in your commit
-   * I try to apply `PSR-2 coding style standard <https://www.php-fig.org/psr/psr-2/>`_, please sure your commit(s) uses the same standard
+   * I try to apply `PSR-12 coding style standard <https://www.php-fig.org/psr/psr-12/>`_, please sure your commit(s) uses the same standard
    * I take care of code indentation before each release and it's easier for me to see the changes you've done
    * put useful comment in the code that explain what you're trying to do
    * choose good name for variables

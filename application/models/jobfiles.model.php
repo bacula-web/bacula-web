@@ -1,6 +1,23 @@
 <?php
 
 /**
+ * Copyright (C) 2021,2022 Davide Franco
+ * 
+ * This file is part of Bacula-Web.
+ * 
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ * (at your option) any later version.
+ * 
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ * See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ * <https://www.gnu.org/licenses/>.
+ */
+
+/**
  * Description of JobFiles_Model class
  *
  * @author Gabriele Orlando
@@ -12,8 +29,6 @@ class JobFiles_Model extends CModel
 {
     public function getJobFiles($jobId, $limit, $offset, $filename = '')
     {
-        $used_types = array();
-
         $catalog = new Database_Model();
 
         // Catalog version prior to Bacula 11.0.x
@@ -58,9 +73,7 @@ class JobFiles_Model extends CModel
 
         $result = $this->run_query($sqlQuery);
 
-        $used_types = $result->fetchAll();
-
-        return $used_types;
+        return $result->fetchAll();
     }
 
     public function countJobFiles($jobId, $filename = '')
@@ -112,7 +125,9 @@ class JobFiles_Model extends CModel
         $result = $this->run_query($sql_query);
 
         $used_types = $result->fetchAll();
-        if (count($used_types) != 0) {
+
+        if(!empty($used_types)) 
+        {
             $used_types = $used_types[0];
 
             switch ($used_types['jobstatus']) {

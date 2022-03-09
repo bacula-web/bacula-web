@@ -1,18 +1,20 @@
 <?php
- /*
-  +-------------------------------------------------------------------------+
-  | Copyright 2010-2021, Davide Franco			                            |
-  |                                                                         |
-  | This program is free software; you can redistribute it and/or           |
-  | modify it under the terms of the GNU General Public License             |
-  | as published by the Free Software Foundation; either version 2          |
-  | of the License, or (at your option) any later version.                  |
-  |                                                                         |
-  | This program is distributed in the hope that it will be useful,         |
-  | but WITHOUT ANY WARRANTY; without even the implied warranty of          |
-  | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           |
-  | GNU General Public License for more details.                            |
-  +-------------------------------------------------------------------------+
+
+/**
+ * Copyright (C) 2010-2022 Davide Franco
+ * 
+ * This file is part of Bacula-Web.
+ * 
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ * (at your option) any later version.
+ * 
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ * See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ * <https://www.gnu.org/licenses/>.
  */
 
 class Jobs_Model extends CModel
@@ -243,14 +245,12 @@ class Jobs_Model extends CModel
         if (!is_null($client_id)) {
             $this->addParameter('clientid', $client_id);
             $where[] = 'clientid = :clientid';
-            //$where[] = "clientid = '$client_id'";
         }
 
         // Job type filter
         if (!is_null($job_type)) {
             $this->addParameter('jobtype', $job_type);
             $where[] = 'type = :jobtype';
-            //$where[] = "type = '$job_type'";
         }
 
         $statment   = array( 'table' => 'Job', 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );

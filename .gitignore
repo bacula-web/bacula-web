@@ -4,3 +4,4 @@
 /application/config/config.php
 /application/assets/protected/application.db
 docs/_build
+.idea
