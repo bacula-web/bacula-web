@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c238efbb31e290935e9ba81e0730c25d",
+    "content-hash": "b32fa2e5066da7e877e7de187745fcd5",
     "packages": [
         {
             "name": "components/font-awesome",
@@ -244,33 +244,6 @@
                 }
             ],
             "time": "2021-09-13T08:19:44+00:00"
-        },
-        {
-            "name": "datatables/datatables",
-            "version": "1.10.21",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DataTables/DataTables.git",
-                "reference": "83e59694a105225ff889ddfa0d723a3ab24fda78"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/DataTables/zipball/83e59694a105225ff889ddfa0d723a3ab24fda78",
-                "reference": "83e59694a105225ff889ddfa0d723a3ab24fda78",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool, based upon the foundations of progressive enhancement, which will add advanced interaction controls to any HTML table.",
-            "homepage": "http://www.datatables.net/",
-            "support": {
-                "forum": "https://datatables.net/forums",
-                "source": "https://github.com/DataTables/DataTablesSrc/"
-            },
-            "time": "2020-05-21T10:08:44+00:00"
         },
         {
             "name": "eonasdan/bootstrap-datetimepicker",
@@ -3557,7 +3530,6 @@
         "novus/nvd3": 0,
         "eonasdan/bootstrap-datetimepicker": 0,
         "smarty-gettext/smarty-gettext": 0,
-        "datatables/datatables": 0,
         "sebastian/phpcpd": 0,
         "phpmd/phpmd": 0,
         "squizlabs/php_codesniffer": 0,
