@@ -65,8 +65,7 @@ Bacula-Web use the following tools and libraries
    * `NVD3`_
    * `Bootstrap`_
    * `Font Awesome`_
-   * `jQuery`_ 
-   * `DataTables`_
+   * `jQuery`_
 
 Supported browser
 =================
