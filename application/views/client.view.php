@@ -91,8 +91,8 @@ class ClientView extends CView
             // Get the last n days interval (start and end timestamps)
             $days = DateTimeUtil::getLastDaysIntervals($period);
 
-            $startTime = date($_SESSION['datetime_format'], $days[0]['start']);
-            $endTime = date($_SESSION['datetime_format'], $days[array_key_last($days)]['end']);
+            $startTime = date('Y-m-d H:i:s', $days[0]['start']);
+            $endTime = date('Y-m-d H:i:s', $days[array_key_last($days)]['end']);
 
             $jobs->addParameter('job_starttime', $startTime);
             $where[] = 'Job.endtime >= :job_starttime';
@@ -131,7 +131,7 @@ class ClientView extends CView
                 ], $jobs->get_driver_name() );
 
             $jobs_result = $jobs->run_query($query);
-            
+
             foreach ($jobs_result->fetchAll() as $job) {
                 $job['level']     = $job_levels[$job['level']];
                 $job['jobfiles']  = CUtils::format_Number($job['jobfiles']);
