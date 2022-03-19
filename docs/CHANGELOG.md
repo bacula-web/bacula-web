@@ -1,3 +1,22 @@
+## Bacula-Web 8.5.4 (Month Day 2022)
+
+### Changelog
+
+- General
+  - Removed DataTables from everywhere (see #107)
+
+- Backup job report
+  - Fixed a bug while displaying compression ratio for canceled jobs (see #105)
+
+### Fixed bug(s)
+
+- #107 [improvement] - Remove datatables dependency and related code
+- #105 [bug] - Division by zero with canceled jobs inBackup Job report
+
+### New feature(s)
+
+- none
+
 ## Bacula-Web 8.5.3 (March 9th 2022)
 
 ### Changelog
