@@ -34,27 +34,27 @@
 						<table class="table table-condensed">
 							<tr>
 								<td><h5>{t}Running jobs{/t}</h5></td>
-								<td class="text-center"> <a href="index.php?page=jobs&job_status_filter=1"><h4><span class="label label-default">{$running_jobs}</span></h4></a> </td>
+								<td class="text-center"> <a href="index.php?page=jobs&filter_jobstatus=1"><h4><span class="label label-default">{$running_jobs}</span></h4></a> </td>
 							</tr>
 							<tr>
  								<td><h5>{t}Completed job(s){/t}</h5></td>
-								<td class="text-center"> <a href="index.php?page=jobs&job_status_filter=3"><h4><span class="label label-success">{$completed_jobs}</span></h4></a> </td>
+								<td class="text-center"> <a href="index.php?page=jobs&filter_jobstatus=3"><h4><span class="label label-success">{$completed_jobs}</span></h4></a> </td>
 							</tr>
                      <tr>
                         <td><h5>{t}Completed with errors job(s){/t}
-								<td class="text-center"> <a href="index.php?page=jobs&job_status_filter=4"><h4><span style="background-color: #FFD700;" class="label label-default">{$completed_with_errors_jobs}</span></h4></a> </td>
+								<td class="text-center"> <a href="index.php?page=jobs&filter_jobstatus=4"><h4><span style="background-color: #FFD700;" class="label label-default">{$completed_with_errors_jobs}</span></h4></a> </td>
                      </tr>
  							<tr>
                             	<td> <h5>{t}Waiting jobs(s){/t}</h5></td>
-                                <td class="text-center"> <a href="index.php?page=jobs&job_status_filter=2"><h4><span class="label label-primary">{$waiting_jobs}</span></h4></a> </td>
+                                <td class="text-center"> <a href="index.php?page=jobs&filter_jobstatus=2"><h4><span class="label label-primary">{$waiting_jobs}</span></h4></a> </td>
                             </tr>
 							<tr>
                             	<td> <h5>{t}Failed job(s){/t}</h5></td>
-                                <td class="text-center"> <a href="index.php?page=jobs&job_status_filter=5"><h4><span class="label label-danger">{$failed_jobs}</span></h4></a> </td>
+                                <td class="text-center"> <a href="index.php?page=jobs&filter_jobstatus=5"><h4><span class="label label-danger">{$failed_jobs}</span></h4></a> </td>
                             </tr>
 							<tr>
                             	<td> <h5>{t}Canceled job(s){/t}</h5></td>
-                                <td class="text-center"> <a href="index.php?page=jobs&job_status_filter=6"><h4><span class="label label-warning">{$canceled_jobs}</span></h4></a> </td>
+                                <td class="text-center"> <a href="index.php?page=jobs&filter_jobstatus=6"><h4><span class="label label-warning">{$canceled_jobs}</span></h4></a> </td>
                             </tr>
 							<tr>
 								<td> <h5>{t}Job Level (Incr / Diff / Full){/t}</h5> </td>
