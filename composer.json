@@ -28,8 +28,7 @@
       "eonasdan/bootstrap-datetimepicker": "@stable",
       "smarty/smarty": "3.1.*",
       "smarty-gettext/smarty-gettext": "@stable",
-      "components/font-awesome": "4.*",
-      "datatables/datatables": "@stable"
+      "components/font-awesome": "4.*"
 	},
     "require-dev": {
       "sebastian/phpcpd": "@stable",

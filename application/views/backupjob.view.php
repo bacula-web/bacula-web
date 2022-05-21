@@ -175,7 +175,7 @@ class BackupJobView extends CView
                 $job['elapsedtime'] = DateTimeUtil::Get_Elapsed_Time($job['starttime'], $job['endtime']);
        
                 // Compression
-                if ($job['jobbytes'] > 0) {
+                if (($job['jobbytes'] > 0) && ($job['readbytes'] > 0)) {
                     $compression = (1-($job['jobbytes'] / $job['readbytes']));
                     $job['compression'] = number_format($compression, 2);
                 } else {

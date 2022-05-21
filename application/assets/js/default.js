@@ -3,13 +3,6 @@ $(document).ready(function() {
     /* Initialize tooltips */
     $('[data-toggle="tooltip"]').tooltip()
 
-    /* DataTable */
-    $('table.paginate').DataTable( {
-            searching: false,
-            ordering: false,
-            lengthMenu: [ 25, 50, 75, 100 ]
-    } );
-
     /* Hide graph images for few milliseconds */
     $("img").hide();
     $(".img_loader").delay(200).fadeOut(300);
