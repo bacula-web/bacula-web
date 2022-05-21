@@ -1,4 +1,4 @@
-## Bacula-Web 8.5.4 (Month Day 2022)
+## Bacula-Web 8.5.4 (May 21st 2022)
 
 ### Changelog
 
@@ -16,6 +16,7 @@
 - #105 [bug] - Division by zero with canceled jobs inBackup Job report
 - #106 [bug] - SQL query error using custom datetime format in Client report page
 - #107 [improvement] - Remove datatables dependency and related code
+- #108 [bug] - Broken job status link in last period job status
 
 ### New feature(s)
 
