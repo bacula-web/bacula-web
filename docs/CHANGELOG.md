@@ -1,3 +1,16 @@
+## Bacula-Web 8.5.5 (June 4th 2022)
+
+### Changelog
+
+- Genera
+  - Fix security issue with smarty/smarty (see #111)
+
+### Fixed bug(s)
+
+- #111 [security] - Upgrade smarty/smarty to 3.1.45 
+
+### New feature(s)
+
 ## Bacula-Web 8.5.4 (May 21st 2022)
 
 ### Changelog
