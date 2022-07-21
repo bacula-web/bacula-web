@@ -30,7 +30,7 @@ class CUtils
             case 'auto':
                 while (!$lisible) {
                     if ($hsize >= 1024) {
-                        $hsize = $hsize / 1024;
+                        $hsize /= 1024;
                         $unit_id++;
                     } else {
                         $lisible = true;
@@ -41,7 +41,7 @@ class CUtils
             default:
                 $exp = array_keys($units, $unit);
                 $unit_id = current($exp);
-                $hsize = $hsize / pow(1024, $unit_id);
+                $hsize /= pow(1024, $unit_id);
                 break;
         } // end switch
         // Format human readable value (with dot for decimal separator)
@@ -49,7 +49,7 @@ class CUtils
 
         // Append unit or not
         if ($display_unit) {
-            $hsize = $hsize . ' ' . $units[$unit_id];
+            $hsize .= ' ' . $units[$unit_id];
         }
 
         return $hsize;
