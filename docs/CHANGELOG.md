@@ -1,13 +1,12 @@
-## Bacula-Web 8.5.5 (June 4th 2022)
+## Bacula-Web 8.5.6 (mm dd 2022)
 
 ### Changelog
 
 - General
-  - Fix security issue with smarty/smarty (see #111)
 
 ### Fixed bug(s)
 
-- #111 [security] - Upgrade smarty/smarty to 3.1.45 
+- #91 [enhancement] - Use combined operators (thanks to @elfring)
 
 ### New feature(s)
 
