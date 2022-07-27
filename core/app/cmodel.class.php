@@ -26,8 +26,8 @@ class CModel
 
     public function __construct()
     {
-        $user = '';
-        $pwd  = '';
+        $user = null;
+        $pwd  = null;
         $this->cdb  = new CDB();
 
         // Open config file
@@ -43,14 +43,7 @@ class CModel
             $pwd  = FileConfig::get_Value('password', $catalog_id);
         }
 
-        switch ($this->driver) {
-         case 'mysql':
-         case 'pgsql':
-            $this->db_link = $this->cdb->connect($dsn, $user, $pwd);
-         break;
-         case 'sqlite':
-            $this->db_link = $this->cdb->connect($dsn);
-      } // end switch
+        $this->db_link = $this->cdb->connect($dsn, $user, $pwd);
     }
  
     // ==================================================================================
