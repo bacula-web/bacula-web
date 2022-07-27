@@ -50,7 +50,7 @@ class JobFiles_Model extends CModel
                   'orderby' => $orderby,
                   'limit' => array( 'count' => $limit, 'offset' => $offset*$limit),
                   'offset' => ($offset*$limit)
-              ), $this->driver);
+              ), $this->cdb->getDriverName());
         } else {
             $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'File.Filename AS Filename');
             $where = array("File.JobId = $jobId");
@@ -68,7 +68,7 @@ class JobFiles_Model extends CModel
                 'orderby' => $orderby,
                 'limit' => array( 'count' => $limit, 'offset' => $offset*$limit),
                 'offset' => ($offset*$limit)
-            ), $this->driver);
+            ), $this->cdb->getDriverName());
         }
 
         $result = $this->run_query($sqlQuery);

@@ -20,6 +20,7 @@
 class CDB
 {
     private $connection;
+    private $driver;
 
     // ==================================================================================
     // Function: 	__construct()
@@ -27,30 +28,50 @@ class CDB
     // Return:		none
     // ==================================================================================
 
-    public function __construct()
+    /**
+     * @param $dsn|null
+     * @param $user
+     * @param $password
+     */
+    public function __construct($dsn = null)
     {
-    }
+        $user = null;
+        $password  = null;
 
-    // ==================================================================================
-    // Function: 	connect()
-    // Parameters: 	none
-    // Return:		valid PDO connection
-    // ==================================================================================
+        // Open config file
+        FileConfig::open(CONFIG_FILE);
 
-    public function connect($dsn, $user = null, $password = null)
-    {
+        // Create PDO connection to database
+        $catalog_id = $_SESSION['catalog_id'];
+
+        $this->driver = FileConfig::get_Value('db_type', $catalog_id);
+
+        if ($dsn === null) {
+            $dsn = FileConfig::get_DataSourceName($catalog_id);
+        }
+
+        if ($this->driver != 'sqlite') {
+            $user = FileConfig::get_Value('login', $catalog_id);
+            $password  = FileConfig::get_Value('password', $catalog_id);
+        }
+
         $this->connection = new PDO($dsn, $user, $password);
 
         // Set PDO connection options
         $this->connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->connection->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('CDBResult', array($this)));
-        
+
         // MySQL connection specific parameter
         if ($this->getDriverName() == 'mysql') {
             $this->connection->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
         }
-        
+    }
+
+    /**
+     * @return PDO
+     */
+    public function getDb() {
         return $this->connection;
     }
 

@@ -26,24 +26,9 @@ class CModel
 
     public function __construct()
     {
-        $user = null;
-        $pwd  = null;
-        $this->cdb  = new CDB();
-
-        // Open config file
-        FileConfig::open(CONFIG_FILE);
-
-        // Create PDO connection to database
-        $catalog_id = $_SESSION['catalog_id'];
-        $this->driver = FileConfig::get_Value('db_type', $catalog_id);
-        $dsn = FileConfig::get_DataSourceName($catalog_id);
-      
-        if ($this->driver != 'sqlite') {
-            $user = FileConfig::get_Value('login', $catalog_id);
-            $pwd  = FileConfig::get_Value('password', $catalog_id);
-        }
-
-        $this->db_link = $this->cdb->connect($dsn, $user, $pwd);
+        // Get PDO instance
+        $this->cdb = new CDB();
+        $this->db_link = $this->cdb->getDb();
     }
  
     // ==================================================================================

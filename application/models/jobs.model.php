@@ -52,7 +52,7 @@ class Jobs_Model extends CModel
         }
 
         // Getting timestamp interval
-        $intervals = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
+        $intervals = CDBQuery::get_Timestamp_Interval($this->cdb->getDriverName(), $period_timestamps);
         
         // Defining interval depending on job status
         if (!is_null($job_status)) {
@@ -128,7 +128,7 @@ class Jobs_Model extends CModel
         }
         
         // Defined period
-        $intervals     = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
+        $intervals     = CDBQuery::get_Timestamp_Interval($this->cdb->getDriverName(), $period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
@@ -177,7 +177,7 @@ class Jobs_Model extends CModel
         $jobtype    = 'B';
         
         // Defined period
-        $intervals     = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
+        $intervals     = CDBQuery::get_Timestamp_Interval($this->cdb->getDriverName(), $period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
@@ -321,7 +321,7 @@ class Jobs_Model extends CModel
         $groupby = 'dayofweek';
         $res = array();
 
-        switch ($this->driver) {
+        switch ($this->cdb->getDriverName()) {
        case 'mysql':
           $fields[] = "FROM_UNIXTIME(Job.JobTDate, '%W') AS dayofweek";
           break;
@@ -348,7 +348,7 @@ class Jobs_Model extends CModel
           
             // Simply fix day name for postgreSQL
             // It could be improved but I lack some SQL (postgreSQL skills)
-            if ($this->driver == 'pgsql') {
+            if ($this->cdb->getDriverName() == 'pgsql') {
                 $day['dayofweek'] = $week[ $day['dayofweek'] ];
             }
           
