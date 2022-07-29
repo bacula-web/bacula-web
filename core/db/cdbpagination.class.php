@@ -72,7 +72,7 @@ class CDBPagination
     /**
      * paginate
      *
-     * @param CDBResult $dbResult
+     * @param PDOStatement $dbResult
      * @param int $rowsTotal total row(s) in the table
      * @param int $rowsFiltered total filtered rows in the table
      * @return array
