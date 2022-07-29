@@ -48,7 +48,7 @@ class DirectorsView extends CView
 
             $clients = new ClientTable(DatabaseFactory::getDatabase());
             $jobs = new Jobs_Model(DatabaseFactory::getDatabase());
-            $catalog = new Database_Model(DatabaseFactory::getDatabase());
+            $catalog = new CatalogTable(DatabaseFactory::getDatabase());
             $volumes = new VolumeTable(DatabaseFactory::getDatabase());
             $pools = new Pools_Model(DatabaseFactory::getDatabase());
             $filesets = new FileSets_Model(DatabaseFactory::getDatabase());
@@ -73,7 +73,7 @@ class DirectorsView extends CView
                 'filesets' => $filesets->count()
             );
 
-            // Destroy Database_Model object
+            // Destroy CatalogTable object
             unset($clients);
             unset($jobs);
             unset($catalog);

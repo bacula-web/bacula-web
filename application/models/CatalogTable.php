@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class Database_Model extends Table
+class CatalogTable extends Table
 {
     protected $tablename = 'Version';
     private $dbVersionId = '';

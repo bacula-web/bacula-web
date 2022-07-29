@@ -31,7 +31,7 @@ class JobFiles_Model extends Table
 
     public function getJobFiles($jobId, $limit, $offset, $filename = '')
     {
-        $catalog = new Database_Model(DatabaseFactory::getDatabase());
+        $catalog = new CatalogTable(DatabaseFactory::getDatabase());
 
         // Catalog version prior to Bacula 11.0.x
         if ($catalog->getCatalogVersion() < 1016) {
@@ -82,7 +82,7 @@ class JobFiles_Model extends Table
         $used_types = array();
 
         $database = new Database();
-        $catalog = new Database_Model($database);
+        $catalog = new CatalogTable($database);
 
         if ($catalog->getCatalogVersion() < 1016) {
             $sql_query = "SELECT COUNT(*) as count
