@@ -19,6 +19,7 @@
 
 class Database_Model extends CModel
 {
+    protected $tablename = 'Version';
     private $dbVersionId = '';
  
     // ==================================================================================

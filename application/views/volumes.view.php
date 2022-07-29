@@ -120,7 +120,7 @@ class VolumesView extends CView
         $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
         'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
 
-        $sqlQuery = CDBQuery::get_Select(array('table' => $volumes->tablename,
+        $sqlQuery = CDBQuery::get_Select(array('table' => $volumes->getTableName(),
                                             'fields' => $fields,
                                             'orderby' => "$volume_orderby_filter $volume_orderby_asc",
                                             'join' => array(

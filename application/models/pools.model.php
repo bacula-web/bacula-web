@@ -20,6 +20,8 @@
 class Pools_Model extends CModel
 {
 
+    protected $tablename = 'Pool';
+
     // ==================================================================================
     // Function: 	getPools()
     // Parameters: 	none

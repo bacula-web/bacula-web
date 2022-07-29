@@ -23,19 +23,25 @@ class CModel
     protected $cdb;
     protected $driver;
     protected $parameters;
-    public $tablename;     // TODO: $tablename should not be public, switch to protected once not used outside the class
+    protected $tablename = null;
 
-    public function __construct($tablename = null)
+    public function __construct()
     {
-        if (!is_null($tablename)) {
-            $this->tablename = $tablename;
-        } else {
-            $this->tablename = str_replace('_Model', '', static::class);
+        if ($this->tablename === null) {
+            throw new Exception("\$tablename property is not set in " . static::class . ' class');
         }
 
         // Get PDO instance
         $this->cdb = new CDB();
         $this->db_link = $this->cdb->getDb();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTableName() :string
+    {
+        return $this->tablename;
     }
  
     // ==================================================================================

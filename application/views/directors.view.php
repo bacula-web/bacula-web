@@ -47,12 +47,12 @@ class DirectorsView extends CView
             // Create new instance of Database_Model with the correct catalog_id
             $_SESSION['catalog_id'] = $d;
 
-            $clients = new Clients_Model('Client');
-            $jobs = new Jobs_Model('Job');
+            $clients = new Clients_Model();
+            $jobs = new Jobs_Model();
             $catalog = new Database_Model();
-            $volumes = new Volumes_Model('Media');
-            $pools = new Pools_Model('Pool');
-            $filesets = new FileSets_Model('FileSet');
+            $volumes = new Volumes_Model();
+            $pools = new Pools_Model();
+            $filesets = new FileSets_Model();
 
             $host = FileConfig::get_Value('host', $d);
             $db_user = FileConfig::get_Value('login', $d);

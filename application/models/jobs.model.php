@@ -19,7 +19,7 @@
 
 class Jobs_Model extends CModel
 {
-    
+    protected $tablename = 'Job';
     // ==================================================================================
     // Function: 	 count_Jobs()
     // Parameters: $period_timestamps		Array containing start and end date (unix timestamp format)

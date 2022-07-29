@@ -27,13 +27,14 @@
 
 class JobFiles_Model extends CModel
 {
+    protected $tablename = 'File';
+
     public function getJobFiles($jobId, $limit, $offset, $filename = '')
     {
         $catalog = new Database_Model();
 
         // Catalog version prior to Bacula 11.0.x
         if ($catalog->getCatalogVersion() < 1016) {
-            
             $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'Filename.Name AS Filename');
             $where = array("File.JobId = $jobId");
             if (! empty($filename)) {

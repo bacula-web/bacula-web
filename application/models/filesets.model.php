@@ -19,5 +19,5 @@
 
 class FileSets_Model extends CModel
 {
-
+    protected $tablename = 'FileSet';
 }

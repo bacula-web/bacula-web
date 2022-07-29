@@ -121,7 +121,7 @@ class ClientView extends CView
             $jobs->addParameter('clientid', $clientid);
             $where[] = 'clientid = :clientid';
 
-            $query = CDBQuery::get_Select( ['table' => $jobs->tablename,
+            $query = CDBQuery::get_Select( ['table' => $jobs->getTableName(),
                 'fields' => ['Job.Name', 'Job.Jobid', 'Job.Level', 'Job.Endtime', 'Job.Jobbytes', 'Job.Jobfiles', 'Status.JobStatusLong'],
                 'join' => [
                     ['table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus']

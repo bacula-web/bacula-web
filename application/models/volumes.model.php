@@ -19,6 +19,7 @@
 
 class Volumes_Model extends CModel
 {
+    protected $tablename = 'Media';
  
     // ==================================================================================
     // Function: 	getDiskUsage()
