@@ -49,7 +49,7 @@ class DirectorsView extends CView
             $clients = new ClientTable(DatabaseFactory::getDatabase());
             $jobs = new Jobs_Model(DatabaseFactory::getDatabase());
             $catalog = new Database_Model(DatabaseFactory::getDatabase());
-            $volumes = new Volumes_Model(DatabaseFactory::getDatabase());
+            $volumes = new VolumeTable(DatabaseFactory::getDatabase());
             $pools = new Pools_Model(DatabaseFactory::getDatabase());
             $filesets = new FileSets_Model(DatabaseFactory::getDatabase());
 

@@ -33,7 +33,7 @@ class DashboardView extends CView
     {
         $jobs = new Jobs_Model(DatabaseFactory::getDatabase());
         $pools = new Pools_Model(DatabaseFactory::getDatabase());
-        $volumes = new Volumes_Model(DatabaseFactory::getDatabase());
+        $volumes = new VolumeTable(DatabaseFactory::getDatabase());
 
         require_once('core/const.inc.php');
 

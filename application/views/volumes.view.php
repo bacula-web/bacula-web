@@ -30,8 +30,8 @@ class VolumesView extends CView
     
     public function prepare()
     {
-        $volumes = new Volumes_Model(DatabaseFactory::getDatabase());
-        $filteredVolumes = new Volumes_Model(DatabaseFactory::getDatabase());
+        $volumes = new VolumeTable(DatabaseFactory::getDatabase());
+        $filteredVolumes = new VolumeTable(DatabaseFactory::getDatabase());
         $volumes_list = array();
         $volumes_total_bytes = 0;
         $where = null;
