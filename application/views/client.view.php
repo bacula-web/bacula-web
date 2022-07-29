@@ -39,9 +39,9 @@ class ClientView extends CView
         $days_stored_files = array();
 
         // Get job names for the client
-        $jobs = new Jobs_Model();
+        $jobs = new Jobs_Model('Job');
 
-        $client = new Clients_Model();
+        $client = new Clients_Model('Client');
  
         // Clients list
         $this->assign('clients_list', $client->getClients());
@@ -121,7 +121,7 @@ class ClientView extends CView
             $jobs->addParameter('clientid', $clientid);
             $where[] = 'clientid = :clientid';
 
-            $query = CDBQuery::get_Select( ['table' => 'Job',
+            $query = CDBQuery::get_Select( ['table' => $jobs->tablename,
                 'fields' => ['Job.Name', 'Job.Jobid', 'Job.Level', 'Job.Endtime', 'Job.Jobbytes', 'Job.Jobfiles', 'Status.JobStatusLong'],
                 'join' => [
                     ['table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus']
@@ -143,7 +143,7 @@ class ClientView extends CView
        
             $this->assign('backup_jobs', $backup_jobs);
        
-            $jobsStats = new Jobs_Model();
+            $jobsStats = new Jobs_Model('Job');
             // Last n days stored Bytes graph
             foreach ($days as $day) {
                 $stored_bytes = $jobsStats->getStoredBytes(array($day['start'], $day['end']), 'ALL', $clientid);
@@ -161,7 +161,7 @@ class ClientView extends CView
        
             unset($stored_bytes_chart);
        
-            $jobsStats = new Jobs_Model();
+            $jobsStats = new Jobs_Model('Job');
 
             // Last n days stored files graph
             foreach ($days as $day) {

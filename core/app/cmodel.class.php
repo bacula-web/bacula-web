@@ -23,9 +23,16 @@ class CModel
     protected $cdb;
     protected $driver;
     protected $parameters;
+    public $tablename;     // TODO: $tablename should not be public, switch to protected once not used outside the class
 
-    public function __construct()
+    public function __construct($tablename = null)
     {
+        if (!is_null($tablename)) {
+            $this->tablename = $tablename;
+        } else {
+            $this->tablename = str_replace('_Model', '', static::class);
+        }
+
         // Get PDO instance
         $this->cdb = new CDB();
         $this->db_link = $this->cdb->getDb();
@@ -38,12 +45,12 @@ class CModel
     // Return:		return row count for one table
     // ==================================================================================
 
-    protected function count($tablename, $filter = null)
+    public function count($filter = null)
     {
         $fields        = array( 'COUNT(*) as row_count' );
 
         // Prepare and execute query
-        $statment   = CDBQuery::get_Select(array( 'table' => $tablename, 'fields' => $fields, 'where' => $filter));
+        $statment   = CDBQuery::get_Select(array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $filter));
         $result     = $this->run_query($statment);
 
         $result     = $result->fetch();

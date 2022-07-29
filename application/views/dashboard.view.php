@@ -31,9 +31,9 @@ class DashboardView extends CView
 
     public function prepare()
     {
-        $jobs = new Jobs_Model();
-        $pools = new Pools_Model();
-        $volumes = new Volumes_Model();
+        $jobs = new Jobs_Model('Job');
+        $pools = new Pools_Model('Pool');
+        $volumes = new Volumes_Model('Media');
 
         require_once('core/const.inc.php');
 
@@ -232,7 +232,7 @@ class DashboardView extends CView
         $this->assign('volumes_list', $last_volumes);
 
         // Per job name backup and restore statistics
-    $job_types = array( 'R' => 'Restore', 'B' => 'Backup' );      // TO IMPROVE
+        $job_types = array( 'R' => 'Restore', 'B' => 'Backup' );      // TO IMPROVE
 
     $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes, Name AS JobName FROM Job WHERE Type in ('B','R') GROUP BY Name,Type";
         $result = $jobs->run_query($query);

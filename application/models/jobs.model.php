@@ -20,18 +20,6 @@
 class Jobs_Model extends CModel
 {
     
-   // ==================================================================================
-    // Function: 	count()
-    // Parameters: $tablename = Job by default
-    //             $filter (actualy unused, need to fix this
-    // Return:		Number of clients
-    // ==================================================================================
-
-    public function count($tablename = 'Job', $filter = null)
-    {
-        return parent::count($tablename, $filter);
-    }
-    
     // ==================================================================================
     // Function: 	 count_Jobs()
     // Parameters: $period_timestamps		Array containing start and end date (unix timestamp format)
@@ -43,7 +31,7 @@ class Jobs_Model extends CModel
     public function count_Jobs($period_timestamps, $job_status = null, $job_level = null)
     {
         $where        = null;
-        $tablename    = 'Job';
+        $tablename    = $this->tablename;
         $fields        = array('COUNT(*) as job_count');
         
         // Check PDO object
@@ -120,7 +108,7 @@ class Jobs_Model extends CModel
     {
         $where      = array();
         $fields     = array( 'SUM(JobFiles) AS stored_files' );
-        $tablename    = 'Job';
+
         
         // Check PDO object
         if (!is_a($this->db_link, 'PDO') || is_null($this->db_link)) {
@@ -146,7 +134,7 @@ class Jobs_Model extends CModel
         $where[] = "Type = :jobtype";
         
         // Building SQL statment
-        $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
+        $statment = array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
 
         // Execute query
@@ -173,7 +161,7 @@ class Jobs_Model extends CModel
     {
         $where      = [];
         $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
-        $tablename  = 'Job';
+        $tablename  = $this->tablename;
         $jobtype    = 'B';
         
         // Defined period
@@ -221,7 +209,7 @@ class Jobs_Model extends CModel
         $fields        = array( 'COUNT(DISTINCT Name) AS job_name_count' );
 
         // Prepare and execute query
-        $statment     = CDBQuery::get_Select(array( 'table' => 'Job', 'fields' => $fields ));
+        $statment     = CDBQuery::get_Select(array( 'table' => $this->tablename, 'fields' => $fields ));
         $result     = $this->run_query($statment);
 
         $result        = $result->fetch();
@@ -253,7 +241,7 @@ class Jobs_Model extends CModel
             $where[] = 'type = :jobtype';
         }
 
-        $statment   = array( 'table' => 'Job', 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
+        $statment   = array( 'table' => $this->tablename, 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
         $result     = $this->run_query(CDBQuery::get_Select($statment));
 
         foreach ($result->fetchAll() as $job) {
@@ -272,7 +260,7 @@ class Jobs_Model extends CModel
     public function getLevels($levels_name = array())
     {
         $levels = array();
-        $statment = array( 'table' => 'Job', 'fields' => array('Level'), 'groupby' => 'Level');
+        $statment = array( 'table' => $this->tablename, 'fields' => array('Level'), 'groupby' => 'Level');
         $result = $this->run_query(CDBQuery::get_Select($statment));
 
         foreach ($result->fetchAll() as $level) {
@@ -295,7 +283,7 @@ class Jobs_Model extends CModel
     public function getUsedJobTypes($job_types)
     {
         $used_types = array();
-        $sql_query = "SELECT DISTINCT Type from Job";
+        $sql_query = "SELECT DISTINCT Type from " . $this->tablename;
         $result = $this->run_query($sql_query);
 
         foreach ($result->fetchAll() as $job_type) {
@@ -332,7 +320,7 @@ class Jobs_Model extends CModel
           return null;
        } // end switch
 
-        $query = CDBQuery::get_Select(array( 'table' => 'Job',
+        $query = CDBQuery::get_Select(array( 'table' => $this->tablename,
           'fields' => $fields,
           'where' => $where,
           'groupby' => $groupby,
@@ -370,7 +358,7 @@ class Jobs_Model extends CModel
         $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
         $res = array();
 
-        $query = CDBQuery::get_Select(array( 'table' => 'Job',
+        $query = CDBQuery::get_Select(array( 'table' => $this->tablename,
           'fields' => $fields,
           'where' => $where,
           'orderby' => 'jobbytes DESC',

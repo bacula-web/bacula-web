@@ -39,7 +39,7 @@ class JobFilesView extends CView
     public function prepare()
     {
         $rows_per_page = 10;
-        $jobFiles = new JobFiles_Model();
+        $jobFiles = new JobFiles_Model('File');
         $filename = '';
 
         if (CHttpRequest::get_Value('jobId') != null) {

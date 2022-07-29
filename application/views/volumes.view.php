@@ -30,8 +30,8 @@ class VolumesView extends CView
     
     public function prepare()
     {
-        $volumes = new Volumes_Model();
-        $filteredVolumes = new Volumes_Model();
+        $volumes = new Volumes_Model('Media');
+        $filteredVolumes = new Volumes_Model('Media');
         $volumes_list = array();
         $volumes_total_bytes = 0;
         $where = null;
@@ -56,7 +56,7 @@ class VolumesView extends CView
             'Purged' => 'fa-battery-empty' );
 
         // Pools list filter
-        $pools = new Pools_Model();
+        $pools = new Pools_Model('Pool');
         $pools_list = array();
         
         // Create pools list
@@ -120,7 +120,7 @@ class VolumesView extends CView
         $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
         'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
 
-        $sqlQuery = CDBQuery::get_Select(array('table' => 'Media',
+        $sqlQuery = CDBQuery::get_Select(array('table' => $volumes->tablename,
                                             'fields' => $fields,
                                             'orderby' => "$volume_orderby_filter $volume_orderby_asc",
                                             'join' => array(

@@ -68,7 +68,7 @@ class Database_Model extends CModel
      */
     public function getCatalogVersion()
     {
-        $sqlQuery = CDBQuery::get_Select(array('table' => 'Version',
+        $sqlQuery = CDBQuery::get_Select(array('table' => $this->tablename,
             'fields' => array('VersionId'),
             'limit' => array( 'count' => 1, 'offset' => 0)
         ), $this->cdb->getDriverName());

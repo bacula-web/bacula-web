@@ -21,17 +21,6 @@ class Pools_Model extends CModel
 {
 
     // ==================================================================================
-    // Function: 	count()
-    // Parameters:	$pdo (PDO valid connection)
-    // Return:	row count for one table
-    // ==================================================================================
-
-    public function count($tablename = 'Pool', $filter = null)
-    {
-        return parent::count($tablename);
-    }
-  
-    // ==================================================================================
     // Function: 	getPools()
     // Parameters: 	none
     // Return:	pools list in a array
@@ -40,7 +29,6 @@ class Pools_Model extends CModel
     public function getPools()
     {
         $pools    = null;
-        $table    = 'Pool';
         $where    = null;
         $orderby  = 'Name';
         
@@ -49,7 +37,7 @@ class Pools_Model extends CModel
         }
         
         $fields = array( 'poolid', 'name', 'numvols');
-        $result = $this->run_query(CDBQuery::get_Select(array( 'table' => $table,
+        $result = $this->run_query(CDBQuery::get_Select(array( 'table' => $this->tablename,
                                                                   'fields' => $fields,
                                                                   'where' => $where,
                                                                   'orderby' => $orderby )));

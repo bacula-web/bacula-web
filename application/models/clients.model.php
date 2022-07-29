@@ -21,17 +21,6 @@ class Clients_Model extends CModel
 {
 
     // ==================================================================================
-    // Function: 	   count()
-    // Parameters:	$tablename - Client table name
-    // Return:		   Number of clients
-    // ==================================================================================
-
-    public function count($tablename = 'Client', $filter = null)
-    {
-        return parent::count($tablename);
-    }
-
-    // ==================================================================================
     // Function: 	getClients()
     // Parameters:	$pdo_connection - valide pdo object
     // Return:		array containing client list or false
@@ -40,11 +29,11 @@ class Clients_Model extends CModel
     public function getClients()
     {
         $clients      = array();
-        $table         = 'Client';
+        //$table         = 'Client';
         $fields        = array('ClientId, Name');
         $orderby    = 'Name';
 
-        $statment     = array( 'table' => $table, 'fields' => $fields, 'orderby' => $orderby );
+        $statment     = array( 'table' => $this->tablename, 'fields' => $fields, 'orderby' => $orderby );
 
         if (FileConfig::get_Value('show_inactive_clients') != null) {
             $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
@@ -74,8 +63,8 @@ class Clients_Model extends CModel
         $this->addParameter('clientid', $client_id);
         $where[]    = 'clientid = :clientid';
 
-        $statment   = CDBQuery::get_Select(array(   'table'=> 'Client', 
-                                                    'fields' => $fields, 
+        $statment   = CDBQuery::get_Select(array(   'table'=> $this->tablename,
+                                                    'fields' => $fields,
                                                     'where' => $where ), $this->get_driver_name());
         
         $result     = $this->run_query($statment);

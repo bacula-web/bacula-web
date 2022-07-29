@@ -20,23 +20,4 @@
 class FileSets_Model extends CModel
 {
 
-    // ==================================================================================
-    // Function: 	count()
-    // Parameters:	$tablename
-    //				$filter (optional)
-    // Return:		return row count for one table
-    // ==================================================================================
-
-    public function count($tablename = 'FileSet', $filter = null)
-    {
-        $fields    = array( "COUNT(DISTINCT $tablename) as filesets_count" );
-        $table    = 'FileSet';
-
-        // Prepare and execute query
-        $statment     = CDBQuery::get_Select(array( 'table' => $table, 'fields' => $fields ));
-        $result     = $this->run_query($statment);
-
-        $result = $result->fetch();
-        return $result['filesets_count'];
-    }
 }

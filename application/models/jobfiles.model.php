@@ -41,7 +41,7 @@ class JobFiles_Model extends CModel
             }
 
             $orderby = 'File.FileIndex ASC';
-            $sqlQuery = CDBQuery::get_Select(array('table' => 'File',
+            $sqlQuery = CDBQuery::get_Select(array('table' => $this->tablename,
                 'fields' => $fields,
                 'join' =>   array(  array('table' => 'Path', 'condition' => 'Path.PathId = File.PathId'),
                                     array('table' => 'Filename', 'condition' => 'File.FilenameId = Filename.FilenameId'),
@@ -60,7 +60,7 @@ class JobFiles_Model extends CModel
             }
 
             $orderby = 'File.FileIndex ASC';
-            $sqlQuery = CDBQuery::get_Select(array('table' => 'File',
+            $sqlQuery = CDBQuery::get_Select(array('table' => $this->tablename,
                 'fields' => $fields,
                 'join' =>   array(  array('table' => 'Path', 'condition' => 'Path.PathId = File.PathId'),
                                     array('table' => 'Job', 'condition' => 'Job.JobId = File.JobId') ),

@@ -43,7 +43,7 @@ class BackupJobView extends CView
         $this->assign('periods_list', $periods_list);
         
         // Stored Bytes on the defined period
-        $jobs = new Jobs_Model();
+        $jobs = new Jobs_Model('Job');
 
         // Get backup job(s) list
         $jobslist = $jobs->get_Jobs_List(null, 'B');
@@ -155,7 +155,7 @@ class BackupJobView extends CView
             // Backup job starttime and endtime
             $where[] = '(EndTime BETWEEN ' . $periods['starttime'] . ' AND ' . $periods['endtime'] . ')';
 
-            $query = CDBQuery::get_Select(array('table' => 'Job',
+            $query = CDBQuery::get_Select(array('table' => $jobs->tablename,
             'fields' => array( 'JobId', 'Level', 'JobFiles', 'JobBytes', 'ReadBytes', 'Job.JobStatus', 'StartTime', 'EndTime', 'Name', 'Status.JobStatusLong'),
             'where' => $where,
             'orderby' => 'EndTime DESC',
