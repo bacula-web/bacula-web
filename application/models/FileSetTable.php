@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class FileSets_Model extends Table
+class FileSetTable extends Table
 {
     protected $tablename = 'FileSet';
 }

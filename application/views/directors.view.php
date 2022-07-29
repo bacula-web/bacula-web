@@ -51,7 +51,7 @@ class DirectorsView extends CView
             $catalog = new CatalogTable(DatabaseFactory::getDatabase());
             $volumes = new VolumeTable(DatabaseFactory::getDatabase());
             $pools = new Pools_Model(DatabaseFactory::getDatabase());
-            $filesets = new FileSets_Model(DatabaseFactory::getDatabase());
+            $filesets = new FileSetTable(DatabaseFactory::getDatabase());
 
             $host = FileConfig::get_Value('host', $d);
             $db_user = FileConfig::get_Value('login', $d);
