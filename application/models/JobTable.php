@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class Jobs_Model extends Table
+class JobTable extends Table
 {
     protected $tablename = 'Job';
     // ==================================================================================

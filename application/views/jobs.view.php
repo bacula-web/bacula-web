@@ -30,8 +30,8 @@ class JobsView extends CView
 
     public function prepare()
     {
-        $jobs = new Jobs_Model(DatabaseFactory::getDatabase());
-        $filteredJobs = new Jobs_Model(DatabaseFactory::getDatabase());
+        $jobs = new JobTable(DatabaseFactory::getDatabase());
+        $filteredJobs = new JobTable(DatabaseFactory::getDatabase());
 
         $where = null;
 
