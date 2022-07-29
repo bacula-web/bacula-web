@@ -46,7 +46,7 @@ class DirectorsView extends CView
         for ($d=0; $d < $directors_count; $d++) {
             $_SESSION['catalog_id'] = $d;
 
-            $clients = new Clients_Model(DatabaseFactory::getDatabase());
+            $clients = new ClientTable(DatabaseFactory::getDatabase());
             $jobs = new Jobs_Model(DatabaseFactory::getDatabase());
             $catalog = new Database_Model(DatabaseFactory::getDatabase());
             $volumes = new Volumes_Model(DatabaseFactory::getDatabase());

@@ -188,7 +188,7 @@ class JobsView extends CView
         $this->assign('filter_job_endtime', $filter_job_endtime);
 
         // Clients list filter
-        $clients = new Clients_Model(DatabaseFactory::getDatabase());
+        $clients = new ClientTable(DatabaseFactory::getDatabase());
         $clients_list = $clients->getClients();
         $clients_list[0] = 'Any';
         $this->assign('clients_list', $clients_list);

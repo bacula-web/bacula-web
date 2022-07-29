@@ -40,7 +40,7 @@ class ClientView extends CView
 
         // Get job names for the client
         $jobs = new Jobs_Model(DatabaseFactory::getDatabase());
-        $client = new Clients_Model(DatabaseFactory::getDatabase());
+        $client = new ClientTable(DatabaseFactory::getDatabase());
  
         // Clients list
         $this->assign('clients_list', $client->getClients());
