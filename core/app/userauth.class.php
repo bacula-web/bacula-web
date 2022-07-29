@@ -27,7 +27,7 @@ class UserAuth extends CModel
         $this->appDbBackend = 'application/assets/protected/application.db';
         $this->dsn = "sqlite:$this->appDbBackend";
 
-        $this->cdb  = new CDB("sqlite:$this->appDbBackend");
+        $this->cdb  = new Database("sqlite:$this->appDbBackend");
         $this->db_link = $this-> cdb->getDb();
 
         // Throw an exception if PHP SQLite is not installed

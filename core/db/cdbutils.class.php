@@ -34,7 +34,7 @@ class CDBUtils
     public static function getConnectionStatus($PDO_connection)
     {
         // If MySQL of postGreSQL
-        if (CDB::getDriverName() != 'sqlite') {
+        if (Database::getDriverName() != 'sqlite') {
             return $PDO_connection->getAttribute(PDO::ATTR_CONNECTION_STATUS);
         } else {
             return 'N/A';

@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class CDB
+class Database
 {
     private $connection;
     private $driver;

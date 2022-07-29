@@ -32,7 +32,7 @@ class CModel
         }
 
         // Get PDO instance
-        $this->cdb = new CDB();
+        $this->cdb = new Database();
         $this->db_link = $this->cdb->getDb();
     }
 
