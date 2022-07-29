@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class Volumes_Model extends CModel
+class Volumes_Model extends Table
 {
     protected $tablename = 'Media';
  

@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class CModel
+class Table
 {
     protected $db_link;
     protected $cdb;
@@ -114,7 +114,7 @@ class CModel
 
  	    /**
  	    * Reset $this->parameters to an empty array
- 	    * Otherwise, next call to CModel::run_query() will fail if CModel::addParameters() is not called and CModel::parameters is not empty
+ 	    * Otherwise, next call to Table::run_query() will fail if Table::addParameters() is not called and Table::parameters is not empty
  	    */
  	    $this->parameters = [];
 

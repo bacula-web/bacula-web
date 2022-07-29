@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class UserAuth extends CModel
+class UserAuth extends Table
 {
     protected $appDbBackend;
     protected $dsn;

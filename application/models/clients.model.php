@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class Clients_Model extends CModel
+class Clients_Model extends Table
 {
     protected $tablename = 'Client';
 
