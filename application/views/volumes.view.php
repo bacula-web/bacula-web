@@ -56,7 +56,7 @@ class VolumesView extends CView
             'Purged' => 'fa-battery-empty' );
 
         // Pools list filter
-        $pools = new Pools_Model(DatabaseFactory::getDatabase());
+        $pools = new PoolTable(DatabaseFactory::getDatabase());
         $pools_list = array();
         
         // Create pools list

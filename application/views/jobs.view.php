@@ -194,7 +194,7 @@ class JobsView extends CView
         $this->assign('clients_list', $clients_list);
 
         // Pools list filer
-        $pools = new Pools_Model(DatabaseFactory::getDatabase());
+        $pools = new PoolTable(DatabaseFactory::getDatabase());
         $pools_list = array();
 
         foreach ($pools->getPools() as $pool) {

@@ -32,7 +32,7 @@ class DashboardView extends CView
     public function prepare()
     {
         $jobs = new JobTable(DatabaseFactory::getDatabase());
-        $pools = new Pools_Model(DatabaseFactory::getDatabase());
+        $pools = new PoolTable(DatabaseFactory::getDatabase());
         $volumes = new VolumeTable(DatabaseFactory::getDatabase());
 
         require_once('core/const.inc.php');

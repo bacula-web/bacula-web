@@ -31,7 +31,7 @@ class PoolsView extends CView
     public function prepare()
     {
         // Get volumes list (pools.tpl)
-        $pools = new Pools_Model(DatabaseFactory::getDatabase());
+        $pools = new PoolTable(DatabaseFactory::getDatabase());
         $pools_list = array();
         $plist = $pools->getPools();
 

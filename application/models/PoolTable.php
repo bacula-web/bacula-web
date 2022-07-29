@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class Pools_Model extends Table
+class PoolTable extends Table
 {
 
     protected $tablename = 'Pool';
