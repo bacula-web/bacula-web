@@ -90,4 +90,29 @@ class Database
         $server_version = explode(':', $server_version);
         return $server_version[0];
     }
+
+    // ==================================================================================
+    // Function: 	getServerTimestamp()
+    // Parameters:   none
+    // Return:		   return database server timestamp
+    // ==================================================================================
+
+    /**
+     * @return string|false
+     */
+    public function getServerTimestamp()
+    {
+        // Different query for SQlite
+        if ($this->getDriverName() == 'sqlite') {
+            $statment = "SELECT datetime('now') as currentdatetime";
+        } else {
+            $statment = 'SELECT now() as currentdatetime';
+        }
+
+        $result = $this->connection->query($statment);
+        $result = $result->fetch();
+
+        // Return timestamp
+        return strtotime($result['currentdatetime']);
+    } // end function getServerTimestamp()
 }

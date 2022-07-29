@@ -44,15 +44,14 @@ class DirectorsView extends CView
         $this->assign('directors_count', $directors_count);
 
         for ($d=0; $d < $directors_count; $d++) {
-            // Create new instance of Database_Model with the correct catalog_id
             $_SESSION['catalog_id'] = $d;
 
-            $clients = new Clients_Model();
-            $jobs = new Jobs_Model();
-            $catalog = new Database_Model();
-            $volumes = new Volumes_Model();
-            $pools = new Pools_Model();
-            $filesets = new FileSets_Model();
+            $clients = new Clients_Model(DatabaseFactory::getDatabase());
+            $jobs = new Jobs_Model(DatabaseFactory::getDatabase());
+            $catalog = new Database_Model(DatabaseFactory::getDatabase());
+            $volumes = new Volumes_Model(DatabaseFactory::getDatabase());
+            $pools = new Pools_Model(DatabaseFactory::getDatabase());
+            $filesets = new FileSets_Model(DatabaseFactory::getDatabase());
 
             $host = FileConfig::get_Value('host', $d);
             $db_user = FileConfig::get_Value('login', $d);

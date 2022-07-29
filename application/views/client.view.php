@@ -39,9 +39,8 @@ class ClientView extends CView
         $days_stored_files = array();
 
         // Get job names for the client
-        $jobs = new Jobs_Model('Job');
-
-        $client = new Clients_Model('Client');
+        $jobs = new Jobs_Model(DatabaseFactory::getDatabase());
+        $client = new Clients_Model(DatabaseFactory::getDatabase());
  
         // Clients list
         $this->assign('clients_list', $client->getClients());
@@ -143,7 +142,7 @@ class ClientView extends CView
        
             $this->assign('backup_jobs', $backup_jobs);
        
-            $jobsStats = new Jobs_Model('Job');
+            $jobsStats = new Jobs_Model(DatabaseFactory::getDatabase());
             // Last n days stored Bytes graph
             foreach ($days as $day) {
                 $stored_bytes = $jobsStats->getStoredBytes(array($day['start'], $day['end']), 'ALL', $clientid);
@@ -161,7 +160,7 @@ class ClientView extends CView
        
             unset($stored_bytes_chart);
        
-            $jobsStats = new Jobs_Model('Job');
+            $jobsStats = new Jobs_Model(DatabaseFactory::getDatabase());
 
             // Last n days stored files graph
             foreach ($days as $day) {

@@ -31,7 +31,7 @@ class TestView extends CView
 
     public function prepare()
     {
-        $catalog = new Database_Model();
+        $catalog = new Database_Model(DatabaseFactory::getDatabase());
         
         // Installed PDO drivers
         $pdo_drivers = PDO::getAvailableDrivers();

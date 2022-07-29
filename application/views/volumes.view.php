@@ -30,8 +30,8 @@ class VolumesView extends CView
     
     public function prepare()
     {
-        $volumes = new Volumes_Model('Media');
-        $filteredVolumes = new Volumes_Model('Media');
+        $volumes = new Volumes_Model(DatabaseFactory::getDatabase());
+        $filteredVolumes = new Volumes_Model(DatabaseFactory::getDatabase());
         $volumes_list = array();
         $volumes_total_bytes = 0;
         $where = null;
@@ -56,7 +56,7 @@ class VolumesView extends CView
             'Purged' => 'fa-battery-empty' );
 
         // Pools list filter
-        $pools = new Pools_Model('Pool');
+        $pools = new Pools_Model(DatabaseFactory::getDatabase());
         $pools_list = array();
         
         // Create pools list

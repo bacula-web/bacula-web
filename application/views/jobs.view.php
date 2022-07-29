@@ -30,8 +30,8 @@ class JobsView extends CView
 
     public function prepare()
     {
-        $jobs = new Jobs_Model('Job');
-        $filteredJobs = new Jobs_Model('Job');
+        $jobs = new Jobs_Model(DatabaseFactory::getDatabase());
+        $filteredJobs = new Jobs_Model(DatabaseFactory::getDatabase());
 
         $where = null;
 
@@ -188,13 +188,13 @@ class JobsView extends CView
         $this->assign('filter_job_endtime', $filter_job_endtime);
 
         // Clients list filter
-        $clients = new Clients_Model('Client');
+        $clients = new Clients_Model(DatabaseFactory::getDatabase());
         $clients_list = $clients->getClients();
         $clients_list[0] = 'Any';
         $this->assign('clients_list', $clients_list);
 
         // Pools list filer
-        $pools = new Pools_Model('Pool');
+        $pools = new Pools_Model(DatabaseFactory::getDatabase());
         $pools_list = array();
 
         foreach ($pools->getPools() as $pool) {

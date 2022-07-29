@@ -25,14 +25,18 @@ class CModel
     protected $parameters;
     protected $tablename = null;
 
-    public function __construct()
+    /**
+     * @param Database $db
+     * @throws Exception
+     */
+    public function __construct(Database $db)
     {
         if ($this->tablename === null) {
             throw new Exception("\$tablename property is not set in " . static::class . ' class');
         }
 
         // Get PDO instance
-        $this->cdb = new Database();
+        $this->cdb = $db;
         $this->db_link = $this->cdb->getDb();
     }
 
@@ -68,28 +72,6 @@ class CModel
             return $result['row_count'];
         }
     }
-
-    // ==================================================================================
-    // Function: 	getServerTimestamp()
-    // Parameters:   none
-    // Return:		   return database server timestamp
-    // ==================================================================================
-    
-    public function getServerTimestamp()
-    {
-        // Different query for SQlite
-        if ($this->get_driver_name() == 'sqlite') {
-            $statment = "SELECT datetime('now') as currentdatetime";
-        } else {
-            $statment = 'SELECT now() as currentdatetime';
-        }
-           
-        $result = $this->run_query($statment);
-        $result = $result->fetch();
-           
-        // Return timestamp
-        return strtotime($result['currentdatetime']);
-    } // end function getServerTimestamp()
 
     public function get_driver_name()
     {

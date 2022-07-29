@@ -43,7 +43,7 @@ class BackupJobView extends CView
         $this->assign('periods_list', $periods_list);
         
         // Stored Bytes on the defined period
-        $jobs = new Jobs_Model('Job');
+        $jobs = new Jobs_Model(DatabaseFactory::getDatabase());
 
         // Get backup job(s) list
         $jobslist = $jobs->get_Jobs_List(null, 'B');
