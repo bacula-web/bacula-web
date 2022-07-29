@@ -52,7 +52,7 @@ class Database
         // Set PDO connection options
         $this->connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->connection->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('CDBResult', array($this)));
+        $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
         // MySQL connection specific parameter
         if ($this->getDriverName() == 'mysql') {
