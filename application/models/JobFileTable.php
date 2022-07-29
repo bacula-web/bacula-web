@@ -18,14 +18,14 @@
  */
 
 /**
- * Description of JobFiles_Model class
+ * Description of JobFileTable class
  *
  * @author Gabriele Orlando
  * @author Davide Franco
  * @copyright 2018-2021 Gabriele Orlando
  */
 
-class JobFiles_Model extends Table
+class JobFileTable extends Table
 {
     protected $tablename = 'File';
 
