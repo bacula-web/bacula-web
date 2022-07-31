@@ -61,15 +61,13 @@ class Table
 
         // Prepare and execute query
         $statment   = CDBQuery::get_Select(array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $filter));
-        $result     = $this->run_query($statment);
-
-        $result     = $result->fetch();
+        $result     = $this->query($statment)[0];
 
         // If SQL count result is null, return 0 instead (much better when plotting data)
         if (is_null($result['row_count'])) {
             return 0;
         } else {
-            return $result['row_count'];
+            return (int)$result['row_count'];
         }
     }
 
@@ -78,7 +76,23 @@ class Table
         return $this->cdb->getDriverName();
     }
 
-    /*
+    public function query(string $query, $params = null, $fetchClass = null)
+    {
+        $statment = null;
+        if ($params !== null) {
+            $statment = $this->db_link->prepare($query);
+            $statment->execute($params);
+        } else {
+            $statment = $this->db_link->query($query);
+        }
+
+        if ($fetchClass !== null) {
+            $statment->setFetchMode(PDO::FETCH_CLASS, $fetchClass);
+        }
+        return $statment->fetchAll();
+    }
+
+    /**
       Function: run_query
       Parameters:  $query
       Return:	   PDO_Statment
