@@ -26,9 +26,15 @@
 
 class CDBPagination
 {
+    private $totalRow = 0;
+    private $filteredRow = 0;
     private $currentView;
     private $offset;
     private $limit;
+    /**
+     * Number max of pages
+     * @var
+     */
     private $paginationMax;
     private $paginationSteps = 4;
     private $paginationLink;
@@ -68,20 +74,24 @@ class CDBPagination
     {
         return $this->limit;
     }
-    
+
     /**
-     * paginate
-     *
-     * @param PDOStatement $dbResult
-     * @param int $rowsTotal total row(s) in the table
-     * @param int $rowsFiltered total filtered rows in the table
-     * @return array
+     * @param Table $table
+     * @param $query
+     * @param $queryCount
+     * @param $params
+     * @return array|false
      */
-    public function paginate($dbResult, $rowsTotal, $rowsFiltered)
-    {        
-        $this->currentView->assign('rowcount', $rowsTotal);
-        $this->currentView->assign('count', $rowsFiltered);
-        $this->paginationMax = intval($rowsFiltered / $this->limit)+1;
+    public function paginate(Table $table, $query, $queryCount, $params = null)
+    {
+        $this->totalRow = $table->count();
+        $this->currentView->assign('rowcount', $this->totalRow);
+
+        $this->filteredRow = $table->query($queryCount, $params)[0]['row_count'];
+        $this->paginationMax = ceil($this->filteredRow / $this->limit);
+
+        $this->currentView->assign('count', $this->filteredRow);
+
         $this->currentView->assign('pagination_link', $this->paginationLink);
 
         if (!is_null(filter_input(INPUT_GET, 'pagination_page'))) {
@@ -133,19 +143,18 @@ class CDBPagination
             }
             
             $this->currentView->assign('first', 'disabled');
-            
         }
 
         // these lines below are buggy :(
-        if($this->paginationMax == $this->paginationCurrent ) {
-            $this->currentView->assign('pagination_range', ($this->offset) . ' to '. $rowsFiltered);
-        }else {
+        if ($this->paginationMax == $this->paginationCurrent) {
+            $this->currentView->assign('pagination_range', ($this->offset) . ' to '. $this->filteredRow);
+        } else {
             $this->currentView->assign('pagination_range', ($this->offset) . ' to '. ($this->offset+$this->limit));
         }
     
         $this->currentView->assign('pagination_max', $this->paginationMax);
         $this->currentView->assign('pagination_steps', $this->paginationSteps);
 
-        return $dbResult->fetchAll();
+        return $table->query($query, $params);
     }
 }

@@ -31,15 +31,10 @@ class JobsView extends CView
     public function prepare()
     {
         $jobs = new JobTable(DatabaseFactory::getDatabase());
-        $filteredJobs = new JobTable(DatabaseFactory::getDatabase());
-
         $where = null;
 
         // Total of Jobs
         $totalJobs = $jobs->count();
-
-        // Paginate database query result
-        $pagination = new CDBPagination($this);
 
         // This is horrible, it must be improved :(
         require_once('core/const.inc.php');
@@ -233,35 +228,32 @@ class JobsView extends CView
 
         // Selected level filter
         if ($filter_joblevel != '0') {
-            $jobs->addParameter('job_level', $filter_joblevel);
-            $filteredJobs->addParameter('job_level', $filter_joblevel);
             $where[] .= "Job.Level = :job_level ";
+            $params['job_level'] = $filter_joblevel;
         }
  
         // Selected pool filter
         if ($filter_poolid != '0') {
-            $jobs->addParameter('pool_id', $filter_poolid);
-            $filteredJobs->addParameter('pool_id', $filter_poolid);
             $where[] .= "Job.PoolId = :pool_id ";
+            $params['pool_id'] = $filter_poolid;
         }
 
         if($filter_jobtype !== '0') {
-            $jobs->addParameter('job_type', $filter_jobtype);
-            $filteredJobs->addParameter('job_type', $filter_jobtype);
             $where[] = "Job.Type = :job_type";
+            $params['job_type'] = $filter_jobtype;
         }
 
         // Selected client filter
         if ($filter_clientid != '0') {
-            $jobs->addParameter('client_id', $filter_clientid);
-            $filteredJobs->addParameter('client_id', $filter_clientid);
             $where[] .= "Job.ClientId = :client_id";
+            $params['client_id'] = $filter_clientid;
         }
 
         // Selected job start time filter
         if (!is_null($filter_job_starttime) && !empty($filter_job_starttime)) {
             if (DateTimeUtil::checkDate($filter_job_starttime)) {
                 $where[] = "Job.StartTime >= '$filter_job_starttime'";
+                $params['Job.StartTime'] = $filter_job_starttime;
             }
         }
         
@@ -269,6 +261,7 @@ class JobsView extends CView
         if (!is_null($filter_job_endtime) && !empty($filter_job_starttime)) {
             if (DateTimeUtil::checkDate($filter_job_endtime)) {
                 $where[] = "Job.EndTime <= '$filter_job_endtime'";
+                $params['Job.EndTime'] = $filter_job_endtime;
             }
         }
 
@@ -284,21 +277,28 @@ class JobsView extends CView
             $this->assign('result_order_asc_checked', '');
         }
 
+        // Paginate database query result
+        $pagination = new CDBPagination($this);
+
         // Parsing jobs result
         $sqlQuery = CDBQuery::get_Select(array('table' => 'Job',
             'fields' => $fields,
             'where' => $where,
             'orderby' => $orderby,
             'limit' => [
-                'count' => $pagination->getLimit(), 
-                'offset' => $pagination->getOffset() 
+                'count' => $pagination->getLimit(),
+                'offset' => $pagination->getOffset()
             ],
             'join' => array(
                 array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
-            ) ),$jobs->get_driver_name());
-        
-        foreach( $pagination->paginate($jobs->run_query($sqlQuery), $totalJobs, $filteredJobs->count('Job', $where)) as $job) {
+            ) ), $jobs->get_driver_name());
+
+        $countQuery = CDBQuery::get_Select(array('table' => 'Job',
+            'fields' => ['COUNT(*) AS row_count'],
+            'where' => $where));
+
+        foreach ($pagination->paginate($jobs, $sqlQuery, $countQuery, $params) as $job) {
             // Determine icon for job status
             switch ($job['jobstatus']) {
             case J_RUNNING:
