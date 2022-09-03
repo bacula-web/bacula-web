@@ -39,8 +39,12 @@ class CDBPagination
     private $paginationSteps = 4;
     private $paginationLink;
     private $paginationCurrent = 1;
-    
-    public function __construct($view)
+
+    /**
+     * @param CView $view
+     * @throws Exception
+     */
+    public function __construct(CView $view)
     {
         $this->currentView = $view;
         $this->limit = (FileConfig::get_Value('rows_per_page') !== null) ? FileConfig::get_Value('rows_per_page') : 25;
