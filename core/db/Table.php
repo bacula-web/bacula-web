@@ -71,12 +71,21 @@ class Table
         }
     }
 
-    public function get_driver_name()
+    /**
+     * @return mixed
+     */
+    public function get_driver_name() :string
     {
         return $this->cdb->getDriverName();
     }
 
-    public function query(string $query, $params = null, $fetchClass = null)
+    /**
+     * @param string $query
+     * @param array|null $params array
+     * @param string|null $fetchClass
+     * @return array|false
+     */
+    public function query(string $query, array $params = null, string $fetchClass = null)
     {
         $statment = null;
         if ($params !== null) {
