@@ -17,21 +17,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class Volumes_Model extends CModel
+class VolumeTable extends Table
 {
+    protected $tablename = 'Media';
  
-    // ==================================================================================
-    // Function: 	count()
-    // Parameters:	$tablename
-    //				$filter (optional)
-    // Return:		return row count for one table
-    // ==================================================================================
-
-    public function count($tablename = 'Media', $filter = null)
-    {
-        return parent::count($tablename, $filter);
-    }
-
     // ==================================================================================
     // Function: 	getDiskUsage()
     // Parameters: 	none
@@ -41,7 +30,7 @@ class Volumes_Model extends CModel
     public function getDiskUsage()
     {
         $fields        = array('SUM(Media.VolBytes) as bytes_size');
-        $statment     = array( 'table' => 'Media', 'fields' => $fields );
+        $statment     = array( 'table' => $this->tablename, 'fields' => $fields );
         
         // Run SQL query
         $result     = $this->run_query(CDBQuery::get_Select($statment));
@@ -83,7 +72,7 @@ class Volumes_Model extends CModel
         $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
         'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
 
-        $query = CDBQuery::get_Select( array('table'=>'Media',
+        $query = CDBQuery::get_Select( array('table'=> $this->tablename,
                                             'fields' => $fields,
                                             'orderby' => "$orderby $orderasc",
                                             'join' => array(

@@ -17,95 +17,98 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class CModel
+class Table
 {
     protected $db_link;
     protected $cdb;
     protected $driver;
     protected $parameters;
+    protected $tablename = null;
 
-    public function __construct()
+    /**
+     * @param Database $db
+     * @throws Exception
+     */
+    public function __construct(Database $db)
     {
-        $user = '';
-        $pwd  = '';
-        $this->cdb  = new CDB();
-
-        // Open config file
-        FileConfig::open(CONFIG_FILE);
-
-        // Create PDO connection to database
-        $catalog_id = $_SESSION['catalog_id'];
-        $this->driver = FileConfig::get_Value('db_type', $catalog_id);
-        $dsn = FileConfig::get_DataSourceName($catalog_id);
-      
-        if ($this->driver != 'sqlite') {
-            $user = FileConfig::get_Value('login', $catalog_id);
-            $pwd  = FileConfig::get_Value('password', $catalog_id);
+        if ($this->tablename === null) {
+            throw new Exception("\$tablename property is not set in " . static::class . ' class');
         }
 
-        switch ($this->driver) {
-         case 'mysql':
-         case 'pgsql':
-            $this->db_link = $this->cdb->connect($dsn, $user, $pwd);
-         break;
-         case 'sqlite':
-            $this->db_link = $this->cdb->connect($dsn);
-      } // end switch
+        // Get PDO instance
+        $this->cdb = $db;
+        $this->db_link = $this->cdb->getDb();
     }
- 
-    // ==================================================================================
-    // Function: 	count()
-    // Parameters:	$tablename
-    //				$filter (optional)
-    // Return:		return row count for one table
-    // ==================================================================================
 
-    protected function count($tablename, $filter = null)
+    /**
+     * @return string
+     */
+    public function getTableName() :string
+    {
+        return $this->tablename;
+    }
+
+    /**
+     * Return table row count or 0
+     *
+     * @param $filter
+     * @return int
+     * @throws Exception
+     */
+    public function count($filter = null) :int
     {
         $fields        = array( 'COUNT(*) as row_count' );
 
         // Prepare and execute query
-        $statment   = CDBQuery::get_Select(array( 'table' => $tablename, 'fields' => $fields, 'where' => $filter));
-        $result     = $this->run_query($statment);
+        $statment   = CDBQuery::get_Select(
+            [
+                'table' => $this->tablename,
+                'fields' => $fields,
+                'where' => $filter
+            ]
+        );
 
-        $result     = $result->fetch();
+        $result     = $this->query($statment)[0];
 
         // If SQL count result is null, return 0 instead (much better when plotting data)
         if (is_null($result['row_count'])) {
             return 0;
         } else {
-            return $result['row_count'];
+            return (int)$result['row_count'];
         }
     }
 
-    // ==================================================================================
-    // Function: 	getServerTimestamp()
-    // Parameters:   none
-    // Return:		   return database server timestamp
-    // ==================================================================================
-    
-    public function getServerTimestamp()
-    {
-        // Different query for SQlite
-        if ($this->get_driver_name() == 'sqlite') {
-            $statment = "SELECT datetime('now') as currentdatetime";
-        } else {
-            $statment = 'SELECT now() as currentdatetime';
-        }
-           
-        $result = $this->run_query($statment);
-        $result = $result->fetch();
-           
-        // Return timestamp
-        return strtotime($result['currentdatetime']);
-    } // end function getServerTimestamp()
-
-    public function get_driver_name()
+    /**
+     * @return mixed
+     */
+    public function get_driver_name() :string
     {
         return $this->cdb->getDriverName();
     }
 
-    /*
+    /**
+     * @param string $query
+     * @param array|null $params array
+     * @param string|null $fetchClass
+     * @return array|false
+     */
+    public function query(string $query, array $params = null, string $fetchClass = null)
+    {
+        $statment = null;
+        if ($params !== null) {
+            $statment = $this->db_link->prepare($query);
+            $statment->execute($params);
+        } else {
+            $statment = $this->db_link->query($query);
+        }
+
+        if ($fetchClass !== null) {
+            $statment->setFetchMode(PDO::FETCH_CLASS, $fetchClass);
+        }
+        return $statment->fetchAll();
+    }
+
+    /**
       Function: run_query
       Parameters:  $query
       Return:	   PDO_Statment
@@ -141,7 +144,7 @@ class CModel
 
  	    /**
  	    * Reset $this->parameters to an empty array
- 	    * Otherwise, next call to CModel::run_query() will fail if CModel::addParameters() is not called and CModel::parameters is not empty
+ 	    * Otherwise, next call to Table::run_query() will fail if Table::addParameters() is not called and Table::parameters is not empty
  	    */
  	    $this->parameters = [];
 
@@ -164,12 +167,11 @@ class CModel
         $this->parameters[$name] = $value;
     }
 
-    // ==================================================================================
-    // Function:     getConnectionStatus()
-    // Parameters:   none
-    // Return:       PDO connection status (string)
-    // ==================================================================================
-   
+    /**
+     * Return PDO connection status
+     *
+     * @return mixed|string
+     */
     public function getConnectionStatus()
     {
         // If MySQL of postGreSQL
@@ -180,13 +182,10 @@ class CModel
         }
     }
 
-    // ==================================================================================
-    // Function:      isConnected()
-    // Parameters:    none
-    // Return:        true if PDO connection is ok, false otherwise
-    // ==================================================================================
-
-    public function isConnected()
+    /**
+     * @return bool
+     */
+    public function isConnected() :bool
     {
         // If MySQL of postGreSQL
         switch ($this->get_driver_name()) {

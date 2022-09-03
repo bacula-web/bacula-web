@@ -30,8 +30,9 @@ class VolumesView extends CView
     
     public function prepare()
     {
-        $volumes = new Volumes_Model();
-        $filteredVolumes = new Volumes_Model();
+        $volumes = new VolumeTable(DatabaseFactory::getDatabase());
+        $params = [];
+
         $volumes_list = array();
         $volumes_total_bytes = 0;
         $where = null;
@@ -39,9 +40,6 @@ class VolumesView extends CView
 
         // Paginate database query result
         $pagination = new CDBPagination($this);
-
-        // Count volumes
-        $volumesTotal = $volumes->count('Media');
 
         // Volumes status icon
         $volume_status = array( 'Full' => 'fa-battery-full',
@@ -56,7 +54,7 @@ class VolumesView extends CView
             'Purged' => 'fa-battery-empty' );
 
         // Pools list filter
-        $pools = new Pools_Model();
+        $pools = new PoolTable(DatabaseFactory::getDatabase());
         $pools_list = array();
         
         // Create pools list
@@ -75,12 +73,11 @@ class VolumesView extends CView
             
             if (CHttpRequest::get_Value('filter_pool_id') !== '0') {
                 $pool_id = CHttpRequest::get_Value('filter_pool_id');
-                $volumes->addParameter('pool_id', $pool_id);
-                $filteredVolumes->addParameter('pool_id', $pool_id);
                 $where[] = 'Media.PoolId = :pool_id';
+                $params['pool_id'] = $pool_id;
             }
         }
-        
+
         // Order by
         $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
         
@@ -111,16 +108,15 @@ class VolumesView extends CView
         $this->assign('inchanger_checked', '');
 
         if (!is_null(CHttpRequest::get_Value('filter_inchanger'))) {
-            $volumes->addParameter('inchanger', 1);
-            $filteredVolumes->addParameter('inchanger', 1);
             $where[] = 'Media.inchanger = :inchanger';
+            $params['inchanger'] = 1;
             $this->assign('inchanger_checked', 'checked');
         }
 
         $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
         'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
 
-        $sqlQuery = CDBQuery::get_Select(array('table' => 'Media',
+        $sqlQuery = CDBQuery::get_Select(array('table' => $volumes->getTableName(),
                                             'fields' => $fields,
                                             'orderby' => "$volume_orderby_filter $volume_orderby_asc",
                                             'join' => array(
@@ -128,11 +124,16 @@ class VolumesView extends CView
                                             ),
                                             'where' => $where,
                                             'limit' => [
-                                                'count' => $pagination->getLimit(), 
+                                                'count' => $pagination->getLimit(),
                                                 'offset' => $pagination->getOffset() ]
                                             ),$volumes->get_driver_name());
 
-        foreach($pagination->paginate($volumes->run_query($sqlQuery), $volumesTotal, $filteredVolumes->count('Media', $where)) as $volume) {
+        $countQuery = CDBQuery::get_Select([
+            'table' => $volumes->getTableName(),
+            'fields' => ['COUNT(*) as row_count'],
+            'where' => $where ]);
+
+        foreach($pagination->paginate($volumes, $sqlQuery, $countQuery, $params) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {

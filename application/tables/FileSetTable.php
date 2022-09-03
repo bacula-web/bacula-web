@@ -17,10 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class CDBResult extends PDOStatement
+class FileSetTable extends Table
 {
-    protected function __construct()
-    {
-        $this->setFetchMode(PDO::FETCH_ASSOC);
-    }
+    protected $tablename = 'FileSet';
 }

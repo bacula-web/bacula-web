@@ -17,14 +17,18 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class UserAuth extends CModel
+class UserAuth extends Table
 {
     protected $appDbBackend;
     protected $dsn;
 
     public function __construct()
     {
-        $this->cdb  = new CDB();
+        $this->appDbBackend = 'application/assets/protected/application.db';
+        $this->dsn = "sqlite:$this->appDbBackend";
+
+        $this->cdb  = new Database("sqlite:$this->appDbBackend");
+        $this->db_link = $this-> cdb->getDb();
 
         // Throw an exception if PHP SQLite is not installed
         $pdoDrivers = PDO::getAvailableDrivers();
@@ -43,11 +47,6 @@ class UserAuth extends CModel
         if ($webUser != $assetsOwner['name']) {
             throw new Exception('Bad ownership / permissions for protected assets folder (application/assets/protected)');
         }
-
-        $this->appDbBackend = 'application/assets/protected/application.db';
-        $this->dsn = "sqlite:$this->appDbBackend";
-
-        $this->db_link = $this->cdb->connect($this->dsn);
     }
 
     public function checkSchema()

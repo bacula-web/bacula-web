@@ -17,8 +17,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-class Database_Model extends CModel
+class CatalogTable extends Table
 {
+    protected $tablename = 'Version';
     private $dbVersionId = '';
  
     // ==================================================================================
@@ -31,7 +32,7 @@ class Database_Model extends CModel
     {
         $db_name    = FileConfig::get_Value('db_name', $catalog_id);
         
-        switch ($this->driver) {
+        switch ($this->cdb->getDriverName()) {
             case 'mysql':
              // Return N/A for MySQL server prior version 5 (no information_schemas)
                 if (version_compare($this->cdb->getServerVersion(), '5.0.0') >= 0) {
@@ -68,10 +69,10 @@ class Database_Model extends CModel
      */
     public function getCatalogVersion()
     {
-        $sqlQuery = CDBQuery::get_Select(array('table' => 'Version',
+        $sqlQuery = CDBQuery::get_Select(array('table' => $this->tablename,
             'fields' => array('VersionId'),
             'limit' => array( 'count' => 1, 'offset' => 0)
-        ), $this->driver);
+        ), $this->cdb->getDriverName());
         
         $result = $this->run_query($sqlQuery);
         $this->dbVersionId = intval($result->fetchColumn()); 
