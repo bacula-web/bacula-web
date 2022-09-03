@@ -172,7 +172,7 @@ class Table
      *
      * @return mixed|string
      */
-    public function getConnectionStatus() :
+    public function getConnectionStatus()
     {
         // If MySQL of postGreSQL
         if ($this->get_driver_name() != 'sqlite') {
