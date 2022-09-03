@@ -55,12 +55,24 @@ class Table
     // Return:		return row count for one table
     // ==================================================================================
 
-    public function count($filter = null)
+    /**
+     * @param $filter
+     * @return int
+     * @throws Exception
+     */
+    public function count($filter = null) :int
     {
         $fields        = array( 'COUNT(*) as row_count' );
 
         // Prepare and execute query
-        $statment   = CDBQuery::get_Select(array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $filter));
+        $statment   = CDBQuery::get_Select(
+            array(
+                'table' => $this->tablename,
+                'fields' => $fields,
+                'where' => $filter
+            )
+        );
+
         $result     = $this->query($statment)[0];
 
         // If SQL count result is null, return 0 instead (much better when plotting data)
