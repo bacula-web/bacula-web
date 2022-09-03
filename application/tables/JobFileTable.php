@@ -72,9 +72,7 @@ class JobFileTable extends Table
             ), $this->cdb->getDriverName());
         }
 
-        $result = $this->run_query($sqlQuery);
-
-        return $result->fetchAll();
+        return $this->run_query($sqlQuery)->fetchAll();
     }
 
     public function countJobFiles($jobId, $filename = '')
