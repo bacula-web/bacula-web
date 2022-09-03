@@ -5,11 +5,13 @@
 - General
   - Use combined operators in CUtil class (see #91)
   - Minor refactoring of PDO related PHP classes (see #100)
+  - Update composer.json by adding ext-pdo depencency (see #113)
 
 ### Fixed bug(s)
 
 - #91 [enhancement] - Use combined operators (thanks to @elfring)
 - #100 [enhancement] - Refactor PHP PDO database related classes
+- #113 [bugfix] - Add missing ext-pdo to composer.json
 
 ### New feature(s)
 
