@@ -19,17 +19,13 @@
 
 class UserAuth extends Table
 {
+    protected $tablename = 'Users';
     protected $appDbBackend;
     protected $dsn;
 
-    public function __construct()
+    public function check()
     {
         $this->appDbBackend = 'application/assets/protected/application.db';
-        $this->dsn = "sqlite:$this->appDbBackend";
-
-        $this->cdb  = new Database("sqlite:$this->appDbBackend");
-        $this->db_link = $this-> cdb->getDb();
-
         // Throw an exception if PHP SQLite is not installed
         $pdoDrivers = PDO::getAvailableDrivers();
        
@@ -42,7 +38,7 @@ class UserAuth extends Table
         exec('whoami', $webUser);
         $webUser = reset($webUser);
        
-        $assetsOwner = posix_getpwuid(fileowner('application/assets/protected'));
+        $assetsOwner = posix_getpwuid(fileowner($this->appDbBackend));
       
         if ($webUser != $assetsOwner['name']) {
             throw new Exception('Bad ownership / permissions for protected assets folder (application/assets/protected)');
@@ -51,7 +47,6 @@ class UserAuth extends Table
 
     public function checkSchema()
     {
-        
         // Check if sqlite db file is writable
         if (!is_writable($this->appDbBackend)) {
             throw new Exception('Application backend database file is not writable, please fix it');
@@ -59,8 +54,8 @@ class UserAuth extends Table
 
         // Check if Users table exist
         $query = "SELECT name FROM sqlite_master WHERE type='table' AND name='Users';";
-        $res = $this->run_query($query);
 
+        $res = $this->run_query($query);
         $res = $res->fetchAll();
 
         // Users table do not exist, let's create it

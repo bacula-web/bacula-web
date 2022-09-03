@@ -23,7 +23,8 @@ class Database
     private $driver;
 
     /**
-     * @param $dsn|null
+     * @param $dsn
+     * @throws Exception
      */
     public function __construct($dsn = null)
     {

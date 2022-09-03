@@ -39,12 +39,13 @@ class WebApplication
         } else {
             $this->enable_users_auth = true;
         }
-        
 
         if ($this->enable_users_auth  === true) {
 
             // Prepare users authentication back-end
-            $this->userauth = new UserAuth();
+            $appDbBackend = 'application/assets/protected/application.db';
+            $this->userauth = new UserAuth( DatabaseFactory::getDatabase('sqlite:' . $appDbBackend));
+            $this->userauth->check();
             
             // Check if database exists and is writable
             $this->userauth->checkSchema();
