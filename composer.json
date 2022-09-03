@@ -21,6 +21,7 @@
       "ext-gettext": "*",
       "ext-mbstring": "*",
       "ext-openssl": "*",
+      "ext-pdo": "*",
       "ext-sqlite3": "*",
       "ext-posix": "*",
       "novus/nvd3": "@stable",
