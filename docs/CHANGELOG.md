@@ -3,10 +3,13 @@
 ### Changelog
 
 - General
+  - Use combined operators in CUtil class (see #91)
+  - Minor refactoring of PDO related PHP classes (see #100)
 
 ### Fixed bug(s)
 
 - #91 [enhancement] - Use combined operators (thanks to @elfring)
+- #100 [enhancement] - Refactor PHP PDO database related classes
 
 ### New feature(s)
 
