@@ -167,13 +167,12 @@ class Table
         $this->parameters[$name] = $value;
     }
 
-    // ==================================================================================
-    // Function:     getConnectionStatus()
-    // Parameters:   none
-    // Return:       PDO connection status (string)
-    // ==================================================================================
-   
-    public function getConnectionStatus()
+    /**
+     * Return PDO connection status
+     *
+     * @return mixed|string
+     */
+    public function getConnectionStatus() :
     {
         // If MySQL of postGreSQL
         if ($this->get_driver_name() != 'sqlite') {
@@ -183,13 +182,10 @@ class Table
         }
     }
 
-    // ==================================================================================
-    // Function:      isConnected()
-    // Parameters:    none
-    // Return:        true if PDO connection is ok, false otherwise
-    // ==================================================================================
-
-    public function isConnected()
+    /**
+     * @return bool
+     */
+    public function isConnected() :bool
     {
         // If MySQL of postGreSQL
         switch ($this->get_driver_name()) {
