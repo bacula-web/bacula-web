@@ -47,15 +47,10 @@ class Table
     {
         return $this->tablename;
     }
- 
-    // ==================================================================================
-    // Function: 	count()
-    // Parameters:	$tablename
-    //				$filter (optional)
-    // Return:		return row count for one table
-    // ==================================================================================
 
     /**
+     * Return table row count or 0
+     *
      * @param $filter
      * @return int
      * @throws Exception
@@ -66,11 +61,11 @@ class Table
 
         // Prepare and execute query
         $statment   = CDBQuery::get_Select(
-            array(
+            [
                 'table' => $this->tablename,
                 'fields' => $fields,
                 'where' => $filter
-            )
+            ]
         );
 
         $result     = $this->query($statment)[0];
