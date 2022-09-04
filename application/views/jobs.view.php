@@ -33,9 +33,6 @@ class JobsView extends CView
         $jobs = new JobTable(DatabaseFactory::getDatabase());
         $where = null;
 
-        // Total of Jobs
-        $totalJobs = $jobs->count();
-
         // This is horrible, it must be improved :(
         require_once('core/const.inc.php');
 
