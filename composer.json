@@ -14,7 +14,12 @@
       }
    ],
    "config": {
-		"component-dir": "vendor/components"
+		"component-dir": "vendor/components",
+        "allow-plugins": {
+          "composer/installers": true,
+          "robloach/component-installer": true,
+          "oomphinc/composer-installers-extender": true
+      }
 	},
    "require": {
       "php": ">=7.3.0",
