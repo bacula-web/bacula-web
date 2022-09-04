@@ -32,6 +32,7 @@ class JobsView extends CView
     {
         $jobs = new JobTable(DatabaseFactory::getDatabase());
         $where = null;
+        $params = [];
 
         // This is horrible, it must be improved :(
         require_once('core/const.inc.php');
