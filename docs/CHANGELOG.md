@@ -4,13 +4,15 @@
 
 - General
   - Use combined operators in CUtil class (see #91)
-  - Minor refactoring of PDO related PHP classes (see #100)
-  - Update composer.json by adding ext-pdo depencency (see #113)
+  - Refactored PDO related PHP classes (see #100)
+  - Updated composer.json by adding ext-pdo depencency (see #113)
+  - Updated allowed plugin in composer.json (see #103)
 
 ### Fixed bug(s)
 
 - #91 [enhancement] - Use combined operators (thanks to @elfring)
 - #100 [enhancement] - Refactor PHP PDO database related classes
+- #103 [enhancement] - Improve support Composer version 2.2.1 or later
 - #113 [bugfix] - Add missing ext-pdo to composer.json
 
 ### New feature(s)
