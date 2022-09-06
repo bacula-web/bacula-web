@@ -77,8 +77,6 @@ class JobFileTable extends Table
 
     public function countJobFiles($jobId, $filename = '')
     {
-        $used_types = array();
-
         $database = new Database();
         $catalog = new CatalogTable($database);
 
@@ -118,10 +116,8 @@ class JobFileTable extends Table
 
     public function getJobNameAndJobStatusByJobId($jobId)
     {
-        $used_types = array();
-        $sql_query = "SELECT distinct Job.Name, Job.JobStatus
-			FROM Job
-			WHERE Job.JobId = $jobId;";
+        $sql_query = "SELECT distinct Job.Name, Job.JobStatus FROM Job WHERE Job.JobId = $jobId;";
+
         $result = $this->run_query($sql_query);
 
         $used_types = $result->fetchAll();
