@@ -199,7 +199,7 @@ class Table
       }
 
         // Test connection status
-        if ($pdo_connection != false) {
+        if ($pdo_connection !== false) {
             return true;
         } else {
             return false;
