@@ -55,7 +55,7 @@ class WebApplication
         $appConfigFile = CONFIG_DIR . 'application.php';
 
         if (file_exists($appConfigFile) && is_readable($appConfigFile)) {
-            require_once($appConfigFile);
+            $app = include($appConfigFile);
 
             // Set application properties from config file
             $this->name = $app['name'];
