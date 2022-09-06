@@ -92,16 +92,12 @@ class Database
         return $server_version[0];
     }
 
-    // ==================================================================================
-    // Function: 	getServerTimestamp()
-    // Parameters:   none
-    // Return:		   return database server timestamp
-    // ==================================================================================
-
     /**
-     * @return string|false
+     * Return database server timestamp
+     *
+     * @return int
      */
-    public function getServerTimestamp()
+    public function getServerTimestamp(): int
     {
         // Different query for SQlite
         if ($this->getDriverName() == 'sqlite') {
