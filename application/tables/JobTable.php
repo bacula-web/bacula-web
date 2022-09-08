@@ -31,7 +31,6 @@ class JobTable extends Table
     public function count_Jobs($period_timestamps, $job_status = null, $job_level = null)
     {
         $where        = null;
-        $tablename    = $this->tablename;
         $fields        = array('COUNT(*) as job_count');
         
         // Check PDO object
@@ -87,7 +86,7 @@ class JobTable extends Table
         }
         
         // Building SQL statment
-        $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
+        $statment = array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
         
         // Execute SQL statment
@@ -161,7 +160,6 @@ class JobTable extends Table
     {
         $where      = [];
         $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
-        $tablename  = $this->tablename;
         $jobtype    = 'B';
         
         // Defined period
@@ -183,7 +181,7 @@ class JobTable extends Table
         $where[] = 'Type = :jobtype';
 
         // Building SQL statment
-        $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
+        $statment = array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
 
         // Execute query
