@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-include_once( 'core/global.inc.php' );
+include_once('core/bootstrap.php');
 
 $bw = new Bweb();
 $bw->run();

@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-require_once('core/global.inc.php');
+require_once('core/bootstrap.php');
 
 class File
 {
