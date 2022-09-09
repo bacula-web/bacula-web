@@ -18,8 +18,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-require_once('core/bootstrap.php');
-
 class Bweb extends WebApplication
 {
     public $translate;                    // Translation class instance

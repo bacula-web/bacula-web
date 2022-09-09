@@ -17,7 +17,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-include_once('core/bootstrap.php');
+// Include composer autoloader
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Bootstrap application
+require_once __DIR__ . '/core/bootstrap.php';
+
+// Get all $_POST and $_GET values
+CHttpRequest::get_Vars();
 
 $bw = new Bweb();
 $bw->run();

@@ -17,8 +17,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-require_once('core/bootstrap.php');
-
 class File
 {
     protected static $config_file;

@@ -17,12 +17,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 
- // Include composer autoloader
- require_once 'vendor/autoload.php';
- 
- // Get all $_POST and $_GET values
- CHttpRequest::get_Vars();
- 
  // Views path
  define('BW_ROOT', getcwd());
  define('VIEW_DIR', BW_ROOT . "/application/views/templates");

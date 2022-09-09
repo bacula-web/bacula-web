@@ -17,8 +17,6 @@
  * <https://www.gnu.org/licenses/>.
  */
  
-     require_once('core/bootstrap.php');
-     
 class FileConfig extends File
 {
 
