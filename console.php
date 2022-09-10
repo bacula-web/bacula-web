@@ -254,6 +254,65 @@ case 'setupauth':
         die('Database error ' . $e->getMessage() . ' code(' . $e->getCode() . ')');
     }
     break;
+    case 'publishAssets':
+        echo "Publishing assets" . PHP_EOL;
+
+        $assets = [
+            'css'=> [
+                'vendor/twbs/bootstrap/dist/css/bootstrap.min.css',
+                'vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css',
+                'vendor/components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+                'application/assets/css/default.css',
+                'vendor/components/font-awesome/css/font-awesome.min.css',
+                'vendor/novus/nvd3/build/nv.d3.css'
+            ],
+            'js' => [
+                'vendor/novus/nvd3/build/nv.d3.js',
+                'vendor/mbostock/d3/d3.min.js',
+                'vendor/components/jquery/jquery.min.js',
+                'vendor/moment/moment/min/moment-with-locales.js',
+                'vendor/twbs/bootstrap/dist/js/bootstrap.min.js',
+                'vendor/components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+                'application/assets/js/default.js',
+                'application/assets/js/ie10-viewport-bug-workaround.js',
+            ],
+            'images' => [
+                'application/assets/images/bacula-web-logo.png'
+            ],
+            'fonts' => [
+                'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff2',
+                'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff',
+                'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.ttf',
+                'vendor/components/font-awesome/fonts/fontawesome-webfont.woff2',
+                'vendor/components/font-awesome/fonts/fontawesome-webfont.woff',
+                'vendor/components/font-awesome/fonts/fontawesome-webfont.ttf'
+            ]
+        ];
+
+        // Copy css assets
+        foreach( $assets['css'] as $css) {
+            $filename = basename($css);
+            copy($css, "public/css/$filename");
+        }
+
+        // Copy javascript assets
+        foreach( $assets['js'] as $js) {
+            $filename = basename($js);
+            copy($js, "public/js/$filename");
+        }
+
+        // Copy images assets
+        foreach( $assets['images'] as $image) {
+            $filename = basename($image);
+            copy($image, "public/img/$filename");
+        }
+
+        // Copy fonts assets
+        foreach( $assets['fonts'] as $font) {
+            $filename = basename($font);
+            copy($font, "public/fonts/$filename");
+        }
+        break;
 default:
     exit("\nError: unknown command, use <php bwc help> for further informations\n\n");
 }
