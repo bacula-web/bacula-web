@@ -8,22 +8,22 @@
   <title>Bacula-Web - {$page_name}</title>
 
   <!-- Bootstrap front-end framework -->
-  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="vendor/components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 
   <!-- Custom css -->
-  <link rel="stylesheet" href="application/assets/css/default.css">
+  <link rel="stylesheet" href="css/default.css">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="vendor/components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
 
   <!-- nvd3 javascript -->
-  <script src="vendor/mbostock/d3/d3.min.js" charset="utf-8"></script>
-  <script src="vendor/novus/nvd3/build/nv.d3.js"></script>
+  <script src="js/d3.min.js" charset="utf-8"></script>
+  <script src="js/nv.d3.js"></script>
 
   <!-- nvd3 css -->
-  <link href="vendor/novus/nvd3/build/nv.d3.css" rel="stylesheet" type="text/css">
+  <link href="css/nv.d3.css" rel="stylesheet" type="text/css">
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
