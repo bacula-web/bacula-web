@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+    # enable rewrite engine
+    RewriteEngine On
+
+    # Send all requests to front controller
+    RewriteRule ^$ index.php?/ [QSA,L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule (.*) index.php?/$1 [QSA,L]
+</IfModule>
