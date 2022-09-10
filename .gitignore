@@ -4,4 +4,8 @@
 /application/config/config.php
 /application/assets/protected/application.db
 docs/_build
+public/css/*
+public/js/*
+public/fonts/*
+public/img/*
 .idea
