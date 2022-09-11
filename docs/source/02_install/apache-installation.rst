@@ -215,17 +215,19 @@ with the content below
 ::
 
    <VirtualHost *:80>
-     DocumentRoot "/var/www/html/bacula-web"
+     DocumentRoot "/var/www/html/bacula-web/public"
      ServerName bacula-web.domain.com
          
-     <Directory /var/www/html/bacula-web>
+     <Directory /var/www/html/bacula-web/public>
        AllowOverride All
      </Directory>
 
      # More directives here ...
    </VirtualHost>
 
-.. important:: You might need to adapt Bacula-Web installation path in the above configuration according to your setup
+You might need to adapt Bacula-Web installation path in the above configuration according to your setup
+
+.. important:: As of version 8.6.0, the DocumentRoot must be set to the public sub-folder.
 
 Enable the configuration
 
