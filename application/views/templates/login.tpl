@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-xs-4 col-xs-offset-4">
       <div class="jumbotron form-signin">
-        <img class="img-responsive center-block" src="application/assets/images/bacula-web-logo.png" alt="" />
+        <img class="img-responsive center-block" src="img/bacula-web-logo.png" alt="" />
 
         <form action="index.php" method="post">
           <h4>Please sign in</h4>
