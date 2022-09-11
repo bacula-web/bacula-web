@@ -62,7 +62,7 @@ class UserAuth extends Table
         if (count($res) == 0) {
             # If Users table not found, raise an exception
             throw new Exception('Users authentication database not found, 
-              have a look at the chapter <b>Installation / Finalize your setup</b> in the <a href="http://docs.bacula-web.org" target="_blank">documentation</a>');
+              have a look at the chapter <b>Installation / Finalize your setup</b> in the <a href="https://docs.bacula-web.org" target="_blank">documentation</a>');
         }
     }
 
