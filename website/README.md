@@ -33,6 +33,7 @@ docker run --rm -i -t -v $(pwd):/src --name bacula-web-website -p 1313:1313 klak
 ```
 
 **Important note**
+
 > adapt <tag> with latest Docker image tag, but make sure you're using the extended version of Hugo
 > example: klakegg/hugo:0.83.1-ext-alpine
 
@@ -49,6 +50,11 @@ hugo server
 
 # To show content in draft, run this command
 hugo server -D
+```
+
+You can also run this command
+```shell
+docker run --rm -it -v $(pwd):/src --name website -p 1313:1313 klakegg/hugo:0.83.1-ext-alpine server -D
 ```
 
 **Quick note**
