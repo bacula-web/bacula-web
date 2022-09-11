@@ -30,7 +30,7 @@ class ClientView extends CView
 
     public function prepare()
     {
-        require_once('core/const.inc.php');
+        require_once BW_ROOT . '/core/const.inc.php';
         
         $period = 7;
         $backup_jobs = array();

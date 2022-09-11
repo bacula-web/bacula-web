@@ -30,7 +30,7 @@ class DirectorsView extends CView
 
     public function prepare()
     {
-        require_once('core/const.inc.php');
+        require_once BW_ROOT . '/core/const.inc.php';
         
         $no_period = array(FIRST_DAY, NOW);
         $directors = array();

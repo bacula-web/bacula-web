@@ -35,7 +35,7 @@ class DashboardView extends CView
         $pools = new PoolTable(DatabaseFactory::getDatabase());
         $volumes = new VolumeTable(DatabaseFactory::getDatabase());
 
-        require_once('core/const.inc.php');
+        require_once BW_ROOT . '/core/const.inc.php';
 
         // Custom period for dashboard
         $no_period = array(FIRST_DAY, NOW);
