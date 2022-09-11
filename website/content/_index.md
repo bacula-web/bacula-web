@@ -58,3 +58,13 @@ Bacula-Web is know to work well on the platform listed below
 ## Documentation
 
 Latest documentation is available at https://docs.bacula-web.org
+
+## Support
+
+Bacula-Web project is mainly maintained by myself on spare-time since October 2010.
+
+I don't get paid for this work or receive any financial support from any company. I do it only as I'd like to give something back for free to Bacula's community users.
+
+If you enjoy using Bacula-Web and would like to encourage the project efforts, please consider making a small donation using the button below.
+
+{{< figure src="/kofi_button_dark.png" width="280" link="https://ko-fi.com/baculaweb" target="_blank" title="Thanks for your support" >}}
