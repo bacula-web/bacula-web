@@ -35,7 +35,7 @@ class JobsView extends CView
         $params = [];
 
         // This is horrible, it must be improved :(
-        require_once('core/const.inc.php');
+        require_once BW_ROOT . '/core/const.inc.php';
 
         $fields = array( 'Job.JobId', 'Job.Name AS Job_name', 'Job.Type',
             'Job.SchedTime', 'Job.StartTime', 'Job.EndTime', 'Job.Level',

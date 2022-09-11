@@ -48,6 +48,17 @@
 			"application"
 		]
 	},
+    "scripts": {
+        "post-install-cmd": [
+          "php bwc publishAssets"
+        ],
+        "post-update-cmd": [
+          "php bwc publishAssets"
+        ],
+        "post-create-project-cmd": [
+          "php bwc publishAssets"
+        ]
+    },
     "archive": {
         "exclude": ["/docs/source", "/docs/theme", ".gitignore", ".eslintrc.yml", ".codeclimate.yml", ".eslintignore", ".csslintrc", ".htpasswd", "sonar-project.properties", ".github", ".readthedocs.yaml", "docs/requirements.txt"]
     }

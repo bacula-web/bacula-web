@@ -25,7 +25,7 @@ class UserAuth extends Table
 
     public function check()
     {
-        $this->appDbBackend = 'application/assets/protected/application.db';
+        $this->appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
         // Throw an exception if PHP SQLite is not installed
         $pdoDrivers = PDO::getAvailableDrivers();
        

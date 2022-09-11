@@ -3,6 +3,9 @@
 ### Changelog
 
 - General
+  - **Breaking change**: Implemented front controller
+    Bacula-Web web app is now served from the public sub-folder, please
+    check the web server config documentation
   - Use combined operators in CUtil class (see #91)
   - Refactored PDO related PHP classes (see #100)
   - Updated composer.json by adding ext-pdo depencency (see #113)
@@ -14,6 +17,7 @@
 - #100 [enhancement] - Refactor PHP PDO database related classes
 - #103 [enhancement] - Improve support Composer version 2.2.1 or later
 - #113 [bugfix] - Add missing ext-pdo to composer.json
+- #114 [security] - Implement front controller
 
 ### New feature(s)
 

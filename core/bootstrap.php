@@ -17,8 +17,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
- // Views path
- define('BW_ROOT', getcwd());
+/**
+ * Setup app paths
+ */
+
+ define('BW_ROOT', dirname(__DIR__) );
  define('VIEW_DIR', BW_ROOT . "/application/views/templates");
  define('VIEW_CACHE_DIR', BW_ROOT . "/application/views/cache");
  
