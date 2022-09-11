@@ -44,7 +44,9 @@ You can create as many user you need, there's no limitation
 
 ## Translated in more than 15 languages
 
-Bacula-Web have been translated in many languages
+Bacula-Web have been translated in many languages on Transifex 
+
+https://explore.transifex.com/bacula-web/bacula-web/
 
 ## Supported platform
 
