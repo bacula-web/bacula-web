@@ -32,6 +32,12 @@ and run this command to run a Docker container
 docker run --rm -i -t -v $(pwd):/src --name bacula-web-website -p 1313:1313 klakegg/hugo:<tag> shell
 ```
 
+## Build
+
+```shell
+docker run --rm -it -e HUGO_ENV=production -v $(pwd):/src klakegg/hugo:0.101.0-ext-alpine -b https://www.bacula-web.org
+```
+
 **Important note**
 
 > adapt <tag> with latest Docker image tag, but make sure you're using the extended version of Hugo
