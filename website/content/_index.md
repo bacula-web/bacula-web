@@ -4,9 +4,11 @@ featured_image: 'bacula-web-dashboard.png'
 description: "Open source web based reporting and monitoring tool for Bacula"
 ---
 
+# Bacula-Web, backup reporting tool for Bacula
+
 Bacula-Web is a web based reporting and monitoring tool which provides you useful information about your Bacula infrastructure like jobs, pools, volumes, jobs logs, clients and backup jobs reports and even more ...
 
-# Features
+## Advantages
 
 - [x] 100% Open source
 - [x] User friendly
@@ -15,40 +17,40 @@ Bacula-Web is a web based reporting and monitoring tool which provides you usefu
 - [x] Safe and secure
 - [x] Does not alter your Bacula catalog
 
-# License
+## License
 
 Bacula-Web is released under the term of [GNU General Public License version 2](https://opensource.org/licenses/gpl-2.0.php)
 
-# Main features
+## Main features
 
-## Dashboard
+### Dashboard
 
 Bacula-Web Dashboard provide an overview of your Bacula jobs, volumes, pools, catalog statistics, amount of Bytes/Files protected by Bacula, etc.
 
-## Multi-catalog support
+### Multi-catalog support
 
 No need to install Bacula-Web twice or more, you can monitor as many as you need Bacula directors from a single place
 
-## Reporting and monitoring
+### Reporting and monitoring
 
 Bacula-Web offer different reports to monitor jobs, pools, volumes, clients, backup jobs and even more
 
-## Responsive web UI
+### Responsive web UI
 
 Bacula-Web use Bootstrap framework and behave very well on your smartphone, tablets or your desktop
 
-## User authentication
+### User authentication
 
 Protect access to your Bacula-Web instance by using user authentication (enable by default)
 You can create as many user you need, there's no limitation
 
-## Translated in more than 15 languages
+### Translated in more than 15 languages
 
 Bacula-Web have been translated in many languages on Transifex 
 
 https://explore.transifex.com/bacula-web/bacula-web/
 
-## Supported platform
+### Supported platform
 
 Bacula-Web is know to work well on the platform listed below
 
@@ -57,11 +59,11 @@ Bacula-Web is know to work well on the platform listed below
 - [x] FreeBSD / OpenBSD
 - [x] Gentoo
 
-## Documentation
+### Documentation
 
 Latest documentation is available at https://docs.bacula-web.org
 
-## Support
+### Support
 
 Bacula-Web project is mainly maintained by myself on spare-time since October 2010.
 
