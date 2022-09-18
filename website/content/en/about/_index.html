@@ -4,16 +4,113 @@ linkTitle: About
 menu:
   main:
     weight: 10
+
+resources:
+- src: "**.{jpg}"
+  title: "Image #:counter"
+  params:
+    byline: "Bacula-Web project author"
 ---
 
 {{< blocks/cover title="About Bacula-Web" image_anchor="bottom" height="min" >}}
 
-<p class="lead mt-5">A sample site using the Docsy Hugo theme.</p>
+<!-- <p class="lead mt-5">A sample site using the Docsy Hugo theme.</p> --> 
 
 {{< /blocks/cover >}}
 
 {{% blocks/lead %}}
-Bacula-Web is a nice tool to monitoring <a href="https://github.com/google/docsy">Bacula</a> backup server.
+Bacula-Web is a great tool to monitoring <a href="https://github.com/google/docsy">Bacula</a> backup server.
 {{% /blocks/lead %}}
 
 {{< blocks/section >}}
+
+<div class="col-12">
+<h2 class="text-center">How to get help</h2>
+</div>
+
+<h3>Bug tracker</h3>
+
+<p>
+I'd be happy to help you fixing your Bacula-Web installation, configuration or any other issue.
+</p>
+<p>
+But before submitting a bug or feature request, please have a look at <a href="https://docs.bacula-web.org/en/latest/03_gethelp/support.html#bug-report-guideline" target="_blank">bugs and features request guideline</a> first.
+</p>
+
+<p>
+To submit a bug report or feature request, please use <a href="https://github.com/bacula-web/bacula-web/issues">GitHub issues</a> on Bacula-Web project.
+</p>
+
+<h3>FAQ</h3>
+
+<p>
+You can find more the most often questions answered into the <a target="_blank" href="https://docs.bacula-web.org/en/latest/03_gethelp/faq.html">FAQ</a>
+</p>
+
+{{< /blocks/section >}}
+
+{{< blocks/section >}}
+
+<div class="col-12">
+<h2 class="text-center">Screenshots</h2>
+</div>
+
+<table>
+  <tr>
+    <td>
+{{< imgproc bacula-web-dashboard Fill "400x450" >}}
+Bacula-Web dashboard
+{{< /imgproc >}}
+    </td>
+  <td>
+{{< imgproc bacula-web-jobs-report.jpg Fill "400x450" >}}
+Bacula-Web dashboard
+{{< /imgproc >}}
+  </td>
+  <td>
+{{< imgproc bacula-web-job-logs.jpg Fill "400x450" >}}
+Bacula-Web dashboard
+{{< /imgproc >}}
+      </td>
+  </tr>
+  <tr>
+    <td>
+      {{< imgproc bacula-web-test-page.jpg Fill "400x450" >}}
+      Bacula-Web dashboard
+      {{< /imgproc >}}      
+    </td>
+    <td>
+      {{< imgproc bacula-web-pools.jpg Fill "400x450" >}}
+      Bacula-Web dashboard
+      {{< /imgproc >}}      
+    </td>
+    <td>
+      {{< imgproc bacula-web-volumes.jpg Fill "400x450" >}}
+      Bacula-Web dashboard
+      {{< /imgproc >}}      
+    </td>  
+  </tr>
+</table>
+
+{{< /blocks/section >}}
+
+{{< blocks/section >}}
+
+<div class="col-12">
+<h2 class="text-center">Support the project</h2>
+</div>
+
+<p>Bacula-Web project is mainly maintained by myself on spare-time since October 2010.</p>
+
+<p>I don’t get paid for this work or receive any financial support from any company. I do it only as I’d like to give something back for free to Bacula’s community users.</p>
+
+<p>If you enjoy using Bacula-Web and would like to encourage the project efforts, please consider making a small donation using the buttons below.</p>
+
+<div class="col-12">
+{{< figure src="/kofi_button_dark.png" width="280" link="https://ko-fi.com/baculaweb" target="_blank" title="" >}}
+</div>
+<div class="col-12">
+<a href="https://www.buymeacoffee.com/baculaweb" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</div>
+
+{{< /blocks/section >}}
