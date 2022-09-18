@@ -224,3 +224,8 @@ enable = false
   name = 'Documentation'
   url = 'https://docs.bacula-web.org'
   weight = 50
+
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5
