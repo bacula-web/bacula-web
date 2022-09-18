@@ -1,3 +1,4 @@
 public
 /resources/_gen/
 .idea/
+.hugo_build.lock
