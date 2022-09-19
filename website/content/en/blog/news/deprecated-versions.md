@@ -1,5 +1,6 @@
 ---
 title: Deprecated versions
+description: "Important information about deprecated versions"
 date: '2018-06-01'
 tags: ["news"]
 ---
