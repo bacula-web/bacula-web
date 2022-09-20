@@ -11,6 +11,9 @@
   - Updated composer.json by adding ext-pdo depencency (see #113)
   - Updated allowed plugin in composer.json (see #103)
 
+- Security
+  - Bump smarty/smarty from 3.1.45 to 3.1.47 (see #116)
+
 ### Fixed bug(s)
 
 - #91 [enhancement] - Use combined operators (thanks to @elfring)
@@ -18,6 +21,7 @@
 - #103 [enhancement] - Improve support Composer version 2.2.1 or later
 - #113 [bugfix] - Add missing ext-pdo to composer.json
 - #114 [security] - Implement front controller
+- #116 [security] - Bump smarty/smarty from 3.1.45 to 3.1.47
 
 ### New feature(s)
 
