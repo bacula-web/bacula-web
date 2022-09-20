@@ -35,7 +35,11 @@ class Database
         FileConfig::open(CONFIG_FILE);
 
         // Create PDO connection to database
-        $catalog_id = $_SESSION['catalog_id'];
+        if(isset($_SESSION['catalog_id']) && !empty($_SESSION['catalog_id'])) {
+            $catalog_id = $_SESSION['catalog_id'];
+        } else {
+            $catalog_id = 0;
+        }
 
         $this->driver = FileConfig::get_Value('db_type', $catalog_id);
 
