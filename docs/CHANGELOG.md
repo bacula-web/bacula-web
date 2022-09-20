@@ -22,6 +22,7 @@
 - #113 [bugfix] - Add missing ext-pdo to composer.json
 - #114 [security] - Implement front controller
 - #116 [security] - Bump smarty/smarty from 3.1.45 to 3.1.47
+- #117 [bugfix] - PHP notice about undefined catalog_id
 
 ### New feature(s)
 
