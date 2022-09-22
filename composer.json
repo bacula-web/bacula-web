@@ -34,7 +34,8 @@
       "eonasdan/bootstrap-datetimepicker": "@stable",
       "smarty/smarty": "3.1.*",
       "smarty-gettext/smarty-gettext": "@stable",
-      "components/font-awesome": "4.*"
+      "components/font-awesome": "4.*",
+      "symfony/http-foundation": "^5.4"
 	},
     "require-dev": {
       "sebastian/phpcpd": "@stable",
