@@ -65,7 +65,7 @@ class CErrorHandler
         $output .= '<ul class="list-group">
                     <li class="list-group-item">
                     Using the <b>test page</b> could be helpful <br /><br />
-                    <a class="btn btn-default btn-sm btn-info" href="index.php?page=test.php" target="_blank" rel="noopener noreferrer" role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a>
+                    <a class="btn btn-default btn-sm btn-info" href="index.php?page=test" target="_blank" rel="noopener noreferrer" role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a>
                     </li>';
         $output .= '<li class="list-group-item">
                     Official documentation <br /><br />
