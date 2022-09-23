@@ -86,6 +86,9 @@ weight = 1
 section = ["HTML", "RSS"]
 
 [params]
+
+description = "Backup reporting tool for Bacula"
+
 copyright = "Davide Franco"
 # privacy_policy = "https://policies.google.com/privacy"
 
