@@ -1,4 +1,4 @@
-## Bacula-Web 8.5.6 (mm dd 2022)
+## Bacula-Web 8.6.0 (mm dd 2022)
 
 ### Changelog
 
@@ -10,6 +10,7 @@
   - Refactored PDO related PHP classes (see #100)
   - Updated composer.json by adding ext-pdo depencency (see #113)
   - Updated allowed plugin in composer.json (see #103)
+  - Fixed wrong link to test page on error page
 
 - Security
   - Bump smarty/smarty from 3.1.45 to 3.1.47 (see #116)
