@@ -37,14 +37,14 @@ class HtmlHelper
   <title>Bacula-Web - Application error</title>
 
   <!-- Bootstrap front-end framework -->
-  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 
   <!-- Custom css -->
-  <link rel="stylesheet" href="application/assets/css/default.css">
+  <link rel="stylesheet" href="css/default.css">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="vendor/components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
@@ -88,11 +88,9 @@ class HtmlHelper
     public static function getHtmlFooter()
     {
         $htmlFooter = '<!-- JQuery and Bootstrap Javascript -->
-                    <script src="vendor/components/jquery/jquery.min.js"></script>
-                    <script src="vendor/moment/moment/min/moment-with-locales.js"></script>
-                    <script src="vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
-                    <script src="vendor/components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-                    <script src="vendor/1000hz/bootstrap-validator/dist/validator.min.js"></script>
+                    <script src="js/jquery/jquery.min.js"></script>
+                    <script src="js/moment-with-locales.js"></script>
+                    <script src="js/bootstrap.min.js"></script>
 
                     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
                     <script src="application/assets/js/ie10-viewport-bug-workaround.js"></script>
