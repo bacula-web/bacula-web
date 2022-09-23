@@ -45,8 +45,8 @@ class DashboardView extends CView
         $custom_period = $last_day;
         $selected_period = 'last_day';
 
-        if (isset($_POST['period_selector'])) {
-            $selected_period = CHttpRequest::get_Value('period_selector');
+        if (WebApplication::getRequest()->request->get('period_selector')) {
+            $selected_period = WebApplication::getRequest()->request->get('period_selector');
             $this->assign('custom_period_list_selected', $selected_period);
 
             switch ($selected_period) {

@@ -121,54 +121,54 @@ class JobsView extends CView
         $job_orderby_asc_filter = 'DESC';
 
         // Job client id filter
-        if (CHttpRequest::get_Value('filter_clientid') != null) {
-            $filter_clientid = (int) CHttpRequest::get_Value('filter_clientid');
+        if (WebApplication::getRequest()->request->get('filter_clientid') !== null) {
+            $filter_clientid = WebApplication::getRequest()->request->getInt('filter_clientid');
         }
 
         // Job type filter
-        if (CHttpRequest::get_Value('filter_jobtype') !== null) {
+        if (WebApplication::getRequest()->request->get('filter_jobtype') !== null) {
             // if provided filter_jobtype is not part of valid job type, we simply ignore it
-            if (array_key_exists(CHttpRequest::get_Value('filter_jobtype'), $job_types)) {
-                $filter_jobtype = CHttpRequest::get_Value('filter_jobtype');
+            if (array_key_exists(WebApplication::getRequest()->request->get('filter_jobtype'), $job_types)) {
+                $filter_jobtype = WebApplication::getRequest()->request->get('filter_jobtype');
             }
         }
 
         // Job status filter
-        if (CHttpRequest::get_Value('filter_jobstatus') != null) {
-            $filter_jobstatus = (int) CHttpRequest::get_Value('filter_jobstatus');
+        if (WebApplication::getRequest()->request->get('filter_jobstatus') !== null) {
+            $filter_jobstatus = WebApplication::getRequest()->request->getInt('filter_jobstatus');
         }
 
         // Job level id filter
-        if (CHttpRequest::get_Value('filter_joblevel') != null) {
-            $filter_joblevel = CHttpRequest::get_Value('filter_joblevel');
+        if (WebApplication::getRequest()->request->get('filter_joblevel') !== null) {
+            $filter_joblevel = WebApplication::getRequest()->request->get('filter_joblevel');
         }
 
         // Job pool id filter
-        if (CHttpRequest::get_Value('filter_poolid') != null) {
-            $filter_poolid = (int) CHttpRequest::get_Value('filter_poolid');
+        if (WebApplication::getRequest()->request->get('filter_poolid') !== null) {
+            $filter_poolid = WebApplication::getRequest()->request->getInt('filter_poolid');
         }
 
         // Job starttime filter
-        if (CHttpRequest::get_Value('filter_job_starttime') != null) {
-            $filter_job_starttime = CHttpRequest::get_Value('filter_job_starttime');
+        if (WebApplication::getRequest()->request->get('filter_job_starttime') !== null) {
+            $filter_job_starttime = WebApplication::getRequest()->request->get('filter_job_starttime');
         }
 
         // Job endtime filter
-        if (CHttpRequest::get_Value('filter_job_endtime') != null) {
-            $filter_job_endtime = CHttpRequest::get_Value('filter_job_endtime');
+        if (WebApplication::getRequest()->request->get('filter_job_endtime') !== null) {
+            $filter_job_endtime = WebApplication::getRequest()->request->get('filter_job_endtime');
         }
 
         // Job orderby filter
-        if (CHttpRequest::get_Value('job_orderby') != null) {
+        if (WebApplication::getRequest()->request->get('job_orderby') !== null) {
             // if provided job_orderby is not part of valid job order field, we simply ignore it
-            if (array_key_exists(CHttpRequest::get_Value('job_orderby'), $result_order)) {
-                $job_orderby_filter = CHttpRequest::get_Value('job_orderby');
+            if (array_key_exists(WebApplication::getRequest()->request->get('job_orderby'), $result_order)) {
+                $job_orderby_filter = WebApplication::getRequest()->request->get('job_orderby');
             }
         }
 
         // Job orderby asc filter
-        if (CHttpRequest::get_Value('job_orderby_asc') != null) {
-            $job_orderby_asc_filter = CHttpRequest::get_Value('job_orderby_asc');
+        if (WebApplication::getRequest()->request->get('job_orderby_asc') !== null) {
+            $job_orderby_asc_filter = WebApplication::getRequest()->request->get('job_orderby_asc');
         }
 
         // Assign variables to template

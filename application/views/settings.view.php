@@ -33,12 +33,12 @@ class SettingsView extends CView
         $userauth = new UserAuth();
 
         // Create new user
-        if (isset($_REQUEST['action'])) {
-            switch ($_REQUEST['action']) {
+        if (WebApplication::getRequest()->request->has('action')) {
+            switch (WebApplication::getRequest()->request->get('action')) {
                 case 'createuser':
                     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
                     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-                    $userauth->addUser($username, $email, $_REQUEST['password']);
+                    $userauth->addUser($username, $email, WebApplication::getRequest()->request->get('password'));
                     break;
             }
         }

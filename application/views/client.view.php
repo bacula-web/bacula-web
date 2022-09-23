@@ -60,27 +60,23 @@ class ClientView extends CView
         );
 
         // Check client_id and period received by POST request
-        if (!is_null(CHttpRequest::get_Value('client_id'))) {
-            $clientid = CHttpRequest::get_Value('client_id');
+        if (WebApplication::getRequest()->request->has('client_id')) {
+            $clientid = WebApplication::getRequest()->request->getInt('client_id');
 
             // Verify if client_id is a valid integer
-            if (!filter_var($clientid, FILTER_VALIDATE_INT)) {
+            if ($clientid === 0) {
                 throw new Exception('Critical: provided parameter (client_id) is not valid');
             }
 
-            $period = CHttpRequest::get_Value('period');
-
-            $this->assign('selected_period', CHttpRequest::get_Value('period'));
-            $this->assign('selected_client', $clientid);
+            $period = WebApplication::getRequest()->request->getInt('period');
 
             // Check if period is an integer and listed in known periods
             if (!array_key_exists($period, $periods_list)) {
                 throw new Exception('Critical: provided value for (period) is unknown or not valid');
             }
 
-            if (!filter_var($period, FILTER_VALIDATE_INT)) {
-                throw new Exception('Critical: provided value for (period) is unknown or not valid');
-            }
+            $this->assign('selected_period', $period);
+            $this->assign('selected_client', $clientid);
 
             /**
              * Filter jobs per requested period 
