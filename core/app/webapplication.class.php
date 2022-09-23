@@ -17,6 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+use Symfony\Component\HttpFoundation\Request;
+
 class WebApplication
 {
     protected $name;
@@ -25,6 +27,12 @@ class WebApplication
     protected $defaultView;
     protected $userauth;
     protected $enable_users_auth;
+    protected $request;
+
+    public function __construct()
+    {
+        $this->request = Request::createFromGlobals();
+    }
 
     protected function setup()
     {

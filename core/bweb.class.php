@@ -28,7 +28,7 @@ class Bweb extends WebApplication
     public $datetime_format;
     public $datetime_format_short;
 
-    public function init()
+    protected function init()
     {
         // Loading configuration file parameters
         if (!FileConfig::open(CONFIG_FILE)) {
@@ -49,7 +49,7 @@ class Bweb extends WebApplication
             if (FileConfig::get_Value('datetime_format') != null) {
                 $this->datetime_format = FileConfig::get_Value('datetime_format');
                 $_SESSION['datetime_format'] = $this->datetime_format;
-                  
+
                 // Get first part of datetime_format
                 $this->datetime_format_short = explode(' ', $this->datetime_format);
                 $_SESSION['datetime_format_short'] = $this->datetime_format_short[0];
@@ -59,32 +59,35 @@ class Bweb extends WebApplication
                 $_SESSION['datetime_format_short'] = 'Y-m-d';
             }
         }
-            
+
         // Checking template cache permissions
         if (!is_writable(VIEW_CACHE_DIR)) {
             throw new Exception("The template cache folder <b>" . VIEW_CACHE_DIR . "</b> must be writable by Apache user");
         }
-                
+
         // Initialize smarty gettext function
         $language = FileConfig::get_Value('language');
         if ($language == null) {
             throw new Exception('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
         }
-                
+
         $this->translate = new CTranslation($language);
         $this->translate->set_Language($this->view);
-            
+
         // Get catalog_id from http $_GET request
-        if (!is_null(CHttpRequest::get_Value('catalog_id'))) {
-            if (FileConfig::catalogExist(CHttpRequest::get_Value('catalog_id'))) {
-                $this->catalog_current_id = CHttpRequest::get_Value('catalog_id');
+        $this->catalog_id = $this->request->request->getInt('catalog_id', 0);
+        $_SESSION['catalog_id'] = $this->catalog_id;
+
+        if($this->request->query->has('catalog_id')) {
+            if (FileConfig::catalogExist($this->request->request->getInt('catalog_id'))) {
+                $this->catalog_current_id = $this->request->query->getInt('catalog_id');
                 $_SESSION['catalog_id'] = $this->catalog_current_id;
-            } else {
+            }else {
                 $_SESSION['catalog_id']    = 0;
                 $this->catalog_current_id = 0;
                 throw new Exception('The catalog_id value provided does not correspond to a valid catalog, please verify the config.php file');
             }
-        } else {
+        }else {
             if (isset($_SESSION['catalog_id'])) {
                 // Stick with previously selected catalog_id
                 $this->catalog_current_id = $_SESSION['catalog_id'];
@@ -92,12 +95,12 @@ class Bweb extends WebApplication
                 $_SESSION['catalog_id'] = $this->catalog_current_id;
             }
         }
-            
+
         // Define catalog id and catalog label
         $this->view->assign('catalog_current_id', $this->catalog_current_id);
         $this->view->assign('catalog_label', FileConfig::get_Value('label', $this->catalog_current_id));
-            
-        
+
+
         // Get Bacula catalog list
         $this->view->assign('catalogs', FileConfig::get_Catalogs());
         // Get catalogs count
@@ -110,4 +113,5 @@ class Bweb extends WebApplication
         // Set language
         $this->view->assign('language', $language);
     }
+
 } // end class Bweb
