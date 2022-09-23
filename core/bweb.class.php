@@ -75,16 +75,17 @@ class Bweb extends WebApplication
         $this->translate->set_Language($this->view);
 
         // Get catalog_id from http $_GET request
-        $this->catalog_id = $this->request->request->getInt('catalog_id', 0);
-        $_SESSION['catalog_id'] = $this->catalog_id;
+        $this->catalog_current_id = WebApplication::getRequest()->request->getInt('catalog_id', 0);
+        $_SESSION['catalog_id'] = $this->catalog_current_id;
 
-        if($this->request->query->has('catalog_id')) {
-            if (FileConfig::catalogExist($this->request->request->getInt('catalog_id'))) {
-                $this->catalog_current_id = $this->request->query->getInt('catalog_id');
+        if(WebApplication::getRequest()->query->has('catalog_id')) {
+            if (FileConfig::catalogExist(WebApplication::getRequest()->request->getInt('catalog_id'))) {
+                $this->catalog_current_id = WebApplication::getRequest()->query->getInt('catalog_id');
                 $_SESSION['catalog_id'] = $this->catalog_current_id;
             }else {
-                $_SESSION['catalog_id']    = 0;
+                $_SESSION['catalog_id'] = 0;
                 $this->catalog_current_id = 0;
+                // It should redirect to home with catalog_id = 0 and display a flash message to the user
                 throw new Exception('The catalog_id value provided does not correspond to a valid catalog, please verify the config.php file');
             }
         }else {

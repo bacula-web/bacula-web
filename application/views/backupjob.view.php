@@ -50,11 +50,17 @@ class BackupJobView extends CView
         $this->assign('jobs_list', $jobslist);
 
         // Check backup job name from $_POST request
-        $backupjob_name = CHttpRequest::get_value('backupjob_name');
+        $backupjob_name = null;
+
+        if(WebApplication::getRequest()->getMethod() === 'POST') {
+            $backupjob_name = WebApplication::getRequest()->request->get('backupjob_name');
+        }elseif(WebApplication::getRequest()->getMethod() === 'GET') {
+            $backupjob_name = WebApplication::getRequest()->query->get('backupjob_name');
+        }
 
         $where = array();
 
-        if (($backupjob_name === null) && (empty($backupjob_name))) {
+        if($backupjob_name == null) {
             $this->assign('selected_jobname', '');
             $this->assign('no_report_options', 'true');
 
@@ -70,13 +76,10 @@ class BackupJobView extends CView
 
             $this->assign('selected_jobname', $backupjob_name);
 
-            // Generate Backup Job report period string
-            $backupjob_period = CHttpRequest::get_value('period');
-
-            // Set default backup job period to 7 if not set in user request
-            if ($backupjob_period === null) {
-                $backupjob_period = '7';
-            }
+            /**
+             * Get selected period from POST request, or set it to default value (7)
+             */
+            $backupjob_period = WebApplication::getRequest()->request->getInt('period', 7);
 
             // Set selected period
             $this->assign('selected_period', $backupjob_period);

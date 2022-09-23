@@ -55,7 +55,7 @@ class CView extends SmartyBC
 
         // Build breadcrumb
         $breadcrumb = '';
-        if (isset($_GET['page'])) {
+        if(WebApplication::getRequest()->query->has('page')) {
             $breadcrumb = '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
             $breadcrumb .= '<li class="active">' . $this->name . '</li>';
         } else {

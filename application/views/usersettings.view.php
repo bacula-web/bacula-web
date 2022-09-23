@@ -42,14 +42,14 @@ class UserSettingsView extends CView
         $this->assign('email', $user['email']);
 
         // Check if password reset have been requested
-        if (isset($_REQUEST['action'])) {
-            switch ($_REQUEST['action']) {
+        if(WebApplication::getRequest()->request->has('action')) {
+            switch (WebApplication::getRequest()->request->get('action')) {
             case 'passwordreset':
                 // Check if provided current password is correct
-                if ($this->userauth->authUser($_SESSION['username'], $_POST['oldpassword']) == 'yes') {
+                if ($this->userauth->authUser($_SESSION['username'], WebApplication::getRequest()->request->get('oldpassword')) == 'yes') {
 
                     // Update user password with new one
-                    if ($this->userauth->setPassword($_SESSION['username'], $_POST['newpassword'])) {
+                    if ($this->userauth->setPassword($_SESSION['username'], WebApplication::getRequest()->request->get['newpassword'])) {
                         $this->userAlert = 'Password successfuly updated';
                         $this->userAlertType = 'success';
                     }

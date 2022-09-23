@@ -39,25 +39,20 @@ class JobFilesView extends CView
     public function prepare()
     {
         $rows_per_page = 10;
+        $current_page = null;
         $jobFiles = new JobFileTable(DatabaseFactory::getDatabase());
         $filename = '';
 
-        if (CHttpRequest::get_Value('jobId') != null) {
+        $jobId = WebApplication::getRequest()->query->getInt('jobId', 0);
 
-            // Ensure pool_id value is numeric
-            $jobId = CHttpRequest::get_Value('jobId');
-
-            if (!is_numeric($jobId) && !is_null($jobId)) {
-                throw new Exception('Invalid Job Id (not numeric) provided in ' . $this->title);
-            }
-
+        if($jobId !== 0) {
             $this->assign('jobid', $jobId);
         } else {
-            throw new Exception('Missing Job Id parameter in' . $this->title);
+            throw new Exception('Invalid or missing Job Id (not numeric) provided in ' . $this->title);
         }
 
-        if (CHttpRequest::get_Value('InputFilename') != null) {
-            $filename = CHttpRequest::get_Value('InputFilename');
+        if( WebApplication::getRequest()->request->has('InputFilename')) {
+            $filename = WebApplication::getRequest()->request->get('InputFilename');
         }
 
         $jobInfo = $jobFiles->getJobNameAndJobStatusByJobId($jobId);
@@ -70,12 +65,12 @@ class JobFilesView extends CView
         if ($files_count > $rows_per_page) {
             $pagination_active = true;
         }
-        $this->assign('pagination_active', $pagination_active);
-        $current_page = 0;
-        if (array_key_exists('paginationCurrentPage', $_GET)) {
-            $current_page = $_GET['paginationCurrentPage'];
+
+        if (WebApplication::getRequest()->query->has('paginationCurrentPage')) {
+            $current_page = WebApplication::getRequest()->query->getInt('paginationCurrentPage');
         }
 
+        $this->assign('pagination_active', $pagination_active);
         $this->assign('pagination_current_page', $current_page);
         $this->assign('pagination_rows_per_page', $rows_per_page);
 

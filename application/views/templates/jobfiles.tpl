@@ -25,7 +25,7 @@
         <div class="panel panel-default">
           <div class="panel-heading"><b>Search</b></div>
           <div class="panel-body"> 
-            <form class="form-inline" action="index.php?page=jobfiles" method="post">
+            <form class="form-inline" action="index.php?page=jobfiles&jobId={$jobid}" method="post">
               <div class="form-group">
                 <label for="InputFilename">Filename</label>
                 <input type="text" class="form-control" name="InputFilename" id="InputFilename" placeholder="{$filename}">

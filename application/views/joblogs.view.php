@@ -31,10 +31,13 @@ class JobLogsView extends CView
     public function prepare()
     {
         $joblogs = array();
-        $jobid = CHttpRequest::get_Value('jobid');
-    
-        // If $_GET['jobid'] is null and is not a number, throw an Exception
-        if (is_null($jobid) || !is_numeric($jobid)) {
+        $jobid = WebApplication::getRequest()->query->getInt('jobid', 0);
+
+        /*
+         * if $_GET['jobid'] is not a valid integer different than 0, then throw an exception
+         * Exceptions will be handled in a better fashion in later development
+         */
+        if ($jobid === 0) {
             throw new Exception('Invalid job id (invalid or null) provided in Job logs report');
         }
 

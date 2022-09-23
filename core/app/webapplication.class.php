@@ -27,11 +27,19 @@ class WebApplication
     protected $defaultView;
     protected $userauth;
     protected $enable_users_auth;
-    protected $request;
+    protected static $request;
+
+    /**
+     * @return Request
+     */
+    public static function getRequest(): Request
+    {
+        return self::$request;
+    }
 
     public function __construct()
     {
-        $this->request = Request::createFromGlobals();
+        self::$request = Request::createFromGlobals();
     }
 
     protected function setup()
@@ -75,10 +83,13 @@ class WebApplication
 
         // login or logout only if users authentication is enabled
         if ($this->enable_users_auth  === true) {
-            if (isset($_REQUEST['action'])) {
-                switch ($_REQUEST['action']) {
+            if(WebApplication::getRequest()->request->has('action')) {
+                switch (WebApplication::getRequest()->request->get('action')) {
                 case 'login':
-                    $_SESSION['user_authenticated'] = $this->userauth->authUser($_POST['username'], $_POST['password']);
+                    $_SESSION['user_authenticated'] = $this->userauth->authUser(
+                        WebApplication::getRequest()->request->get('username'),
+                        WebApplication::getRequest()->request->get('password')
+                    );
 
                     if ($_SESSION['user_authenticated'] == 'yes') {
                         $user = $this->userauth->getData(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
@@ -102,7 +113,7 @@ class WebApplication
         if ((isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') || $this->enable_users_auth == false) {
 
                 // Get requested page or set default one
-            if (isset($_REQUEST['page'])) {
+            if (WebApplication::getRequest()->query->has('page')) {
                 $pageName = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
                     
                 // Check if requested page is a known route

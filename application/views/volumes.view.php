@@ -36,7 +36,6 @@ class VolumesView extends CView
         $volumes_list = array();
         $volumes_total_bytes = 0;
         $where = null;
-        $pool_id = 0;
 
         // Paginate database query result
         $pagination = new CDBPagination($this);
@@ -65,52 +64,42 @@ class VolumesView extends CView
         $pools_list = array( 0 => 'Any') + $pools_list; // Add defautl pool filter
         $this->assign('pools_list', $pools_list);
 
-        if (CHttpRequest::get_Value('filter_pool_id') != null) {
-            // Ensure pool_id value is an integer
-            if (!is_numeric(CHttpRequest::get_Value('filter_pool_id')) && !is_null(CHttpRequest::get_Value('filter_pool_id'))) {
-                throw new Exception('Invalid pool id (not numeric) provided in Volumes report page');
-            }
-            
-            if (CHttpRequest::get_Value('filter_pool_id') !== '0') {
-                $pool_id = CHttpRequest::get_Value('filter_pool_id');
-                $where[] = 'Media.PoolId = :pool_id';
-                $params['pool_id'] = $pool_id;
-            }
+        $pool_id = WebApplication::getRequest()->request->getInt('filter_pool_id', 0);
+
+        if($pool_id !== 0) {
+            $where[] = 'Media.PoolId = :pool_id';
+            $params['pool_id'] = $pool_id;
         }
 
         // Order by
         $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
-        
+
         // Set order by
         $this->assign('orderby', $orderby);
-        $volume_orderby_filter = 'Name';
-        $volume_orderby_asc = 'DESC';
 
-        if (!is_null(CHttpRequest::get_Value('orderby'))) {
-            if (array_key_exists(CHttpRequest::get_Value('orderby'), $orderby)) {
-                $volume_orderby_filter = CHttpRequest::get_Value('orderby');
-            } else {
-                throw new Exception("Critical: Provided orderby parameter is not correct");
-            }
-        }
- 
-        // Set order by filter and checkbox status
-        $this->assign('orderby_asc_checked', '');
-
-        if (!is_null(CHttpRequest::get_Value('orderby_asc'))) {
-            $volume_orderby_asc = 'ASC';
-            $this->assign('orderby_asc_checked', 'checked');
-        }
-   
+        $volume_orderby_filter = WebApplication::getRequest()->request->get('orderby', 'Name');
         $this->assign('orderby_selected', $volume_orderby_filter);
 
-        // Set inchanger checkbox to unchecked by default
-        $this->assign('inchanger_checked', '');
+        if (!array_key_exists($volume_orderby_filter, $orderby)) {
+            throw new Exception("Critical: Provided orderby parameter is not correct");
+        }
 
-        if (!is_null(CHttpRequest::get_Value('filter_inchanger'))) {
+        // Set order by filter and checkbox status
+        $volume_orderby_asc = WebApplication::getRequest()->request->get('orderby_asc', 'DESC');
+
+        if($volume_orderby_asc === 'Asc') {
+            $this->assign('orderby_asc_checked', 'checked');
+        }else {
+            $this->assign('orderby_asc_checked', '');
+        }
+
+        // Set inchanger checkbox to unchecked by default
+        if(WebApplication::getRequest()->request->has('filter_inchanger')) {
             $where[] = 'Media.inchanger = :inchanger';
             $params['inchanger'] = 1;
             $this->assign('inchanger_checked', 'checked');
+        }else {
+            $this->assign('inchanger_checked', '');
         }
 
         $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
