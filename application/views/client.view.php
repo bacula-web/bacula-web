@@ -26,10 +26,10 @@ use Core\Db\DatabaseFactory;
 use Core\Db\CDBQuery;
 use Core\Utils\DateTimeUtil;
 use Core\Utils\CUtils;
+use Core\App\UserAuth;
 use Core\Helpers\Sanitizer;
 use App\Tables\JobTable;
 use App\Tables\ClientTable;
-
 
 class ClientView extends CView
 {

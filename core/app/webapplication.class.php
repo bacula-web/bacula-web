@@ -90,6 +90,7 @@ class WebApplication
 
         // login or logout only if users authentication is enabled
         if ($this->enable_users_auth  === true) {
+
             if(WebApplication::getRequest()->request->has('action')) {
                 switch (Sanitizer::sanitize(WebApplication::getRequest()->request->get('action'))) {
                 case 'login':
