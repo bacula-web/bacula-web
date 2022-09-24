@@ -12,6 +12,7 @@
   - Updated composer.json by adding ext-pdo depencency (see #113)
   - Updated allowed plugin in composer.json (see #103)
   - Use PHP namespaces (see #118)
+  - Fixed dozens of code smell warnings
 
 - Test page
   - Fixed wrong link to test page on error page
