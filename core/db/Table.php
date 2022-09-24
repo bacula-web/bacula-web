@@ -17,6 +17,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\Db;
+
+use PDO;
+use Exception;
+use PDOException;
+
 class Table
 {
     protected $db_link;

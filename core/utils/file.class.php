@@ -17,6 +17,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\Utils;
+
+use Exception;
+
 class File
 {
     protected static $config_file;

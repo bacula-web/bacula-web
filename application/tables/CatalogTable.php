@@ -17,6 +17,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Tables;
+
+use Core\Db\Table;
+use App\Libs\FileConfig;
+use Core\Db\CDBQuery;
+use Core\Utils\CUtils;
+
 class CatalogTable extends Table
 {
     protected $tablename = 'Version';

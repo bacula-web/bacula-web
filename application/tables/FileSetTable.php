@@ -17,6 +17,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Tables;
+
+use Core\Db\Table;
+
 class FileSetTable extends Table
 {
     protected $tablename = 'FileSet';

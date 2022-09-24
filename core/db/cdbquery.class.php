@@ -17,6 +17,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\Db;
+
+use Exception;
+
 class CDBQuery
 {
     /**

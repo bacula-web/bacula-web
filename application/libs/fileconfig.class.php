@@ -16,7 +16,11 @@
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
  * <https://www.gnu.org/licenses/>.
  */
- 
+
+namespace App\Libs;
+
+use Core\Utils\File;
+
 class FileConfig extends File
 {
 

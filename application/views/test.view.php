@@ -18,6 +18,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Views;
+
+use Core\App\CView;
+use Core\Db\DatabaseFactory;
+use App\Tables\CatalogTable;
+use PDO;
+use Core\Graph\Chart;
+
 class TestView extends CView
 {
     public function __construct()

@@ -17,6 +17,20 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Views;
+
+use Core\App\CView;
+
+use Core\Db\DatabaseFactory;
+use App\Libs\FileConfig;
+use App\Tables\ClientTable;
+use App\Tables\JobTable;
+use App\Tables\CatalogTable;
+use App\Tables\VolumeTable;
+use App\Tables\PoolTable;
+use App\Tables\FileSetTable;
+use Core\Utils\CUtils;
+
 class DirectorsView extends CView
 {
     public function __construct()

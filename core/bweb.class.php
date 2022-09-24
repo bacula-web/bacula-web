@@ -18,6 +18,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+use App\Libs\FileConfig;
+use Core\App\WebApplication;
+use Core\i18n\CTranslation;
+
 class Bweb extends WebApplication
 {
     public $translate;                    // Translation class instance

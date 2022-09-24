@@ -24,6 +24,12 @@
  *
  */
 
+namespace Core\Db;
+
+use App\Libs\FileConfig;
+use Core\App\WebApplication;
+use Core\App\CView;
+
 class CDBPagination
 {
     private $totalRow = 0;

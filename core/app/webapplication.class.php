@@ -17,7 +17,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\App;
+
+use App\Views\LoginView;
+use Core\Db\DatabaseFactory;
+use App\Libs\FileConfig;
 use Symfony\Component\HttpFoundation\Request;
+use Exception;
 
 class WebApplication
 {
@@ -76,15 +82,15 @@ class WebApplication
             // Set application properties from config file
             $this->name = $app['name'];
             $this->version = $app['version'];
-            $this->defaultView = $app['defaultview'];
+            $this->defaultView = 'App\\Views\\' . $app['defaultview'];
         } else {
             throw new Exception('Application config file not found, please fix it');
         }
 
         // login or logout only if users authentication is enabled
         if ($this->enable_users_auth  === true) {
-            if(WebApplication::getRequest()->request->has('action')) {
-                switch (WebApplication::getRequest()->request->get('action')) {
+            if(WebApplication::getRequest()->query->has('action')) {
+                switch (WebApplication::getRequest()->query->get('action')) {
                 case 'login':
                     $_SESSION['user_authenticated'] = $this->userauth->authUser(
                         WebApplication::getRequest()->request->get('username'),
@@ -118,8 +124,8 @@ class WebApplication
                     
                 // Check if requested page is a known route
                 if (array_key_exists($pageName, $app['routes'])) {
-                    $viewName = ucfirst($app['routes'][$pageName]) . 'View';
-                        
+                    $viewName = '\\App\Views\\'. ucfirst($app['routes'][$pageName]) . 'View';
+
                     if (class_exists($viewName)) {
                         $this->view = new $viewName;
                     } else {

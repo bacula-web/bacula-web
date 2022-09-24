@@ -17,6 +17,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Views;
+
+use Core\App\WebApplication;
+use Core\App\CView;
+use Core\Db\CDBQuery;
+use Core\Db\DatabaseFactory;
+use App\Tables\JobTable;
+use Exception;
+
 class JobLogsView extends CView
 {
     public function __construct()

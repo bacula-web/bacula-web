@@ -1,5 +1,7 @@
 <?php
 
+namespace Core\Db;
+
 class DatabaseFactory
 {
     /**

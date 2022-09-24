@@ -17,6 +17,18 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Views;
+
+use App\Tables\JobTable;
+use Core\App\CView;
+use Core\App\WebApplication;
+use Core\Db\CDBQuery;
+use Core\Db\DatabaseFactory;
+use Core\Graph\Chart;
+use Core\Utils\CUtils;
+use Core\Utils\DateTimeUtil;
+use Exception;
+
 class BackupJobView extends CView
 {
     public function __construct()

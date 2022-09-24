@@ -25,6 +25,13 @@
  * @copyright 2018-2021 Gabriele Orlando
  */
 
+namespace App\Tables;
+
+use Core\Db\Database;
+use Core\Db\CDBQuery;
+use Core\Db\DatabaseFactory;
+use Core\Db\Table;
+
 class JobFileTable extends Table
 {
     protected $tablename = 'File';

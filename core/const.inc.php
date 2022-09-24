@@ -16,7 +16,9 @@
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
  * <https://www.gnu.org/licenses/>.
  */
- 
+
+use Core\Db\DatabaseFactory;
+
 // Time intervals in secondes
  define('NOW', (DatabaseFactory::getDatabase())->getServerTimestamp());
  define('FIRST_DAY', mktime(0, 0, 0, 1, 1, 1970));

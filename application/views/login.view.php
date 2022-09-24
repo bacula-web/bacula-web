@@ -17,6 +17,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Views;
+
+use Core\App\CView;
+
 class LoginView extends CView
 {
     public function __construct()

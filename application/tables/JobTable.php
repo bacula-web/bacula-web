@@ -17,6 +17,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Tables;
+
+use Core\Db\CDBQuery;
+use Core\Db\Table;
+use Core\Utils\CUtils;
+use Exception;
+
 class JobTable extends Table
 {
     protected $tablename = 'Job';

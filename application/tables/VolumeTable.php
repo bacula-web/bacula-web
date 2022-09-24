@@ -17,6 +17,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Tables;
+
+use Core\Db\Table;
+use Core\Db\CDBQuery;
+use Core\Db\CDBPagination;
+
 class VolumeTable extends Table
 {
     protected $tablename = 'Media';

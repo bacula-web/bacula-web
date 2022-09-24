@@ -17,6 +17,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Views;
+
+use Core\App\WebApplication;
+use Core\App\CView;
+use Core\App\UserAuth;
+use App\Libs\FileConfig;
+use Exception;
+
 class SettingsView extends CView
 {
     public function __construct()
