@@ -1,5 +1,7 @@
 <?php
 
+use Core\Helpers\Sanitizer;
+
 /**
  * Copyright (C) 2010-2022 Davide Franco
  * 
@@ -62,6 +64,7 @@ class ClientView extends CView
         // Check client_id and period received by POST request
         if (WebApplication::getRequest()->request->has('client_id')) {
             $clientid = WebApplication::getRequest()->request->getInt('client_id');
+            $clientid = Sanitizer::sanitize($clientid);
 
             // Verify if client_id is a valid integer
             if ($clientid === 0) {
@@ -69,6 +72,7 @@ class ClientView extends CView
             }
 
             $period = WebApplication::getRequest()->request->getInt('period');
+            $period = Sanitizer::sanitize($period);
 
             // Check if period is an integer and listed in known periods
             if (!array_key_exists($period, $periods_list)) {

@@ -78,6 +78,8 @@ class VolumesView extends CView
         $this->assign('orderby', $orderby);
 
         $volume_orderby_filter = WebApplication::getRequest()->request->get('orderby', 'Name');
+        $volume_orderby_filter = \Core\Helpers\Sanitizer::sanitize($volume_orderby_filter);
+
         $this->assign('orderby_selected', $volume_orderby_filter);
 
         if (!array_key_exists($volume_orderby_filter, $orderby)) {
@@ -86,6 +88,7 @@ class VolumesView extends CView
 
         // Set order by filter and checkbox status
         $volume_orderby_asc = WebApplication::getRequest()->request->get('orderby_asc', 'DESC');
+        $volume_orderby_asc = \Core\Helpers\Sanitizer::sanitize($volume_orderby_asc);
 
         if($volume_orderby_asc === 'Asc') {
             $this->assign('orderby_asc_checked', 'checked');

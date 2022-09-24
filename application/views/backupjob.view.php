@@ -1,5 +1,7 @@
 <?php
 
+use Core\Helpers\Sanitizer;
+
 /**
  * Copyright (C) 2010-2022 Davide Franco
  * 
@@ -57,6 +59,7 @@ class BackupJobView extends CView
         }elseif(WebApplication::getRequest()->getMethod() === 'GET') {
             $backupjob_name = WebApplication::getRequest()->query->get('backupjob_name');
         }
+        $backupjob_name = Sanitizer::sanitize($backupjob_name);
 
         $where = array();
 

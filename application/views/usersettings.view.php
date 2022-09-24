@@ -1,5 +1,7 @@
 <?php
 
+use Core\Helpers\Sanitizer;
+
 /**
  * Copyright (C) 2010-2022 Davide Franco
  * 
@@ -43,7 +45,7 @@ class UserSettingsView extends CView
 
         // Check if password reset have been requested
         if(WebApplication::getRequest()->request->has('action')) {
-            switch (WebApplication::getRequest()->request->get('action')) {
+            switch (Sanitizer::sanitize(WebApplication::getRequest()->request->get('action'))) {
             case 'passwordreset':
                 // Check if provided current password is correct
                 if ($this->userauth->authUser($_SESSION['username'], WebApplication::getRequest()->request->get('oldpassword')) == 'yes') {

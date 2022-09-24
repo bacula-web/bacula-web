@@ -1,6 +1,8 @@
 <?php
 
- /**
+use Core\Helpers\Sanitizer;
+
+/**
   * Copyright (C) 2004 Juan Luis Frances Jimenez
   * Copyright (C) 2010-2022 Davide Franco
   * 
@@ -47,6 +49,7 @@ class DashboardView extends CView
 
         if (WebApplication::getRequest()->request->get('period_selector')) {
             $selected_period = WebApplication::getRequest()->request->get('period_selector');
+            $selected_period = Sanitizer::sanitize($selected_period);
             $this->assign('custom_period_list_selected', $selected_period);
 
             switch ($selected_period) {

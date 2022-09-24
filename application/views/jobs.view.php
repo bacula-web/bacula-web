@@ -1,5 +1,7 @@
 <?php
 
+use Core\Helpers\Sanitizer;
+
 /**
  * Copyright (C) 2010-2022 Davide Franco
  * 
@@ -130,6 +132,7 @@ class JobsView extends CView
             // if provided filter_jobtype is not part of valid job type, we simply ignore it
             if (array_key_exists(WebApplication::getRequest()->request->get('filter_jobtype'), $job_types)) {
                 $filter_jobtype = WebApplication::getRequest()->request->get('filter_jobtype');
+                $filter_jobtype = Sanitizer::sanitize($filter_jobtype);
             }
         }
 
@@ -141,6 +144,7 @@ class JobsView extends CView
         // Job level id filter
         if (WebApplication::getRequest()->request->get('filter_joblevel') !== null) {
             $filter_joblevel = WebApplication::getRequest()->request->get('filter_joblevel');
+            $filter_joblevel = Sanitizer::sanitize($filter_joblevel);
         }
 
         // Job pool id filter
@@ -151,11 +155,13 @@ class JobsView extends CView
         // Job starttime filter
         if (WebApplication::getRequest()->request->get('filter_job_starttime') !== null) {
             $filter_job_starttime = WebApplication::getRequest()->request->get('filter_job_starttime');
+            $filter_job_starttime = Sanitizer::sanitize($filter_job_starttime);
         }
 
         // Job endtime filter
         if (WebApplication::getRequest()->request->get('filter_job_endtime') !== null) {
             $filter_job_endtime = WebApplication::getRequest()->request->get('filter_job_endtime');
+            $filter_job_endtime = Sanitizer::sanitize($filter_job_endtime);
         }
 
         // Job orderby filter
@@ -163,12 +169,14 @@ class JobsView extends CView
             // if provided job_orderby is not part of valid job order field, we simply ignore it
             if (array_key_exists(WebApplication::getRequest()->request->get('job_orderby'), $result_order)) {
                 $job_orderby_filter = WebApplication::getRequest()->request->get('job_orderby');
+                $job_orderby_filter = Sanitizer::sanitize($job_orderby_filter);
             }
         }
 
         // Job orderby asc filter
         if (WebApplication::getRequest()->request->get('job_orderby_asc') !== null) {
             $job_orderby_asc_filter = WebApplication::getRequest()->request->get('job_orderby_asc');
+            $job_orderby_asc_filter = Sanitizer::sanitize($job_orderby_asc_filter);
         }
 
         // Assign variables to template
