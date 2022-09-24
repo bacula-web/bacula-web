@@ -1,5 +1,7 @@
 <?php
 
+use Core\Helpers\Sanitizer;
+
 /**
  * Copyright (C) 2010-2022 Davide Franco
  * 
@@ -34,11 +36,15 @@ class SettingsView extends CView
 
         // Create new user
         if (WebApplication::getRequest()->request->has('action')) {
-            switch (WebApplication::getRequest()->request->get('action')) {
+            switch (Sanitizer::sanitize(WebApplication::getRequest()->request->get('action'))) {
                 case 'createuser':
-                    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-                    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-                    $userauth->addUser($username, $email, WebApplication::getRequest()->request->get('password'));
+                    $username = Sanitizer::sanitize( WebApplication::getRequest()->request->get('username'));
+                    $email = Sanitizer::sanitize(WebApplication::getRequest()->request->get('email'));
+                    $userauth->addUser(
+                        $username,
+                        $email,
+                        WebApplication::getRequest()->request->get('password')
+                    );
                     break;
             }
         }

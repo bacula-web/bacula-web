@@ -17,6 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+use Core\Helpers\Sanitizer;
 use Symfony\Component\HttpFoundation\Request;
 
 class WebApplication
@@ -84,17 +85,17 @@ class WebApplication
         // login or logout only if users authentication is enabled
         if ($this->enable_users_auth  === true) {
             if(WebApplication::getRequest()->request->has('action')) {
-                switch (WebApplication::getRequest()->request->get('action')) {
+                switch (Sanitizer::sanitize(WebApplication::getRequest()->request->get('action'))) {
                 case 'login':
                     $_SESSION['user_authenticated'] = $this->userauth->authUser(
-                        WebApplication::getRequest()->request->get('username'),
+                        Sanitizer::sanitize( WebApplication::getRequest()->request->get('username')),
                         WebApplication::getRequest()->request->get('password')
                     );
 
                     if ($_SESSION['user_authenticated'] == 'yes') {
-                        $user = $this->userauth->getData(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
-                        $_SESSION['username'] = $user['username'];
-                        $_SESSION['email'] = $user['email'];
+                        $username = Sanitizer::sanitize(WebApplication::getRequest()->request->get('username'));
+
+                        $_SESSION['username'] = $username;
 
                         $this->view = new $this->defaultView();
                         $this->view->assign('user_authenticated', 'yes');
@@ -114,7 +115,7 @@ class WebApplication
 
                 // Get requested page or set default one
             if (WebApplication::getRequest()->query->has('page')) {
-                $pageName = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING);
+                $pageName = Sanitizer::sanitize(WebApplication::getRequest()->query->get('page'));
                     
                 // Check if requested page is a known route
                 if (array_key_exists($pageName, $app['routes'])) {

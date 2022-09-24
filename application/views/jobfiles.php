@@ -18,6 +18,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+use Core\Helpers\Sanitizer;
+
 /**
  * Description of JobFilesView class
  *
@@ -53,6 +55,7 @@ class JobFilesView extends CView
 
         if( WebApplication::getRequest()->request->has('InputFilename')) {
             $filename = WebApplication::getRequest()->request->get('InputFilename');
+            $filename = Sanitizer::sanitize($filename);
         }
 
         $jobInfo = $jobFiles->getJobNameAndJobStatusByJobId($jobId);

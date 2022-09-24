@@ -17,6 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+use Core\Helpers\Sanitizer;
+
 /**
  * CDBPagination helps creating pagination from database queries results
  *
@@ -49,7 +51,7 @@ class CDBPagination
         $this->currentView = $view;
         $this->limit = (FileConfig::get_Value('rows_per_page') !== null) ? FileConfig::get_Value('rows_per_page') : 25;
         $this->offset = (WebApplication::getRequest()->query->has('pagination_page')) ? WebApplication::getRequest()->query->getInt('pagination_page') : 0;
-        $this->paginationLink = 'index.php?page='. WebApplication::getRequest()->query->getAlpha('page');
+        $this->paginationLink = 'index.php?page='. Sanitizer::sanitize( WebApplication::getRequest()->query->getAlpha('page'));
 
         // Append filter and options from submited form values
         foreach(WebApplication::getRequest()->query->all() as $key => $value) {
@@ -98,56 +100,56 @@ class CDBPagination
 
         $this->currentView->assign('pagination_link', $this->paginationLink);
 
-        if (!is_null(filter_input(INPUT_GET, 'pagination_page'))) {
-            $this->paginationCurrent = WebApplication::getRequest()->query->getInt('pagination_page');
-            $this->currentView->assign('pagination_current', $this->paginationCurrent);
+        if (WebApplication::getRequest()->query->has('pagination_page')) {
+                $this->paginationCurrent = WebApplication::getRequest()->query->getInt('pagination_page');
+                $this->currentView->assign('pagination_current', $this->paginationCurrent);
 
-            // if requested pagination page is the first one
-            if (WebApplication::getRequest()->query->get('pagination_page') == "1") {
-                $this->currentView->assign('first', 'disabled');
+                // if requested pagination page is the first one
+                if (WebApplication::getRequest()->query->get('pagination_page') == "1") {
+                    $this->currentView->assign('first', 'disabled');
+                } else {
+                    $this->currentView->assign('first', '');
+                }
+
+                // if requested pagination page is the last one
+                if (WebApplication::getRequest()->query->getInt('pagination_page') == $this->paginationMax) {
+                    $this->currentView->assign('last', 'disabled');
+                } else {
+                    $this->currentView->assign('last', '');
+                }
+
+                // if requested pagination page is in first 4 pages, disable previous button
+                if (WebApplication::getRequest()->query->getInt('pagination_page') < $this->paginationSteps) {
+                    $this->currentView->assign('previous_enabled', 'disabled');
+                } else {
+                    $this->currentView->assign('previous_enabled', '');
+                }
+
+                // if requested pagination page is within $this->paginationSteps, disable next link
+                if (WebApplication::getRequest()->query->getInt('pagination_page') > ($this->paginationMax - $this->paginationSteps)) {
+                    $this->currentView->assign('next_enabled', 'disabled');
+                }else {
+                    $this->currentView->assign('next_enabled', '');
+                }
+
+                $this->currentView->assign('previous', WebApplication::getRequest()->query->getInt('pagination_page') - $this->paginationSteps);
+                $this->currentView->assign('next', WebApplication::getRequest()->query->getInt('pagination_page')+$this->paginationSteps);
             } else {
-                $this->currentView->assign('first', '');
-            }
-
-            // if requested pagination page is the last one
-            if (WebApplication::getRequest()->query->getInt('pagination_page') == $this->paginationMax) {
-                $this->currentView->assign('last', 'disabled');
-            } else {
-                $this->currentView->assign('last', '');
-            }
-
-            // if requested pagination page is in first 4 pages, disable previous button
-            if (WebApplication::getRequest()->query->getInt('pagination_page') < $this->paginationSteps) {
+                $this->currentView->assign('pagination_current', $this->paginationCurrent);
                 $this->currentView->assign('previous_enabled', 'disabled');
-            } else {
-                $this->currentView->assign('previous_enabled', '');
-            }
+                $this->currentView->assign('previous', '1');
+                $this->currentView->assign('next', $this->paginationSteps+1);
 
-            // if requested pagination page is within $this->paginationSteps, disable next link
-            if (WebApplication::getRequest()->query->getInt('pagination_page') > ($this->paginationMax - $this->paginationSteps)) {
-                $this->currentView->assign('next_enabled', 'disabled');
-            }else {
-                $this->currentView->assign('next_enabled', '');
-            }
+                if($this->paginationMax == 1) {
+                    $this->currentView->assign('next_enabled', 'disabled');
+                    $this->currentView->assign('last', 'disabled');
+                }else {
+                    $this->currentView->assign('next_enabled', '');
+                    $this->currentView->assign('last', '');
+                }
 
-            $this->currentView->assign('previous', WebApplication::getRequest()->query->getInt('pagination_page') - $this->paginationSteps);
-            $this->currentView->assign('next', WebApplication::getRequest()->query->getInt('pagination_page')+$this->paginationSteps);
-        } else {
-            $this->currentView->assign('pagination_current', $this->paginationCurrent);
-            $this->currentView->assign('previous_enabled', 'disabled');
-            $this->currentView->assign('previous', '1');
-            $this->currentView->assign('next', $this->paginationSteps+1);
-
-            if($this->paginationMax == 1) {
-                $this->currentView->assign('next_enabled', 'disabled');
-                $this->currentView->assign('last', 'disabled');
-            }else {
-                $this->currentView->assign('next_enabled', '');
-                $this->currentView->assign('last', '');
+                $this->currentView->assign('first', 'disabled');
             }
-            
-            $this->currentView->assign('first', 'disabled');
-        }
 
         // these lines below are buggy :(
         if ($this->paginationMax == $this->paginationCurrent) {
