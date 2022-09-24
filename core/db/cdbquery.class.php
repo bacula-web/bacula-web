@@ -31,17 +31,18 @@ class CDBQuery
      *      'groupby'   => (string) add GROUP BY field
      *      'orderby'   => (string) add ORDER BY field
      *      'limit'     => (array) array ['count' => define the limit, 'offset' => define the OFFSET]
-     *  ]      
-     * @param  string $driver
+     *
+     * @param string $driver
      * @return string computed SQL query
+     * @throws Exception
      */
 
-    public static function get_Select($param = array(), $driver = null)
+    public static function get_Select(array $param, $driver = null): string
     {
         $query = 'SELECT ';
         $where = '';
 
-        if (!is_array($param) || empty($param)) {
+        if (empty($param)) {
             throw new Exception("Missing parameters: you should provide an array");
         }
 
