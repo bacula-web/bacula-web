@@ -1,4 +1,4 @@
-## Bacula-Web 8.6.0 (mm dd 2022)
+## Bacula-Web 8.6.0 (Sep dd 2022)
 
 ### Changelog
 
@@ -6,10 +6,14 @@
   - **Breaking change**: Implemented front controller
     Bacula-Web web app is now served from the public sub-folder, please
     check the web server config documentation
+  - Replaced CHttpRequest class by Symfony framework Request class
   - Use combined operators in CUtil class (see #91)
   - Refactored PDO related PHP classes (see #100)
   - Updated composer.json by adding ext-pdo depencency (see #113)
   - Updated allowed plugin in composer.json (see #103)
+  - Use PHP namespaces (see #118)
+- 
+- Test page
   - Fixed wrong link to test page on error page
 
 - Security
@@ -24,6 +28,24 @@
 - #114 [security] - Implement front controller
 - #116 [security] - Bump smarty/smarty from 3.1.45 to 3.1.47
 - #117 [bugfix] - PHP notice about undefined catalog_id
+- #118 [enhancement] - Use PHP namespaces
+
+### New feature(s)
+
+-
+
+- none
+
+## Bacula-Web 8.5.5 (June 4th 2022)
+
+### Changelog
+
+- General
+	- Fix security issue with smarty/smarty (see #111)
+
+### Fixed bug(s)
+
+- #111 [security] - Upgrade smarty/smarty to 3.1.45
 
 ### New feature(s)
 
