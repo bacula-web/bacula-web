@@ -12,7 +12,7 @@
   - Updated composer.json by adding ext-pdo depencency (see #113)
   - Updated allowed plugin in composer.json (see #103)
   - Use PHP namespaces (see #118)
-- 
+
 - Test page
   - Fixed wrong link to test page on error page
 
@@ -33,8 +33,6 @@
 ### New feature(s)
 
 -
-
-- none
 
 ## Bacula-Web 8.5.5 (June 4th 2022)
 
