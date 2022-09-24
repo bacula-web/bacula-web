@@ -35,7 +35,7 @@ class PoolTable extends Table
         $orderby  = 'Name';
         
         if (FileConfig::get_Value('hide_empty_pools')) {
-            $where[] = "$table.NumVols > 0";
+            $where[] = "$this->tablename.NumVols > 0";
         }
         
         $fields = array( 'poolid', 'name', 'numvols');
