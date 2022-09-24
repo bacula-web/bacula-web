@@ -51,7 +51,7 @@ class UserSettingsView extends CView
                 if ($this->userauth->authUser($_SESSION['username'], WebApplication::getRequest()->request->get('oldpassword')) == 'yes') {
 
                     // Update user password with new one
-                    if ($this->userauth->setPassword($_SESSION['username'], WebApplication::getRequest()->request->get['newpassword'])) {
+                    if ($this->userauth->setPassword($_SESSION['username'], WebApplication::getRequest()->request->get('newpassword'))) {
                         $this->userAlert = 'Password successfuly updated';
                         $this->userAlertType = 'success';
                     }
