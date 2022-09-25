@@ -1,7 +1,5 @@
 <?php
 
-use Core\Helpers\Sanitizer;
-
 /**
  * Copyright (C) 2010-2022 Davide Franco
  *
@@ -29,6 +27,7 @@ use Core\Db\DatabaseFactory;
 use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
+use Core\Helpers\Sanitizer;
 use Exception;
 
 class BackupJobView extends CView

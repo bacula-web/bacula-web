@@ -1,7 +1,5 @@
 <?php
 
-use Core\Helpers\Sanitizer;
-
 /**
   * Copyright (C) 2004 Juan Luis Frances Jimenez
   * Copyright (C) 2010-2022 Davide Franco
@@ -32,6 +30,7 @@ use Core\Helpers\Sanitizer;
  use Core\Graph\Chart;
  use Core\Utils\CUtils;
  use Core\Utils\DateTimeUtil;
+ use Core\Helpers\Sanitizer;
 
  class DashboardView extends CView
 {

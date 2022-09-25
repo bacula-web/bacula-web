@@ -1,7 +1,5 @@
 <?php
 
-use Core\Helpers\Sanitizer;
-
 /**
  * Copyright (C) 2010-2022 Davide Franco
  *
@@ -28,6 +26,7 @@ use Core\Db\CDBPagination;
 use Core\Db\CDBQuery;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
+use Core\Helpers\Sanitizer;
 use App\Tables\JobTable;
 use App\Tables\ClientTable;
 use App\Tables\PoolTable;

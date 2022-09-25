@@ -18,8 +18,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-use Core\Helpers\Sanitizer;
-
 /**
  * Description of JobFilesView class
  *
@@ -33,6 +31,7 @@ use Core\App\WebApplication;
 use Core\App\CView;
 use Core\Db\DatabaseFactory;
 use Core\Utils\CUtils;
+use Core\Helpers\Sanitizer;
 use App\Tables\JobFileTable;
 use Exception;
 

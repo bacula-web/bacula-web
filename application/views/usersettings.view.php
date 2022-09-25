@@ -1,7 +1,5 @@
 <?php
 
-use Core\Helpers\Sanitizer;
-
 /**
  * Copyright (C) 2010-2022 Davide Franco
  *
@@ -24,6 +22,7 @@ namespace App\Views;
 use Core\App\WebApplication;
 use Core\App\UserAuth;
 use Core\App\CView;
+use Core\Helpers\Sanitizer;
 
 class UserSettingsView extends CView
 {
