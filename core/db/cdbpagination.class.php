@@ -17,8 +17,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-use Core\Helpers\Sanitizer;
-
 /**
  * CDBPagination helps creating pagination from database queries results
  *
@@ -31,6 +29,7 @@ namespace Core\Db;
 use App\Libs\FileConfig;
 use Core\App\WebApplication;
 use Core\App\CView;
+use Core\Helpers\Sanitizer;
 
 class CDBPagination
 {
