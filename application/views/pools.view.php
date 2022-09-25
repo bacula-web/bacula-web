@@ -17,6 +17,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Views;
+
+use Core\Db\DatabaseFactory;
+use Core\App\CView;
+use Core\Utils\CUtils;
+use App\Tables\PoolTable;
+
 class PoolsView extends CView
 {
     public function __construct()

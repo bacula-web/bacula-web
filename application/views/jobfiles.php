@@ -27,6 +27,15 @@ use Core\Helpers\Sanitizer;
  * @author Davide Franco
  */
 
+namespace App\Views;
+
+use Core\App\WebApplication;
+use Core\App\CView;
+use Core\Db\DatabaseFactory;
+use Core\Utils\CUtils;
+use App\Tables\JobFileTable;
+use Exception;
+
 class JobFilesView extends CView
 {
     public function __construct()

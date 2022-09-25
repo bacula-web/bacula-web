@@ -17,6 +17,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\App;
+
+use Core\Db\Table;
+use PDO;
+use Exception;
+
 class UserAuth extends Table
 {
     protected $tablename = 'Users';

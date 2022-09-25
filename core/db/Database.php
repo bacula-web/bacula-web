@@ -17,6 +17,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\Db;
+
+use App\Libs\FileConfig;
+use PDO;
+
 class Database
 {
     private $connection;

@@ -17,6 +17,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\Graph;
+
+use Core\Utils\CUtils;
+use Exception;
+
 class Chart
 {
     public $name;

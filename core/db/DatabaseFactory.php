@@ -17,6 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\Db;
+
 class DatabaseFactory
 {
     /**

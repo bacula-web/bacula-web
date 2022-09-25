@@ -17,6 +17,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\App;
+
+use Smarty;
+use SmartyBC;
+
 class CView extends SmartyBC
 {
     protected $templateName;

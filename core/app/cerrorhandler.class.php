@@ -17,6 +17,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\App;
+
+use Core\Utils\HtmlHelper;
+
 class CErrorHandler
 {
     private static $header;

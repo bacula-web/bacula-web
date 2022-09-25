@@ -17,6 +17,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Tables;
+
+use Core\Db\Table;
+use Core\Db\CDBQuery;
+use App\Libs\FileConfig;
+
 class PoolTable extends Table
 {
 

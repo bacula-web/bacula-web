@@ -17,6 +17,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\Utils;
+
+use DateTime;
+
 class DateTimeUtil
 {
     /*

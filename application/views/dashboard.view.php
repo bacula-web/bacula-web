@@ -20,7 +20,20 @@ use Core\Helpers\Sanitizer;
   * <https://www.gnu.org/licenses/>.
   */
 
-class DashboardView extends CView
+ namespace App\Views;
+
+ use App\Tables\JobTable;
+ use App\Tables\PoolTable;
+ use App\Tables\VolumeTable;
+ use Core\App\CView;
+ use Core\Db\CDBQuery;
+ use Core\Db\DatabaseFactory;
+ use Core\App\WebApplication;
+ use Core\Graph\Chart;
+ use Core\Utils\CUtils;
+ use Core\Utils\DateTimeUtil;
+
+ class DashboardView extends CView
 {
     public function __construct()
     {
@@ -136,7 +149,7 @@ class DashboardView extends CView
           'fields' => array('SUM(numvols) AS sum_vols'),
           'limit' => array( 'offset' => ($pools_count - $max_pools), 'count' => $pools_count),
           'groupby' => 'name');
-            $result = $pools->run_query(CDBQuery::get_Select($query, $pools->get_driver_name()));
+            $result = $pools->run_query( CDBQuery::get_Select($query, $pools->get_driver_name()));
             $sum_vols = $result->fetch();
         }
 

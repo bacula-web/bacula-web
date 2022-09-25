@@ -17,6 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\Utils;
+
 class CUtils
 {
     public static function Get_Human_Size($size, $decimal = 2, $unit = 'auto', $display_unit = true)

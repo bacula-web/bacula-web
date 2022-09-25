@@ -19,6 +19,19 @@ use Core\Helpers\Sanitizer;
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Views;
+
+use Core\App\WebApplication;
+use Core\App\CView;
+use Core\Db\DatabaseFactory;
+use Core\Db\CDBPagination;
+use Core\Db\CDBQuery;
+use Core\Utils\CUtils;
+use Core\Utils\DateTimeUtil;
+use App\Tables\JobTable;
+use App\Tables\ClientTable;
+use App\Tables\PoolTable;
+
 class JobsView extends CView
 {
     public function __construct()

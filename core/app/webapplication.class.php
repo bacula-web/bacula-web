@@ -17,8 +17,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace Core\App;
+
+use Core\Db\DatabaseFactory;
 use Core\Helpers\Sanitizer;
+use App\Libs\FileConfig;
+use App\Views\LoginView;
 use Symfony\Component\HttpFoundation\Request;
+use Exception;
 
 class WebApplication
 {
@@ -77,7 +83,7 @@ class WebApplication
             // Set application properties from config file
             $this->name = $app['name'];
             $this->version = $app['version'];
-            $this->defaultView = $app['defaultview'];
+            $this->defaultView = 'App\\Views\\' . $app['defaultview'];
         } else {
             throw new Exception('Application config file not found, please fix it');
         }
@@ -119,8 +125,8 @@ class WebApplication
                     
                 // Check if requested page is a known route
                 if (array_key_exists($pageName, $app['routes'])) {
-                    $viewName = ucfirst($app['routes'][$pageName]) . 'View';
-                        
+                    $viewName = '\\App\Views\\'. ucfirst($app['routes'][$pageName]) . 'View';
+
                     if (class_exists($viewName)) {
                         $this->view = new $viewName;
                     } else {

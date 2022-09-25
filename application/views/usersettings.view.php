@@ -19,6 +19,12 @@ use Core\Helpers\Sanitizer;
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Views;
+
+use Core\App\WebApplication;
+use Core\App\UserAuth;
+use Core\App\CView;
+
 class UserSettingsView extends CView
 {
     protected $userauth;

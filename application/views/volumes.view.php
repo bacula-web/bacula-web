@@ -17,6 +17,18 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Views;
+
+use Core\Db\DatabaseFactory;
+use Core\Db\CDBQuery;
+use Core\Db\CDBPagination;
+use Core\App\WebApplication;
+use Core\App\CView;
+use Core\Utils\CUtils;
+use App\Tables\VolumeTable;
+use App\Tables\PoolTable;
+use Exception;
+
 class VolumesView extends CView
 {
     public function __construct()
