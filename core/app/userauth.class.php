@@ -160,9 +160,6 @@ class UserAuth extends Table
     {
         $getUsersQuery = "SELECT username,email FROM Users";
 
-        $result = $this->run_query($getUsersQuery);
-        $result = $result->fetchAll();
-        
-        return $result;
+        return $this->query($getUsersQuery);
     }
 } // end of class

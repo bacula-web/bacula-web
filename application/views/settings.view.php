@@ -1,7 +1,5 @@
 <?php
 
-use Core\Helpers\Sanitizer;
-
 /**
  * Copyright (C) 2010-2022 Davide Franco
  *
@@ -25,6 +23,8 @@ use Core\App\WebApplication;
 use Core\App\CView;
 use Core\App\UserAuth;
 use App\Libs\FileConfig;
+use Core\Db\DatabaseFactory;
+use Core\Helpers\Sanitizer;
 use Exception;
 
 class SettingsView extends CView
@@ -40,7 +40,8 @@ class SettingsView extends CView
 
     public function prepare()
     {
-        $userauth = new UserAuth();
+        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
+        $userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
 
         // Create new user
         if (WebApplication::getRequest()->request->has('action')) {

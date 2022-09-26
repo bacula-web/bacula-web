@@ -22,6 +22,7 @@ namespace App\Views;
 use Core\App\WebApplication;
 use Core\App\UserAuth;
 use Core\App\CView;
+use Core\Db\DatabaseFactory;
 use Core\Helpers\Sanitizer;
 
 class UserSettingsView extends CView
@@ -37,7 +38,8 @@ class UserSettingsView extends CView
         $this->name = 'User settings';
         $this->title = '';
         $this->username = '';
-        $this->userauth = new UserAuth();
+        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
+        $this->userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
     }
 
     public function prepare()
