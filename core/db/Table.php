@@ -94,7 +94,7 @@ class Table
 
     /**
      * @param string $query
-     * @param array|null $params array
+     * @param array|null $params
      * @param string|null $fetchClass
      * @return array|false
      */
