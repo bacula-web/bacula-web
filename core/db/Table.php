@@ -66,15 +66,14 @@ class Table
         $fields        = array( 'COUNT(*) as row_count' );
 
         // Prepare and execute query
-        $statment   = CDBQuery::get_Select(
-            [
+        $statement = CDBQuery::get_Select( [
                 'table' => $this->tablename,
                 'fields' => $fields,
                 'where' => $filter
             ]
         );
 
-        $result     = $this->query($statment)[0];
+        $result = $this->query($statement)[0];
 
         // If SQL count result is null, return 0 instead (much better when plotting data)
         if (is_null($result['row_count'])) {
