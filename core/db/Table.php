@@ -101,16 +101,16 @@ class Table
     public function query(string $query, array $params = null, string $fetchClass = null)
     {
         if ($params !== null) {
-            $statment = $this->db_link->prepare($query);
-            $statment->execute($params);
+            $statement = $this->db_link->prepare($query);
+            $statement->execute($params);
         } else {
-            $statment = $this->db_link->query($query);
+            $statement = $this->db_link->query($query);
         }
 
         if ($fetchClass !== null) {
-            $statment->setFetchMode(PDO::FETCH_CLASS, $fetchClass);
+            $statement->setFetchMode(PDO::FETCH_CLASS, $fetchClass);
         }
-        return $statment->fetchAll();
+        return $statement->fetchAll();
     }
 
     /**
