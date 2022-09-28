@@ -100,7 +100,6 @@ class Table
      */
     public function query(string $query, array $params = null, string $fetchClass = null)
     {
-        $statment = null;
         if ($params !== null) {
             $statment = $this->db_link->prepare($query);
             $statment->execute($params);
