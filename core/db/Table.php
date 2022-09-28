@@ -175,7 +175,7 @@ class Table
     /**
      * Return PDO connection status
      *
-     * @return mixed|string
+     * @return string|null
      */
     public function getConnectionStatus()
     {
