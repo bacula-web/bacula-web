@@ -63,7 +63,7 @@ class Table
      */
     public function count($filter = null) :int
     {
-        $fields        = array( 'COUNT(*) as row_count' );
+        $fields = array( 'COUNT(*) as row_count' );
 
         // Prepare and execute query
         $statement = CDBQuery::get_Select( [
@@ -73,7 +73,7 @@ class Table
             ]
         );
 
-        $result = $this->select($statement)[0];
+        $result = $this->select( $statement, null, null, true);
 
         // If SQL count result is null, return 0 instead (much better when plotting data)
         if (is_null($result['row_count'])) {
