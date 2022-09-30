@@ -117,17 +117,6 @@ class UserAuth extends Table
         }
     }
 
-    public function getData($username)
-    {
-        $getUserDataQuery = "SELECT username,email FROM Users WHERE username = :username LIMIT 1";
-        $this->addParameter('username', $username);
-
-        $result = $this->run_query($getUserDataQuery);
-        $result = $result->fetchAll();
-        
-        return $result[0];
-    }
-
     public function destroySession()
     {
         $_SESSION = array();
