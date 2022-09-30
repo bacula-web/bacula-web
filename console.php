@@ -17,6 +17,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/core/bootstrap.php';
+
+use Core\Db\DatabaseFactory;
+use App\Tables\UserTable;
+
 /*
  * Function:    printUsage
  * Parameters:  none
@@ -241,11 +247,12 @@ case 'setupauth':
             die("\tPassword must be at least 6 characters long, aborting" . hightlight('Error', 'error') . PHP_EOL);
         }
 
-        $hashedPassword = password_hash($password, CRYPT_BLOWFISH);
-        $addUserQuery = "INSERT INTO Users (username,email,passwordHash) VALUES ('$username','$email', '$hashedPassword');";
-        $createdUser = $pdo->exec($addUserQuery);
+        $userTable = new UserTable(
+            DatabaseFactory::getDatabase(
+                'sqlite:' . BW_ROOT . '/application/assets/protected/application.db')
+        );
 
-        if ($createdUser > 0) {
+        if( $userTable->addUser($username, $email, $password)) {
             echo "\tUser created" . hightlight('Ok', 'ok') . PHP_EOL;
         }
 
