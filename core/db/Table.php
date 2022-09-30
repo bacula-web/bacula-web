@@ -95,9 +95,10 @@ class Table
      * @param string $query
      * @param array|null $params
      * @param string|null $fetchClass
-     * @return array|false
+     * @param boolean $single
+     * @return mixed
      */
-    public function query(string $query, array $params = null, string $fetchClass = null)
+    public function query(string $query, array $params = null, string $fetchClass = null, $single = null)
     {
         if ($params !== null) {
             $statement = $this->db_link->prepare($query);
@@ -109,6 +110,11 @@ class Table
         if ($fetchClass !== null) {
             $statement->setFetchMode(PDO::FETCH_CLASS, $fetchClass);
         }
+
+        if( $single !== null) {
+            return $statement->fetch();    // set fetch mode
+        }
+
         return $statement->fetchAll();
     }
 
