@@ -75,7 +75,7 @@ class UserTable extends Table
         $parameters = [
             'username' => $user->getUsername(),
             'email' => $user->getEmail(),
-            'hashedPassword' => $user->getHashedPassword()
+            'hashedPassword' => $user->getPasswordHash()
         ];
 
         $addUserQuery = "INSERT INTO Users (username,email,passwordHash) VALUES (:username, :email, :hashedPassword)";

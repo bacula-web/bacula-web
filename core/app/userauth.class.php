@@ -19,6 +19,7 @@
 
 namespace Core\App;
 
+use Core\Db\DatabaseFactory;
 use Core\Db\Table;
 use PDO;
 use Exception;
@@ -87,26 +88,24 @@ class UserAuth extends Table
 
     public function authUser($username, $password)
     {
-        $authUserQuery = "SELECT passwordHash FROM Users WHERE ";
-        $authUserQuery .= "username = :username LIMIT 1";
+        // TODO: FILTER_SANITIZE_STRING is deprecated as of PHP 8.1, replace by htmlspecialchars() instead
 
         // Sanitize username
         $username = filter_var($username, FILTER_SANITIZE_STRING, array( 'flags' => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH));
-        $username = str_replace(' ', '', $username);
+        $username = trim($username, ' ');
 
-        $this->addParameter('username', $username);
+        $userTable = new \App\Tables\UserTable(DatabaseFactory::getDatabase('sqlite:' . $this->appDbBackend));
+        $user = $userTable->findByName($username);
 
-        $result = $this->run_query($authUserQuery);
-        $result = $result->fetchAll();
-
-        if (count($result) == 0) {
-            echo "<pre>username or password incorrect</pre>";
-        } else {
-            if (password_verify($password, $result[0]['passwordhash']) === true) {
+        if($user) {
+            if(password_verify($password, $user->getPasswordHash())) {
                 return 'yes';
             } else {
                 return 'no';
             }
+        }else {
+            // TODO: Display a flash message like "User not found or password incorrect"
+            return 'no';
         }
     }
 

@@ -10,7 +10,7 @@ class User {
 
     private $password;
 
-    private $hashedPassword;
+    private $passwordhash;
 
     private $email;
 
@@ -41,11 +41,11 @@ class User {
 
     public function setPassword($password)
     {
-        $this->hashedPassword = password_hash($password, CRYPT_BLOWFISH);
+        $this->passwordhash = password_hash($password, CRYPT_BLOWFISH);
     }
 
-    public function getHashedPassword()
+    public function getPasswordHash()
     {
-        return $this->hashedPassword;
+        return $this->passwordhash;
     }
 }
