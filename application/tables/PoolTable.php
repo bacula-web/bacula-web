@@ -44,16 +44,13 @@ class PoolTable extends Table
             $where[] = "$this->tablename.NumVols > 0";
         }
         
-        $fields = array( 'poolid', 'name', 'numvols');
-        $result = $this->run_query(CDBQuery::get_Select(array( 'table' => $this->tablename,
-                                                                  'fields' => $fields,
-                                                                  'where' => $where,
-                                                                  'orderby' => $orderby )));
-            
-        foreach ($result->fetchAll() as $pool) {
-            $pools[] = $pool;
-        }
+        $fields = [ 'poolid', 'name', 'numvols' ];
 
-        return $pools;
+        $query = CDBQuery::get_Select(array( 'table' => $this->tablename,
+            'fields' => $fields,
+            'where' => $where,
+            'orderby' => $orderby ));
+
+        return $this->select($query);
     }
 }

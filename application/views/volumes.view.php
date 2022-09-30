@@ -72,8 +72,8 @@ class VolumesView extends CView
         foreach ($pools->getPools() as $pool) {
             $pools_list[$pool['poolid']] = $pool['name'];
         }
-         
-        $pools_list = array( 0 => 'Any') + $pools_list; // Add defautl pool filter
+
+        $pools_list = array( 0 => 'Any') + $pools_list; // Add default pool filter
         $this->assign('pools_list', $pools_list);
 
         $pool_id = WebApplication::getRequest()->request->getInt('filter_pool_id', 0);
