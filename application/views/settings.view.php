@@ -23,6 +23,7 @@ use Core\App\WebApplication;
 use Core\App\CView;
 use Core\App\UserAuth;
 use App\Libs\FileConfig;
+use App\Tables\UserTable;
 use Core\Db\DatabaseFactory;
 use Core\Helpers\Sanitizer;
 use Exception;
@@ -43,6 +44,9 @@ class SettingsView extends CView
         $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
         $userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
 
+        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
+        $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
+
         // Create new user
         if (WebApplication::getRequest()->request->has('action')) {
             switch (Sanitizer::sanitize(WebApplication::getRequest()->request->get('action'))) {
@@ -59,7 +63,7 @@ class SettingsView extends CView
         }
 
         // Get users list
-        $this->assign('users', $userauth->getUsers());
+        $this->assign('users', $userTable->getAll());
 
         // Get parameters set in configuration file
         if (!FileConfig::open(CONFIG_FILE)) {

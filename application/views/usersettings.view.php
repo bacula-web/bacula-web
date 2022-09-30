@@ -19,6 +19,7 @@
 
 namespace App\Views;
 
+use App\Tables\UserTable;
 use Core\App\WebApplication;
 use Core\App\UserAuth;
 use Core\App\CView;
@@ -44,11 +45,14 @@ class UserSettingsView extends CView
 
     public function prepare()
     {
-        $this->username = $_SESSION['username'];
-        $this->assign('username', $this->username);
+        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
+        $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
 
-        $user = $this->userauth->getData($this->username);
-        $this->assign('email', $user['email']);
+        $this->username = $_SESSION['username'];
+        $user = $userTable->findByName($this->username);
+
+        $this->assign('username', $user->getUsername());
+        $this->assign('email', $user->getEmail());
 
         // Check if password reset have been requested
         if(WebApplication::getRequest()->request->has('action')) {

@@ -94,8 +94,8 @@
                       </tr>
                       {foreach from=$users item=user}
                       <tr>
-                        <td>{$user.username}</td>
-                        <td>{$user.email}</td>
+                        <td>{$user->getUsername()}</td>
+                        <td>{$user->getEmail()}</td>
                         <td></td>
                       </tr>
                       {/foreach}
