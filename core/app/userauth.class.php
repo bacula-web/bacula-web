@@ -19,6 +19,7 @@
 
 namespace Core\App;
 
+use App\Tables\UserTable;
 use Core\Db\DatabaseFactory;
 use Core\Db\Table;
 use PDO;
@@ -27,7 +28,7 @@ use Exception;
 class UserAuth extends Table
 {
     protected $tablename = 'Users';
-    protected $appDbBackend;
+    protected $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
     protected $dsn;
 
     public function check()
@@ -73,19 +74,6 @@ class UserAuth extends Table
         }
     }
 
-    public function createSchema()
-    {
-        $createSchemaQuery = 'CREATE TABLE IF NOT EXISTS Users (
-                        user_id INTEGER PRIMARY KEY,
-                        username TEXT NOT NULL UNIQUE,
-                        passwordHash TEXT NOT NULL,
-                        email TEXT
-                        );
-                        CREATE INDEX IF NOT EXISTS User_ix_username ON Users (username);';
-
-        $this->run_query($createSchemaQuery);
-    }
-
     public function authUser($username, $password)
     {
         // TODO: FILTER_SANITIZE_STRING is deprecated as of PHP 8.1, replace by htmlspecialchars() instead
@@ -94,7 +82,7 @@ class UserAuth extends Table
         $username = filter_var($username, FILTER_SANITIZE_STRING, array( 'flags' => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH));
         $username = trim($username, ' ');
 
-        $userTable = new \App\Tables\UserTable(DatabaseFactory::getDatabase('sqlite:' . $this->appDbBackend));
+        $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:' . $this->appDbBackend));
         $user = $userTable->findByName($username);
 
         if($user) {

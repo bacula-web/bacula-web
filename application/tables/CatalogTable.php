@@ -39,22 +39,22 @@ class CatalogTable extends Table
     {
         $db_name    = FileConfig::get_Value('db_name', $catalog_id);
         
-        switch ($this->cdb->getDriverName()) {
+        switch ($this->db->getDriverName()) {
             case 'mysql':
              // Return N/A for MySQL server prior version 5 (no information_schemas)
-                if (version_compare($this->cdb->getServerVersion(), '5.0.0') >= 0) {
+                if (version_compare($this->db->getServerVersion(), '5.0.0') >= 0) {
                     // Prepare SQL statment
                     $statment = array( 'table'   => 'information_schema.TABLES',
                      'fields'  => array("table_schema AS 'database', (sum( data_length + index_length) / 1024 / 1024 ) AS 'dbsize'"),
                      'where'   => array( "table_schema = '$db_name'" ),
                      'groupby' => 'table_schema' );
                                        
-                    $result        = $this->run_query(CDBQuery::get_Select($statment, $this->db_link));
+                    $result        = $this->run_query(CDBQuery::get_Select($statment, $this->pdo));
                     $db_size    = $result->fetch();
                     $db_size     = $db_size['dbsize'] * 1024 * 1024;
                     return CUtils::Get_Human_Size($db_size);
                 } else {
-                    echo 'Not supported ('. $this->cdb->getServerVersion().') <br />';
+                    echo 'Not supported ('. $this->db->getServerVersion().') <br />';
                 }
                 break;
             case 'pgsql':
@@ -79,7 +79,7 @@ class CatalogTable extends Table
         $sqlQuery = CDBQuery::get_Select(array('table' => $this->tablename,
             'fields' => array('VersionId'),
             'limit' => array( 'count' => 1, 'offset' => 0)
-        ), $this->cdb->getDriverName());
+        ), $this->db->getDriverName());
         
         $result = $this->run_query($sqlQuery);
         $this->dbVersionId = intval($result->fetchColumn()); 

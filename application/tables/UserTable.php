@@ -17,7 +17,8 @@ class UserTable extends Table
     public function findByName($username)
     {
         try {
-            $sqlQuery = 'SELECT * from Users WHERE username = :username';
+            $sqlQuery = "SELECT * FROM 'Users' WHERE username = :username";
+
             return $this->select( $sqlQuery,
                 ['username' => $username],
                 '\App\Entity\User',
@@ -51,11 +52,20 @@ class UserTable extends Table
 
         $parameters = [
             'username' => $user->getUsername(),
-            'hashedPassword' => $user->getHashedPassword()
+            'hashedPassword' => $user->getPasswordHash()
         ];
 
         $query = 'UPDATE ' . $this->tablename . ' SET passwordHash = :hashedPassword WHERE username = :username';
+
         return $this->update($query, $parameters);
+
+        /*
+        $result = $this->execute($query, $parameters);
+        if ($result !== false) {
+            var_dump($result);
+            die();
+        }
+        */
     }
 
     /**
@@ -81,5 +91,21 @@ class UserTable extends Table
         $addUserQuery = "INSERT INTO Users (username,email,passwordHash) VALUES (:username, :email, :hashedPassword)";
 
         return $this->create($addUserQuery, $parameters);
+    }
+
+    /**
+     * @return false|int
+     */
+    public function createSchema()
+    {
+        $createSchemaQuery = 'CREATE TABLE IF NOT EXISTS Users (
+                        user_id INTEGER PRIMARY KEY,
+                        username TEXT NOT NULL UNIQUE,
+                        passwordHash TEXT NOT NULL,
+                        email TEXT
+                        );
+                        CREATE INDEX IF NOT EXISTS User_ix_username ON Users (username);';
+
+        return $this->pdo->exec($createSchemaQuery);
     }
 }

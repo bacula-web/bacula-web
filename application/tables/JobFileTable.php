@@ -58,7 +58,7 @@ class JobFileTable extends Table
                   'orderby' => $orderby,
                   'limit' => array( 'count' => $limit, 'offset' => $offset*$limit),
                   'offset' => ($offset*$limit)
-              ), $this->cdb->getDriverName());
+              ), $this->db->getDriverName());
         } else {
             $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'File.Filename AS Filename');
             $where = array("File.JobId = $jobId");
@@ -76,7 +76,7 @@ class JobFileTable extends Table
                 'orderby' => $orderby,
                 'limit' => array( 'count' => $limit, 'offset' => $offset*$limit),
                 'offset' => ($offset*$limit)
-            ), $this->cdb->getDriverName());
+            ), $this->db->getDriverName());
         }
 
         return $this->run_query($sqlQuery)->fetchAll();

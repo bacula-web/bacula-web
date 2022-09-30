@@ -25,8 +25,15 @@ use PDOException;
 
 class Table
 {
-    protected $db_link;
-    protected $cdb;
+    /**
+     * @var PDO
+     */
+    protected $pdo;
+
+    /**
+     * @var Database
+     */
+    protected $db;
     protected $driver;
     protected $parameters;
     protected $tablename = null;
@@ -42,8 +49,8 @@ class Table
         }
 
         // Get PDO instance
-        $this->cdb = $db;
-        $this->db_link = $this->cdb->getDb();
+        $this->db = $db;
+        $this->pdo = $this->db->getDb();
     }
 
     /**
@@ -88,7 +95,7 @@ class Table
      */
     public function get_driver_name() :string
     {
-        return $this->cdb->getDriverName();
+        return $this->db->getDriverName();
     }
 
     /**
@@ -101,10 +108,10 @@ class Table
     public function select(string $query, array $params = null, string $fetchClass = null, $single = null)
     {
         if ($params !== null) {
-            $statement = $this->db_link->prepare($query);
+            $statement = $this->pdo->prepare($query);
             $statement->execute($params);
         } else {
-            $statement = $this->db_link->query($query);
+            $statement = $this->pdo->query($query);
         }
 
         if ($fetchClass !== null) {
@@ -126,19 +133,35 @@ class Table
     public function update(string $query, array $params = null): bool
     {
         if ($params !== null) {
-            $statement = $this->db_link->prepare($query);
+            $statement = $this->pdo->prepare($query);
             return $statement->execute($params);
         }
-        return $this->db_link->exec($query);
+        return $this->pdo->exec($query);
     }
 
     public function create(string $query, array $params = null)
     {
         if ($params !== null) {
-            $statement = $this->db_link->prepare($query);
+            $statement = $this->pdo->prepare($query);
             return $statement->execute($params);
         }
-        return $this->db_link->exec($query);
+        return $this->pdo->exec($query);
+    }
+
+    /**
+     * @param string $query
+     * @param array|null $params
+     * @return \PDOStatement|bool
+     */
+    protected function execute(string $query, array $params = null)
+    {
+        $statement = $this->pdo->prepare($query);
+        if ($params !== null) {
+            $statement->execute($params);
+        } else {
+            $statement->execute();
+        }
+        return $statement;
     }
 
     /**
@@ -150,7 +173,7 @@ class Table
     public function run_query($query)
     {
         // Prepare PDO statment
-        $statment    = $this->db_link->prepare($query);
+        $statment    = $this->pdo->prepare($query);
 
         if ($statment == false) {
             throw new PDOException("Failed to prepare PDOStatment <br />$query");
@@ -209,7 +232,7 @@ class Table
     {
         // If MySQL of postGreSQL
         if ($this->get_driver_name() != 'sqlite') {
-            return $this->db_link->getAttribute(PDO::ATTR_CONNECTION_STATUS);
+            return $this->pdo->getAttribute(PDO::ATTR_CONNECTION_STATUS);
         } else {
             return 'N/A';
         }

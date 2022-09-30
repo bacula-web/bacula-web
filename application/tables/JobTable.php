@@ -41,12 +41,12 @@ class JobTable extends Table
         $fields        = array('COUNT(*) as job_count');
         
         // Check PDO object
-        if (!is_a($this->db_link, 'PDO') && is_null($this->db_link)) {
+        if (!is_a($this->pdo, 'PDO') && is_null($this->pdo)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
         }
 
         // Getting timestamp interval
-        $intervals = CDBQuery::get_Timestamp_Interval($this->cdb->getDriverName(), $period_timestamps);
+        $intervals = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
         
         // Defining interval depending on job status
         if (!is_null($job_status)) {
@@ -117,12 +117,12 @@ class JobTable extends Table
 
         
         // Check PDO object
-        if (!is_a($this->db_link, 'PDO') || is_null($this->db_link)) {
+        if (!is_a($this->pdo, 'PDO') || is_null($this->pdo)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
         }
         
         // Defined period
-        $intervals     = CDBQuery::get_Timestamp_Interval($this->cdb->getDriverName(), $period_timestamps);
+        $intervals     = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
@@ -170,7 +170,7 @@ class JobTable extends Table
         $jobtype    = 'B';
         
         // Defined period
-        $intervals     = CDBQuery::get_Timestamp_Interval($this->cdb->getDriverName(), $period_timestamps);
+        $intervals     = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
@@ -314,7 +314,7 @@ class JobTable extends Table
         $groupby = 'dayofweek';
         $res = array();
 
-        switch ($this->cdb->getDriverName()) {
+        switch ($this->db->getDriverName()) {
        case 'mysql':
           $fields[] = "FROM_UNIXTIME(Job.JobTDate, '%W') AS dayofweek";
           break;
@@ -341,7 +341,7 @@ class JobTable extends Table
           
             // Simply fix day name for postgreSQL
             // It could be improved but I lack some SQL (postgreSQL skills)
-            if ($this->cdb->getDriverName() == 'pgsql') {
+            if ($this->db->getDriverName() == 'pgsql') {
                 $day['dayofweek'] = $week[ $day['dayofweek'] ];
             }
           

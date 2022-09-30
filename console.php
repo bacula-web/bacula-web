@@ -209,28 +209,18 @@ case 'setupauth':
 
     // Create SQLite database
     try {
-        $pdo = new PDO('sqlite:application/assets/protected/application.db');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        echo "\tDatabase created" . hightlight('Ok', 'ok') . PHP_EOL;
-
         // Create database schema
         echo "Creating database schema" . PHP_EOL;
-    
-        $createSchemaQuery = 'CREATE TABLE IF NOT EXISTS Users (
-            user_id INTEGER PRIMARY KEY,
-            username TEXT NOT NULL UNIQUE,
-            passwordHash TEXT NOT NULL,
-            email TEXT
+
+        $userTable = new UserTable(
+            DatabaseFactory::getDatabase(
+                'sqlite:' . BW_ROOT . '/application/assets/protected/application.db')
         );
-        CREATE INDEX IF NOT EXISTS User_ix_username ON Users (username);';
 
-        $rows = $pdo->exec($createSchemaQuery);
-
-        if ($rows === false) {
+        if ($userTable->createSchema() === 0) {
+            echo "\tDatabase created" . hightlight('Ok', 'ok') . PHP_EOL;
+        }else {
             echo "\tDatabase schema not created" . hightlight('Error', 'error') . PHP_EOL;
-        } else {
-            echo "\tDatabase schema created" . hightlight('Ok', 'ok') . PHP_EOL;
         }
 
         echo "User creation" . PHP_EOL;
@@ -246,11 +236,6 @@ case 'setupauth':
         if (strlen($password) < 6) {
             die("\tPassword must be at least 6 characters long, aborting" . hightlight('Error', 'error') . PHP_EOL);
         }
-
-        $userTable = new UserTable(
-            DatabaseFactory::getDatabase(
-                'sqlite:' . BW_ROOT . '/application/assets/protected/application.db')
-        );
 
         if( $userTable->addUser($username, $email, $password)) {
             echo "\tUser created" . hightlight('Ok', 'ok') . PHP_EOL;
