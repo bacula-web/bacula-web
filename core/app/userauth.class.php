@@ -128,21 +128,6 @@ class UserAuth extends Table
         return $result[0];
     }
 
-    public function setPassword($username, $password)
-    {
-        $hashedPassword = password_hash($password, CRYPT_BLOWFISH);
-        $updateUserQuery = "UPDATE Users SET passwordHash = '$hashedPassword' WHERE username = :username;";
-
-        $this->addParameter('username', $username);
-        $result = $this->run_query($updateUserQuery);
-
-        if (is_a($result, 'CDBResult')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public function destroySession()
     {
         $_SESSION = array();
