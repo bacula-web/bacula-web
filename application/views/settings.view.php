@@ -53,11 +53,13 @@ class SettingsView extends CView
                 case 'createuser':
                     $username = Sanitizer::sanitize( WebApplication::getRequest()->request->get('username'));
                     $email = Sanitizer::sanitize(WebApplication::getRequest()->request->get('email'));
-                    $userauth->addUser(
+                    if($userTable->addUser(
                         $username,
                         $email,
                         WebApplication::getRequest()->request->get('password')
-                    );
+                    )) {
+                        // TODO: add flash message if success
+                    };
                     break;
             }
         }

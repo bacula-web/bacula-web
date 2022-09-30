@@ -85,13 +85,6 @@ class UserAuth extends Table
         $this->run_query($createSchemaQuery);
     }
 
-    public function addUser($username, $email, $password)
-    {
-        $hashedPassword = password_hash($password, CRYPT_BLOWFISH);
-        $addUserQuery = "INSERT INTO Users (username,email,passwordHash) VALUES ('$username','$email', '$hashedPassword');";
-        $this->run_query($addUserQuery);
-    }
-
     public function authUser($username, $password)
     {
         $authUserQuery = "SELECT passwordHash FROM Users WHERE ";

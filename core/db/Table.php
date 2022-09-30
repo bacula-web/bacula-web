@@ -132,6 +132,15 @@ class Table
         return $this->db_link->exec($query);
     }
 
+    public function create(string $query, array $params = null)
+    {
+        if ($params !== null) {
+            $statement = $this->db_link->prepare($query);
+            return $statement->execute($params);
+        }
+        return $this->db_link->exec($query);
+    }
+
     /**
       Function: run_query
       Parameters:  $query

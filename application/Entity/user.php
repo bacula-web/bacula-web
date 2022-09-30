@@ -14,6 +14,11 @@ class User {
 
     private $email;
 
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
     public function getUsername()
     {
         return $this->username;
@@ -22,6 +27,11 @@ class User {
     public function getEmail()
     {
         return $this->email;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
     public function getPassword()

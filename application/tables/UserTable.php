@@ -57,4 +57,29 @@ class UserTable extends Table
         $query = 'UPDATE ' . $this->tablename . ' SET passwordHash = :hashedPassword WHERE username = :username';
         return $this->update($query, $parameters);
     }
+
+    /**
+     * @param $username
+     * @param $email
+     * @param $password
+     * @return bool|int
+     */
+    public function addUser($username, $email, $password)
+    {
+        $user = new User();
+
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setPassword($password);
+
+        $parameters = [
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'hashedPassword' => $user->getHashedPassword()
+        ];
+
+        $addUserQuery = "INSERT INTO Users (username,email,passwordHash) VALUES (:username, :email, :hashedPassword)";
+
+        return $this->create($addUserQuery, $parameters);
+    }
 }
