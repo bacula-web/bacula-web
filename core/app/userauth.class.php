@@ -155,11 +155,4 @@ class UserAuth extends Table
         // Destroy the session.
         session_destroy();
     }
-
-    public function getUsers()
-    {
-        $getUsersQuery = "SELECT username,email FROM Users";
-
-        return $this->query($getUsersQuery);
-    }
-} // end of class
+}
