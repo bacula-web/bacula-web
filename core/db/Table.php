@@ -73,7 +73,7 @@ class Table
             ]
         );
 
-        $result = $this->query($statement)[0];
+        $result = $this->select($statement)[0];
 
         // If SQL count result is null, return 0 instead (much better when plotting data)
         if (is_null($result['row_count'])) {
@@ -98,7 +98,7 @@ class Table
      * @param boolean $single
      * @return mixed
      */
-    public function query(string $query, array $params = null, string $fetchClass = null, $single = null)
+    public function select(string $query, array $params = null, string $fetchClass = null, $single = null)
     {
         if ($params !== null) {
             $statement = $this->db_link->prepare($query);
@@ -116,6 +116,20 @@ class Table
         }
 
         return $statement->fetchAll();
+    }
+
+    /**
+     * @param string $query
+     * @param array $params
+     * @return bool
+     */
+    public function update(string $query, array $params = null): bool
+    {
+        if ($params !== null) {
+            $statement = $this->db_link->prepare($query);
+            return $statement->execute($params);
+        }
+        return $this->db_link->exec($query);
     }
 
     /**

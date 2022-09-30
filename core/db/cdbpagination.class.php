@@ -98,7 +98,7 @@ class CDBPagination
         $this->totalRow = $table->count();
         $this->currentView->assign('rowcount', $this->totalRow);
 
-        $this->filteredRow = $table->query($queryCount, $params)[0]['row_count'];
+        $this->filteredRow = $table->select($queryCount, $params)[0]['row_count'];
         $this->paginationMax = ceil($this->filteredRow / $this->limit);
 
         $this->currentView->assign('count', $this->filteredRow);
@@ -166,6 +166,6 @@ class CDBPagination
         $this->currentView->assign('pagination_max', $this->paginationMax);
         $this->currentView->assign('pagination_steps', $this->paginationSteps);
 
-        return $table->query($query, $params);
+        return $table->select($query, $params);
     }
 }

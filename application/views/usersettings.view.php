@@ -28,7 +28,6 @@ use Core\Helpers\Sanitizer;
 
 class UserSettingsView extends CView
 {
-    protected $userauth;
     protected $username;
 
     public function __construct()
@@ -39,14 +38,15 @@ class UserSettingsView extends CView
         $this->name = 'User settings';
         $this->title = '';
         $this->username = '';
-        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
-        $this->userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
     }
 
     public function prepare()
     {
         $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
         $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
+
+        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
+        $userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
 
         $this->username = $_SESSION['username'];
         $user = $userTable->findByName($this->username);
@@ -59,11 +59,11 @@ class UserSettingsView extends CView
             switch (Sanitizer::sanitize(WebApplication::getRequest()->request->get('action'))) {
             case 'passwordreset':
                 // Check if provided current password is correct
-                if ($this->userauth->authUser($_SESSION['username'], WebApplication::getRequest()->request->get('oldpassword')) == 'yes') {
+                if ($userauth->authUser($user->getUsername(), WebApplication::getRequest()->request->get('oldpassword')) == 'yes') {
 
                     // Update user password with new one
-                    if ($this->userauth->setPassword($_SESSION['username'], WebApplication::getRequest()->request->get('newpassword'))) {
-                        $this->userAlert = 'Password successfuly updated';
+                    if($userTable->setPassword( $user->getUsername(), WebApplication::getRequest()->request->get('newpassword'))) {
+                        $this->userAlert = 'Password successfully updated';
                         $this->userAlertType = 'success';
                     }
                 } else {
