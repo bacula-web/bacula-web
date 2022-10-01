@@ -28,15 +28,12 @@ class PoolTable extends Table
 
     protected $tablename = 'Pool';
 
-    // ==================================================================================
-    // Function: 	getPools()
-    // Parameters: 	none
-    // Return:	pools list in a array
-    // ==================================================================================
-
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     public function getPools()
     {
-        $pools    = null;
         $where    = null;
         $orderby  = 'Name';
         
