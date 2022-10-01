@@ -57,20 +57,27 @@ class UserSettingsView extends CView
         // Check if password reset have been requested
         if(WebApplication::getRequest()->request->has('action')) {
             switch (Sanitizer::sanitize(WebApplication::getRequest()->request->get('action'))) {
-            case 'passwordreset':
-                // Check if provided current password is correct
-                if ($userauth->authUser($user->getUsername(), WebApplication::getRequest()->request->get('oldpassword')) == 'yes') {
+                case 'passwordreset':
+                    // Check if provided current password is correct
+                    if ($userauth->authUser($user->getUsername(), WebApplication::getRequest()->request->get('oldpassword')) == 'yes') {
 
-                    // Update user password with new one
-                    if($userTable->setPassword( $user->getUsername(), WebApplication::getRequest()->request->get('newpassword'))) {
-                        $this->userAlert = 'Password successfully updated';
-                        $this->userAlertType = 'success';
+                        // Update user password with new one
+                        $result = $userTable->setPassword(
+                            $user->getUsername(),
+                            WebApplication::getRequest()->request->get('newpassword')
+                        );
+
+                        if ($result !== false) {
+                            $this->userAlert = 'Password successfully updated';
+                            $this->userAlertType = 'success';
+                        } else {
+                            // TODO: do we need to check something here ?
+                        }
+                    } else {
+                        $this->userAlert = 'Current password do not match';
+                        $this->userAlertType = 'danger';
                     }
-                } else {
-                    $this->userAlert = 'Current password do not match';
-                    $this->userAlertType = 'danger';
-                }
-                break;
+                    break;
             }
         }
     }

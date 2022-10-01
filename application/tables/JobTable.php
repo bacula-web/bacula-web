@@ -27,6 +27,7 @@ use Exception;
 class JobTable extends Table
 {
     protected $tablename = 'Job';
+
     // ==================================================================================
     // Function: 	 count_Jobs()
     // Parameters: $period_timestamps		Array containing start and end date (unix timestamp format)

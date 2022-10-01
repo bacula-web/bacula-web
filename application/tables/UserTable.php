@@ -5,6 +5,7 @@ namespace App\Tables;
 use App\Entity\User;
 use Core\App\CErrorHandler;
 use Core\Db\Table;
+use PDOStatement;
 
 class UserTable extends Table
 {
@@ -42,9 +43,9 @@ class UserTable extends Table
     /**
      * @param string $username
      * @param string $password
-     * @return bool
+     * @return PDOStatement|bool
      */
-    public function setPassword(string $username, string $password): bool
+    public function setPassword(string $username, string $password)
     {
         $user = $this->findByName($username);
 
@@ -57,15 +58,7 @@ class UserTable extends Table
 
         $query = 'UPDATE ' . $this->tablename . ' SET passwordHash = :hashedPassword WHERE username = :username';
 
-        return $this->update($query, $parameters);
-
-        /*
-        $result = $this->execute($query, $parameters);
-        if ($result !== false) {
-            var_dump($result);
-            die();
-        }
-        */
+        return $this->execute($query, $parameters);
     }
 
     /**
@@ -90,7 +83,7 @@ class UserTable extends Table
 
         $addUserQuery = "INSERT INTO Users (username,email,passwordHash) VALUES (:username, :email, :hashedPassword)";
 
-        return $this->create($addUserQuery, $parameters);
+        return $this->execute($addUserQuery, $parameters);
     }
 
     /**

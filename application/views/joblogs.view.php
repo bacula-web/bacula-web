@@ -19,6 +19,7 @@
 
 namespace App\Views;
 
+use App\Tables\LogTable;
 use Core\App\WebApplication;
 use Core\App\CView;
 use Core\Db\CDBQuery;
@@ -39,12 +40,12 @@ class JobLogsView extends CView
 
     public function prepare()
     {
-        $joblogs = array();
         $jobid = WebApplication::getRequest()->query->getInt('jobid', 0);
+        $this->assign('jobid', $jobid);
 
         /*
          * if $_GET['jobid'] is not a valid integer different than 0, then throw an exception
-         * Exceptions will be handled in a better fashion in later development
+         * TODO: Exceptions will be handled in a better fashion in later development
          */
         if ($jobid === 0) {
             throw new Exception('Invalid job id (invalid or null) provided in Job logs report');
@@ -52,18 +53,25 @@ class JobLogsView extends CView
 
         // Prepare and execute SQL statment
         $jobs = new JobTable(DatabaseFactory::getDatabase());
-        $statment     = array('table' => 'Log', 'where' => array("JobId = :jobid"), 'orderby' => 'Time');
-        $jobs->addParameter('jobid', $jobid);
-        $result     = $jobs->run_query(CDBQuery::get_Select($statment));
+        $jobs->find(['JobId = :jobid'], ['jobid' => $jobid]);
 
-        // Processing result
-        foreach ($result->fetchAll() as $log) {
-            $log['logtext'] = nl2br($log['logtext']);
-            $log['time'] = date($_SESSION['datetime_format'], strtotime($log['time']));
-            $joblogs[] = $log;
-        }
-        
-        $this->assign('jobid', $jobid);
-        $this->assign('joblogs', $joblogs);
-    } // end of prepare() method
-} // end of class
+        $sql = CDBQuery::get_Select(
+            [
+                'table' => 'Log',
+                'where' => [ 'JobId = :jobid'],
+                'orderby' => 'Time'
+            ]
+        );
+
+        $logTable = new LogTable(DatabaseFactory::getDatabase());
+
+        $this->assign(
+            'joblogs',
+            $logTable->findAll(
+                $sql,
+                ['jobid' => $jobid],
+                'App\Entity\Log'
+            )
+        );
+    }
+}

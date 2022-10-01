@@ -126,30 +126,8 @@ class Table
     }
 
     /**
-     * @param string $query
-     * @param array $params
-     * @return bool
-     */
-    public function update(string $query, array $params = null): bool
-    {
-        if ($params !== null) {
-            $statement = $this->pdo->prepare($query);
-            return $statement->execute($params);
-        }
-        return $this->pdo->exec($query);
-    }
-
-    public function create(string $query, array $params = null)
-    {
-        if ($params !== null) {
-            $statement = $this->pdo->prepare($query);
-            return $statement->execute($params);
-        }
-        return $this->pdo->exec($query);
-    }
-
-    /**
-     * @param string $query
+     * Prepare a query using PDO::prepare() and return false on failure, or a PDOStatement
+     * @param string $query SQL query
      * @param array|null $params
      * @return \PDOStatement|bool
      */
@@ -260,5 +238,33 @@ class Table
         } else {
             return false;
         }
+    }
+
+    /**
+     * @param $criteria
+     * @param $parameters
+     * @return array|bool
+     */
+    public function find($criteria, $parameters = null)
+    {
+        $sql = 'SELECT * FROM ' . $this->getTableName() . ' WHERE ';
+        $sql .= implode(' AND ', $criteria);
+
+        $statement = $this->execute($sql, $parameters);
+
+        return $statement->fetch();
+    }
+
+    /**
+     * @param $sql
+     * @param $parameters
+     * @param $fetchClass
+     * @return array|false
+     */
+    public function findAll($sql, $parameters, $fetchClass)
+    {
+        $statement = $this->execute($sql, $parameters);
+
+        return $statement->fetchAll(PDO::FETCH_CLASS, $fetchClass);
     }
 }

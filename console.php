@@ -237,8 +237,9 @@ case 'setupauth':
             die("\tPassword must be at least 6 characters long, aborting" . hightlight('Error', 'error') . PHP_EOL);
         }
 
-        if( $userTable->addUser($username, $email, $password)) {
-            echo "\tUser created" . hightlight('Ok', 'ok') . PHP_EOL;
+        $result = $userTable->addUser($username, $email, $password);
+        if( $result === false) {
+            echo '\t' . $result->rowCount() . "ser created successfully" . hightlight('Ok', 'ok') . PHP_EOL;
         }
 
         echo PHP_EOL . "You can now connect to your Bacula-Web instance using provided credentials" . PHP_EOL;
