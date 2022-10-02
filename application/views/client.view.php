@@ -19,17 +19,16 @@
 
 namespace App\Views;
 
-use Core\App\WebApplication;
 use Core\App\CView;
 use Core\Graph\Chart;
 use Core\Db\DatabaseFactory;
 use Core\Db\CDBQuery;
 use Core\Utils\DateTimeUtil;
 use Core\Utils\CUtils;
-use Core\App\UserAuth;
 use Core\Helpers\Sanitizer;
 use App\Tables\JobTable;
 use App\Tables\ClientTable;
+use Symfony\Component\HttpFoundation\Request;
 
 class ClientView extends CView
 {
@@ -42,7 +41,7 @@ class ClientView extends CView
         $this->title = 'Report per Bacula client';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
         require_once BW_ROOT . '/core/const.inc.php';
         
@@ -74,8 +73,8 @@ class ClientView extends CView
         );
 
         // Check client_id and period received by POST request
-        if (WebApplication::getRequest()->request->has('client_id')) {
-            $clientid = WebApplication::getRequest()->request->getInt('client_id');
+        if ($request->request->has('client_id')) {
+            $clientid = $request->request->getInt('client_id');
             $clientid = Sanitizer::sanitize($clientid);
 
             // Verify if client_id is a valid integer
@@ -83,7 +82,7 @@ class ClientView extends CView
                 throw new Exception('Critical: provided parameter (client_id) is not valid');
             }
 
-            $period = WebApplication::getRequest()->request->getInt('period');
+            $period = $request->request->getInt('period');
             $period = Sanitizer::sanitize($period);
 
             // Check if period is an integer and listed in known periods

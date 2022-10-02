@@ -22,12 +22,12 @@ namespace App\Views;
 use Core\Db\DatabaseFactory;
 use Core\Db\CDBQuery;
 use Core\Db\CDBPagination;
-use Core\App\WebApplication;
 use Core\App\CView;
 use Core\Utils\CUtils;
 use App\Tables\VolumeTable;
 use App\Tables\PoolTable;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class VolumesView extends CView
 {
@@ -40,7 +40,7 @@ class VolumesView extends CView
         $this->title = 'Bacula volume(s) overview';
     }
     
-    public function prepare()
+    public function prepare(Request $request)
     {
         $volumes = new VolumeTable(DatabaseFactory::getDatabase());
         $params = [];
@@ -76,7 +76,7 @@ class VolumesView extends CView
         $pools_list = array( 0 => 'Any') + $pools_list; // Add default pool filter
         $this->assign('pools_list', $pools_list);
 
-        $pool_id = WebApplication::getRequest()->request->getInt('filter_pool_id', 0);
+        $pool_id = $request->request->getInt('filter_pool_id', 0);
 
         if($pool_id !== 0) {
             $where[] = 'Media.PoolId = :pool_id';
@@ -89,7 +89,7 @@ class VolumesView extends CView
         // Set order by
         $this->assign('orderby', $orderby);
 
-        $volume_orderby_filter = WebApplication::getRequest()->request->get('orderby', 'Name');
+        $volume_orderby_filter = $request->request->get('orderby', 'Name');
         $volume_orderby_filter = \Core\Helpers\Sanitizer::sanitize($volume_orderby_filter);
 
         $this->assign('orderby_selected', $volume_orderby_filter);
@@ -99,7 +99,7 @@ class VolumesView extends CView
         }
 
         // Set order by filter and checkbox status
-        $volume_orderby_asc = WebApplication::getRequest()->request->get('orderby_asc', 'DESC');
+        $volume_orderby_asc = $request->request->get('orderby_asc', 'DESC');
         $volume_orderby_asc = \Core\Helpers\Sanitizer::sanitize($volume_orderby_asc);
 
         if($volume_orderby_asc === 'Asc') {
@@ -109,7 +109,7 @@ class VolumesView extends CView
         }
 
         // Set inchanger checkbox to unchecked by default
-        if(WebApplication::getRequest()->request->has('filter_inchanger')) {
+        if($request->request->has('filter_inchanger')) {
             $where[] = 'Media.inchanger = :inchanger';
             $params['inchanger'] = 1;
             $this->assign('inchanger_checked', 'checked');

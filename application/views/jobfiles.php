@@ -27,13 +27,13 @@
 
 namespace App\Views;
 
-use Core\App\WebApplication;
 use Core\App\CView;
 use Core\Db\DatabaseFactory;
 use Core\Utils\CUtils;
 use Core\Helpers\Sanitizer;
 use App\Tables\JobFileTable;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class JobFilesView extends CView
 {
@@ -46,14 +46,14 @@ class JobFilesView extends CView
         $this->title = 'Bacula Job Files';
     }
     
-    public function prepare()
+    public function prepare(Request $request)
     {
         $rows_per_page = 10;
         $current_page = null;
         $jobFiles = new JobFileTable(DatabaseFactory::getDatabase());
         $filename = '';
 
-        $jobId = WebApplication::getRequest()->query->getInt('jobId', 0);
+        $jobId = $request->query->getInt('jobId', 0);
 
         if($jobId !== 0) {
             $this->assign('jobid', $jobId);
@@ -61,8 +61,8 @@ class JobFilesView extends CView
             throw new Exception('Invalid or missing Job Id (not numeric) provided in ' . $this->title);
         }
 
-        if( WebApplication::getRequest()->request->has('InputFilename')) {
-            $filename = WebApplication::getRequest()->request->get('InputFilename');
+        if ($request->request->has('InputFilename')) {
+            $filename = $request->request->get('InputFilename');
             $filename = Sanitizer::sanitize($filename);
         }
 
@@ -77,8 +77,8 @@ class JobFilesView extends CView
             $pagination_active = true;
         }
 
-        if (WebApplication::getRequest()->query->has('paginationCurrentPage')) {
-            $current_page = WebApplication::getRequest()->query->getInt('paginationCurrentPage');
+        if ($request->query->has('paginationCurrentPage')) {
+            $current_page = $request->query->getInt('paginationCurrentPage');
         }
 
         $this->assign('pagination_active', $pagination_active);

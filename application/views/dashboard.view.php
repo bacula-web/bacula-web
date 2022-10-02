@@ -26,11 +26,11 @@
  use Core\App\CView;
  use Core\Db\CDBQuery;
  use Core\Db\DatabaseFactory;
- use Core\App\WebApplication;
  use Core\Graph\Chart;
  use Core\Utils\CUtils;
  use Core\Utils\DateTimeUtil;
  use Core\Helpers\Sanitizer;
+ use Symfony\Component\HttpFoundation\Request;
 
  class DashboardView extends CView
 {
@@ -43,7 +43,7 @@
         $this->title = 'General overview';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
         $jobs = new JobTable(DatabaseFactory::getDatabase());
         $pools = new PoolTable(DatabaseFactory::getDatabase());
@@ -59,8 +59,8 @@
         $custom_period = $last_day;
         $selected_period = 'last_day';
 
-        if (WebApplication::getRequest()->request->get('period_selector')) {
-            $selected_period = WebApplication::getRequest()->request->get('period_selector');
+        if ($request->request->get('period_selector')) {
+            $selected_period = $request->request->get('period_selector');
             $selected_period = Sanitizer::sanitize($selected_period);
             $this->assign('custom_period_list_selected', $selected_period);
 
@@ -77,7 +77,7 @@
             case 'since_bot':
                 $custom_period = $no_period;
                 break;
-        } // end switch
+            }
         } else {
             $this->assign('custom_period_list_selected', $selected_period);
         }

@@ -20,6 +20,7 @@
 namespace App\Views;
 
 use Core\App\CView;
+use Symfony\Component\HttpFoundation\Request;
 
 class LoginView extends CView
 {
@@ -32,7 +33,8 @@ class LoginView extends CView
         $this->title = '';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
+        // TODO: implement
     }
 } // end of class

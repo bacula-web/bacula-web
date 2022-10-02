@@ -30,6 +30,7 @@ use App\Tables\VolumeTable;
 use App\Tables\PoolTable;
 use App\Tables\FileSetTable;
 use Core\Utils\CUtils;
+use Symfony\Component\HttpFoundation\Request;
 
 class DirectorsView extends CView
 {
@@ -42,7 +43,7 @@ class DirectorsView extends CView
         $this->title = 'Bacula director(s) overview';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
         require_once BW_ROOT . '/core/const.inc.php';
         

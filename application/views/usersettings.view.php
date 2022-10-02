@@ -20,11 +20,11 @@
 namespace App\Views;
 
 use App\Tables\UserTable;
-use Core\App\WebApplication;
 use Core\App\UserAuth;
 use Core\App\CView;
 use Core\Db\DatabaseFactory;
 use Core\Helpers\Sanitizer;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserSettingsView extends CView
 {
@@ -40,7 +40,7 @@ class UserSettingsView extends CView
         $this->username = '';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
         $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
         $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
@@ -55,16 +55,16 @@ class UserSettingsView extends CView
         $this->assign('email', $user->getEmail());
 
         // Check if password reset have been requested
-        if(WebApplication::getRequest()->request->has('action')) {
-            switch (Sanitizer::sanitize(WebApplication::getRequest()->request->get('action'))) {
+        if($request->request->has('action')) {
+            switch (Sanitizer::sanitize($request->request->get('action'))) {
                 case 'passwordreset':
                     // Check if provided current password is correct
-                    if ($userauth->authUser($user->getUsername(), WebApplication::getRequest()->request->get('oldpassword')) == 'yes') {
+                    if ($userauth->authUser($user->getUsername(), $request->request->get('oldpassword')) == 'yes') {
 
                         // Update user password with new one
                         $result = $userTable->setPassword(
                             $user->getUsername(),
-                            WebApplication::getRequest()->request->get('newpassword')
+                            $request->request->get('newpassword')
                         );
 
                         if ($result !== false) {

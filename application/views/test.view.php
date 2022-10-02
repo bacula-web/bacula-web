@@ -25,6 +25,7 @@ use Core\Db\DatabaseFactory;
 use App\Tables\CatalogTable;
 use PDO;
 use Core\Graph\Chart;
+use Symfony\Component\HttpFoundation\Request;
 
 class TestView extends CView
 {
@@ -37,7 +38,7 @@ class TestView extends CView
         $this->title = 'Check requirements and configuration';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
         $catalog = new CatalogTable(DatabaseFactory::getDatabase());
         

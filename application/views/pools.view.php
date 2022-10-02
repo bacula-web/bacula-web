@@ -23,6 +23,7 @@ use Core\Db\DatabaseFactory;
 use Core\App\CView;
 use Core\Utils\CUtils;
 use App\Tables\PoolTable;
+use Symfony\Component\HttpFoundation\Request;
 
 class PoolsView extends CView
 {
@@ -35,7 +36,7 @@ class PoolsView extends CView
         $this->title = 'Bacula pool(s) overview';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
         // Get volumes list (pools.tpl)
         $pools = new PoolTable(DatabaseFactory::getDatabase());

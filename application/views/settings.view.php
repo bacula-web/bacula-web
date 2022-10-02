@@ -19,7 +19,6 @@
 
 namespace App\Views;
 
-use Core\App\WebApplication;
 use Core\App\CView;
 use Core\App\UserAuth;
 use App\Libs\FileConfig;
@@ -27,6 +26,7 @@ use App\Tables\UserTable;
 use Core\Db\DatabaseFactory;
 use Core\Helpers\Sanitizer;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class SettingsView extends CView
 {
@@ -39,7 +39,7 @@ class SettingsView extends CView
         $this->title = 'General settings';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
         $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
         $userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
@@ -48,16 +48,16 @@ class SettingsView extends CView
         $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
 
         // Create new user
-        if (WebApplication::getRequest()->request->has('action')) {
-            switch (Sanitizer::sanitize(WebApplication::getRequest()->request->get('action'))) {
+        if ($request->request->has('action')) {
+            switch (Sanitizer::sanitize($request->request->get('action'))) {
                 case 'createuser':
-                    $username = Sanitizer::sanitize( WebApplication::getRequest()->request->get('username'));
-                    $email = Sanitizer::sanitize(WebApplication::getRequest()->request->get('email'));
+                    $username = Sanitizer::sanitize( $request->request->get('username'));
+                    $email = Sanitizer::sanitize($request->request->get('email'));
 
                     $result = $userTable->addUser(
                         $username,
                         $email,
-                        WebApplication::getRequest()->request->get('password')
+                        $request->request->get('password')
                     );
                     if($result !== false) {
                         // TODO: replace by flash message

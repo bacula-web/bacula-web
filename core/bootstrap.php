@@ -32,4 +32,4 @@
  // Locales
  define('LOCALE_DIR', BW_ROOT . '/application/locale');
 
- $request = new \Symfony\Component\HttpFoundation\Request();
+ $request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();

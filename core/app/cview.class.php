@@ -21,6 +21,7 @@ namespace Core\App;
 
 use Smarty;
 use SmartyBC;
+use Symfony\Component\HttpFoundation\Request;
 
 class CView extends SmartyBC
 {
@@ -43,7 +44,7 @@ class CView extends SmartyBC
         $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
     }
 
-    public function render()
+    public function render(Request $request)
     {
         $this->assign('page_name', $this->name);
         $this->assign('page_title', $this->title);
@@ -59,8 +60,7 @@ class CView extends SmartyBC
         $this->assign('userAlertType', $this->userAlertType);
 
         // Build breadcrumb
-        $breadcrumb = '';
-        if(WebApplication::getRequest()->query->has('page')) {
+        if ($request->query->has('page')) {
             $breadcrumb = '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
             $breadcrumb .= '<li class="active">' . $this->name . '</li>';
         } else {

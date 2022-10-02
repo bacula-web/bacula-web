@@ -21,7 +21,6 @@ namespace App\Views;
 
 use App\Tables\JobTable;
 use Core\App\CView;
-use Core\App\WebApplication;
 use Core\Db\CDBQuery;
 use Core\Db\DatabaseFactory;
 use Core\Graph\Chart;
@@ -30,6 +29,7 @@ use Core\Utils\DateTimeUtil;
 
 use Core\Helpers\Sanitizer;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class BackupJobView extends CView
 {
@@ -42,7 +42,7 @@ class BackupJobView extends CView
         $this->title = 'Report per Bacula backup job name';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
         require_once BW_ROOT . '/core/const.inc.php';
         
@@ -66,10 +66,10 @@ class BackupJobView extends CView
         // Check backup job name from $_POST request
         $backupjob_name = null;
 
-        if(WebApplication::getRequest()->getMethod() === 'POST') {
-            $backupjob_name = WebApplication::getRequest()->request->get('backupjob_name');
-        }elseif(WebApplication::getRequest()->getMethod() === 'GET') {
-            $backupjob_name = WebApplication::getRequest()->query->get('backupjob_name');
+        if($request->getMethod() === 'POST') {
+            $backupjob_name = $request->request->get('backupjob_name');
+        }elseif($request->getMethod() === 'GET') {
+            $backupjob_name = $request->query->get('backupjob_name');
         }
         $backupjob_name = Sanitizer::sanitize($backupjob_name);
 
@@ -94,7 +94,7 @@ class BackupJobView extends CView
             /**
              * Get selected period from POST request, or set it to default value (7)
              */
-            $backupjob_period = WebApplication::getRequest()->request->getInt('period', 7);
+            $backupjob_period = $request->request->getInt('period', 7);
 
             // Set selected period
             $this->assign('selected_period', $backupjob_period);

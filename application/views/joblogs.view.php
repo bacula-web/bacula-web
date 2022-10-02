@@ -20,12 +20,12 @@
 namespace App\Views;
 
 use App\Tables\LogTable;
-use Core\App\WebApplication;
 use Core\App\CView;
 use Core\Db\CDBQuery;
 use Core\Db\DatabaseFactory;
 use App\Tables\JobTable;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class JobLogsView extends CView
 {
@@ -38,9 +38,9 @@ class JobLogsView extends CView
         $this->title = 'Bacula job log';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
-        $jobid = WebApplication::getRequest()->query->getInt('jobid', 0);
+        $jobid = $request->query->getInt('jobid', 0);
         $this->assign('jobid', $jobid);
 
         /*

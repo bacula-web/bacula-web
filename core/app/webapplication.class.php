@@ -27,7 +27,6 @@ use Core\i18n\CTranslation;
 use Symfony\Component\HttpFoundation\Request;
 use Exception;
 
-
 class WebApplication
 {
     protected $name;
@@ -36,24 +35,16 @@ class WebApplication
     protected $defaultView;
     protected $userauth;
     protected $enable_users_auth;
-    protected static $request;
+    protected $request;
     public $translate;                    // Translation class instance
     public $catalog_nb;                // Catalog count
     public $catalog_current_id = 0;    // Selected or default catalog id
     public $datetime_format;
     public $datetime_format_short;
 
-    /**
-     * @return Request
-     */
-    public static function getRequest(): Request
+    public function __construct(Request $request)
     {
-        return self::$request;
-    }
-
-    public function __construct()
-    {
-        self::$request = Request::createFromGlobals();
+        $this->request = $request;
     }
 
     private function setup()
@@ -95,24 +86,25 @@ class WebApplication
             throw new Exception('Application config file not found, please fix it');
         }
 
+
         // login or logout only if users authentication is enabled
         if ($this->enable_users_auth  === true) {
-            if (WebApplication::getRequest()->query->has('action')) {
-                if (WebApplication::getRequest()->query->get('action') === 'logout') {
+            if ($this->request->query->has('action')) {
+                if ($this->request->query->get('action') === 'logout') {
                     $this->userauth->destroySession();
                 }
             }
 
-            if (WebApplication::getRequest()->request->has('action')) {
-                switch (Sanitizer::sanitize(WebApplication::getRequest()->request->get('action'))) {
+            if ($this->request->request->has('action')) {
+                switch (Sanitizer::sanitize($this->request->request->get('action'))) {
                     case 'login':
                         $_SESSION['user_authenticated'] = $this->userauth->authUser(
-                            Sanitizer::sanitize(WebApplication::getRequest()->request->get('username')),
-                            WebApplication::getRequest()->request->get('password')
+                            Sanitizer::sanitize($this->request->request->get('username')),
+                            $this->request->request->get('password')
                         );
 
                         if ($_SESSION['user_authenticated'] == 'yes') {
-                            $username = Sanitizer::sanitize(WebApplication::getRequest()->request->get('username'));
+                            $username = Sanitizer::sanitize($this->request->request->get('username'));
 
                             $_SESSION['username'] = $username;
 
@@ -132,15 +124,15 @@ class WebApplication
         // Check if user is already authenticated or <enable_users_auth> is disabled
         if ((isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') || $this->enable_users_auth == false) {
             // Get requested page or set default one
-            if (WebApplication::getRequest()->query->has('page')) {
-                $pageName = Sanitizer::sanitize(WebApplication::getRequest()->query->get('page'));
+            if ($this->request->query->has('page')) {
+                $pageName = Sanitizer::sanitize($this->request->query->get('page'));
                     
                 // Check if requested page is a known route
                 if (array_key_exists($pageName, $app['routes'])) {
                     $viewName = '\\App\Views\\'. ucfirst($app['routes'][$pageName]) . 'View';
 
                     if (class_exists($viewName)) {
-                        $this->view = new $viewName;
+                        $this->view = new $viewName();
                     } else {
                         throw new Exception("PHP class $viewName not found");
                     }
@@ -215,12 +207,12 @@ class WebApplication
         $this->translate->set_Language($this->view);
 
         // Get catalog_id from http $_GET request
-        $this->catalog_current_id = WebApplication::getRequest()->request->getInt('catalog_id', 0);
+        $this->catalog_current_id = $this->request->request->getInt('catalog_id', 0);
         $_SESSION['catalog_id'] = $this->catalog_current_id;
 
-        if(WebApplication::getRequest()->query->has('catalog_id')) {
-            if (FileConfig::catalogExist(WebApplication::getRequest()->request->getInt('catalog_id'))) {
-                $this->catalog_current_id = WebApplication::getRequest()->query->getInt('catalog_id');
+        if($this->request->query->has('catalog_id')) {
+            if (FileConfig::catalogExist($this->request->request->getInt('catalog_id'))) {
+                $this->catalog_current_id = $this->request->query->getInt('catalog_id');
                 $_SESSION['catalog_id'] = $this->catalog_current_id;
             }else {
                 $_SESSION['catalog_id'] = 0;
@@ -260,8 +252,8 @@ class WebApplication
         try {
             $this->setup();
             $this->init();
-            $this->view->prepare();
-            $this->view->render();
+            $this->view->prepare($this->request);
+            $this->view->render($this->request);
         } catch (Exception $e) {
             // Display application error here
             CErrorHandler::displayError($e);

@@ -19,7 +19,6 @@
 
 namespace App\Views;
 
-use Core\App\WebApplication;
 use Core\App\CView;
 use Core\Db\DatabaseFactory;
 use Core\Db\CDBPagination;
@@ -30,6 +29,7 @@ use Core\Helpers\Sanitizer;
 use App\Tables\JobTable;
 use App\Tables\ClientTable;
 use App\Tables\PoolTable;
+use Symfony\Component\HttpFoundation\Request;
 
 class JobsView extends CView
 {
@@ -42,7 +42,7 @@ class JobsView extends CView
         $this->title = 'Bacula jobs overview';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
         $jobs = new JobTable(DatabaseFactory::getDatabase());
         $where = null;
@@ -135,59 +135,59 @@ class JobsView extends CView
         $job_orderby_asc_filter = 'DESC';
 
         // Job client id filter
-        if (WebApplication::getRequest()->request->get('filter_clientid') !== null) {
-            $filter_clientid = WebApplication::getRequest()->request->getInt('filter_clientid');
+        if ($request->request->get('filter_clientid') !== null) {
+            $filter_clientid = $request->request->getInt('filter_clientid');
         }
 
         // Job type filter
-        if (WebApplication::getRequest()->request->get('filter_jobtype') !== null) {
+        if ($request->request->get('filter_jobtype') !== null) {
             // if provided filter_jobtype is not part of valid job type, we simply ignore it
-            if (array_key_exists(WebApplication::getRequest()->request->get('filter_jobtype'), $job_types)) {
-                $filter_jobtype = WebApplication::getRequest()->request->get('filter_jobtype');
+            if (array_key_exists($request->request->get('filter_jobtype'), $job_types)) {
+                $filter_jobtype = $request->request->get('filter_jobtype');
                 $filter_jobtype = Sanitizer::sanitize($filter_jobtype);
             }
         }
 
         // Job status filter
-        if (WebApplication::getRequest()->request->get('filter_jobstatus') !== null) {
-            $filter_jobstatus = WebApplication::getRequest()->request->getInt('filter_jobstatus');
+        if ($request->request->get('filter_jobstatus') !== null) {
+            $filter_jobstatus = $request->request->getInt('filter_jobstatus');
         }
 
         // Job level id filter
-        if (WebApplication::getRequest()->request->get('filter_joblevel') !== null) {
-            $filter_joblevel = WebApplication::getRequest()->request->get('filter_joblevel');
+        if ($request->request->get('filter_joblevel') !== null) {
+            $filter_joblevel = $request->request->get('filter_joblevel');
             $filter_joblevel = Sanitizer::sanitize($filter_joblevel);
         }
 
         // Job pool id filter
-        if (WebApplication::getRequest()->request->get('filter_poolid') !== null) {
-            $filter_poolid = WebApplication::getRequest()->request->getInt('filter_poolid');
+        if ($request->request->get('filter_poolid') !== null) {
+            $filter_poolid = $request->request->getInt('filter_poolid');
         }
 
         // Job starttime filter
-        if (WebApplication::getRequest()->request->get('filter_job_starttime') !== null) {
-            $filter_job_starttime = WebApplication::getRequest()->request->get('filter_job_starttime');
+        if ($request->request->get('filter_job_starttime') !== null) {
+            $filter_job_starttime = $request->request->get('filter_job_starttime');
             $filter_job_starttime = Sanitizer::sanitize($filter_job_starttime);
         }
 
         // Job endtime filter
-        if (WebApplication::getRequest()->request->get('filter_job_endtime') !== null) {
-            $filter_job_endtime = WebApplication::getRequest()->request->get('filter_job_endtime');
+        if ($request->request->get('filter_job_endtime') !== null) {
+            $filter_job_endtime = $request->request->get('filter_job_endtime');
             $filter_job_endtime = Sanitizer::sanitize($filter_job_endtime);
         }
 
         // Job orderby filter
-        if (WebApplication::getRequest()->request->get('job_orderby') !== null) {
+        if ($request->request->get('job_orderby') !== null) {
             // if provided job_orderby is not part of valid job order field, we simply ignore it
-            if (array_key_exists(WebApplication::getRequest()->request->get('job_orderby'), $result_order)) {
-                $job_orderby_filter = WebApplication::getRequest()->request->get('job_orderby');
+            if (array_key_exists($request->request->get('job_orderby'), $result_order)) {
+                $job_orderby_filter = $request->request->get('job_orderby');
                 $job_orderby_filter = Sanitizer::sanitize($job_orderby_filter);
             }
         }
 
         // Job orderby asc filter
-        if (WebApplication::getRequest()->request->get('job_orderby_asc') !== null) {
-            $job_orderby_asc_filter = WebApplication::getRequest()->request->get('job_orderby_asc');
+        if ($request->request->get('job_orderby_asc') !== null) {
+            $job_orderby_asc_filter = $request->request->get('job_orderby_asc');
             $job_orderby_asc_filter = Sanitizer::sanitize($job_orderby_asc_filter);
         }
 
