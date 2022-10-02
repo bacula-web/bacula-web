@@ -144,3 +144,12 @@
   </div> <!-- div class="container" -->
   {/if}
 {/if}
+
+{if $userAlert != ''}
+	<div class="container">
+		<div class="alert alert-{$userAlertType} role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		{$userAlert}
+		</div>
+	</html>
+{/if}
