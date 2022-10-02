@@ -23,5 +23,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
 // Bootstrap application
 require_once __DIR__ . '/../core/bootstrap.php';
 
-$bw = new Bweb();
-$bw->run();
+$app = new \Core\App\WebApplication($request);
+$app->run();
