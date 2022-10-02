@@ -14,6 +14,7 @@
   - Use PHP namespaces (see #118)
   - Fixed dozens of code smell warnings
   - Refactored good amount of the code
+  - Moved flash message below header for better visibility
 
 - Test page
   - Fixed wrong link to test page on error page
