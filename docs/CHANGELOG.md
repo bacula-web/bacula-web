@@ -1,4 +1,4 @@
-## Bacula-Web 8.6.0 (Sep dd 2022)
+## Bacula-Web 8.6.0 (Oct dd 2022)
 
 ### Changelog
 
@@ -13,12 +13,14 @@
   - Updated allowed plugin in composer.json (see #103)
   - Use PHP namespaces (see #118)
   - Fixed dozens of code smell warnings
+  - Refactored good amount of the code
 
 - Test page
   - Fixed wrong link to test page on error page
 
 - Security
   - Bump smarty/smarty from 3.1.45 to 3.1.47 (see #116)
+  - Improved session management (see #68)
 
 ### Fixed bug(s)
 
