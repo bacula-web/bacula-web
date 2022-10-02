@@ -31,6 +31,7 @@
  use Core\Utils\DateTimeUtil;
  use Core\Helpers\Sanitizer;
  use Symfony\Component\HttpFoundation\Request;
+ use Symfony\Component\HttpFoundation\Session\Session;
 
  class DashboardView extends CView
 {
@@ -45,6 +46,8 @@
 
     public function prepare(Request $request)
     {
+        $session = new Session();
+
         $jobs = new JobTable(DatabaseFactory::getDatabase());
         $pools = new PoolTable(DatabaseFactory::getDatabase());
         $volumes = new VolumeTable(DatabaseFactory::getDatabase());
@@ -219,7 +222,7 @@
         case 'mysql':
         case 'sqlite':
             $tmp .= "AND (Media.Lastwritten != 0)";
-    }
+        }
      
         $where[] = $tmp;
 
@@ -237,7 +240,8 @@
 
         foreach ($result as $volume) {
             if ($volume['lastwritten'] != '0000-00-00 00:00:00') {
-                $volume['lastwritten'] = date($_SESSION['datetime_format'], strtotime($volume['lastwritten']));
+                $volume['lastwritten'] = date($session->get('datetime_format'), strtotime($volume['lastwritten']));
+                //$volume['lastwritten'] = date($_SESSION['datetime_format'], strtotime($volume['lastwritten']));
             } else {
                 $volume['lastwritten'] = 'n/a';
             }

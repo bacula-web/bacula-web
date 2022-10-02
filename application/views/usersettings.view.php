@@ -25,6 +25,7 @@ use Core\App\CView;
 use Core\Db\DatabaseFactory;
 use Core\Helpers\Sanitizer;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserSettingsView extends CView
 {
@@ -42,13 +43,14 @@ class UserSettingsView extends CView
 
     public function prepare(Request $request)
     {
+        $session = new Session();
         $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
         $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
 
         $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
         $userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
 
-        $this->username = $_SESSION['username'];
+        $this->username = $session->get('username');
         $user = $userTable->findByName($this->username);
 
         $this->assign('username', $user->getUsername());

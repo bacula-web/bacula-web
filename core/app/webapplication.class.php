@@ -26,6 +26,7 @@ use Core\Helpers\Sanitizer;
 use Core\i18n\CTranslation;
 use Symfony\Component\HttpFoundation\Request;
 use Exception;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class WebApplication
 {
@@ -36,22 +37,24 @@ class WebApplication
     protected $userauth;
     protected $enable_users_auth;
     protected $request;
+    private $session;
     public $translate;                    // Translation class instance
     public $catalog_nb;                // Catalog count
     public $catalog_current_id = 0;    // Selected or default catalog id
     public $datetime_format;
     public $datetime_format_short;
 
+    /**
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
+        $this->session = new Session();
     }
 
     private function setup()
     {
-        // Start user session
-        session_start();
-
         // Check if <enable_users_auth> parameter is set in config file, enabled by default
         FileConfig::open(CONFIG_FILE) ;
 
@@ -62,10 +65,9 @@ class WebApplication
         }
 
         if ($this->enable_users_auth  === true) {
-
             // Prepare users authentication back-end
             $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
-            $this->userauth = new UserAuth( DatabaseFactory::getDatabase('sqlite:' . $appDbBackend));
+            $this->userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:' . $appDbBackend));
             $this->userauth->check();
             
             // Check if database exists and is writable
@@ -98,18 +100,21 @@ class WebApplication
             if ($this->request->request->has('action')) {
                 switch (Sanitizer::sanitize($this->request->request->get('action'))) {
                     case 'login':
-                        $_SESSION['user_authenticated'] = $this->userauth->authUser(
-                            Sanitizer::sanitize($this->request->request->get('username')),
-                            $this->request->request->get('password')
-                        );
+                        $this->session->set(
+                            'user_authenticated',
+                            $this->userauth->authUser(Sanitizer::sanitize(
+                                $this->request->request->get('username')
+                            ), $this->request->request->get('password')
+                            ));
 
-                        if ($_SESSION['user_authenticated'] == 'yes') {
+                        if ($this->session->get('user_authenticated') == 'yes') {
                             $username = Sanitizer::sanitize($this->request->request->get('username'));
 
-                            $_SESSION['username'] = $username;
+                            $this->session->set('username', $username);
 
                             $this->view = new $this->defaultView();
                             $this->view->assign('user_authenticated', 'yes');
+                            $this->view->assign('username', $this->session->get('username'));
                         }
                         break;
 
@@ -122,7 +127,7 @@ class WebApplication
         }
 
         // Check if user is already authenticated or <enable_users_auth> is disabled
-        if ((isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') || $this->enable_users_auth == false) {
+        if($this->session->has('user_authenticated') && $this->session->get('user_authenticated') || $this->enable_users_auth == false) {
             // Get requested page or set default one
             if ($this->request->query->has('page')) {
                 $pageName = Sanitizer::sanitize($this->request->query->get('page'));
@@ -151,12 +156,14 @@ class WebApplication
         if ($this->enable_users_auth === true) {
             $this->view->assign('enable_users_auth', 'true');
         } else {
-            $_SESSION['user_authenticated'] = 'no';
+            $this->session->set('user_authenticated', 'no');
+            //$_SESSION['user_authenticated'] = 'no';
             $this->view->assign('enable_users_auth', 'false');
         }
         
-        if (isset($_SESSION['user_authenticated'])) {
-            $this->view->assign('user_authenticated', $_SESSION['user_authenticated']);
+        //if (isset($_SESSION['user_authenticated'])) {
+        if ($this->session->has('user_authenticated')) {
+            $this->view->assign('user_authenticated', $this->session->get('user_authenticated'));
         }
     } // end function setup()
 
@@ -180,15 +187,15 @@ class WebApplication
             // Check if datetime_format is defined in configuration
             if (FileConfig::get_Value('datetime_format') != null) {
                 $this->datetime_format = FileConfig::get_Value('datetime_format');
-                $_SESSION['datetime_format'] = $this->datetime_format;
+                $this->session->set('datetime_format', $this->datetime_format);
 
                 // Get first part of datetime_format
                 $this->datetime_format_short = explode(' ', $this->datetime_format);
-                $_SESSION['datetime_format_short'] = $this->datetime_format_short[0];
+                $this->session->set('datetime_format_short', $this->datetime_format_short[0]);
             } else {
                 // Set default time format
-                $_SESSION['datetime_format'] = 'Y-m-d H:i:s';
-                $_SESSION['datetime_format_short'] = 'Y-m-d';
+                $this->session->set('datetime_format', 'Y-m-d H:i:s');
+                $this->session->set('datetime_format_short', 'Y-m-d');
             }
         }
 
@@ -208,25 +215,24 @@ class WebApplication
 
         // Get catalog_id from http $_GET request
         $this->catalog_current_id = $this->request->request->getInt('catalog_id', 0);
-        $_SESSION['catalog_id'] = $this->catalog_current_id;
+        $this->session->set('catalog_id',$this->catalog_current_id);
 
         if($this->request->query->has('catalog_id')) {
             if (FileConfig::catalogExist($this->request->request->getInt('catalog_id'))) {
                 $this->catalog_current_id = $this->request->query->getInt('catalog_id');
-                $_SESSION['catalog_id'] = $this->catalog_current_id;
+                $this->session->set('catalog_id',$this->catalog_current_id);
             }else {
-                $_SESSION['catalog_id'] = 0;
+                $this->session->set('catalog_id', 0);
+                //$_SESSION['catalog_id'] = 0;
                 $this->catalog_current_id = 0;
                 // It should redirect to home with catalog_id = 0 and display a flash message to the user
                 throw new Exception('The catalog_id value provided does not correspond to a valid catalog, please verify the config.php file');
             }
-        }else {
-            if (isset($_SESSION['catalog_id'])) {
-                // Stick with previously selected catalog_id
-                $this->catalog_current_id = $_SESSION['catalog_id'];
-            } else {
-                $_SESSION['catalog_id'] = $this->catalog_current_id;
-            }
+        }elseif ($this->session->has('catalog_id')) {
+            // Stick with previously selected catalog_id
+            $this->catalog_current_id = $this->session->get('catalog_id');
+        } else {
+            $this->session->set('catalog_id', $this->catalog_current_id);
         }
 
         // Define catalog id and catalog label
@@ -252,6 +258,7 @@ class WebApplication
         try {
             $this->setup();
             $this->init();
+
             $this->view->prepare($this->request);
             $this->view->render($this->request);
         } catch (Exception $e) {

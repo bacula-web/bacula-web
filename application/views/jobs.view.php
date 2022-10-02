@@ -30,6 +30,7 @@ use App\Tables\JobTable;
 use App\Tables\ClientTable;
 use App\Tables\PoolTable;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class JobsView extends CView
 {
@@ -46,6 +47,7 @@ class JobsView extends CView
     {
         $jobs = new JobTable(DatabaseFactory::getDatabase());
         $where = null;
+        $session = new Session();
         $params = [];
 
         // This is horrible, it must be improved :(
@@ -355,19 +357,19 @@ class JobsView extends CView
             if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
                 $job['starttime'] = 'n/a';
             } else {
-                $job['starttime'] = date($_SESSION['datetime_format'], strtotime($job['starttime']));
+                $job['starttime'] = date($session->get('datetime_format'), strtotime($job['starttime']));
             }
        
             if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
                 $job['endtime'] = 'n/a';
             } else {
-                $job['endtime'] = date($_SESSION['datetime_format'], strtotime($job['endtime']));
+                $job['endtime'] = date($session->get('datetime_format'), strtotime($job['endtime']));
             }
        
             // Get the job elapsed time completion
             $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
 
-            $job['schedtime'] = date($_SESSION['datetime_format'], strtotime($job['schedtime']));
+            $job['schedtime'] = date($session->get('datetime_format'), strtotime($job['schedtime']));
        
             // Job Level
             if (isset($job_levels[$job['level']])) {

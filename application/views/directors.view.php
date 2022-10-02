@@ -31,6 +31,7 @@ use App\Tables\PoolTable;
 use App\Tables\FileSetTable;
 use Core\Utils\CUtils;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class DirectorsView extends CView
 {
@@ -46,12 +47,14 @@ class DirectorsView extends CView
     public function prepare(Request $request)
     {
         require_once BW_ROOT . '/core/const.inc.php';
+
+        $session = new Session();
         
         $no_period = array(FIRST_DAY, NOW);
         $directors = array();
 
         // Save catalog_id from user session
-        $prev_catalog_id = $_SESSION['catalog_id'];
+        $prev_catalog_id = $session->get('catalog_id');
 
         FileConfig::open(CONFIG_FILE);
         $directors_count = FileConfig::count_Catalogs();
@@ -59,7 +62,7 @@ class DirectorsView extends CView
         $this->assign('directors_count', $directors_count);
 
         for ($d=0; $d < $directors_count; $d++) {
-            $_SESSION['catalog_id'] = $d;
+            $session->set('catalog_id', $d);
 
             $clients = new ClientTable(DatabaseFactory::getDatabase());
             $jobs = new JobTable(DatabaseFactory::getDatabase());
@@ -98,7 +101,7 @@ class DirectorsView extends CView
         }
 
         // Set previous catalog_id in user session
-        $_SESSION['catalog_id'] = $prev_catalog_id;
+        $session->set('catalog_id', $prev_catalog_id);
 
         $this->assign('directors', $directors);
     } // end of prepare() method

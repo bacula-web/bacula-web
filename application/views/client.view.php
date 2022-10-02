@@ -29,6 +29,7 @@ use Core\Helpers\Sanitizer;
 use App\Tables\JobTable;
 use App\Tables\ClientTable;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ClientView extends CView
 {
@@ -44,6 +45,8 @@ class ClientView extends CView
     public function prepare(Request $request)
     {
         require_once BW_ROOT . '/core/const.inc.php';
+
+        $session = new Session();
         
         $period = 7;
         $backup_jobs = array();
@@ -145,7 +148,7 @@ class ClientView extends CView
                 $job['level']     = $job_levels[$job['level']];
                 $job['jobfiles']  = CUtils::format_Number($job['jobfiles']);
                 $job['jobbytes']  = CUtils::Get_Human_Size($job['jobbytes']);
-                $job['endtime']   = date($_SESSION['datetime_format'], strtotime($job['endtime']));
+                $job['endtime']   = date($session->get('datetime_format'), strtotime($job['endtime']));
             
                 $backup_jobs[] = $job;
             } // end foreach

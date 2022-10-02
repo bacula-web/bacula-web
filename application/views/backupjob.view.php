@@ -30,6 +30,7 @@ use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class BackupJobView extends CView
 {
@@ -48,6 +49,7 @@ class BackupJobView extends CView
         
         $interval = array();
         $interval[1] = NOW;
+        $session = new Session();
    
         $days_stored_bytes = array();
         $days_stored_files = array();
@@ -101,15 +103,15 @@ class BackupJobView extends CView
 
             switch ($backupjob_period) {
             case '7':
-                $periodDesc = "From " . date($_SESSION['datetime_format_short'], (NOW - WEEK)) . " to " . date($_SESSION['datetime_format_short'], NOW);
+                $periodDesc = "From " . date($session->get('datetime_format_short'), (NOW - WEEK)) . " to " . date($session->get('datetime_format_short'), NOW);
                 $interval[0] = NOW-WEEK;
                 break;
             case '14':
-                $periodDesc = "From " . date($_SESSION['datetime_format_short'], (NOW - (2 * WEEK))) . " to " . date($_SESSION['datetime_format_short'], NOW);
+                $periodDesc = "From " . date($session->get('datetime_format_short'), (NOW - (2 * WEEK))) . " to " . date($session->get('datetime_format_short'), NOW);
                 $interval[0] = NOW-(2*WEEK);
                 break;
             case '30':
-                $periodDesc = "From " . date($_SESSION['datetime_format_short'], (NOW - MONTH)) . " to " . date($_SESSION['datetime_format_short'], NOW);
+                $periodDesc = "From " . date($session->get('datetime_format_short'), (NOW - MONTH)) . " to " . date($session->get('datetime_format_short'), NOW);
                 $interval[0] = NOW-MONTH;
             }
 
@@ -217,8 +219,8 @@ class BackupJobView extends CView
                 $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
        
                 // Format date/time
-                $job['starttime'] = date($_SESSION['datetime_format'], strtotime($job['starttime']));
-                $job['endtime'] = date($_SESSION['datetime_format'], strtotime($job['endtime']));
+                $job['starttime'] = date($session->get('datetime_format'), strtotime($job['starttime']));
+                $job['endtime'] = date($session->get('datetime_format'), strtotime($job['endtime']));
        
                 $joblist[] = $job;
             } // end while

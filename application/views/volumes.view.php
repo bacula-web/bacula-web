@@ -28,6 +28,7 @@ use App\Tables\VolumeTable;
 use App\Tables\PoolTable;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class VolumesView extends CView
 {
@@ -42,6 +43,7 @@ class VolumesView extends CView
     
     public function prepare(Request $request)
     {
+        $session = new Session();
         $volumes = new VolumeTable(DatabaseFactory::getDatabase());
         $params = [];
 
@@ -144,7 +146,7 @@ class VolumesView extends CView
                 // Calculate expiration date only if volume status is Full or Used
                 if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
                     $expire_date = strtotime($volume['lastwritten']) + $volume['volretention'];
-                    $volume['expire'] = date($_SESSION['datetime_format_short'], $expire_date);
+                    $volume['expire'] = date($session->get('datetime_format_short'), $expire_date);
                 } else {
                     $volume['expire'] = 'n/a';
                 }
@@ -157,7 +159,7 @@ class VolumesView extends CView
                 $volume['lastwritten'] = 'n/a';
             } else {
                 // Format lastwritten in custom format if defined in config file
-                $volume['lastwritten'] = date($_SESSION['datetime_format'], strtotime($volume['lastwritten']));
+                $volume['lastwritten'] = date($session->get('datetime_format'), strtotime($volume['lastwritten']));
             }
 
             // Sum volumes bytes

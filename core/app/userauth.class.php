@@ -24,6 +24,7 @@ use Core\Db\DatabaseFactory;
 use Core\Db\Table;
 use PDO;
 use Exception;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserAuth extends Table
 {
@@ -97,14 +98,18 @@ class UserAuth extends Table
         }
     }
 
+    /**
+     * @return void
+     */
     public function destroySession()
     {
-        session_destroy();
-        $_SESSION['user_authenticated'] = 'no';
+        $session = new Session();
+        $session->clear();
+        $session->invalidate();
 
-        if (ini_get("session.use_cookies")) {
+        if (ini_get('session.use_cookies')) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+            setcookie($session->getName(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
         }
     }
 }

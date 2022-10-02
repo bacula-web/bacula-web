@@ -22,6 +22,7 @@ namespace Core\App;
 use Smarty;
 use SmartyBC;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class CView extends SmartyBC
 {
@@ -50,9 +51,12 @@ class CView extends SmartyBC
         $this->assign('page_title', $this->title);
         $this->assign('templateName', $this->templateName);
 
+        // TODO: to move somewhere else, but not keep in the view for sure
         // Set username, if user is connected
-        if (isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') {
-            $this->assign('username', $_SESSION['username']);
+
+        $session = new Session();
+        if ($session->has('user_authenticated') && $session->get('user_authenticated') === 'yes') {
+            $this->assign('username', $session->get('username'));
         }
 
         // Give user some feedback
