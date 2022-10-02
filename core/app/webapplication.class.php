@@ -90,27 +90,32 @@ class WebApplication
 
         // login or logout only if users authentication is enabled
         if ($this->enable_users_auth  === true) {
+            if (WebApplication::getRequest()->query->has('action')) {
+                if (WebApplication::getRequest()->query->get('action') === 'logout') {
+                    $this->userauth->destroySession();
+                }
+            }
 
-            if(WebApplication::getRequest()->request->has('action')) {
+            if (WebApplication::getRequest()->request->has('action')) {
                 switch (Sanitizer::sanitize(WebApplication::getRequest()->request->get('action'))) {
-                case 'login':
-                    $_SESSION['user_authenticated'] = $this->userauth->authUser(
-                        Sanitizer::sanitize( WebApplication::getRequest()->request->get('username')),
-                        WebApplication::getRequest()->request->get('password')
-                    );
+                    case 'login':
+                        $_SESSION['user_authenticated'] = $this->userauth->authUser(
+                            Sanitizer::sanitize(WebApplication::getRequest()->request->get('username')),
+                            WebApplication::getRequest()->request->get('password')
+                        );
 
-                    if ($_SESSION['user_authenticated'] == 'yes') {
-                        $username = Sanitizer::sanitize(WebApplication::getRequest()->request->get('username'));
+                        if ($_SESSION['user_authenticated'] == 'yes') {
+                            $username = Sanitizer::sanitize(WebApplication::getRequest()->request->get('username'));
 
-                        $_SESSION['username'] = $username;
+                            $_SESSION['username'] = $username;
 
-                        $this->view = new $this->defaultView();
-                        $this->view->assign('user_authenticated', 'yes');
-                    }
-                    break;
-                case 'logout':
-                    $_SESSION['user_authenticated'] = 'no';
-                   $this->userauth->destroySession();
+                            $this->view = new $this->defaultView();
+                            $this->view->assign('user_authenticated', 'yes');
+                        }
+                        break;
+
+                    case 'logout':
+                        $this->userauth->destroySession();
                 }
             }
         } else {
@@ -119,8 +124,7 @@ class WebApplication
 
         // Check if user is already authenticated or <enable_users_auth> is disabled
         if ((isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') || $this->enable_users_auth == false) {
-
-                // Get requested page or set default one
+            // Get requested page or set default one
             if (WebApplication::getRequest()->query->has('page')) {
                 $pageName = Sanitizer::sanitize(WebApplication::getRequest()->query->get('page'));
                     
