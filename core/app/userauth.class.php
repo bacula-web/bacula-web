@@ -112,4 +112,17 @@ class UserAuth extends Table
             setcookie($session->getName(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
         }
     }
+
+    /**
+     * @return bool
+     */
+    public function authenticated(): bool
+    {
+        $session = new Session();
+        if ($session->get('user_authenticated') === 'yes') {
+            return true;
+        }
+
+        return false;
+    }
 }
