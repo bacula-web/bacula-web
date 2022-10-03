@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+
 class Log
 {
 
@@ -17,6 +19,8 @@ class Log
 
     public function getTime()
     {
-        return date($_SESSION['datetime_format'], strtotime($this->time));
+        // TODO: we may not need to store everything in the session
+        $session = new Session();
+        return date($session->get('datetime_format'), strtotime($this->time));
     }
 }
