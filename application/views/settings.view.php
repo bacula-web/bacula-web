@@ -59,12 +59,11 @@ class SettingsView extends CView
                         $email,
                         $request->request->get('password')
                     );
-                    if($result !== false) {
-                        // TODO: replace by flash message
-                        echo $result->rowCount() . ' user created successfully';
+                    if ($result !== false) {
+                        // TODO: replace by session flash message
+                        $this->setAlert($result->rowCount() . ' user created successfully');
+                        $this->setAlertType('success');
                     }
-                        // TODO: add flash message if success
-
                     break;
             }
         }
