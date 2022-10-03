@@ -25,7 +25,7 @@ class CErrorHandler
 {
     private static $header;
 
-    public static function displayError($exception)
+    public static function displayError($exception): string
     {
         switch (get_class($exception)) {
             case 'PDOException':
@@ -81,7 +81,7 @@ class CErrorHandler
         // Render Exception page
         $output = HtmlHelper::getHtmlHeader() . HtmlHelper::getNavBar() . '<div class="container">' . $output . '</div>' . HtmlHelper::getHtmlFooter();
 
-        echo $output;
+        return $output;
     } // end function displayError
 
     public static function getFormatedTrace($e)

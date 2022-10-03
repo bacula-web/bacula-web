@@ -45,6 +45,20 @@ class CView extends SmartyBC
         $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
     }
 
+    /**
+     * @param $alert
+     * @return void
+     */
+    public function setAlert($alert)
+    {
+        $this->userAlert = $alert;
+    }
+
+    public function setAlertType($type)
+    {
+        $this->userAlertType = $type;
+    }
+
     public function render(Request $request)
     {
         $this->assign('page_name', $this->name);
@@ -73,6 +87,6 @@ class CView extends SmartyBC
         $this->assign('breadcrumb', $breadcrumb);
 
         // Render using the default layout
-        $this->display('layouts/default.tpl');
+        return $this->fetch('layouts/default.tpl');
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2022 Davide Franco
  *
@@ -22,10 +24,12 @@ namespace Core\App;
 use App\Libs\FileConfig;
 use App\Views\LoginView;
 use Core\Db\DatabaseFactory;
+use Core\Exception\NotAuthorizedException;
 use Core\Helpers\Sanitizer;
 use Core\i18n\CTranslation;
 use Symfony\Component\HttpFoundation\Request;
 use Exception;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class WebApplication
@@ -37,6 +41,7 @@ class WebApplication
     protected $userauth;
     protected $enable_users_auth;
     protected $request;
+    private $response;
     private $session;
     public $translate;                    // Translation class instance
     public $catalog_nb;                // Catalog count
@@ -53,24 +58,45 @@ class WebApplication
         $this->session = new Session();
     }
 
+    /**
+     * Return View class name, or default one based on the request
+     *
+     * @return string
+     */
+    private function getMatch(): string
+    {
+        $appConfigFile = CONFIG_DIR . 'application.php';
+        $app = include($appConfigFile);
+
+        if ($this->request->query->has('page')) {
+            $page_name = Sanitizer::sanitize($this->request->query->get('page'));
+            return '\\App\Views\\' . ucfirst($app['routes'][$page_name]) . 'View';
+        }
+        return $this->defaultView;
+    }
+
     private function setup()
     {
-        // Check if <enable_users_auth> parameter is set in config file, enabled by default
-        FileConfig::open(CONFIG_FILE) ;
+        FileConfig::open(CONFIG_FILE);
+
+        /*
+         * Check if <enable_users_auth> parameter is set in config file and type is boolean
+         * If not set, set it to true by default
+         */
 
         if ((FileConfig::get_Value('enable_users_auth') !== null) && is_bool(FileConfig::get_Value('enable_users_auth'))) {
-            $this->enable_users_auth = FileConfig::get_Value('enable_users_auth');
+            $this->enable_users_auth = (bool)FileConfig::get_Value('enable_users_auth');
         } else {
             $this->enable_users_auth = true;
         }
 
-        if ($this->enable_users_auth  === true) {
+        if ($this->enable_users_auth) {
             // Prepare users authentication back-end
             $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
             $this->userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:' . $appDbBackend));
-            $this->userauth->check();
-            
+
             // Check if database exists and is writable
+            $this->userauth->check();
             $this->userauth->checkSchema();
         }
 
@@ -78,7 +104,7 @@ class WebApplication
         $appConfigFile = CONFIG_DIR . 'application.php';
 
         if (file_exists($appConfigFile) && is_readable($appConfigFile)) {
-            $app = include_once($appConfigFile);
+            $app = include($appConfigFile);
 
             // Set application properties from config file
             $this->name = $app['name'];
@@ -88,84 +114,55 @@ class WebApplication
             throw new Exception('Application config file not found, please fix it');
         }
 
-
         // login or logout only if users authentication is enabled
-        if ($this->enable_users_auth  === true) {
-            if ($this->request->query->has('action')) {
-                if ($this->request->query->get('action') === 'logout') {
-                    $this->userauth->destroySession();
-                }
-            }
+        if ($this->enable_users_auth) {
+            // First thing first, is the user session already authenticated ?
+            if ($this->userauth->authenticated()) {
+                $view_name = $this->getMatch();
+                $this->view = new $view_name();
+                $this->view->assign('user_authenticated', 'yes');
+                $this->view->assign('enable_users_auth', 'true');
+            } elseif (Sanitizer::sanitize($this->request->request->get('action')) === 'login') {
+                $input_username = Sanitizer::sanitize($this->request->request->get('username'));
+                $input_password = $this->request->request->get('password');
 
-            if ($this->request->request->has('action')) {
-                switch (Sanitizer::sanitize($this->request->request->get('action'))) {
-                    case 'login':
-                        $this->session->set(
-                            'user_authenticated',
-                            $this->userauth->authUser(Sanitizer::sanitize(
-                                $this->request->request->get('username')
-                            ), $this->request->request->get('password')
-                            ));
+                $this->session->set(
+                    'user_authenticated',
+                    $this->userauth->authUser($input_username, $input_password)
+                );
 
-                        if ($this->session->get('user_authenticated') == 'yes') {
-                            $username = Sanitizer::sanitize($this->request->request->get('username'));
+                if ($this->userauth->authenticated()) {
+                    $username = Sanitizer::sanitize($this->request->request->get('username'));
+                    $this->session->set('username', $username);
 
-                            $this->session->set('username', $username);
+                    $view_name = $this->getMatch();
+                    $this->view = new $view_name();
 
-                            $this->view = new $this->defaultView();
-                            $this->view->assign('user_authenticated', 'yes');
-                            $this->view->assign('username', $this->session->get('username'));
-                        }
-                        break;
-
-                    case 'logout':
-                        $this->userauth->destroySession();
-                }
-            }
-        } else {
-            $this->view = new $this->defaultView();
-        }
-
-        // Check if user is already authenticated or <enable_users_auth> is disabled
-        if($this->session->has('user_authenticated') && $this->session->get('user_authenticated') || $this->enable_users_auth == false) {
-            // Get requested page or set default one
-            if ($this->request->query->has('page')) {
-                $pageName = Sanitizer::sanitize($this->request->query->get('page'));
-                    
-                // Check if requested page is a known route
-                if (array_key_exists($pageName, $app['routes'])) {
-                    $viewName = '\\App\Views\\'. ucfirst($app['routes'][$pageName]) . 'View';
-
-                    if (class_exists($viewName)) {
-                        $this->view = new $viewName();
-                    } else {
-                        throw new Exception("PHP class $viewName not found");
-                    }
+                    $this->view->assign('user_authenticated', 'yes');
+                    $this->view->assign('username', $this->session->get('username'));
+                    $this->view->assign('enable_users_auth', 'true');
                 } else {
-                    throw new Exception('Requested page does not exist');
+                    $this->view = new LoginView();
+                    $this->view->setAlert('bad username or password');
+                    $this->view->setAlertType('danger');
                 }
             } else {
-                $this->view = new $this->defaultView();
+                $this->view = new LoginView();
             }
-        } else {
-            // If user is not authenticated, redirect to Login page
-            $this->view = new LoginView();
-        }
 
-        // Assign enable_users_auth variable to template
-        if ($this->enable_users_auth === true) {
-            $this->view->assign('enable_users_auth', 'true');
-        } else {
-            $this->session->set('user_authenticated', 'no');
-            //$_SESSION['user_authenticated'] = 'no';
-            $this->view->assign('enable_users_auth', 'false');
+            if ($this->userauth->authenticated()) {
+                if ($this->request->request->has('action')) {
+                    switch (Sanitizer::sanitize($this->request->request->get('action'))) {
+                        case 'logout':
+                            $this->userauth->destroySession();
+                            $this->view = new LoginView();
+                            $this->view->setAlert('Successfully logged out');
+                            $this->view->setAlertType('success');
+                    }
+                }
+            }
         }
-        
-        //if (isset($_SESSION['user_authenticated'])) {
-        if ($this->session->has('user_authenticated')) {
-            $this->view->assign('user_authenticated', $this->session->get('user_authenticated'));
-        }
-    } // end function setup()
+    }
 
     private function init()
     {
@@ -178,11 +175,10 @@ class WebApplication
 
             // Check if debug is enabled
             if (FileConfig::get_Value('debug') != null && is_bool(FileConfig::get_Value('debug'))) {
-                ini_set('error_reporting', E_ALL);
+                ini_set('error_reporting', 'E_ALL');
                 ini_set('display_errors', 'On');
                 ini_set('display_startup_errors', 'Off');
             }
-
 
             // Check if datetime_format is defined in configuration
             if (FileConfig::get_Value('datetime_format') != null) {
@@ -215,20 +211,20 @@ class WebApplication
 
         // Get catalog_id from http $_GET request
         $this->catalog_current_id = $this->request->request->getInt('catalog_id', 0);
-        $this->session->set('catalog_id',$this->catalog_current_id);
+        $this->session->set('catalog_id', $this->catalog_current_id);
 
-        if($this->request->query->has('catalog_id')) {
+        if ($this->request->query->has('catalog_id')) {
             if (FileConfig::catalogExist($this->request->request->getInt('catalog_id'))) {
                 $this->catalog_current_id = $this->request->query->getInt('catalog_id');
-                $this->session->set('catalog_id',$this->catalog_current_id);
-            }else {
+                $this->session->set('catalog_id', $this->catalog_current_id);
+            } else {
                 $this->session->set('catalog_id', 0);
                 //$_SESSION['catalog_id'] = 0;
                 $this->catalog_current_id = 0;
                 // It should redirect to home with catalog_id = 0 and display a flash message to the user
                 throw new Exception('The catalog_id value provided does not correspond to a valid catalog, please verify the config.php file');
             }
-        }elseif ($this->session->has('catalog_id')) {
+        } elseif ($this->session->has('catalog_id')) {
             // Stick with previously selected catalog_id
             $this->catalog_current_id = $this->session->get('catalog_id');
         } else {
@@ -260,11 +256,18 @@ class WebApplication
             $this->init();
 
             $this->view->prepare($this->request);
-            $this->view->render($this->request);
-        } catch (Exception $e) {
-            // Display application error here
-            CErrorHandler::displayError($e);
-            // Render the view
+
+            $this->response = new Response();
+            $this->response->setStatusCode(200);
+            $this->response->setContent($this->view->render($this->request));
+        } catch (NotAuthorizedException $exception) {
+            $this->response = new Response(CErrorHandler::displayError($exception), 403);
+        } catch (\PDOException $exception) {
+            $this->response = new Response(CErrorHandler::displayError($exception), 500);
+        } catch (Exception $exception) {
+            $this->response = new Response(CErrorHandler::displayError($exception), 500);
+        } finally {
+            $this->response->send();
         }
     }
 }
