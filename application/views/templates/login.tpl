@@ -4,7 +4,7 @@
       <div class="jumbotron form-signin">
         <img class="img-responsive center-block" src="img/bacula-web-logo.png" alt="" />
 
-        <form action="index.php?action=login" method="post">
+        <form action="index.php" method="POST">
           <h4>Please sign in</h4>
         
           <label for="inputUsername" class="sr-only">Username</label>

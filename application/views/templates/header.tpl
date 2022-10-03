@@ -84,14 +84,20 @@
 
             <!-- Authenticated user options -->
             {if isset($user_authenticated) }
-              {if $enable_users_auth eq 'true' and $user_authenticated eq 'yes' }		
+              {if $enable_users_auth eq 'true' and $user_authenticated eq 'yes' }
                 <li class="dropdown">
                   <a href="#" class="dropdown-toogle" data-toggle="dropdown" role="button">{$username} <i class="fa fa-user fa-fw"></i></a>
                   <ul class="dropdown-menu">
                     <li><a href="index.php?page=usersettings" title="User settings"> <i class="fa fa-wrench fa-fw"></i> {t}User settings{/t}</a></li>
-                    <li><a href="index.php?action=logout" title="Sign out"> <i class="fa fa-sign-out fa-fw"></i> {t}Sign out{/t}</a></li>
                   </ul>
                 </li>
+				  <form class="navbar-form navbar-left" action="index.php" method="POST">
+					  <input type="hidden" name="action" value="logout">
+					  <button type="submit" class="btn btn-link" title="Sign out">
+						  <i class="fa fa-sign-out fa-lg"></i>
+					  </button>
+					  <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+				  </form>
               {/if}
             {/if}
 				
