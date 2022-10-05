@@ -60,9 +60,9 @@ Third-party tools and libraries
 
 Bacula-Web use the following tools and libraries
 
-=========================    ================
+===========================  ================
 Component                    License
-=========================    ================
+===========================  ================
 `PHP`_                       PHP License v3.01
 `Symfony HttpFoundation`_    MIT
 `Smarty`_                    LGPL
@@ -72,7 +72,7 @@ Component                    License
 `Font Awesome`_              CC BY 4.0
 `jQuery`_                    MIT
 `bootstrap-datetimepicker`_  MIT
-=========================    ================
+===========================  ================
 
 Supported browser
 =================
