@@ -19,6 +19,9 @@
 - Test page
   - Fixed wrong link to test page on error page
 
+- Translations
+	- Updated translations with one more language (romanian) (see #92) 
+
 - Security
   - Bump smarty/smarty from 3.1.45 to 3.1.47 (see #116)
   - Improved session management (see #68)
@@ -26,6 +29,7 @@
 ### Fixed bug(s)
 
 - #91 [enhancement] - Use combined operators (thanks to @elfring)
+- #92 [translation] - Update translations
 - #100 [enhancement] - Refactor PHP PDO database related classes
 - #103 [enhancement] - Improve support Composer version 2.2.1 or later
 - #113 [bugfix] - Add missing ext-pdo to composer.json

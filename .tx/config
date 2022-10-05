@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[o:bacula-web:p:bacula-web:r:messagespo-25]
+file_filter  = application/locale/<lang>/LC_MESSAGES/messages.po
+source_file  = application/locale/en_EN/LC_MESSAGES/messages.po
+type         = PO
+minimum_perc = 0
+
