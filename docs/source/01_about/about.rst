@@ -60,12 +60,19 @@ Third-party tools and libraries
 
 Bacula-Web use the following tools and libraries
 
-   * `PHP`_ 
-   * `Smarty`_ 
-   * `NVD3`_
-   * `Bootstrap`_
-   * `Font Awesome`_
-   * `jQuery`_
+=========================    ================
+Component                    License
+=========================    ================
+`PHP`_                       PHP License v3.01
+`Symfony HttpFoundation`_    MIT
+`Smarty`_                    LGPL
+`Smarty Gettext`_            LGPL-2.1
+`NVD3`_                      Apache v2
+`Bootstrap`_                 MIT
+`Font Awesome`_              CC BY 4.0
+`jQuery`_                    MIT
+`bootstrap-datetimepicker`_  MIT
+=========================    ================
 
 Supported browser
 =================
@@ -147,7 +154,9 @@ There are a lot of tool which can help you administering, monitoring and configu
 You can find a complete `list of GUI`_ on the Bacula's web site
 
 .. _PHP: http://www.php.net
+.. _Symfony HttpFoundation: https://github.com/symfony/http-foundation
 .. _Smarty: http://www.smarty.net/
+.. _Smarty Gettext: https://packagist.org/packages/smarty-gettext/smarty-gettext
 .. _NVD3: http://nvd3.org/
 .. _Bootstrap: http://getbootstrap.com/
 .. _Font Awesome: http://fontawesome.io/
@@ -158,9 +167,9 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _Centos: https://www.centos.org/
 .. _Webmin: http://www.webmin.com/index.html
 .. _Bacula Status: https://github.com/evaldoprestes/baculastatus
-.. _Reportula: http://www.reportula.org
-.. _baculum: http://www.bacula.org/7.4.x-manuals/en/console/Baculum_Web_GUI_Tool.html
-.. _breport: http://breport.sourceforge.net
-.. _Webacula: http://webacula.sourceforge.net/
-.. _list of GUI: http://www.bacula.org/manuals/en/console/console/GUI_Programs.html
-.. _DataTables: https://datatables.net/
+.. _Reportula: https://www.reportula.org
+.. _baculum: https://www.bacula.org/7.4.x-manuals/en/console/Baculum_Web_GUI_Tool.html
+.. _breport: https://breport.sourceforge.net
+.. _Webacula: https://webacula.sourceforge.net/
+.. _list of GUI: https://www.bacula.org/manuals/en/console/console/GUI_Programs.html
+.. _bootstrap-datetimepicker: https://packagist.org/packages/eonasdan/bootstrap-datetimepicker
