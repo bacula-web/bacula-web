@@ -96,6 +96,7 @@ Bacula-Web language is by default in english, but it's also translated in not le
    * Norwegian
    * Polish
    * Portuguese Brazil
+   * Romanian
    * Russian
    * Spanish
    * Swedish
