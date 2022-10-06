@@ -5,7 +5,7 @@
 - General
   - **Breaking change**: Implemented front controller
     Bacula-Web web app is now served from the public sub-folder, please
-    check the web server config documentation
+    check the web server config documentation (see #114)
   - Replaced CHttpRequest class by Symfony framework Request class
   - Use combined operators in CUtil class (see #91)
   - Refactored PDO related PHP classes (see #100)
@@ -15,16 +15,22 @@
   - Fixed dozens of code smell warnings
   - Refactored good amount of the code
   - Moved flash message below header for better visibility
+  - Improve handling of non-existant page requests
 
 - Test page
   - Fixed wrong link to test page on error page
 
 - Translations
-	- Updated translations with one more language (romanian) (see #92) 
+    - Updated translations with one more language (romanian) (see #92) 
 
 - Security
   - Bump smarty/smarty from 3.1.45 to 3.1.47 (see #116)
   - Improved session management (see #68)
+
+- Documentation
+  - Fixed link to contributors on README
+  - Updated list of components with license
+  - Updated Apache and Nginx server configuration according to new public root folder (see #114)
 
 ### Fixed bug(s)
 
