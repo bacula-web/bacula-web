@@ -16,6 +16,7 @@
   - Refactored good amount of the code
   - Moved flash message below header for better visibility
   - Improve handling of non-existant page requests
+  - Fixed PHP notice after login (see #117)
 
 - Test page
   - Fixed wrong link to test page on error page
@@ -34,6 +35,7 @@
 
 ### Fixed bug(s)
 
+- #68 [security] - Improve session management
 - #91 [enhancement] - Use combined operators (thanks to @elfring)
 - #92 [translation] - Update translations
 - #100 [enhancement] - Refactor PHP PDO database related classes
