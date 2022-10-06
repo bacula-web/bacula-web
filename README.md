@@ -104,7 +104,7 @@ For more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/ma
 
 - Original author: Juan Luis Francés Jimenez
 - Current maintainer: Davide Franco ([@dfranco](https://github.com/dfranco))
-- Contributors: [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/badges.svg)](https://GitHub.com/bacula-web/bacula-web/badges/graphs/contributors/)
+- Contributors: [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/badges.svg)](https://github.com/bacula-web/bacula-web/graphs/contributors)
 
 ---
 
