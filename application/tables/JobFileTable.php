@@ -2,38 +2,46 @@
 
 /**
  * Copyright (C) 2021,2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
 
 /**
- * Description of JobFiles_Model class
+ * Description of JobFileTable class
  *
  * @author Gabriele Orlando
  * @author Davide Franco
  * @copyright 2018-2021 Gabriele Orlando
  */
 
-class JobFiles_Model extends CModel
+namespace App\Tables;
+
+use Core\Db\Database;
+use Core\Db\CDBQuery;
+use Core\Db\DatabaseFactory;
+use Core\Db\Table;
+
+class JobFileTable extends Table
 {
+    protected $tablename = 'File';
+
     public function getJobFiles($jobId, $limit, $offset, $filename = '')
     {
-        $catalog = new Database_Model();
+        $catalog = new CatalogTable(DatabaseFactory::getDatabase());
 
         // Catalog version prior to Bacula 11.0.x
         if ($catalog->getCatalogVersion() < 1016) {
-            
             $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'Filename.Name AS Filename');
             $where = array("File.JobId = $jobId");
             if (! empty($filename)) {
@@ -41,7 +49,7 @@ class JobFiles_Model extends CModel
             }
 
             $orderby = 'File.FileIndex ASC';
-            $sqlQuery = CDBQuery::get_Select(array('table' => 'File',
+            $sqlQuery = CDBQuery::get_Select(array('table' => $this->tablename,
                 'fields' => $fields,
                 'join' =>   array(  array('table' => 'Path', 'condition' => 'Path.PathId = File.PathId'),
                                     array('table' => 'Filename', 'condition' => 'File.FilenameId = Filename.FilenameId'),
@@ -50,7 +58,7 @@ class JobFiles_Model extends CModel
                   'orderby' => $orderby,
                   'limit' => array( 'count' => $limit, 'offset' => $offset*$limit),
                   'offset' => ($offset*$limit)
-              ), $this->driver);
+              ), $this->db->getDriverName());
         } else {
             $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'File.Filename AS Filename');
             $where = array("File.JobId = $jobId");
@@ -60,7 +68,7 @@ class JobFiles_Model extends CModel
             }
 
             $orderby = 'File.FileIndex ASC';
-            $sqlQuery = CDBQuery::get_Select(array('table' => 'File',
+            $sqlQuery = CDBQuery::get_Select(array('table' => $this->tablename,
                 'fields' => $fields,
                 'join' =>   array(  array('table' => 'Path', 'condition' => 'Path.PathId = File.PathId'),
                                     array('table' => 'Job', 'condition' => 'Job.JobId = File.JobId') ),
@@ -68,19 +76,16 @@ class JobFiles_Model extends CModel
                 'orderby' => $orderby,
                 'limit' => array( 'count' => $limit, 'offset' => $offset*$limit),
                 'offset' => ($offset*$limit)
-            ), $this->driver);
+            ), $this->db->getDriverName());
         }
 
-        $result = $this->run_query($sqlQuery);
-
-        return $result->fetchAll();
+        return $this->run_query($sqlQuery)->fetchAll();
     }
 
     public function countJobFiles($jobId, $filename = '')
     {
-        $used_types = array();
-
-        $catalog = new Database_Model();
+        $database = new Database();
+        $catalog = new CatalogTable($database);
 
         if ($catalog->getCatalogVersion() < 1016) {
             $sql_query = "SELECT COUNT(*) as count
@@ -118,10 +123,8 @@ class JobFiles_Model extends CModel
 
     public function getJobNameAndJobStatusByJobId($jobId)
     {
-        $used_types = array();
-        $sql_query = "SELECT distinct Job.Name, Job.JobStatus
-			FROM Job
-			WHERE Job.JobId = $jobId;";
+        $sql_query = "SELECT distinct Job.Name, Job.JobStatus FROM Job WHERE Job.JobId = $jobId;";
+
         $result = $this->run_query($sql_query);
 
         $used_types = $result->fetchAll();

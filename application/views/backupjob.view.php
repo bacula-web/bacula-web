@@ -2,20 +2,35 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+namespace App\Views;
+
+use App\Tables\JobTable;
+use Core\App\CView;
+use Core\Db\CDBQuery;
+use Core\Db\DatabaseFactory;
+use Core\Graph\Chart;
+use Core\Utils\CUtils;
+use Core\Utils\DateTimeUtil;
+
+use Core\Helpers\Sanitizer;
+use Exception;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class BackupJobView extends CView
 {
@@ -28,12 +43,13 @@ class BackupJobView extends CView
         $this->title = 'Report per Bacula backup job name';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
-        require_once('core/const.inc.php');
+        require_once BW_ROOT . '/core/const.inc.php';
         
         $interval = array();
         $interval[1] = NOW;
+        $session = new Session();
    
         $days_stored_bytes = array();
         $days_stored_files = array();
@@ -43,18 +59,25 @@ class BackupJobView extends CView
         $this->assign('periods_list', $periods_list);
         
         // Stored Bytes on the defined period
-        $jobs = new Jobs_Model();
+        $jobs = new JobTable(DatabaseFactory::getDatabase());
 
         // Get backup job(s) list
         $jobslist = $jobs->get_Jobs_List(null, 'B');
         $this->assign('jobs_list', $jobslist);
 
         // Check backup job name from $_POST request
-        $backupjob_name = CHttpRequest::get_value('backupjob_name');
+        $backupjob_name = null;
+
+        if($request->getMethod() === 'POST') {
+            $backupjob_name = $request->request->get('backupjob_name');
+        }elseif($request->getMethod() === 'GET') {
+            $backupjob_name = $request->query->get('backupjob_name');
+        }
+        $backupjob_name = Sanitizer::sanitize($backupjob_name);
 
         $where = array();
 
-        if (($backupjob_name === null) && (empty($backupjob_name))) {
+        if($backupjob_name == null) {
             $this->assign('selected_jobname', '');
             $this->assign('no_report_options', 'true');
 
@@ -70,28 +93,25 @@ class BackupJobView extends CView
 
             $this->assign('selected_jobname', $backupjob_name);
 
-            // Generate Backup Job report period string
-            $backupjob_period = CHttpRequest::get_value('period');
-
-            // Set default backup job period to 7 if not set in user request
-            if ($backupjob_period === null) {
-                $backupjob_period = '7';
-            }
+            /**
+             * Get selected period from POST request, or set it to default value (7)
+             */
+            $backupjob_period = $request->request->getInt('period', 7);
 
             // Set selected period
             $this->assign('selected_period', $backupjob_period);
 
             switch ($backupjob_period) {
             case '7':
-                $periodDesc = "From " . date($_SESSION['datetime_format_short'], (NOW - WEEK)) . " to " . date($_SESSION['datetime_format_short'], NOW);
+                $periodDesc = "From " . date($session->get('datetime_format_short'), (NOW - WEEK)) . " to " . date($session->get('datetime_format_short'), NOW);
                 $interval[0] = NOW-WEEK;
                 break;
             case '14':
-                $periodDesc = "From " . date($_SESSION['datetime_format_short'], (NOW - (2 * WEEK))) . " to " . date($_SESSION['datetime_format_short'], NOW);
+                $periodDesc = "From " . date($session->get('datetime_format_short'), (NOW - (2 * WEEK))) . " to " . date($session->get('datetime_format_short'), NOW);
                 $interval[0] = NOW-(2*WEEK);
                 break;
             case '30':
-                $periodDesc = "From " . date($_SESSION['datetime_format_short'], (NOW - MONTH)) . " to " . date($_SESSION['datetime_format_short'], NOW);
+                $periodDesc = "From " . date($session->get('datetime_format_short'), (NOW - MONTH)) . " to " . date($session->get('datetime_format_short'), NOW);
                 $interval[0] = NOW-MONTH;
             }
 
@@ -155,7 +175,7 @@ class BackupJobView extends CView
             // Backup job starttime and endtime
             $where[] = '(EndTime BETWEEN ' . $periods['starttime'] . ' AND ' . $periods['endtime'] . ')';
 
-            $query = CDBQuery::get_Select(array('table' => 'Job',
+            $query = CDBQuery::get_Select(array('table' => $jobs->getTableName(),
             'fields' => array( 'JobId', 'Level', 'JobFiles', 'JobBytes', 'ReadBytes', 'Job.JobStatus', 'StartTime', 'EndTime', 'Name', 'Status.JobStatusLong'),
             'where' => $where,
             'orderby' => 'EndTime DESC',
@@ -199,8 +219,8 @@ class BackupJobView extends CView
                 $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
        
                 // Format date/time
-                $job['starttime'] = date($_SESSION['datetime_format'], strtotime($job['starttime']));
-                $job['endtime'] = date($_SESSION['datetime_format'], strtotime($job['endtime']));
+                $job['starttime'] = date($session->get('datetime_format'), strtotime($job['starttime']));
+                $job['endtime'] = date($session->get('datetime_format'), strtotime($job['endtime']));
        
                 $joblist[] = $job;
             } // end while

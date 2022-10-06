@@ -2,34 +2,30 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
 
-class Clients_Model extends CModel
+namespace App\Tables;
+
+use Core\Db\Table;
+use Core\Db\CDBQuery;
+use App\Libs\FileConfig;
+
+class ClientTable extends Table
 {
-
-    // ==================================================================================
-    // Function: 	   count()
-    // Parameters:	$tablename - Client table name
-    // Return:		   Number of clients
-    // ==================================================================================
-
-    public function count($tablename = 'Client', $filter = null)
-    {
-        return parent::count($tablename);
-    }
+    protected $tablename = 'Client';
 
     // ==================================================================================
     // Function: 	getClients()
@@ -39,18 +35,17 @@ class Clients_Model extends CModel
 
     public function getClients()
     {
-        $clients      = array();
-        $table         = 'Client';
-        $fields        = array('ClientId, Name');
+        $clients    = array();
+        $fields     = array('ClientId, Name');
         $orderby    = 'Name';
 
-        $statment     = array( 'table' => $table, 'fields' => $fields, 'orderby' => $orderby );
+        $statment     = array( 'table' => $this->tablename, 'fields' => $fields, 'orderby' => $orderby );
 
         if (FileConfig::get_Value('show_inactive_clients') != null) {
             $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
         }
 
-        $result     = $this->run_query(CDBQuery::get_Select($statment), $this->get_driver_name());
+        $result     = $this->run_query(CDBQuery::get_Select($statment));
             
         foreach ($result->fetchAll() as $client) {
             $clients[ $client['clientid'] ] = $client['name'];
@@ -74,8 +69,8 @@ class Clients_Model extends CModel
         $this->addParameter('clientid', $client_id);
         $where[]    = 'clientid = :clientid';
 
-        $statment   = CDBQuery::get_Select(array(   'table'=> 'Client', 
-                                                    'fields' => $fields, 
+        $statment   = CDBQuery::get_Select(array(   'table'=> $this->tablename,
+                                                    'fields' => $fields,
                                                     'where' => $where ), $this->get_driver_name());
         
         $result     = $this->run_query($statment);

@@ -2,36 +2,32 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
 
-class Jobs_Model extends CModel
-{
-    
-   // ==================================================================================
-    // Function: 	count()
-    // Parameters: $tablename = Job by default
-    //             $filter (actualy unused, need to fix this
-    // Return:		Number of clients
-    // ==================================================================================
+namespace App\Tables;
 
-    public function count($tablename = 'Job', $filter = null)
-    {
-        return parent::count($tablename, $filter);
-    }
-    
+use Core\Db\CDBQuery;
+use Core\Db\Table;
+use Core\Utils\CUtils;
+use Exception;
+
+class JobTable extends Table
+{
+    protected $tablename = 'Job';
+
     // ==================================================================================
     // Function: 	 count_Jobs()
     // Parameters: $period_timestamps		Array containing start and end date (unix timestamp format)
@@ -43,16 +39,15 @@ class Jobs_Model extends CModel
     public function count_Jobs($period_timestamps, $job_status = null, $job_level = null)
     {
         $where        = null;
-        $tablename    = 'Job';
         $fields        = array('COUNT(*) as job_count');
         
         // Check PDO object
-        if (!is_a($this->db_link, 'PDO') && is_null($this->db_link)) {
+        if (!is_a($this->pdo, 'PDO') && is_null($this->pdo)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
         }
 
         // Getting timestamp interval
-        $intervals = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
+        $intervals = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
         
         // Defining interval depending on job status
         if (!is_null($job_status)) {
@@ -99,7 +94,7 @@ class Jobs_Model extends CModel
         }
         
         // Building SQL statment
-        $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
+        $statment = array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
         
         // Execute SQL statment
@@ -120,15 +115,15 @@ class Jobs_Model extends CModel
     {
         $where      = array();
         $fields     = array( 'SUM(JobFiles) AS stored_files' );
-        $tablename    = 'Job';
+
         
         // Check PDO object
-        if (!is_a($this->db_link, 'PDO') || is_null($this->db_link)) {
+        if (!is_a($this->pdo, 'PDO') || is_null($this->pdo)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
         }
         
         // Defined period
-        $intervals     = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
+        $intervals     = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
@@ -146,7 +141,7 @@ class Jobs_Model extends CModel
         $where[] = "Type = :jobtype";
         
         // Building SQL statment
-        $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
+        $statment = array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
 
         // Execute query
@@ -173,11 +168,10 @@ class Jobs_Model extends CModel
     {
         $where      = [];
         $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
-        $tablename  = 'Job';
         $jobtype    = 'B';
         
         // Defined period
-        $intervals     = CDBQuery::get_Timestamp_Interval($this->driver, $period_timestamps);
+        $intervals     = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         
         if ($job_name != 'ALL') {
@@ -195,7 +189,7 @@ class Jobs_Model extends CModel
         $where[] = 'Type = :jobtype';
 
         // Building SQL statment
-        $statment = array( 'table' => $tablename, 'fields' => $fields, 'where' => $where);
+        $statment = array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
 
         // Execute query
@@ -221,7 +215,7 @@ class Jobs_Model extends CModel
         $fields        = array( 'COUNT(DISTINCT Name) AS job_name_count' );
 
         // Prepare and execute query
-        $statment     = CDBQuery::get_Select(array( 'table' => 'Job', 'fields' => $fields ));
+        $statment     = CDBQuery::get_Select(array( 'table' => $this->tablename, 'fields' => $fields ));
         $result     = $this->run_query($statment);
 
         $result        = $result->fetch();
@@ -253,7 +247,7 @@ class Jobs_Model extends CModel
             $where[] = 'type = :jobtype';
         }
 
-        $statment   = array( 'table' => 'Job', 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
+        $statment   = array( 'table' => $this->tablename, 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
         $result     = $this->run_query(CDBQuery::get_Select($statment));
 
         foreach ($result->fetchAll() as $job) {
@@ -272,7 +266,7 @@ class Jobs_Model extends CModel
     public function getLevels($levels_name = array())
     {
         $levels = array();
-        $statment = array( 'table' => 'Job', 'fields' => array('Level'), 'groupby' => 'Level');
+        $statment = array( 'table' => $this->tablename, 'fields' => array('Level'), 'groupby' => 'Level');
         $result = $this->run_query(CDBQuery::get_Select($statment));
 
         foreach ($result->fetchAll() as $level) {
@@ -295,7 +289,7 @@ class Jobs_Model extends CModel
     public function getUsedJobTypes($job_types)
     {
         $used_types = array();
-        $sql_query = "SELECT DISTINCT Type from Job";
+        $sql_query = "SELECT DISTINCT Type from " . $this->tablename;
         $result = $this->run_query($sql_query);
 
         foreach ($result->fetchAll() as $job_type) {
@@ -321,7 +315,7 @@ class Jobs_Model extends CModel
         $groupby = 'dayofweek';
         $res = array();
 
-        switch ($this->driver) {
+        switch ($this->db->getDriverName()) {
        case 'mysql':
           $fields[] = "FROM_UNIXTIME(Job.JobTDate, '%W') AS dayofweek";
           break;
@@ -332,7 +326,7 @@ class Jobs_Model extends CModel
           return null;
        } // end switch
 
-        $query = CDBQuery::get_Select(array( 'table' => 'Job',
+        $query = CDBQuery::get_Select(array( 'table' => $this->tablename,
           'fields' => $fields,
           'where' => $where,
           'groupby' => $groupby,
@@ -348,7 +342,7 @@ class Jobs_Model extends CModel
           
             // Simply fix day name for postgreSQL
             // It could be improved but I lack some SQL (postgreSQL skills)
-            if ($this->driver == 'pgsql') {
+            if ($this->db->getDriverName() == 'pgsql') {
                 $day['dayofweek'] = $week[ $day['dayofweek'] ];
             }
           
@@ -370,7 +364,7 @@ class Jobs_Model extends CModel
         $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
         $res = array();
 
-        $query = CDBQuery::get_Select(array( 'table' => 'Job',
+        $query = CDBQuery::get_Select(array( 'table' => $this->tablename,
           'fields' => $fields,
           'where' => $where,
           'orderby' => 'jobbytes DESC',

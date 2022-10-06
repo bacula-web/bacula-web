@@ -2,24 +2,33 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Views;
+
+use App\Tables\UserTable;
+use Core\App\UserAuth;
+use Core\App\CView;
+use Core\Db\DatabaseFactory;
+use Core\Helpers\Sanitizer;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 class UserSettingsView extends CView
 {
-    protected $userauth;
     protected $username;
 
     public function __construct()
@@ -30,34 +39,47 @@ class UserSettingsView extends CView
         $this->name = 'User settings';
         $this->title = '';
         $this->username = '';
-        $this->userauth = new UserAuth();
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
-        $this->username = $_SESSION['username'];
-        $this->assign('username', $this->username);
+        $session = new Session();
+        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
+        $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
 
-        $user = $this->userauth->getData($this->username);
-        $this->assign('email', $user['email']);
+        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
+        $userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
+
+        $this->username = $session->get('username');
+        $user = $userTable->findByName($this->username);
+
+        $this->assign('username', $user->getUsername());
+        $this->assign('email', $user->getEmail());
 
         // Check if password reset have been requested
-        if (isset($_REQUEST['action'])) {
-            switch ($_REQUEST['action']) {
-            case 'passwordreset':
-                // Check if provided current password is correct
-                if ($this->userauth->authUser($_SESSION['username'], $_POST['oldpassword']) == 'yes') {
+        if($request->request->has('action')) {
+            switch (Sanitizer::sanitize($request->request->get('action'))) {
+                case 'passwordreset':
+                    // Check if provided current password is correct
+                    if ($userauth->authUser($user->getUsername(), $request->request->get('oldpassword')) == 'yes') {
 
-                    // Update user password with new one
-                    if ($this->userauth->setPassword($_SESSION['username'], $_POST['newpassword'])) {
-                        $this->userAlert = 'Password successfuly updated';
-                        $this->userAlertType = 'success';
+                        // Update user password with new one
+                        $result = $userTable->setPassword(
+                            $user->getUsername(),
+                            $request->request->get('newpassword')
+                        );
+
+                        if ($result !== false) {
+                            $this->userAlert = 'Password successfully updated';
+                            $this->userAlertType = 'success';
+                        } else {
+                            // TODO: do we need to check something here ?
+                        }
+                    } else {
+                        $this->userAlert = 'Current password do not match';
+                        $this->userAlertType = 'danger';
                     }
-                } else {
-                    $this->userAlert = 'Current password do not match';
-                    $this->userAlertType = 'danger';
-                }
-                break;
+                    break;
             }
         }
     }

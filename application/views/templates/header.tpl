@@ -8,22 +8,22 @@
   <title>Bacula-Web - {$page_name}</title>
 
   <!-- Bootstrap front-end framework -->
-  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="vendor/components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 
   <!-- Custom css -->
-  <link rel="stylesheet" href="application/assets/css/default.css">
+  <link rel="stylesheet" href="css/default.css">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="vendor/components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
 
   <!-- nvd3 javascript -->
-  <script src="vendor/mbostock/d3/d3.min.js" charset="utf-8"></script>
-  <script src="vendor/novus/nvd3/build/nv.d3.js"></script>
+  <script src="js/d3.min.js" charset="utf-8"></script>
+  <script src="js/nv.d3.js"></script>
 
   <!-- nvd3 css -->
-  <link href="vendor/novus/nvd3/build/nv.d3.css" rel="stylesheet" type="text/css">
+  <link href="css/nv.d3.css" rel="stylesheet" type="text/css">
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
@@ -84,14 +84,20 @@
 
             <!-- Authenticated user options -->
             {if isset($user_authenticated) }
-              {if $enable_users_auth eq 'true' and $user_authenticated eq 'yes' }		
+              {if $enable_users_auth eq 'true' and $user_authenticated eq 'yes' }
                 <li class="dropdown">
                   <a href="#" class="dropdown-toogle" data-toggle="dropdown" role="button">{$username} <i class="fa fa-user fa-fw"></i></a>
                   <ul class="dropdown-menu">
                     <li><a href="index.php?page=usersettings" title="User settings"> <i class="fa fa-wrench fa-fw"></i> {t}User settings{/t}</a></li>
-                    <li><a href="index.php?action=logout" title="Sign out"> <i class="fa fa-sign-out fa-fw"></i> {t}Sign out{/t}</a></li>
                   </ul>
                 </li>
+				  <form class="navbar-form navbar-left" action="index.php" method="POST">
+					  <input type="hidden" name="action" value="logout">
+					  <button type="submit" class="btn btn-link" title="Sign out">
+						  <i class="fa fa-sign-out fa-lg"></i>
+					  </button>
+					  <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+				  </form>
               {/if}
             {/if}
 				
@@ -143,4 +149,13 @@
       </div> <!-- div class="row" -->
   </div> <!-- div class="container" -->
   {/if}
+{/if}
+
+{if $userAlert != ''}
+	<div class="container">
+		<div class="alert alert-{$userAlertType} role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		{$userAlert}
+		</div>
+	</html>
 {/if}

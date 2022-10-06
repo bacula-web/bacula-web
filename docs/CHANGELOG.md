@@ -1,15 +1,71 @@
+## Bacula-Web 8.6.0 (Oct 6th 2022)
+
+### Changelog
+
+- General
+  - **Breaking change**: Implemented front controller
+    Bacula-Web web app is now served from the public sub-folder, please
+    check the web server config documentation (see #114)
+  - Replaced CHttpRequest class by Symfony framework Request class
+  - Use combined operators in CUtil class (see #91)
+  - Refactored PDO related PHP classes (see #100)
+  - Updated composer.json by adding ext-pdo depencency (see #113)
+  - Updated allowed plugin in composer.json (see #103)
+  - Use PHP namespaces (see #118)
+  - Fixed dozens of code smell warnings
+  - Refactored good amount of the code
+  - Moved flash message below header for better visibility
+  - Improve handling of non-existant page requests
+  - Fixed PHP notice after login (see #117)
+
+- Test page
+  - Fixed wrong link to test page on error page
+
+- Translations
+    - Updated translations with one more language (romanian) (see #92) 
+
+- Security
+  - Bump smarty/smarty from 3.1.45 to 3.1.47 (see #116)
+  - Improved session management (see #68)
+  - Improved how user input are sanitized (see #86)
+
+- Documentation
+  - Fixed link to contributors on README
+  - Updated list of components with license
+  - Updated Apache and Nginx server configuration according to new public root folder (see #114)
+
+### Fixed bug(s)
+
+- #68 [security] - Improve session managemen
+- #86 [security] - Sanitize user input
+- #91 [enhancement] - Use combined operators (thanks to @elfring)
+- #92 [translation] - Update translations
+- #100 [enhancement] - Refactor PHP PDO database related classes
+- #103 [enhancement] - Improve support Composer version 2.2.1 or later
+- #113 [bugfix] - Add missing ext-pdo to composer.json
+- #114 [security] - Implement front controller
+- #116 [security] - Bump smarty/smarty from 3.1.45 to 3.1.47
+- #117 [bugfix] - PHP notice about undefined catalog_id
+- #118 [enhancement] - Use PHP namespaces
+
+### New feature(s)
+
+- none
+
 ## Bacula-Web 8.5.5 (June 4th 2022)
 
 ### Changelog
 
-- Genera
-  - Fix security issue with smarty/smarty (see #111)
+- General
+	- Fix security issue with smarty/smarty (see #111)
 
 ### Fixed bug(s)
 
-- #111 [security] - Upgrade smarty/smarty to 3.1.45 
+- #111 [security] - Upgrade smarty/smarty to 3.1.45
 
 ### New feature(s)
+
+- none
 
 ## Bacula-Web 8.5.4 (May 21st 2022)
 

@@ -2,22 +2,26 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
 
-require_once('core/global.inc.php');
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/core/bootstrap.php';
+
+use Core\Db\DatabaseFactory;
+use App\Tables\UserTable;
 
 /*
  * Function:    printUsage
@@ -27,7 +31,7 @@ require_once('core/global.inc.php');
 
 function printUsage()
 {
-    echo "Bacula-Web version 8.5.5\n\n";
+    echo "Bacula-Web version 8.6.0\n\n";
     echo "Usage:\n";
     echo "   php bwc [command]\n\n";
     echo "Available commands:\n";
@@ -205,28 +209,18 @@ case 'setupauth':
 
     // Create SQLite database
     try {
-        $pdo = new PDO('sqlite:application/assets/protected/application.db');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        echo "\tDatabase created" . hightlight('Ok', 'ok') . PHP_EOL;
-
         // Create database schema
         echo "Creating database schema" . PHP_EOL;
-    
-        $createSchemaQuery = 'CREATE TABLE IF NOT EXISTS Users (
-            user_id INTEGER PRIMARY KEY,
-            username TEXT NOT NULL UNIQUE,
-            passwordHash TEXT NOT NULL,
-            email TEXT
+
+        $userTable = new UserTable(
+            DatabaseFactory::getDatabase(
+                'sqlite:' . BW_ROOT . '/application/assets/protected/application.db')
         );
-        CREATE INDEX IF NOT EXISTS User_ix_username ON Users (username);';
 
-        $rows = $pdo->exec($createSchemaQuery);
-
-        if ($rows === false) {
+        if ($userTable->createSchema() === 0) {
+            echo "\tDatabase created" . hightlight('Ok', 'ok') . PHP_EOL;
+        }else {
             echo "\tDatabase schema not created" . hightlight('Error', 'error') . PHP_EOL;
-        } else {
-            echo "\tDatabase schema created" . hightlight('Ok', 'ok') . PHP_EOL;
         }
 
         echo "User creation" . PHP_EOL;
@@ -243,12 +237,9 @@ case 'setupauth':
             die("\tPassword must be at least 6 characters long, aborting" . hightlight('Error', 'error') . PHP_EOL);
         }
 
-        $hashedPassword = password_hash($password, CRYPT_BLOWFISH);
-        $addUserQuery = "INSERT INTO Users (username,email,passwordHash) VALUES ('$username','$email', '$hashedPassword');";
-        $createdUser = $pdo->exec($addUserQuery);
-
-        if ($createdUser > 0) {
-            echo "\tUser created" . hightlight('Ok', 'ok') . PHP_EOL;
+        $result = $userTable->addUser($username, $email, $password);
+        if( $result === false) {
+            echo '\t' . $result->rowCount() . "ser created successfully" . hightlight('Ok', 'ok') . PHP_EOL;
         }
 
         echo PHP_EOL . "You can now connect to your Bacula-Web instance using provided credentials" . PHP_EOL;
@@ -256,6 +247,65 @@ case 'setupauth':
         die('Database error ' . $e->getMessage() . ' code(' . $e->getCode() . ')');
     }
     break;
+    case 'publishAssets':
+        echo "Publishing assets" . PHP_EOL;
+
+        $assets = [
+            'css'=> [
+                'vendor/twbs/bootstrap/dist/css/bootstrap.min.css',
+                'vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css',
+                'vendor/components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+                'application/assets/css/default.css',
+                'vendor/components/font-awesome/css/font-awesome.min.css',
+                'vendor/novus/nvd3/build/nv.d3.css'
+            ],
+            'js' => [
+                'vendor/novus/nvd3/build/nv.d3.js',
+                'vendor/mbostock/d3/d3.min.js',
+                'vendor/components/jquery/jquery.min.js',
+                'vendor/moment/moment/min/moment-with-locales.js',
+                'vendor/twbs/bootstrap/dist/js/bootstrap.min.js',
+                'vendor/components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+                'application/assets/js/default.js',
+                'application/assets/js/ie10-viewport-bug-workaround.js',
+            ],
+            'images' => [
+                'application/assets/images/bacula-web-logo.png'
+            ],
+            'fonts' => [
+                'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff2',
+                'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff',
+                'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.ttf',
+                'vendor/components/font-awesome/fonts/fontawesome-webfont.woff2',
+                'vendor/components/font-awesome/fonts/fontawesome-webfont.woff',
+                'vendor/components/font-awesome/fonts/fontawesome-webfont.ttf'
+            ]
+        ];
+
+        // Copy css assets
+        foreach( $assets['css'] as $css) {
+            $filename = basename($css);
+            copy($css, "public/css/$filename");
+        }
+
+        // Copy javascript assets
+        foreach( $assets['js'] as $js) {
+            $filename = basename($js);
+            copy($js, "public/js/$filename");
+        }
+
+        // Copy images assets
+        foreach( $assets['images'] as $image) {
+            $filename = basename($image);
+            copy($image, "public/img/$filename");
+        }
+
+        // Copy fonts assets
+        foreach( $assets['fonts'] as $font) {
+            $filename = basename($font);
+            copy($font, "public/fonts/$filename");
+        }
+        break;
 default:
     exit("\nError: unknown command, use <php bwc help> for further informations\n\n");
 }

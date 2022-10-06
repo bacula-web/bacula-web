@@ -7,12 +7,6 @@
   <div class="row">
     <div class="col col-xs-6">
 
-      {if $userAlert != ''}
-      <div class="alert alert-{$userAlertType} role="alert">
-        {$userAlert}
-      </div>
-      {/if}
-
       <h4>User details</h4>
 
       <form action="index.php?page=usersettings" method="post">

@@ -2,20 +2,36 @@
 
 /**
  * Copyright (C) 2011-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+namespace App\Views;
+
+use Core\App\CView;
+
+use Core\Db\DatabaseFactory;
+use App\Libs\FileConfig;
+use App\Tables\ClientTable;
+use App\Tables\JobTable;
+use App\Tables\CatalogTable;
+use App\Tables\VolumeTable;
+use App\Tables\PoolTable;
+use App\Tables\FileSetTable;
+use Core\Utils\CUtils;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class DirectorsView extends CView
 {
@@ -28,15 +44,17 @@ class DirectorsView extends CView
         $this->title = 'Bacula director(s) overview';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
-        require_once('core/const.inc.php');
+        require_once BW_ROOT . '/core/const.inc.php';
+
+        $session = new Session();
         
         $no_period = array(FIRST_DAY, NOW);
         $directors = array();
 
         // Save catalog_id from user session
-        $prev_catalog_id = $_SESSION['catalog_id'];
+        $prev_catalog_id = $session->get('catalog_id');
 
         FileConfig::open(CONFIG_FILE);
         $directors_count = FileConfig::count_Catalogs();
@@ -44,15 +62,14 @@ class DirectorsView extends CView
         $this->assign('directors_count', $directors_count);
 
         for ($d=0; $d < $directors_count; $d++) {
-            // Create new instance of Database_Model with the correct catalog_id
-            $_SESSION['catalog_id'] = $d;
+            $session->set('catalog_id', $d);
 
-            $clients = new Clients_Model();
-            $jobs = new Jobs_Model();
-            $catalog = new Database_Model();
-            $volumes = new Volumes_Model();
-            $pools = new Pools_Model();
-            $filesets = new FileSets_Model();
+            $clients = new ClientTable(DatabaseFactory::getDatabase());
+            $jobs = new JobTable(DatabaseFactory::getDatabase());
+            $catalog = new CatalogTable(DatabaseFactory::getDatabase());
+            $volumes = new VolumeTable(DatabaseFactory::getDatabase());
+            $pools = new PoolTable(DatabaseFactory::getDatabase());
+            $filesets = new FileSetTable(DatabaseFactory::getDatabase());
 
             $host = FileConfig::get_Value('host', $d);
             $db_user = FileConfig::get_Value('login', $d);
@@ -74,7 +91,7 @@ class DirectorsView extends CView
                 'filesets' => $filesets->count()
             );
 
-            // Destroy Database_Model object
+            // Destroy CatalogTable object
             unset($clients);
             unset($jobs);
             unset($catalog);
@@ -84,7 +101,7 @@ class DirectorsView extends CView
         }
 
         // Set previous catalog_id in user session
-        $_SESSION['catalog_id'] = $prev_catalog_id;
+        $session->set('catalog_id', $prev_catalog_id);
 
         $this->assign('directors', $directors);
     } // end of prepare() method

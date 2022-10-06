@@ -73,7 +73,7 @@ Define a new virtual server configuration like below.
       listen 80;
       listen [::]:80;
 
-      root /var/www/html/bacula-web;
+      root /var/www/html/bacula-web/public;
 
       index index.php;
 
@@ -85,6 +85,8 @@ Define a new virtual server configuration like below.
         try_files $uri $uri/ /index.php?$query_string;
       }
     }
+
+.. important:: As of version 8.6.0, the DocumentRoot must be set to the public sub-folder.
 
 Test your configuration
 

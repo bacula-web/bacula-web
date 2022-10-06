@@ -2,20 +2,28 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+namespace App\Views;
+
+use Core\Db\DatabaseFactory;
+use Core\App\CView;
+use Core\Utils\CUtils;
+use App\Tables\PoolTable;
+use Symfony\Component\HttpFoundation\Request;
 
 class PoolsView extends CView
 {
@@ -28,11 +36,10 @@ class PoolsView extends CView
         $this->title = 'Bacula pool(s) overview';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
-        
         // Get volumes list (pools.tpl)
-        $pools = new Pools_Model();
+        $pools = new PoolTable(DatabaseFactory::getDatabase());
         $pools_list = array();
         $plist = $pools->getPools();
 

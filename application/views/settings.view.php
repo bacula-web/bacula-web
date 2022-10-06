@@ -2,20 +2,31 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+namespace App\Views;
+
+use Core\App\CView;
+use Core\App\UserAuth;
+use App\Libs\FileConfig;
+use App\Tables\UserTable;
+use Core\Db\DatabaseFactory;
+use Core\Helpers\Sanitizer;
+use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class SettingsView extends CView
 {
@@ -28,23 +39,37 @@ class SettingsView extends CView
         $this->title = 'General settings';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
-        $userauth = new UserAuth();
+        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
+        $userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
+
+        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
+        $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
 
         // Create new user
-        if (isset($_REQUEST['action'])) {
-            switch ($_REQUEST['action']) {
+        if ($request->request->has('action')) {
+            switch (Sanitizer::sanitize($request->request->get('action'))) {
                 case 'createuser':
-                    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-                    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-                    $userauth->addUser($username, $email, $_REQUEST['password']);
+                    $username = Sanitizer::sanitize( $request->request->get('username'));
+                    $email = Sanitizer::sanitize($request->request->get('email'));
+
+                    $result = $userTable->addUser(
+                        $username,
+                        $email,
+                        $request->request->get('password')
+                    );
+                    if ($result !== false) {
+                        // TODO: replace by session flash message
+                        $this->setAlert($result->rowCount() . ' user created successfully');
+                        $this->setAlertType('success');
+                    }
                     break;
             }
         }
 
         // Get users list
-        $this->assign('users', $userauth->getUsers());
+        $this->assign('users', $userTable->getAll());
 
         // Get parameters set in configuration file
         if (!FileConfig::open(CONFIG_FILE)) {

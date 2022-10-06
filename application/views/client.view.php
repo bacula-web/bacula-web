@@ -2,20 +2,34 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+namespace App\Views;
+
+use Core\App\CView;
+use Core\Graph\Chart;
+use Core\Db\DatabaseFactory;
+use Core\Db\CDBQuery;
+use Core\Utils\DateTimeUtil;
+use Core\Utils\CUtils;
+use Core\Helpers\Sanitizer;
+use App\Tables\JobTable;
+use App\Tables\ClientTable;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ClientView extends CView
 {
@@ -28,20 +42,20 @@ class ClientView extends CView
         $this->title = 'Report per Bacula client';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
-        require_once('core/const.inc.php');
+        require_once BW_ROOT . '/core/const.inc.php';
+
+        $session = new Session();
         
         $period = 7;
-        $clientid = null;
         $backup_jobs = array();
         $days_stored_bytes = array();
         $days_stored_files = array();
 
         // Get job names for the client
-        $jobs = new Jobs_Model();
-
-        $client = new Clients_Model();
+        $jobs = new JobTable(DatabaseFactory::getDatabase());
+        $client = new ClientTable(DatabaseFactory::getDatabase());
  
         // Clients list
         $this->assign('clients_list', $client->getClients());
@@ -62,27 +76,25 @@ class ClientView extends CView
         );
 
         // Check client_id and period received by POST request
-        if (!is_null(CHttpRequest::get_Value('client_id'))) {
-            $clientid = CHttpRequest::get_Value('client_id');
+        if ($request->request->has('client_id')) {
+            $clientid = $request->request->getInt('client_id');
+            $clientid = Sanitizer::sanitize($clientid);
 
             // Verify if client_id is a valid integer
-            if (!filter_var($clientid, FILTER_VALIDATE_INT)) {
+            if ($clientid === 0) {
                 throw new Exception('Critical: provided parameter (client_id) is not valid');
             }
 
-            $period = CHttpRequest::get_Value('period');
-
-            $this->assign('selected_period', CHttpRequest::get_Value('period'));
-            $this->assign('selected_client', $clientid);
+            $period = $request->request->getInt('period');
+            $period = Sanitizer::sanitize($period);
 
             // Check if period is an integer and listed in known periods
             if (!array_key_exists($period, $periods_list)) {
                 throw new Exception('Critical: provided value for (period) is unknown or not valid');
             }
 
-            if (!filter_var($period, FILTER_VALIDATE_INT)) {
-                throw new Exception('Critical: provided value for (period) is unknown or not valid');
-            }
+            $this->assign('selected_period', $period);
+            $this->assign('selected_client', $clientid);
 
             /**
              * Filter jobs per requested period 
@@ -121,7 +133,7 @@ class ClientView extends CView
             $jobs->addParameter('clientid', $clientid);
             $where[] = 'clientid = :clientid';
 
-            $query = CDBQuery::get_Select( ['table' => 'Job',
+            $query = CDBQuery::get_Select( ['table' => $jobs->getTableName(),
                 'fields' => ['Job.Name', 'Job.Jobid', 'Job.Level', 'Job.Endtime', 'Job.Jobbytes', 'Job.Jobfiles', 'Status.JobStatusLong'],
                 'join' => [
                     ['table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus']
@@ -136,14 +148,14 @@ class ClientView extends CView
                 $job['level']     = $job_levels[$job['level']];
                 $job['jobfiles']  = CUtils::format_Number($job['jobfiles']);
                 $job['jobbytes']  = CUtils::Get_Human_Size($job['jobbytes']);
-                $job['endtime']   = date($_SESSION['datetime_format'], strtotime($job['endtime']));
+                $job['endtime']   = date($session->get('datetime_format'), strtotime($job['endtime']));
             
                 $backup_jobs[] = $job;
             } // end foreach
        
             $this->assign('backup_jobs', $backup_jobs);
        
-            $jobsStats = new Jobs_Model();
+            $jobsStats = new JobTable(DatabaseFactory::getDatabase());
             // Last n days stored Bytes graph
             foreach ($days as $day) {
                 $stored_bytes = $jobsStats->getStoredBytes(array($day['start'], $day['end']), 'ALL', $clientid);
@@ -161,7 +173,7 @@ class ClientView extends CView
        
             unset($stored_bytes_chart);
        
-            $jobsStats = new Jobs_Model();
+            $jobsStats = new JobTable(DatabaseFactory::getDatabase());
 
             // Last n days stored files graph
             foreach ($days as $day) {

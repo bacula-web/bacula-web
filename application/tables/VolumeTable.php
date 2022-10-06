@@ -2,36 +2,31 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
 
-class Volumes_Model extends CModel
+namespace App\Tables;
+
+use Core\Db\Table;
+use Core\Db\CDBQuery;
+use Core\Db\CDBPagination;
+
+class VolumeTable extends Table
 {
+    protected $tablename = 'Media';
  
-    // ==================================================================================
-    // Function: 	count()
-    // Parameters:	$tablename
-    //				$filter (optional)
-    // Return:		return row count for one table
-    // ==================================================================================
-
-    public function count($tablename = 'Media', $filter = null)
-    {
-        return parent::count($tablename, $filter);
-    }
-
     // ==================================================================================
     // Function: 	getDiskUsage()
     // Parameters: 	none
@@ -41,7 +36,7 @@ class Volumes_Model extends CModel
     public function getDiskUsage()
     {
         $fields        = array('SUM(Media.VolBytes) as bytes_size');
-        $statment     = array( 'table' => 'Media', 'fields' => $fields );
+        $statment     = array( 'table' => $this->tablename, 'fields' => $fields );
         
         // Run SQL query
         $result     = $this->run_query(CDBQuery::get_Select($statment));
@@ -83,7 +78,7 @@ class Volumes_Model extends CModel
         $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
         'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
 
-        $query = CDBQuery::get_Select( array('table'=>'Media',
+        $query = CDBQuery::get_Select( array('table'=> $this->tablename,
                                             'fields' => $fields,
                                             'orderby' => "$orderby $orderasc",
                                             'join' => array(

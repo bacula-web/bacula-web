@@ -1,24 +1,39 @@
 <?php
 
- /**
+/**
   * Copyright (C) 2004 Juan Luis Frances Jimenez
   * Copyright (C) 2010-2022 Davide Franco
-  * 
+  *
   * This file is part of Bacula-Web.
-  * 
-  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
-  * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+  *
+  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
   * (at your option) any later version.
-  * 
-  * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
-  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+  *
+  * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
   * See the GNU General Public License for more details.
-  * 
-  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+  *
+  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
   * <https://www.gnu.org/licenses/>.
   */
 
-class DashboardView extends CView
+ namespace App\Views;
+
+ use App\Tables\JobTable;
+ use App\Tables\PoolTable;
+ use App\Tables\VolumeTable;
+ use Core\App\CView;
+ use Core\Db\CDBQuery;
+ use Core\Db\DatabaseFactory;
+ use Core\Graph\Chart;
+ use Core\Utils\CUtils;
+ use Core\Utils\DateTimeUtil;
+ use Core\Helpers\Sanitizer;
+ use Symfony\Component\HttpFoundation\Request;
+ use Symfony\Component\HttpFoundation\Session\Session;
+
+ class DashboardView extends CView
 {
     public function __construct()
     {
@@ -29,13 +44,15 @@ class DashboardView extends CView
         $this->title = 'General overview';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
-        $jobs = new Jobs_Model();
-        $pools = new Pools_Model();
-        $volumes = new Volumes_Model();
+        $session = new Session();
 
-        require_once('core/const.inc.php');
+        $jobs = new JobTable(DatabaseFactory::getDatabase());
+        $pools = new PoolTable(DatabaseFactory::getDatabase());
+        $volumes = new VolumeTable(DatabaseFactory::getDatabase());
+
+        require_once BW_ROOT . '/core/const.inc.php';
 
         // Custom period for dashboard
         $no_period = array(FIRST_DAY, NOW);
@@ -45,8 +62,9 @@ class DashboardView extends CView
         $custom_period = $last_day;
         $selected_period = 'last_day';
 
-        if (isset($_POST['period_selector'])) {
-            $selected_period = CHttpRequest::get_Value('period_selector');
+        if ($request->request->get('period_selector')) {
+            $selected_period = $request->request->get('period_selector');
+            $selected_period = Sanitizer::sanitize($selected_period);
             $this->assign('custom_period_list_selected', $selected_period);
 
             switch ($selected_period) {
@@ -62,7 +80,7 @@ class DashboardView extends CView
             case 'since_bot':
                 $custom_period = $no_period;
                 break;
-        } // end switch
+            }
         } else {
             $this->assign('custom_period_list_selected', $selected_period);
         }
@@ -133,7 +151,7 @@ class DashboardView extends CView
           'fields' => array('SUM(numvols) AS sum_vols'),
           'limit' => array( 'offset' => ($pools_count - $max_pools), 'count' => $pools_count),
           'groupby' => 'name');
-            $result = $pools->run_query(CDBQuery::get_Select($query, $pools->get_driver_name()));
+            $result = $pools->run_query( CDBQuery::get_Select($query, $pools->get_driver_name()));
             $sum_vols = $result->fetch();
         }
 
@@ -204,7 +222,7 @@ class DashboardView extends CView
         case 'mysql':
         case 'sqlite':
             $tmp .= "AND (Media.Lastwritten != 0)";
-    }
+        }
      
         $where[] = $tmp;
 
@@ -222,7 +240,8 @@ class DashboardView extends CView
 
         foreach ($result as $volume) {
             if ($volume['lastwritten'] != '0000-00-00 00:00:00') {
-                $volume['lastwritten'] = date($_SESSION['datetime_format'], strtotime($volume['lastwritten']));
+                $volume['lastwritten'] = date($session->get('datetime_format'), strtotime($volume['lastwritten']));
+                //$volume['lastwritten'] = date($_SESSION['datetime_format'], strtotime($volume['lastwritten']));
             } else {
                 $volume['lastwritten'] = 'n/a';
             }
@@ -232,7 +251,7 @@ class DashboardView extends CView
         $this->assign('volumes_list', $last_volumes);
 
         // Per job name backup and restore statistics
-    $job_types = array( 'R' => 'Restore', 'B' => 'Backup' );      // TO IMPROVE
+        $job_types = array( 'R' => 'Restore', 'B' => 'Backup' );      // TO IMPROVE
 
     $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes, Name AS JobName FROM Job WHERE Type in ('B','R') GROUP BY Name,Type";
         $result = $jobs->run_query($query);

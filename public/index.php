@@ -17,20 +17,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
- // Include composer autoloader
- require_once 'vendor/autoload.php';
- 
- // Get all $_POST and $_GET values
- CHttpRequest::get_Vars();
- 
- // Views path
- define('BW_ROOT', getcwd());
- define('VIEW_DIR', BW_ROOT . "/application/views/templates");
- define('VIEW_CACHE_DIR', BW_ROOT . "/application/views/cache");
- 
- // Configuration
- define('CONFIG_DIR', BW_ROOT . "/application/config/");
- define('CONFIG_FILE', CONFIG_DIR . "config.php");
- 
- // Locales
- define('LOCALE_DIR', BW_ROOT . '/application/locale');
+// Include composer autoloader
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Bootstrap application
+require_once __DIR__ . '/../core/bootstrap.php';
+
+$app = new \Core\App\WebApplication($request);
+$app->run();

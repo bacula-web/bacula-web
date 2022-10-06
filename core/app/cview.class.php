@@ -2,20 +2,27 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+namespace Core\App;
+
+use Smarty;
+use SmartyBC;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class CView extends SmartyBC
 {
@@ -38,15 +45,32 @@ class CView extends SmartyBC
         $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
     }
 
-    public function render()
+    /**
+     * @param $alert
+     * @return void
+     */
+    public function setAlert($alert)
+    {
+        $this->userAlert = $alert;
+    }
+
+    public function setAlertType($type)
+    {
+        $this->userAlertType = $type;
+    }
+
+    public function render(Request $request)
     {
         $this->assign('page_name', $this->name);
         $this->assign('page_title', $this->title);
         $this->assign('templateName', $this->templateName);
 
+        // TODO: to move somewhere else, but not keep in the view for sure
         // Set username, if user is connected
-        if (isset($_SESSION['user_authenticated']) && $_SESSION['user_authenticated'] == 'yes') {
-            $this->assign('username', $_SESSION['username']);
+
+        $session = new Session();
+        if ($session->has('user_authenticated') && $session->get('user_authenticated') === 'yes') {
+            $this->assign('username', $session->get('username'));
         }
 
         // Give user some feedback
@@ -54,8 +78,7 @@ class CView extends SmartyBC
         $this->assign('userAlertType', $this->userAlertType);
 
         // Build breadcrumb
-        $breadcrumb = '';
-        if (isset($_GET['page'])) {
+        if ($request->query->has('page')) {
             $breadcrumb = '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
             $breadcrumb .= '<li class="active">' . $this->name . '</li>';
         } else {
@@ -64,6 +87,6 @@ class CView extends SmartyBC
         $this->assign('breadcrumb', $breadcrumb);
 
         // Render using the default layout
-        $this->display('layouts/default.tpl');
+        return $this->fetch('layouts/default.tpl');
     }
 }

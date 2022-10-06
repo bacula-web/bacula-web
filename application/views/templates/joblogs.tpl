@@ -19,9 +19,9 @@
 			<th class="text-center">{t}Event{/t}</th>
 		</tr>
 		{foreach from=$joblogs item=log}
-	    <tr class="{$log.class}">
-			<td class="text-center">{$log.time}</td>
-			<td class="text-left">{$log.logtext}</td>		
+	    <tr>
+			<td class="text-center">{$log->getTime()}</td>
+			<td class="text-left">{$log->getLogText()}</td>
 	    </tr>
         {foreachelse}
         <tr>

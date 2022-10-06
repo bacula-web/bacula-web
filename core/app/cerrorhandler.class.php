@@ -2,26 +2,30 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+namespace Core\App;
+
+use Core\Utils\HtmlHelper;
 
 class CErrorHandler
 {
     private static $header;
 
-    public static function displayError($exception)
+    public static function displayError($exception): string
     {
         switch (get_class($exception)) {
             case 'PDOException':
@@ -65,7 +69,7 @@ class CErrorHandler
         $output .= '<ul class="list-group">
                     <li class="list-group-item">
                     Using the <b>test page</b> could be helpful <br /><br />
-                    <a class="btn btn-default btn-sm btn-info" href="index.php?page=test.php" target="_blank" rel="noopener noreferrer" role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a>
+                    <a class="btn btn-default btn-sm btn-info" href="index.php?page=test" target="_blank" rel="noopener noreferrer" role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a>
                     </li>';
         $output .= '<li class="list-group-item">
                     Official documentation <br /><br />
@@ -77,7 +81,7 @@ class CErrorHandler
         // Render Exception page
         $output = HtmlHelper::getHtmlHeader() . HtmlHelper::getNavBar() . '<div class="container">' . $output . '</div>' . HtmlHelper::getHtmlFooter();
 
-        echo $output;
+        return $output;
     } // end function displayError
 
     public static function getFormatedTrace($e)

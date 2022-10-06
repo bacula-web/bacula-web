@@ -2,20 +2,22 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+namespace Core\Utils;
 
 class HtmlHelper
 {
@@ -37,14 +39,14 @@ class HtmlHelper
   <title>Bacula-Web - Application error</title>
 
   <!-- Bootstrap front-end framework -->
-  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 
   <!-- Custom css -->
-  <link rel="stylesheet" href="application/assets/css/default.css">
+  <link rel="stylesheet" href="css/default.css">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="vendor/components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
@@ -88,11 +90,9 @@ class HtmlHelper
     public static function getHtmlFooter()
     {
         $htmlFooter = '<!-- JQuery and Bootstrap Javascript -->
-                    <script src="vendor/components/jquery/jquery.min.js"></script>
-                    <script src="vendor/moment/moment/min/moment-with-locales.js"></script>
-                    <script src="vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
-                    <script src="vendor/components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-                    <script src="vendor/1000hz/bootstrap-validator/dist/validator.min.js"></script>
+                    <script src="js/jquery/jquery.min.js"></script>
+                    <script src="js/moment-with-locales.js"></script>
+                    <script src="js/bootstrap.min.js"></script>
 
                     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
                     <script src="application/assets/js/ie10-viewport-bug-workaround.js"></script>

@@ -14,13 +14,19 @@
       }
    ],
    "config": {
-		"component-dir": "vendor/components"
+		"component-dir": "vendor/components",
+        "allow-plugins": {
+          "composer/installers": true,
+          "robloach/component-installer": true,
+          "oomphinc/composer-installers-extender": true
+      }
 	},
    "require": {
       "php": ">=7.3.0",
       "ext-gettext": "*",
       "ext-mbstring": "*",
       "ext-openssl": "*",
+      "ext-pdo": "*",
       "ext-sqlite3": "*",
       "ext-posix": "*",
       "novus/nvd3": "@stable",
@@ -28,7 +34,8 @@
       "eonasdan/bootstrap-datetimepicker": "@stable",
       "smarty/smarty": "3.1.*",
       "smarty-gettext/smarty-gettext": "@stable",
-      "components/font-awesome": "4.*"
+      "components/font-awesome": "4.*",
+      "symfony/http-foundation": "^5.4"
 	},
     "require-dev": {
       "sebastian/phpcpd": "@stable",
@@ -37,11 +44,26 @@
       "friendsofphp/php-cs-fixer": "@stable"
     },
 	"autoload": {
+      "psr-4": {
+        "Core\\": "core/",
+        "App\\": "application/"
+      },
 		"classmap": [
-			"core",
-			"application"
+          "core",
+          "application"
 		]
 	},
+    "scripts": {
+        "post-install-cmd": [
+          "php bwc publishAssets"
+        ],
+        "post-update-cmd": [
+          "php bwc publishAssets"
+        ],
+        "post-create-project-cmd": [
+          "php bwc publishAssets"
+        ]
+    },
     "archive": {
         "exclude": ["/docs/source", "/docs/theme", ".gitignore", ".eslintrc.yml", ".codeclimate.yml", ".eslintignore", ".csslintrc", ".htpasswd", "sonar-project.properties", ".github", ".readthedocs.yaml", "docs/requirements.txt"]
     }

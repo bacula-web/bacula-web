@@ -1,6 +1,7 @@
 # Bacula-Web translations
-# Copyright (C) 2017 Davide Franco
+# Copyright (C) 2021 Davide Franco
 # This file is distributed under the same license as the Bacula-Web package.
+# Davide Franco <bacula-dev@dflc.ch>, 2012-2021.
 # 
 # Translators:
 # Georg Herland <georg@herland.org>, 2016
@@ -8,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bacula-Web\n"
 "Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
-"POT-Creation-Date: 2017-10-11 13:16+0200\n"
-"PO-Revision-Date: 2017-10-11 11:22+0000\n"
-"Last-Translator: Davide Franco\n"
+"POT-Creation-Date: 2012-07-26 18:49+0200\n"
+"PO-Revision-Date: 2014-12-09 08:00+0000\n"
+"Last-Translator: Georg Herland <georg@herland.org>, 2016\n"
 "Language-Team: Norwegian (Norway) (http://www.transifex.com/bacula-web/bacula-web/language/no_NO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

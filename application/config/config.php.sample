@@ -43,21 +43,22 @@ $config['debug'] = false;
 // Translations
 $config['language'] = 'en_US';
 
-// en_US -> English 
 // be_BY -> Belarusian
 // ca_ES -> Catalan
-// pl_PL -> Polish
-// ru_RU -> Russian
-// zh_CN -> Chinese
-// no_NO -> Norwegian
-// ja_JP -> Japanese
-// sv_SE -> Swedish
-// es_ES -> Spanish
 // de_DE -> German
-// it_IT -> Italian
+// en_US -> English
+// es_ES -> Spanish
 // fr_FR -> French
-// pt_BR -> Portuguese Brazil
+// it_IT -> Italian
+// ja_JP -> Japanese
 // nl_NL -> Dutch
+// no_NO -> Norwegian
+// pl_PL -> Polish
+// pt_BR -> Portuguese Brazil
+// ro_RO -> Romanian
+// ru_RU -> Russian
+// sv_SE -> Swedish
+// zh_CN -> Chinese
 
 // Rows per page
 $config['rows_per_page'] = 25;

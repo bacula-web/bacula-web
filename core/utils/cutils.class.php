@@ -2,20 +2,22 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+namespace Core\Utils;
 
 class CUtils
 {
@@ -30,7 +32,7 @@ class CUtils
             case 'auto':
                 while (!$lisible) {
                     if ($hsize >= 1024) {
-                        $hsize = $hsize / 1024;
+                        $hsize /= 1024;
                         $unit_id++;
                     } else {
                         $lisible = true;
@@ -41,7 +43,7 @@ class CUtils
             default:
                 $exp = array_keys($units, $unit);
                 $unit_id = current($exp);
-                $hsize = $hsize / pow(1024, $unit_id);
+                $hsize /= pow(1024, $unit_id);
                 break;
         } // end switch
         // Format human readable value (with dot for decimal separator)
@@ -49,7 +51,7 @@ class CUtils
 
         // Append unit or not
         if ($display_unit) {
-            $hsize = $hsize . ' ' . $units[$unit_id];
+            $hsize .= ' ' . $units[$unit_id];
         }
 
         return $hsize;

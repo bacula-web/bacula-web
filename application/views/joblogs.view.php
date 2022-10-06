@@ -2,20 +2,30 @@
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
- * 
+ *
  * This file is part of Bacula-Web.
- * 
- * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License as published by the Free Software Foundation, either version 2 of the License, or 
+ *
+ * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
- * 
- * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ *
+ * Bacula-Web is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see 
+ *
+ * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+namespace App\Views;
+
+use App\Tables\LogTable;
+use Core\App\CView;
+use Core\Db\CDBQuery;
+use Core\Db\DatabaseFactory;
+use App\Tables\JobTable;
+use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class JobLogsView extends CView
 {
@@ -28,30 +38,40 @@ class JobLogsView extends CView
         $this->title = 'Bacula job log';
     }
 
-    public function prepare()
+    public function prepare(Request $request)
     {
-        $joblogs = array();
-        $jobid = CHttpRequest::get_Value('jobid');
-    
-        // If $_GET['jobid'] is null and is not a number, throw an Exception
-        if (is_null($jobid) || !is_numeric($jobid)) {
+        $jobid = $request->query->getInt('jobid', 0);
+        $this->assign('jobid', $jobid);
+
+        /*
+         * if $_GET['jobid'] is not a valid integer different than 0, then throw an exception
+         * TODO: Exceptions will be handled in a better fashion in later development
+         */
+        if ($jobid === 0) {
             throw new Exception('Invalid job id (invalid or null) provided in Job logs report');
         }
 
         // Prepare and execute SQL statment
-        $jobs = new Jobs_Model();
-        $statment     = array('table' => 'Log', 'where' => array("JobId = :jobid"), 'orderby' => 'Time');
-        $jobs->addParameter('jobid', $jobid);
-        $result     = $jobs->run_query(CDBQuery::get_Select($statment),$jobs->get_driver_name());
+        $jobs = new JobTable(DatabaseFactory::getDatabase());
+        $jobs->find(['JobId = :jobid'], ['jobid' => $jobid]);
 
-        // Processing result
-        foreach ($result->fetchAll() as $log) {
-            $log['logtext'] = nl2br($log['logtext']);
-            $log['time'] = date($_SESSION['datetime_format'], strtotime($log['time']));
-            $joblogs[] = $log;
-        }
-        
-        $this->assign('jobid', $jobid);
-        $this->assign('joblogs', $joblogs);
-    } // end of prepare() method
-} // end of class
+        $sql = CDBQuery::get_Select(
+            [
+                'table' => 'Log',
+                'where' => [ 'JobId = :jobid'],
+                'orderby' => 'Time'
+            ]
+        );
+
+        $logTable = new LogTable(DatabaseFactory::getDatabase());
+
+        $this->assign(
+            'joblogs',
+            $logTable->findAll(
+                $sql,
+                ['jobid' => $jobid],
+                'App\Entity\Log'
+            )
+        );
+    }
+}
