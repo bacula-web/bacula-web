@@ -31,7 +31,7 @@ use App\Tables\UserTable;
 
 function printUsage()
 {
-    echo "Bacula-Web version 8.5.5\n\n";
+    echo "Bacula-Web version 8.6.0\n\n";
     echo "Usage:\n";
     echo "   php bwc [command]\n\n";
     echo "Available commands:\n";

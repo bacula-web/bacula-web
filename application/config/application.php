@@ -28,7 +28,7 @@
  * @since 8.0.0-rc.1
  */
 
-$app = [ 'name' => 'Bacula-Web', 'version' => '8.5.5',
+$app = [ 'name' => 'Bacula-Web', 'version' => '8.6.0',
         'routes' => [   'home' => 'Dashboard',
                         'test' => 'Test',
                         'jobs' => 'Jobs',
