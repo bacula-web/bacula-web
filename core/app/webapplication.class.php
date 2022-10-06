@@ -138,7 +138,7 @@ class WebApplication
                     $username = Sanitizer::sanitize($this->request->request->get('username'));
                     $this->session->set('username', $username);
 
-                    $view_name = $this->getMatch();
+                    $view_name = $this->getMatch($app['routes']);
                     $this->view = new $view_name();
 
                     $this->view->assign('user_authenticated', 'yes');
