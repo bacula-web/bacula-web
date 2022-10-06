@@ -1,4 +1,4 @@
-## Bacula-Web 8.6.0 (Oct dd 2022)
+## Bacula-Web 8.6.0 (Oct 6th 2022)
 
 ### Changelog
 
@@ -27,6 +27,7 @@
 - Security
   - Bump smarty/smarty from 3.1.45 to 3.1.47 (see #116)
   - Improved session management (see #68)
+  - Improved how user input are sanitized (see #86)
 
 - Documentation
   - Fixed link to contributors on README
@@ -35,7 +36,8 @@
 
 ### Fixed bug(s)
 
-- #68 [security] - Improve session management
+- #68 [security] - Improve session managemen
+- #86 [security] - Sanitize user input
 - #91 [enhancement] - Use combined operators (thanks to @elfring)
 - #92 [translation] - Update translations
 - #100 [enhancement] - Refactor PHP PDO database related classes
@@ -48,7 +50,7 @@
 
 ### New feature(s)
 
--
+- none
 
 ## Bacula-Web 8.5.5 (June 4th 2022)
 
