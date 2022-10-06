@@ -25,6 +25,7 @@ use App\Libs\FileConfig;
 use App\Views\LoginView;
 use Core\Db\DatabaseFactory;
 use Core\Exception\NotAuthorizedException;
+use Core\Exception\PageNotFoundException;
 use Core\Helpers\Sanitizer;
 use Core\i18n\CTranslation;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,6 +63,7 @@ class WebApplication
      * Return View class name, or default one based on the request
      *
      * @return string
+     * @throws PageNotFoundException
      */
     private function getMatch(): string
     {
@@ -70,6 +72,9 @@ class WebApplication
 
         if ($this->request->query->has('page')) {
             $page_name = Sanitizer::sanitize($this->request->query->get('page'));
+            if (!isset($app['routes'][$page_name])) {
+                throw new PageNotFoundException('Page not found');
+            }
             return '\\App\Views\\' . ucfirst($app['routes'][$page_name]) . 'View';
         }
         return $this->defaultView;
@@ -260,6 +265,8 @@ class WebApplication
             $this->response = new Response();
             $this->response->setStatusCode(200);
             $this->response->setContent($this->view->render($this->request));
+        } catch (PageNotFoundException $exception) {
+            $this->response = new Response(CErrorHandler::displayError($exception), 404);
         } catch (NotAuthorizedException $exception) {
             $this->response = new Response(CErrorHandler::displayError($exception), 403);
         } catch (\PDOException $exception) {
