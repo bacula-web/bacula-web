@@ -62,20 +62,18 @@ class WebApplication
     /**
      * Return View class name, or default one based on the request
      *
+     * @param array $routes
      * @return string
      * @throws PageNotFoundException
      */
-    private function getMatch(): string
+    private function getMatch(array $routes): string
     {
-        $appConfigFile = CONFIG_DIR . 'application.php';
-        $app = include($appConfigFile);
-
         if ($this->request->query->has('page')) {
             $page_name = Sanitizer::sanitize($this->request->query->get('page'));
-            if (!isset($app['routes'][$page_name])) {
+            if (!isset($routes[$page_name])) {
                 throw new PageNotFoundException('Page not found');
             }
-            return '\\App\Views\\' . ucfirst($app['routes'][$page_name]) . 'View';
+            return '\\App\Views\\' . ucfirst($routes[$page_name]) . 'View';
         }
         return $this->defaultView;
     }
@@ -109,7 +107,7 @@ class WebApplication
         $appConfigFile = CONFIG_DIR . 'application.php';
 
         if (file_exists($appConfigFile) && is_readable($appConfigFile)) {
-            $app = include($appConfigFile);
+            $app = include_once($appConfigFile);
 
             // Set application properties from config file
             $this->name = $app['name'];
@@ -123,7 +121,7 @@ class WebApplication
         if ($this->enable_users_auth) {
             // First thing first, is the user session already authenticated ?
             if ($this->userauth->authenticated()) {
-                $view_name = $this->getMatch();
+                $view_name = $this->getMatch($app['routes']);
                 $this->view = new $view_name();
                 $this->view->assign('user_authenticated', 'yes');
                 $this->view->assign('enable_users_auth', 'true');
