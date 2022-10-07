@@ -83,6 +83,10 @@ $ composer create-project bacula-web/bacula-web
 $ cd bacula-web
 $ sudo -u www-data php bwc setupauth
 
+# Configure Bacula catalog database and other parameters
+$ cd application/config && cp config.php.sample config.php
+$ vim config.php
+
 # Check you meet all requirement
 $ sudo -u www-data php bwc check
 
