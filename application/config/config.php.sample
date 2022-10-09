@@ -66,9 +66,9 @@ $config['rows_per_page'] = 25;
 // Database connection parameters
 // Copy/paste and adjust parameters according to your configuration
 
-// For Unix socket connection, use parameters decribed below
+// For Unix socket connection, use parameters described below
 // MySQL: use localhost for $config[0]['host']
-// postgreSQL: do not define $config[0]['host']
+// PostgreSQL: do not define $config[0]['host']
 
 // MySQL bacula catalog
 // $config[0]['label'] = 'Backup Server';
@@ -79,7 +79,7 @@ $config['rows_per_page'] = 25;
 // $config[0]['db_type'] = 'mysql';
 // $config[0]['db_port'] = '3306';
 
-// postgreSQL bacula catalog
+// PostgreSQL bacula catalog
 // $config[0]['label'] = 'Prod Server';
 // $config[0]['host'] = 'db-server.domain.com';
 // $config[0]['login'] = 'bacula';
