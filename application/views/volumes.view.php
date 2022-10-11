@@ -78,7 +78,15 @@ class VolumesView extends CView
         $pools_list = array( 0 => 'Any') + $pools_list; // Add default pool filter
         $this->assign('pools_list', $pools_list);
 
-        $pool_id = $request->request->getInt('filter_pool_id', 0);
+        /*
+         * If filter_pool_id parameter is not provided in GET or POST request, use 0 as default
+         */
+        $pool_id = 0;
+        if ($request->query->has('filter_pool_id')) {
+            $pool_id = $request->query->getInt('filter_pool_id');
+        } elseif ($request->request->has('filter_pool_id')) {
+            $pool_id = $request->request->getInt('filter_pool_id');
+        }
 
         if($pool_id !== 0) {
             $where[] = 'Media.PoolId = :pool_id';
