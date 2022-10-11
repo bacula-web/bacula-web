@@ -1,8 +1,14 @@
-## Bacula-Web 8.6.1 (Month Day Year)
+## Bacula-Web 8.6.1 (October Day Year)
 
 ### Changelog
 
+- General
+  - Fixed Bacula catalog selector
+    Using several Bacula catalog, the catalog selector was broken for some pages (see #120)
+
 ### Fixed bug(s)
+
+- #120 - Bacula catalog selector not working
 
 ### New feature(s)
 
