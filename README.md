@@ -110,7 +110,11 @@ For more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/ma
 
 ### Support the project
 
-As you probably already know, developpers does needs a lot of coffee :coffee: to be more efficient :wink:, so if you think Bacula-Web project desearve a little help, please consider buying me a coffee using the link below.
+Bacula-Web project is mainly maintained by myself on spare-time since October 2010.
+
+I don't get paid for this work or receive any financial support from any company. I do it only as I'd like to give something back for free to Bacula's community users.
+
+If you enjoy using Bacula-Web and would like to encourage the project efforts, please consider making a small donation using the buttons below.
 
 <a href="https://www.buymeacoffee.com/baculaweb"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=baculaweb&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff"></a>
 
