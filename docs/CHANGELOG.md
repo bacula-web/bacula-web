@@ -6,9 +6,13 @@
   - Fixed Bacula catalog selector
     Using several Bacula catalog, the catalog selector was broken for some pages (see #120)
 
+- Pools report
+  - Fixed the Volumes button which now list volumes in the right pool (see #121)
+
 ### Fixed bug(s)
 
 - #120 - Bacula catalog selector not working
+- #121 - Listing volumes for specific pool does not work
 
 ### New feature(s)
 
