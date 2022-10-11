@@ -21,6 +21,7 @@ namespace Core\Db;
 
 use App\Libs\FileConfig;
 use PDO;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class Database
 {
@@ -40,10 +41,9 @@ class Database
         FileConfig::open(CONFIG_FILE);
 
         // Create PDO connection to database
-        if(isset($_SESSION['catalog_id']) && !empty($_SESSION['catalog_id'])) {
-            $catalog_id = $_SESSION['catalog_id'];
-        } else {
-            $catalog_id = 0;
+        $session = new Session();
+        if ($session->has('catalog_id')) {
+            $catalog_id = $session->get('catalog_id');
         }
 
         $this->driver = FileConfig::get_Value('db_type', $catalog_id);
