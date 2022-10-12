@@ -246,6 +246,10 @@ class WebApplication
 
         // Set language
         $this->view->assign('language', $language);
+
+        if ($this->request->query->has('page')) {
+            $this->view->assign('page', $this->request->query->getAlpha('page'));
+        }
     }
 
     public function run()
