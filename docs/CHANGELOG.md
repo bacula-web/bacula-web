@@ -1,8 +1,9 @@
-## Bacula-Web 8.6.1 (October Day Year)
+## Bacula-Web 8.6.1 (October Day 2022)
 
 ### Changelog
 
 - General
+  - User will stay on current page when switching to another catalog (see #22)
   - Fixed Bacula catalog selector
     Using several Bacula catalog, the catalog selector was broken for some pages (see #120)
 
@@ -11,8 +12,9 @@
 
 ### Fixed bug(s)
 
-- #120 - Bacula catalog selector not working
-- #121 - Listing volumes for specific pool does not work
+- #22 [bugfix] - Stay on current page when switching to another catalog
+- #120 [bugfix] - Bacula catalog selector not working
+- #121 [bugfix] - Listing volumes for specific pool does not work
 
 ### New feature(s)
 
