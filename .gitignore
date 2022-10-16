@@ -9,3 +9,4 @@ public/js/*
 public/fonts/*
 public/img/*
 .idea
+.php-cs-fixer.cache
