@@ -59,7 +59,12 @@ class CDBPagination
         $this->limit = (FileConfig::get_Value('rows_per_page') !== null) ? FileConfig::get_Value('rows_per_page') : 25;
 
         // get pagination page from GET
-        $this->offset = $this->request->query->get('pagination_page', 0);
+        $current_page = (int) $this->request->query->get('pagination_page', 1);
+        if ($current_page === 1) {
+            $this->offset = 0;
+        } else {
+            $this->offset = ($current_page -1) * $this->limit;
+        }
 
         $this->paginationLink = 'index.php?page='. Sanitizer::sanitize($this->request->query->getAlpha('page'));
 
