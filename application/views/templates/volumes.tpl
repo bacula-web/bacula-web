@@ -65,11 +65,11 @@
         <span class="help-block">{t}Options{/t}</span>
         <div class="form-group">
           <label>{t}Order by{/t}</label>
-          {html_options class="form-control input-sm" name=orderby options=$orderby selected=$orderby_selected}
+          {html_options class="form-control input-sm" name=filter_orderby options=$orderby selected=$orderby_selected}
         </div>
         <div class="checkbox">
           <label>
-          <input type="checkbox" name="orderby_asc" value="{t}Asc{/t}" {$orderby_asc_checked}> Asc 
+          <input type="checkbox" name="filter_orderby_asc" value="{t}Asc{/t}" {$orderby_asc_checked}> Asc
           </label>
         </div> <!-- end div checkbox -->
         <button type="submit" class="btn btn-primary btn-sm pull-right" title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>

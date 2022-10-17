@@ -60,11 +60,11 @@
 		<span class="help-block">{t}Options{/t}</span>
 
 		<label>{t}Order by{/t}</label>
-        {html_options class="form-control" name=job_orderby options=$result_order selected=$result_order_field}
+        {html_options class="form-control" name=filter_job_orderby options=$result_order selected=$result_order_field}
 
 		<div class="checkbox">
 		  <label>
-			<input type="checkbox" name="job_orderby_asc" value="{t}ASC{/t}" {$result_order_asc_checked}> Up
+			<input type="checkbox" name="filter_job_orderby_asc" value="{t}ASC{/t}" {$result_order_asc_checked}> Up
 		  </label>
 		</div>
 

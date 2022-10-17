@@ -29,9 +29,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TestView extends CView
 {
-    public function __construct()
+    /**
+     * @param Request $request
+     */
+    public function __construct(Request $request)
     {
-        parent::__construct();
+        parent::__construct($request);
         
         $this->templateName = 'test.tpl';
         $this->name = 'Test page';

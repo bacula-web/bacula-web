@@ -33,9 +33,12 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class ClientView extends CView
 {
-    public function __construct()
+    /**
+     * @param Request $request
+     */
+    public function __construct(Request $request)
     {
-        parent::__construct();
+        parent::__construct($request);
 
         $this->templateName = 'client-report.tpl';
         $this->name = 'Client report';

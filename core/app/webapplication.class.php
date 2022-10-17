@@ -122,7 +122,7 @@ class WebApplication
             // First thing first, is the user session already authenticated ?
             if ($this->userauth->authenticated()) {
                 $view_name = $this->getMatch($app['routes']);
-                $this->view = new $view_name();
+                $this->view = new $view_name($this->request);
                 $this->view->assign('user_authenticated', 'yes');
                 $this->view->assign('enable_users_auth', 'true');
             } elseif (Sanitizer::sanitize($this->request->request->get('action')) === 'login') {
@@ -139,18 +139,18 @@ class WebApplication
                     $this->session->set('username', $username);
 
                     $view_name = $this->getMatch($app['routes']);
-                    $this->view = new $view_name();
+                    $this->view = new $view_name($this->request);
 
                     $this->view->assign('user_authenticated', 'yes');
                     $this->view->assign('username', $this->session->get('username'));
                     $this->view->assign('enable_users_auth', 'true');
                 } else {
-                    $this->view = new LoginView();
+                    $this->view = new LoginView($this->request);
                     $this->view->setAlert('bad username or password');
                     $this->view->setAlertType('danger');
                 }
             } else {
-                $this->view = new LoginView();
+                $this->view = new LoginView($this->request);
             }
 
             if ($this->userauth->authenticated()) {
@@ -158,7 +158,7 @@ class WebApplication
                     switch (Sanitizer::sanitize($this->request->request->get('action'))) {
                         case 'logout':
                             $this->userauth->destroySession();
-                            $this->view = new LoginView();
+                            $this->view = new LoginView($this->request);
                             $this->view->setAlert('Successfully logged out');
                             $this->view->setAlertType('success');
                     }

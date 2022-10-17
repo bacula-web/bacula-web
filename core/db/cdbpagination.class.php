@@ -27,7 +27,6 @@
 namespace Core\Db;
 
 use App\Libs\FileConfig;
-use Core\App\WebApplication;
 use Core\App\CView;
 use Core\Helpers\Sanitizer;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,19 +50,30 @@ class CDBPagination
 
     /**
      * @param CView $view
-     * @throws Exception
      */
     public function __construct(CView $view)
     {
         $this->request = Request::createFromGlobals();
         $this->currentView = $view;
+
         $this->limit = (FileConfig::get_Value('rows_per_page') !== null) ? FileConfig::get_Value('rows_per_page') : 25;
-        $this->offset = ($this->request->query->has('pagination_page')) ? $this->request->query->getInt('pagination_page') : 0;
+
+        // get pagination page from GET
+        $this->offset = $this->request->query->get('pagination_page', 0);
+
         $this->paginationLink = 'index.php?page='. Sanitizer::sanitize($this->request->query->getAlpha('page'));
 
         // Append filter and options from submited form values
-        foreach($this->request->query->all() as $key => $value) {
-            if(strpos($key, 'filter_') !== false) {
+        // from POST
+        foreach ($this->request->request->all() as $key => $value) {
+            if (strpos($key, 'filter_') !== false) {
+                $this->paginationLink .= "&$key=$value";
+            }
+        }
+
+        // from GET
+        foreach ($this->request->query->all() as $key => $value) {
+            if (strpos($key, 'filter_') !== false) {
                 $this->paginationLink .= "&$key=$value";
             }
         }

@@ -32,9 +32,12 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class VolumesView extends CView
 {
-    public function __construct()
+    /**
+     * @param Request $request
+     */
+    public function __construct(Request $request)
     {
-        parent::__construct();
+        parent::__construct($request);
         
         $this->templateName = 'volumes.tpl';
         $this->name = 'Volumes report';
@@ -81,14 +84,9 @@ class VolumesView extends CView
         /*
          * If filter_pool_id parameter is not provided in GET or POST request, use 0 as default
          */
-        $pool_id = 0;
-        if ($request->query->has('filter_pool_id')) {
-            $pool_id = $request->query->getInt('filter_pool_id');
-        } elseif ($request->request->has('filter_pool_id')) {
-            $pool_id = $request->request->getInt('filter_pool_id');
-        }
+        $pool_id = (int) $this->getParameter('filter_pool_id', 0);
 
-        if($pool_id !== 0) {
+        if ($pool_id !== 0) {
             $where[] = 'Media.PoolId = :pool_id';
             $params['pool_id'] = $pool_id;
         }
@@ -99,9 +97,7 @@ class VolumesView extends CView
         // Set order by
         $this->assign('orderby', $orderby);
 
-        $volume_orderby_filter = $request->request->get('orderby', 'Name');
-        $volume_orderby_filter = \Core\Helpers\Sanitizer::sanitize($volume_orderby_filter);
-
+        $volume_orderby_filter = $this->getParameter('filter_orderby', 'Name');
         $this->assign('orderby_selected', $volume_orderby_filter);
 
         if (!array_key_exists($volume_orderby_filter, $orderby)) {
@@ -109,10 +105,9 @@ class VolumesView extends CView
         }
 
         // Set order by filter and checkbox status
-        $volume_orderby_asc = $request->request->get('orderby_asc', 'DESC');
-        $volume_orderby_asc = \Core\Helpers\Sanitizer::sanitize($volume_orderby_asc);
+        $volume_orderby_asc = $this->getParameter('filter_orderby_asc', 'DESC');
 
-        if($volume_orderby_asc === 'Asc') {
+        if ($volume_orderby_asc === 'Asc') {
             $this->assign('orderby_asc_checked', 'checked');
         }else {
             $this->assign('orderby_asc_checked', '');
