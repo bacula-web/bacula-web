@@ -7,6 +7,7 @@
   - Fixed Bacula catalog selector
     Using several Bacula catalog, the catalog selector was broken for some pages (see #120)
   - Web browser will not ask a form submission while moving back from Job logs report page (see #30)
+  - Fixed how pagination count rows per page (see #123)
 
 - Jobs report
   - Fixed pagination not using applied filters and options (see #122)
@@ -26,6 +27,7 @@
 - #120 [bugfix] - Bacula catalog selector not working
 - #121 [bugfix] - Listing volumes for specific pool does not work
 - #122 [bugfix] - Page filters and options are lost using pagination
+- #123 [bugfix] - Incorrect displayed rows per pagination page
 
 ### New feature(s)
 
