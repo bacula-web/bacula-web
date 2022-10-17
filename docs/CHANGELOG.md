@@ -6,15 +6,26 @@
   - User will stay on current page when switching to another catalog (see #22)
   - Fixed Bacula catalog selector
     Using several Bacula catalog, the catalog selector was broken for some pages (see #120)
+  - Web browser will not ask a form submission while moving back from Job logs report page (see #30)
+
+- Jobs report
+  - Fixed pagination not using applied filters and options (see #122)
+  - Job endtime filter is now working as expected
+  - Ordering options are kept while using pagination (see #122)
 
 - Pools report
   - Fixed the Volumes button which now list volumes in the right pool (see #121)
 
+- Volumes report
+  - Fixed pagination not using applied filters and options (see #122)
+
 ### Fixed bug(s)
 
 - #22 [bugfix] - Stay on current page when switching to another catalog
+- #30 [bugfix] - Make it possible to go back from jobs details to (filtered) job overview
 - #120 [bugfix] - Bacula catalog selector not working
 - #121 [bugfix] - Listing volumes for specific pool does not work
+- #122 [bugfix] - Page filters and options are lost using pagination
 
 ### New feature(s)
 
