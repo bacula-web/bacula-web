@@ -43,8 +43,7 @@ class JobLogsView extends CView
 
     public function prepare(Request $request)
     {
-        $jobid = $request->query->getInt('jobid', 0);
-        $this->assign('jobid', $jobid);
+        $jobid = $request->query->getInt('jobid');
 
         /*
          * if $_GET['jobid'] is not a valid integer different than 0, then throw an exception
@@ -56,7 +55,10 @@ class JobLogsView extends CView
 
         // Prepare and execute SQL statment
         $jobs = new JobTable(DatabaseFactory::getDatabase());
-        $jobs->find(['JobId = :jobid'], ['jobid' => $jobid]);
+
+        $this->assign('job', $jobs->findById($jobid));
+
+        $logTable = new LogTable(DatabaseFactory::getDatabase());
 
         $sql = CDBQuery::get_Select(
             [
@@ -65,8 +67,6 @@ class JobLogsView extends CView
                 'orderby' => 'Time'
             ]
         );
-
-        $logTable = new LogTable(DatabaseFactory::getDatabase());
 
         $this->assign(
             'joblogs',
