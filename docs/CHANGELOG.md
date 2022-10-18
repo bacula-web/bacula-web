@@ -14,6 +14,9 @@
   - Job endtime filter is now working as expected
   - Ordering options are kept while using pagination (see #122)
 
+- Job logs report
+  - More job information are now displayed (see #124)
+
 - Pools report
   - Fixed the Volumes button which now list volumes in the right pool (see #121)
 
@@ -30,6 +33,8 @@
 - #123 [bugfix] - Incorrect displayed rows per pagination page
 
 ### New feature(s)
+
+- #124 - Display more job information on Job logs report
 
 ## Bacula-Web 8.6.0 (October 6th 2022)
 
