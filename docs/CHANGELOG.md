@@ -9,6 +9,7 @@
   - Web browser will not ask a form submission while moving back from Job logs report page (see #30)
   - Fixed how pagination count rows per page (see #123)
   - Bump Composer dependencies to latest version
+  - Fixed pagination next button (see #125)
 
 - Jobs report
   - Fixed pagination not using applied filters and options (see #122)
@@ -32,6 +33,7 @@
 - #121 [bugfix] - Listing volumes for specific pool does not work
 - #122 [bugfix] - Page filters and options are lost using pagination
 - #123 [bugfix] - Incorrect displayed rows per pagination page
+- #125 [bubfix] - Next button in pagination should display next pagination page
 
 ### New feature(s)
 
