@@ -16,6 +16,7 @@
   - Fixed pagination not using applied filters and options (see #122)
   - Job endtime filter is now working as expected
   - Ordering options are kept while using pagination (see #122)
+  - You can reach Job files report from Jobs report page from now (see #126)
 
 - Job logs report
   - More job information are now displayed (see #124)
@@ -42,6 +43,7 @@
 ### New feature(s)
 
 - #124 - Display more job information on Job logs report
+- #126 - Show files of backup jobs in Jobs report page
 
 ## Bacula-Web 8.6.0 (October 6th 2022)
 
