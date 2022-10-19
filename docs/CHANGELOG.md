@@ -1,4 +1,4 @@
-## Bacula-Web 8.6.1 (October Day 2022)
+## Bacula-Web 8.6.1 (October 19th 2022)
 
 ### Changelog
 
@@ -8,6 +8,7 @@
     Using several Bacula catalog, the catalog selector was broken for some pages (see #120)
   - Web browser will not ask a form submission while moving back from Job logs report page (see #30)
   - Fixed how pagination count rows per page (see #123)
+  - Bump Composer dependencies to latest version
 
 - Jobs report
   - Fixed pagination not using applied filters and options (see #122)
@@ -47,7 +48,7 @@
   - Replaced CHttpRequest class by Symfony framework Request class
   - Use combined operators in CUtil class (see #91)
   - Refactored PDO related PHP classes (see #100)
-  - Updated composer.json by adding ext-pdo depencency (see #113)
+  - Updated composer.json by adding ext-pdo dependency (see #113)
   - Updated allowed plugin in composer.json (see #103)
   - Use PHP namespaces (see #118)
   - Fixed dozens of code smell warnings
