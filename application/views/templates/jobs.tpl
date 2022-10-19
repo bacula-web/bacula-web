@@ -120,7 +120,15 @@
 			<td>{$job.elapsed_time}</td>
 			<td>{$job.level}</td>
 			<td>{$job.jobbytes}</td>
-			<td>{$job.jobfiles}</td>
+			<td>
+				{if $job.jobfiles != 0 && $job.type == 'B'}
+					<a href="index.php?page=jobfiles&jobId={$job.jobid}" title="{t}Show job files{/t}">
+						{$job.jobfiles} <span class="glyphicon glyphicon-folder-open"></span>
+					</a>
+				{else}
+			      {$job.jobfiles}
+				{/if}
+			</td>
 			<td>{$job.speed}</td>
 			<td>{$job.compression}</td>
 			<td>{$job.pool_name}</td>
