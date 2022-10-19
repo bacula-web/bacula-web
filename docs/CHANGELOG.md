@@ -10,6 +10,7 @@
   - Fixed how pagination count rows per page (see #123)
   - Bump Composer dependencies to latest version
   - Fixed pagination next button (see #125)
+  - Link to official documentation is now available from top navigation bar
 
 - Jobs report
   - Fixed pagination not using applied filters and options (see #122)
