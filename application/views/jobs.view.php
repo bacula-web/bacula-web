@@ -138,7 +138,7 @@ class JobsView extends CView
         $this->assign('filter_jobstatus', $filter_jobstatus);
 
         // Job type filter
-        $filter_jobtype = (int) $this->getParameter('filter_jobtype', 0);
+        $filter_jobtype = $this->getParameter('filter_jobtype', 0);
         $this->assign('filter_jobtype', $filter_jobtype);
 
         // Validate filter job type
@@ -234,7 +234,7 @@ class JobsView extends CView
             $params['pool_id'] = $filter_poolid;
         }
 
-        if ($filter_jobtype !== 0) {
+        if ($filter_jobtype !== '0') {
             $where[] = "Job.Type = :job_type";
             $params['job_type'] = $filter_jobtype;
         }
