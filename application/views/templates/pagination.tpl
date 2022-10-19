@@ -1,7 +1,7 @@
 <hr />
 <div class="row">
     <div class="col-xs-6">
-        <p class="pagination">{$pagination_range} / {$count} (out of {$rowcount})</p>
+        <p class="pagination">{$pagination_range} / {$count} row(s) out of {$rowcount}</p>
     </div>
     <div class="col-xs-6">
         <nav aria-label="">
@@ -21,11 +21,11 @@
                 <li class="{$previous_enabled}">
                     {if $previous_enabled eq "disabled"}
                         <span>
-                            <span title="{t}Previous pages{/t} aria-hidden="true">&lang;</span>
+                            <span title="{t}Previous page{/t} aria-hidden="true">&lang;</span>
                         </span>
                     {else}
                         <a href="{$pagination_link}&pagination_page={$previous}" aria-label="Previous">
-                            <span aria-hidden="true" title="{t}Previous pages{/t}">&lang;</span>
+                            <span aria-hidden="true" title="{t}Previous page{/t}">&lang;</span>
                         </a>
                     {/if}
                 </li>
@@ -60,11 +60,11 @@
                 <li class="{$next_enabled}">
                 {if $next_enabled eq "disabled"}
                     <span>
-                        <span title="{t}Next pages{/t} aria-hidden="true">&rang;</span>
+                        <span title="{t}Next page{/t} aria-hidden="true">&rang;</span>
                     </span>
                 {else}
                     <a href="{$pagination_link}&pagination_page={$next}" aria-label="Next">
-                        <span aria-hidden="true" title="{t}Next pages{/t}">&rang;</span>
+                        <span aria-hidden="true" title="{t}Next page{/t}">&rang;</span>
                     </a>
                 {/if}
                 </li>

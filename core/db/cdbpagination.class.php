@@ -38,12 +38,13 @@ class CDBPagination
     private $currentView;
     private $offset;
     private $limit;
+
     /**
-     * Number max of pages
-     * @var
+     * Maximum number of pagination page
+     * @var int
      */
     private $paginationMax;
-    private $paginationSteps = 4;
+    private $paginationSteps = 1;
     private $paginationLink;
     private $paginationCurrent = 1;
     private $request;
