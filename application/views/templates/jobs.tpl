@@ -60,11 +60,11 @@
 		<span class="help-block">{t}Options{/t}</span>
 
 		<label>{t}Order by{/t}</label>
-        {html_options class="form-control" name=job_orderby options=$result_order selected=$result_order_field}
+        {html_options class="form-control" name=filter_job_orderby options=$result_order selected=$result_order_field}
 
 		<div class="checkbox">
 		  <label>
-			<input type="checkbox" name="job_orderby_asc" value="{t}ASC{/t}" {$result_order_asc_checked}> Up
+			<input type="checkbox" name="filter_job_orderby_asc" value="{t}ASC{/t}" {$result_order_asc_checked}> Up
 		  </label>
 		</div>
 
@@ -120,7 +120,15 @@
 			<td>{$job.elapsed_time}</td>
 			<td>{$job.level}</td>
 			<td>{$job.jobbytes}</td>
-			<td>{$job.jobfiles}</td>
+			<td>
+				{if $job.jobfiles != 0 && $job.type == 'B'}
+					<a href="index.php?page=jobfiles&jobId={$job.jobid}" title="{t}Show job files{/t}">
+						{$job.jobfiles} <span class="glyphicon glyphicon-folder-open"></span>
+					</a>
+				{else}
+			      {$job.jobfiles}
+				{/if}
+			</td>
 			<td>{$job.speed}</td>
 			<td>{$job.compression}</td>
 			<td>{$job.pool_name}</td>

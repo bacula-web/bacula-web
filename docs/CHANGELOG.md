@@ -1,4 +1,51 @@
-## Bacula-Web 8.6.0 (Oct 6th 2022)
+## Bacula-Web 8.6.1 (October 19th 2022)
+
+### Changelog
+
+- General
+  - User will stay on current page when switching to another catalog (see #22)
+  - Fixed Bacula catalog selector
+    Using several Bacula catalog, the catalog selector was broken for some pages (see #120)
+  - Web browser will not ask a form submission while moving back from Job logs report page (see #30)
+  - Fixed how pagination count rows per page (see #123)
+  - Bump Composer dependencies to latest version
+  - Fixed pagination next button (see #125)
+  - Link to official documentation is now available from top navigation bar
+
+- Jobs report
+  - Fixed pagination not using applied filters and options (see #122)
+  - Job endtime filter is now working as expected
+  - Ordering options are kept while using pagination (see #122)
+  - You can reach Job files report from Jobs report page from now (see #126)
+
+- Job logs report
+  - More job information are now displayed (see #124)
+
+- Pools report
+  - Fixed the Volumes button which now list volumes in the right pool (see #121)
+
+- Volumes report
+  - Fixed pagination not using applied filters and options (see #122)
+
+- Settings
+  - Removed extra flash message which appear when a user is created
+
+### Fixed bug(s)
+
+- #22 [bugfix] - Stay on current page when switching to another catalog
+- #30 [bugfix] - Make it possible to go back from jobs details to (filtered) job overview
+- #120 [bugfix] - Bacula catalog selector not working
+- #121 [bugfix] - Listing volumes for specific pool does not work
+- #122 [bugfix] - Page filters and options are lost using pagination
+- #123 [bugfix] - Incorrect displayed rows per pagination page
+- #125 [bubfix] - Next button in pagination should display next pagination page
+
+### New feature(s)
+
+- #124 - Display more job information on Job logs report
+- #126 - Show files of backup jobs in Jobs report page
+
+## Bacula-Web 8.6.0 (October 6th 2022)
 
 ### Changelog
 
@@ -9,7 +56,7 @@
   - Replaced CHttpRequest class by Symfony framework Request class
   - Use combined operators in CUtil class (see #91)
   - Refactored PDO related PHP classes (see #100)
-  - Updated composer.json by adding ext-pdo depencency (see #113)
+  - Updated composer.json by adding ext-pdo dependency (see #113)
   - Updated allowed plugin in composer.json (see #103)
   - Use PHP namespaces (see #118)
   - Fixed dozens of code smell warnings

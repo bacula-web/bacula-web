@@ -34,9 +34,12 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class BackupJobView extends CView
 {
-    public function __construct()
+    /**
+     * @param Request $request
+     */
+    public function __construct(Request $request)
     {
-        parent::__construct();
+        parent::__construct($request);
 
         $this->templateName = 'backupjob-report.tpl';
         $this->name = 'Backup job report';

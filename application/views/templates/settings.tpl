@@ -7,12 +7,7 @@
   <div class="row">
 
         <div class="col-xs-3">
-      
-          {if $userAlert != ''}
-            <div class="alert alert-{$userAlertType}" role="alert">
-              {$userAlert}
-            </div>
-          {/if}
+
             <!-- required for floating -->
             <!-- Nav tabs -->
             <ul class="nav nav-tabs tabs-left nav-stacked">

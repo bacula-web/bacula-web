@@ -35,9 +35,12 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class DirectorsView extends CView
 {
-    public function __construct()
+    /**
+     * @param Request $request
+     */
+    public function __construct(Request $request)
     {
-        parent::__construct();
+        parent::__construct($request);
         
         $this->templateName = 'directors.tpl';
         $this->name = 'Directors';

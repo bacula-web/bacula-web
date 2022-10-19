@@ -7,9 +7,22 @@
     <div class="panel panel-default">
 		<div class="panel-heading"> <h4 class="panel-title">{t}Job details{/t}</h4> </div>
 		<div class="panel-body">
-			<dl class="dl-horizontal">
-				<dt>{t}Job id{/t}</dt> <dd>{$jobid}</dd>
-			</dl>
+			<div class="row">
+				<div class="cold-md-6">
+					<dl class="dl-horizontal">
+						<dt>{t}Job id{/t}</dt> <dd>{$job->jobid}</dd>
+						<dt>{t}Job name{/t}</dt> <dd>{$job->job_name}</dd>
+						<dt>{t}Job status{/t}</dt> <dd>{$job->jobstatuslong}</dd>
+						<dt>{t}Job bytes{/t}</dt> <dd>{$job->getJobBytes()}</dd>
+						<dt>{t}Scheduled time{/t}</dt> <dd>{$job->schedtime}</dd>
+						<dt>{t}Job start time{/t}</dt> <dd>{$job->starttime}</dd>
+						<dt>{t}Job end time{/t}</dt> <dd>{$job->endtime}</dd>
+						<dt>{t}Job level{/t}</dt> <dd>{$job->getLevel()}</dd>
+						<dt>{t}Pool{/t}</dt> <dd>{$job->pool_name}</dd>
+					</dl>
+				</div>
+
+			</div>
 		</div> <!-- end div class="panel-body" -->
 	</div>
 	<div class="table-responsive">

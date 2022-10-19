@@ -35,9 +35,12 @@
 
  class DashboardView extends CView
 {
-    public function __construct()
-    {
-        parent::__construct();
+     /**
+      * @param Request $request
+      */
+     public function __construct(Request $request)
+     {
+         parent::__construct($request);
         
         $this->templateName = 'dashboard.tpl';
         $this->name = _('Dashboard');

@@ -19,6 +19,7 @@
 
 namespace App\Tables;
 
+use App\Entity\Job;
 use Core\Db\CDBQuery;
 use Core\Db\Table;
 use Core\Utils\CUtils;
@@ -379,5 +380,23 @@ class JobTable extends Table
         }
       
         return $res;
+    }
+
+    public function findById(int $jobid)
+    {
+        $fields = ['Job.JobId', 'Job.Name AS Job_name', 'Job.Type',
+            'Job.SchedTime', 'Job.StartTime', 'Job.EndTime', 'Job.Level',
+            'Job.ReadBytes', 'Job.JobBytes', 'Job.JobFiles',
+            'Pool.Name', 'Job.JobStatus', 'Pool.Name AS Pool_name', 'Status.JobStatusLong'];
+
+        $sql_query = CDBQuery::get_Select(array('table' => 'Job',
+            'fields' => $fields,
+            'where' => ['jobid = :jobid'],
+            'join' => array(
+                array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
+                array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
+            ) ), $this->get_driver_name());
+
+        return $this->select($sql_query, ['jobid' => $jobid], Job::class, true);
     }
 }

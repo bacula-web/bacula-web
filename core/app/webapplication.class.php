@@ -122,7 +122,7 @@ class WebApplication
             // First thing first, is the user session already authenticated ?
             if ($this->userauth->authenticated()) {
                 $view_name = $this->getMatch($app['routes']);
-                $this->view = new $view_name();
+                $this->view = new $view_name($this->request);
                 $this->view->assign('user_authenticated', 'yes');
                 $this->view->assign('enable_users_auth', 'true');
             } elseif (Sanitizer::sanitize($this->request->request->get('action')) === 'login') {
@@ -139,18 +139,18 @@ class WebApplication
                     $this->session->set('username', $username);
 
                     $view_name = $this->getMatch($app['routes']);
-                    $this->view = new $view_name();
+                    $this->view = new $view_name($this->request);
 
                     $this->view->assign('user_authenticated', 'yes');
                     $this->view->assign('username', $this->session->get('username'));
                     $this->view->assign('enable_users_auth', 'true');
                 } else {
-                    $this->view = new LoginView();
+                    $this->view = new LoginView($this->request);
                     $this->view->setAlert('bad username or password');
                     $this->view->setAlertType('danger');
                 }
             } else {
-                $this->view = new LoginView();
+                $this->view = new LoginView($this->request);
             }
 
             if ($this->userauth->authenticated()) {
@@ -158,7 +158,7 @@ class WebApplication
                     switch (Sanitizer::sanitize($this->request->request->get('action'))) {
                         case 'logout':
                             $this->userauth->destroySession();
-                            $this->view = new LoginView();
+                            $this->view = new LoginView($this->request);
                             $this->view->setAlert('Successfully logged out');
                             $this->view->setAlertType('success');
                     }
@@ -213,18 +213,14 @@ class WebApplication
         $this->translate->set_Language($this->view);
 
         // Get catalog_id from http $_GET request
-        $this->catalog_current_id = $this->request->request->getInt('catalog_id', 0);
-        $this->session->set('catalog_id', $this->catalog_current_id);
-
         if ($this->request->query->has('catalog_id')) {
             if (FileConfig::catalogExist($this->request->request->getInt('catalog_id'))) {
                 $this->catalog_current_id = $this->request->query->getInt('catalog_id');
                 $this->session->set('catalog_id', $this->catalog_current_id);
             } else {
                 $this->session->set('catalog_id', 0);
-                //$_SESSION['catalog_id'] = 0;
                 $this->catalog_current_id = 0;
-                // It should redirect to home with catalog_id = 0 and display a flash message to the user
+                // TODO: It should redirect to home with catalog_id = 0 and display a flash message to the user
                 throw new Exception('The catalog_id value provided does not correspond to a valid catalog, please verify the config.php file');
             }
         } elseif ($this->session->has('catalog_id')) {
@@ -250,6 +246,10 @@ class WebApplication
 
         // Set language
         $this->view->assign('language', $language);
+
+        if ($this->request->query->has('page')) {
+            $this->view->assign('page', $this->request->query->getAlpha('page'));
+        }
     }
 
     public function run()

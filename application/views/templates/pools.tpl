@@ -22,7 +22,7 @@
 	          <td>{$pool.numvols}</td>
 	          <td>{$pool.totalbytes}</td>
 	          <td>
-	            <a title="{t}Show volumes{/t}" class="btn btn-primary btn-sm {if $pool.numvols == '0'} disabled {/if}" role="button" href="index.php?page=volumes&pool_id={$pool.poolid}">{t}Show Volumes{/t}</a>
+	            <a title="{t}Show volumes{/t}" class="btn btn-primary btn-sm {if $pool.numvols == '0'} disabled {/if}" role="button" href="index.php?page=volumes&filter_pool_id={$pool.poolid}">{t}Show Volumes{/t}</a>
 	          </td>
 	        </tr>
 	      {/foreach}

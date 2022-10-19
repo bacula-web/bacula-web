@@ -19,6 +19,7 @@
 
 namespace Core\App;
 
+use Core\Helpers\Sanitizer;
 use Smarty;
 use SmartyBC;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,9 +34,16 @@ class CView extends SmartyBC
     protected $userAlert;
     protected $userAlertType;
 
-    public function __construct()
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    public function __construct(Request $request)
     {
         parent::__construct();
+
+        $this->request = $request;
 
         $this->setTemplateDir(VIEW_DIR);
         $this->setCompileDir(VIEW_CACHE_DIR);
@@ -88,5 +96,25 @@ class CView extends SmartyBC
 
         // Render using the default layout
         return $this->fetch('layouts/default.tpl');
+    }
+
+    /**
+     * @param string $parameter
+     * @param mixed $default
+     * @return string|null
+     */
+
+    protected function getParameter(string $parameter, $default): ?string
+    {
+        if ($this->request->getMethod() === 'GET') {
+            if ($this->request->query->has($parameter)) {
+                return Sanitizer::sanitize($this->request->query->get($parameter));
+            }
+        } elseif ($this->request->getMethod() === 'POST') {
+            if ($this->request->request->has($parameter)) {
+                return Sanitizer::sanitize($this->request->request->get($parameter));
+            }
+        }
+        return $default;
     }
 }

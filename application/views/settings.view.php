@@ -30,9 +30,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SettingsView extends CView
 {
-    public function __construct()
+    /**
+     * @param Request $request
+     */
+    public function __construct(Request $request)
     {
-        parent::__construct();
+        parent::__construct($request);
 
         $this->templateName = 'settings.tpl';
         $this->name = 'Settings';

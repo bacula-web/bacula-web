@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2022 Davide Franco
  *
@@ -34,23 +36,30 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class JobsView extends CView
 {
-    public function __construct()
+    /**
+     * @param Request $request
+     */
+    public function __construct(Request $request)
     {
-        parent::__construct();
+        parent::__construct($request);
         
         $this->templateName = 'jobs.tpl';
         $this->name = 'Jobs report';
         $this->title = 'Bacula jobs overview';
     }
 
-    public function prepare(Request $request)
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public function prepare(): void
     {
         $jobs = new JobTable(DatabaseFactory::getDatabase());
         $where = null;
         $session = new Session();
         $params = [];
 
-        // This is horrible, it must be improved :(
+        // TODO: Improve how these constants are declared and used
         require_once BW_ROOT . '/core/const.inc.php';
 
         $fields = array( 'Job.JobId', 'Job.Name AS Job_name', 'Job.Type',
@@ -82,12 +91,7 @@ class JobsView extends CView
             'A' => 'Data'
         );
 
-        // Levels list filter
-        $levels_list = $jobs->getLevels($job_levels);
-        $levels_list['0']  = 'Any';
-        $this->assign('levels_list', $levels_list);
-
-        $last_jobs = array();
+        $last_jobs = [];
         
         // Job Status list
         define('STATUS_ALL', 0);
@@ -125,82 +129,54 @@ class JobsView extends CView
         $job_types_list['0'] = 'Any';
         $this->assign('job_types_list', $job_types_list);
 
-        // Define default values for each filter
-        $filter_jobtype = '0';
-        $filter_jobstatus = STATUS_ALL;
-        $filter_joblevel = 0;
-        $filter_poolid = 0;
-        $filter_clientid = 0;
-        $filter_job_starttime = null;
-        $filter_job_endtime = null;
-        $job_orderby_filter = 'jobid';
-        $job_orderby_asc_filter = 'DESC';
-
         // Job client id filter
-        if ($request->request->get('filter_clientid') !== null) {
-            $filter_clientid = $request->request->getInt('filter_clientid');
-        }
-
-        // Job type filter
-        if ($request->request->get('filter_jobtype') !== null) {
-            // if provided filter_jobtype is not part of valid job type, we simply ignore it
-            if (array_key_exists($request->request->get('filter_jobtype'), $job_types)) {
-                $filter_jobtype = $request->request->get('filter_jobtype');
-                $filter_jobtype = Sanitizer::sanitize($filter_jobtype);
-            }
-        }
+        $filter_clientid = (int) $this->getParameter('filter_clientid', 0);
+        $this->assign('filter_clientid', $filter_clientid);
 
         // Job status filter
-        if ($request->request->get('filter_jobstatus') !== null) {
-            $filter_jobstatus = $request->request->getInt('filter_jobstatus');
+        $filter_jobstatus = (int) $this->getParameter('filter_jobstatus', 0);
+        $this->assign('filter_jobstatus', $filter_jobstatus);
+
+        // Job type filter
+        $filter_jobtype = $this->getParameter('filter_jobtype', 0);
+        $this->assign('filter_jobtype', $filter_jobtype);
+
+        // Validate filter job type
+        if (array_key_exists($filter_jobtype, $job_types)) {
+            // TODO: Validate request parameter
         }
 
-        // Job level id filter
-        if ($request->request->get('filter_joblevel') !== null) {
-            $filter_joblevel = $request->request->get('filter_joblevel');
-            $filter_joblevel = Sanitizer::sanitize($filter_joblevel);
-        }
+        // Levels list filter
+        $levels_list = $jobs->getLevels($job_levels);
+        $levels_list['0']  = 'Any';
+        $this->assign('levels_list', $levels_list);
 
-        // Job pool id filter
-        if ($request->request->get('filter_poolid') !== null) {
-            $filter_poolid = $request->request->getInt('filter_poolid');
-        }
+        // Job level filter
+        $filter_joblevel = $this->getParameter('filter_joblevel', 0);
+        $this->assign('filter_joblevel', $filter_joblevel);
+
+        // Job pool filter
+        $filter_poolid = (int) $this->getParameter('filter_poolid', 0);
+        $this->assign('filter_poolid', $filter_poolid);
 
         // Job starttime filter
-        if ($request->request->get('filter_job_starttime') !== null) {
-            $filter_job_starttime = $request->request->get('filter_job_starttime');
-            $filter_job_starttime = Sanitizer::sanitize($filter_job_starttime);
-        }
+        $filter_job_starttime = $this->getParameter('filter_job_starttime', null);
+        $this->assign('filter_job_starttime', $filter_job_starttime);
 
         // Job endtime filter
-        if ($request->request->get('filter_job_endtime') !== null) {
-            $filter_job_endtime = $request->request->get('filter_job_endtime');
-            $filter_job_endtime = Sanitizer::sanitize($filter_job_endtime);
-        }
+        $filter_job_endtime = $this->getParameter('filter_job_endtime', null);
+        $this->assign('filter_job_endtime', $filter_job_endtime);
 
         // Job orderby filter
-        if ($request->request->get('job_orderby') !== null) {
-            // if provided job_orderby is not part of valid job order field, we simply ignore it
-            if (array_key_exists($request->request->get('job_orderby'), $result_order)) {
-                $job_orderby_filter = $request->request->get('job_orderby');
-                $job_orderby_filter = Sanitizer::sanitize($job_orderby_filter);
-            }
+        $job_orderby_filter = $this->getParameter('filter_job_orderby', 'jobid');
+
+        // Validate job order by
+        if (array_key_exists($job_orderby_filter, $result_order)) {
+            // TODO: Validate job order
         }
 
         // Job orderby asc filter
-        if ($request->request->get('job_orderby_asc') !== null) {
-            $job_orderby_asc_filter = $request->request->get('job_orderby_asc');
-            $job_orderby_asc_filter = Sanitizer::sanitize($job_orderby_asc_filter);
-        }
-
-        // Assign variables to template
-        $this->assign('filter_jobtype', $filter_jobtype);
-        $this->assign('filter_jobstatus', $filter_jobstatus);
-        $this->assign('filter_joblevel', $filter_joblevel);
-        $this->assign('filter_poolid', $filter_poolid);
-        $this->assign('filter_clientid', $filter_clientid);
-        $this->assign('filter_job_starttime', $filter_job_starttime);
-        $this->assign('filter_job_endtime', $filter_job_endtime);
+        $job_orderby_asc_filter = $this->getParameter('filter_job_orderby_asc', 'DESC');
 
         // Clients list filter
         $clients = new ClientTable(DatabaseFactory::getDatabase());
@@ -247,24 +223,24 @@ class JobsView extends CView
         } // end switch
 
         // Selected level filter
-        if ($filter_joblevel != '0') {
+        if ($filter_joblevel !== '0') {
             $where[] .= "Job.Level = :job_level ";
             $params['job_level'] = $filter_joblevel;
         }
  
         // Selected pool filter
-        if ($filter_poolid != '0') {
+        if ($filter_poolid !== 0) {
             $where[] .= "Job.PoolId = :pool_id ";
             $params['pool_id'] = $filter_poolid;
         }
 
-        if($filter_jobtype !== '0') {
+        if ($filter_jobtype !== '0') {
             $where[] = "Job.Type = :job_type";
             $params['job_type'] = $filter_jobtype;
         }
 
         // Selected client filter
-        if ($filter_clientid != '0') {
+        if ($filter_clientid !== 0) {
             $where[] .= "Job.ClientId = :client_id";
             $params['client_id'] = $filter_clientid;
         }
@@ -276,9 +252,9 @@ class JobsView extends CView
                 $params['Job.StartTime'] = $filter_job_starttime;
             }
         }
-        
+
         // Selected job end time filter
-        if (!is_null($filter_job_endtime) && !empty($filter_job_starttime)) {
+        if (!is_null($filter_job_endtime) && !empty($filter_job_endtime)) {
             if (DateTimeUtil::checkDate($filter_job_endtime)) {
                 $where[] = "Job.EndTime <= '$filter_job_endtime'";
                 $params['Job.EndTime'] = $filter_job_endtime;
@@ -314,9 +290,13 @@ class JobsView extends CView
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
             ) ), $jobs->get_driver_name());
 
-        $countQuery = CDBQuery::get_Select(array('table' => 'Job',
+        $countQuery = CDBQuery::get_Select(
+            [
+            'table' => 'Job',
             'fields' => ['COUNT(*) AS row_count'],
-            'where' => $where));
+            'where' => $where
+            ]
+        );
 
         foreach ($pagination->paginate($jobs, $sqlQuery, $countQuery, $params) as $job) {
             // Determine icon for job status
@@ -427,4 +407,4 @@ class JobsView extends CView
         // Count jobs
         $this->assign('jobs_found', count($last_jobs));
     }
-} // end of class
+}
