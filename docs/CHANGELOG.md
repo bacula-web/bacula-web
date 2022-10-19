@@ -26,6 +26,9 @@
 - Volumes report
   - Fixed pagination not using applied filters and options (see #122)
 
+- Settings
+  - Removed extra flash message which appear when a user is created
+
 ### Fixed bug(s)
 
 - #22 [bugfix] - Stay on current page when switching to another catalog
