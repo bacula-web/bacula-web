@@ -24,6 +24,7 @@ use Core\App\CView;
 use Core\Utils\CUtils;
 use App\Tables\PoolTable;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class PoolsView extends CView
 {
@@ -42,7 +43,7 @@ class PoolsView extends CView
     public function prepare(Request $request)
     {
         // Get volumes list (pools.tpl)
-        $pools = new PoolTable(DatabaseFactory::getDatabase());
+        $pools = new PoolTable(DatabaseFactory::getDatabase((new Session())->get('catalog_id', 0)));
         $pools_list = array();
         $plist = $pools->getPools();
 

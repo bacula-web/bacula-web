@@ -210,11 +210,10 @@ case 'setupauth':
     // Create SQLite database
     try {
         // Create database schema
-        echo "Creating database schema" . PHP_EOL;
+        echo 'Creating database schema' . PHP_EOL;
 
         $userTable = new UserTable(
-            DatabaseFactory::getDatabase(
-                'sqlite:' . BW_ROOT . '/application/assets/protected/application.db')
+            DatabaseFactory::getDatabase()
         );
 
         if ($userTable->createSchema() === 0) {

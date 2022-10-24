@@ -51,9 +51,9 @@
     {
         $session = new Session();
 
-        $jobs = new JobTable(DatabaseFactory::getDatabase());
-        $pools = new PoolTable(DatabaseFactory::getDatabase());
-        $volumes = new VolumeTable(DatabaseFactory::getDatabase());
+        $jobs = new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
+        $pools = new PoolTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
+        $volumes = new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
 
         require_once BW_ROOT . '/core/const.inc.php';
 

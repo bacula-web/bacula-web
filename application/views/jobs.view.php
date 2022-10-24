@@ -54,7 +54,12 @@ class JobsView extends CView
      */
     public function prepare(): void
     {
-        $jobs = new JobTable(DatabaseFactory::getDatabase());
+        $jobs = new JobTable(
+            DatabaseFactory::getDatabase(
+                (new Session())->get('catalog_id', 0)
+            )
+        );
+
         $where = null;
         $session = new Session();
         $params = [];
@@ -179,13 +184,22 @@ class JobsView extends CView
         $job_orderby_asc_filter = $this->getParameter('filter_job_orderby_asc', 'DESC');
 
         // Clients list filter
-        $clients = new ClientTable(DatabaseFactory::getDatabase());
+        $clients = new ClientTable(
+            DatabaseFactory::getDatabase(
+                (new Session())->get('catalog_id', 0)
+            )
+        );
+
         $clients_list = $clients->getClients();
         $clients_list[0] = 'Any';
         $this->assign('clients_list', $clients_list);
 
         // Pools list filer
-        $pools = new PoolTable(DatabaseFactory::getDatabase());
+        $pools = new PoolTable(
+            DatabaseFactory::getDatabase(
+                (new Session())->get('catalog_id', 0)
+            )
+        );
         $pools_list = array();
 
         foreach ($pools->getPools() as $pool) {

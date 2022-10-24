@@ -22,11 +22,14 @@ namespace Core\Db;
 class DatabaseFactory
 {
     /**
-     * @param $dsn|null
+     * @param string $catalogId|null
      * @return Database
      */
-    public static function getDatabase($dsn = null) :Database
+    public static function getDatabase($catalogId = null): Database
     {
-        return new Database($dsn);
+        if ($catalogId !== null) {
+            return new Database($catalogId);
+        }
+        return new Database();
     }
 }

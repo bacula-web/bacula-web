@@ -34,6 +34,7 @@ use Core\Helpers\Sanitizer;
 use App\Tables\JobFileTable;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class JobFilesView extends CView
 {
@@ -53,7 +54,13 @@ class JobFilesView extends CView
     {
         $rows_per_page = 10;
         $current_page = null;
-        $jobFiles = new JobFileTable(DatabaseFactory::getDatabase());
+
+        $jobFiles = new JobFileTable(
+            DatabaseFactory::getDatabase(
+                (new Session())->get('catalog_id', 0)
+            )
+        );
+
         $filename = '';
 
         $jobId = $request->query->getInt('jobId', 0);

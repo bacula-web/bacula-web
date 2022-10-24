@@ -21,24 +21,33 @@ namespace Core\App;
 
 use App\Tables\UserTable;
 use Core\Db\DatabaseFactory;
-use Core\Db\Table;
-use PDO;
 use Exception;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class UserAuth extends Table
+class UserAuth
 {
     protected $tablename = 'Users';
     protected $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
     protected $dsn;
 
+    /**
+     * @var UserTable
+     */
+    private $userTable;
+
+    public function __construct()
+    {
+        $this->userTable = new UserTable(
+            DatabaseFactory::getDatabase()
+        );
+    }
+
     public function check()
     {
-        $this->appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
         // Throw an exception if PHP SQLite is not installed
-        $pdoDrivers = PDO::getAvailableDrivers();
-       
-        if (! in_array('sqlite', $pdoDrivers)) {
+        $pdo_drivers = \PDO::getAvailableDrivers();
+
+        if (! in_array($this->userTable->get_driver_name(), $pdo_drivers)) {
             throw new Exception('PHP SQLite support not found');
         }
 
@@ -64,7 +73,7 @@ class UserAuth extends Table
         // Check if Users table exist
         $query = "SELECT name FROM sqlite_master WHERE type='table' AND name='Users';";
 
-        $res = $this->run_query($query);
+        $res = $this->userTable->run_query($query);
         $res = $res->fetchAll();
 
         // Users table do not exist, let's create it
@@ -83,8 +92,7 @@ class UserAuth extends Table
         $username = filter_var($username, FILTER_SANITIZE_STRING, array( 'flags' => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH));
         $username = trim($username, ' ');
 
-        $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:' . $this->appDbBackend));
-        $user = $userTable->findByName($username);
+        $user = $this->userTable->findByName($username);
 
         if($user) {
             if(password_verify($password, $user->getPasswordHash())) {
