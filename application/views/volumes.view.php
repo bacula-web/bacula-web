@@ -47,7 +47,7 @@ class VolumesView extends CView
     public function prepare(Request $request)
     {
         $session = new Session();
-        $volumes = new VolumeTable(DatabaseFactory::getDatabase());
+        $volumes = new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
         $params = [];
 
         $volumes_list = array();
@@ -70,7 +70,7 @@ class VolumesView extends CView
             'Purged' => 'fa-battery-empty' );
 
         // Pools list filter
-        $pools = new PoolTable(DatabaseFactory::getDatabase());
+        $pools = new PoolTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
         $pools_list = array();
         
         // Create pools list

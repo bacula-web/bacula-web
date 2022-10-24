@@ -26,7 +26,6 @@ use Core\Db\DatabaseFactory;
 use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
-
 use Core\Helpers\Sanitizer;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +61,7 @@ class BackupJobView extends CView
         $this->assign('periods_list', $periods_list);
         
         // Stored Bytes on the defined period
-        $jobs = new JobTable(DatabaseFactory::getDatabase());
+        $jobs = new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
 
         // Get backup job(s) list
         $jobslist = $jobs->get_Jobs_List(null, 'B');

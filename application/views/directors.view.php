@@ -67,12 +67,12 @@ class DirectorsView extends CView
         for ($d=0; $d < $directors_count; $d++) {
             $session->set('catalog_id', $d);
 
-            $clients = new ClientTable(DatabaseFactory::getDatabase());
-            $jobs = new JobTable(DatabaseFactory::getDatabase());
-            $catalog = new CatalogTable(DatabaseFactory::getDatabase());
-            $volumes = new VolumeTable(DatabaseFactory::getDatabase());
-            $pools = new PoolTable(DatabaseFactory::getDatabase());
-            $filesets = new FileSetTable(DatabaseFactory::getDatabase());
+            $clients = new ClientTable(DatabaseFactory::getDatabase($d));
+            $jobs = new JobTable(DatabaseFactory::getDatabase($d));
+            $catalog = new CatalogTable(DatabaseFactory::getDatabase($d));
+            $volumes = new VolumeTable(DatabaseFactory::getDatabase($d));
+            $pools = new PoolTable(DatabaseFactory::getDatabase($d));
+            $filesets = new FileSetTable(DatabaseFactory::getDatabase($d));
 
             $host = FileConfig::get_Value('host', $d);
             $db_user = FileConfig::get_Value('login', $d);

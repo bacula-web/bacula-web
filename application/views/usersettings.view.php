@@ -47,11 +47,9 @@ class UserSettingsView extends CView
     public function prepare(Request $request)
     {
         $session = new Session();
-        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
-        $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
+        $userTable = new UserTable(DatabaseFactory::getDatabase());
 
-        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
-        $userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
+        $userauth = new UserAuth();
 
         $this->username = $session->get('username');
         $user = $userTable->findByName($this->username);

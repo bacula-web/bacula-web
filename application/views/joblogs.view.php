@@ -26,6 +26,7 @@ use Core\Db\DatabaseFactory;
 use App\Tables\JobTable;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class JobLogsView extends CView
 {
@@ -54,11 +55,19 @@ class JobLogsView extends CView
         }
 
         // Prepare and execute SQL statment
-        $jobs = new JobTable(DatabaseFactory::getDatabase());
+        $jobs = new JobTable(
+            DatabaseFactory::getDatabase(
+                (new Session())->get('catalog_id', 0)
+            )
+        );
 
         $this->assign('job', $jobs->findById($jobid));
 
-        $logTable = new LogTable(DatabaseFactory::getDatabase());
+        $logTable = new LogTable(
+            DatabaseFactory::getDatabase(
+                (new Session())->get('catalog_id', 0)
+            )
+        );
 
         $sql = CDBQuery::get_Select(
             [

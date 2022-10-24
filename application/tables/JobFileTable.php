@@ -31,6 +31,7 @@ use Core\Db\Database;
 use Core\Db\CDBQuery;
 use Core\Db\DatabaseFactory;
 use Core\Db\Table;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class JobFileTable extends Table
 {
@@ -38,7 +39,10 @@ class JobFileTable extends Table
 
     public function getJobFiles($jobId, $limit, $offset, $filename = '')
     {
-        $catalog = new CatalogTable(DatabaseFactory::getDatabase());
+        $catalog = new CatalogTable(
+            DatabaseFactory::getDatabase(
+                (new Session())->get('catalog_id', 0))
+        );
 
         // Catalog version prior to Bacula 11.0.x
         if ($catalog->getCatalogVersion() < 1016) {
@@ -84,8 +88,11 @@ class JobFileTable extends Table
 
     public function countJobFiles($jobId, $filename = '')
     {
-        $database = new Database();
-        $catalog = new CatalogTable($database);
+        $catalog = new CatalogTable(
+            DatabaseFactory::getDatabase(
+                (new Session())->get('catalog_id', 0)
+            )
+        );
 
         if ($catalog->getCatalogVersion() < 1016) {
             $sql_query = "SELECT COUNT(*) as count

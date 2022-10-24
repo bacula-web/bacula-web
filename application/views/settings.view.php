@@ -44,11 +44,7 @@ class SettingsView extends CView
 
     public function prepare(Request $request)
     {
-        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
-        $userauth = new UserAuth(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
-
-        $appDbBackend = BW_ROOT . '/application/assets/protected/application.db';
-        $userTable = new UserTable(DatabaseFactory::getDatabase('sqlite:'.$appDbBackend));
+        $userTable = new UserTable(DatabaseFactory::getDatabase());
 
         // Create new user
         if ($request->request->has('action')) {

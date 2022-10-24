@@ -1,3 +1,21 @@
+## Bacula-Web 8.6.2 (October 24th 2022)
+
+### Changelog
+
+- General
+  - Fixed a regression introduced in v8.6.1
+    Using Bacula-Web console to setup authentication was throwing an error
+    Big thanks to @IdahoPL for reporting the issue
+
+### Fixed bug(s)
+
+- #127 [bugfix] - Failed to start the session because headers have already been sent
+- #128 [bugfix] - Database class constructor tight coupled from Session
+
+### New feature(s)
+
+- none
+
 ## Bacula-Web 8.6.1 (October 19th 2022)
 
 ### Changelog

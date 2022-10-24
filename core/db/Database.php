@@ -20,72 +20,76 @@
 namespace Core\Db;
 
 use App\Libs\FileConfig;
+use Core\App\CErrorHandler;
 use PDO;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class Database
 {
+    /**
+     * @var PDO
+     */
     private $connection;
+
+    /**
+     * @var string
+     */
     private $driver;
 
     /**
-     * @param $dsn
-     * @throws Exception
+     * @param int $catalogId
+     * @throws \Exception
      */
-    public function __construct($dsn = null)
+    public function __construct($catalogId = null)
     {
-        $user = null;
-        $password  = null;
+        $username = null;
+        $password = null;
 
-        // Open config file
-        FileConfig::open(CONFIG_FILE);
+        if ($catalogId !== null) {
+            FileConfig::open(CONFIG_FILE);
 
-        // Create PDO connection to database
-        $session = new Session();
-        $catalogId = 0;
-
-        if ($session->has('catalog_id')) {
-            $catalogId = $session->get('catalog_id');
-        }
-
-        $this->driver = FileConfig::get_Value('db_type', $catalogId);
-
-        if ($dsn === null) {
+            $this->driver = FileConfig::get_Value('db_type', $catalogId);
             $dsn = FileConfig::get_DataSourceName($catalogId);
+
+            // Bacula catalog is using sqlite
+            if ($this->driver != 'sqlite') {
+                $username = FileConfig::get_Value('login', $catalogId);
+                $password  = FileConfig::get_Value('password', $catalogId);
+            }
+        } else {
+            $this->driver = 'sqlite';
+            $dsn = $this->driver . ':' . BW_ROOT . '/application/assets/protected/application.db';
         }
 
-        if ($this->driver != 'sqlite') {
-            $user = FileConfig::get_Value('login', $catalogId);
-            $password  = FileConfig::get_Value('password', $catalogId);
+        $options = [
+            PDO::ATTR_CASE => PDO::CASE_LOWER,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ];
+
+        if ($this->driver == 'mysql') {
+            $options[] = [PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true];
         }
 
-        $this->connection = new PDO($dsn, $user, $password);
-
-        // Set PDO connection options
-        $this->connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-        // MySQL connection specific parameter
-        if ($this->getDriverName() == 'mysql') {
-            $this->connection->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
-        }
+        $this->connection = new PDO(
+            $dsn,
+            $username,
+            $password,
+            $options
+        );
     }
 
     /**
      * @return PDO
      */
-    public function getDb() {
+    public function getDb(): PDO
+    {
         return $this->connection;
     }
 
-    // ==================================================================================
-    // Function: 	getDriverName()
-    // Parameters: 	none
-    // Return:		driver name (eg: mysql, pgsql, sqlite, etc.)
-    // ==================================================================================
-
-    public function getDriverName()
+    /**
+     * @return string
+     */
+    public function getDriverName(): string
     {
         return $this->connection->getAttribute(PDO::ATTR_DRIVER_NAME);
     }
