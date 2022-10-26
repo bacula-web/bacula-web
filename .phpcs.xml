@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PHP_CodeSniffer" xsi:noNamespaceSchemaLocation="phpcs.xsd">
+    <description>Code style rules.</description>
+
+    <arg name="colors"/>
+    <arg name="no-cache"/>
+    <arg value="p"/>
+
+    <file>core</file>
+    <file>application</file>
+    <file>public/index.php</file>
+    <file>console.php</file>
+    <file>bwc</file>
+
+    <rule ref="PSR12"></rule>
+</ruleset>
