@@ -43,7 +43,7 @@ class CErrorHandler
 
         // Error page header
         $output .= '<div class="page-header">
-              <h3> <i class="fa fa-exclamation-triangle fa-lg"></i> '.self::$header.'<small> Oops, looks like something went wrong :(</small></h3>
+              <h3> <i class="fa fa-exclamation-triangle fa-lg"></i> ' . self::$header . '<small> Oops, looks like something went wrong :(</small></h3>
               </div>';
 
         // Display PHP exception details
@@ -87,7 +87,7 @@ class CErrorHandler
     public static function getFormatedTrace($e)
     {
         $formated_trace  = '<table class="table">';
-        
+
         foreach ($e->getTrace() as $exception) {
             $formated_trace .= '<tr>';
             $formated_trace .= '<td>';
@@ -99,7 +99,7 @@ class CErrorHandler
         }
 
         $formated_trace .= '</table>';
-        
+
         return $formated_trace;
     }
 }

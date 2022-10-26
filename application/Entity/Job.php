@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use Core\Utils\CUtils;
 
-class Job {
-
+class Job
+{
     /**
      * @var string
      */

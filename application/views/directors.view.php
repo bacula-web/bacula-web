@@ -20,7 +20,6 @@
 namespace App\Views;
 
 use Core\App\CView;
-
 use Core\Db\DatabaseFactory;
 use App\Libs\FileConfig;
 use App\Tables\ClientTable;
@@ -41,7 +40,7 @@ class DirectorsView extends CView
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        
+
         $this->templateName = 'directors.tpl';
         $this->name = 'Directors';
         $this->title = 'Bacula director(s) overview';
@@ -52,7 +51,7 @@ class DirectorsView extends CView
         require_once BW_ROOT . '/core/const.inc.php';
 
         $session = new Session();
-        
+
         $no_period = array(FIRST_DAY, NOW);
         $directors = array();
 
@@ -61,10 +60,10 @@ class DirectorsView extends CView
 
         FileConfig::open(CONFIG_FILE);
         $directors_count = FileConfig::count_Catalogs();
-        
+
         $this->assign('directors_count', $directors_count);
 
-        for ($d=0; $d < $directors_count; $d++) {
+        for ($d = 0; $d < $directors_count; $d++) {
             $session->set('catalog_id', $d);
 
             $clients = new ClientTable(DatabaseFactory::getDatabase($d));

@@ -95,9 +95,9 @@ class Database
     }
 
     // ==================================================================================
-    // Function: 	getServerVersion()
-    // Parameters: 	none
-    // Return:		database server version
+    // Function:    getServerVersion()
+    // Parameters:  none
+    // Return:      database server version
     // ==================================================================================
 
     public function getServerVersion()

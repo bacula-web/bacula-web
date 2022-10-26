@@ -30,18 +30,18 @@ class JobTable extends Table
     protected $tablename = 'Job';
 
     // ==================================================================================
-    // Function: 	 count_Jobs()
-    // Parameters: $period_timestamps		Array containing start and end date (unix timestamp format)
-    //				 $job_status 			Job status (optional)
-    //				 $job_level 				Job level (optional)
-    // Return:		 Jobs count
+    // Function:     count_Jobs()
+    // Parameters: $period_timestamps       Array containing start and end date (unix timestamp format)
+    //               $job_status            Job status (optional)
+    //               $job_level                 Job level (optional)
+    // Return:       Jobs count
     // ==================================================================================
 
     public function count_Jobs($period_timestamps, $job_status = null, $job_level = null)
     {
         $where        = null;
         $fields        = array('COUNT(*) as job_count');
-        
+
         // Check PDO object
         if (!is_a($this->pdo, 'PDO') && is_null($this->pdo)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
@@ -49,7 +49,7 @@ class JobTable extends Table
 
         // Getting timestamp interval
         $intervals = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
-        
+
         // Defining interval depending on job status
         if (!is_null($job_status)) {
             switch ($job_status) {
@@ -58,14 +58,14 @@ class JobTable extends Table
                 // So, I'd not use starttime and endtime for waiting and running jobs here
                 case 'waiting':
                 case 'running':
-                break;
+                    break;
                 default:
                     $where = array( '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ' );
             } // end switch
         } else {
             $where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         }
-        
+
         // Job status
         if (!is_null($job_status)) {
             switch ($job_status) {
@@ -77,7 +77,7 @@ class JobTable extends Table
                     break;
                 case 'completed with errors':
                     $where[] = "JobStatus IN ('E', 'e') ";
-                   break;
+                    break;
                 case 'failed':
                     $where[] = "JobStatus = 'f' ";
                     break;
@@ -88,28 +88,28 @@ class JobTable extends Table
                     $where[] = "JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
             } // end switch
         }
-        
+
         // Job level
         if (!is_null($job_level)) {
             $where[] = "Level = '$job_level' ";
         }
-        
+
         // Building SQL statment
         $statment = array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
-        
+
         // Execute SQL statment
         $result = $this->run_query($statment);
         $result = $result->fetch();
         return $result['job_count'];
     }
-    
+
     // ==================================================================================
-    // Function: 	 getStoredFiles()
-    // Parameters: $period_timestamps	Array containing start and end date (unix timestamp format)
-    //				 $job_name			Job name (optional)
-    //				 $client_id			Client id (optional)
-    // Return:		 Total of stored files (backup) within the specific period
+    // Function:     getStoredFiles()
+    // Parameters: $period_timestamps   Array containing start and end date (unix timestamp format)
+    //               $job_name          Job name (optional)
+    //               $client_id         Client id (optional)
+    // Return:       Total of stored files (backup) within the specific period
     // ==================================================================================
 
     public function getStoredFiles($period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
@@ -117,30 +117,30 @@ class JobTable extends Table
         $where      = array();
         $fields     = array( 'SUM(JobFiles) AS stored_files' );
 
-        
+
         // Check PDO object
         if (!is_a($this->pdo, 'PDO') || is_null($this->pdo)) {
             throw new Exception('Unvalid PDO object provided in count_Jobs() function');
         }
-        
+
         // Defined period
         $intervals     = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
-        
+
         if ($job_name != 'ALL') {
             $this->addParameter('jobname', $job_name);
             $where[] = "name = :jobname";
         }
-        
+
         if ($client_id != 'ALL') {
             $this->addParameter('clientid', $client_id);
             $where[] = "clientid = :clientid";
         }
         // Get stored files only for Bacula job type <Backup>
-        
+
         $this->addParameter('jobtype', 'B');
         $where[] = "Type = :jobtype";
-        
+
         // Building SQL statment
         $statment = array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $where);
         $statment = CDBQuery::get_Select($statment);
@@ -148,7 +148,7 @@ class JobTable extends Table
         // Execute query
         $result = $this->run_query($statment);
         $result = $result->fetch();
-        
+
         // If result == null, return 0 instead
         if (is_null($result['stored_files'])) {
             return 0;
@@ -158,11 +158,11 @@ class JobTable extends Table
     }
 
     // ==================================================================================
-    // Function: 	 getStoredBytes()
-    // Parameters: $period_timestamps 	Array containing start and end date (unix timestamp format)
-    //				 $job_name			Job name (optional)
-    //				 $client_id			Client id (optional)
-    // Return:		 Total of stored bytes (backup) within the specific period
+    // Function:     getStoredBytes()
+    // Parameters: $period_timestamps   Array containing start and end date (unix timestamp format)
+    //               $job_name          Job name (optional)
+    //               $client_id         Client id (optional)
+    // Return:       Total of stored bytes (backup) within the specific period
     // ==================================================================================
 
     public function getStoredBytes($period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
@@ -170,11 +170,11 @@ class JobTable extends Table
         $where      = [];
         $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
         $jobtype    = 'B';
-        
+
         // Defined period
         $intervals     = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
         $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
-        
+
         if ($job_name != 'ALL') {
             $this->addParameter('jobname', $job_name);
             $where[] = "name = :jobname";
@@ -184,7 +184,7 @@ class JobTable extends Table
             $this->addParameter('clientid', $client_id);
             $where[] = "clientid = :clientid";
         }
-        
+
         // // Get stored files only for Bacula job with type = 'B'
         $this->addParameter('jobtype', $jobtype);
         $where[] = 'Type = :jobtype';
@@ -206,9 +206,9 @@ class JobTable extends Table
     }
 
     // ==================================================================================
-    // Function: 	 count_Job_Names()
+    // Function:     count_Job_Names()
     // Parameters: none
-    // Return:		 total of defined jobs name
+    // Return:       total of defined jobs name
     // ==================================================================================
 
     public function count_Job_Names()
@@ -224,10 +224,10 @@ class JobTable extends Table
     }
 
     // ==================================================================================
-    // Function: 	 get_Jobs_List()
-    // Parameters: $client_id 	Client id (optional)
+    // Function:     get_Jobs_List()
+    // Parameters: $client_id   Client id (optional)
     //             $job_type     Job Type (optional)
-    // Return:		 List of defined jobs name
+    // Return:       List of defined jobs name
     // ==================================================================================
 
     public function get_Jobs_List($client_id = null, $job_type = null)
@@ -254,14 +254,14 @@ class JobTable extends Table
         foreach ($result->fetchAll() as $job) {
             $jobs[] = $job['name'];
         }
-        
+
         return $jobs;
     }
 
     // ==================================================================================
-    // Function: 	 getLevels()
+    // Function:     getLevels()
     // Parameters: $levels_name - Array containing level name
-    // Return:		 array containing level list
+    // Return:       array containing level list
     // ==================================================================================
 
     public function getLevels($levels_name = array())
@@ -282,9 +282,9 @@ class JobTable extends Table
     }
 
     // ==================================================================================
-    // Function: 	   getUsedJobTypes()
+    // Function:       getUsedJobTypes()
     // Parameters:   array of available Bacula job types
-    // Return:		   array containing distinct list of jobs type
+    // Return:         array containing distinct list of jobs type
     // ==================================================================================
 
     public function getUsedJobTypes($job_types)
@@ -303,9 +303,9 @@ class JobTable extends Table
     }
 
     // ==================================================================================
-    // Function: 	   getWeeklyJobsStats()
+    // Function:       getWeeklyJobsStats()
     // Parameters:   none
-    // Return:		   array containing stored bytes and files of completed backup jobs for each day of the week
+    // Return:         array containing stored bytes and files of completed backup jobs for each day of the week
     // ==================================================================================
 
     public function getWeeklyJobsStats()
@@ -317,15 +317,15 @@ class JobTable extends Table
         $res = array();
 
         switch ($this->db->getDriverName()) {
-       case 'mysql':
-          $fields[] = "FROM_UNIXTIME(Job.JobTDate, '%W') AS dayofweek";
-          break;
-       case 'pgsql':
-          $fields[] = 'extract(dow from Job.EndTime::timestamp) AS dayofweek';
-          break;
-       case 'sqlite':
-          return null;
-       } // end switch
+            case 'mysql':
+                $fields[] = "FROM_UNIXTIME(Job.JobTDate, '%W') AS dayofweek";
+                break;
+            case 'pgsql':
+                $fields[] = 'extract(dow from Job.EndTime::timestamp) AS dayofweek';
+                break;
+            case 'sqlite':
+                return null;
+        } // end switch
 
         $query = CDBQuery::get_Select(array( 'table' => $this->tablename,
           'fields' => $fields,
@@ -340,13 +340,13 @@ class JobTable extends Table
         foreach ($result->fetchAll() as $day) {
             $day['jobbytes'] = CUtils::Get_Human_Size($day['jobbytes']);
             $day['jobfiles'] = CUtils::format_Number($day['jobfiles']);
-          
+
             // Simply fix day name for postgreSQL
             // It could be improved but I lack some SQL (postgreSQL skills)
             if ($this->db->getDriverName() == 'pgsql') {
                 $day['dayofweek'] = $week[ $day['dayofweek'] ];
             }
-          
+
             $res[] = $day;
         }
 
@@ -354,9 +354,9 @@ class JobTable extends Table
     }
 
     // ==================================================================================
-    // Function: 	   getBiggestJobsStats()
+    // Function:       getBiggestJobsStats()
     // Parameters:   none
-    // Return:		   array containing 10 biggest backup jobs (stored bytes)
+    // Return:         array containing 10 biggest backup jobs (stored bytes)
     // ==================================================================================
 
     public function getBiggestJobsStats()
@@ -378,7 +378,7 @@ class JobTable extends Table
             $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
             $res[] = $job;
         }
-      
+
         return $res;
     }
 

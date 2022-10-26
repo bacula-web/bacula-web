@@ -28,9 +28,9 @@ class ClientTable extends Table
     protected $tablename = 'Client';
 
     // ==================================================================================
-    // Function: 	getClients()
-    // Parameters:	$pdo_connection - valide pdo object
-    // Return:		array containing client list or false
+    // Function:    getClients()
+    // Parameters:  $pdo_connection - valide pdo object
+    // Return:      array containing client list or false
     // ==================================================================================
 
     public function getClients()
@@ -46,18 +46,18 @@ class ClientTable extends Table
         }
 
         $result     = $this->run_query(CDBQuery::get_Select($statment));
-            
+
         foreach ($result->fetchAll() as $client) {
             $clients[ $client['clientid'] ] = $client['name'];
         }
 
         return $clients;
     }
-    
+
     // ==================================================================================
-    // Function: 	getClientInfos()
-    // Parameters: 	client id
-    // Return:		array containing client information
+    // Function:    getClientInfos()
+    // Parameters:  client id
+    // Return:      array containing client information
     // ==================================================================================
 
     public function getClientInfos($client_id)
@@ -69,12 +69,12 @@ class ClientTable extends Table
         $this->addParameter('clientid', $client_id);
         $where[]    = 'clientid = :clientid';
 
-        $statment   = CDBQuery::get_Select(array(   'table'=> $this->tablename,
+        $statment   = CDBQuery::get_Select(array(   'table' => $this->tablename,
                                                     'fields' => $fields,
                                                     'where' => $where ), $this->get_driver_name());
-        
+
         $result     = $this->run_query($statment);
-            
+
         foreach ($result->fetchAll() as $client) {
             $uname = explode(',', $client['uname']);
 
@@ -101,7 +101,7 @@ class ClientTable extends Table
                 $client['os'] = 'n/a';
             }
         }
-        
+
         return $client;
     }
 }

@@ -37,7 +37,7 @@ class UserSettingsView extends CView
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        
+
         $this->templateName = 'usersettings.tpl';
         $this->name = 'User settings';
         $this->title = '';
@@ -58,12 +58,11 @@ class UserSettingsView extends CView
         $this->assign('email', $user->getEmail());
 
         // Check if password reset have been requested
-        if($request->request->has('action')) {
+        if ($request->request->has('action')) {
             switch (Sanitizer::sanitize($request->request->get('action'))) {
                 case 'passwordreset':
                     // Check if provided current password is correct
                     if ($userauth->authUser($user->getUsername(), $request->request->get('oldpassword')) == 'yes') {
-
                         // Update user password with new one
                         $result = $userTable->setPassword(
                             $user->getUsername(),

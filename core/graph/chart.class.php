@@ -76,7 +76,7 @@ class Chart
        * Parameters:   $data_in (array of values to uniformize)
        * Return:       array of uniformized values
      */
-   
+
     private function uniformizeData()
     {
         $array_sum = 0;
@@ -87,20 +87,20 @@ class Chart
                 $this->data[$key][1] = 0;
             }
         }
-      
+
         // Calculate sum of all values
         foreach ($this->data as $value) {
             $array_sum += $value[1];
         }
-      
+
         // Calculate average value and best unit
         $avg = $array_sum  / count($this->data);
         list($value, $best_unit) = explode(' ', CUtils::Get_Human_Size($avg, 1));
-      
+
         foreach ($this->data as $key => $value) {
             $this->data[$key][1] = CUtils::Get_Human_Size($value[1], 1, $best_unit, false);
         }
-      
+
         $this->ylabel = $best_unit;
     }
 
@@ -129,76 +129,75 @@ class Chart
 
         // If the chart type is <bar>, prepare JSON data differently
         switch ($this->type) {
-      case 'pie':
-         $blob .= $this->name . '_data = ' . json_encode($json_data) . ';' . "\n";
-         break;
-      case 'bar':
-         $blob .= $this->name . '_data = ' . '[ {';
-         $blob .= 'key: ' . '"Serie one"' . ',' . "\n";
-         $blob .= 'values: ' . json_encode($json_data) . '} ];';
-      }
-        $blob .= 'nv.addGraph(function() {'."\n";
+            case 'pie':
+                $blob .= $this->name . '_data = ' . json_encode($json_data) . ';' . "\n";
+                break;
+            case 'bar':
+                $blob .= $this->name . '_data = ' . '[ {';
+                $blob .= 'key: ' . '"Serie one"' . ',' . "\n";
+                $blob .= 'values: ' . json_encode($json_data) . '} ];';
+        }
+        $blob .= 'nv.addGraph(function() {' . "\n";
 
         // Check chart type
         switch ($this->type) {
-      case 'pie':
-         $blob .= 'var chart = nv.models.pieChart()' . "\n";
-         break;
-      case 'bar':
-         $blob .= 'var chart = nv.models.discreteBarChart()' . "\n";
-      }
-      
+            case 'pie':
+                $blob .= 'var chart = nv.models.pieChart()' . "\n";
+                break;
+            case 'bar':
+                $blob .= 'var chart = nv.models.discreteBarChart()' . "\n";
+        }
+
         $blob .= '.x(function(d) {return d.label})' . "\n";
         $blob .= '.y(function(d) {return d.value})' . "\n";
 
         // If chart type is pie then show labels outside the slices
         if ($this->type == 'pie') {
-            $blob .= '.showLabels(true)'."\n";
-            $blob .= '.labelsOutside(true)'."\n";
-            $blob .= '.growOnHover(true)'."\n";
-            $blob .= '.labelType("percent")'."\n";
-            $blob .= '.valueFormat(d3.format(",.0d"))'."\n";
+            $blob .= '.showLabels(true)' . "\n";
+            $blob .= '.labelsOutside(true)' . "\n";
+            $blob .= '.growOnHover(true)' . "\n";
+            $blob .= '.labelType("percent")' . "\n";
+            $blob .= '.valueFormat(d3.format(",.0d"))' . "\n";
         }
         // Set animation duration an staggerLabels for bar chart
         if ($this->type == 'bar') {
             $blob .= '.duration(500)' . "\n";
-            $blob .= '.showValues(false)'."\n";
-            $blob .= '.staggerLabels(true)'."\n";
-            $blob .= '.showYAxis(true)'."\n";
+            $blob .= '.showValues(false)' . "\n";
+            $blob .= '.staggerLabels(true)' . "\n";
+            $blob .= '.showYAxis(true)' . "\n";
         }
 
         // Set chart margins
         switch ($this->type) {
-      case 'bar':
-         $blob .= '.margin({"top": ' . $this->margin . ',"right": ' . $this->margin . ',"left": 100,"bottom": ' . $this->margin . '})'."\n";
-         break;
-      default:
-         $blob .= '.margin({"top": ' . $this->margin . ',"right": ' . $this->margin . ',"left": ' . $this->margin . ',"bottom": ' . $this->margin . '})'."\n";
-      }
+            case 'bar':
+                $blob .= '.margin({"top": ' . $this->margin . ',"right": ' . $this->margin . ',"left": 100,"bottom": ' . $this->margin . '})' . "\n";
+                break;
+            default:
+                $blob .= '.margin({"top": ' . $this->margin . ',"right": ' . $this->margin . ',"left": ' . $this->margin . ',"bottom": ' . $this->margin . '})' . "\n";
+        }
 
         // Set colors
         switch ($this->type) {
-      case 'bar':
-         $blob .= '.color(["#696969"]);';
-         break;
-      default:
-         $blob .= '.color(["#696969","#32CD32","#FFD700", "#4169E1","#FF0000","#FF8C00","#ADD8E6","#FFD700","#E0FFFF","#E6E6FA","#A9A9A9"]);';
-      }
+            case 'bar':
+                $blob .= '.color(["#696969"]);';
+                break;
+            default:
+                $blob .= '.color(["#696969","#32CD32","#FFD700", "#4169E1","#FF0000","#FF8C00","#ADD8E6","#FFD700","#E0FFFF","#E6E6FA","#A9A9A9"]);';
+        }
 
         $blob .= "\n";
 
-        if ($this->type == 'bar' && !is_null($this->ylabel))
-        {
-                $blob .= "\n".'chart.yAxis'."\n";
+        if ($this->type == 'bar' && !is_null($this->ylabel)) {
+                $blob .= "\n" . 'chart.yAxis' . "\n";
                 $blob .= ".axisLabelDistance(25)\n";
-                $blob .= ".axisLabel('".$this->ylabel."');\n";
+                $blob .= ".axisLabel('" . $this->ylabel . "');\n";
         }
 
-        $blob .= 'd3.select(\'#'.$this->name . ' svg\')' . "\n";
+        $blob .= 'd3.select(\'#' . $this->name . ' svg\')' . "\n";
 
         $blob .= '.datum(' . $this->name . '_data )' . "\n" ;
         $blob .= '.call(chart);' . "\n";
-              
+
         $blob .= 'nv.utils.windowResize(chart.update);';
 
         // Handle click event
@@ -208,7 +207,7 @@ class Chart
 
         $blob .= 'return chart;';
         $blob .= ' });';
-      
+
         $blob .= '</script>';
 
         return $blob;

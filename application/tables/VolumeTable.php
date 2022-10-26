@@ -26,21 +26,21 @@ use Core\Db\CDBPagination;
 class VolumeTable extends Table
 {
     protected $tablename = 'Media';
- 
+
     // ==================================================================================
-    // Function: 	getDiskUsage()
-    // Parameters: 	none
-    // Return:		disk space usage (in Bytes) for all volumes
+    // Function:    getDiskUsage()
+    // Parameters:  none
+    // Return:      disk space usage (in Bytes) for all volumes
     // ==================================================================================
 
     public function getDiskUsage()
     {
         $fields        = array('SUM(Media.VolBytes) as bytes_size');
         $statment     = array( 'table' => $this->tablename, 'fields' => $fields );
-        
+
         // Run SQL query
         $result     = $this->run_query(CDBQuery::get_Select($statment));
-    
+
         $result     = $result->fetch();
         return $result['bytes_size'];
     }
@@ -56,7 +56,7 @@ class VolumeTable extends Table
      *
      * @return @array
      */
-    
+
     public function getVolumes($pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $inchanger = false, $view = null)
     {
         $volumes_list = array();
@@ -75,10 +75,10 @@ class VolumeTable extends Table
             $where[] = 'Media.inchanger = :inchanger';
         }
 
-        $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
+        $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten',
         'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
 
-        $query = CDBQuery::get_Select( array('table'=> $this->tablename,
+        $query = CDBQuery::get_Select(array('table' => $this->tablename,
                                             'fields' => $fields,
                                             'orderby' => "$orderby $orderasc",
                                             'join' => array(

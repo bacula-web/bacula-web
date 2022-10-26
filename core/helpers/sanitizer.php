@@ -21,7 +21,6 @@ namespace Core\Helpers;
 
 class Sanitizer
 {
-
     /**
      * @param $value
      * @return string

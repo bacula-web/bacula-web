@@ -20,12 +20,13 @@ class UserTable extends Table
         try {
             $sqlQuery = "SELECT * FROM 'Users' WHERE username = :username";
 
-            return $this->select( $sqlQuery,
+            return $this->select(
+                $sqlQuery,
                 ['username' => $username],
                 '\App\Entity\User',
                 true
             );
-        } catch ( \PDOException $e) {
+        } catch (\PDOException $e) {
             CErrorHandler::displayError($e);
         }
     }

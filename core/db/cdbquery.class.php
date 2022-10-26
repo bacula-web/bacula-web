@@ -87,12 +87,12 @@ class CDBQuery
 
             $query .= 'WHERE ' . $where . ' ';
         }
-        
+
         // Group by
         if (isset($param['groupby']) && !is_null($param['groupby'])) {
             $query .= 'GROUP BY ' . $param['groupby'] . ' ';
         }
-            
+
         // Order by
         if (isset($param['orderby']) && !is_null($param['orderby'])) {
             $query .= 'ORDER BY ' . $param['orderby'] . ' ';
@@ -101,7 +101,7 @@ class CDBQuery
         // Limit
         if (isset($param['limit']) && !is_null($param['limit'])) {
             $limit = $param['limit'];
-         
+
             // we passed an array( 'count' => $count, 'offset' => $offset)
             if (is_array($limit)) {
                 if (($driver == 'pgsql') || ($driver == 'mysql')) {
@@ -121,16 +121,16 @@ class CDBQuery
 
         return $query;
     }
-    
+
     // ==================================================================================
-    // Function: 	get_Timestamp_Interval()
-    // Parameters:	$period array containing start and end timestamp
-    // Return:		return table with correct case
+    // Function:    get_Timestamp_Interval()
+    // Parameters:  $period array containing start and end timestamp
+    // Return:      return table with correct case
     // ==================================================================================
     public static function get_Timestamp_Interval($driver, $period_timestamp = array())
     {
         $period = array();
-        
+
         switch ($driver) {
             case 'pgsql':
                 $period['starttime']     = "TIMESTAMP '" . date("Y-m-d H:i:s", $period_timestamp[0]) . "'";

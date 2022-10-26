@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
     /* Initialize tooltips */
     $('[data-toggle="tooltip"]').tooltip()
@@ -7,7 +7,7 @@ $(document).ready(function() {
     $("img").hide();
     $(".img_loader").delay(200).fadeOut(300);
     $("img").delay(500).fadeIn(600);
-    
+
     /* Bootstrap Tooltip */
     $('[data-toggle="tooltip"]').tooltip();
 

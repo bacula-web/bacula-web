@@ -25,7 +25,6 @@ use App\Libs\FileConfig;
 
 class PoolTable extends Table
 {
-
     protected $tablename = 'Pool';
 
     /**
@@ -36,11 +35,11 @@ class PoolTable extends Table
     {
         $where    = null;
         $orderby  = 'Name';
-        
+
         if (FileConfig::get_Value('hide_empty_pools')) {
             $where[] = "$this->tablename.NumVols > 0";
         }
-        
+
         $fields = [ 'poolid', 'name', 'numvols' ];
 
         $query = CDBQuery::get_Select(array( 'table' => $this->tablename,

@@ -41,7 +41,8 @@ class JobFileTable extends Table
     {
         $catalog = new CatalogTable(
             DatabaseFactory::getDatabase(
-                (new Session())->get('catalog_id', 0))
+                (new Session())->get('catalog_id', 0)
+            )
         );
 
         // Catalog version prior to Bacula 11.0.x
@@ -60,8 +61,8 @@ class JobFileTable extends Table
                                       array('table' => 'Job', 'condition' => 'Job.JobId = File.JobId') ),
                   'where' => $where,
                   'orderby' => $orderby,
-                  'limit' => array( 'count' => $limit, 'offset' => $offset*$limit),
-                  'offset' => ($offset*$limit)
+                  'limit' => array( 'count' => $limit, 'offset' => $offset * $limit),
+                  'offset' => ($offset * $limit)
               ), $this->db->getDriverName());
         } else {
             $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'File.Filename AS Filename');
@@ -78,8 +79,8 @@ class JobFileTable extends Table
                                     array('table' => 'Job', 'condition' => 'Job.JobId = File.JobId') ),
                 'where' => $where,
                 'orderby' => $orderby,
-                'limit' => array( 'count' => $limit, 'offset' => $offset*$limit),
-                'offset' => ($offset*$limit)
+                'limit' => array( 'count' => $limit, 'offset' => $offset * $limit),
+                'offset' => ($offset * $limit)
             ), $this->db->getDriverName());
         }
 
@@ -136,8 +137,7 @@ class JobFileTable extends Table
 
         $used_types = $result->fetchAll();
 
-        if(!empty($used_types)) 
-        {
+        if (!empty($used_types)) {
             $used_types = $used_types[0];
 
             switch ($used_types['jobstatus']) {

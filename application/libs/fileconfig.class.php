@@ -23,7 +23,6 @@ use Core\Utils\File;
 
 class FileConfig extends File
 {
-
     /**
      * Constructor
      *
@@ -33,40 +32,40 @@ class FileConfig extends File
     }
 
     // ==================================================================================
-    // Function: 	check()
-    // Parameters:	none
-    // Return:		false if something is wrong in the configuration file
+    // Function:    check()
+    // Parameters:  none
+    // Return:      false if something is wrong in the configuration file
     // ==================================================================================
 
     public function check()
     {
         // Check if all parameters ... to be completed
     }
-        
+
     // ==================================================================================
-    // Function: 	count_Catalogs()
-    // Parameters:	none
-    // Return:		configured catalog count number or false if something goes wrong
+    // Function:    count_Catalogs()
+    // Parameters:  none
+    // Return:      configured catalog count number or false if something goes wrong
     // ==================================================================================
 
     public static function count_Catalogs()
     {
         $catalog_count = 0;
-            
+
         foreach ($GLOBALS['config'] as $param) {
             if (is_array($param)) {
                 $catalog_count += 1;
             }
         }
-            
+
         return $catalog_count;
     }
 
     // ==================================================================================
-    // Function: 	get_Value()
-    // Parameters:	configuration parameter or false (if not defined)
-    //				$catalog_id (optional)
-    // Return:		parameter value or NULL if does not exist
+    // Function:    get_Value()
+    // Parameters:  configuration parameter or false (if not defined)
+    //              $catalog_id (optional)
+    // Return:      parameter value or NULL if does not exist
     // ==================================================================================
 
     public static function get_Value($parameter, $catalog_id = null)
@@ -93,9 +92,9 @@ class FileConfig extends File
     } // end function
 
     // ==================================================================================
-    // Function: 	get_DataSourceName()
-    // Parameters:	$catalog_id
-    // Return:		dsn string
+    // Function:    get_DataSourceName()
+    // Parameters:  $catalog_id
+    // Return:      dsn string
     // ==================================================================================
     public static function get_DataSourceName($catalog_id)
     {
@@ -125,9 +124,9 @@ class FileConfig extends File
     }
 
     // ==================================================================================
-    // Function: 	get_Catalogs()
-    // Parameters:	none
-    // Return:		an array containing all catalogs labels define in the configuration
+    // Function:    get_Catalogs()
+    // Parameters:  none
+    // Return:      an array containing all catalogs labels define in the configuration
     // ==================================================================================
 
     public static function get_Catalogs()
@@ -139,14 +138,14 @@ class FileConfig extends File
                 $catalogs[] = $parameter['label'];
             }
         }
-                
+
         return $catalogs;
     }
 
     // ==================================================================================
-    // Function: 	catalogExist()
-    // Parameters:	$catalog_id
-    // Return:		true or false (depending if catalog exist or not in the configuration)
+    // Function:    catalogExist()
+    // Parameters:  $catalog_id
+    // Return:      true or false (depending if catalog exist or not in the configuration)
     // ==================================================================================
 
     public static function catalogExist($catalog_id)

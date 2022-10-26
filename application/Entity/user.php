@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-class User {
-
+class User
+{
     private $id;
 
     private $username;

@@ -33,15 +33,15 @@
  use Symfony\Component\HttpFoundation\Request;
  use Symfony\Component\HttpFoundation\Session\Session;
 
- class DashboardView extends CView
+class DashboardView extends CView
 {
-     /**
-      * @param Request $request
-      */
-     public function __construct(Request $request)
-     {
-         parent::__construct($request);
-        
+    /**
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
+        parent::__construct($request);
+
         $this->templateName = 'dashboard.tpl';
         $this->name = _('Dashboard');
         $this->title = 'General overview';
@@ -71,18 +71,18 @@
             $this->assign('custom_period_list_selected', $selected_period);
 
             switch ($selected_period) {
-            case 'last_day':
-                $custom_period = array( LAST_DAY, NOW);
-                break;
-            case 'last_week':
-                $custom_period = array( LAST_WEEK, NOW);
-                break;
-            case 'last_month':
-                $custom_period = array( LAST_MONTH, NOW);
-                break;
-            case 'since_bot':
-                $custom_period = $no_period;
-                break;
+                case 'last_day':
+                    $custom_period = array( LAST_DAY, NOW);
+                    break;
+                case 'last_week':
+                    $custom_period = array( LAST_WEEK, NOW);
+                    break;
+                case 'last_month':
+                    $custom_period = array( LAST_MONTH, NOW);
+                    break;
+                case 'since_bot':
+                    $custom_period = $no_period;
+                    break;
             }
         } else {
             $this->assign('custom_period_list_selected', $selected_period);
@@ -96,7 +96,7 @@
         $this->assign('custom_period_list', $custom_period_list);
 
         // Set period start - end for widget header
-        $this->assign('literal_period', strftime("%a %e %b %Y", $custom_period[0]).' to ' . strftime("%a %e %b %Y", $custom_period[1]));
+        $this->assign('literal_period', strftime("%a %e %b %Y", $custom_period[0]) . ' to ' . strftime("%a %e %b %Y", $custom_period[1]));
 
         // Running, completed, failed, waiting and canceled jobs status over last 24 hours
         $this->assign('running_jobs', $jobs->count_Jobs($custom_period, 'running'));
@@ -112,7 +112,7 @@
         // Total bytes and files stored over the last 24 hours
         $this->assign('bytes_last', CUtils::Get_Human_Size($jobs->getStoredBytes($custom_period)));
         $this->assign('files_last', CUtils::format_Number($jobs->getStoredFiles($custom_period)));
- 
+
         // Incremental, Differential and Full jobs over the last 24 hours
         $this->assign('incr_jobs', $jobs->count_Jobs($custom_period, null, J_INCR));
         $this->assign('diff_jobs', $jobs->count_Jobs($custom_period, null, J_DIFF));
@@ -133,7 +133,7 @@
         $last_jobs_chart = new Chart(array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data, 'linked_report' => 'jobs' ));
         $this->assign('last_jobs_chart_id', $last_jobs_chart->name);
         $this->assign('last_jobs_chart', $last_jobs_chart->render());
-    
+
         unset($last_jobs_chart);
 
         // ==============================================================
@@ -151,10 +151,10 @@
         // Display 9 biggest pools and rest of volumes in 10th one display as Other
         if ($pools_count > $max_pools) {
             $query = array( 'table' => $table_pool,
-          'fields' => array('SUM(numvols) AS sum_vols'),
-          'limit' => array( 'offset' => ($pools_count - $max_pools), 'count' => $pools_count),
-          'groupby' => 'name');
-            $result = $pools->run_query( CDBQuery::get_Select($query, $pools->get_driver_name()));
+            'fields' => array('SUM(numvols) AS sum_vols'),
+            'limit' => array( 'offset' => ($pools_count - $max_pools), 'count' => $pools_count),
+            'groupby' => 'name');
+            $result = $pools->run_query(CDBQuery::get_Select($query, $pools->get_driver_name()));
             $sum_vols = $result->fetch();
         }
 
@@ -219,14 +219,14 @@
         $tmp   = "(Media.Volstatus != 'Disabled') ";
 
         switch ($volumes->get_driver_name()) {
-        case 'pgsql':
-            $tmp .= "AND (Media.LastWritten IS NOT NULL)";
-            break;
-        case 'mysql':
-        case 'sqlite':
-            $tmp .= "AND (Media.Lastwritten != 0)";
+            case 'pgsql':
+                $tmp .= "AND (Media.LastWritten IS NOT NULL)";
+                break;
+            case 'mysql':
+            case 'sqlite':
+                $tmp .= "AND (Media.Lastwritten != 0)";
         }
-     
+
         $where[] = $tmp;
 
         $statment = array( 'table' => 'Media',
@@ -239,7 +239,7 @@
                        'limit' => '10');
 
         // Run the query
-        $result     = $volumes->run_query(CDBQuery::get_Select($statment,$volumes->get_driver_name()));
+        $result     = $volumes->run_query(CDBQuery::get_Select($statment, $volumes->get_driver_name()));
 
         foreach ($result as $volume) {
             if ($volume['lastwritten'] != '0000-00-00 00:00:00') {
@@ -256,7 +256,7 @@
         // Per job name backup and restore statistics
         $job_types = array( 'R' => 'Restore', 'B' => 'Backup' );      // TO IMPROVE
 
-    $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes, Name AS JobName FROM Job WHERE Type in ('B','R') GROUP BY Name,Type";
+        $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes, Name AS JobName FROM Job WHERE Type in ('B','R') GROUP BY Name,Type";
         $result = $jobs->run_query($query);
         $jobs_result = array();
 

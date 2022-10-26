@@ -21,14 +21,14 @@
  * Setup app paths
  */
 
- define('BW_ROOT', dirname(__DIR__) );
+ define('BW_ROOT', dirname(__DIR__));
  define('VIEW_DIR', BW_ROOT . "/application/views/templates");
  define('VIEW_CACHE_DIR', BW_ROOT . "/application/views/cache");
- 
+
  // Configuration
  define('CONFIG_DIR', BW_ROOT . "/application/config/");
  define('CONFIG_FILE', CONFIG_DIR . "config.php");
- 
+
  // Locales
  define('LOCALE_DIR', BW_ROOT . '/application/locale');
 
