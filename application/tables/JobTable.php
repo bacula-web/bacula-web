@@ -40,7 +40,7 @@ class JobTable extends Table
     public function count_Jobs($period_timestamps, $job_status = null, $job_level = null)
     {
         $where        = null;
-        $fields        = array('COUNT(*) as job_count');
+        $fields        = ['COUNT(*) as job_count'];
 
         // Check PDO object
         if (!is_a($this->pdo, 'PDO') && is_null($this->pdo)) {
@@ -60,7 +60,9 @@ class JobTable extends Table
                 case 'running':
                     break;
                 default:
-                    $where = array( '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ' );
+                    $where = [
+                        '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') '
+                    ];
             } // end switch
         } else {
             $where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
@@ -95,7 +97,7 @@ class JobTable extends Table
         }
 
         // Building SQL statment
-        $statment = array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $where);
+        $statment = ['table' => $this->tablename, 'fields' => $fields, 'where' => $where];
         $statment = CDBQuery::get_Select($statment);
 
         // Execute SQL statment
@@ -112,11 +114,10 @@ class JobTable extends Table
     // Return:       Total of stored files (backup) within the specific period
     // ==================================================================================
 
-    public function getStoredFiles($period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
+    public function getStoredFiles($period_timestamps = [], $job_name = 'ALL', $client_id = 'ALL')
     {
-        $where      = array();
-        $fields     = array( 'SUM(JobFiles) AS stored_files' );
-
+        $where      = [];
+        $fields     = ['SUM(JobFiles) AS stored_files'];
 
         // Check PDO object
         if (!is_a($this->pdo, 'PDO') || is_null($this->pdo)) {
@@ -129,20 +130,20 @@ class JobTable extends Table
 
         if ($job_name != 'ALL') {
             $this->addParameter('jobname', $job_name);
-            $where[] = "name = :jobname";
+            $where[] = 'name = :jobname';
         }
 
         if ($client_id != 'ALL') {
             $this->addParameter('clientid', $client_id);
-            $where[] = "clientid = :clientid";
+            $where[] = 'clientid = :clientid';
         }
-        // Get stored files only for Bacula job type <Backup>
 
+        // Get stored files only for Bacula job type <Backup>
         $this->addParameter('jobtype', 'B');
-        $where[] = "Type = :jobtype";
+        $where[] = 'Type = :jobtype';
 
         // Building SQL statment
-        $statment = array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $where);
+        $statment = ['table' => $this->tablename, 'fields' => $fields, 'where' => $where];
         $statment = CDBQuery::get_Select($statment);
 
         // Execute query
@@ -172,17 +173,17 @@ class JobTable extends Table
         $jobtype    = 'B';
 
         // Defined period
-        $intervals     = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
-        $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
+        $intervals = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
+        $where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
 
         if ($job_name != 'ALL') {
             $this->addParameter('jobname', $job_name);
-            $where[] = "name = :jobname";
+            $where[] = 'name = :jobname';
         }
 
         if ($client_id != 'ALL') {
             $this->addParameter('clientid', $client_id);
-            $where[] = "clientid = :clientid";
+            $where[] = 'clientid = :clientid';
         }
 
         // // Get stored files only for Bacula job with type = 'B'
@@ -190,7 +191,7 @@ class JobTable extends Table
         $where[] = 'Type = :jobtype';
 
         // Building SQL statment
-        $statment = array( 'table' => $this->tablename, 'fields' => $fields, 'where' => $where);
+        $statment = ['table' => $this->tablename, 'fields' => $fields, 'where' => $where];
         $statment = CDBQuery::get_Select($statment);
 
         // Execute query
@@ -213,13 +214,17 @@ class JobTable extends Table
 
     public function count_Job_Names()
     {
-        $fields        = array( 'COUNT(DISTINCT Name) AS job_name_count' );
+        $fields = ['COUNT(DISTINCT Name) AS job_name_count'];
 
         // Prepare and execute query
-        $statment     = CDBQuery::get_Select(array( 'table' => $this->tablename, 'fields' => $fields ));
-        $result     = $this->run_query($statment);
+        $statment = CDBQuery::get_Select(
+            [
+                'table' => $this->tablename, 'fields' => $fields
+            ]
+        );
 
-        $result        = $result->fetch();
+        $result = $this->run_query($statment);
+        $result = $result->fetch();
         return $result['job_name_count'];
     }
 
@@ -232,8 +237,8 @@ class JobTable extends Table
 
     public function get_Jobs_List($client_id = null, $job_type = null)
     {
-        $jobs   = array();
-        $fields = array( 'Name');
+        $jobs   = [];
+        $fields = ['Name'];
         $where  = null;
 
         // Prepare and execute query
@@ -248,7 +253,14 @@ class JobTable extends Table
             $where[] = 'type = :jobtype';
         }
 
-        $statment   = array( 'table' => $this->tablename, 'fields' => $fields, 'groupby' => 'Name', 'orderby' => 'Name', 'where' => $where );
+        $statment   = [
+            'table' => $this->tablename,
+            'fields' => $fields,
+            'groupby' => 'Name',
+            'orderby' => 'Name',
+            'where' => $where
+        ];
+
         $result     = $this->run_query(CDBQuery::get_Select($statment));
 
         foreach ($result->fetchAll() as $job) {
@@ -266,8 +278,8 @@ class JobTable extends Table
 
     public function getLevels($levels_name = array())
     {
-        $levels = array();
-        $statment = array( 'table' => $this->tablename, 'fields' => array('Level'), 'groupby' => 'Level');
+        $levels = [];
+        $statment = ['table' => $this->tablename, 'fields' => array('Level'), 'groupby' => 'Level'];
         $result = $this->run_query(CDBQuery::get_Select($statment));
 
         foreach ($result->fetchAll() as $level) {
@@ -289,8 +301,8 @@ class JobTable extends Table
 
     public function getUsedJobTypes($job_types)
     {
-        $used_types = array();
-        $sql_query = "SELECT DISTINCT Type from " . $this->tablename;
+        $used_types = [];
+        $sql_query = 'SELECT DISTINCT Type FROM ' . $this->tablename;
         $result = $this->run_query($sql_query);
 
         foreach ($result->fetchAll() as $job_type) {
@@ -310,11 +322,11 @@ class JobTable extends Table
 
     public function getWeeklyJobsStats()
     {
-        $fields = array( 'SUM(Job.Jobbytes) as jobbytes' , 'SUM(Job.Jobfiles) as jobfiles');
-        $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
+        $fields = ['SUM(Job.Jobbytes) as jobbytes' , 'SUM(Job.Jobfiles) as jobfiles'];
+        $where = ["Job.JobStatus = 'T'", "Job.Type = 'B'"];
         $orderby = 'JobBytes DESC';
         $groupby = 'dayofweek';
-        $res = array();
+        $res = [];
 
         switch ($this->db->getDriverName()) {
             case 'mysql':
@@ -327,15 +339,19 @@ class JobTable extends Table
                 return null;
         } // end switch
 
-        $query = CDBQuery::get_Select(array( 'table' => $this->tablename,
-          'fields' => $fields,
-          'where' => $where,
-          'groupby' => $groupby,
-          'orderby' => $orderby));
+        $query = CDBQuery::get_Select(
+            [
+                'table' => $this->tablename,
+                'fields' => $fields,
+                'where' => $where,
+                'groupby' => $groupby,
+                'orderby' => $orderby
+            ]
+        );
 
         $result = $this->run_query($query);
 
-        $week = array( 0 => 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        $week = [0 => 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
         foreach ($result->fetchAll() as $day) {
             $day['jobbytes'] = CUtils::Get_Human_Size($day['jobbytes']);
@@ -361,15 +377,19 @@ class JobTable extends Table
 
     public function getBiggestJobsStats()
     {
-        $fields = array( 'Job.Jobbytes', 'Job.Jobfiles', 'Job.Name');
-        $where = array("Job.JobStatus = 'T'", "Job.Type = 'B'");
-        $res = array();
+        $fields = ['Job.Jobbytes', 'Job.Jobfiles', 'Job.Name'];
+        $where = ["Job.JobStatus = 'T'", "Job.Type = 'B'"];
+        $res = [];
 
-        $query = CDBQuery::get_Select(array( 'table' => $this->tablename,
-          'fields' => $fields,
-          'where' => $where,
-          'orderby' => 'jobbytes DESC',
-          'limit' => '10'));
+        $query = CDBQuery::get_Select(
+            [
+                'table' => $this->tablename,
+                'fields' => $fields,
+                'where' => $where,
+                'orderby' => 'jobbytes DESC',
+                'limit' => '10'
+            ]
+        );
 
         $result = $this->run_query($query);
 
@@ -395,7 +415,7 @@ class JobTable extends Table
             'join' => array(
                 array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
-            ) ), $this->get_driver_name());
+            )), $this->get_driver_name());
 
         return $this->select($sql_query, ['jobid' => $jobid], Job::class, true);
     }
