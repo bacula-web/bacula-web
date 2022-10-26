@@ -4,47 +4,94 @@ namespace App\Entity;
 
 class User
 {
+    /**
+     * @var int
+     */
     private $id;
 
+    /**
+     * @var string
+     */
     private $username;
 
+    /**
+     * @var string
+     */
     private $password;
 
+    /**
+     * @var string
+     */
     private $passwordhash;
 
+    /**
+     * @var string
+     */
     private $email;
 
-    public function setUsername($username)
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $username
+     * @return void
+     */
+    public function setUsername(string $username)
     {
         $this->username = $username;
     }
 
-    public function getUsername()
+    /**
+     * @return string
+     */
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    public function getEmail()
+    /**
+     * @return string
+     */
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function setEmail($email)
+    /**
+     * @param $email
+     * @return void
+     */
+    public function setEmail(string $email)
     {
         $this->email = $email;
     }
 
-    public function getPassword()
+    /**
+     * @return string
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function setPassword($password)
+    /**
+     * @param string $password
+     * @return void
+     */
+    public function setPassword(string $password)
     {
         $this->passwordhash = password_hash($password, CRYPT_BLOWFISH);
     }
 
-    public function getPasswordHash()
+    /**
+     * @return string
+     */
+    public function getPasswordHash(): string
     {
         return $this->passwordhash;
     }
