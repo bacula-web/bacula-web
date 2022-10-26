@@ -22,6 +22,7 @@ namespace App\Tables;
 use Core\Db\Table;
 use Core\Db\CDBQuery;
 use App\Libs\FileConfig;
+use Exception;
 
 class ClientTable extends Table
 {
@@ -35,11 +36,11 @@ class ClientTable extends Table
 
     public function getClients()
     {
-        $clients    = array();
-        $fields     = array('ClientId, Name');
+        $clients    = [];
+        $fields     = ['ClientId, Name'];
         $orderby    = 'Name';
 
-        $statment     = array( 'table' => $this->tablename, 'fields' => $fields, 'orderby' => $orderby );
+        $statment     = ['table' => $this->tablename, 'fields' => $fields, 'orderby' => $orderby];
 
         if (FileConfig::get_Value('show_inactive_clients') != null) {
             $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
@@ -60,20 +61,25 @@ class ClientTable extends Table
     // Return:      array containing client information
     // ==================================================================================
 
-    public function getClientInfos($client_id)
+    public function getClientInfos($clientid)
     {
-        $client     = array();
-        $fields     = array('name','uname');
+        $client     = [];
+        $fields     = ['name','uname'];
 
         // Filter by clientid
-        $this->addParameter('clientid', $client_id);
-        $where[]    = 'clientid = :clientid';
+        $this->addParameter('clientid', $clientid);
+        $where[] = 'clientid = :clientid';
 
-        $statment   = CDBQuery::get_Select(array(   'table' => $this->tablename,
-                                                    'fields' => $fields,
-                                                    'where' => $where ), $this->get_driver_name());
+        $statment = CDBQuery::get_Select(
+            [
+                'table' => $this->tablename,
+                'fields' => $fields,
+                'where' => $where
+            ],
+            $this->get_driver_name()
+        );
 
-        $result     = $this->run_query($statment);
+        $result = $this->run_query($statment);
 
         foreach ($result->fetchAll() as $client) {
             $uname = explode(',', $client['uname']);
