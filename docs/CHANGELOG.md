@@ -2,6 +2,9 @@
 
 ### Changelog
 
+- General
+  Fixed PSR12 code style warnings
+
 ### Fixed bug(s)
 
 ### New feature(s)
