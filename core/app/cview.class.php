@@ -25,7 +25,7 @@ use SmartyBC;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class CView extends SmartyBC
+class CView extends Smarty
 {
     protected $templateName;
     protected $name;

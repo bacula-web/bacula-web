@@ -34,12 +34,11 @@ class CTranslation
         $this->locale_path  = LOCALE_DIR;
     }
 
-    public function set_Language(&$template)
+    /**
+     * @return void
+     */
+    public function set_Language(): void
     {
-        // Template engine block registration
-        $template->register_block('t', 'smarty_block_t');
-
-        // Setting up language
         putenv("LANGUAGE=" . $this->language . '.' . $this->charset);
         putenv("LANG=" . $this->language . '.' . $this->charset);
         setlocale(LC_ALL, $this->language . '.' . $this->charset);
