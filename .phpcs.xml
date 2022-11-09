@@ -13,4 +13,11 @@
     <file>bwc</file>
 
     <rule ref="PSR12"></rule>
+  
+    <ini name="memory_limit" value="64M"/>
+
+    <autoload>vendor/autoload.php</autoload>
+
+    <exclude-pattern>*/docs/*</exclude-pattern>
+
 </ruleset>
