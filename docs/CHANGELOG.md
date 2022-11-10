@@ -1,13 +1,20 @@
-## Bacula-Web 8.x.x ()
+## Bacula-Web 8.6.3 (November dd 2022)
 
 ### Changelog
 
 - General
-  Fixed PSR12 code style warnings
+  - Fixed Composer dependency problem with smarty/smarty (see #131)
+  - Bumped smarty/smarty to version 4.2.1
+  - Improved support for PHP >= 8.0
+  - Fixed PSR12 code style warnings
 
 ### Fixed bug(s)
 
+- #131 [bugfix] - smarty/smarty is not resolvable using PHP >= 8.0
+
 ### New feature(s)
+
+- none
 
 ## Bacula-Web 8.6.2 (October 24th 2022)
 
