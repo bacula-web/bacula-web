@@ -23,7 +23,7 @@ class CTranslation
 {
     private $language;
     private $charset;
-    private $locale_path;
+    private $localePath;
     private $domaine;
 
     /**
@@ -34,7 +34,7 @@ class CTranslation
         $this->language     = $lang;
         $this->charset      = 'UTF-8';
         $this->domaine      = 'messages';
-        $this->locale_path  = LOCALE_DIR;
+        $this->localePath  = LOCALE_DIR;
     }
 
     /**
@@ -46,7 +46,7 @@ class CTranslation
         putenv('LANG=' . $this->language . '.' . $this->charset);
         setlocale(LC_ALL, $this->language . '.' . $this->charset);
 
-        bindtextdomain($this->domaine, $this->locale_path);
+        bindtextdomain($this->domaine, $this->localePath);
         bind_textdomain_codeset($this->domaine, $this->charset);
         textdomain($this->domaine);
     }
