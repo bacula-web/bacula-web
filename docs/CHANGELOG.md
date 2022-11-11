@@ -7,6 +7,7 @@
   - Bumped smarty/smarty to version 4.2.1
   - Improved support for PHP >= 8.0
   - Fixed PSR12 code style warnings
+  - Improved testing and code coverage (see #133)
 
 ### Fixed bug(s)
 
