@@ -39,8 +39,8 @@ class CTranslation
      */
     public function set_Language(): void
     {
-        putenv("LANGUAGE=" . $this->language . '.' . $this->charset);
-        putenv("LANG=" . $this->language . '.' . $this->charset);
+        putenv('LANGUAGE=' . $this->language . '.' . $this->charset);
+        putenv('LANG=' . $this->language . '.' . $this->charset);
         setlocale(LC_ALL, $this->language . '.' . $this->charset);
 
         bindtextdomain($this->domaine, $this->locale_path);
