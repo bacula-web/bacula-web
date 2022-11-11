@@ -26,7 +26,10 @@ class CTranslation
     private $locale_path;
     private $domaine;
 
-    public function __construct($lang = 'en_EN')
+    /**
+     * @param string $lang
+     */
+    public function __construct(string $lang = 'en_EN')
     {
         $this->language     = $lang;
         $this->charset      = 'UTF-8';
