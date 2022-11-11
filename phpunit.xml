@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<phpunit
+    bootstrap="./vendor/autoload.php"
+    colors="true"
+    verbose="true"
+    columns="max"
+>
+    <testsuite name="Bacula-Web Test Suite">
+        <directory>./tests</directory>
+    </testsuite>
+
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">application</directory>
+            <directory suffix=".php">core</directory>
+        </include>
+    </coverage>
+
+</phpunit>

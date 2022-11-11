@@ -41,7 +41,8 @@
       "sebastian/phpcpd": "@stable",
       "phpmd/phpmd": "@stable",
       "squizlabs/php_codesniffer": "@stable",
-      "friendsofphp/php-cs-fixer": "@stable"
+      "friendsofphp/php-cs-fixer": "@stable",
+      "phpunit/phpunit": "9.5.26"
     },
 	"autoload": {
       "psr-4": {
