@@ -40,7 +40,7 @@ class CTranslation
     /**
      * @return void
      */
-    public function set_Language(): void
+    public function setLanguage(): void
     {
         putenv('LANGUAGE=' . $this->language . '.' . $this->charset);
         putenv('LANG=' . $this->language . '.' . $this->charset);
