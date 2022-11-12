@@ -43,7 +43,12 @@ class File
     // Return:      true or false if the file doesn't exist or unreadable
     // ==================================================================================
 
-    public static function open($file)
+    /**
+     * @param string $file
+     * @return bool
+     * @throws ConfigFileException
+     */
+    public static function open(string $file): bool
     {
         global $config;
 
@@ -58,7 +63,7 @@ class File
             self::$config = $config;
             return true;
         } else {
-            throw new Exception("Config file not found or bad file permissions");
+            throw new ConfigFileException('Config file not found or not readable');
         }
-    } // end function open()
+    }
 }
