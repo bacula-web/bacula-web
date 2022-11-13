@@ -120,7 +120,7 @@ class TestView extends CView
                     $check['check_result'] = $icon_result[is_writable(VIEW_CACHE_DIR)];
                     break;
                 case 'users-db':
-                    $check['check_result'] = $icon_result[is_writable('application/assets/protected')];
+                    $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/assets/protected')];
                     break;
                 case 'php-version':
                     $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '7.3', '>=')];
