@@ -8,6 +8,7 @@
   - Improved support for PHP >= 8.0
   - Fixed PSR12 code style warnings
   - Improved testing and code coverage (see #133)
+  - The error page was too verbose, even while not in debug mode (see #134)
 
 - Test page
   - Test page was not checking correctly the permissions on the protected assets folder (see #136)
@@ -18,6 +19,7 @@
 ### Fixed bug(s)
 
 - #131 [bug] - smarty/smarty is not resolvable using PHP >= 8.0
+- #134 [bug] - Error page should not be too verbose if debug mode is disabled
 - #136 [bug] - Protected assets folder permissions not checked properly on test page
 
 ### New feature(s)
@@ -35,8 +37,8 @@
 
 ### Fixed bug(s)
 
-- #127 [bugfix] - Failed to start the session because headers have already been sent
-- #128 [bugfix] - Database class constructor tight coupled from Session
+- #127 [bug] - Failed to start the session because headers have already been sent
+- #128 [bug] - Database class constructor tight coupled from Session
 
 ### New feature(s)
 
@@ -76,12 +78,12 @@
 
 ### Fixed bug(s)
 
-- #22 [bugfix] - Stay on current page when switching to another catalog
-- #30 [bugfix] - Make it possible to go back from jobs details to (filtered) job overview
-- #120 [bugfix] - Bacula catalog selector not working
-- #121 [bugfix] - Listing volumes for specific pool does not work
-- #122 [bugfix] - Page filters and options are lost using pagination
-- #123 [bugfix] - Incorrect displayed rows per pagination page
+- #22 [bug] - Stay on current page when switching to another catalog
+- #30 [bug] - Make it possible to go back from jobs details to (filtered) job overview
+- #120 [bug] - Bacula catalog selector not working
+- #121 [bug] - Listing volumes for specific pool does not work
+- #122 [bug] - Page filters and options are lost using pagination
+- #123 [bug] - Incorrect displayed rows per pagination page
 - #125 [bubfix] - Next button in pagination should display next pagination page
 
 ### New feature(s)
@@ -133,10 +135,10 @@
 - #92 [translation] - Update translations
 - #100 [enhancement] - Refactor PHP PDO database related classes
 - #103 [enhancement] - Improve support Composer version 2.2.1 or later
-- #113 [bugfix] - Add missing ext-pdo to composer.json
+- #113 [bug] - Add missing ext-pdo to composer.json
 - #114 [security] - Implement front controller
 - #116 [security] - Bump smarty/smarty from 3.1.45 to 3.1.47
-- #117 [bugfix] - PHP notice about undefined catalog_id
+- #117 [bug] - PHP notice about undefined catalog_id
 - #118 [enhancement] - Use PHP namespaces
 
 ### New feature(s)
