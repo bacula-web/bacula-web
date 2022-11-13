@@ -9,9 +9,13 @@
   - Fixed PSR12 code style warnings
   - Improved testing and code coverage (see #133)
 
+- Test page
+  - Test page was not checking correctly the permissions on the protected assets folder (see #136)
+
 ### Fixed bug(s)
 
-- #131 [bugfix] - smarty/smarty is not resolvable using PHP >= 8.0
+- #131 [bug] - smarty/smarty is not resolvable using PHP >= 8.0
+- #136 [bug] - Protected assets folder permissions not checked properly on test page
 
 ### New feature(s)
 
