@@ -12,6 +12,9 @@
 - Test page
   - Test page was not checking correctly the permissions on the protected assets folder (see #136)
 
+- Console
+  - The console check command now displays current PHP version (see #137)
+
 ### Fixed bug(s)
 
 - #131 [bug] - smarty/smarty is not resolvable using PHP >= 8.0
@@ -19,7 +22,7 @@
 
 ### New feature(s)
 
-- none
+- #137 - The console check command should display current PHP version
 
 ## Bacula-Web 8.6.2 (October 24th 2022)
 

@@ -32,9 +32,9 @@ use App\Tables\UserTable;
 function printUsage()
 {
     echo "Bacula-Web version 8.6.2\n\n";
-    echo "Usage:\n";
+    echo "Usage:\n\n";
     echo "   php bwc [command]\n\n";
-    echo "Available commands:\n";
+    echo "Available commands:\n\n";
     echo "   help\t\t\tPrint this help summary\n";
     echo "   check\t\tCheck requirements and permissions\n";
     echo "   setupauth\t\tSetup Apache authentication\n\n";
@@ -52,7 +52,7 @@ function getPassword($prompt)
     $ostty = `stty -g`;
 
     // Set tty in silent mode
-    system("stty -echo -icanon min 1 time 0 2>/dev/null || " . "stty -echo cbreak");
+    system('stty -echo -icanon min 1 time 0 2>/dev/null || ' . 'stty -echo cbreak');
 
     echo "$prompt :";
     // Drop newline at the end of the string
@@ -71,23 +71,28 @@ function getPassword($prompt)
  * @param string $type
  */
 
-function hightlight($string, $type = 'error')
-{
-
-/* shell colors
+/**
+ * Return provided string in coloredk based on $type parameter
+ * Available colors are
  * red : 31
  * green :  32
  * orange: 33
+ *
+ * @param string $string
+ * @param string[] $type
+ * @return string
  */
-    $colors = array( 'error' => '31', 'ok' => '32', 'warning' => '33', 'information' => '34');
+function hightlight(string $string, $type = 'error'): string
+{
+    $colors = ['error' => '31', 'ok' => '32', 'warning' => '33', 'information' => '34'];
 
     $color = $colors[$type];
-    return " \033[$color" . "m" . $string . "\033[0m";
+    return " \033[$color" . 'm' . $string . "\033[0m";
 }
 
 // Make sure the script is run from the command line
 if (php_sapi_name() !== 'cli') {
-    exit("You are not allowed to run this script from a web browser, but only from the command line");
+    exit('You are not allowed to run this script from a web browser, but only from the command line');
 }
 
 // Make sure at least one parameter has been provided
@@ -103,15 +108,17 @@ switch ($argv[1]) {
         printUsage();
         break;
     case 'check':
-        echo PHP_EOL . '=======================' . PHP_EOL;
+        echo '=====================' . PHP_EOL;
         echo 'Checking requirements' . PHP_EOL;
-        echo '=======================' . PHP_EOL . PHP_EOL;
+        echo '=====================' . PHP_EOL . PHP_EOL;
 
         // Check PHP version
+        $phpversion = phpversion();
         if (version_compare(PHP_VERSION, '7.3', '>=')) {
-            echo "\tPHP version" . hightlight('Ok', 'ok') . PHP_EOL;
+            echo "\tPHP version" . hightlight('Ok', 'ok') . " (using $phpversion)" . PHP_EOL;
         } else {
-            echo "PHP version" . hightlight('Error', 'error') . ']' . PHP_EOL;
+            echo 'PHP version' . hightlight('Error', 'error') . ']' . PHP_EOL;
+            echo 'You have to upgrade PHP to at least version 7.3 ' . $phpversion . PHP_EOL;
         }
 
         // Check PHP timezone
@@ -136,11 +143,37 @@ switch ($argv[1]) {
             echo "\tSmarty cache folder write permission" . hightlight('Error', 'error') . PHP_EOL;
         }
 
-        // Check PHP Posix support
-        if (function_exists('posix_getpwuid')) {
-            echo "\tPHP Posix support" . hightlight('Ok', 'ok') . PHP_EOL;
+        // List available PHP PDO drivers
+        echo PHP_EOL;
+        echo 'Checking installed PHP database extensions' . PHP_EOL;
+        echo '==========================================' . PHP_EOL . PHP_EOL;
+        foreach ($pdo_drivers = PDO::getAvailableDrivers() as $driver) {
+            echo "\t$driver" . hightlight('installed', 'ok') . PHP_EOL;
+        }
+
+        echo PHP_EOL;
+        echo 'Checking installed PHP extensions' . PHP_EOL;
+        echo '=================================' . PHP_EOL . PHP_EOL;
+
+        // Check PHP SQLite support
+        if (in_array('sqlite', PDO::getAvailableDrivers())) {
+            echo "\tSQLite support" . hightlight('Ok', 'ok') . PHP_EOL;
         } else {
-            echo "\tPHP Posix support" . hightlight('Error', 'error') . PHP_EOL;
+            echo "\tSQLite support" . hightlight('Error', 'error') . PHP_EOL;
+        }
+
+        // Check PHP Gettext support
+        if (function_exists('gettext')) {
+            echo "\tGettext support" . hightlight('Ok', 'ok') . PHP_EOL;
+        } else {
+            echo "\tGettext support" . hightlight('Error', 'error') . PHP_EOL;
+        }
+
+        // Check PHP Session support
+        if (function_exists('session_start')) {
+            echo "\tSession support" . hightlight('Ok', 'ok') . PHP_EOL;
+        } else {
+            echo "\tSession support" . hightlight('Error', 'error') . PHP_EOL;
         }
 
         // Check PHP PDO support
@@ -150,53 +183,33 @@ switch ($argv[1]) {
             echo "\tPHP PDO support" . hightlight('Error', 'error') . PHP_EOL;
         }
 
-        // Check PHP SQLite support
-        if (in_array('sqlite', PDO::getAvailableDrivers())) {
-            echo "\tPHP SQLite support" . hightlight('Ok', 'ok') . PHP_EOL;
+        // Check PHP Posix support
+        if (function_exists('posix_getpwuid')) {
+            echo "\tPHP Posix support" . hightlight('Ok', 'ok') . PHP_EOL;
         } else {
-            echo "\tPHP SQLite support" . hightlight('Error', 'error') . PHP_EOL;
+            echo "\tPHP Posix support" . hightlight('Error', 'error') . PHP_EOL;
         }
-
-        // List available PHP PDO drivers
-        echo PHP_EOL . hightlight('PDO drivers (available):', 'information');
-        foreach ($pdo_drivers = PDO::getAvailableDrivers() as $driver) {
-            echo "\t driver: $driver" . PHP_EOL;
-        }
-
-        // Check PHP Gettext support
-        if (function_exists('gettext')) {
-            echo "\tPHP Gettext support" . hightlight('Ok', 'ok') . PHP_EOL;
-        } else {
-            echo "\tPHP Gettext support" . hightlight('Error', 'error') . PHP_EOL;
-        }
-
-        // Check PHP Session support
-        if (function_exists('session_start')) {
-            echo "\tPHP Session support" . hightlight('Ok', 'ok') . PHP_EOL;
-        } else {
-            echo "\tPHP Session support" . hightlight('Error', 'error') . PHP_EOL;
-        }
-
+        echo PHP_EOL;
         break;
     case 'setupauth':
         echo "It's now time to setup the application back-end database" . PHP_EOL;
-        echo PHP_EOL . "Please note that all informations stored in the user database will be destroyed" . PHP_EOL;
-        echo "Can we proceed ? " . PHP_EOL;
+        echo PHP_EOL . 'Please note that all informations stored in the user database will be destroyed' . PHP_EOL;
+        echo 'Can we proceed ? ' . PHP_EOL;
         echo "\nAnswer (Yes/No): ";
         $answer = substr(fgets(STDIN), 0, -1);
 
         switch (strtolower($answer)) {
-            case "yes":
+            case 'yes':
                 echo "Let's go !" . PHP_EOL;
                 break;
-            case "no":
-                exit("Setup aborted" . PHP_EOL);
+            case 'no':
+                exit('Setup aborted' . PHP_EOL);
             break;
             default:
-                exit("Wrong answer, aborting" . PHP_EOL);
+                exit('Wrong answer, aborting' . PHP_EOL);
         }
 
-        echo "Deleting application back-end database" . PHP_EOL;
+        echo 'Deleting application back-end database' . PHP_EOL;
 
         if (file_exists('application/assets/protected/application.db')) {
             if (unlink('application/assets/protected/application.db')) {
@@ -221,15 +234,15 @@ switch ($argv[1]) {
                 echo "\tDatabase schema not created" . hightlight('Error', 'error') . PHP_EOL;
             }
 
-            echo "User creation" . PHP_EOL;
+            echo 'User creation' . PHP_EOL;
 
-            echo "Username: ";
+            echo 'Username: ';
             $username = substr(fgets(STDIN), 0, -1);
 
-            echo "Email address: ";
+            echo 'Email address: ';
             $email = substr(fgets(STDIN), 0, -1);
 
-            $password = getPassword("Password");
+            $password = getPassword('Password');
 
             if (strlen($password) < 6) {
                 die("\tPassword must be at least 6 characters long, aborting" . hightlight('Error', 'error') . PHP_EOL);
@@ -237,16 +250,16 @@ switch ($argv[1]) {
 
             $result = $userTable->addUser($username, $email, $password);
             if ($result === false) {
-                echo '\t' . $result->rowCount() . "ser created successfully" . hightlight('Ok', 'ok') . PHP_EOL;
+                echo '\t' . $result->rowCount() . 'ser created successfully' . hightlight('Ok', 'ok') . PHP_EOL;
             }
 
-            echo PHP_EOL . "You can now connect to your Bacula-Web instance using provided credentials" . PHP_EOL;
+            echo PHP_EOL . 'You can now connect to your Bacula-Web instance using provided credentials' . PHP_EOL;
         } catch (PDOException $e) {
             die('Database error ' . $e->getMessage() . ' code(' . $e->getCode() . ')');
         }
         break;
     case 'publishAssets':
-        echo "Publishing assets" . PHP_EOL;
+        echo 'Publishing assets' . PHP_EOL;
 
         $assets = [
             'css' => [
