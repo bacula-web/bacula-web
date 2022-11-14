@@ -3,7 +3,7 @@
 /application/views/cache/*.php
 /application/config/config.php
 /application/assets/protected/application.db
-docs/_build
+docs/build
 public/css/*
 public/js/*
 public/fonts/*
