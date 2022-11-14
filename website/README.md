@@ -2,9 +2,8 @@
 
 ## About this git repository
 
-Bacula-Web website content is generated using [Hugo](https://gohugo.io/).
-
-This Repository Git contains the data available via the URL <https://www.baculata-web.org>
+This repository contains the code of Bacula-Web website content.
+Bacula-web website is built using [Hugo](https://gohugo.io/).
 
 ## Contributing
 
