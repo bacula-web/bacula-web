@@ -1,4 +1,5 @@
 public
 /resources/_gen/
-.idea/
 .hugo_build.lock
+.idea/
+.DS_Store
