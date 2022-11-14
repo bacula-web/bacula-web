@@ -209,7 +209,7 @@ class WebApplication
         }
 
         $this->translate = new CTranslation($language);
-        $this->translate->set_Language($this->view);
+        $this->translate->setLanguage();
 
         // Get catalog_id from http $_GET request
         if ($this->request->query->has('catalog_id')) {

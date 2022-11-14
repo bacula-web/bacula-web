@@ -24,8 +24,7 @@ use App\Libs\FileConfig;
 use Core\Db\CDBQuery;
 use Core\Utils\CUtils;
 
-class LogTable extends Table {
-
+class LogTable extends Table
+{
     protected $tablename = 'Log';
-
 }

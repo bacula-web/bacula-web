@@ -25,11 +25,11 @@ use Core\Db\DatabaseFactory;
  define('DAY', 86400);
  define('WEEK', 7 * DAY);
  define('MONTH', 4 * WEEK);
- 
+
  // Timestamp constants
  define('LAST_DAY', NOW - DAY);
  define('LAST_WEEK', NOW - (7 * DAY));
- define('LAST_MONTH', NOW - (4* WEEK));
+ define('LAST_MONTH', NOW - (4 * WEEK));
 
  // Job status code
  define('J_NOT_RUNNING', 'C');

@@ -81,7 +81,7 @@ class DateTimeUtil
     // ==================================================================================
     // Function:        get_ElapsedSeconds()
     // Parameters:      $end
-    //			        $start
+    //                  $start
     // Return:          amount of seconds between two UNIX date string or false
     // ==================================================================================
 
@@ -102,9 +102,9 @@ class DateTimeUtil
     }
 
     // ==================================================================================
-    // Function: 	    get_Day_Intervals()
-    // Parameters:	    $day
-    // Return:		    array('start' => start_timestamp, 'end' => end_timestamp)
+    // Function:        get_Day_Intervals()
+    // Parameters:      $day
+    // Return:          array('start' => start_timestamp, 'end' => end_timestamp)
     // ==================================================================================
 
     public static function get_Day_Intervals($day)
@@ -116,9 +116,9 @@ class DateTimeUtil
     }
 
     // ==================================================================================
-    // Function: 	    getLastDaysIntervals()
-    // Parameters:	    $nb_day
-    // Return:		    array('start' => start_timestamp, 'end' => end_timestamp) of last n days
+    // Function:        getLastDaysIntervals()
+    // Parameters:      $nb_day
+    // Return:          array('start' => start_timestamp, 'end' => end_timestamp) of last n days
     // ==================================================================================
 
     public static function getLastDaysIntervals($nb_days)

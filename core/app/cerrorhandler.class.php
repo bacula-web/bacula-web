@@ -19,12 +19,22 @@
 
 namespace Core\App;
 
+use App\Libs\FileConfig;
+use Core\Utils\ConfigFileException;
 use Core\Utils\HtmlHelper;
+use Exception;
 
 class CErrorHandler
 {
+    /**
+     * @var string
+     */
     private static $header;
 
+    /**
+     * @param $exception
+     * @return string
+     */
     public static function displayError($exception): string
     {
         switch (get_class($exception)) {
@@ -35,15 +45,16 @@ class CErrorHandler
             default:
                 self::$header = 'Application error';
                 break;
-        } // end switch
+            case 'ConfigFileException':
+                self::$header = 'Configuration error';
+                break;
+        }
 
-        $output = '';
-
-        $output .= '<div class="row"> <div class="col-xs-9">';
+        $output = '<div class="row"> <div class="col-xs-9">';
 
         // Error page header
         $output .= '<div class="page-header">
-              <h3> <i class="fa fa-exclamation-triangle fa-lg"></i> '.self::$header.'<small> Oops, looks like something went wrong :(</small></h3>
+              <h3> <i class="fa fa-exclamation-triangle fa-lg"></i> ' . self::$header . '<small> Oops, looks like something went wrong :(</small></h3>
               </div>';
 
         // Display PHP exception details
@@ -52,15 +63,17 @@ class CErrorHandler
         $output .= '<p>A problem with the description below happen</p>';
         $output .= '<b>Problem: </b>' . $exception->getMessage() . '<br />';
 
-        $output .= '<h4>Debug</h4>';
-        $output .= '<b>File: </b>' . $exception->getFile() . '<br />';
-        $output .= '<b>Line: </b>' . $exception->getLine() . '<br />';
-        $output .= '<b>Code: </b>' . $exception->getCode() . '<br />';
-        $output .= '<h5>Exception trace</h5>';
-        $output .= self::getFormatedTrace($exception);
+        FileConfig::open(CONFIG_FILE);
+        if (FileConfig::get_Value('debug')) {
+            $output .= '<h4>Debug</h4>';
+            $output .= '<b>File: </b>' . $exception->getFile() . '<br />';
+            $output .= '<b>Line: </b>' . $exception->getLine() . '<br />';
+            $output .= '<b>Code: </b>' . $exception->getCode() . '<br />';
+            $output .= '<h5>Exception trace</h5>';
+            $output .= self::getFormatedTrace($exception);
+        }
 
         $output .= "<hr /> <div class='well'> <h4>Found a bug, or need a new feature ?</h4> Feel free to submit a <a href='https://github.com/bacula-web/bacula-web/issues/new/choose' target='_blank' class='btn btn-default btn-warning btn-sm active'>bug report</a> or a <a href='https://github.com/bacula-web/bacula-web/issues' target='_blank' class='btn btn-default btn-primary btn-sm active'>feature request</a> </div>";
-
         $output .= '</div> ';
 
         // Right pane
@@ -82,12 +95,16 @@ class CErrorHandler
         $output = HtmlHelper::getHtmlHeader() . HtmlHelper::getNavBar() . '<div class="container">' . $output . '</div>' . HtmlHelper::getHtmlFooter();
 
         return $output;
-    } // end function displayError
+    }
 
-    public static function getFormatedTrace($e)
+    /**
+     * @param Exception $e
+     * @return string
+     */
+    public static function getFormatedTrace(Exception $e): string
     {
         $formated_trace  = '<table class="table">';
-        
+
         foreach ($e->getTrace() as $exception) {
             $formated_trace .= '<tr>';
             $formated_trace .= '<td>';
@@ -99,7 +116,7 @@ class CErrorHandler
         }
 
         $formated_trace .= '</table>';
-        
+
         return $formated_trace;
     }
 }

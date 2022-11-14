@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * Copyright (C) 2010-2022 Davide Franco
@@ -17,16 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace Core\Helpers;
+namespace Core\Utils;
 
-class Sanitizer
+class ConfigFileException extends \Exception
 {
-    /**
-     * @param $value
-     * @return string
-     */
-    public static function sanitize($value): string
-    {
-        return strip_tags(htmlentities($value, ENT_QUOTES, 'UTF-8'));
-    }
 }

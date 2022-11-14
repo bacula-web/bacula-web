@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class Log
 {
-
     private $logtext;
 
     private $time;

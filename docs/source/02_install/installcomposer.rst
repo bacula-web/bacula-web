@@ -4,7 +4,7 @@
 Install Bacula-Web using Composer
 =================================
 
-Since version 8.0.0, Bacula-Web dependencies management is performed using `Composer`_.
+Since version 8.0.0, Bacula-Web dependencies are managed using `Composer`_.
 
 As stated on `Composer's official website <https://getcomposer.org/doc/00-intro.md#dependency-management>`_
 
@@ -27,7 +27,7 @@ Most Linux distro povides Composer as package, so to install it run this command
     $ sudo yum install composer
 
 If your distro doesn't provide Composer package, Composer website contains all informations 
-you need to install Composer manually. Please see `this page <https://getcomposer.org/download/>`_.
+you can install it manually as explained on `this page <https://getcomposer.org/download/>`_.
 
 .. important::
 

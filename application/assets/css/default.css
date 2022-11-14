@@ -1,11 +1,11 @@
-body { 
-  min-height: 1000px; 
+body {
+  min-height: 1000px;
   padding-top: 60px;
 }
 
 h1, .h1, h2, .h2, h3, .h3 {
-  margin-top: 5px; 
-  margin-bottom: 10px; 
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 div.panel h3 { margin: 5px;}
@@ -46,7 +46,7 @@ img {
 
 .form-signin { margin-top: 100px; }
 
-.pagination { 
+.pagination {
   margin: 2px 0 45px 0;
 }
 

@@ -22,7 +22,7 @@
       }
 	},
    "require": {
-      "php": ">=7.3.0",
+     "php": "^7.3|^8.0",
       "ext-gettext": "*",
       "ext-mbstring": "*",
       "ext-openssl": "*",
@@ -32,7 +32,7 @@
       "novus/nvd3": "@stable",
       "twbs/bootstrap": "3.4.1",
       "eonasdan/bootstrap-datetimepicker": "@stable",
-      "smarty/smarty": "3.1.*",
+      "smarty/smarty": "4.2.*",
       "smarty-gettext/smarty-gettext": "@stable",
       "components/font-awesome": "4.*",
       "symfony/http-foundation": "^5.4"
@@ -41,7 +41,8 @@
       "sebastian/phpcpd": "@stable",
       "phpmd/phpmd": "@stable",
       "squizlabs/php_codesniffer": "@stable",
-      "friendsofphp/php-cs-fixer": "@stable"
+      "friendsofphp/php-cs-fixer": "@stable",
+      "phpunit/phpunit": "9.5.26"
     },
 	"autoload": {
       "psr-4": {
@@ -78,7 +79,8 @@
           ".github",
           ".readthedocs.yaml",
           "docs/requirements.txt",
-          ".tx"
+          ".tx",
+          "/tests"
         ]
     }
 }

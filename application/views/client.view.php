@@ -50,7 +50,7 @@ class ClientView extends CView
         require_once BW_ROOT . '/core/const.inc.php';
 
         $session = new Session();
-        
+
         $period = 7;
         $backup_jobs = array();
         $days_stored_bytes = array();
@@ -60,7 +60,7 @@ class ClientView extends CView
         $catalogid = $session->get('catalogid', 0);
         $jobs = new JobTable(DatabaseFactory::getDatabase($catalogid));
         $client = new ClientTable(DatabaseFactory::getDatabase($catalogid));
- 
+
         // Clients list
         $this->assign('clients_list', $client->getClients());
 
@@ -101,9 +101,9 @@ class ClientView extends CView
             $this->assign('selected_client', $clientid);
 
             /**
-             * Filter jobs per requested period 
+             * Filter jobs per requested period
              */
-            
+
             // Get the last n days interval (start and end timestamps)
             $days = DateTimeUtil::getLastDaysIntervals($period);
 
@@ -119,12 +119,12 @@ class ClientView extends CView
 
             // Client informations
             $client_info  = $client->getClientInfos($clientid);
-            
+
             $this->assign('client_name', $client_info['name']);
             $this->assign('client_os', $client_info['os']);
             $this->assign('client_arch', $client_info['arch']);
             $this->assign('client_version', $client_info['version']);
-                   
+
             // // Filter by Job status = Completed
             $jobs->addParameter('jobstatus', 'T');
             $where[] = 'Job.JobStatus = :jobstatus';
@@ -132,19 +132,19 @@ class ClientView extends CView
             // // Filter by Job Type
             $jobs->addParameter('jobtype', 'B');
             $where[] = 'Job.Type = :jobtype';
-            
+
             // Filter by Client id
             $jobs->addParameter('clientid', $clientid);
             $where[] = 'clientid = :clientid';
 
-            $query = CDBQuery::get_Select( ['table' => $jobs->getTableName(),
+            $query = CDBQuery::get_Select(['table' => $jobs->getTableName(),
                 'fields' => ['Job.Name', 'Job.Jobid', 'Job.Level', 'Job.Endtime', 'Job.Jobbytes', 'Job.Jobfiles', 'Status.JobStatusLong'],
                 'join' => [
                     ['table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus']
-                ], 
+                ],
                 'orderby' => 'Job.EndTime DESC',
-                'where' => $where 
-                ], $jobs->get_driver_name() );
+                'where' => $where
+                ], $jobs->get_driver_name());
 
             $jobs_result = $jobs->run_query($query);
 
@@ -153,30 +153,30 @@ class ClientView extends CView
                 $job['jobfiles']  = CUtils::format_Number($job['jobfiles']);
                 $job['jobbytes']  = CUtils::Get_Human_Size($job['jobbytes']);
                 $job['endtime']   = date($session->get('datetime_format'), strtotime($job['endtime']));
-            
+
                 $backup_jobs[] = $job;
             } // end foreach
-       
+
             $this->assign('backup_jobs', $backup_jobs);
-       
+
             $jobsStats = new JobTable(DatabaseFactory::getDatabase($catalogid));
             // Last n days stored Bytes graph
             foreach ($days as $day) {
                 $stored_bytes = $jobsStats->getStoredBytes(array($day['start'], $day['end']), 'ALL', $clientid);
                 $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
             } // end foreach
-       
+
             $stored_bytes_chart = new Chart(array( 'type' => 'bar',
                 'name' => 'chart_storedbytes',
                 'data' => $days_stored_bytes,
                 'ylabel' => 'Bytes',
                 'uniformize_data' => true ));
-       
+
             $this->assign('stored_bytes_chart_id', $stored_bytes_chart->name);
             $this->assign('stored_bytes_chart', $stored_bytes_chart->render());
-       
+
             unset($stored_bytes_chart);
-       
+
             $jobsStats = new JobTable(DatabaseFactory::getDatabase($catalogid));
 
             // Last n days stored files graph
@@ -184,22 +184,22 @@ class ClientView extends CView
                 $stored_files = $jobsStats->getStoredFiles(array($day['start'], $day['end']), 'ALL', $clientid);
                 $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
             }
-       
+
             $stored_files_chart = new Chart(array( 'type' => 'bar',
                 'name' => 'chart_storedfiles',
                 'data' => $days_stored_files,
                 'ylabel' => 'Files' ));
-       
+
             $this->assign('stored_files_chart_id', $stored_files_chart->name);
             $this->assign('stored_files_chart', $stored_files_chart->render());
-       
+
             unset($stored_files_chart);
         } else {
             $this->assign('selected_period', '');
             $this->assign('selected_client', '');
             $this->assign('no_report_options', 'true');
         }
-        
+
         $this->assign('period', $period);
     } // end of prepare() method
 } // end of class

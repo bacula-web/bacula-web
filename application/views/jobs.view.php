@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-2022 Davide Franco
  *
@@ -18,6 +16,8 @@ declare(strict_types=1);
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+declare(strict_types=1);
 
 namespace App\Views;
 
@@ -42,7 +42,7 @@ class JobsView extends CView
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        
+
         $this->templateName = 'jobs.tpl';
         $this->name = 'Jobs report';
         $this->title = 'Bacula jobs overview';
@@ -72,7 +72,7 @@ class JobsView extends CView
             'Job.ReadBytes', 'Job.JobBytes', 'Job.JobFiles',
             'Pool.Name', 'Job.JobStatus', 'Pool.Name AS Pool_name', 'Status.JobStatusLong',
         );
-   
+
         // Order result by
         $result_order = array(
             'SchedTime' => 'Job Scheduled Time',
@@ -97,7 +97,7 @@ class JobsView extends CView
         );
 
         $last_jobs = [];
-        
+
         // Job Status list
         define('STATUS_ALL', 0);
         define('STATUS_RUNNING', 1);
@@ -128,7 +128,7 @@ class JobsView extends CView
             'C' => 'Copy',
             'g' => 'Migration'
         );
- 
+
         // Jobs type filter
         $job_types_list = $jobs->getUsedJobTypes($job_types);
         $job_types_list['0'] = 'Any';
@@ -213,27 +213,27 @@ class JobsView extends CView
          * Job status filter
          */
         switch ($filter_jobstatus) {
-        case STATUS_RUNNING:
-            $where[] = "Job.JobStatus = 'R' ";
-            break;
-        case STATUS_WAITING:
-            $where[] = "Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
-            break;
-        case STATUS_COMPLETED:
-            $where[] = "Job.JobStatus = 'T' ";
-            break;
-        case STATUS_COMPLETED_WITH_ERRORS:
-            $where[] = "Job.JobStatus = 'E' ";
-            break;
-        case STATUS_FAILED:
-            $where[] = "Job.JobStatus = 'f' ";
-            break;
-        case STATUS_CANCELED:
-            $where[] = "Job.JobStatus = 'A' ";
-            break;
-        case STATUS_ALL:
-            $where[] = "Job.JobStatus != 'xxxx' "; // This code must be improved
-            break;
+            case STATUS_RUNNING:
+                $where[] = "Job.JobStatus = 'R' ";
+                break;
+            case STATUS_WAITING:
+                $where[] = "Job.JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
+                break;
+            case STATUS_COMPLETED:
+                $where[] = "Job.JobStatus = 'T' ";
+                break;
+            case STATUS_COMPLETED_WITH_ERRORS:
+                $where[] = "Job.JobStatus = 'E' ";
+                break;
+            case STATUS_FAILED:
+                $where[] = "Job.JobStatus = 'f' ";
+                break;
+            case STATUS_CANCELED:
+                $where[] = "Job.JobStatus = 'A' ";
+                break;
+            case STATUS_ALL:
+                $where[] = "Job.JobStatus != 'xxxx' "; // This code must be improved
+                break;
         } // end switch
 
         // Selected level filter
@@ -241,7 +241,7 @@ class JobsView extends CView
             $where[] .= "Job.Level = :job_level ";
             $params['job_level'] = $filter_joblevel;
         }
- 
+
         // Selected pool filter
         if ($filter_poolid !== 0) {
             $where[] .= "Job.PoolId = :pool_id ";
@@ -315,109 +315,109 @@ class JobsView extends CView
         foreach ($pagination->paginate($jobs, $sqlQuery, $countQuery, $params) as $job) {
             // Determine icon for job status
             switch ($job['jobstatus']) {
-            case J_RUNNING:
-               $job['Job_icon'] = "play";
-                break;
-            case J_COMPLETED:
-               $job['Job_icon'] = "ok";
-               break;
-            case J_CANCELED:
-                $job['Job_icon'] = "off";
-                break;
-            case J_VERIFY_FOUND_DIFFERENCES:
-            case J_COMPLETED_ERROR:
-                $job['Job_icon'] = "warning-sign";
-                break;
-            case J_FATAL:
-                $job['Job_icon'] = "remove";
-                break;
-            case J_WAITING_CLIENT:
-            case J_WAITING_SD:
-            case J_WAITING_MOUNT_MEDIA:
-            case J_WAITING_NEW_MEDIA:
-            case J_WAITING_STORAGE_RES:
-            case J_WAITING_JOB_RES:
-            case J_WAITING_CLIENT_RES:
-            case J_WAITING_MAX_JOBS:
-            case J_WAITING_START_TIME:
-            case J_NOT_RUNNING:
-                $job['Job_icon'] = "time";
-                break;
+                case J_RUNNING:
+                    $job['Job_icon'] = "play";
+                    break;
+                case J_COMPLETED:
+                    $job['Job_icon'] = "ok";
+                    break;
+                case J_CANCELED:
+                    $job['Job_icon'] = "off";
+                    break;
+                case J_VERIFY_FOUND_DIFFERENCES:
+                case J_COMPLETED_ERROR:
+                    $job['Job_icon'] = "warning-sign";
+                    break;
+                case J_FATAL:
+                    $job['Job_icon'] = "remove";
+                    break;
+                case J_WAITING_CLIENT:
+                case J_WAITING_SD:
+                case J_WAITING_MOUNT_MEDIA:
+                case J_WAITING_NEW_MEDIA:
+                case J_WAITING_STORAGE_RES:
+                case J_WAITING_JOB_RES:
+                case J_WAITING_CLIENT_RES:
+                case J_WAITING_MAX_JOBS:
+                case J_WAITING_START_TIME:
+                case J_NOT_RUNNING:
+                    $job['Job_icon'] = "time";
+                    break;
             } // end switch
-       
+
             $start_time = $job['starttime'];
             $end_time   = $job['endtime'];
-       
+
             if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
                 $job['starttime'] = 'n/a';
             } else {
                 $job['starttime'] = date($session->get('datetime_format'), strtotime($job['starttime']));
             }
-       
+
             if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
                 $job['endtime'] = 'n/a';
             } else {
                 $job['endtime'] = date($session->get('datetime_format'), strtotime($job['endtime']));
             }
-       
+
             // Get the job elapsed time completion
             $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
 
             $job['schedtime'] = date($session->get('datetime_format'), strtotime($job['schedtime']));
-       
+
             // Job Level
             if (isset($job_levels[$job['level']])) {
                 $job['level'] = $job_levels[$job['level']];
             } else {
                 $job['level'] = 'n/a';
             }
-       
+
             // Job files
             $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
 
             // Set default Job speed and compression rate
             $job['speed'] = '0 Mb/s';
             $job['compression'] = 'n/a';
-       
-            switch ($job['jobstatus']) {
-            case J_COMPLETED:
-            case J_COMPLETED_ERROR:
-            case J_NO_FATAL_ERROR:
-            case J_CANCELED:
-                // Job speed
-                $seconds = DateTimeUtil::get_ElaspedSeconds($end_time, $start_time);
 
-                if ($seconds !== false && $seconds > 0) {
-                    $speed     = $job['jobbytes'] / $seconds;
-                    $speed     = CUtils::Get_Human_Size($speed, 2) . '/s';
-                    $job['speed'] = $speed;
-                } else {
-                    $job['speed'] = 'n/a';
-                }
-          
-                // Job compression
-                if ($job['jobbytes'] > 0 && $job['type'] == 'B' && $job['jobstatus'] != J_CANCELED && ($job['jobbytes'] < $job['readbytes'])) {
-                    $compression        = (1-($job['jobbytes'] / $job['readbytes']));
-                    $job['compression'] = number_format($compression, 2);
-                } else {
-                    $job['compression'] = 'n/a';
-                }
-                break;
+            switch ($job['jobstatus']) {
+                case J_COMPLETED:
+                case J_COMPLETED_ERROR:
+                case J_NO_FATAL_ERROR:
+                case J_CANCELED:
+                    // Job speed
+                    $seconds = DateTimeUtil::get_ElaspedSeconds($end_time, $start_time);
+
+                    if ($seconds !== false && $seconds > 0) {
+                        $speed     = $job['jobbytes'] / $seconds;
+                        $speed     = CUtils::Get_Human_Size($speed, 2) . '/s';
+                        $job['speed'] = $speed;
+                    } else {
+                        $job['speed'] = 'n/a';
+                    }
+
+                    // Job compression
+                    if ($job['jobbytes'] > 0 && $job['type'] == 'B' && $job['jobstatus'] != J_CANCELED && ($job['jobbytes'] < $job['readbytes'])) {
+                        $compression        = (1 - ($job['jobbytes'] / $job['readbytes']));
+                        $job['compression'] = number_format($compression, 2);
+                    } else {
+                        $job['compression'] = 'n/a';
+                    }
+                    break;
             } // end switch
-       
+
             // Job size
             $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
-       
+
             // Job Pool
             if (is_null($job['pool_name'])) {
                 $job['pool_name'] = 'n/a';
             }
-       
+
             $last_jobs[] = $job;
         } // end foreach
-        
+
         $this->assign('last_jobs', $last_jobs);
-    
+
         // Count jobs
         $this->assign('jobs_found', count($last_jobs));
     }

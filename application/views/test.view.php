@@ -35,7 +35,7 @@ class TestView extends CView
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        
+
         $this->templateName = 'test.tpl';
         $this->name = 'Test page';
         $this->title = 'Check requirements and configuration';
@@ -44,10 +44,10 @@ class TestView extends CView
     public function prepare(Request $request)
     {
         $catalog = new CatalogTable(DatabaseFactory::getDatabase());
-        
+
         // Installed PDO drivers
         $pdo_drivers = PDO::getAvailableDrivers();
-        
+
         // Check result icon
         //$icon_result = array( true => 'ok.png', false => 'error.png');
         $icon_result = array( true => 'glyphicon-ok', false => 'glyphicon-remove');
@@ -95,50 +95,50 @@ class TestView extends CView
         // Doing all checks
         foreach ($check_list as &$check) {
             switch ($check['check_cmd']) {
-            case 'php-session':
-                $check['check_result'] = $icon_result[function_exists('session_start')];
-                break;
-            case 'php-gettext':
-                $check['check_result'] = $icon_result[function_exists('gettext')];
-                break;
-            case 'php-mysql':
-                $check['check_result'] = $icon_result[in_array('mysql', $pdo_drivers)];
-                break;
-            case 'php-postgres':
-                $check['check_result'] = $icon_result[in_array('pgsql', $pdo_drivers)];
-                break;
-            case 'php-sqlite':
-                $check['check_result'] = $icon_result[in_array('sqlite', $pdo_drivers)];
-                break;
-            case 'php-pdo':
-                $check['check_result'] = $icon_result[class_exists('PDO')];
-                break;
-            case 'php-posix':
-                $check['check_result'] = $icon_result[function_exists('posix_getpwuid')];
-                break;
-            case 'smarty-cache':
-                $check['check_result'] = $icon_result[is_writable(VIEW_CACHE_DIR)];
-                break;
-            case'users-db':
-                $check['check_result'] = $icon_result[is_writable('application/assets/protected')];
-                break;
-            case 'php-version':
-                $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '7.3', '>=')];
-                break;
-            case 'db-connection':
-                $check['check_result'] = $icon_result[$catalog->isConnected()];
-                break;
-            case 'php-timezone':
-                $timezone = ini_get('date.timezone');
-                if (!empty($timezone)) {
-                    $check['check_result'] = $icon_result[true];
-                } else {
-                    $check['check_result'] = $icon_result[false];
-                }
-                break;
+                case 'php-session':
+                    $check['check_result'] = $icon_result[function_exists('session_start')];
+                    break;
+                case 'php-gettext':
+                    $check['check_result'] = $icon_result[function_exists('gettext')];
+                    break;
+                case 'php-mysql':
+                    $check['check_result'] = $icon_result[in_array('mysql', $pdo_drivers)];
+                    break;
+                case 'php-postgres':
+                    $check['check_result'] = $icon_result[in_array('pgsql', $pdo_drivers)];
+                    break;
+                case 'php-sqlite':
+                    $check['check_result'] = $icon_result[in_array('sqlite', $pdo_drivers)];
+                    break;
+                case 'php-pdo':
+                    $check['check_result'] = $icon_result[class_exists('PDO')];
+                    break;
+                case 'php-posix':
+                    $check['check_result'] = $icon_result[function_exists('posix_getpwuid')];
+                    break;
+                case 'smarty-cache':
+                    $check['check_result'] = $icon_result[is_writable(VIEW_CACHE_DIR)];
+                    break;
+                case 'users-db':
+                    $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/assets/protected')];
+                    break;
+                case 'php-version':
+                    $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '7.3', '>=')];
+                    break;
+                case 'db-connection':
+                    $check['check_result'] = $icon_result[$catalog->isConnected()];
+                    break;
+                case 'php-timezone':
+                    $timezone = ini_get('date.timezone');
+                    if (!empty($timezone)) {
+                        $check['check_result'] = $icon_result[true];
+                    } else {
+                        $check['check_result'] = $icon_result[false];
+                    }
+                    break;
             }
         }
-        
+
         // Testing graph capabilities
         $data = array( array('test', 100),
             array('test1', 150),
@@ -146,17 +146,17 @@ class TestView extends CView
             array('test3', 270),
             array('test4', 456)
         );
-        
+
         // Dummy Pie chart
         $pie_chart = new Chart(array(   'type' => 'pie',
             'name' => 'chart_pie_test',
             'data' => $data ));
-        
+
         $this->assign('pie_graph_id', $pie_chart->name);
         $this->assign('pie_graph', $pie_chart->render());
-        
+
         unset($pie_chart);
-        
+
         // Dummy bar graph
         $bar_chart = new Chart(array(   'type' => 'bar',
             'name' => 'chart_bar_test',

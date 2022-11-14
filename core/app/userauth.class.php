@@ -55,9 +55,9 @@ class UserAuth
         $webUser = array();
         exec('whoami', $webUser);
         $webUser = reset($webUser);
-       
+
         $assetsOwner = posix_getpwuid(fileowner($this->appDbBackend));
-      
+
         if ($webUser != $assetsOwner['name']) {
             throw new Exception('Bad ownership / permissions for protected assets folder (application/assets/protected)');
         }
@@ -94,13 +94,13 @@ class UserAuth
 
         $user = $this->userTable->findByName($username);
 
-        if($user) {
-            if(password_verify($password, $user->getPasswordHash())) {
+        if ($user) {
+            if (password_verify($password, $user->getPasswordHash())) {
                 return 'yes';
             } else {
                 return 'no';
             }
-        }else {
+        } else {
             // TODO: Display a flash message like "User not found or password incorrect"
             return 'no';
         }

@@ -56,18 +56,18 @@ class CUtils
 
         return $hsize;
     }
-    
+
     // ==================================================================================
-    // Function: 	format_Number()
-    // Parameters:	$number
-    //				$decimal (optional, default = 0)
-    // Return:		formated number depending on current locale
+    // Function:    format_Number()
+    // Parameters:  $number
+    //              $decimal (optional, default = 0)
+    // Return:      formated number depending on current locale
     // ==================================================================================
     public static function format_Number($number, $decimal = 0)
     {
         // Getting localized numeric formating information
         $locale = localeconv();
-        
+
         // Check if thousands_sep is set
         if (empty($locale['thousands_sep'])) {
             $locale['thousands_sep'] = '.';

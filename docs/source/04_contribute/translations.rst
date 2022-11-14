@@ -39,7 +39,8 @@ If you want to help the project by updating the translations or create new ones,
 
 If you want me to create a new language for Bacula-Web, please send me message, I'll do it with pleasure.
 
-Using this tool is pretty easy but if you need a bit of help, do not hesitate to get back to me using the `Mantis bug tracker`_ or by email.
+Using this tool is pretty easy but if you need a bit of help, do not hesitate to get back to me using the project `GitHub issues`_.
 
 .. _Bacula-Web project at Transifex: https://www.transifex.com/bacula-web/bacula-web/
+.. _GitHub issues: https://github.com/bacula-web/bacula-web/issues
 .. _Transifex.com: https://www.transifex.com

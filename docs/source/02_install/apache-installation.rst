@@ -35,7 +35,7 @@ MySql Bacula catalog
 
    $ sudo yum install php php-gettext php-mysql php-pdo
 
-.. important:: On Fedora 29, install php-mysqlnd instead of php-mysql
+.. important:: On Fedora 36, install php-mysqlnd instead of php-mysql
 
 postgreSQL Bacula catalog
 
@@ -106,7 +106,7 @@ Install Apache and PHP
 
 ::
 
-   $ sudo apt-get install apache2 libapache2-mod-php7.0 php7-sqlite 
+   $ sudo apt-get install apache2 libapache2-mod-php php-sqlite
 
    With MySQL support
    
@@ -248,3 +248,8 @@ Then restart Apache to apply the configuration change
 ::
 
    $ sudo /etc/init.d/apache2 restart
+
+If everything went well, you can now proceed with the installation using Composer, or the Composer package (follow one of the link below)
+
+   * Install :ref:`using the archive<install/installarchive>`
+   * Install :ref:`using Composer<install/installcomposer>`

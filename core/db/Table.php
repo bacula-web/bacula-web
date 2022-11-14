@@ -56,7 +56,7 @@ class Table
     /**
      * @return string
      */
-    public function getTableName() :string
+    public function getTableName(): string
     {
         return $this->tablename;
     }
@@ -68,19 +68,18 @@ class Table
      * @return int
      * @throws Exception
      */
-    public function count($filter = null) :int
+    public function count($filter = null): int
     {
         $fields = array( 'COUNT(*) as row_count' );
 
         // Prepare and execute query
-        $statement = CDBQuery::get_Select( [
+        $statement = CDBQuery::get_Select([
                 'table' => $this->tablename,
                 'fields' => $fields,
                 'where' => $filter
-            ]
-        );
+            ]);
 
-        $result = $this->select( $statement, null, null, true);
+        $result = $this->select($statement, null, null, true);
 
         // If SQL count result is null, return 0 instead (much better when plotting data)
         if (is_null($result['row_count'])) {
@@ -93,7 +92,7 @@ class Table
     /**
      * @return mixed
      */
-    public function get_driver_name() :string
+    public function get_driver_name(): string
     {
         return $this->db->getDriverName();
     }
@@ -118,7 +117,7 @@ class Table
             $statement->setFetchMode(PDO::FETCH_CLASS, $fetchClass);
         }
 
-        if( $single !== null) {
+        if ($single !== null) {
             return $statement->fetch();    // set fetch mode
         }
 
@@ -145,7 +144,7 @@ class Table
     /**
       Function: run_query
       Parameters:  $query
-      Return:	   PDO_Statment
+      Return:      PDO_Statment
     */
 
     public function run_query($query)
@@ -159,28 +158,28 @@ class Table
 
         // Bind PHP variables with named placeholders
         if (isset($this->parameters)) {
-            try{
+            try {
                 foreach ($this->parameters as $name => $value) {
-                    if(is_string($value)) {
+                    if (is_string($value)) {
                         $statment->bindValue(":$name", $value, PDO::PARAM_STR);
-                    }elseif( is_int($value)) {
+                    } elseif (is_int($value)) {
                         $statment->bindValue(":$name", $value, PDO::PARAM_INT);
-                    }elseif( is_bool($value)) {
+                    } elseif (is_bool($value)) {
                         $statment->bindValue(":$name", $value, PDO::PARAM_BOOL);
                     }
                 }
-            }catch(PDOException $pdoException) {
+            } catch (PDOException $pdoException) {
                 $pdoException->getMessage();
             }
         }
 
         $result = $statment->execute();
 
- 	    /**
- 	    * Reset $this->parameters to an empty array
- 	    * Otherwise, next call to Table::run_query() will fail if Table::addParameters() is not called and Table::parameters is not empty
- 	    */
- 	    $this->parameters = [];
+        /**
+        * Reset $this->parameters to an empty array
+        * Otherwise, next call to Table::run_query() will fail if Table::addParameters() is not called and Table::parameters is not empty
+        */
+        $this->parameters = [];
 
         if ($result == false) {
             throw new PDOException("Failed to execute PDOStatment <br />$query");
@@ -188,7 +187,7 @@ class Table
             return $statment;
         }
     }
-    
+
     /**
      * addParameter
      *
@@ -219,18 +218,18 @@ class Table
     /**
      * @return bool
      */
-    public function isConnected() :bool
+    public function isConnected(): bool
     {
         // If MySQL of postGreSQL
         switch ($this->get_driver_name()) {
-         case 'mysql':
-         case 'pgsql':
-         $pdo_connection = $this->getConnectionStatus();
-         break;
-      default:
-         // We assume that the user running Apache has access to the SQLite database file (must be improved)
-         $pdo_connection = true;
-      }
+            case 'mysql':
+            case 'pgsql':
+                $pdo_connection = $this->getConnectionStatus();
+                break;
+            default:
+               // We assume that the user running Apache has access to the SQLite database file (must be improved)
+                $pdo_connection = true;
+        }
 
         // Test connection status
         if ($pdo_connection !== false) {

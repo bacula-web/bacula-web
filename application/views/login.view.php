@@ -40,4 +40,4 @@ class LoginView extends CView
     {
         // TODO: implement
     }
-} // end of class
+}

@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use Core\Utils\CUtils;
 
-class Job {
-
+class Job
+{
     /**
      * @var string
      */
@@ -21,7 +21,7 @@ class Job {
      */
     public function getLevel(): string
     {
-        $job_levels = [
+        $joblevels = [
             'D' => 'Differential',
             'I' => 'Incremental',
             'F' => 'Full',
@@ -32,7 +32,7 @@ class Job {
             'A' => 'Data'
         ];
 
-        return $job_levels[$this->level];
+        return $joblevels[$this->level];
     }
 
     /**

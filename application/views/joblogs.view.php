@@ -36,7 +36,7 @@ class JobLogsView extends CView
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        
+
         $this->templateName = 'joblogs.tpl';
         $this->name = 'Job logs';
         $this->title = 'Bacula job log';

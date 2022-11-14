@@ -64,10 +64,10 @@ class CDBPagination
         if ($current_page === 1) {
             $this->offset = 0;
         } else {
-            $this->offset = ($current_page -1) * $this->limit;
+            $this->offset = ($current_page - 1) * $this->limit;
         }
 
-        $this->paginationLink = 'index.php?page='. Sanitizer::sanitize($this->request->query->getAlpha('page'));
+        $this->paginationLink = 'index.php?page=' . Sanitizer::sanitize($this->request->query->getAlpha('page'));
 
         // Append filter and options from submited form values
         // from POST
@@ -84,7 +84,7 @@ class CDBPagination
             }
         }
     }
-    
+
     /**
      * getOffset
      *
@@ -94,7 +94,7 @@ class CDBPagination
     {
         return $this->offset;
     }
-         
+
     /**
      * getLimit
      *
@@ -129,59 +129,59 @@ class CDBPagination
                 $this->currentView->assign('pagination_current', $this->paginationCurrent);
 
                 // if requested pagination page is the first one
-                if ($this->request->query->get('pagination_page') == "1") {
-                    $this->currentView->assign('first', 'disabled');
-                } else {
-                    $this->currentView->assign('first', '');
-                }
+            if ($this->request->query->get('pagination_page') == "1") {
+                $this->currentView->assign('first', 'disabled');
+            } else {
+                $this->currentView->assign('first', '');
+            }
 
                 // if requested pagination page is the last one
-                if ($this->request->query->getInt('pagination_page') == $this->paginationMax) {
-                    $this->currentView->assign('last', 'disabled');
-                } else {
-                    $this->currentView->assign('last', '');
-                }
+            if ($this->request->query->getInt('pagination_page') == $this->paginationMax) {
+                $this->currentView->assign('last', 'disabled');
+            } else {
+                $this->currentView->assign('last', '');
+            }
 
                 // if requested pagination page is in first 4 pages, disable previous button
-                if ($this->request->query->getInt('pagination_page') < $this->paginationSteps) {
-                    $this->currentView->assign('previous_enabled', 'disabled');
-                } else {
-                    $this->currentView->assign('previous_enabled', '');
-                }
+            if ($this->request->query->getInt('pagination_page') < $this->paginationSteps) {
+                $this->currentView->assign('previous_enabled', 'disabled');
+            } else {
+                $this->currentView->assign('previous_enabled', '');
+            }
 
                 // if requested pagination page is within $this->paginationSteps, disable next link
-                if ($this->request->query->getInt('pagination_page') > ($this->paginationMax - $this->paginationSteps)) {
-                    $this->currentView->assign('next_enabled', 'disabled');
-                }else {
-                    $this->currentView->assign('next_enabled', '');
-                }
+            if ($this->request->query->getInt('pagination_page') > ($this->paginationMax - $this->paginationSteps)) {
+                $this->currentView->assign('next_enabled', 'disabled');
+            } else {
+                $this->currentView->assign('next_enabled', '');
+            }
 
                 $this->currentView->assign('previous', $this->request->query->getInt('pagination_page') - $this->paginationSteps);
-                $this->currentView->assign('next', $this->request->query->getInt('pagination_page')+$this->paginationSteps);
+                $this->currentView->assign('next', $this->request->query->getInt('pagination_page') + $this->paginationSteps);
+        } else {
+            $this->currentView->assign('pagination_current', $this->paginationCurrent);
+            $this->currentView->assign('previous_enabled', 'disabled');
+            $this->currentView->assign('previous', '1');
+            $this->currentView->assign('next', $this->paginationSteps + 1);
+
+            if ($this->paginationMax == 1) {
+                $this->currentView->assign('next_enabled', 'disabled');
+                $this->currentView->assign('last', 'disabled');
             } else {
-                $this->currentView->assign('pagination_current', $this->paginationCurrent);
-                $this->currentView->assign('previous_enabled', 'disabled');
-                $this->currentView->assign('previous', '1');
-                $this->currentView->assign('next', $this->paginationSteps+1);
-
-                if($this->paginationMax == 1) {
-                    $this->currentView->assign('next_enabled', 'disabled');
-                    $this->currentView->assign('last', 'disabled');
-                }else {
-                    $this->currentView->assign('next_enabled', '');
-                    $this->currentView->assign('last', '');
-                }
-
-                $this->currentView->assign('first', 'disabled');
+                $this->currentView->assign('next_enabled', '');
+                $this->currentView->assign('last', '');
             }
+
+            $this->currentView->assign('first', 'disabled');
+        }
 
         // these lines below are buggy :(
         if ($this->paginationMax == $this->paginationCurrent) {
-            $this->currentView->assign('pagination_range', ($this->offset) . ' to '. $this->filteredRow);
+            $this->currentView->assign('pagination_range', ($this->offset) . ' to ' . $this->filteredRow);
         } else {
-            $this->currentView->assign('pagination_range', ($this->offset) . ' to '. ($this->offset+$this->limit));
+            $this->currentView->assign('pagination_range', ($this->offset) . ' to ' . ($this->offset + $this->limit));
         }
-    
+
         $this->currentView->assign('pagination_max', $this->paginationMax);
         $this->currentView->assign('pagination_steps', $this->paginationSteps);
 

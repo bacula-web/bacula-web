@@ -4,8 +4,14 @@
 Installation overview
 =====================
 
-Bacula-Web is a web application written in PHP and should be run on Apache httpd server (Nginx works fine too).
+Bacula-Web is a web application written in PHP which could be used with web servers listed below
 
-Before starting the installation of Bacula-Web, please make sure you have a valid ssh or console access to your server.
+   * Apache web server
+   * Nginx
 
-.. important:: Ability to run shell commands as root or using sudo is also a requirement.
+Before starting the installation of Bacula-Web, please you meet the requirements listed below
+
+   * you have access to the server using ssh or console access
+   * you have root access or sudo privileges
+
+.. important:: Installing Bacula-Web using root account is not recommended, use a regular account with sudo privileges

@@ -21,7 +21,6 @@ namespace Core\Utils;
 
 class HtmlHelper
 {
-
     /**
     * Return html header
     * @return string

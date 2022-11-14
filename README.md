@@ -60,7 +60,7 @@ Have a look at [Bacula-Web documentation](http://docs.bacula-web.org) hosted by 
 
 ### Installation
 
-Bacula-Web can be installed [from the source archive](https://docs.bacula-web.org/en/latest/02_install/installarchive.html), but the easiest and recommanded way to install it is by using [Composer](https://getcomposer.org/).
+Bacula-Web can be installed [from the source archive](https://docs.bacula-web.org/en/latest/02_install/installarchive.html), but the easiest and recommended way to install it is by using [Composer](https://getcomposer.org/).
 
 To proceeed, make sure you have Composer installed using [these instructions](https://getcomposer.org/download/)
 

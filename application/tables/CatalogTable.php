@@ -28,17 +28,17 @@ class CatalogTable extends Table
 {
     protected $tablename = 'Version';
     private $dbVersionId = '';
- 
+
     // ==================================================================================
-    // Function: 	get_Size()
-    // Parameters:	$pdo_connection - valid PDO object instance
-    // Return:		Database size
+    // Function:    get_Size()
+    // Parameters:  $pdo_connection - valid PDO object instance
+    // Return:      Database size
     // ==================================================================================
 
     public function get_Size($catalog_id)
     {
         $db_name    = FileConfig::get_Value('db_name', $catalog_id);
-        
+
         switch ($this->db->getDriverName()) {
             case 'mysql':
              // Return N/A for MySQL server prior version 5 (no information_schemas)
@@ -48,13 +48,13 @@ class CatalogTable extends Table
                      'fields'  => array("table_schema AS 'database', (sum( data_length + index_length) / 1024 / 1024 ) AS 'dbsize'"),
                      'where'   => array( "table_schema = '$db_name'" ),
                      'groupby' => 'table_schema' );
-                                       
+
                     $result        = $this->run_query(CDBQuery::get_Select($statment, $this->pdo));
                     $db_size    = $result->fetch();
                     $db_size     = $db_size['dbsize'] * 1024 * 1024;
                     return CUtils::Get_Human_Size($db_size);
                 } else {
-                    echo 'Not supported ('. $this->db->getServerVersion().') <br />';
+                    echo 'Not supported (' . $this->db->getServerVersion() . ') <br />';
                 }
                 break;
             case 'pgsql':
@@ -80,10 +80,10 @@ class CatalogTable extends Table
             'fields' => array('VersionId'),
             'limit' => array( 'count' => 1, 'offset' => 0)
         ), $this->db->getDriverName());
-        
+
         $result = $this->run_query($sqlQuery);
-        $this->dbVersionId = intval($result->fetchColumn()); 
-        
+        $this->dbVersionId = intval($result->fetchColumn());
+
         return $this->dbVersionId;
     }
 }

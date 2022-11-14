@@ -1,8 +1,8 @@
 .. _install/installnginx:
 
-=============================
-Nginx web server installation
-=============================
+================
+Nginx web server
+================
 
 Before you start
 ================
@@ -86,7 +86,7 @@ Define a new virtual server configuration like below.
       }
     }
 
-.. important:: As of version 8.6.0, the DocumentRoot must be set to the public sub-folder.
+.. important:: Please note that as of version 8.6.0, the DocumentRoot must be set to the public sub-folder.
 
 Test your configuration
 
@@ -100,7 +100,7 @@ Restart Nginx to apply configuration changes
 
     $ sudo /etc/init.d/nginx restart
 
-Once your web server is ready, you can process with Bacula-Web installation.
+Once your web server is ready, you can proceed with Bacula-Web installation.
 
 You have now two different options
 

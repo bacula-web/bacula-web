@@ -38,12 +38,12 @@ class VolumesView extends CView
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        
+
         $this->templateName = 'volumes.tpl';
         $this->name = 'Volumes report';
         $this->title = 'Bacula volume(s) overview';
     }
-    
+
     public function prepare(Request $request)
     {
         $session = new Session();
@@ -72,7 +72,7 @@ class VolumesView extends CView
         // Pools list filter
         $pools = new PoolTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
         $pools_list = array();
-        
+
         // Create pools list
         foreach ($pools->getPools() as $pool) {
             $pools_list[$pool['poolid']] = $pool['name'];
@@ -109,20 +109,20 @@ class VolumesView extends CView
 
         if ($volume_orderby_asc === 'Asc') {
             $this->assign('orderby_asc_checked', 'checked');
-        }else {
+        } else {
             $this->assign('orderby_asc_checked', '');
         }
 
         // Set inchanger checkbox to unchecked by default
-        if($request->request->has('filter_inchanger')) {
+        if ($request->request->has('filter_inchanger')) {
             $where[] = 'Media.inchanger = :inchanger';
             $params['inchanger'] = 1;
             $this->assign('inchanger_checked', 'checked');
-        }else {
+        } else {
             $this->assign('inchanger_checked', '');
         }
 
-        $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten', 
+        $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten',
         'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
 
         $sqlQuery = CDBQuery::get_Select(array('table' => $volumes->getTableName(),
@@ -135,14 +135,14 @@ class VolumesView extends CView
                                             'limit' => [
                                                 'count' => $pagination->getLimit(),
                                                 'offset' => $pagination->getOffset() ]
-                                            ),$volumes->get_driver_name());
+                                            ), $volumes->get_driver_name());
 
         $countQuery = CDBQuery::get_Select([
             'table' => $volumes->getTableName(),
             'fields' => ['COUNT(*) as row_count'],
             'where' => $where ]);
 
-        foreach($pagination->paginate($volumes, $sqlQuery, $countQuery, $params) as $volume) {
+        foreach ($pagination->paginate($volumes, $sqlQuery, $countQuery, $params) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
@@ -178,17 +178,17 @@ class VolumesView extends CView
             } else {
                 $volume['inchanger'] = '<span class="glyphicon glyphicon-ok"></span>';
             }
-      
+
             // Set volume status icon
             $volume['status_icon'] = $volume_status[ $volume['volstatus'] ];
 
             // Format voljobs
             $volume['voljobs'] = CUtils::format_Number($volume['voljobs']);
-      
+
             // add volume in volumes list array
             $volumes_list[] = $volume;
         } // end foreach
-   
+
         $this->assign('pool_id', $pool_id);
         $this->assign('volumes', $volumes_list);
 

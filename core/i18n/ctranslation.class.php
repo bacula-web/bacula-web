@@ -23,28 +23,30 @@ class CTranslation
 {
     private $language;
     private $charset;
-    private $locale_path;
+    private $localePath;
     private $domaine;
 
-    public function __construct($lang = 'en_EN')
+    /**
+     * @param string $lang
+     */
+    public function __construct(string $lang = 'en_EN')
     {
         $this->language     = $lang;
         $this->charset      = 'UTF-8';
         $this->domaine      = 'messages';
-        $this->locale_path  = LOCALE_DIR;
+        $this->localePath  = LOCALE_DIR;
     }
 
-    public function set_Language(&$template)
+    /**
+     * @return void
+     */
+    public function setLanguage(): void
     {
-        // Template engine block registration
-        $template->register_block('t', 'smarty_block_t');
-
-        // Setting up language
-        putenv("LANGUAGE=" . $this->language . '.' . $this->charset);
-        putenv("LANG=" . $this->language . '.' . $this->charset);
+        putenv('LANGUAGE=' . $this->language . '.' . $this->charset);
+        putenv('LANG=' . $this->language . '.' . $this->charset);
         setlocale(LC_ALL, $this->language . '.' . $this->charset);
 
-        bindtextdomain($this->domaine, $this->locale_path);
+        bindtextdomain($this->domaine, $this->localePath);
         bind_textdomain_codeset($this->domaine, $this->charset);
         textdomain($this->domaine);
     }

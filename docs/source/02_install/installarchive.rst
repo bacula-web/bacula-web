@@ -25,9 +25,9 @@ and download the archive by running this command
 
 ::
 
-   # curl -O -L https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/bacula-web-8.3.2.tgz
+   # curl -O -L https://github.com/bacula-web/bacula-web/releases/download/v8.6.3/bacula-web-8.6.3.tgz
 
-.. important:: Since Bacula-Web version 8.3.2, compressed archive and signature files are hosted on GitHub.
+.. important:: Since Bacula-Web version 8.3.2, compressed archive and signature files are available in `GitHub releases`_.
 
 Verify archive signature (optional)
 ===================================
@@ -37,10 +37,10 @@ Both SHA 256 and 512 signature files are available from Bacula-Web project relea
 I'd strongly suggest to verify the integrity of the compressed archive you downloaded before proceeding to the installation.
 
 **SHA256**
-`https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/sha256sum.txt <https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/sha256sum.txt>`_
+`https://github.com/bacula-web/bacula-web/releases/download/v8.6.3/sha256sum.txt <https://github.com/bacula-web/bacula-web/releases/download/v8.6.3/sha256sum.txt>`_
 
 **SHA512**
-`https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/sha512sum.txt <https://github.com/bacula-web/bacula-web/releases/download/v8.3.2/sha512sum.txt>`_
+`https://github.com/bacula-web/bacula-web/releases/download/v8.6.3/sha512sum.txt <https://github.com/bacula-web/bacula-web/releases/download/v8.6.3/sha512sum.txt>`_
 
 Download the SHA sum file using the link above (adapt the version, the links are just examples).
 
@@ -58,7 +58,7 @@ Both command should output something like below
 
 ::
 
-  bacula-web-8.3.2.tgz: OK
+  bacula-web-8.6.3.tgz: OK
 
 Decompress the archive
 ======================
@@ -67,7 +67,7 @@ Decompress the archive
 
 ::
 
-   # tar xvf bacula-web-latest.tgz
+   # tar -xvf bacula-web-latest.tgz
  
 **On Debian / Ubuntu**
 
@@ -96,3 +96,5 @@ Change files/folders permissions
 .. note:: For those who are using php-fpm, or any other web server stack, the basic idea to ensure Bacula-Web will properly, is to give the right ownership and permission to the cache folder. So make sure the user running the web server process is the owner of the **application/views/cache** folder, or have enough permissions to write into this folder. 
 
 It's now time to :ref:`configure Bacula-Web <install/configure>`
+
+.. _GitHub releases: https://github.com/bacula-web/bacula-web/releases

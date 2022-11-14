@@ -50,7 +50,7 @@ class SettingsView extends CView
         if ($request->request->has('action')) {
             switch (Sanitizer::sanitize($request->request->get('action'))) {
                 case 'createuser':
-                    $username = Sanitizer::sanitize( $request->request->get('username'));
+                    $username = Sanitizer::sanitize($request->request->get('username'));
                     $email = Sanitizer::sanitize($request->request->get('email'));
 
                     $result = $userTable->addUser(
@@ -74,11 +74,10 @@ class SettingsView extends CView
         if (!FileConfig::open(CONFIG_FILE)) {
             throw new Exception("The configuration file is missing");
         } else {
-
             // Check if datetime_format is set, otherwise, set default datetime_format
             if (FileConfig::get_Value('datetime_format') != null) {
                 $this->assign('config_datetime_format', FileConfig::get_Value('datetime_format'));
-            }else {
+            } else {
                 $this->assign('config_datetime_format', 'Y-m-d H:i:s');
             }
 
@@ -103,7 +102,7 @@ class SettingsView extends CView
                 if ($config_hide_empty_pools == true) {
                     $this->assign('config_hide_empty_pools', 'checked');
                 }
-            }else{
+            } else {
                 $this->assign('config_hide_empty_pools', '');
             }
 
@@ -114,7 +113,7 @@ class SettingsView extends CView
             if (FileConfig::get_Value('enable_users_auth') !== null && is_bool(FileConfig::get_Value('enable_users_auth'))) {
                 $config_enable_users_auth = FileConfig::get_Value('enable_users_auth');
             }
-            
+
             if ($config_enable_users_auth == true) {
                 $this->assign('config_enable_users_auth', 'checked');
             }
@@ -129,7 +128,7 @@ class SettingsView extends CView
 
             if ($config_debug == true) {
                 $this->assign('config_debug', 'checked');
-            }else {
+            } else {
                 $this->assign('config_debug', '');
             }
         }

@@ -25,40 +25,45 @@ class File
 {
     protected static $config_file;
     protected static $config;
-     
+
     // ==================================================================================
-    // Function: 	__constructor()
-    // Parameters:	none
-    // Return:		none
+    // Function:    __constructor()
+    // Parameters:  none
+    // Return:      none
     // ==================================================================================
 
     private function __construct()
     {
         // Nothing to do here
     }
-     
+
     // ==================================================================================
-    // Function: 	open()
-    // Parameters:	none
-    // Return:		true or false if the file doesn't exist or unreadable
+    // Function:    open()
+    // Parameters:  none
+    // Return:      true or false if the file doesn't exist or unreadable
     // ==================================================================================
 
-    public static function open($file)
+    /**
+     * @param string $file
+     * @return bool
+     * @throws ConfigFileException
+     */
+    public static function open(string $file): bool
     {
         global $config;
-        
+
         // static variable singleton
         if (!self::$config_file) {
             self::$config_file = $file;
         }
-        
+
         // Check if config file exist and is readable, then include it
         if (is_readable(self::$config_file)) {
             require_once(self::$config_file);
             self::$config = $config;
             return true;
         } else {
-            throw new Exception("Config file not found or bad file permissions");
+            throw new ConfigFileException('Config file not found or not readable');
         }
-    } // end function open()
+    }
 }
