@@ -4,6 +4,7 @@
 
 - General
   - Fixed Composer dependency problem with smarty/smarty (see #131)
+    Big thanks to @lrosenman for his bug report and contribution
   - Bumped smarty/smarty to version 4.2.1
   - Improved support for PHP >= 8.0
   - Fixed PSR12 code style warnings
@@ -19,6 +20,7 @@
 - Documentation
   - Documentation has been fixed/updated (see #138)
   - Added instructions for Lighttpd web server (see #129)
+    Big thanks to @sruckh for his bug report and contribution
 
 ### Fixed bug(s)
 
