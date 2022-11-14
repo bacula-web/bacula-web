@@ -1,4 +1,4 @@
-## Bacula-Web 8.6.3 (November dd 2022)
+## Bacula-Web 8.6.3 (November 15th 2022)
 
 ### Changelog
 
