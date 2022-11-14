@@ -11,6 +11,7 @@ Installation
    requirements
    apache-installation
    nginx-installation
+   lighttpd-installation
    installarchive
    installcomposer
    upgrade

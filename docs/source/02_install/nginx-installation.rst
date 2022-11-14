@@ -1,8 +1,8 @@
 .. _install/installnginx:
 
-=============================
-Nginx web server installation
-=============================
+================
+Nginx web server
+================
 
 Before you start
 ================
