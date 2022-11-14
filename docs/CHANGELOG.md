@@ -18,12 +18,13 @@
 
 - Documentation
   - Documentation has been fixed/updated (see #138)
-  - 
-
+  - Added instructions for Lighttpd web server (see #129)
 
 ### Fixed bug(s)
 
+- #129 [doc] - Add instructions for Lighttpd web server
 - #131 [bug] - smarty/smarty is not resolvable using PHP >= 8.0
+- #133 [core] - Improve testing and code coverage
 - #134 [bug] - Error page should not be too verbose if debug mode is disabled
 - #136 [bug] - Protected assets folder permissions not checked properly on test page
 - #138 [doc] - Documentation needs to be updated
