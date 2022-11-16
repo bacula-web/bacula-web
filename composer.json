@@ -1,86 +1,92 @@
 {
-   "name": "bacula-web/bacula-web",
-   "type": "project",
-   "description": "The open source web based reporting and monitoring tool for Bacula",
-   "keywords": ["php","reporting","monitoring","bacula"],
-   "homepage": "https://www.bacula-web.org",
-   "license": "GPL-2.0-only",
-   "authors": [
-      {
-         "name": "Davide Franco",
-         "email": "bacula-dev@dflc.ch",
-         "homepage": "https://www.bacula-web.org",
-         "role": "Developer"
-      }
-   ],
-   "config": {
-		"component-dir": "vendor/components",
-        "allow-plugins": {
-          "composer/installers": true,
-          "robloach/component-installer": true,
-          "oomphinc/composer-installers-extender": true
-      }
-	},
-   "require": {
-     "php": "^7.3|^8.0",
-      "ext-gettext": "*",
-      "ext-mbstring": "*",
-      "ext-openssl": "*",
-      "ext-pdo": "*",
-      "ext-sqlite3": "*",
-      "ext-posix": "*",
-      "novus/nvd3": "@stable",
-      "twbs/bootstrap": "3.4.1",
-      "eonasdan/bootstrap-datetimepicker": "@stable",
-      "smarty/smarty": "4.2.*",
-      "smarty-gettext/smarty-gettext": "@stable",
-      "components/font-awesome": "4.*",
-      "symfony/http-foundation": "^5.4"
-	},
-    "require-dev": {
-      "sebastian/phpcpd": "@stable",
-      "phpmd/phpmd": "@stable",
-      "squizlabs/php_codesniffer": "@stable",
-      "friendsofphp/php-cs-fixer": "@stable",
-      "phpunit/phpunit": "9.5.26"
-    },
-	"autoload": {
-      "psr-4": {
-        "Core\\": "core/",
-        "App\\": "application/"
-      },
-		"classmap": [
-          "core",
-          "application"
-		]
-	},
-    "scripts": {
-        "post-install-cmd": [
-          "php bwc publishAssets"
-        ],
-        "post-update-cmd": [
-          "php bwc publishAssets"
-        ],
-        "post-create-project-cmd": [
-          "php bwc publishAssets"
-        ]
-    },
-    "archive": {
-        "exclude": [
-          "/docs/source",
-          "/docs/theme",
-          ".gitignore",
-          ".eslintrc.yml",
-          ".codeclimate.yml",
-          ".eslintignore",
-          ".csslintrc",
-          ".htpasswd",
-          "sonar-project.properties",
-          ".github",
-          ".readthedocs.yaml",
-          "docs/requirements.txt",
-          ".tx",
-          "/tests"
-        ]
+  "name": "bacula-web/bacula-web",
+  "type": "project",
+  "description": "The open source web based reporting and monitoring tool for Bacula",
+  "keywords": [
+    "php",
+    "reporting",
+    "monitoring",
+    "bacula"
+  ],
+  "homepage": "https://www.bacula-web.org",
+  "license": "GPL-2.0-only",
+  "authors": [
+    {
+      "name": "Davide Franco",
+      "email": "bacula-dev@dflc.ch",
+      "homepage": "https://www.bacula-web.org",
+      "role": "Developer"
     }
+  ],
+  "config": {
+    "component-dir": "vendor/components",
+    "allow-plugins": {
+      "composer/installers": true,
+      "robloach/component-installer": true,
+      "oomphinc/composer-installers-extender": true
+    }
+  },
+  "require": {
+    "php": "^7.3|^8.0",
+    "ext-gettext": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*",
+    "ext-pdo": "*",
+    "ext-sqlite3": "*",
+    "ext-posix": "*",
+    "novus/nvd3": "@stable",
+    "twbs/bootstrap": "3.4.1",
+    "eonasdan/bootstrap-datetimepicker": "@stable",
+    "smarty/smarty": "4.2.*",
+    "smarty-gettext/smarty-gettext": "@stable",
+    "components/font-awesome": "4.*",
+    "symfony/http-foundation": "^5.4"
+  },
+  "require-dev": {
+    "sebastian/phpcpd": "@stable",
+    "phpmd/phpmd": "@stable",
+    "squizlabs/php_codesniffer": "@stable",
+    "friendsofphp/php-cs-fixer": "@stable",
+    "phpunit/phpunit": "9.5.26"
+  },
+  "autoload": {
+    "psr-4": {
+      "Core\\": "core/",
+      "App\\": "application/"
+    },
+    "classmap": [
+      "core",
+      "application"
+    ]
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "php bwc publishAssets"
+    ],
+    "post-update-cmd": [
+      "php bwc publishAssets"
+    ],
+    "post-create-project-cmd": [
+      "php bwc publishAssets"
+    ]
+  },
+  "archive": {
+    "exclude": [
+      "/docs/source",
+      "/docs/requirements.txt",
+      "/docs/Makefile",
+      ".gitignore",
+      ".eslintrc.yml",
+      ".codeclimate.yml",
+      ".eslintignore",
+      ".csslintrc",
+      ".phpcs.xml",
+      "sonar-project.properties",
+      ".github",
+      ".readthedocs.yaml",
+      ".tx",
+      "phpunit.xml",
+      "/tests"
+    ]
+  }
 }
