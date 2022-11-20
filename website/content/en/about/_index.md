@@ -63,4 +63,4 @@ Protect access to your Bacula-Web instance by using user authentication (enable 
 Gallery
 {{% /blocks/lead %}}
 
-![Bacula-Web gallery](/about/bacula-web-slides.gif "Image title")
+![Bacula-Web gallery](/about/bacula-web-slides.gif "Bacula-Web web UI screenshots")
