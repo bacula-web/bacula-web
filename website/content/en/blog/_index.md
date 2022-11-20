@@ -1,9 +1,11 @@
 ---
-title: "Docsy Blog"
+title: "Bacula-Web blog"
 linkTitle: "Blog"
 menu:
   main:
-    weight: 30
+    weight: 10
+cascade:
+  - type: "blog"    
 ---
 
 

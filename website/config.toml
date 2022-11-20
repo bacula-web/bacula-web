@@ -61,9 +61,11 @@ id = "UA-27806163-1"
 # Language configuration
 
 [languages]
+
 [languages.en]
+
 title = "Bacula-Web"
-description = "Backup reporting tool for Bacula"
+description = "Open source backup monitoring and reporting tool for Bacula"
 languageName ="English"
 # Weight used for sorting.
 weight = 1
@@ -86,10 +88,9 @@ weight = 1
 section = ["HTML", "RSS"]
 
 [params]
-
 description = "Backup reporting tool for Bacula"
-
 copyright = "Davide Franco"
+
 # privacy_policy = "https://policies.google.com/privacy"
 
 # First one is picked as the Twitter card image if not set on page.
@@ -191,16 +192,18 @@ enable = false
   url = "https://github.com/bacula-web/bacula-web"
   icon = "fab fa-github"
   desc = "Bacula-Web project on GitHub"
+
+[[params.links.developer]]
+  name = "GitHub discussions"
+  url = "https://github.com/bacula-web/bacula-web/discussions"
+  icon = "fa fa-envelope"
+  desc = "Discuss about the project"
+  
 #[[params.links.developer]]
 #  name = "Slack"
 #  url = "https://example.org/slack"
 #  icon = "fab fa-slack"
 #  desc = "Chat with other project developers"
-#[[params.links.developer]]
-#  name = "Developer mailing list"
-#  url = "https://example.org/mail"
-#  icon = "fa fa-envelope"
-#  desc = "Discuss development issues around the project"
 
 # hugo module configuration
 
@@ -218,18 +221,20 @@ enable = false
     disable = false    
 
 [menu]
-[[menu.main]]
-  identifier = 'github'
-  name = ' '
-  pre = '<i class="fab fa-github"></i>'
-  url = 'https://github.com/bacula-web/bacula-web'
-  weight = 60
 
 [[menu.main]]
   identifier = 'docs'
   name = 'Documentation'
   url = 'https://docs.bacula-web.org'
-  weight = 50
+  weight = 60
+  
+  
+[[menu.main]]
+  identifier = 'github'
+  name = ' '
+  pre = '<i class="fab fa-github"></i>'
+  url = 'https://github.com/bacula-web/bacula-web'
+  weight = 70
 
 [sitemap]
   changefreq = "weekly"
