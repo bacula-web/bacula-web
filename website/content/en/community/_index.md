@@ -53,12 +53,12 @@ A **huge thanks** to companies and people who already sponsored this project
 
 [![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
 
-> Thanks to JetBrains for his support on open source project
+> *Thanks to JetBrains for his support on open source project*
 
 ### Becoming a sponsor
 
 If you find Bacula-Web useful, and think it deserve a little help, please consider sponsoring the project using the link below
 
-<a href="https://www.buymeacoffee.com/baculaweb"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=baculaweb&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff"></a>
+[![Bacula-Web on BueMeACoffee](https://img.buymeacoffee.com/button-api/?emoji=&slug=baculaweb&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/baculaweb)
 
 {{% /pageinfo %}}
