@@ -20,7 +20,11 @@ Contributing to Bacula-Web project
 {{% /blocks/lead %}}
 
 {{% pageinfo color="primary" %}}
-Please follow the contribution guide
+Bacula-Web is an open source project.
+
+If you would like to contribute to the project, please read the following document
+
+* [Contribution guide](https://docs.bacula-web.org/en/latest/04_contribute/index.html)
 {{% /pageinfo %}}
 
 <!-- Become a sponsor -->
