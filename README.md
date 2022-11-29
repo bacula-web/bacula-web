@@ -4,11 +4,15 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
 
+<p align="center">
+<img src="https://www.bacula-web.org/bacula-web-dashboard.png" width="500px" alt="Bacula-Web dashboard"/>
+</p>
+
 Bacula-Web is a web based tool written in [PHP](https://php.net) which provides a summarized view of your [Bacula](https://www.bacula.org) backup infrastructure.
 
-Metrics and informations displayed in Bacula-Web are taken from [Bacula](https://www.bacula.org) catalog database, no need to setup bconsole, bvfs, etc.
+All the metrics and informations provided by Bacula-Web are taken from [Bacula](https://www.bacula.org) catalog database, so there's no need to setup bconsole, bvfs, etc
 
-In addition, the access to the database is made read-only, so your Bacula catalog database remains safe :)
+In addition, the accesses to the database are made read-only, so your Bacula catalog is not altered by Bacula-Web
 
 ---
 
@@ -19,68 +23,111 @@ Bacula-Web project has been revived since 2010.
 I tought that having an easy and useful web UI to monitor Bacula backup jobs, volumes, pools, etc. would be nice.
 So I decided to take care of this project which was almost abandonned since more than 4 years.
 
-You can find more information about the project timeline in the official documentation [here](https://docs.bacula-web.org/en/latest/01_about/about.html#the-project-history)
+For more information, please check the [project history](https://docs.bacula-web.org/en/latest/01_about/about.html#the-project-history)
 
-*This is my little contribution to [Bacula](http://www.bacula.org) community project. Hope you enjoy it !*
-
-<p align="center">
-<img src="https://www.bacula-web.org/bacula-web-dashboard.png" width="500px" alt="Bacula-Web dashboard"/>
-</p>
+> This project is my little contribution to [Bacula](http://www.bacula.org) community project.
+> I hope you'll find it useful and enjoy it !
 
 ---
 
-### Features
+### Main features
 
-* **Easy to setup**
-  > It takes only few minutes to setup Bacula-Web, read the [documentation](https://docs.bacula-web.org/en/latest/02_install/index.html)
-* **Install once**
-  > Install Bacula-Web once, then monitor as many Bacula directors you have in your infrastructure
-* **Secure**
-  > Users authentication is enabled by default, no Bacula's information are disclosed
-* **Dashboard**
-  > Bacula-Web dashboard gives you a general overview of your [Bacula](https://www.bacula.org) backup jobs, pools, volumes, etc.
-* **Use it in your native language**
-  > Bacula-Web has been translated in [more than 15 languages](https://www.transifex.com/bacula-web/public/) by the community users ❤️
-* **Jobs report**
-  > Monitor backup jobs from a single one page (filter and options are also available)
-* **Job Files report**
-  > List files and folders from backup job(s)
-* **Directors report**
-  > High-level report pages for all configured [Bacula](https://www.bacula.org) directors
-* **Pools and volumes**
-  > Display all your [Bacula](https://www.bacula.org) pools and volumes
+Bacula-Web provides tons of features such as
+
+- Main dashboard (gives you the overall status of your backups, volumes, etc. at a glance)
+- Pools and Volumes reports
+- Jobs report
+- Directors report
+- Job files report
+- Translated in more than 15 languages
+  Bacula-Web has been translated in [more than 15 languages](https://www.transifex.com/bacula-web/public/) by the community users ❤️
+- and even more ...
 
 ---
 
 ### Documentation
 
-Have a look at [Bacula-Web documentation](http://docs.bacula-web.org) hosted by [Read The Docs](https://readthedocs.org/) to get more informations about installation, configuration, upgrade, etc.
+Bacula-Web documentation is available using the link below
+[Bacula-Web documentation](http://docs.bacula-web.org)
+
+*Huge thanks to [Read The Docs](https://readthedocs.org/) :heart: *
 
 ---
 
-### Installation
+### Getting started
 
-Bacula-Web can be installed [from the source archive](https://docs.bacula-web.org/en/latest/02_install/installarchive.html), but the easiest and recommended way to install it is by using [Composer](https://getcomposer.org/).
+#### Requirements
 
-To proceeed, make sure you have Composer installed using [these instructions](https://getcomposer.org/download/)
+To run Bacula-Web, you'll need at least PHP 7.3 with following extensions enabled
 
-Then run the command below to install Bacula-Web
+- Gettext
+- Session
+- PDO
+- MySQL, postgreSQL
+- SQlite (required for user auth)
+- CLI
+- JSON
+- Posix
 
-```
-$ composer create-project --no-dev bacula-web/bacula-web bacula-web
-```
+You'll find more details in the [installation guide](https://docs.bacula-web.org/en/latest/02_install/requirements.html)
 
-Otherwise, Bacula-Web can be installed using the provided compressed archive or using Composer, check [Installation page](http://docs.bacula-web.org/en/latest/02_install/index.html) for more details
+#### Installation
 
-Latest stable release compressed archive can be found in [latest GitHub release](https://github.com/bacula-web/bacula-web/releases)
+The most recommended way to install Bacula-Web is by using [Composer](https://getcomposer.org/download)
+
+- Install required packages and setup one of the following web server of your choice
+  - [Nginx](https://docs.bacula-web.org/en/latest/02_install/nginx-installation.html)
+  - [Lighttpd](https://docs.bacula-web.org/en/latest/02_install/lighttpd-installation.html)
+  - [Apache](https://docs.bacula-web.org/en/latest/02_install/apache-installation.html)
+  
+- Make sure you have Composer installed on your server
+- Run the command below
+  ```shell
+  $ composer create-project --no-dev bacula-web/bacula-web bacula-web
+  $ cd bacula-web
+  $ composer check 
+  ```
+- Update the configuration based on your environment
+  ```shell
+  $ cp application/config.php.sample application/config.php
+  $ vim | nano application/config.php
+  ```
+- Setup users authentication
+  Run the command below and follow the instructions
+  ```shell
+  $ sudo -u www-data php bwc setupauth
+  ```
+- Test your setup using the two following options
+
+  ```shell
+  $ sudo -u www-data php bwc setupauth
+  ```
+  or use the test page https://bacula-web-url/index.php?page=test
+
+#### Alternative way (using the source archive)
+
+Bacula-Web could also be installed [from the source archive](https://docs.bacula-web.org/en/latest/02_install/installarchive.html) which contains
+all Composer dependencies pre-installed in it.
+
+**Important note:**
+
+> The only purpose of this pre-installed archive was to provide an easy way for users who wheren't able to install Composer on their servers
+> 
+> Please note that it will not be available once proper packages will be available
+
+More details about the installation or upgrade and configuration can be found in [the documentation](https://docs.bacula-web.org/en/latest/02_install/index.html)
 
 ---
 
 ### How to get help ?
 
-Best way to get help or ask a question is to submit a bug report using [GitHub project issues](https://github.com/bacula-web/bacula-web/issues)
+The best way to get help or ask a question is to submit a bug report using [GitHub project issues](https://github.com/bacula-web/bacula-web/issues).
 
-### How to contribute ?
+> Before submiting any issues, please have a look at the [Bugs and feature request guide](https://docs.bacula-web.org/en/latest/03_gethelp/support.html)
+
+For general questions or feedbacks, you can use [GitHub discussions](https://github.com/bacula-web/bacula-web/discussions)
+
+### Contribution
 
 #### Translations
 
@@ -88,15 +135,13 @@ If you want to help translating Bacula-Web in your language, please check the [C
 
 #### Developpment
 
-You can contribute by submitting a GitHub pull request, please have a look the [contribution guide](http://docs.bacula-web.org/en/latest/04_contribute/development.html) first.
+You can contribute by submitting a GitHub pull request, please check the [contribution guide](http://docs.bacula-web.org/en/latest/04_contribute/development.html) for more details.
 
 ---
 
 ### License
 
-Bacula-Web source code, web site and documentation are licensed under **GNU GPLv2**
-
-For more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/master/LICENSE)
+Bacula-Web source code, web site and documentation are provided under [GPLv2](https://github.com/bacula-web/bacula-web/blob/master/LICENSE) license
 
 ---
 
@@ -110,9 +155,7 @@ For more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/ma
 
 ### Support the project
 
-Bacula-Web project is mainly maintained by myself on spare-time since October 2010.
-
-I don't get paid for this work or receive any financial support from any company. I do it only as I'd like to give something back for free to Bacula's community users.
+Bacula-Web is a free (like a bird) and open source project maintained on spare time, with the great help from the community.
 
 If you enjoy using Bacula-Web and would like to encourage the project efforts, please consider making a small donation using the buttons below.
 
