@@ -25,7 +25,7 @@ So I decided to take care of this project which was almost abandonned since more
 
 For more information, please check the [project history](https://docs.bacula-web.org/en/latest/01_about/about.html#the-project-history)
 
-> This project is my little contribution to [Bacula](http://www.bacula.org) community project.
+> This project is just my little contribution to [Bacula](http://www.bacula.org) community project.
 > I hope you'll find it useful and enjoy it !
 
 ---
@@ -40,7 +40,7 @@ Bacula-Web provides tons of features such as
 - Directors report
 - Job files report
 - Translated in more than 15 languages
-  Bacula-Web has been translated in [more than 15 languages](https://www.transifex.com/bacula-web/public/) by the community users ❤️
+  Bacula-Web has been translated in [more than 15 languages](https://www.transifex.com/bacula-web/public/) by the community users :heart:
 - and even more ...
 
 ---
@@ -50,7 +50,7 @@ Bacula-Web provides tons of features such as
 Bacula-Web documentation is available using the link below
 [Bacula-Web documentation](http://docs.bacula-web.org)
 
-*Huge thanks to [Read The Docs](https://readthedocs.org/) :heart: *
+A huge thanks to [Read The Docs](https://readthedocs.org/) for providing a free documentation hosting :heart:
 
 ---
 
