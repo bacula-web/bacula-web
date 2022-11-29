@@ -61,7 +61,7 @@ A **huge thanks** to companies and people who already sponsored this project
 
 ### Becoming a sponsor
 
-If you find Bacula-Web useful, and think it deserve a little help, please consider sponsoring the project using the link below
+If you find Bacula-Web useful, and you think it deserves a little help, please consider sponsoring the project using the link below
 
 [![Bacula-Web on BueMeACoffee](https://img.buymeacoffee.com/button-api/?emoji=&slug=baculaweb&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/baculaweb)
 
