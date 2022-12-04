@@ -1,3 +1,14 @@
+## Bacula-Web 8.7.0 (December dd 2022)
+
+### Changelog
+
+- Core
+  - Bumped FontAwesome to version 6.2.0 (see #141)
+
+### Fixed bug(s)
+
+### New feature(s)
+
 ## Bacula-Web 8.6.3 (November 15th 2022)
 
 ### Changelog
