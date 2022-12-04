@@ -45,7 +45,7 @@ class HtmlHelper
   <link rel="stylesheet" href="css/default.css">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/all.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
 </head>
@@ -89,7 +89,7 @@ class HtmlHelper
     public static function getHtmlFooter()
     {
         $htmlFooter = '<!-- JQuery and Bootstrap Javascript -->
-                    <script src="js/jquery/jquery.min.js"></script>
+                    <script src="js/jquery.min.js"></script>
                     <script src="js/moment-with-locales.js"></script>
                     <script src="js/bootstrap.min.js"></script>
 

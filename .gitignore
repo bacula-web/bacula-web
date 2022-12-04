@@ -12,6 +12,7 @@ docs/build
 public/css/*
 public/js/*
 public/fonts/*
+public/webfonts/*
 public/img/*
 
 # IDE & tools

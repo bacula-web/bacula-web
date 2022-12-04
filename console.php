@@ -263,15 +263,44 @@ switch ($argv[1]) {
 
         $assets = [
             'css' => [
+                /**
+                 * Bootstrap CSS
+                 */
                 'vendor/twbs/bootstrap/dist/css/bootstrap.min.css',
+                'vendor/twbs/bootstrap/dist/css/bootstrap.css.map',
+                'vendor/twbs/bootstrap/dist/css/bootstrap.min.css.map',
+
+                /**
+                 * Bootstrap theme CSS
+                 */
                 'vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css',
+                'vendor/twbs/bootstrap/dist/css/bootstrap-theme.css.map',
+                'vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css.map',
+
+                /**
+                 * Bootstrap datetimepicker
+                 */
                 'vendor/components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+
+                /**
+                 * Bacula-Web custom css
+                 */
                 'application/assets/css/default.css',
-                'vendor/components/font-awesome/css/font-awesome.min.css',
+
+                /**
+                 * Font Awesome CSS
+                 */
+                'vendor/components/font-awesome/css/fontawesome.min.css',
+                'vendor/components/font-awesome/css/all.css',
+
+                /**
+                 * Novus D3 CSS
+                 */
                 'vendor/novus/nvd3/build/nv.d3.css'
             ],
             'js' => [
                 'vendor/novus/nvd3/build/nv.d3.js',
+                'vendor/novus/nvd3/build/nv.d3.js.map',
                 'vendor/mbostock/d3/d3.min.js',
                 'vendor/components/jquery/jquery.min.js',
                 'vendor/moment/moment/min/moment-with-locales.js',
@@ -284,12 +313,26 @@ switch ($argv[1]) {
                 'application/assets/images/bacula-web-logo.png'
             ],
             'fonts' => [
+                /**
+                 * Bootstrap Gliyph icons
+                 */
                 'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff2',
                 'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff',
                 'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.ttf',
-                'vendor/components/font-awesome/fonts/fontawesome-webfont.woff2',
-                'vendor/components/font-awesome/fonts/fontawesome-webfont.woff',
-                'vendor/components/font-awesome/fonts/fontawesome-webfont.ttf'
+            ],
+            'webfonts' => [
+                /**
+                 * Font Awesome web fonts
+                 */
+                'vendor/components/font-awesome/webfonts/fa-brands-400.ttf',
+                'vendor/components/font-awesome/webfonts/fa-brands-400.woff2',
+                'vendor/components/font-awesome/webfonts/fa-regular-400.ttf',
+                'vendor/components/font-awesome/webfonts/fa-regular-400.woff2',
+                'vendor/components/font-awesome/webfonts/fa-solid-900.ttf',
+                'vendor/components/font-awesome/webfonts/fa-solid-900.woff2',
+                'vendor/components/font-awesome/webfonts/fa-v4compatibility.ttf',
+                'vendor/components/font-awesome/webfonts/fa-v4compatibility.woff2',
+
             ]
         ];
 
@@ -316,6 +359,13 @@ switch ($argv[1]) {
             $filename = basename($font);
             copy($font, "public/fonts/$filename");
         }
+
+        // Copy web fonts assets
+        foreach ($assets['webfonts'] as $font) {
+            $filename = basename($font);
+            copy($font, "public/webfonts/$filename");
+        }
+
         break;
     default:
         exit("\nError: unknown command, use <php bwc help> for further informations\n\n");

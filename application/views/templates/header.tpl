@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/default.css">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
 
     <!-- nvd3 javascript -->
     <script src="js/d3.min.js" charset="utf-8"></script>
@@ -26,6 +26,9 @@
     <link href="css/nv.d3.css" rel="stylesheet" type="text/css">
 
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+    <link rel="stylesheet" href="css/all.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 <body>
@@ -70,8 +73,7 @@
                         <!-- Catalog selector -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                        class="fa fa-database fa-fw"></i> {$catalog_label} <span
-                                        class="caret"></span></a>
+                                        class="fa fa-database"></i> {$catalog_label} <span class="caret"></span></a>
 
                             <ul class="dropdown-menu">
                                 {foreach from=$catalogs key=catalog_id item=catalog_name}

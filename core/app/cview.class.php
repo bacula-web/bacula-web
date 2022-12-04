@@ -90,7 +90,7 @@ class CView extends Smarty
             $breadcrumb = '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
             $breadcrumb .= '<li class="active">' . $this->name . '</li>';
         } else {
-            $breadcrumb = '<li class="active"> <i class="fa fa-home fa-fw"></i> ' . $this->name . '</li>';
+            $breadcrumb = '<li class="active"> <i class="fa-light fa-home fa-fw"></i> ' . $this->name . '</li>';
         }
         $this->assign('breadcrumb', $breadcrumb);
 
