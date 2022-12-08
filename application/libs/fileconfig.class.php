@@ -19,6 +19,7 @@
 
 namespace App\Libs;
 
+use Core\Utils\ConfigFileException;
 use Core\Utils\File;
 use Exception;
 
@@ -73,7 +74,7 @@ class FileConfig extends File
     {
         // Check if the $global_config have been already set first
         if (!isset(self::$config_file)) {
-            throw new Exception("The configuration is missing or there's something wrong in it");
+            throw new ConfigFileException("The configuration is missing or there's something wrong with it");
         }
 
         // If $catalog_id is not null, get value from this catalog
@@ -81,7 +82,7 @@ class FileConfig extends File
             if (is_array(parent::$config[$catalog_id])) {
                 return parent::$config[$catalog_id][$parameter];
             } else {
-                throw new Exception("Configuration error: catalog id <$catalog_id> is empty or does not exist");
+                throw new ConfigFileException("Configuration error: catalog id <$catalog_id> is empty or does not exist");
             }
         } else {
             if (isset(parent::$config[$parameter])) {

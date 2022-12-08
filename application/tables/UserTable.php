@@ -9,7 +9,7 @@ use PDOStatement;
 
 class UserTable extends Table
 {
-    protected $tablename = 'Users';
+    protected ?string $tablename = 'Users';
 
     /**
      * @param $username

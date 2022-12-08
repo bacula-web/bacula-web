@@ -8,7 +8,7 @@
 <div class="container">
 
   <div class="page-header">
-    <h3>{$page_name} <small>{t}Report per Bacula backup job name{/t}</small></h3>
+    <h3>{t}Backup job report{/t}<small>&nbsp;{t}Report per Bacula backup job name{/t}</small></h3>
   </div>
 
     <!-- Backup job report -->

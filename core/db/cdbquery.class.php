@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -20,6 +20,7 @@
 namespace Core\Db;
 
 use Exception;
+use TypeError;
 
 class CDBQuery
 {
@@ -47,7 +48,7 @@ class CDBQuery
         $where = '';
 
         if (empty($param)) {
-            throw new Exception("Missing parameters: you should provide an array");
+            throw new TypeError("Missing parameters: you should provide an array");
         }
 
         // Buidling SQL query
@@ -122,12 +123,12 @@ class CDBQuery
         return $query;
     }
 
-    // ==================================================================================
-    // Function:    get_Timestamp_Interval()
-    // Parameters:  $period array containing start and end timestamp
-    // Return:      return table with correct case
-    // ==================================================================================
-    public static function get_Timestamp_Interval($driver, $period_timestamp = array())
+    /**
+     * @param string $driver
+     * @param [] $period_timestamp
+     * @return array
+     */
+    public static function get_Timestamp_Interval(string $driver, $period_timestamp = []): array
     {
         $period = array();
 

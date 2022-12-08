@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,35 +19,28 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Views;
+namespace App\Controller;
 
 use App\Tables\JobTable;
-use Core\App\CView;
+use Core\App\Controller;
 use Core\Db\CDBQuery;
 use Core\Db\DatabaseFactory;
+use Core\Exception\AppException;
 use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
 use Exception;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class BackupJobView extends CView
+class BackupJobController extends Controller
 {
     /**
-     * @param Request $request
+     * @return Response
+     * @throws Exception
      */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'backupjob-report.tpl';
-        $this->name = 'Backup job report';
-        $this->title = 'Report per Bacula backup job name';
-    }
-
-    public function prepare(Request $request)
+    public function prepare(): Response
     {
         require_once BW_ROOT . '/core/const.inc.php';
 
@@ -58,50 +53,50 @@ class BackupJobView extends CView
 
         // Period list
         $periods_list = array( '7' => "Last week", '14' => "Last 2 weeks", '30' => "Last month");
-        $this->assign('periods_list', $periods_list);
+        $this->setVar('periods_list', $periods_list);
 
         // Stored Bytes on the defined period
         $jobs = new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
 
         // Get backup job(s) list
         $jobslist = $jobs->get_Jobs_List(null, 'B');
-        $this->assign('jobs_list', $jobslist);
+        $this->setVar('jobs_list', $jobslist);
 
         // Check backup job name from $_POST request
         $backupjob_name = null;
 
-        if ($request->getMethod() === 'POST') {
-            $backupjob_name = $request->request->get('backupjob_name');
-        } elseif ($request->getMethod() === 'GET') {
-            $backupjob_name = $request->query->get('backupjob_name');
+        if ($this->request->getMethod() === 'POST') {
+            $backupjob_name = $this->request->request->get('backupjob_name');
+        } elseif ($this->request->getMethod() === 'GET') {
+            $backupjob_name = $this->request->query->get('backupjob_name');
         }
         $backupjob_name = Sanitizer::sanitize($backupjob_name);
 
         $where = array();
 
         if ($backupjob_name == null) {
-            $this->assign('selected_jobname', '');
-            $this->assign('no_report_options', 'true');
+            $this->setVar('selected_jobname', '');
+            $this->setVar('no_report_options', 'true');
 
             // Set selected period
-            $this->assign('selected_period', 7);
+            $this->setVar('selected_period', 7);
         } else {
-            $this->assign('no_report_options', 'false');
+            $this->setVar('no_report_options', 'false');
 
             // Make sure provided backupjob_name exist
             if (!in_array($backupjob_name, $jobslist)) {
-                throw new Exception("Critical: provided backupjob_name is not valid");
+                throw new AppException("Critical: provided backupjob_name is not valid");
             }
 
-            $this->assign('selected_jobname', $backupjob_name);
+            $this->setVar('selected_jobname', $backupjob_name);
 
             /**
              * Get selected period from POST request, or set it to default value (7)
              */
-            $backupjob_period = $request->request->getInt('period', 7);
+            $backupjob_period = $this->request->request->getInt('period', 7);
 
             // Set selected period
-            $this->assign('selected_period', $backupjob_period);
+            $this->setVar('selected_period', $backupjob_period);
 
             switch ($backupjob_period) {
                 case '7':
@@ -143,8 +138,8 @@ class BackupJobView extends CView
                 'ylabel' => 'Files' )
             );
 
-            $this->assign('stored_files_chart_id', $stored_files_chart->name);
-            $this->assign('stored_files_chart', $stored_files_chart->render());
+            $this->setVar('stored_files_chart_id', $stored_files_chart->name);
+            $this->setVar('stored_files_chart', $stored_files_chart->render());
 
             unset($stored_files_chart);
 
@@ -162,8 +157,8 @@ class BackupJobView extends CView
                 'ylabel' => 'Bytes' )
             );
 
-            $this->assign('stored_bytes_chart_id', $stored_bytes_chart->name);
-            $this->assign('stored_bytes_chart', $stored_bytes_chart->render());
+            $this->setVar('stored_bytes_chart_id', $stored_bytes_chart->name);
+            $this->setVar('stored_bytes_chart', $stored_bytes_chart->render());
             unset($stored_bytes_chart);
 
             // Backup job name
@@ -228,11 +223,13 @@ class BackupJobView extends CView
             } // end while
 
             // Assign vars to template
-            $this->assign('jobs', $joblist);
-            $this->assign('backupjob_name', $backupjob_name);
-            $this->assign('periodDesc', $periodDesc);
-            $this->assign('backupjob_bytes', $backupjob_bytes);
-            $this->assign('backupjob_files', $backupjob_files);
-        } // end else
-    } // end of prepare() method
-} // end of class
+            $this->setVar('jobs', $joblist);
+            $this->setVar('backupjob_name', $backupjob_name);
+            $this->setVar('periodDesc', $periodDesc);
+            $this->setVar('backupjob_bytes', $backupjob_bytes);
+            $this->setVar('backupjob_files', $backupjob_files);
+        }
+
+        return (new Response($this->render('backupjob-report.tpl')));
+    }
+}

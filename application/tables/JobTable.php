@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -22,21 +24,21 @@ namespace App\Tables;
 use App\Entity\Job;
 use Core\Db\CDBQuery;
 use Core\Db\Table;
+use Core\Exception\DatabaseException;
 use Core\Utils\CUtils;
 use Exception;
 
 class JobTable extends Table
 {
-    protected $tablename = 'Job';
+    protected ?string $tablename = 'Job';
 
-    // ==================================================================================
-    // Function:     count_Jobs()
-    // Parameters: $period_timestamps       Array containing start and end date (unix timestamp format)
-    //               $job_status            Job status (optional)
-    //               $job_level                 Job level (optional)
-    // Return:       Jobs count
-    // ==================================================================================
-
+    /**
+     * @param $period_timestamps
+     * @param $job_status
+     * @param $job_level
+     * @return mixed
+     * @throws Exception
+     */
     public function count_Jobs($period_timestamps, $job_status = null, $job_level = null)
     {
         $where        = null;
@@ -44,7 +46,7 @@ class JobTable extends Table
 
         // Check PDO object
         if (!is_a($this->pdo, 'PDO') && is_null($this->pdo)) {
-            throw new Exception('Unvalid PDO object provided in count_Jobs() function');
+            throw new DatabaseException('Unvalid PDO object provided in count_Jobs() function');
         }
 
         // Getting timestamp interval
@@ -106,22 +108,21 @@ class JobTable extends Table
         return $result['job_count'];
     }
 
-    // ==================================================================================
-    // Function:     getStoredFiles()
-    // Parameters: $period_timestamps   Array containing start and end date (unix timestamp format)
-    //               $job_name          Job name (optional)
-    //               $client_id         Client id (optional)
-    // Return:       Total of stored files (backup) within the specific period
-    // ==================================================================================
-
-    public function getStoredFiles($period_timestamps = [], $job_name = 'ALL', $client_id = 'ALL')
+    /**
+     * @param array $period_timestamps Array containing start and end date (unix timestamp format)
+     * @param string $job_name
+     * @param string $client_id
+     * @return int|mixed
+     * @throws Exception
+     */
+    public function getStoredFiles($period_timestamps = [], string $job_name = 'ALL', string $client_id = 'ALL')
     {
         $where      = [];
         $fields     = ['SUM(JobFiles) AS stored_files'];
 
         // Check PDO object
         if (!is_a($this->pdo, 'PDO') || is_null($this->pdo)) {
-            throw new Exception('Unvalid PDO object provided in count_Jobs() function');
+            throw new DatabaseException('Unvalid PDO object provided in count_Jobs() function');
         }
 
         // Defined period

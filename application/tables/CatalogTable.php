@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -22,13 +24,21 @@ namespace App\Tables;
 use Core\Db\Table;
 use App\Libs\FileConfig;
 use Core\Db\CDBQuery;
+use Core\Exception\DatabaseException;
 use Core\Utils\CUtils;
 use Exception;
 
 class CatalogTable extends Table
 {
-    protected $tablename = 'Version';
-    private $dbVersionId = '';
+    /**
+     * @var string|null
+     */
+    protected ?string $tablename = 'Version';
+
+    /**
+     * @var int
+     */
+    private int $dbVersionId;
 
     /**
      * @param int $catalogId
@@ -72,18 +82,17 @@ class CatalogTable extends Table
                 $dbSize = filesize(FileConfig::get_Value('dbName', $catalogId));
                 return CUtils::Get_Human_Size($dbSize);
             default:
-                throw new Exception('Catalog db size error: Unsupported PDO driver' . $this->db->getDriverName());
+                throw new DatabaseException('Catalog db size error: Unsupported PDO driver' . $this->db->getDriverName());
         }
     }
 
     /**
      * Return Bacula catalog id
-     * @a
-     * author Tom Hodder <tom@limepepper.co.uk>
-     * @return string VersionId value from Bacula catalog
+     * @author Tom Hodder <tom@limepepper.co.uk>
+     * @return int VersionId value from Bacula catalog
      * @throws Exception
      */
-    public function getCatalogVersion(): string
+    public function getCatalogVersion(): int
     {
         $sqlQuery = CDBQuery::get_Select(array('table' => $this->tablename,
             'fields' => array('VersionId'),
@@ -91,8 +100,7 @@ class CatalogTable extends Table
         ), $this->db->getDriverName());
 
         $result = $this->run_query($sqlQuery);
-        $this->dbVersionId = intval($result->fetchColumn());
 
-        return $this->dbVersionId;
+        return $this->dbVersionId = (int) $result->fetchColumn();
     }
 }

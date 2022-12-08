@@ -25,7 +25,7 @@ use Core\Db\CDBPagination;
 
 class VolumeTable extends Table
 {
-    protected $tablename = 'Media';
+    protected ?string $tablename = 'Media';
 
     // ==================================================================================
     // Function:    getDiskUsage()

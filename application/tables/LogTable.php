@@ -26,5 +26,5 @@ use Core\Utils\CUtils;
 
 class LogTable extends Table
 {
-    protected $tablename = 'Log';
+    protected ?string $tablename = 'Log';
 }

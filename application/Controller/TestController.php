@@ -18,30 +18,26 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Views;
+namespace App\Controller;
 
-use Core\App\CView;
+use Core\App\Controller;
 use Core\Db\DatabaseFactory;
 use App\Tables\CatalogTable;
+use Exception;
 use PDO;
 use Core\Graph\Chart;
+use SmartyException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class TestView extends CView
+class TestController extends Controller
 {
     /**
-     * @param Request $request
+     * @return Response
+     * @throws SmartyException
+     * @throws Exception
      */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'test.tpl';
-        $this->name = 'Test page';
-        $this->title = 'Check requirements and configuration';
-    }
-
-    public function prepare(Request $request)
+    public function prepare(): Response
     {
         $catalog = new CatalogTable(DatabaseFactory::getDatabase());
 
@@ -80,7 +76,7 @@ class TestView extends CView
                     'check_descr' => 'Current status: ' . $catalog->getConnectionStatus() ),
             array(  'check_cmd' => 'smarty-cache',
                     'check_label' => 'Smarty cache folder write permission',
-                    'check_descr' => realpath(VIEW_CACHE_DIR) . ' must be writable by Apache'),
+                    'check_descr' => $this->view->getCacheDir() . ' must be writable by Apache'),
             array(  'check_cmd' => 'users-db',
                     'check_label' => 'Protected assets folder write permission',
                     'check_descr' => 'application/assets/protected folder must be writable by Apache'),
@@ -117,7 +113,7 @@ class TestView extends CView
                     $check['check_result'] = $icon_result[function_exists('posix_getpwuid')];
                     break;
                 case 'smarty-cache':
-                    $check['check_result'] = $icon_result[is_writable(VIEW_CACHE_DIR)];
+                    $check['check_result'] = $icon_result[is_writable($this->view->getCacheDir())];
                     break;
                 case 'users-db':
                     $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/assets/protected')];
@@ -152,8 +148,8 @@ class TestView extends CView
             'name' => 'chart_pie_test',
             'data' => $data ));
 
-        $this->assign('pie_graph_id', $pie_chart->name);
-        $this->assign('pie_graph', $pie_chart->render());
+        $this->setVar('pie_graph_id', $pie_chart->name);
+        $this->setVar('pie_graph', $pie_chart->render());
 
         unset($pie_chart);
 
@@ -163,12 +159,14 @@ class TestView extends CView
             'data' => $data,
             'ylabel' => 'Coffee cups' ));
 
-        $this->assign('bar_chart_id', $bar_chart->name);
-        $this->assign('bar_chart', $bar_chart->render());
+        $this->setVar('bar_chart_id', $bar_chart->name);
+        $this->setVar('bar_chart', $bar_chart->render());
 
         unset($bar_chart);
 
         // Template rendering
-        $this->assign('checks', $check_list);
+        $this->setVar('checks', $check_list);
+
+        return (new Response($this->render('test.tpl')));
     }
-} // end TestView class
+}

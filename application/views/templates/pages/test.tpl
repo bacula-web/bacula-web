@@ -1,14 +1,14 @@
 {extends file='default.tpl'}
 
 {block name=title}
-	<title>Bacula-Web - {t}Login{/t}</title>
+	<title>Bacula-Web - {t}Test{/t}</title>
 {/block}
 
 {block name=body}
 <div class="container" id="testpage">
 
    <div class="page-header">
-     <h3>{$page_name} <small>{t}Check requirements and configuration{/t}</small></h3>
+     <h3>{t}Test page{/t}<small>&nbsp;{t}Check requirements and configuration{/t}</small></h3>
    </div>
     
 	<table class="table table-striped">
@@ -40,6 +40,8 @@
          {$bar_chart}
 		</div>
 	</div>
+
+	<a href="index.php">Home page</a>
 
 </div> <!-- div class="container" -->
 {/block}

@@ -8,7 +8,7 @@
 <div class="container" id="jobsreport">
 
 	<div class="page-header">
-		<h3>{$page_name} <small>{t}Bacula History Files{/t}</small></h3>
+		<h3>{t}Job files{/t}&nbsp;<small>{t}Bacula History Files{/t}</small></h3>
 	</div>
 
 	<div class="row">

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -23,26 +23,53 @@ namespace Core\App;
 
 use App\Libs\FileConfig;
 use App\Views\LoginView;
-use Core\Exception\NotAuthorizedException;
 use Core\Exception\PageNotFoundException;
 use Core\Helpers\Sanitizer;
 use Core\i18n\CTranslation;
+use Core\Utils\ConfigFileException;
 use Symfony\Component\HttpFoundation\Request;
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\RequestContext;
+use Exception;
+use Error;
 
 class WebApplication
 {
-    protected $name;
-    protected $version;
-    protected $view;
+    /**
+     * @var WebApplication
+     */
+    protected static WebApplication $appInstance;
+
+    /**
+     * @var string
+     */
+    protected string $name;
+
+    /**
+     * @var string
+     */
+    protected string $version;
+
+    /**
+     * @var View
+     */
+    protected View $view;
+
     protected $defaultView;
     protected $userauth;
     protected $enable_users_auth;
+
+    /**
+     * @var Request
+     */
     protected Request $request;
-    private $response;
-    private $session;
+
+    /**
+     * @var Session
+     */
+    private Session $session;
+
     public $translate;                    // Translation class instance
     public $catalog_nb;                // Catalog count
     public $catalog_current_id = 0;    // Selected or default catalog id
@@ -54,53 +81,106 @@ class WebApplication
      */
     private static array $config;
 
+    /**
+     * @var RequestContext
+     */
+    protected RequestContext $context;
+
+    /**
+     * @var string[];
+     */
+    private array $routes = [];
 
     /**
      * @param array $config Application config
      */
     public function __construct(array $config)
     {
+        // Create session
         $this->session = new Session();
+
+        // Load application config
         self::$config = $config;
+
+        /**
+         * Set exception & error handlers
+         */
+        set_exception_handler([\Core\App\ErrorController::class, 'handle']);
+
+        // Save routes list
+        $this->routes = self::$config['routes'];
+    }
+
+    /**
+     * Return the instance object of type WebApplication
+     * The purpose is to use getContext() and getRoutes() method from a different context
+     *
+     * @return WebApplication
+     */
+    public static function getApp(): WebApplication
+    {
+        if (!isset(self::$appInstance))
+        {
+            self::$appInstance = new WebApplication(require CONFIG_DIR . '/application.php');
+        }
+        return self::$appInstance;
     }
 
     /**
      * Return View class name, or default one based on the request
      *
-     * @param array $routes
-     * @return string
+     * @return Response Controller method related to the request
      * @throws PageNotFoundException
+     * @throws Exception
      */
-    private function getMatch(array $routes): string
+    private function invokeController(): Response
     {
-        if ($this->request->query->has('page')) {
-            $page_name = Sanitizer::sanitize($this->request->query->get('page'));
-            if (!isset($routes[$page_name])) {
-                throw new PageNotFoundException('Page not found');
-            }
-            return '\\App\Views\\' . ucfirst($routes[$page_name]) . 'View';
+        // Inject request params into Request object instance
+        $params = $this->request->query->all();
+        $params = array_merge($this->request->request->all(), $params);
+        $this->request->attributes->add($params);
+        $page = $this->request->attributes->get('page');
+
+        /**
+         * if page request param is not provided, return fallback controller return response
+         */
+        if( $page === null) {
+            $callback = self::$config['fallback_controller']['callback'];
+            return call_user_func([(new $callback($this->request,(new View()))), 'prepare']);
         }
-        return $this->defaultView;
+
+        /**
+         * IF the page does exist, return route callback method response
+         * Otherwise, if the page does not exist, then return ErrorController::handle() return value (Response) with a 404 status code
+         */
+        if (array_key_exists($page, self::getRoutes())) {
+            $callback = self::$config['routes'][$page]['callback'];
+            return call_user_func([(new $callback($this->request, (new View()))), 'prepare']);
+        } else {
+            return ErrorController::handle((new PageNotFoundException()));
+        }
     }
 
-    private function setup()
+    /**
+     * @return void
+     * @throws Exception
+     */
+    private function setup(): void
     {
-        try {
-            FileConfig::open(CONFIG_FILE);
-        } catch(Exception $exception) {
-            die($exception->getMessage());
-        }
+        FileConfig::open(CONFIG_FILE);
 
-        /*
+        /**
          * Check if <enable_users_auth> parameter is set in config file and type is boolean
          * If not set, set it to true by default
          */
 
+        /*
         if ((FileConfig::get_Value('enable_users_auth') !== null) && is_bool(FileConfig::get_Value('enable_users_auth'))) {
             $this->enable_users_auth = (bool)FileConfig::get_Value('enable_users_auth');
         } else {
             $this->enable_users_auth = true;
         }
+
 
         if ($this->enable_users_auth) {
             // Prepare users authentication back-end
@@ -111,25 +191,15 @@ class WebApplication
             $this->userauth->checkSchema();
         }
 
+
         // Check application config file
         $appConfigFile = CONFIG_DIR . 'application.php';
-
-        if (file_exists($appConfigFile) && is_readable($appConfigFile)) {
-            $app = include_once($appConfigFile);
-
-            // Set application properties from config file
-            $this->name = $app['name'];
-            $this->version = $app['version'];
-            $this->defaultView = 'App\\Views\\' . $app['defaultview'];
-        } else {
-            throw new Exception('Application config file not found, please fix it');
-        }
 
         // login or logout only if users authentication is enabled
         if ($this->enable_users_auth) {
             // First thing first, is the user session already authenticated ?
             if ($this->userauth->authenticated()) {
-                $view_name = $this->getMatch($app['routes']);
+                $view_name = $this->getMatch(self::$config['routes']);
                 $this->view = new $view_name($this->request);
                 $this->view->assign('user_authenticated', 'yes');
                 $this->view->assign('enable_users_auth', 'true');
@@ -146,7 +216,7 @@ class WebApplication
                     $username = Sanitizer::sanitize($this->request->request->get('username'));
                     $this->session->set('username', $username);
 
-                    $view_name = $this->getMatch($app['routes']);
+                    $view_name = $this->getMatch(self::$config['routes']);
                     $this->view = new $view_name($this->request);
 
                     $this->view->assign('user_authenticated', 'yes');
@@ -173,23 +243,23 @@ class WebApplication
                 }
             }
         }
+        */
     }
 
-    private function init()
+    /**
+     * This method run some "pre-flight" checks before launch
+     *
+     * @return void
+     * @throws ConfigFileException
+     */
+    private function bootstrap()
     {
         // Loading configuration file parameters
         if (!FileConfig::open(CONFIG_FILE)) {
-            throw new Exception("The configuration file is missing");
+            throw new ConfigFileException('The configuration file is missing');
         } else {
             // Count defined Bacula catalogs
             $this->catalog_nb = FileConfig::count_Catalogs();
-
-            // Check if debug is enabled
-            if (FileConfig::get_Value('debug') != null && is_bool(FileConfig::get_Value('debug'))) {
-                ini_set('error_reporting', 'E_ALL');
-                ini_set('display_errors', 'On');
-                ini_set('display_startup_errors', 'Off');
-            }
 
             // Check if datetime_format is defined in configuration
             if (FileConfig::get_Value('datetime_format') != null) {
@@ -209,7 +279,7 @@ class WebApplication
         // Initialize smarty gettext function
         $language = FileConfig::get_Value('language');
         if ($language == null) {
-            throw new Exception('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
+            throw new ConfigFileException('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
         }
 
         $this->translate = new CTranslation($language);
@@ -224,7 +294,7 @@ class WebApplication
                 $this->session->set('catalog_id', 0);
                 $this->catalog_current_id = 0;
                 // TODO: It should redirect to home with catalog_id = 0 and display a flash message to the user
-                throw new Exception('The catalog_id value provided does not correspond to a valid catalog, please verify the config.php file');
+                throw new ConfigFileException('The catalog_id value provided does not correspond to a valid catalog, please verify the config.php file');
             }
         } elseif ($this->session->has('catalog_id')) {
             // Stick with previously selected catalog_id
@@ -233,10 +303,10 @@ class WebApplication
             $this->session->set('catalog_id', $this->catalog_current_id);
         }
 
+        /*
         // Define catalog id and catalog label
         $this->view->assign('catalog_current_id', $this->catalog_current_id);
         $this->view->assign('catalog_label', FileConfig::get_Value('label', $this->catalog_current_id));
-
 
         // Get Bacula catalog list
         $this->view->assign('catalogs', FileConfig::get_Catalogs());
@@ -253,44 +323,51 @@ class WebApplication
         if ($this->request->query->has('page')) {
             $this->view->assign('page', $this->request->query->getAlpha('page'));
         }
+        */
     }
 
     /**
-     * @var Request $request
-     * @throws Exception
+     * @param Request $request
+     * @return Response
+     * @throws ConfigFileException
      */
-    public function run(Request $request)
+    public function run(Request $request): Response
     {
+        $response = null;
         $this->request = $request;
 
         try {
+            /**
+             * Initialize smarty gettext function
+             */
+            FileConfig::open(CONFIG_FILE);
 
-            $view = new LoginView($this->request);
-            $view->prepare($this->request);
+            $language = FileConfig::get_Value('language');
+            if ($language == null) {
+                throw new ConfigFileException('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
+            }
 
-            $response = new Response();
-            $response->setContent($view->render('login.tpl'));
-            $response->send();
+            $this->translate = new CTranslation($language);
+            $this->translate->setLanguage();
 
-            $this->setup();
-            $this->init();
+            $this->bootstrap();
 
-            $this->view->prepare($this->request);
-
-            $this->response = new Response();
-            $this->response->setStatusCode(200);
-            $this->response->setContent($this->view->render('login.tpl'));
-        } catch (PageNotFoundException $exception) {
-            $this->response = new Response(CErrorHandler::displayError($exception), 404);
-        } catch (NotAuthorizedException $exception) {
-            $this->response = new Response(CErrorHandler::displayError($exception), 403);
-        } catch (\PDOException $exception) {
-            $this->response = new Response(CErrorHandler::displayError($exception), 500);
-        } catch (Exception $exception) {
-            $this->response = new Response(CErrorHandler::displayError($exception), 500);
-        } finally {
-            $this->response->send();
+            $response = $this->invokeController();
+        } catch(PageNotFoundException|Exception $exception) {
+            return ErrorController::handle($exception);
+        } catch(Exception $exception) {
+            return ErrorController::handle($exception);
+        } catch(Error $error) {
+            return ErrorController::handle($error);
         }
+
+        return $response;
+
+        /*
+        try {
+
+            $this->init();
+        */
     }
 
     /**
@@ -307,5 +384,35 @@ class WebApplication
     public static function getVersion(): string
     {
         return self::$config['version'];
+    }
+
+    /**
+     * @return bool|null
+     * @throws ConfigFileException
+     */
+    public function isDebug(): ?bool
+    {
+        FileConfig::open(CONFIG_DIR . '/config.php');
+        try {
+            return FileConfig::get_Value('debug') ?? false;
+        } catch(ConfigFileException $exception) {
+            exit();
+        }
+    }
+
+    /**
+     * @return RequestContext
+     */
+    public function getContext(): RequestContext
+    {
+        return $this->context;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRoutes(): array
+    {
+        return $this->routes;
     }
 }

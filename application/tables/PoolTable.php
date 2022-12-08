@@ -25,7 +25,7 @@ use App\Libs\FileConfig;
 
 class PoolTable extends Table
 {
-    protected $tablename = 'Pool';
+    protected ?string $tablename = 'Pool';
 
     /**
      * @return mixed

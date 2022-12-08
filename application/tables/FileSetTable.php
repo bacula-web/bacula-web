@@ -23,5 +23,5 @@ use Core\Db\Table;
 
 class FileSetTable extends Table
 {
-    protected $tablename = 'FileSet';
+    protected ?string $tablename = 'FileSet';
 }

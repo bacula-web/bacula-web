@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,30 +19,23 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Views;
+namespace App\Controller;
 
+use Core\App\Controller;
 use Core\Db\DatabaseFactory;
-use Core\App\CView;
 use Core\Utils\CUtils;
 use App\Tables\PoolTable;
-use Symfony\Component\HttpFoundation\Request;
+use Exception;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class PoolsView extends CView
+class PoolController extends Controller
 {
     /**
-     * @param Request $request
+     * @return Response
+     * @throws Exception
      */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'pools.tpl';
-        $this->name = 'Pools report';
-        $this->title = 'Bacula pool(s) overview';
-    }
-
-    public function prepare(Request $request)
+    public function prepare(): Response
     {
         // Get volumes list (pools.tpl)
         $pools = new PoolTable(DatabaseFactory::getDatabase((new Session())->get('catalog_id', 0)));
@@ -58,6 +53,8 @@ class PoolsView extends CView
             $pools_list[] = $pool;
         }
 
-        $this->assign('pools', $pools_list);
-    } // end of preare() method
-} // end of class
+        $this->setVar('pools', $pools_list);
+
+        return (new Response($this->render('pools.tpl')));
+    }
+}

@@ -2,7 +2,7 @@
 
 /**
   * Copyright (C) 2004 Juan Luis Frances Jimenez
-  * Copyright (C) 2010-2022 Davide Franco
+  * Copyright (C) 2010-2023 Davide Franco
   *
   * This file is part of Bacula-Web.
   *
@@ -18,36 +18,31 @@
   * <https://www.gnu.org/licenses/>.
   */
 
- namespace App\Views;
+ namespace App\Controller;
 
  use App\Tables\JobTable;
  use App\Tables\PoolTable;
  use App\Tables\VolumeTable;
- use Core\App\CView;
+ use Core\App\Controller;
  use Core\Db\CDBQuery;
  use Core\Db\DatabaseFactory;
  use Core\Graph\Chart;
  use Core\Utils\CUtils;
  use Core\Utils\DateTimeUtil;
  use Core\Helpers\Sanitizer;
- use Symfony\Component\HttpFoundation\Request;
+ use Exception;
+ use SmartyException;
+ use Symfony\Component\HttpFoundation\Response;
  use Symfony\Component\HttpFoundation\Session\Session;
 
-class DashboardView extends CView
+class HomeController extends Controller
 {
     /**
-     * @param Request $request
+     * @return Response
+     * @throws SmartyException
+     * @throws Exception
      */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'dashboard.tpl';
-        $this->name = _('Dashboard');
-        $this->title = 'General overview';
-    }
-
-    public function prepare(Request $request)
+    public function prepare(): Response
     {
         $session = new Session();
 
@@ -65,10 +60,10 @@ class DashboardView extends CView
         $custom_period = $last_day;
         $selected_period = 'last_day';
 
-        if ($request->request->get('period_selector')) {
-            $selected_period = $request->request->get('period_selector');
+        if ($this->request->request->get('period_selector')) {
+            $selected_period = $this->request->request->get('period_selector');
             $selected_period = Sanitizer::sanitize($selected_period);
-            $this->assign('custom_period_list_selected', $selected_period);
+            $this->setVar('custom_period_list_selected', $selected_period);
 
             switch ($selected_period) {
                 case 'last_day':
@@ -85,7 +80,7 @@ class DashboardView extends CView
                     break;
             }
         } else {
-            $this->assign('custom_period_list_selected', $selected_period);
+            $this->setVar('custom_period_list_selected', $selected_period);
         }
 
         $custom_period_list = array( 'last_day' => 'Last 24 hours',
@@ -93,30 +88,30 @@ class DashboardView extends CView
                                 'last_month' => 'Last month',
                                 'since_bot' => 'Since BOT');
 
-        $this->assign('custom_period_list', $custom_period_list);
+        $this->setVar('custom_period_list', $custom_period_list);
 
         // Set period start - end for widget header
-        $this->assign('literal_period', strftime("%a %e %b %Y", $custom_period[0]) . ' to ' . strftime("%a %e %b %Y", $custom_period[1]));
+        $this->setVar('literal_period', strftime("%a %e %b %Y", $custom_period[0]) . ' to ' . strftime("%a %e %b %Y", $custom_period[1]));
 
         // Running, completed, failed, waiting and canceled jobs status over last 24 hours
-        $this->assign('running_jobs', $jobs->count_Jobs($custom_period, 'running'));
-        $this->assign('completed_jobs', $jobs->count_Jobs($custom_period, 'completed'));
-        $this->assign('completed_with_errors_jobs', $jobs->count_Jobs($custom_period, 'completed with errors'));
-        $this->assign('failed_jobs', $jobs->count_Jobs($custom_period, 'failed'));
-        $this->assign('waiting_jobs', $jobs->count_Jobs($custom_period, 'waiting'));
-        $this->assign('canceled_jobs', $jobs->count_Jobs($custom_period, 'canceled'));
+        $this->setVar('running_jobs', $jobs->count_Jobs($custom_period, 'running'));
+        $this->setVar('completed_jobs', $jobs->count_Jobs($custom_period, 'completed'));
+        $this->setVar('completed_with_errors_jobs', $jobs->count_Jobs($custom_period, 'completed with errors'));
+        $this->setVar('failed_jobs', $jobs->count_Jobs($custom_period, 'failed'));
+        $this->setVar('waiting_jobs', $jobs->count_Jobs($custom_period, 'waiting'));
+        $this->setVar('canceled_jobs', $jobs->count_Jobs($custom_period, 'canceled'));
 
         // Stored files number
-        $this->assign('stored_files', CUtils::format_Number($jobs->getStoredFiles($no_period)));
+        $this->setVar('stored_files', CUtils::format_Number($jobs->getStoredFiles($no_period)));
 
         // Total bytes and files stored over the last 24 hours
-        $this->assign('bytes_last', CUtils::Get_Human_Size($jobs->getStoredBytes($custom_period)));
-        $this->assign('files_last', CUtils::format_Number($jobs->getStoredFiles($custom_period)));
+        $this->setVar('bytes_last', CUtils::Get_Human_Size($jobs->getStoredBytes($custom_period)));
+        $this->setVar('files_last', CUtils::format_Number($jobs->getStoredFiles($custom_period)));
 
         // Incremental, Differential and Full jobs over the last 24 hours
-        $this->assign('incr_jobs', $jobs->count_Jobs($custom_period, null, J_INCR));
-        $this->assign('diff_jobs', $jobs->count_Jobs($custom_period, null, J_DIFF));
-        $this->assign('full_jobs', $jobs->count_Jobs($custom_period, null, J_FULL));
+        $this->setVar('incr_jobs', $jobs->count_Jobs($custom_period, null, J_INCR));
+        $this->setVar('diff_jobs', $jobs->count_Jobs($custom_period, null, J_DIFF));
+        $this->setVar('full_jobs', $jobs->count_Jobs($custom_period, null, J_FULL));
 
         // ==============================================================
         // Last period <Job status graph>
@@ -131,8 +126,8 @@ class DashboardView extends CView
         }
 
         $last_jobs_chart = new Chart(array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data, 'linked_report' => 'jobs' ));
-        $this->assign('last_jobs_chart_id', $last_jobs_chart->name);
-        $this->assign('last_jobs_chart', $last_jobs_chart->render());
+        $this->setVar('last_jobs_chart_id', $last_jobs_chart->name);
+        $this->setVar('last_jobs_chart', $last_jobs_chart->render());
 
         unset($last_jobs_chart);
 
@@ -170,8 +165,8 @@ class DashboardView extends CView
         }
 
         $pools_usage_chart = new Chart(array( 'type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool, 'linked_report' => 'pools' ));
-        $this->assign('pools_usage_chart_id', $pools_usage_chart->name);
-        $this->assign('pools_usage_chart', $pools_usage_chart->render());
+        $this->setVar('pools_usage_chart_id', $pools_usage_chart->name);
+        $this->setVar('pools_usage_chart', $pools_usage_chart->render());
         unset($pools_usage_chart);
 
         // ==============================================================
@@ -186,8 +181,8 @@ class DashboardView extends CView
 
         $storedbytes_chart = new Chart(array(   'type' => 'bar', 'name' => 'chart_storedbytes', 'data' => $days_stored_bytes, 'ylabel' => 'Stored Bytes', 'uniformize_data' => true ));
 
-        $this->assign('storedbytes_chart_id', $storedbytes_chart->name);
-        $this->assign('storedbytes_chart', $storedbytes_chart->render());
+        $this->setVar('storedbytes_chart_id', $storedbytes_chart->name);
+        $this->setVar('storedbytes_chart', $storedbytes_chart->render());
 
         unset($storedbytes_chart);
 
@@ -203,8 +198,8 @@ class DashboardView extends CView
 
         $storedfiles_chart = new Chart(array(   'type' => 'bar', 'name' => 'chart_storedfiles', 'data' => $days_stored_files, 'ylabel' => 'Stored files' ));
 
-        $this->assign('storedfiles_chart_id', $storedfiles_chart->name);
-        $this->assign('storedfiles_chart', $storedfiles_chart->render());
+        $this->setVar('storedfiles_chart_id', $storedfiles_chart->name);
+        $this->setVar('storedfiles_chart', $storedfiles_chart->render());
 
         unset($storedfiles_chart);
 
@@ -251,7 +246,7 @@ class DashboardView extends CView
             $last_volumes[] = $volume;
         }
 
-        $this->assign('volumes_list', $last_volumes);
+        $this->setVar('volumes_list', $last_volumes);
 
         // Per job name backup and restore statistics
         $job_types = array( 'R' => 'Restore', 'B' => 'Backup' );      // TO IMPROVE
@@ -267,7 +262,7 @@ class DashboardView extends CView
             $jobs_result[] = $job;
         }
 
-        $this->assign('jobnames_jobs_stats', $jobs_result);
+        $this->setVar('jobnames_jobs_stats', $jobs_result);
 
         // Per job type backup and restore statistics
         $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes FROM Job WHERE Type in ('B','R') GROUP BY Type";
@@ -281,12 +276,14 @@ class DashboardView extends CView
             $jobs_result[] = $job;
         }
 
-        $this->assign('jobtypes_jobs_stats', $jobs_result);
+        $this->setVar('jobtypes_jobs_stats', $jobs_result);
 
         # Weekly jobs statistics
-        $this->assign('weeklyjobsstats', $jobs->getWeeklyJobsStats());
+        $this->setVar('weeklyjobsstats', $jobs->getWeeklyJobsStats());
 
         # 10 biggest completed backup jobs
-        $this->assign('biggestjobs', $jobs->getBiggestJobsStats());
+        $this->setVar('biggestjobs', $jobs->getBiggestJobsStats());
+
+        return (new Response($this->render('dashboard.tpl')));
     }
-} // end of DashboardView class
+}

@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,18 +19,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-// Include composer autoloader
-use Core\App\WebApplication;
-use Symfony\Component\HttpFoundation\Request;
+namespace Core\Exception;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+use PDOException;
 
-// Bootstrap application
-require_once __DIR__ . '/../core/bootstrap.php';
-
-$app = new WebApplication(require CONFIG_DIR . '/application.php');
-
-$request = Request::createFromGlobals();
-$response = $app->run($request);
-
-$response->send();
+class DatabaseException extends PDOException
+{}

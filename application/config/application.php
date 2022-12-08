@@ -32,19 +32,47 @@ return [
     'name' => 'Bacula-Web',
     'version' => '8.6.3',
     'routes' => [
-        'home' => 'Dashboard',
-        'test' => 'Test',
-        'jobs' => 'Jobs',
-        'joblogs' => 'JobLogs',
-        'volumes' => 'Volumes',
-        'pools' => 'Pools',
-        'client' => 'Client',
-        'backupjob' => 'BackupJob',
-        'login' => 'Login',
-        'usersettings' => 'UserSettings',
-        'settings' => 'Settings',
-        'directors' => 'Directors',
-        'jobfiles' => 'JobFiles'
+        'home' => [
+            'callback' => \App\Controller\HomeController::class
+        ],
+        'test' => [
+            'callback' => \App\Controller\TestController::class
+        ],
+        'jobs' => [
+            'callback' => \App\Controller\JobController::class
+        ],
+        'joblogs' => [
+            'callback' => \App\Controller\JobLogController::class
+        ],
+        'volumes' => [
+            'callback' => \App\Controller\VolumeController::class
+        ],
+        'pools' => [
+            'callback' => \App\Controller\PoolController::class
+        ],
+        'client' => [
+            'callback' => \App\Controller\ClientController::class
+        ],
+        'backupjob' => [
+            'callback' => \App\Controller\BackupJobController::class
+        ],
+        'login' => [
+            'callback' => \App\Controller\LoginController::class
+        ],
+        'usersettings' => [
+            'callback' => \App\Controller\UserController::class
+        ],
+        'settings' => [
+            'callback' => \App\Controller\SettingsController::class
+        ],
+        'directors' => [
+            'callback' => \App\Controller\DirectorController::class
+        ],
+        'jobfiles' => [
+            'callback' => \App\Controller\JobFilesController::class
+        ]
     ],
-    'defaultview' => 'DashboardView'
+    'fallback_controller' => [
+        'callback' => \App\Controller\HomeController::class
+    ]
 ];

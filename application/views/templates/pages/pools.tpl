@@ -8,7 +8,7 @@
 <div class="container">
 
   <div class="page-header">
-    <h3>{$page_name} <small>{t}Bacula pool(s) overview{/t}</small></h3>
+    <h3>{t}Pools report{/t}<small>&nbsp;{t}Bacula pool(s) overview{/t}</small></h3>
   </div>
 
   <div class="row">

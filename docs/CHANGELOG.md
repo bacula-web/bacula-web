@@ -8,6 +8,8 @@
   - Separated some templates into application/views/templates/partials folder (see #144)
   - Removed Composer lock file from git repository
     To avoid any potential issues for users using different version of  PHP, composer.lock has been removed from the Git repo
+  - Fixed how MVC is implemented by using psr-15 http-handler (See #145) 
+  - Improved how exceptions and errors are handled (see #145)
 
 - Documentation
   - Updated / fixed documentation
@@ -17,6 +19,8 @@
   - Added security policy and documented know security vulnerabilities (see #142)
 
 ### Fixed bug(s)
+
+- #145 [bugfix] - Implement MVC and improve error handling
 
 ### New feature(s)
 

@@ -2,6 +2,7 @@
 
 namespace Core\Exception;
 
-class PageNotFoundException extends \Exception
-{
-}
+use Exception;
+
+class PageNotFoundException extends Exception
+{}
