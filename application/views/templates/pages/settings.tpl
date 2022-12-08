@@ -8,7 +8,7 @@
 <div class="container">
 
   <div class="page-header">
-    <h3>{$page_name} <small></small></h3>
+    <h3>{t}Settings{/t}<small>&nbsp;General settings</small></h3>
   </div>
 
   <div class="row">

@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,15 +19,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Views;
+namespace Core\Exception;
 
-use Core\App\View;
-use Symfony\Component\HttpFoundation\Request;
+use Exception;
 
-class LoginView extends View
-{
-    public function prepare(Request $request)
-    {
-        // TODO: implement
-    }
-}
+class AppException extends Exception
+{}

@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,18 +19,20 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-// Include composer autoloader
-use Core\App\WebApplication;
-use Symfony\Component\HttpFoundation\Request;
+namespace App\Controller;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+use Core\App\Controller;
+use SmartyException;
+use Symfony\Component\HttpFoundation\Response;
 
-// Bootstrap application
-require_once __DIR__ . '/../core/bootstrap.php';
-
-$app = new WebApplication(require CONFIG_DIR . '/application.php');
-
-$request = Request::createFromGlobals();
-$response = $app->run($request);
-
-$response->send();
+class LoginController extends Controller
+{
+    /**
+     * @return Response
+     * @throws SmartyException
+     */
+    public function prepare(): Response
+    {
+        return (new Response($this->render('login.tpl')));
+    }
+}

@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,9 +19,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Views;
+namespace App\Controller;
 
-use Core\App\CView;
+use Core\App\Controller;
 use Core\Graph\Chart;
 use Core\Db\DatabaseFactory;
 use Core\Db\CDBQuery;
@@ -28,24 +30,18 @@ use Core\Utils\CUtils;
 use Core\Helpers\Sanitizer;
 use App\Tables\JobTable;
 use App\Tables\ClientTable;
-use Symfony\Component\HttpFoundation\Request;
+use Exception;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use TypeError;
 
-class ClientView extends CView
+class ClientController extends Controller
 {
     /**
-     * @param Request $request
+     * @return Response
+     * @throws Exception
      */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'client-report.tpl';
-        $this->name = 'Client report';
-        $this->title = 'Report per Bacula client';
-    }
-
-    public function prepare(Request $request)
+    public function prepare(): Response
     {
         require_once BW_ROOT . '/core/const.inc.php';
 
@@ -62,11 +58,11 @@ class ClientView extends CView
         $client = new ClientTable(DatabaseFactory::getDatabase($catalogid));
 
         // Clients list
-        $this->assign('clients_list', $client->getClients());
+        $this->setVar('clients_list', $client->getClients());
 
         // Period list
         $periods_list = array( '7' => "Last week", '14' => "Last 2 weeks", '30' => "Last month");
-        $this->assign('periods_list', $periods_list);
+        $this->setVar('periods_list', $periods_list);
 
         $job_levels = array(
             'D' => 'Differential',
@@ -79,29 +75,29 @@ class ClientView extends CView
             'A' => 'Data'
         );
 
-        // Check client_id and period received by POST request
-        if ($request->request->has('client_id')) {
-            $clientid = $request->request->getInt('client_id');
+        // Check client_id and period received by POST $this->request
+        if ($this->request->request->has('client_id')) {
+            $clientid = $this->request->request->getInt('client_id');
             $clientid = Sanitizer::sanitize($clientid);
 
             // Verify if client_id is a valid integer
             if ($clientid === 0) {
-                throw new Exception('Critical: provided parameter (client_id) is not valid');
+                throw new TypeError('Critical: provided parameter (client_id) is not valid');
             }
 
-            $period = $request->request->getInt('period');
+            $period = $this->request->request->getInt('period');
             $period = Sanitizer::sanitize($period);
 
             // Check if period is an integer and listed in known periods
             if (!array_key_exists($period, $periods_list)) {
-                throw new Exception('Critical: provided value for (period) is unknown or not valid');
+                throw new TypeError('Critical: provided value for (period) is unknown or not valid');
             }
 
-            $this->assign('selected_period', $period);
-            $this->assign('selected_client', $clientid);
+            $this->setVar('selected_period', $period);
+            $this->setVar('selected_client', $clientid);
 
             /**
-             * Filter jobs per requested period
+             * Filter jobs per $this->requested period
              */
 
             // Get the last n days interval (start and end timestamps)
@@ -115,15 +111,15 @@ class ClientView extends CView
             $jobs->addParameter('job_endtime', $endTime);
             $where[] = 'Job.endtime <= :job_endtime';
 
-            $this->assign('no_report_options', 'false');
+            $this->setVar('no_report_options', 'false');
 
             // Client informations
             $client_info  = $client->getClientInfos($clientid);
 
-            $this->assign('client_name', $client_info['name']);
-            $this->assign('client_os', $client_info['os']);
-            $this->assign('client_arch', $client_info['arch']);
-            $this->assign('client_version', $client_info['version']);
+            $this->setVar('client_name', $client_info['name']);
+            $this->setVar('client_os', $client_info['os']);
+            $this->setVar('client_arch', $client_info['arch']);
+            $this->setVar('client_version', $client_info['version']);
 
             // // Filter by Job status = Completed
             $jobs->addParameter('jobstatus', 'T');
@@ -157,7 +153,7 @@ class ClientView extends CView
                 $backup_jobs[] = $job;
             } // end foreach
 
-            $this->assign('backup_jobs', $backup_jobs);
+            $this->setVar('backup_jobs', $backup_jobs);
 
             $jobsStats = new JobTable(DatabaseFactory::getDatabase($catalogid));
             // Last n days stored Bytes graph
@@ -172,8 +168,8 @@ class ClientView extends CView
                 'ylabel' => 'Bytes',
                 'uniformize_data' => true ));
 
-            $this->assign('stored_bytes_chart_id', $stored_bytes_chart->name);
-            $this->assign('stored_bytes_chart', $stored_bytes_chart->render());
+            $this->setVar('stored_bytes_chart_id', $stored_bytes_chart->name);
+            $this->setVar('stored_bytes_chart', $stored_bytes_chart->render());
 
             unset($stored_bytes_chart);
 
@@ -190,16 +186,18 @@ class ClientView extends CView
                 'data' => $days_stored_files,
                 'ylabel' => 'Files' ));
 
-            $this->assign('stored_files_chart_id', $stored_files_chart->name);
-            $this->assign('stored_files_chart', $stored_files_chart->render());
+            $this->setVar('stored_files_chart_id', $stored_files_chart->name);
+            $this->setVar('stored_files_chart', $stored_files_chart->render());
 
             unset($stored_files_chart);
         } else {
-            $this->assign('selected_period', '');
-            $this->assign('selected_client', '');
-            $this->assign('no_report_options', 'true');
+            $this->setVar('selected_period', '');
+            $this->setVar('selected_client', '');
+            $this->setVar('no_report_options', 'true');
         }
 
-        $this->assign('period', $period);
-    } // end of prepare() method
-} // end of class
+        $this->setVar('period', $period);
+
+        return (new Response($this->render('client-report.tpl')));
+    }
+}

@@ -35,7 +35,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class JobFileTable extends Table
 {
-    protected $tablename = 'File';
+    protected ?string $tablename = 'File';
 
     public function getJobFiles($jobId, $limit, $offset, $filename = '')
     {

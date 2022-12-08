@@ -8,7 +8,7 @@
 <div class="container">
 
   <div class="page-header">
-    <h3>{$page_name} <small>{t}Bacula job log{/t}</small></h3>
+    <h3>{t}Job logs{/t}<small>&nbsp;{t}Bacula job log{/t}</small></h3>
   </div>
 
     <div class="panel panel-default">

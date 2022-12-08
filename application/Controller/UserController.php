@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,34 +19,29 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Views;
+namespace App\Controller;
 
 use App\Tables\UserTable;
+use Core\App\Controller;
 use Core\App\UserAuth;
-use Core\App\CView;
 use Core\Db\DatabaseFactory;
 use Core\Helpers\Sanitizer;
-use Symfony\Component\HttpFoundation\Request;
+use Exception;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class UserSettingsView extends CView
+class UserController extends Controller
 {
-    protected $username;
+    /**
+     * @var string
+     */
+    protected string $username = '';
 
     /**
-     * @param Request $request
+     * @return Response
+     * @throws Exception
      */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'usersettings.tpl';
-        $this->name = 'User settings';
-        $this->title = '';
-        $this->username = '';
-    }
-
-    public function prepare(Request $request)
+    public function prepare(): Response
     {
         $session = new Session();
         $userTable = new UserTable(DatabaseFactory::getDatabase());
@@ -54,19 +51,19 @@ class UserSettingsView extends CView
         $this->username = $session->get('username');
         $user = $userTable->findByName($this->username);
 
-        $this->assign('username', $user->getUsername());
-        $this->assign('email', $user->getEmail());
+        $this->setVar('username', $user->getUsername());
+        $this->setVar('email', $user->getEmail());
 
         // Check if password reset have been requested
-        if ($request->request->has('action')) {
-            switch (Sanitizer::sanitize($request->request->get('action'))) {
+        if ($this->request->request->has('action')) {
+            switch (Sanitizer::sanitize($this->request->request->get('action'))) {
                 case 'passwordreset':
                     // Check if provided current password is correct
-                    if ($userauth->authUser($user->getUsername(), $request->request->get('oldpassword')) == 'yes') {
+                    if ($userauth->authUser($user->getUsername(), $this->request->request->get('oldpassword')) == 'yes') {
                         // Update user password with new one
                         $result = $userTable->setPassword(
                             $user->getUsername(),
-                            $request->request->get('newpassword')
+                            $this->request->request->get('newpassword')
                         );
 
                         if ($result !== false) {
@@ -82,5 +79,7 @@ class UserSettingsView extends CView
                     break;
             }
         }
+
+        return (new Response($this->render('usersettings.tpl')));
     }
-} // end of class
+}

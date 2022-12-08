@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,34 +19,26 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Views;
+namespace App\Controller;
 
+use Core\App\Controller;
 use Core\Db\DatabaseFactory;
 use Core\Db\CDBQuery;
 use Core\Db\CDBPagination;
-use Core\App\CView;
 use Core\Utils\CUtils;
 use App\Tables\VolumeTable;
 use App\Tables\PoolTable;
 use Exception;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class VolumesView extends CView
+class VolumeController extends Controller
 {
     /**
-     * @param Request $request
+     * @return Response
+     * @throws Exception
      */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'volumes.tpl';
-        $this->name = 'Volumes report';
-        $this->title = 'Bacula volume(s) overview';
-    }
-
-    public function prepare(Request $request)
+    public function prepare(): Response
     {
         $session = new Session();
         $volumes = new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
@@ -55,7 +49,7 @@ class VolumesView extends CView
         $where = null;
 
         // Paginate database query result
-        $pagination = new CDBPagination($this);
+        $pagination = new CDBPagination($this->view);
 
         // Volumes status icon
         $volume_status = array( 'Full' => 'fa-battery-full',
@@ -79,7 +73,7 @@ class VolumesView extends CView
         }
 
         $pools_list = array( 0 => 'Any') + $pools_list; // Add default pool filter
-        $this->assign('pools_list', $pools_list);
+        $this->setVar('pools_list', $pools_list);
 
         /*
          * If filter_pool_id parameter is not provided in GET or POST request, use 0 as default
@@ -95,31 +89,31 @@ class VolumesView extends CView
         $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
 
         // Set order by
-        $this->assign('orderby', $orderby);
+        $this->setVar('orderby', $orderby);
 
         $volume_orderby_filter = $this->getParameter('filter_orderby', 'Name');
-        $this->assign('orderby_selected', $volume_orderby_filter);
+        $this->setVar('orderby_selected', $volume_orderby_filter);
 
         if (!array_key_exists($volume_orderby_filter, $orderby)) {
-            throw new Exception("Critical: Provided orderby parameter is not correct");
+            throw new \TypeError("Critical: Provided orderby parameter is not correct");
         }
 
         // Set order by filter and checkbox status
         $volume_orderby_asc = $this->getParameter('filter_orderby_asc', 'DESC');
 
         if ($volume_orderby_asc === 'Asc') {
-            $this->assign('orderby_asc_checked', 'checked');
+            $this->setVar('orderby_asc_checked', 'checked');
         } else {
-            $this->assign('orderby_asc_checked', '');
+            $this->setVar('orderby_asc_checked', '');
         }
 
         // Set inchanger checkbox to unchecked by default
-        if ($request->request->has('filter_inchanger')) {
+        if ($this->request->request->has('filter_inchanger')) {
             $where[] = 'Media.inchanger = :inchanger';
             $params['inchanger'] = 1;
-            $this->assign('inchanger_checked', 'checked');
+            $this->setVar('inchanger_checked', 'checked');
         } else {
-            $this->assign('inchanger_checked', '');
+            $this->setVar('inchanger_checked', '');
         }
 
         $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten',
@@ -189,10 +183,12 @@ class VolumesView extends CView
             $volumes_list[] = $volume;
         } // end foreach
 
-        $this->assign('pool_id', $pool_id);
-        $this->assign('volumes', $volumes_list);
+        $this->setVar('pool_id', $pool_id);
+        $this->setVar('volumes', $volumes_list);
 
-        $this->assign('volumes_count', $volumes->count());
-        $this->assign('volumes_total_bytes', CUtils::Get_Human_Size($volumes_total_bytes));
-    } // end of preare() method
-} // end of class
+        $this->setVar('volumes_count', $volumes->count());
+        $this->setVar('volumes_total_bytes', CUtils::Get_Human_Size($volumes_total_bytes));
+
+        return (new Response($this->render('volumes.tpl')));
+    }
+}

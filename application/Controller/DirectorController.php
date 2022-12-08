@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2011-2022 Davide Franco
+ * Copyright (C) 2011-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,9 +19,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Views;
+namespace App\Controller;
 
-use Core\App\CView;
+use Core\App\Controller;
 use Core\Db\DatabaseFactory;
 use App\Libs\FileConfig;
 use App\Tables\ClientTable;
@@ -28,32 +30,31 @@ use App\Tables\CatalogTable;
 use App\Tables\VolumeTable;
 use App\Tables\PoolTable;
 use App\Tables\FileSetTable;
+use Core\Utils\ConfigFileException;
 use Core\Utils\CUtils;
-use Symfony\Component\HttpFoundation\Request;
+use SmartyException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class DirectorsView extends CView
+class DirectorController extends Controller
 {
     /**
-     * @param Request $request
+     * @return Response
+     * @throws ConfigFileException
+     * @throws SmartyException
      */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'directors.tpl';
-        $this->name = 'Directors';
-        $this->title = 'Bacula director(s) overview';
-    }
-
-    public function prepare(Request $request)
+    public function prepare(): Response
     {
         require_once BW_ROOT . '/core/const.inc.php';
 
         $session = new Session();
 
-        $no_period = array(FIRST_DAY, NOW);
-        $directors = array();
+        $no_period = [
+            FIRST_DAY,
+            NOW
+        ];
+
+        $directors = [];
 
         // Save catalog_id from user session
         $prev_catalog_id = $session->get('catalog_id');
@@ -61,7 +62,7 @@ class DirectorsView extends CView
         FileConfig::open(CONFIG_FILE);
         $directors_count = FileConfig::count_Catalogs();
 
-        $this->assign('directors_count', $directors_count);
+        $this->setVar('directors_count', $directors_count);
 
         for ($d = 0; $d < $directors_count; $d++) {
             $session->set('catalog_id', $d);
@@ -105,6 +106,8 @@ class DirectorsView extends CView
         // Set previous catalog_id in user session
         $session->set('catalog_id', $prev_catalog_id);
 
-        $this->assign('directors', $directors);
-    } // end of prepare() method
-} // end of class
+        $this->setVar('directors', $directors);
+
+        return (new Response($this->render('directors.tpl')));
+    }
+}

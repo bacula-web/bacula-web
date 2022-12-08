@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,51 +19,43 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Views;
+namespace App\Controller;
 
 use App\Tables\LogTable;
-use Core\App\CView;
+use Core\App\Controller;
+use Core\App\View;
 use Core\Db\CDBQuery;
 use Core\Db\DatabaseFactory;
 use App\Tables\JobTable;
 use Exception;
-use Symfony\Component\HttpFoundation\Request;
+use SmartyException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use TypeError;
 
-class JobLogsView extends CView
+class JobLogController extends Controller
 {
     /**
-     * @param Request $request
+     * @return Response
+     * @throws SmartyException
+     * @throws Exception
      */
-    public function __construct(Request $request)
+    public function prepare(): Response
     {
-        parent::__construct($request);
+        $jobid = $this->request->query->getInt('jobid');
 
-        $this->templateName = 'joblogs.tpl';
-        $this->name = 'Job logs';
-        $this->title = 'Bacula job log';
-    }
-
-    public function prepare(Request $request)
-    {
-        $jobid = $request->query->getInt('jobid');
-
-        /*
-         * if $_GET['jobid'] is not a valid integer different than 0, then throw an exception
-         * TODO: Exceptions will be handled in a better fashion in later development
-         */
         if ($jobid === 0) {
-            throw new Exception('Invalid job id (invalid or null) provided in Job logs report');
+            throw new TypeError('Invalid job id (invalid or null) provided in Job logs report');
         }
 
-        // Prepare and execute SQL statment
+        // Prepare and execute SQL statement
         $jobs = new JobTable(
             DatabaseFactory::getDatabase(
                 (new Session())->get('catalog_id', 0)
             )
         );
 
-        $this->assign('job', $jobs->findById($jobid));
+        $this->setVar('job', $jobs->findById($jobid));
 
         $logTable = new LogTable(
             DatabaseFactory::getDatabase(
@@ -77,13 +71,11 @@ class JobLogsView extends CView
             ]
         );
 
-        $this->assign(
+        $this->setVar(
             'joblogs',
-            $logTable->findAll(
-                $sql,
-                ['jobid' => $jobid],
-                'App\Entity\Log'
-            )
+            $logTable->findAll($sql, ['jobid' => $jobid], 'App\Entity\Log')
         );
+
+        return (new Response($this->render('joblogs.tpl')));
     }
 }

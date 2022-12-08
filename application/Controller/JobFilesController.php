@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2018 Gabriele Orlando
- * Copyright (C) 2019-2022 Davide Franco
+ * Copyright (C) 2019-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -25,32 +27,25 @@
  * @author Davide Franco
  */
 
-namespace App\Views;
+namespace App\Controller;
 
-use Core\App\CView;
+use Core\App\Controller;
 use Core\Db\DatabaseFactory;
 use Core\Utils\CUtils;
 use Core\Helpers\Sanitizer;
 use App\Tables\JobFileTable;
 use Exception;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use TypeError;
 
-class JobFilesView extends CView
+class JobFilesController extends Controller
 {
     /**
-     * @param Request $request
+     * @return Response
+     * @throws Exception
      */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'jobfiles.tpl';
-        $this->name = 'Job files';
-        $this->title = 'Bacula Job Files';
-    }
-
-    public function prepare(Request $request)
+    public function prepare(): Response
     {
         $rows_per_page = 10;
         $current_page = null;
@@ -63,23 +58,23 @@ class JobFilesView extends CView
 
         $filename = '';
 
-        $jobId = $request->query->getInt('jobId', 0);
+        $jobId = $this->request->query->getInt('jobId');
 
         if ($jobId !== 0) {
-            $this->assign('jobid', $jobId);
+            $this->setVar('jobid', $jobId);
         } else {
-            throw new Exception('Invalid or missing Job Id (not numeric) provided in ' . $this->title);
+            throw new TypeError('Invalid or missing Job Id');
         }
 
-        if ($request->request->has('InputFilename')) {
-            $filename = $request->request->get('InputFilename');
+        if ($this->request->request->has('InputFilename')) {
+            $filename = $this->request->request->get('InputFilename');
             $filename = Sanitizer::sanitize($filename);
         }
 
         $jobInfo = $jobFiles->getJobNameAndJobStatusByJobId($jobId);
-        $this->assign('job_info', $jobInfo);
+        $this->setVar('job_info', $jobInfo);
         $files_count = $jobFiles->countJobFiles($jobId, $filename);
-        $this->assign('job_files_count', CUtils::format_Number($files_count));
+        $this->setVar('job_files_count', CUtils::format_Number($files_count));
 
         //pagination
         $pagination_active = false;
@@ -87,13 +82,13 @@ class JobFilesView extends CView
             $pagination_active = true;
         }
 
-        if ($request->query->has('paginationCurrentPage')) {
-            $current_page = $request->query->getInt('paginationCurrentPage');
+        if ($this->request->query->has('paginationCurrentPage')) {
+            $current_page = $this->request->query->getInt('paginationCurrentPage');
         }
 
-        $this->assign('pagination_active', $pagination_active);
-        $this->assign('pagination_current_page', $current_page);
-        $this->assign('pagination_rows_per_page', $rows_per_page);
+        $this->setVar('pagination_active', $pagination_active);
+        $this->setVar('pagination_current_page', $current_page);
+        $this->setVar('pagination_rows_per_page', $rows_per_page);
 
         if (!empty($filename)) {
             // Filter with provided filename if provided
@@ -103,9 +98,11 @@ class JobFilesView extends CView
             $files = $jobFiles->getJobFiles($jobId, $rows_per_page, $current_page);
         }
 
-        $this->assign('job_files', $files);
-        $this->assign('job_files_count_paging', count($files));
+        $this->setVar('job_files', $files);
+        $this->setVar('job_files_count_paging', count($files));
 
-        $this->assign('filename', $filename);
+        $this->setVar('filename', $filename);
+
+        return (new Response($this->render('jobfiles.tpl')));
     }
 }

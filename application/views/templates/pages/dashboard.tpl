@@ -7,7 +7,7 @@
 {block name=body}
 <div class="container-fluid">
    <div class="page-header">
-     <h3>{$page_name} <small>{t}General overview{/t}</small></h3>
+     <h3>{t}Dashboard{/t} <small>&nbsp;{t}General overview{/t}</small></h3>
    </div>
 	
 	<!-- First row with Jobs statistics, stored bytes and stored files widgets -->

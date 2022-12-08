@@ -26,7 +26,7 @@ use Exception;
 
 class ClientTable extends Table
 {
-    protected $tablename = 'Client';
+    protected ?string $tablename = 'Client';
 
     // ==================================================================================
     // Function:    getClients()

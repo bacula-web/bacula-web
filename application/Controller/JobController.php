@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,42 +19,28 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-declare(strict_types=1);
+namespace App\Controller;
 
-namespace App\Views;
-
-use Core\App\CView;
+use Core\App\Controller;
 use Core\Db\DatabaseFactory;
 use Core\Db\CDBPagination;
 use Core\Db\CDBQuery;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
-use Core\Helpers\Sanitizer;
 use App\Tables\JobTable;
 use App\Tables\ClientTable;
 use App\Tables\PoolTable;
-use Symfony\Component\HttpFoundation\Request;
+use Exception;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class JobsView extends CView
+class JobController extends Controller
 {
     /**
-     * @param Request $request
+     * @return Response
+     * @throws Exception
      */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'jobs.tpl';
-        $this->name = 'Jobs report';
-        $this->title = 'Bacula jobs overview';
-    }
-
-    /**
-     * @return void
-     * @throws \Exception
-     */
-    public function prepare(): void
+    public function prepare(): Response
     {
         $jobs = new JobTable(
             DatabaseFactory::getDatabase(
@@ -67,14 +55,13 @@ class JobsView extends CView
         // TODO: Improve how these constants are declared and used
         require_once BW_ROOT . '/core/const.inc.php';
 
-        $fields = array( 'Job.JobId', 'Job.Name AS Job_name', 'Job.Type',
-            'Job.SchedTime', 'Job.StartTime', 'Job.EndTime', 'Job.Level',
-            'Job.ReadBytes', 'Job.JobBytes', 'Job.JobFiles',
-            'Pool.Name', 'Job.JobStatus', 'Pool.Name AS Pool_name', 'Status.JobStatusLong',
-        );
+        $fields = [
+            'Job.JobId', 'Job.Name AS Job_name', 'Job.Type', 'Job.SchedTime', 'Job.StartTime', 'Job.EndTime', 'Job.Level',
+            'Job.ReadBytes', 'Job.JobBytes', 'Job.JobFiles', 'Pool.Name', 'Job.JobStatus', 'Pool.Name AS Pool_name', 'Status.JobStatusLong'
+        ];
 
         // Order result by
-        $result_order = array(
+        $result_order = [
             'SchedTime' => 'Job Scheduled Time',
             'starttime' => 'Job Start Date',
             'endtime'   => 'Job End Date',
@@ -83,10 +70,11 @@ class JobsView extends CView
             'jobbytes'  => 'Job Bytes',
             'jobfiles'  => 'Job Files',
             'Pool.Name' => 'Pool Name'
-        );
+        ];
 
         // Global variables
-        $job_levels = array( 'D' => 'Differential',
+        $job_levels = [
+            'D' => 'Differential',
             'I' => 'Incremental',
             'F' => 'Full',
             'V' => 'InitCatalog',
@@ -94,7 +82,7 @@ class JobsView extends CView
             'O' => 'VolumeToCatalog',
             'd' => 'DiskToCatalog',
             'A' => 'Data'
-        );
+        ];
 
         $last_jobs = [];
 
@@ -107,16 +95,17 @@ class JobsView extends CView
         define('STATUS_FAILED', 5);
         define('STATUS_CANCELED', 6);
 
-        $job_status = array( STATUS_ALL => 'All',
+        $job_status = [
+            STATUS_ALL => 'All',
             STATUS_RUNNING => 'Running',
             STATUS_WAITING => 'Waiting',
             STATUS_COMPLETED => 'Completed',
             STATUS_COMPLETED_WITH_ERRORS => 'Completed with errors',
             STATUS_FAILED => 'Failed',
             STATUS_CANCELED => 'Canceled'
-        );
+        ];
 
-        $this->assign('job_status', $job_status);
+        $this->setVar('job_status', $job_status);
 
         // Job types
         $job_types = array( 'B' => 'Backup',
@@ -132,19 +121,19 @@ class JobsView extends CView
         // Jobs type filter
         $job_types_list = $jobs->getUsedJobTypes($job_types);
         $job_types_list['0'] = 'Any';
-        $this->assign('job_types_list', $job_types_list);
+        $this->setVar('job_types_list', $job_types_list);
 
         // Job client id filter
         $filter_clientid = (int) $this->getParameter('filter_clientid', 0);
-        $this->assign('filter_clientid', $filter_clientid);
+        $this->setVar('filter_clientid', $filter_clientid);
 
         // Job status filter
         $filter_jobstatus = (int) $this->getParameter('filter_jobstatus', 0);
-        $this->assign('filter_jobstatus', $filter_jobstatus);
+        $this->setVar('filter_jobstatus', $filter_jobstatus);
 
         // Job type filter
         $filter_jobtype = $this->getParameter('filter_jobtype', 0);
-        $this->assign('filter_jobtype', $filter_jobtype);
+        $this->setVar('filter_jobtype', $filter_jobtype);
 
         // Validate filter job type
         if (array_key_exists($filter_jobtype, $job_types)) {
@@ -154,23 +143,24 @@ class JobsView extends CView
         // Levels list filter
         $levels_list = $jobs->getLevels($job_levels);
         $levels_list['0']  = 'Any';
-        $this->assign('levels_list', $levels_list);
+        $this->setVar('levels_list', $levels_list);
 
         // Job level filter
         $filter_joblevel = $this->getParameter('filter_joblevel', 0);
-        $this->assign('filter_joblevel', $filter_joblevel);
+
+        $this->setVar('filter_joblevel', $filter_joblevel);
 
         // Job pool filter
         $filter_poolid = (int) $this->getParameter('filter_poolid', 0);
-        $this->assign('filter_poolid', $filter_poolid);
+        $this->setVar('filter_poolid', $filter_poolid);
 
         // Job starttime filter
         $filter_job_starttime = $this->getParameter('filter_job_starttime', null);
-        $this->assign('filter_job_starttime', $filter_job_starttime);
+        $this->setVar('filter_job_starttime', $filter_job_starttime);
 
         // Job endtime filter
         $filter_job_endtime = $this->getParameter('filter_job_endtime', null);
-        $this->assign('filter_job_endtime', $filter_job_endtime);
+        $this->setVar('filter_job_endtime', $filter_job_endtime);
 
         // Job orderby filter
         $job_orderby_filter = $this->getParameter('filter_job_orderby', 'jobid');
@@ -192,7 +182,7 @@ class JobsView extends CView
 
         $clients_list = $clients->getClients();
         $clients_list[0] = 'Any';
-        $this->assign('clients_list', $clients_list);
+        $this->setVar('clients_list', $clients_list);
 
         // Pools list filer
         $pools = new PoolTable(
@@ -207,7 +197,7 @@ class JobsView extends CView
         }
 
         $pools_list[0] = 'Any';
-        $this->assign('pools_list', $pools_list);
+        $this->setVar('pools_list', $pools_list);
 
         /**
          * Job status filter
@@ -237,7 +227,7 @@ class JobsView extends CView
         } // end switch
 
         // Selected level filter
-        if ($filter_joblevel !== '0') {
+        if ($filter_joblevel !== 0) {
             $where[] .= "Job.Level = :job_level ";
             $params['job_level'] = $filter_joblevel;
         }
@@ -248,7 +238,7 @@ class JobsView extends CView
             $params['pool_id'] = $filter_poolid;
         }
 
-        if ($filter_jobtype !== '0') {
+        if ($filter_jobtype !== 0) {
             $where[] = "Job.Type = :job_type";
             $params['job_type'] = $filter_jobtype;
         }
@@ -275,20 +265,20 @@ class JobsView extends CView
             }
         }
 
-        $this->assign('result_order', $result_order);
+        $this->setVar('result_order', $result_order);
         $orderby = "$job_orderby_filter $job_orderby_asc_filter ";
 
         // Set selected option in template for Job order and Job order asc (ascendant order)
-        $this->assign('result_order_field', $job_orderby_filter);
+        $this->setVar('result_order_field', $job_orderby_filter);
 
         if ($job_orderby_asc_filter == 'ASC') {
-            $this->assign('result_order_asc_checked', 'checked');
+            $this->setVar('result_order_asc_checked', 'checked');
         } else {
-            $this->assign('result_order_asc_checked', '');
+            $this->setVar('result_order_asc_checked', '');
         }
 
         // Paginate database query result
-        $pagination = new CDBPagination($this);
+        $pagination = new CDBPagination($this->view);
 
         // Parsing jobs result
         $sqlQuery = CDBQuery::get_Select(array('table' => 'Job',
@@ -403,7 +393,7 @@ class JobsView extends CView
                         $job['compression'] = 'n/a';
                     }
                     break;
-            } // end switch
+            }
 
             // Job size
             $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
@@ -414,11 +404,13 @@ class JobsView extends CView
             }
 
             $last_jobs[] = $job;
-        } // end foreach
+        }
 
-        $this->assign('last_jobs', $last_jobs);
+        $this->setVar('last_jobs', $last_jobs);
 
         // Count jobs
-        $this->assign('jobs_found', count($last_jobs));
+        $this->setVar('jobs_found', count($last_jobs));
+
+        return (new Response($this->render('jobs.tpl')));
     }
 }

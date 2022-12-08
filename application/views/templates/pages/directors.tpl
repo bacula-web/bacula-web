@@ -7,7 +7,7 @@
 {block name=body}
 <div class="container">
   <div class="page-header">
-    <h3>{$page_name} <small>{t}Bacula director(s) overview{/t}</small></h3>
+    <h3>{t}Directors{/t} <small>&nbsp;{t}Bacula director(s) overview{/t}</small></h3>
   </div>
 
   <p>Found {$directors_count} Bacula director catalog(s) in your configuration</p>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -19,9 +19,11 @@
 
 namespace Core\Db;
 
+use Core\Exception\DatabaseException;
 use PDO;
 use Exception;
 use PDOException;
+use PDOStatement;
 
 class Table
 {
@@ -33,10 +35,22 @@ class Table
     /**
      * @var Database
      */
-    protected $db;
-    protected $driver;
+    protected Database $db;
+
+    /**
+     * @var string
+     */
+    protected string $driver;
+
+    /**
+     * @var
+     */
     protected $parameters;
-    protected $tablename = null;
+
+    /**
+     * @var null
+     */
+    protected ?string $tablename = null;
 
     /**
      * @param Database $db
@@ -45,7 +59,7 @@ class Table
     public function __construct(Database $db)
     {
         if ($this->tablename === null) {
-            throw new Exception("\$tablename property is not set in " . static::class . ' class');
+            throw new DatabaseException("\$tablename property is not set in " . static::class . ' class');
         }
 
         // Get PDO instance
@@ -128,7 +142,7 @@ class Table
      * Prepare a query using PDO::prepare() and return false on failure, or a PDOStatement
      * @param string $query SQL query
      * @param array|null $params
-     * @return \PDOStatement|bool
+     * @return PDOStatement|bool
      */
     protected function execute(string $query, array $params = null)
     {
@@ -149,11 +163,11 @@ class Table
 
     public function run_query($query)
     {
-        // Prepare PDO statment
-        $statment    = $this->pdo->prepare($query);
+        // Prepare PDO statement
+        $statment = $this->pdo->prepare($query);
 
         if ($statment == false) {
-            throw new PDOException("Failed to prepare PDOStatment <br />$query");
+            throw new DatabaseException("Failed to prepare PDOStatment <br />$query");
         }
 
         // Bind PHP variables with named placeholders
@@ -205,7 +219,7 @@ class Table
      *
      * @return string|null
      */
-    public function getConnectionStatus()
+    public function getConnectionStatus(): ?string
     {
         // If MySQL of postGreSQL
         if ($this->get_driver_name() != 'sqlite') {

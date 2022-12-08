@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -19,7 +19,8 @@
 
 namespace Core\App;
 
-use Core\Helpers\Sanitizer;
+use Core\Exception\AppException;
+use Core\Utils\ConfigFileException;
 use Smarty;
 use App\Libs\FileConfig;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,15 +49,6 @@ class View
     protected string $title;
 
     /**
-     * @var string
-     */
-    protected string $userAlert = '';
-    /**
-     * @var string
-     */
-    protected string $userAlertType = '';
-
-    /**
      * @var Request
      */
     protected Request $request;
@@ -72,15 +64,12 @@ class View
     protected string $cacheDir = BW_ROOT . '/application/views/cache';
 
     /**
-     * @param Request $request
-     * @throws \Exception
+     * @throws AppException
+     * @throws ConfigFileException
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
         $this->renderer = new Smarty();
-
-        $this->request = $request;
-
         $this->renderer->setTemplateDir([
             $this->templatesRoot . '/layouts',
             $this->templatesRoot . '/partials',
@@ -94,15 +83,15 @@ class View
          * Throw an exception if cache directory is not writable by the web server
          */
         if (!is_writable($this->cacheDir)) {
-            throw new \Exception("The template cache folder <b>" . $this->cacheDir . "</b> must be writable by Apache user");
+            throw new AppException("The template cache folder <b>" . $this->cacheDir . "</b> must be writable by Apache user");
         }
 
+        $this->renderer->force_compile = true;
         $this->renderer->caching = Smarty::CACHING_LIFETIME_CURRENT;
 
         FileConfig::open(CONFIG_FILE);
         if (FileConfig::get_Value('debug') === true) {
             $this->renderer->debugging = true;
-            $this->renderer->force_compile = true;
         }
 
         $this->renderer->assign('app_name', WebApplication::getName());
@@ -110,29 +99,30 @@ class View
     }
 
     /**
-     * @param string $alert
-     * @return void
+     * @return Smarty
      */
-    public function setAlert(string $alert)
+    public function getRenderer(): Smarty
     {
-        $this->userAlert = $alert;
+        return $this->renderer;
     }
 
     /**
-     * @param string $type
+     * @param $name
+     * @param $value
      * @return void
      */
-    public function setAlertType(string $type)
+    public function set($name, $value): void
     {
-        $this->userAlertType = $type;
+        $this->renderer->assign($name, $value);
     }
 
     /**
      * @param string $template
-     * @return false|string
+     * @return string Template content or throw ar either an SmartyException or Exception
      * @throws \Exception
+     * @throws \SmartyException
      */
-    public function render(string $template)
+    public function render(string $template): string
     {
         // TODO: to move somewhere else, but not keep in the view for sure
         // Set username, if user is connected
@@ -141,44 +131,18 @@ class View
             $this->renderer->assign('username', $session->get('username'));
         }
 
-        // Give user some feedback
-        $this->renderer->assign('userAlert', $this->userAlert);
-        $this->renderer->assign('userAlertType', $this->userAlertType);
-
-        // Build breadcrumb
-        if ($this->request->query->has('page')) {
-            $breadcrumb = '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
-            $breadcrumb .= '<li class="active">' . $this->name . '</li>';
-        } else {
-            $breadcrumb = '<li class="active"> <i class="fa-light fa-home fa-fw"></i> ' . $this->name . '</li>';
-        }
-        $this->renderer->assign('breadcrumb', $breadcrumb);
-
-        // Render using the default layout
         try {
             return $this->renderer->fetch($template);
         } catch (\Exception $e) {
-            throw new \Exception();
+            throw new \SmartyException();
         }
     }
 
     /**
-     * @param string $parameter
-     * @param mixed $default
-     * @return string|null
+     * @return string
      */
-
-    protected function getParameter(string $parameter, $default): ?string
+    public function getCacheDir(): string
     {
-        if ($this->request->getMethod() === 'GET') {
-            if ($this->request->query->has($parameter)) {
-                return Sanitizer::sanitize($this->request->query->get($parameter));
-            }
-        } elseif ($this->request->getMethod() === 'POST') {
-            if ($this->request->request->has($parameter)) {
-                return Sanitizer::sanitize($this->request->request->get($parameter));
-            }
-        }
-        return $default;
+        return $this->cacheDir;
     }
 }

@@ -8,7 +8,7 @@
 <div class="container-fluid" id="jobsreport">
 
   <div class="page-header">
-    <h3>{$page_name} <small>{t}Bacula jobs overview{/t}</small></h3>
+    <h3>{t}Jobs report{/t}<small>&nbsp;{t}Bacula jobs overview{/t}</small></h3>
   </div>
 
   <div class="row">

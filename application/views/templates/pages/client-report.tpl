@@ -7,7 +7,7 @@
 {block name=body}
 <div class="container">
   <div class="page-header">
-    <h3>{$page_name} <small>{t}Report per Bacula client{/t}</small></h3>
+    <h3>{t}Client report{/t} <small>&nbsp;{t}Report per Bacula client{/t}</small></h3>
   </div>
 
     <div class="panel panel-default">

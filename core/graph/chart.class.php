@@ -21,6 +21,7 @@ namespace Core\Graph;
 
 use Core\Utils\CUtils;
 use Exception;
+use TypeError;
 
 class Chart
 {
@@ -32,22 +33,22 @@ class Chart
     protected $uniformize_data = false;
     protected $linkedReport;
 
-    /*
-     * Function:      __construct()
-     * Parameters:    array containing data below
-     *                data              array( key => value )
-     *                ylabel            label for Y axis (string)
-     *                type              'bar' or 'pie' (string)
-     *                name              name of the chart (string)
-     *                uniformize_data   do we normalize data ? (boolean)
-     *                linked_report     linked report page
+    /**
+     * $chart_data is an array which the structure below
      *
+     * data => array( key => value )
+     * ylabel => label for Y axis (string)
+     * type => 'bar' or 'pie' (string)
+     * name => name of the chart (string)
+     * uniformize_data => do we normalize data ? (boolean)
+     * linked_report => linked report page
+     *
+     * @param [] $chart_data
      */
-
     public function __construct($chart_data)
     {
         if (!is_array($chart_data)) {
-            throw new Exception('Bad parameters provided to Chart constructor');
+            throw new TypeError('Bad parameters provided to Chart constructor');
         } else {
             if (is_array($chart_data['data'])) {
                 $this->data = $chart_data['data'];
@@ -71,12 +72,9 @@ class Chart
         }
     }
 
-    /*
-       * Function:     uniformizeData()
-       * Parameters:   $data_in (array of values to uniformize)
-       * Return:       array of uniformized values
+    /**
+     * @return void
      */
-
     private function uniformizeData()
     {
         $array_sum = 0;
@@ -104,16 +102,12 @@ class Chart
         $this->ylabel = $best_unit;
     }
 
-    /*
-       * Function:     render()
-       * Parameters:   none
-       * Return:       nothing
+    /**
+     * @return string
      */
-
-    public function render()
+    public function render(): string
     {
-        $blob = '';
-        $blob .= '<script type="text/javascript">' . "\n";
+        $blob = '<script type="text/javascript">' . "\n";
 
         // Uniformize data
         if ($this->uniformize_data === true) {

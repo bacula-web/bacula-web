@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -17,46 +19,41 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Views;
+namespace App\Controller;
 
-use Core\App\CView;
-use Core\App\UserAuth;
+use Core\App\Controller;
 use App\Libs\FileConfig;
 use App\Tables\UserTable;
 use Core\Db\DatabaseFactory;
 use Core\Helpers\Sanitizer;
+use Core\Utils\ConfigFileException;
 use Exception;
-use Symfony\Component\HttpFoundation\Request;
+use SmartyException;
+use Symfony\Component\HttpFoundation\Response;
 
-class SettingsView extends CView
+class SettingsController extends Controller
 {
     /**
-     * @param Request $request
+     * @return Response
+     * @throws ConfigFileException
+     * @throws SmartyException
+     * @throws Exception
      */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'settings.tpl';
-        $this->name = 'Settings';
-        $this->title = 'General settings';
-    }
-
-    public function prepare(Request $request)
+    public function prepare(): Response
     {
         $userTable = new UserTable(DatabaseFactory::getDatabase());
 
         // Create new user
-        if ($request->request->has('action')) {
-            switch (Sanitizer::sanitize($request->request->get('action'))) {
+        if ($this->request->attributes->has('action')) {
+            switch (Sanitizer::sanitize($this->request->request->get('action'))) {
                 case 'createuser':
-                    $username = Sanitizer::sanitize($request->request->get('username'));
-                    $email = Sanitizer::sanitize($request->request->get('email'));
+                    $username = Sanitizer::sanitize($this->request->request->get('username'));
+                    $email = Sanitizer::sanitize($this->request->request->get('email'));
 
                     $result = $userTable->addUser(
                         $username,
                         $email,
-                        $request->request->get('password')
+                        $this->request->request->get('password')
                     );
                     if ($result !== false) {
                         // TODO: replace by session flash message
@@ -68,22 +65,22 @@ class SettingsView extends CView
         }
 
         // Get users list
-        $this->assign('users', $userTable->getAll());
+        $this->setVar('users', $userTable->getAll());
 
         // Get parameters set in configuration file
         if (!FileConfig::open(CONFIG_FILE)) {
-            throw new Exception("The configuration file is missing");
+            throw new ConfigFileException("The configuration file is missing");
         } else {
             // Check if datetime_format is set, otherwise, set default datetime_format
             if (FileConfig::get_Value('datetime_format') != null) {
-                $this->assign('config_datetime_format', FileConfig::get_Value('datetime_format'));
+                $this->setVar('config_datetime_format', FileConfig::get_Value('datetime_format'));
             } else {
-                $this->assign('config_datetime_format', 'Y-m-d H:i:s');
+                $this->setVar('config_datetime_format', 'Y-m-d H:i:s');
             }
 
             // Check if language is set
             if (FileConfig::get_Value('language') != null) {
-                $this->assign('config_language', FileConfig::get_Value('language'));
+                $this->setVar('config_language', FileConfig::get_Value('language'));
             }
 
             // Check if show_inactive_clients is set
@@ -91,7 +88,7 @@ class SettingsView extends CView
                 $config_show_inactive_clients = FileConfig::get_Value('show_inactive_clients');
 
                 if ($config_show_inactive_clients == true) {
-                    $this->assign('config_show_inactive_clients', 'checked');
+                    $this->setVar('config_show_inactive_clients', 'checked');
                 }
             }
 
@@ -100,10 +97,10 @@ class SettingsView extends CView
                 $config_hide_empty_pools = FileConfig::get_Value('hide_empty_pools');
 
                 if ($config_hide_empty_pools == true) {
-                    $this->assign('config_hide_empty_pools', 'checked');
+                    $this->setVar('config_hide_empty_pools', 'checked');
                 }
             } else {
-                $this->assign('config_hide_empty_pools', '');
+                $this->setVar('config_hide_empty_pools', '');
             }
 
             // Parameter <enable_users_auth> is enabled by default (in case is not specified in config file)
@@ -115,7 +112,7 @@ class SettingsView extends CView
             }
 
             if ($config_enable_users_auth == true) {
-                $this->assign('config_enable_users_auth', 'checked');
+                $this->setVar('config_enable_users_auth', 'checked');
             }
 
             // Parameter <debug> is disabled by default (in case is not specified in config file)
@@ -127,10 +124,12 @@ class SettingsView extends CView
             }
 
             if ($config_debug == true) {
-                $this->assign('config_debug', 'checked');
+                $this->setVar('config_debug', 'checked');
             } else {
-                $this->assign('config_debug', '');
+                $this->setVar('config_debug', '');
             }
         }
+
+        return (new Response($this->render('settings.tpl')));
     }
-} // end of class
+}
