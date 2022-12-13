@@ -36,7 +36,7 @@ Since release 6.0.0
 
 Why changing release numbering ?
 
-First, to make my developper "life" easier ;)
+First, to make my developer "life" easier ;)
 And to identify clearly which release is major, minor or a maintenance/bug fix release
 
 As of version 6.0.0, each Bacula-Web releases will be composed of three digits (see below)

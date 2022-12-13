@@ -11,7 +11,7 @@ Using the test page
 
 A test page exist for this purpose that check the following items
 
-   * required package are succesfully installed
+   * required package are successfully installed
    * smarty template cache good permissions
    * application database back-end good permissions
    * php modules are installed and properly configured
@@ -27,7 +27,7 @@ You should got the same result as shown in the screenshot below
 .. image:: /_static/bacula-web-test-page.jpg
    :scale: 20%
 
-note:: this setting is availabe since Bacula-Web 5.2.11
+note:: this setting is available since Bacula-Web 5.2.11
 
 .. note:: Default username and password are (admin/bacula)
 

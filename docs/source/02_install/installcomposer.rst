@@ -16,7 +16,7 @@ Let's start by installing Composer on your system
 Install Composer
 ================
 
-Most Linux distro povides Composer as package, so to install it run this command
+Most Linux distro provides Composer as package, so to install it run this command
 
 ::
 
@@ -26,7 +26,7 @@ Most Linux distro povides Composer as package, so to install it run this command
     On Red Hat, Centos, Fedora
     $ sudo yum install composer
 
-If your distro doesn't provide Composer package, Composer website contains all informations 
+If your distro doesn't provide Composer package, Composer website contains all information
 you can install it manually as explained on `this page <https://getcomposer.org/download/>`_.
 
 .. important::

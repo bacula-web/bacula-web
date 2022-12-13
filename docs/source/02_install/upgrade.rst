@@ -22,7 +22,7 @@ Before proceeding to the upgrade, make sure you do a copy of the config file and
 Check the requirements
 ======================
 
-Ensure that you meet all system requirements (more informations in the :ref:`install/requirements` page).
+Ensure that you meet all system requirements (more information in the :ref:`install/requirements` page).
 
 Upgrade from archive
 ====================
@@ -73,7 +73,7 @@ Move to Apache root folder
     $ cd /var/www/html 
     $ sudo mv -v bacula-web bacula-web.beforeupgrade
 
-..note:: The path might need to be adapted depending on your setup
+.. note:: The path might need to be adapted depending on your setup
 
 Get latest stable version of Bacula-Web
 
