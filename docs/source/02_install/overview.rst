@@ -8,6 +8,7 @@ Bacula-Web is a web application written in PHP which could be used with web serv
 
    * Apache web server
    * Nginx
+   * Lighttpd
 
 Before starting the installation of Bacula-Web, please you meet the requirements listed below
 

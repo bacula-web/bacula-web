@@ -110,7 +110,7 @@ Do not display empty pools in Dashboard (Pools and volumes widget)
 
    $config['hide_empty_pools'] = false;
                              
-.. note:: this setting is availabe since Bacula-Web 5.2.11
+.. note:: this setting is available since Bacula-Web 5.2.11
 
 show_inactive_clients
 ---------------------
@@ -119,13 +119,13 @@ show_inactive_clients
 
 If disabled (set to *false*), don't list or show inactive clients
 
-**EXample**
+**Example**
 
 ::
 
    $config['show_inactive_clients'] = true;
 
-.. note:: this setting is availabe since Bacula-Web 5.2.11
+.. note:: this setting is available since Bacula-Web 5.2.11
 
 datetime_format
 ---------------
@@ -144,7 +144,7 @@ For more information on date format, have a look on date() function in `PHP manu
    or
    $config['datetime_format'] = 'm-d-Y H:i:s';
 
-.. note:: this setting is availabe only since version 7.4.0 
+.. note:: this setting is available only since version 7.4.0
 
 enable_users_auth
 -----------------
@@ -181,7 +181,7 @@ Define how many rows per pagination page will be displayed.
 
    $config['rows_per_page'] = 25;
 
-.. note:: this setting is availabe since version 8.5.0
+.. note:: this setting is available since version 8.5.0
 
 debug
 -----
@@ -199,7 +199,7 @@ Debug mode could be helpful to troubleshoot Bacula-Web setup problem. Debug mode
     // Enable debug mode
     $config['debug'] = true;
 
-.. important:: Use debug mode with caution, sensitive informations can be disclosed if your Bacula-Web setup is exposed to unsecure network.
+.. important:: Use debug mode with caution, sensitive information can be disclosed if your Bacula-Web setup is exposed to unsecure network.
 
 Database connection settings
 ============================
@@ -211,7 +211,7 @@ Setting           Description                                          Example
 ================= ==================================================== ====================================
 label             label displayed in the catalog drop-down selector    Backup server
 host              hostname of the db server hosting Bacula catalog     localhost, fqdn host or ip address
-db_name           name of the catalog database name                    usualy bacula, unless you changed it
+db_name           name of the catalog database name                    usually bacula, unless you changed it
 login             database user                                        bacula, admin, etc.
 password          database password                                    mK3DQLolUV
 db_type           database type                                        mysql, pgsql or sqlite
@@ -261,7 +261,7 @@ db_port           database port number                                  - mysql,
    $config[0]['db_type'] = 'mysql';
    $config[0]['db_port'] = '3306';
 
-   //PostgreSQL Lab serveur
+   //PostgreSQL Lab server
    $config[1]['label'] = 'Lab backup server';
    $config[1]['host'] = '192.168.0.120';
    $config[1]['login'] = 'bacula';

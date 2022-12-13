@@ -27,7 +27,6 @@ General requirements
 | **PHP modules**                                              |
 +-----------------+--------------------------------------------+
 |                 | - Gettext                                  |
-|                 | - GD                                       |
 |                 | - Session                                  |
 |                 | - PDO                                      |
 |                 | - MySQL, postgreSQL                        |
@@ -114,7 +113,7 @@ and if needed, restore the correct SELinux context
 
     # retorecon -Rv /var/lib/php/session
 
-Ressources
+Resources
 ----------
 
 If you need more information about SELinux and security, use the links below

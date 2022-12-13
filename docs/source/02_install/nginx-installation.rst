@@ -26,7 +26,7 @@ Install Nginx and PHP-FPM
 
 ::
 
-    $ sudo apt-get install nginx php-fpm php-sqlite3 php-gd
+    $ sudo apt-get install nginx php-fpm php-sqlite3
 
 If you use MySQL Bacula catalog
 

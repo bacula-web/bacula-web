@@ -15,7 +15,7 @@ Frequently asked questions
 General
 -------
 
-  * Which :ref:`web browsers <supported-web-broswer>` can be used with Bacula-Web ?
+  * Which :ref:`web browsers <supported-web-browser>` can be used with Bacula-Web ?
   * Which :ref:`version of Bacula <supported-bacula-version>` is compatible with Bacula-Web ?
   * Which :ref:`versions of PHP <supported-php-version>` are supported ?
   * Where can I :ref:`download the latest version <download-latest-version>` of Bacula-Web ?
@@ -31,24 +31,24 @@ Install, upgrade, configure and troubleshoot
   * Why I cannot connect :ref:`to remote db server with SELinux enforced <troubleshoot-selinux>` ?
   * Does Bacula-Web can run on a system having :ref:`SELinux enforced <troubleshoot-selinux-enforced>` ?
 
-Developpment
+Development
 ------------
 
-  * What's the current :ref:`developpment status <developpment-status>` of Bacula-Web ?
+  * What's the current :ref:`development status <development-status>` of Bacula-Web ?
   * Why :ref:`reviving Bacula-Web project <project-revive>` ?
   * Is Bacula-Web a :ref:`free and open source <project-license>` project ?
 
 Answers
 =======
 
-.. _supported-web-broswer:
+.. _supported-web-browser:
 
 Which web browsers can be used with Bacula-Web ?
 ------------------------------------------------
 
 Bacula-Web is compatible with almost all well known web browser. The only thing you’ve to worry about is to make sure that Javascript is enabled.
 
-Before releasing a new version, i usualy make some test with latest version of Firefox, Chrome ad Internet Explorer.
+Before releasing a new version, I usually make some tests with latest version of Firefox, Chrome ad Internet Explorer.
 Don't hesitate to share your experience with any other web browser by giving to me a positive/negative feedback.
 
 .. _supported-bacula-version:
@@ -67,7 +67,7 @@ Which version of PHP is supported ?
 
 As of Bacula-Web version 8.5.0, the recommended PHP version is version <= 7.3
 
-.. important:: PHP versions prior to 7.3 are not supported anymore, thoses versions no longer have security support and are exposed to unpatched security vulnerabilities.
+.. important:: PHP versions prior to 7.3 are not supported anymore, theses versions no longer have security support and are exposed to non patched security vulnerabilities.
 
 For more details, please have a look at the `currently supported PHP version`_ (PHP.net website)
 
@@ -91,9 +91,9 @@ Register or log in (if you already registered) in the `bug tracker`_ and submit 
 
 .. _bug tracker: http://bugs.bacula-web.org
 
-More informations on how to submit a bug report can be found :ref:`here <gethelp/support>`
+More information on how to submit a bug report can be found :ref:`here <gethelp/support>`
 
-.. note:: Please remember, as much details and/or informations you provide, as fast I can help you and/for fix the code ;)
+.. note:: Please remember, as much details and/or information you provide, as fast I can help you and/for fix the code ;)
 
 .. _supported-db:
 
@@ -114,9 +114,9 @@ A full :ref:`list of requirements <install/requirements>` is documented in the d
 On which OS can I install Bacula-Web ?
 --------------------------------------
 
-Bacula-Web is currently developped and tested under Centos 6 and Red Hat EL version 5.
+Bacula-Web is currently developed and tested under Centos 6 and Red Hat EL version 5.
 
-But it should work fine on your prefered Linux distributions as
+But it should work fine on your preferred Linux distributions as
 
   * Debian/Ubuntu (or any kind of Debian based distros)
   * Gentoo
@@ -194,19 +194,19 @@ you can fix the SELinux context by running the command below
 
   $ sudo chcon -t httpd_sys_content_t /var/www/html/bacula-web/ -R
 
-Otherwise, the simpliest would be to set SELinux to Permissive or Disabled
+Otherwise, the simplest would be to set SELinux to Permissive or Disabled
 
-.. _developpment-status:
+.. _development-status:
 
-What's the current developpment status of Bacula-Web ?
+What's the current development status of Bacula-Web ?
 ------------------------------------------------------
 
-As described in Bacula-Web project story, I revived the Bacula-Web project since end of 2010 after few years without bug fixes and improvments.
-As you already know, a lot of effort has been made a provide more stable, secure and usefull tool.
+As described in Bacula-Web project story, I revived the Bacula-Web project since end of 2010 after few years without bug fixes and improvements.
+As you already know, a lot of effort has been made a provide more stable, secure and useful tool.
 
 But there's still a lot of things to do but since version 5.1.0 alpha, Bacula-Web is slightly stable.
 
-For people that use Bacula-Web on a daily basis, you already know that they're a lot improvments to achieve.
+For people that use Bacula-Web on a daily basis, you already know that they're a lot improvement to achieve.
 That's what I'll try to do on my spare time and hope you'll enjoy
 
 .. _project-revive:
@@ -214,29 +214,29 @@ That's what I'll try to do on my spare time and hope you'll enjoy
 Why reviving Bacula-Web project ?
 ---------------------------------
 
-Since several years, I'm using as you this amazing open source backup tool Bacula and I was looking for a web based tool that provide me usefull informations about last night jobs.
+Since several years, I'm using as you this amazing open source backup tool Bacula and I was looking for a web based tool that provide me useful information about last night jobs.
 
 My first look were on WeBacula and bweb which are nice to use and features full but maybe pretty much not easy to install and configure.
 
 Then, I've found Bacula-Web which wasn't patched and updated since many years.
 
-I submited patches to Bacula developper list and after some commit, i proposed to become the official maintainer of this project. That's was on July 2010.
+I submitted patches to Bacula developer list and after some commit, i proposed to become the official maintainer of this project. That's was on July 2010.
 
-I know that there's a lot of web based console for administring, monitoring and configuring bacula like
+I know that there's a lot of web based console for managing, monitoring and configuring bacula like
 
   * bweb
   * bat
   * Webacula
 
-You can find a complete list of GUI in the Bacula's web site
+You can also find a complete list of GUI in the Bacula's web site
 
 Because bacula-web stand to be (for both next patch and future release)
 
   * Really easy to install, configure and upgrade
   * Easy to use (after you've successfully installed, you just need a web browser, no GUI)
-  * Usefull (see roadmap for the next version's coming)
+  * Useful (see roadmap for the next version's coming)
 
-I do use Bacula-Web for personal usage several time per week and the idea was to share thoses improvments with the community
+I do use Bacula-Web for personal usage several time per week, and the idea was simply to share those improvements with the community
 
   * Fixes and enhancement I've created on my side
   * Added features such as a new test page

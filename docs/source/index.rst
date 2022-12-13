@@ -3,20 +3,21 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-========================
-Bacula-Web documentation
-========================
+===================================
+Welcome to Bacula-Web documentation
+===================================
 
-.. image:: _static/bacula-web-logo.png
-  :scale: 100%
+.. image:: _static/bacula-web-dashboard-crop.jpeg
+  :scale: 25 %
+  :width: 2555px
+  :height: 2906px
   :align: center
-  :target: https://github.com/bacula-web/bacula-web
-  :alt: Bacula-Web logo
+  :alt: Bacula-Web dashboard
 
 .. toctree::
    :maxdepth: 2
 
    01_about/index
    02_install/index
-   03_gethelp/index
+   03_get-help/index
    04_contribute/index

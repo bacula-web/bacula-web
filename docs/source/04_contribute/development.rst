@@ -4,7 +4,7 @@
 Development
 ============
 
-Bacula-Web source git repository is publicly available and kindly hosted by GitHub `here`_
+Bacula-Web source git repository is publicly available and kindly hosted by GitHub `here <https://github.com/bacula-web/bacula-web>`_
 
 Guidance for developers
 ========================
@@ -29,5 +29,4 @@ Thanks for your help.
 
 Shall you have any questions, feel free to get back to me by mail.
 
-.. _here : https://github.com/bacula-web/bacula-web
 .. _GitHub issues: https://github.com/bacula-web/bacula-web/issues
