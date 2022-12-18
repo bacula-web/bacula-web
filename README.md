@@ -4,13 +4,11 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
 
-<p align="center">
-<img src="https://www.bacula-web.org/bacula-web-dashboard.png" width="500px" alt="Bacula-Web dashboard"/>
-</p>
+![Bacula-Web dashboard](https://www.bacula-web.org/bacula-web-dashboard.png)
 
 Bacula-Web is a web based tool written in [PHP](https://php.net) which provides a summarized view of your [Bacula](https://www.bacula.org) backup infrastructure.
 
-All the metrics and informations provided by Bacula-Web are taken from [Bacula](https://www.bacula.org) catalog database, so there's no need to setup bconsole, bvfs, etc
+All the metrics and information provided by Bacula-Web are taken from [Bacula](https://www.bacula.org) catalog database, so there's no need to set up bconsole, bvfs, etc
 
 In addition, the accesses to the database are made read-only, so your Bacula catalog is not altered by Bacula-Web
 
@@ -20,8 +18,8 @@ In addition, the accesses to the database are made read-only, so your Bacula cat
 
 Bacula-Web project has been revived since 2010.
 
-I tought that having an easy and useful web UI to monitor Bacula backup jobs, volumes, pools, etc. would be nice.
-So I decided to take care of this project which was almost abandonned since more than 4 years.
+I thought that having an easy and useful web UI to monitor Bacula backup jobs, volumes, pools, etc. would be nice.
+So I decided to take care of this project which was almost abandoned since more than 4 years.
 
 For more information, please check the [project history](https://docs.bacula-web.org/en/latest/01_about/about.html#the-project-history)
 
@@ -63,8 +61,8 @@ To run Bacula-Web, you'll need at least PHP 7.3 with following extensions enable
 - Gettext
 - Session
 - PDO
-- MySQL, postgreSQL
-- SQlite (required for user auth)
+- MySQL, postgresSQL
+- SQLite (required for user authentication)
 - CLI
 - JSON
 - Posix
@@ -111,7 +109,7 @@ all Composer dependencies pre-installed in it.
 
 **Important note:**
 
-> The only purpose of this pre-installed archive was to provide an easy way for users who wheren't able to install Composer on their servers
+> The only purpose of this pre-installed archive was to provide an easy way for users who weren't able to install Composer on their servers
 > 
 > Please note that it will not be available once proper packages will be available
 
@@ -123,7 +121,7 @@ More details about the installation or upgrade and configuration can be found in
 
 The best way to get help or ask a question is to submit a bug report using [GitHub project issues](https://github.com/bacula-web/bacula-web/issues).
 
-> Before submiting any issues, please have a look at the [Bugs and feature request guide](https://docs.bacula-web.org/en/latest/03_gethelp/support.html)
+> Before submitting any issues, please have a look at the [Bugs and feature request guide](https://docs.bacula-web.org/en/latest/03_gethelp/support.html)
 
 For general questions or feedbacks, you can use [GitHub discussions](https://github.com/bacula-web/bacula-web/discussions)
 
@@ -133,7 +131,7 @@ For general questions or feedbacks, you can use [GitHub discussions](https://git
 
 If you want to help translating Bacula-Web in your language, please check the [Contribute to translation](http://docs.bacula-web.org/en/latest/04_contribute/translations.html) page
 
-#### Developpment
+#### Development
 
 You can contribute by submitting a GitHub pull request, please check the [contribution guide](http://docs.bacula-web.org/en/latest/04_contribute/development.html) for more details.
 
