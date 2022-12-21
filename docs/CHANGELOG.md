@@ -5,6 +5,9 @@
 - Core
   - Bumped FontAwesome to version 6.2.0 (see #141)
 
+- Documentation
+  - Updated / fixed documentation
+
 ### Fixed bug(s)
 
 ### New feature(s)
