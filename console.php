@@ -114,11 +114,11 @@ switch ($argv[1]) {
 
         // Check PHP version
         $phpversion = phpversion();
-        if (version_compare(PHP_VERSION, '7.3', '>=')) {
+        if (version_compare(PHP_VERSION, '7.4', '>=')) {
             echo "\tPHP version" . hightlight('Ok', 'ok') . " (using $phpversion)" . PHP_EOL;
         } else {
             echo 'PHP version' . hightlight('Error', 'error') . ']' . PHP_EOL;
-            echo 'You have to upgrade PHP to at least version 7.3 ' . $phpversion . PHP_EOL;
+            echo 'You have to upgrade PHP to at least version 7.4 ' . $phpversion . PHP_EOL;
         }
 
         // Check PHP timezone
