@@ -8,6 +8,9 @@
 - Documentation
   - Updated / fixed documentation
 
+- Security
+  - Added security policy and documented know security vulnerabilities (see #142)
+
 ### Fixed bug(s)
 
 ### New feature(s)
