@@ -4,6 +4,7 @@
 
 - Core
   - Bumped FontAwesome to version 6.2.0 (see #141)
+  - PHP versions 7.4 is now the minimal supported versions, older versions are not supported anymore (see #143)
 
 - Documentation
   - Updated / fixed documentation

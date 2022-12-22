@@ -56,7 +56,7 @@ A huge thanks to [Read The Docs](https://readthedocs.org/) for providing a free 
 
 #### Requirements
 
-To run Bacula-Web, you'll need at least PHP 7.3 with following extensions enabled
+To run Bacula-Web, you'll need at least PHP 7.4 with following extensions enabled
 
 - Gettext
 - Session
