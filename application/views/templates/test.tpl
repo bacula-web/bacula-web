@@ -34,8 +34,4 @@
 		</div>
 	</div>
 
-	<i class="fas fa-rocket"></i>
-	<i class="fas fa-home"></i>
-
-
 </div> <!-- div class="container" -->
