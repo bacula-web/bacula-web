@@ -8,6 +8,7 @@
 
 - Documentation
   - Updated / fixed documentation
+  - The [FAQ](https://docs.bacula-web.org/03_get-help/faq.html) has been fixed / updated
 
 - Security
   - Added security policy and documented know security vulnerabilities (see #142)
