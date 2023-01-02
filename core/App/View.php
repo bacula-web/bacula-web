@@ -104,6 +104,9 @@ class View
             $this->renderer->debugging = true;
             $this->renderer->force_compile = true;
         }
+
+        $this->renderer->assign('app_name', WebApplication::getName());
+        $this->renderer->assign('app_version', WebApplication::getVersion());
     }
 
     /**

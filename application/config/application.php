@@ -28,21 +28,23 @@
  * @since 8.0.0-rc.1
  */
 
-$app = [ 'name' => 'Bacula-Web', 'version' => '8.6.3',
-        'routes' => [   'home' => 'Dashboard',
-                        'test' => 'Test',
-                        'jobs' => 'Jobs',
-                        'joblogs' => 'JobLogs',
-                        'volumes' => 'Volumes',
-                        'pools' => 'Pools',
-                        'client' => 'Client',
-                        'backupjob' => 'BackupJob',
-                        'login' => 'Login',
-                        'usersettings' => 'UserSettings',
-                        'settings' => 'Settings',
-                        'directors' => 'Directors',
-                        'jobfiles' => 'JobFiles'
-            ],
-    'defaultview' => 'DashboardView' ];
-
-return $app;
+return [
+    'name' => 'Bacula-Web',
+    'version' => '8.6.3',
+    'routes' => [
+        'home' => 'Dashboard',
+        'test' => 'Test',
+        'jobs' => 'Jobs',
+        'joblogs' => 'JobLogs',
+        'volumes' => 'Volumes',
+        'pools' => 'Pools',
+        'client' => 'Client',
+        'backupjob' => 'BackupJob',
+        'login' => 'Login',
+        'usersettings' => 'UserSettings',
+        'settings' => 'Settings',
+        'directors' => 'Directors',
+        'jobfiles' => 'JobFiles'
+    ],
+    'defaultview' => 'DashboardView'
+];

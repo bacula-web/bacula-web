@@ -1,10 +1,13 @@
-## Bacula-Web 8.7.0 (December dd 2022)
+## Bacula-Web 8.7.0 (January 2 2023)
 
 ### Changelog
 
 - Core
   - Bumped FontAwesome to version 6.2.0 (see #141)
   - PHP versions 7.4 is now the minimal supported versions, older versions are not supported anymore (see #143)
+  - Separated some templates into application/views/templates/partials folder (see #144)
+  - Removed Composer lock file from git repository
+    To avoid any potential issues for users using different version of  PHP, composer.lock has been removed from the Git repo
 
 - Documentation
   - Updated / fixed documentation

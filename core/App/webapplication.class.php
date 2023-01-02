@@ -40,7 +40,7 @@ class WebApplication
     protected $defaultView;
     protected $userauth;
     protected $enable_users_auth;
-    protected $request;
+    protected Request $request;
     private $response;
     private $session;
     public $translate;                    // Translation class instance
@@ -50,12 +50,18 @@ class WebApplication
     public $datetime_format_short;
 
     /**
-     * @param Request $request
+     * @var array
      */
-    public function __construct(Request $request)
+    private static array $config;
+
+
+    /**
+     * @param array $config Application config
+     */
+    public function __construct(array $config)
     {
-        $this->request = $request;
         $this->session = new Session();
+        self::$config = $config;
     }
 
     /**
@@ -250,18 +256,22 @@ class WebApplication
     }
 
     /**
+     * @var Request $request
      * @throws Exception
      */
-    public function run()
+    public function run(Request $request)
     {
+        $this->request = $request;
+
         try {
 
             $view = new LoginView($this->request);
             $view->prepare($this->request);
+
             $response = new Response();
             $response->setContent($view->render('login.tpl'));
             $response->send();
-            die();
+
             $this->setup();
             $this->init();
 
@@ -281,5 +291,21 @@ class WebApplication
         } finally {
             $this->response->send();
         }
+    }
+
+    /**
+     * @return string
+     */
+    public static function getName(): string
+    {
+        return self::$config['name'];
+    }
+
+    /**
+     * @return string
+     */
+    public static function getVersion(): string
+    {
+        return self::$config['version'];
     }
 }

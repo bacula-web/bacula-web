@@ -20,6 +20,7 @@
 namespace App\Libs;
 
 use Core\Utils\File;
+use Exception;
 
 class FileConfig extends File
 {
