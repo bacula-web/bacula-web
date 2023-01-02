@@ -1,3 +1,10 @@
+{extends file='default.tpl'}
+
+{block name=title}
+	<title>Bacula-Web - {t}Job logs{/t}</title>
+{/block}
+
+{block name=body}
 <div class="container">
 
   <div class="page-header">
@@ -44,3 +51,4 @@
 	</table>
 	</div>
 </div> <!-- end div class="container-fluid" -->
+{/block}

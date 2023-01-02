@@ -1,4 +1,11 @@
-<div class="container">  
+{extends file='default.tpl'}
+
+{block name=title}
+	<title>Bacula-Web - {t}Client report{/t}</title>
+{/block}
+
+{block name=body}
+<div class="container">
   <div class="page-header">
     <h3>{$page_name} <small>{t}Report per Bacula client{/t}</small></h3>
   </div>
@@ -119,3 +126,4 @@
      <div class="alert alert-info" role="alert">{t}Choose the client name and the period interval, then click on the{/t} <strong>{t}View report{/t}</strong> {t}button{/t}</div>
    {/if}
 </div> <!-- div class="container" -->
+{/block}

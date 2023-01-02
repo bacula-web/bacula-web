@@ -1,3 +1,10 @@
+{extends file='default.tpl'}
+
+{block name=title}
+	<title>Bacula-Web - {t}Job files{/t}</title>
+{/block}
+
+{block name=body}
 <div class="container" id="jobsreport">
 
 	<div class="page-header">
@@ -98,3 +105,4 @@
      </div> <!-- end div class="col... -->
 	</div> <!-- end div class="row... -->
 </div>
+{/block}

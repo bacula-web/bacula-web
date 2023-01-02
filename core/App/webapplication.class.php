@@ -23,7 +23,6 @@ namespace Core\App;
 
 use App\Libs\FileConfig;
 use App\Views\LoginView;
-use Core\Db\DatabaseFactory;
 use Core\Exception\NotAuthorizedException;
 use Core\Exception\PageNotFoundException;
 use Core\Helpers\Sanitizer;
@@ -80,7 +79,11 @@ class WebApplication
 
     private function setup()
     {
-        FileConfig::open(CONFIG_FILE);
+        try {
+            FileConfig::open(CONFIG_FILE);
+        } catch(Exception $exception) {
+            die($exception->getMessage());
+        }
 
         /*
          * Check if <enable_users_auth> parameter is set in config file and type is boolean
@@ -197,11 +200,6 @@ class WebApplication
             }
         }
 
-        // Checking template cache permissions
-        if (!is_writable(VIEW_CACHE_DIR)) {
-            throw new Exception("The template cache folder <b>" . VIEW_CACHE_DIR . "</b> must be writable by Apache user");
-        }
-
         // Initialize smarty gettext function
         $language = FileConfig::get_Value('language');
         if ($language == null) {
@@ -251,9 +249,19 @@ class WebApplication
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function run()
     {
         try {
+
+            $view = new LoginView($this->request);
+            $view->prepare($this->request);
+            $response = new Response();
+            $response->setContent($view->render('login.tpl'));
+            $response->send();
+            die();
             $this->setup();
             $this->init();
 
@@ -261,7 +269,7 @@ class WebApplication
 
             $this->response = new Response();
             $this->response->setStatusCode(200);
-            $this->response->setContent($this->view->render($this->request));
+            $this->response->setContent($this->view->render('login.tpl'));
         } catch (PageNotFoundException $exception) {
             $this->response = new Response(CErrorHandler::displayError($exception), 404);
         } catch (NotAuthorizedException $exception) {

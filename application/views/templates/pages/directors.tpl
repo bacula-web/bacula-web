@@ -1,3 +1,10 @@
+{extends file='default.tpl'}
+
+{block name=title}
+  <title>Bacula-Web - {t}Directors{/t}</title>
+{/block}
+
+{block name=body}
 <div class="container">
   <div class="page-header">
     <h3>{$page_name} <small>{t}Bacula director(s) overview{/t}</small></h3>
@@ -26,3 +33,4 @@
     {/foreach}
   </div>
 </div> <!-- end div class=container -->
+{/block}

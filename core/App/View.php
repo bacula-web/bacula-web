@@ -21,81 +21,142 @@ namespace Core\App;
 
 use Core\Helpers\Sanitizer;
 use Smarty;
-use SmartyBC;
+use App\Libs\FileConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class CView extends Smarty
+class View
 {
-    protected $templateName;
-    protected $name;
-    protected $title;
+    /**
+     * @var Smarty
+     */
+    protected Smarty $renderer;
 
-    protected $userAlert;
-    protected $userAlertType;
+    /**
+     * @var string
+     */
+    protected string $templateName;
+
+    /**
+     * @var string
+     */
+    protected string $name = '';
+
+    /**
+     * @var string
+     */
+    protected string $title;
+
+    /**
+     * @var string
+     */
+    protected string $userAlert = '';
+    /**
+     * @var string
+     */
+    protected string $userAlertType = '';
 
     /**
      * @var Request
      */
-    protected $request;
+    protected Request $request;
 
+    /**
+     * @var string
+     */
+    protected string $templatesRoot = BW_ROOT . '/application/views/templates';
+
+    /**
+     * @var string
+     */
+    protected string $cacheDir = BW_ROOT . '/application/views/cache';
+
+    /**
+     * @param Request $request
+     * @throws \Exception
+     */
     public function __construct(Request $request)
     {
-        parent::__construct();
+        $this->renderer = new Smarty();
 
         $this->request = $request;
 
-        $this->setTemplateDir(VIEW_DIR);
-        $this->setCompileDir(VIEW_CACHE_DIR);
-        $this->setCacheDir(VIEW_CACHE_DIR);
+        $this->renderer->setTemplateDir([
+            $this->templatesRoot . '/layouts',
+            $this->templatesRoot . '/partials',
+            $this->templatesRoot . '/pages'
+            ]);
 
-        $this->force_compile = true;
-        $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
+        $this->renderer->setCompileDir($this->cacheDir);
+        $this->renderer->setCacheDir($this->cacheDir);
+
+        /**
+         * Throw an exception if cache directory is not writable by the web server
+         */
+        if (!is_writable($this->cacheDir)) {
+            throw new \Exception("The template cache folder <b>" . $this->cacheDir . "</b> must be writable by Apache user");
+        }
+
+        $this->renderer->caching = Smarty::CACHING_LIFETIME_CURRENT;
+
+        FileConfig::open(CONFIG_FILE);
+        if (FileConfig::get_Value('debug') === true) {
+            $this->renderer->debugging = true;
+            $this->renderer->force_compile = true;
+        }
     }
 
     /**
-     * @param $alert
+     * @param string $alert
      * @return void
      */
-    public function setAlert($alert)
+    public function setAlert(string $alert)
     {
         $this->userAlert = $alert;
     }
 
-    public function setAlertType($type)
+    /**
+     * @param string $type
+     * @return void
+     */
+    public function setAlertType(string $type)
     {
         $this->userAlertType = $type;
     }
 
-    public function render(Request $request)
+    /**
+     * @param string $template
+     * @return false|string
+     * @throws \Exception
+     */
+    public function render(string $template)
     {
-        $this->assign('page_name', $this->name);
-        $this->assign('page_title', $this->title);
-        $this->assign('templateName', $this->templateName);
-
         // TODO: to move somewhere else, but not keep in the view for sure
         // Set username, if user is connected
-
         $session = new Session();
         if ($session->has('user_authenticated') && $session->get('user_authenticated') === 'yes') {
-            $this->assign('username', $session->get('username'));
+            $this->renderer->assign('username', $session->get('username'));
         }
 
         // Give user some feedback
-        $this->assign('userAlert', $this->userAlert);
-        $this->assign('userAlertType', $this->userAlertType);
+        $this->renderer->assign('userAlert', $this->userAlert);
+        $this->renderer->assign('userAlertType', $this->userAlertType);
 
         // Build breadcrumb
-        if ($request->query->has('page')) {
+        if ($this->request->query->has('page')) {
             $breadcrumb = '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
             $breadcrumb .= '<li class="active">' . $this->name . '</li>';
         } else {
             $breadcrumb = '<li class="active"> <i class="fa-light fa-home fa-fw"></i> ' . $this->name . '</li>';
         }
-        $this->assign('breadcrumb', $breadcrumb);
+        $this->renderer->assign('breadcrumb', $breadcrumb);
 
         // Render using the default layout
-        return $this->fetch('layouts/default.tpl');
+        try {
+            return $this->renderer->fetch($template);
+        } catch (\Exception $e) {
+            throw new \Exception();
+        }
     }
 
     /**
