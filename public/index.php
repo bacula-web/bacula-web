@@ -18,10 +18,19 @@
  */
 
 // Include composer autoloader
+use Core\App\WebApplication;
+use Symfony\Component\HttpFoundation\Request;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // Bootstrap application
 require_once __DIR__ . '/../core/bootstrap.php';
 
-$app = new \Core\App\WebApplication($request);
-$app->run();
+$app = new WebApplication(require CONFIG_DIR . '/application.php');
+
+try {
+    $request = Request::createFromGlobals();
+    $app->run($request);
+} catch (Exception $e) {
+    die($e->getMessage());
+}
