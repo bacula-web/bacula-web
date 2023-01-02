@@ -1,3 +1,10 @@
+{extends file='default.tpl'}
+
+{block name=title}
+    <title>Bacula-Web - {t}Volumes report{/t}</title>
+{/block}
+
+{block name=body}
 <div class="container">
 
   <div class="page-header">
@@ -106,5 +113,4 @@
 </div> <!-- end div class="row" -->
 
 </div> <!-- div class="container-fluid" -->
-
-<!-- End pools.tpl -->
+{/block}

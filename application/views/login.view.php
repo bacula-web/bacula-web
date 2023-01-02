@@ -19,23 +19,11 @@
 
 namespace App\Views;
 
-use Core\App\CView;
+use Core\App\View;
 use Symfony\Component\HttpFoundation\Request;
 
-class LoginView extends CView
+class LoginView extends View
 {
-    /**
-     * @param Request $request
-     */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-
-        $this->templateName = 'login.tpl';
-        $this->name = 'Login';
-        $this->title = '';
-    }
-
     public function prepare(Request $request)
     {
         // TODO: implement

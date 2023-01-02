@@ -1,3 +1,10 @@
+{extends file='default.tpl'}
+
+{block name=title}
+  <title>Bacula-Web - {t}Login{/t}</title>
+{/block}
+
+{block name=body}
 <div class="container">
   <div class="row">
     <div class="col-xs-4 col-xs-offset-4">
@@ -21,3 +28,4 @@
     </div>
   </div>
 </div> <!-- end div class=container -->
+{/block}

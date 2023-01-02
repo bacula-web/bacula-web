@@ -1,3 +1,10 @@
+{extends file='default.tpl'}
+
+{block name=title}
+    <title>Bacula-Web - {t}Settings{/t}</title>
+{/block}
+
+{block name=body}
 <div class="container">
 
   <div class="page-header">
@@ -130,3 +137,4 @@
   </div> <!-- end div class=row -->
 
 </div> <!-- end div class=container -->
+{/block}

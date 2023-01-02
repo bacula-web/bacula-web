@@ -1,3 +1,10 @@
+{extends file='default.tpl'}
+
+{block name=title}
+    <title>Bacula-Web - {t}Dashboard{/t}</title>
+{/block}
+
+{block name=body}
 <div class="container-fluid">
    <div class="page-header">
      <h3>{$page_name} <small>{t}General overview{/t}</small></h3>
@@ -246,3 +253,4 @@
    </div>
   
 </div> <!-- end <div class="container"> -->
+{/block}
