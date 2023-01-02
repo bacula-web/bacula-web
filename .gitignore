@@ -1,4 +1,5 @@
-# App specific
+# App
+composer.lock
 /vendor
 /application/views/cache/*.tpl
 /application/views/cache/*.php
