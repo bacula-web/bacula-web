@@ -44,7 +44,14 @@ docker run --rm -it -v $(pwd):/src --name website -p 1313:1313 klakegg/hugo:0.10
 
 ### Quick note related to git sub-module
 
-> After cloning this Git repository, as Hugo theme is setup as a git submodule, you need to run the command below
-> `git submodule update --init --recursive`
->
-> For more details, see [Git tools submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+Hugo theme is setup as a git submodule. 
+
+Once you have cloned the git repo from GitHub, run this command to update the git submodule
+
+`git submodule update --init --recursive`
+
+For more details, see [Git tools submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+
+### Update Hugo theme to latest version
+
+Find more details by reading [Update your Docsy submodule](https://www.docsy.dev/docs/updating/updating-submodules/#update-your-docsy-submodule) on docsy.dev documentation website
