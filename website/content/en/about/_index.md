@@ -7,7 +7,7 @@ menu:
 ---
 
 {{% blocks/lead %}}
-Bacula-Web is a great tool to monitoring [bacula](https://www.bacula.org) backup server.
+Bacula-Web - The monitoring & reporting tool for [Bacula](https://www.bacula.org) community edition
 {{% /blocks/lead %}}
 
 {{% blocks/lead color="dark" %}}
@@ -16,13 +16,20 @@ How to get help ?
 
 {{% pageinfo color="primary" %}}
 
-### Issue tracker
+Here's below how you can help while installing, configuring, updating or using Bacula-Web
 
-I'd be happy to help you fixing your Bacula-Web installation, configuration or any other issue.
+## GitHub issues
 
-But before submitting a bug or feature request, please have a look at the [bugs and features request guideline](https://docs.bacula-web.org/en/latest/03_gethelp/support.html#bug-report-guideline) first.
+I'd be glad to help you fixing any potential issue you are facing.
 
-To submit a bug report or feature request, please use [GitHub issues](https://github.com/bacula-web/bacula-web/issues) of Bacula-Web project.
+### Before submitting an issue
+
+- make sure an issue haven't been created already [here](https://github.com/bacula-web/bacula-web/issues)
+- please read the [bugs and features request guideline](https://docs.bacula-web.org/en/latest/03_gethelp/support.html#bug-report-guideline)
+
+### Submitting an issue
+
+Please use Bacula-Web [issues](https://github.com/bacula-web/bacula-web/issues) on GitHub and fill as much details as you can (a GitHub issue template is here to help)
 
 {{% /pageinfo %}}
 
@@ -31,9 +38,9 @@ To submit a bug report or feature request, please use [GitHub issues](https://gi
 FAQ
 {{% /blocks/lead %}}
 
-  {{% pageinfo color="primary" %}}
+{{% pageinfo color="primary" %}}
 
-You can find more the most often questions answered into the [FAQ](https://docs.bacula-web.org/en/latest/03_gethelp/faq.html)
+There is an [FAQ](https://docs.bacula-web.org/en/latest/03_gethelp/faq.html) available on the official Bacula-Web documentation website (which is still a work in progress).
 
 ## Main features
 
