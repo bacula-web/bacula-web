@@ -6,17 +6,15 @@ menu:
     weight: 20
 ---
 
-{{% blocks/lead %}}
-Bacula-Web - The monitoring & reporting tool for [Bacula](https://www.bacula.org) community edition
-{{% /blocks/lead %}}
+{{< blocks/cover title="About the project" image_anchor="bottom" color="dark" height="min" >}}
+Bacula-Web provide a nice way to monitor produce reports for [bacula](https://www.bacula.org) backup server.
+{{< /blocks/cover >}}
 
 {{% blocks/lead color="dark" %}}
-How to get help ?
+How to get help
 {{% /blocks/lead %}}
 
-{{% pageinfo color="primary" %}}
-
-Here's below how you can help while installing, configuring, updating or using Bacula-Web
+{{< blocks/section type="section" color="white">}}
 
 ## GitHub issues
 
@@ -31,18 +29,19 @@ I'd be glad to help you fixing any potential issue you are facing.
 
 Please use Bacula-Web [issues](https://github.com/bacula-web/bacula-web/issues) on GitHub and fill as much details as you can (a GitHub issue template is here to help)
 
-{{% /pageinfo %}}
+## FAQ
 
-<!-- FAQ -->
+You may find an answer from the FAQ (Frequently Asked Questions) section available on the [official documentation](https://docs.bacula-web.org/en/latest/03_gethelp/faq.html) website.
+
+> *Note: the FAQ content is still a work in progress, but any contribution from the community is more than welcome*
+
+{{< /blocks/section >}}
+
 {{% blocks/lead color="dark" %}}
-FAQ
+Main features
 {{% /blocks/lead %}}
 
-{{% pageinfo color="primary" %}}
-
-There is an [FAQ](https://docs.bacula-web.org/en/latest/03_gethelp/faq.html) available on the official Bacula-Web documentation website (which is still a work in progress).
-
-## Main features
+{{< blocks/section type="section" color="white">}}
 
 ### Dashboard
 
@@ -56,7 +55,7 @@ No need to install Bacula-Web twice or more, you can monitor as many as you need
 
 Bacula-Web offer different reports to monitor jobs, pools, volumes, clients, backup jobs and even more
 
-### Responsie web UI
+### Responsive web UI
 
 Bacula-Web use Bootstrap framework and behave very well on your smartphone, tablets or your desktop
 
@@ -64,10 +63,14 @@ Bacula-Web use Bootstrap framework and behave very well on your smartphone, tabl
 
 Protect access to your Bacula-Web instance by using user authentication (enable by default) You can create as many user you need, there’s no limitation
 
-{{% /pageinfo %}}
+{{< /blocks/section >}}
 
-{{% blocks/lead color="dark" align="center" %}}
+{{% blocks/lead color="dark" %}}
 Gallery
 {{% /blocks/lead %}}
 
+{{< blocks/section type="section" color="white">}}
+
 ![Bacula-Web gallery](/about/bacula-web-slides.gif "Bacula-Web web UI screenshots")
+
+{{< /blocks/section >}}
