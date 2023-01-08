@@ -1,0 +1,9 @@
+{{ $dir := string (.Get "gallery_dir") }}
+{{ $albumUrl := string (print "/static/" $dir) }}
+
+    {{ range readDir $albumUrl }}
+      {{ $imgURL := print $dir "/" .Name | absURL }}
+      <a href="{{ $imgURL }}">
+        <img src="{{ $imgURL }}" class="img-fluid img-thumbnail" style="max-width: 240px; height: auto; margin: 25px 25px;" alt="{{ .Name }}">
+      </a>
+    {{ end }}

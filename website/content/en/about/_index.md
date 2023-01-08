@@ -64,13 +64,3 @@ Bacula-Web use Bootstrap framework and behave very well on your smartphone, tabl
 Protect access to your Bacula-Web instance by using user authentication (enable by default) You can create as many user you need, there’s no limitation
 
 {{< /blocks/section >}}
-
-{{% blocks/lead color="dark" %}}
-Gallery
-{{% /blocks/lead %}}
-
-{{< blocks/section type="section" color="white">}}
-
-![Bacula-Web gallery](/about/bacula-web-slides.gif "Bacula-Web web UI screenshots")
-
-{{< /blocks/section >}}
