@@ -224,7 +224,7 @@ enable = false
 
 [[menu.main]]
   identifier = 'docs'
-  name = 'Documentation'
+  name = 'Docs'
   url = 'https://docs.bacula-web.org'
   weight = 60
   
