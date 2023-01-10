@@ -7,7 +7,7 @@ menu:
 ---
 
 {{< blocks/cover title="About the project" image_anchor="bottom" color="dark" height="min" >}}
-Bacula-Web provide a nice way to monitor produce reports for [bacula](https://www.bacula.org) backup server.
+Bacula-Web provide a nice way to monitor and create reports for [bacula](https://www.bacula.org) backup server.
 {{< /blocks/cover >}}
 
 {{% blocks/lead color="dark" %}}
@@ -61,6 +61,6 @@ Bacula-Web use Bootstrap framework and behave very well on your smartphone, tabl
 
 ### Users authentication
 
-Protect access to your Bacula-Web instance by using user authentication (enable by default) You can create as many user you need, there’s no limitation
+Authenticate users (enabled by default) in order to protect any sensitive data collected from Bacula catalog
 
 {{< /blocks/section >}}
