@@ -151,6 +151,14 @@ Bacula-Web source code, web site and documentation are provided under [GPLv2](ht
 
 ---
 
+### Contributors
+
+<a href="https://github.com/bacula-web/bacula-web/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=bacula-web/bacula-web" />
+</a>
+
+*Powered by [contrib.rocks](https://contrib.rocks)*
+
 ### Support the project
 
 Bacula-Web is a free (like a bird) and open source project maintained on spare time, with the great help from the community.
