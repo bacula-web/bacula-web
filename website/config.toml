@@ -176,11 +176,11 @@ enable = false
 #  url = "https://example.org/mail"
 #  icon = "fa fa-envelope"
 #  desc = "Discussion and help from your fellow users"
-#[[params.links.user]]
-#  name ="Twitter"
-#  url = "https://example.org/twitter"
-#  icon = "fab fa-twitter"
-#  desc = "Follow us on Twitter to get the latest news!"
+[[params.links.user]]
+  name ="Twitter"
+  url = "https://twitter.com/baculaweb"
+  icon = "fab fa-twitter"
+  desc = "Follow the project on Twitter to get the latest news!"
 #[[params.links.user]]
 #  name = "Stack Overflow"
 #  url = "https://example.org/stack"
