@@ -176,28 +176,31 @@ enable = false
 #  url = "https://example.org/mail"
 #  icon = "fa fa-envelope"
 #  desc = "Discussion and help from your fellow users"
+
 [[params.links.user]]
   name ="Twitter"
   url = "https://twitter.com/baculaweb"
   icon = "fab fa-twitter"
   desc = "Follow the project on Twitter to get the latest news!"
+
+[[params.links.user]]
+  name = "GitHub discussions"
+  url = "https://github.com/bacula-web/bacula-web/discussions"
+  icon = "fa fa-envelope"
+  desc = "Ask a question or give me a feedback"
+
 #[[params.links.user]]
 #  name = "Stack Overflow"
 #  url = "https://example.org/stack"
 #  icon = "fab fa-stack-overflow"
 #  desc = "Practical questions and curated answers"
 # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
+
 [[params.links.developer]]
   name = "GitHub"
   url = "https://github.com/bacula-web/bacula-web"
   icon = "fab fa-github"
   desc = "Bacula-Web project on GitHub"
-
-[[params.links.developer]]
-  name = "GitHub discussions"
-  url = "https://github.com/bacula-web/bacula-web/discussions"
-  icon = "fa fa-envelope"
-  desc = "Discuss about the project"
   
 #[[params.links.developer]]
 #  name = "Slack"
