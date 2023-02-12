@@ -48,8 +48,8 @@ class BackupJobController extends Controller
         $interval[1] = NOW;
         $session = new Session();
 
-        $days_stored_bytes = array();
-        $days_stored_files = array();
+        $daysstoredbytes = array();
+        $daysstoredfiles = array();
 
         // Period list
         $periods_list = array( '7' => "Last week", '14' => "Last 2 weeks", '30' => "Last month");
@@ -120,39 +120,39 @@ class BackupJobController extends Controller
             // Get start and end datetime for backup jobs report and charts
             $periods = CDBQuery::get_Timestamp_Interval($jobs->get_driver_name(), $interval);
 
-            $backupjob_bytes = $jobs->getStoredBytes($interval, $backupjob_name);
-            $backupjob_bytes = CUtils::Get_Human_Size($backupjob_bytes);
+            $backupjobbytes = $jobs->getStoredBytes($interval, $backupjob_name);
+            $backupjobbytes = CUtils::Get_Human_Size($backupjobbytes);
 
             // Stored files on the defined period
-            $backupjob_files = $jobs->getStoredFiles($interval, $backupjob_name);
-            $backupjob_files = CUtils::format_Number($backupjob_files);
+            $backupjobfiles = $jobs->getStoredFiles($interval, $backupjob_name);
+            $backupjobfiles = CUtils::format_Number($backupjobfiles);
 
             // Get the last 7 days interval (start and end)
             $days = DateTimeUtil::getLastDaysIntervals($backupjob_period);
 
             // Last 7 days stored files chart
             foreach ($days as $day) {
-                $stored_files = $jobs->getStoredFiles(array($day['start'], $day['end']), $backupjob_name);
-                $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
+                $storedfiles = $jobs->getStoredFiles(array($day['start'], $day['end']), $backupjob_name);
+                $daysstoredfiles[] = array(date("m-d", $day['start']), $storedfiles);
             }
 
-            $stored_files_chart = new Chart( [
+            $storedfileschart = new Chart( [
                 'type' => 'bar',
                 'name' => 'chart_storedfiles',
-                'data' => $days_stored_files,
+                'data' => $daysstoredfiles,
                 'ylabel' => 'Files'
                 ]
             );
 
-            $this->setVar('stored_files_chart_id', $stored_files_chart->name);
-            $this->setVar('stored_files_chart', $stored_files_chart->render());
+            $this->setVar('stored_files_chart_id', $storedfileschart->name);
+            $this->setVar('storedfileschart', $storedfileschart->render());
 
-            unset($stored_files_chart);
+            unset($storedfileschart);
 
             // Last 7 days stored bytes chart
             foreach ($days as $day) {
-                $stored_bytes = $jobs->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
-                $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
+                $storedbytes = $jobs->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
+                $daysstoredbytes[] = array(date("m-d", $day['start']), $storedbytes);
             }
 
             $storedbyteschart = new Chart(
@@ -160,7 +160,7 @@ class BackupJobController extends Controller
                     'type' => 'bar',
                     'name' => 'chart_storedbytes',
                     'uniformize_data' => true,
-                    'data' => $days_stored_bytes,
+                    'data' => $daysstoredbytes,
                     'ylabel' => 'Bytes'
                 ]
             );
@@ -195,8 +195,8 @@ class BackupJobController extends Controller
                 ], $jobs->get_driver_name()
             );
 
-            $joblist      = array();
-            $joblevel     = array('I' => 'Incr', 'D' => 'Diff', 'F' => 'Full');
+            $joblist = [];
+            $joblevel = ['I' => 'Incr', 'D' => 'Diff', 'F' => 'Full'];
             $result = $jobs->run_query($query);
 
             foreach ($result->fetchAll() as $job) {
@@ -241,8 +241,8 @@ class BackupJobController extends Controller
             $this->setVar('jobs', $joblist);
             $this->setVar('backupjob_name', $backupjob_name);
             $this->setVar('perioddesc', $perioddesc);
-            $this->setVar('backupjob_bytes', $backupjob_bytes);
-            $this->setVar('backupjob_files', $backupjob_files);
+            $this->setVar('backupjobbytes', $backupjobbytes);
+            $this->setVar('backupjobfiles', $backupjobfiles);
         }
 
         return (new Response($this->render('backupjob-report.tpl')));
