@@ -98,17 +98,19 @@ class BackupJobController extends Controller
             // Set selected period
             $this->setVar('selected_period', $backupjob_period);
 
+            $perioddesc = 'From ';
+
             switch ($backupjob_period) {
                 case '7':
-                    $periodDesc = "From " . date($session->get('datetime_format_short'), (NOW - WEEK)) . " to " . date($session->get('datetime_format_short'), NOW);
+                    $perioddesc .= date($session->get('datetime_format_short'), (NOW - WEEK)) . " to " . date($session->get('datetime_format_short'), NOW);
                     $interval[0] = NOW - WEEK;
                     break;
                 case '14':
-                    $periodDesc = "From " . date($session->get('datetime_format_short'), (NOW - (2 * WEEK))) . " to " . date($session->get('datetime_format_short'), NOW);
+                    $perioddesc .= date($session->get('datetime_format_short'), (NOW - (2 * WEEK))) . " to " . date($session->get('datetime_format_short'), NOW);
                     $interval[0] = NOW - (2 * WEEK);
                     break;
                 case '30':
-                    $periodDesc = "From " . date($session->get('datetime_format_short'), (NOW - MONTH)) . " to " . date($session->get('datetime_format_short'), NOW);
+                    $perioddesc .= date($session->get('datetime_format_short'), (NOW - MONTH)) . " to " . date($session->get('datetime_format_short'), NOW);
                     $interval[0] = NOW - MONTH;
                     break;
                 default:
@@ -134,11 +136,12 @@ class BackupJobController extends Controller
                 $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
             }
 
-            $stored_files_chart = new Chart(
-                array( 'type' => 'bar',
+            $stored_files_chart = new Chart( [
+                'type' => 'bar',
                 'name' => 'chart_storedfiles',
                 'data' => $days_stored_files,
-                'ylabel' => 'Files' )
+                'ylabel' => 'Files'
+                ]
             );
 
             $this->setVar('stored_files_chart_id', $stored_files_chart->name);
@@ -237,7 +240,7 @@ class BackupJobController extends Controller
             // Assign vars to template
             $this->setVar('jobs', $joblist);
             $this->setVar('backupjob_name', $backupjob_name);
-            $this->setVar('periodDesc', $periodDesc);
+            $this->setVar('perioddesc', $perioddesc);
             $this->setVar('backupjob_bytes', $backupjob_bytes);
             $this->setVar('backupjob_files', $backupjob_files);
         }
