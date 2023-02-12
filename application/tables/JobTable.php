@@ -91,7 +91,10 @@ class JobTable extends Table
                     break;
                 case 'waiting':
                     $where[] = "JobStatus IN ('F','S','M','m','s','j','c','d','t','p','C') ";
-            } // end switch
+                    break;
+                default:
+                    throw new AppException('Provided job status is not supported');
+            }
         }
 
         // Job level
