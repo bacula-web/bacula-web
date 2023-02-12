@@ -38,7 +38,7 @@ class BackupJobController extends Controller
 {
     /**
      * @return Response
-     * @throws Exception
+     * @throws Exception|AppException
      */
     public function prepare(): Response
     {
@@ -152,17 +152,19 @@ class BackupJobController extends Controller
                 $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
             }
 
-            $stored_bytes_chart = new Chart(
-                array( 'type' => 'bar',
-                'name' => 'chart_storedbytes',
-                'uniformize_data' => true,
-                'data' => $days_stored_bytes,
-                'ylabel' => 'Bytes' )
+            $storedbyteschart = new Chart(
+                [
+                    'type' => 'bar',
+                    'name' => 'chart_storedbytes',
+                    'uniformize_data' => true,
+                    'data' => $days_stored_bytes,
+                    'ylabel' => 'Bytes'
+                ]
             );
 
-            $this->setVar('stored_bytes_chart_id', $stored_bytes_chart->name);
-            $this->setVar('stored_bytes_chart', $stored_bytes_chart->render());
-            unset($stored_bytes_chart);
+            $this->setVar('stored_bytes_chart_id', $storedbyteschart->name);
+            $this->setVar('storedbyteschart', $storedbyteschart->render());
+            unset($storedbyteschart);
 
             // Backup job name
             $jobs->addParameter('jobname', $backupjob_name);
@@ -175,13 +177,20 @@ class BackupJobController extends Controller
             // Backup job starttime and endtime
             $where[] = '(EndTime BETWEEN ' . $periods['starttime'] . ' AND ' . $periods['endtime'] . ')';
 
-            $query = CDBQuery::get_Select(array('table' => $jobs->getTableName(),
-            'fields' => array( 'JobId', 'Level', 'JobFiles', 'JobBytes', 'ReadBytes', 'Job.JobStatus', 'StartTime', 'EndTime', 'Name', 'Status.JobStatusLong'),
-            'where' => $where,
-            'orderby' => 'EndTime DESC',
-            'join' => array(
-                array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
-            ) ), $jobs->get_driver_name());
+            $query = CDBQuery::get_Select(
+                [
+                    'table' => $jobs->getTableName(),
+                    'fields' =>
+                        ['JobId', 'Level', 'JobFiles', 'JobBytes', 'ReadBytes', 'Job.JobStatus', 'StartTime', 'EndTime', 'Name', 'Status.JobStatusLong'],
+                    'where' => $where,
+                    'orderby' => 'EndTime DESC',
+                    'join' => [
+                        [
+                            'table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus'
+                        ]
+                    ]
+                ], $jobs->get_driver_name()
+            );
 
             $joblist      = array();
             $joblevel     = array('I' => 'Incr', 'D' => 'Diff', 'F' => 'Full');
