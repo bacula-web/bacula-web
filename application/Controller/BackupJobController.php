@@ -110,6 +110,9 @@ class BackupJobController extends Controller
                 case '30':
                     $periodDesc = "From " . date($session->get('datetime_format_short'), (NOW - MONTH)) . " to " . date($session->get('datetime_format_short'), NOW);
                     $interval[0] = NOW - MONTH;
+                    break;
+                default:
+                    throw new AppException('Provided backup job period not supported');
             }
 
             // Get start and end datetime for backup jobs report and charts
