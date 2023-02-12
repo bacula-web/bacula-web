@@ -68,7 +68,7 @@
                                                 class="fa fa-wrench fa-fw"></i> {t}User settings{/t}</a></li>
                             </ul>
                         </li>
-                        <form class="navbar-form navbar-left" action="index.php" method="POST">
+                        <form class="navbar-form navbar-left" action="index.php?page=login" method="POST">
                             <input type="hidden" name="action" value="logout">
                             <button type="submit" class="btn btn-link" title="Sign out">
                                 <i class="fa fa-sign-out fa-lg"></i>

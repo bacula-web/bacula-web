@@ -21,9 +21,13 @@ declare(strict_types=1);
 
 namespace Core\App;
 
+use App\Libs\FileConfig;
 use Core\Helpers\Sanitizer;
+use Core\Utils\ConfigFileException;
 use SmartyException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionFactory;
 
 class Controller
 {
@@ -84,6 +88,7 @@ class Controller
      * @param string $templateName
      * @return string
      * @throws SmartyException
+     * @throws ConfigFileException
      */
     public function render(string $templateName): string
     {
@@ -102,6 +107,37 @@ class Controller
          */
         $this->setVar('userAlert', $this->userAlert);
         $this->setVar('userAlertType', $this->userAlertType);
+
+        $session = new Session();
+        $this->setVar('user_authenticated', $session->get('user_authenticated'));
+        $this->setVar('username', $session->get('username'));
+        $this->setVar('enable_users_auth', $session->get('enable_users_auth'));
+
+        FileConfig::open(CONFIG_FILE);
+        $catalog_current_id = 0;
+
+        // Get catalog_id from http $_GET request
+        if ($this->request->query->has('catalog_id')) {
+            if (FileConfig::catalogExist($this->request->request->getInt('catalog_id'))) {
+                $catalog_current_id = $this->request->query->getInt('catalog_id');
+                $session->set('catalog_id', $catalog_current_id);
+            } else {
+                $session->set('catalog_id', 0);
+                $catalog_current_id = 0;
+                // TODO: It should redirect to home with catalog_id = 0 and display a flash message to the user
+                throw new ConfigFileException('The catalog_id value provided does not correspond to a valid catalog, please verify the config.php file');
+            }
+        } elseif ($session->has('catalog_id')) {
+            // Stick with previously selected catalog_id
+            $catalog_current_id = $session->get('catalog_id');
+        } else {
+            $session->set('catalog_id', $catalog_current_id);
+        }
+
+        // Define catalog id and catalog label
+        $this->setVar('catalog_current_id', $catalog_current_id);
+        $this->setVar('catalog_label', FileConfig::get_Value('label', $catalog_current_id));
+        $this->setVar('catalogs', FileConfig::get_Catalogs());
 
         return $this->view->getRenderer()->fetch($templateName);
     }

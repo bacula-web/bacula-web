@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Copyright (C) 2010-2023 Davide Franco
+ * Copyright (C) 2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -19,10 +19,17 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace Core\Exception;
+namespace Core\Middleware;
 
-use Exception;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class NotAuthorizedException extends Exception
+interface MiddlewareInterface
 {
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function process(Request $request, Response $response): Response;
 }

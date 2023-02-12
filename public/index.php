@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -29,6 +31,8 @@ require_once __DIR__ . '/../core/bootstrap.php';
 $app = new WebApplication(require CONFIG_DIR . '/application.php');
 
 $request = Request::createFromGlobals();
-$response = $app->run($request);
-
-$response->send();
+try {
+    $response = $app->handle($request);
+    $response->send();
+} catch (\Core\Utils\ConfigFileException $e) {
+}
