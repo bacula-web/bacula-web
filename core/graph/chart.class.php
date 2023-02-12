@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -19,6 +19,7 @@
 
 namespace Core\Graph;
 
+use Core\Exception\AppException;
 use Core\Utils\CUtils;
 use Exception;
 use TypeError;
@@ -104,6 +105,7 @@ class Chart
 
     /**
      * @return string
+     * @throws AppException
      */
     public function render(): string
     {
@@ -130,6 +132,9 @@ class Chart
                 $blob .= $this->name . '_data = ' . '[ {';
                 $blob .= 'key: ' . '"Serie one"' . ',' . "\n";
                 $blob .= 'values: ' . json_encode($json_data) . '} ];';
+                break;
+            default:
+                throw new AppException('Unknown graph type');
         }
         $blob .= 'nv.addGraph(function() {' . "\n";
 
@@ -140,6 +145,9 @@ class Chart
                 break;
             case 'bar':
                 $blob .= 'var chart = nv.models.discreteBarChart()' . "\n";
+                break;
+            default:
+                throw new AppException('Unknown graph type');
         }
 
         $blob .= '.x(function(d) {return d.label})' . "\n";
