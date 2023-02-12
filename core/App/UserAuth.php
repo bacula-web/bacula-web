@@ -69,13 +69,15 @@ class UserAuth
         }
 
         // Check protected assets folder permissions$
-        $webUser = array();
+        $webUser = [];
         exec('whoami', $webUser);
         $webUser = reset($webUser);
 
         $assetsOwner = posix_getpwuid(fileowner($this->appDbBackend));
 
-        if ($webUser != $assetsOwner['name']) {
+        if ($assetsOwner === false) {
+            // TODO: this condition should be handled
+        } elseif ($webUser !== $assetsOwner['name']) {
             throw new AppException('Bad ownership / permissions for protected assets folder (application/assets/protected)');
         }
     }

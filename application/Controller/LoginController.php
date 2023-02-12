@@ -22,17 +22,52 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Core\App\Controller;
+use Core\App\UserAuth;
+use Core\Helpers\Sanitizer;
+use Core\Utils\ConfigFileException;
 use SmartyException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class LoginController extends Controller
 {
     /**
      * @return Response
+     * @throws ConfigFileException
      * @throws SmartyException
      */
     public function prepare(): Response
     {
+        $session = new Session();
+        $dbAuth = new UserAuth();
+
+        if ($this->request->request->has('action') ) {
+            if( $this->request->request->get('action') === 'login') {
+                $input_username = Sanitizer::sanitize($this->request->request->get('username'));
+                $input_password = $this->request->request->get('password');
+
+                $session->set(
+                    'user_authenticated',
+                    $dbAuth->authUser($input_username, $input_password)
+                );
+
+                if ($dbAuth->authenticated()) {
+                    $username = Sanitizer::sanitize($this->request->request->get('username'));
+                    $session->set('username', $username);
+
+                    return new RedirectResponse('index.php');
+                }
+            } elseif ($this->request->request->get('action') === 'logout') {
+                $this->setAlert('Successfully logged out');
+                $this->setAlertType('success');
+
+                $dbAuth->destroySession();
+
+                return new RedirectResponse('index.php?page=login');
+            }
+        }
+
         return (new Response($this->render('login.tpl')));
     }
 }

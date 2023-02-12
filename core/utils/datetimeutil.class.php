@@ -48,10 +48,10 @@ class DateTimeUtil
 
     /**
      * @param string $start_time
-     * @param string $end_time
+     * @param string|null $end_time
      * @return string
      */
-    public static function Get_Elapsed_Time(string $start_time, string $end_time): string
+    public static function Get_Elapsed_Time(string $start_time, string $end_time = null): string
     {
         $dateInputFormat = 'Y-m-d H:i:s';
 

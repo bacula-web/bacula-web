@@ -22,18 +22,20 @@ declare(strict_types=1);
 namespace Core\App;
 
 use App\Libs\FileConfig;
-use App\Views\LoginView;
-use Core\Exception\PageNotFoundException;
-use Core\Helpers\Sanitizer;
+use App\Middleware\ExceptionMiddleware;
+use App\Middleware\RouterMiddleware;
+use App\Middleware\DbAuthMiddleware;
 use Core\i18n\CTranslation;
+use Core\Middleware\MiddlewareInterface;
 use Core\Utils\ConfigFileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Routing\RequestContext;
 use Exception;
-use Error;
 
+/**
+ * WebApplication class is the main http request handler
+ */
 class WebApplication
 {
     /**
@@ -56,10 +58,6 @@ class WebApplication
      */
     protected View $view;
 
-    protected $defaultView;
-    protected $userauth;
-    protected $enable_users_auth;
-
     /**
      * @var Request
      */
@@ -70,11 +68,30 @@ class WebApplication
      */
     private Session $session;
 
-    public $translate;                    // Translation class instance
-    public $catalog_nb;                // Catalog count
-    public $catalog_current_id = 0;    // Selected or default catalog id
-    public $datetime_format;
-    public $datetime_format_short;
+    /**
+     * @var CTranslation
+     */
+    public CTranslation $translate;                    // Translation class instance
+
+    /**
+     * @var int
+     */
+    public int $catalog_nb;
+
+    /**
+     * @var int
+     */
+    public int $catalog_current_id = 0;    // Selected or default catalog id
+
+    /**
+     * @var string
+     */
+    public string $datetime_format;
+
+    /**
+     * @var string
+     */
+    public string $datetime_format_short;
 
     /**
      * @var array
@@ -82,14 +99,9 @@ class WebApplication
     private static array $config;
 
     /**
-     * @var RequestContext
-     */
-    protected RequestContext $context;
-
-    /**
      * @var string[];
      */
-    private array $routes = [];
+    private static array $routes = [];
 
     /**
      * @param array $config Application config
@@ -102,13 +114,8 @@ class WebApplication
         // Load application config
         self::$config = $config;
 
-        /**
-         * Set exception & error handlers
-         */
-        set_exception_handler([\Core\App\ErrorController::class, 'handle']);
-
         // Save routes list
-        $this->routes = self::$config['routes'];
+        self::$routes = self::$config['routes'];
     }
 
     /**
@@ -119,131 +126,10 @@ class WebApplication
      */
     public static function getApp(): WebApplication
     {
-        if (!isset(self::$appInstance))
-        {
+        if (!isset(self::$appInstance)) {
             self::$appInstance = new WebApplication(require CONFIG_DIR . '/application.php');
         }
         return self::$appInstance;
-    }
-
-    /**
-     * Return View class name, or default one based on the request
-     *
-     * @return Response Controller method related to the request
-     * @throws PageNotFoundException
-     * @throws Exception
-     */
-    private function invokeController(): Response
-    {
-        // Inject request params into Request object instance
-        $params = $this->request->query->all();
-        $params = array_merge($this->request->request->all(), $params);
-        $this->request->attributes->add($params);
-        $page = $this->request->attributes->get('page');
-
-        /**
-         * if page request param is not provided, return fallback controller return response
-         */
-        if( $page === null) {
-            $callback = self::$config['fallback_controller']['callback'];
-            return call_user_func([(new $callback($this->request,(new View()))), 'prepare']);
-        }
-
-        /**
-         * IF the page does exist, return route callback method response
-         * Otherwise, if the page does not exist, then return ErrorController::handle() return value (Response) with a 404 status code
-         */
-        if (array_key_exists($page, self::getRoutes())) {
-            $callback = self::$config['routes'][$page]['callback'];
-            return call_user_func([(new $callback($this->request, (new View()))), 'prepare']);
-        } else {
-            return ErrorController::handle((new PageNotFoundException()));
-        }
-    }
-
-    /**
-     * @return void
-     * @throws Exception
-     */
-    private function setup(): void
-    {
-        FileConfig::open(CONFIG_FILE);
-
-        /**
-         * Check if <enable_users_auth> parameter is set in config file and type is boolean
-         * If not set, set it to true by default
-         */
-
-        /*
-        if ((FileConfig::get_Value('enable_users_auth') !== null) && is_bool(FileConfig::get_Value('enable_users_auth'))) {
-            $this->enable_users_auth = (bool)FileConfig::get_Value('enable_users_auth');
-        } else {
-            $this->enable_users_auth = true;
-        }
-
-
-        if ($this->enable_users_auth) {
-            // Prepare users authentication back-end
-            $this->userauth = new UserAuth();
-
-            // Check if database exists and is writable
-            $this->userauth->check();
-            $this->userauth->checkSchema();
-        }
-
-
-        // Check application config file
-        $appConfigFile = CONFIG_DIR . 'application.php';
-
-        // login or logout only if users authentication is enabled
-        if ($this->enable_users_auth) {
-            // First thing first, is the user session already authenticated ?
-            if ($this->userauth->authenticated()) {
-                $view_name = $this->getMatch(self::$config['routes']);
-                $this->view = new $view_name($this->request);
-                $this->view->assign('user_authenticated', 'yes');
-                $this->view->assign('enable_users_auth', 'true');
-            } elseif (Sanitizer::sanitize($this->request->request->get('action')) === 'login') {
-                $input_username = Sanitizer::sanitize($this->request->request->get('username'));
-                $input_password = $this->request->request->get('password');
-
-                $this->session->set(
-                    'user_authenticated',
-                    $this->userauth->authUser($input_username, $input_password)
-                );
-
-                if ($this->userauth->authenticated()) {
-                    $username = Sanitizer::sanitize($this->request->request->get('username'));
-                    $this->session->set('username', $username);
-
-                    $view_name = $this->getMatch(self::$config['routes']);
-                    $this->view = new $view_name($this->request);
-
-                    $this->view->assign('user_authenticated', 'yes');
-                    $this->view->assign('username', $this->session->get('username'));
-                    $this->view->assign('enable_users_auth', 'true');
-                } else {
-                    $this->view = new LoginView($this->request);
-                    $this->view->setAlert('bad username or password');
-                    $this->view->setAlertType('danger');
-                }
-            } else {
-                $this->view = new LoginView($this->request);
-            }
-
-            if ($this->userauth->authenticated()) {
-                if ($this->request->request->has('action')) {
-                    switch (Sanitizer::sanitize($this->request->request->get('action'))) {
-                        case 'logout':
-                            $this->userauth->destroySession();
-                            $this->view = new LoginView($this->request);
-                            $this->view->setAlert('Successfully logged out');
-                            $this->view->setAlertType('success');
-                    }
-                }
-            }
-        }
-        */
     }
 
     /**
@@ -276,7 +162,10 @@ class WebApplication
             }
         }
 
-        // Initialize smarty gettext function
+        /**
+         * Initialize smarty gettext function
+         */
+        FileConfig::open(CONFIG_FILE);
         $language = FileConfig::get_Value('language');
         if ($language == null) {
             throw new ConfigFileException('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
@@ -302,72 +191,48 @@ class WebApplication
         } else {
             $this->session->set('catalog_id', $this->catalog_current_id);
         }
-
-        /*
-        // Define catalog id and catalog label
-        $this->view->assign('catalog_current_id', $this->catalog_current_id);
-        $this->view->assign('catalog_label', FileConfig::get_Value('label', $this->catalog_current_id));
-
-        // Get Bacula catalog list
-        $this->view->assign('catalogs', FileConfig::get_Catalogs());
-        // Get catalogs count
-        $this->view->assign('catalog_nb', $this->catalog_nb);
-
-        // Set app name and version in view
-        $this->view->assign('app_name', $this->name);
-        $this->view->assign('app_version', $this->version);
-
-        // Set language
-        $this->view->assign('language', $language);
-
-        if ($this->request->query->has('page')) {
-            $this->view->assign('page', $this->request->query->getAlpha('page'));
-        }
-        */
     }
 
     /**
      * @param Request $request
      * @return Response
-     * @throws ConfigFileException
      */
-    public function run(Request $request): Response
+    public function handle(Request $request): Response
     {
-        $response = null;
         $this->request = $request;
+        $response = new Response();
 
         try {
             /**
-             * Initialize smarty gettext function
+             * Add Database user authentication middleware is enable only if it's enabled
+             * in the configuration
+             *
              */
+            $session = new Session();
+
             FileConfig::open(CONFIG_FILE);
 
-            $language = FileConfig::get_Value('language');
-            if ($language == null) {
-                throw new ConfigFileException('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
+            $enable_users_auth = ((FileConfig::get_Value('enable_users_auth') !== null) && is_bool(FileConfig::get_Value('enable_users_auth'))) ? (bool)FileConfig::get_Value('enable_users_auth') : true;
+            $session->set('enable_users_auth', $enable_users_auth);
+
+            if ($enable_users_auth) {
+                $response = $this->pipeMiddleware(new DbAuthMiddleware($session), $response);
             }
 
-            $this->translate = new CTranslation($language);
-            $this->translate->setLanguage();
+            /**
+             * Add router middleware
+             */
+            $response = $this->pipeMiddleware(new RouterMiddleware(), $response);
 
             $this->bootstrap();
-
-            $response = $this->invokeController();
-        } catch(PageNotFoundException|Exception $exception) {
-            return ErrorController::handle($exception);
-        } catch(Exception $exception) {
-            return ErrorController::handle($exception);
-        } catch(Error $error) {
-            return ErrorController::handle($error);
+        } catch (Exception $exception) {
+            /**
+             * Exception handler should be the last middleware in the queue
+             */
+            return $this->pipeMiddleware(new ExceptionMiddleware($exception), $response);
         }
 
         return $response;
-
-        /*
-        try {
-
-            $this->init();
-        */
     }
 
     /**
@@ -395,24 +260,26 @@ class WebApplication
         FileConfig::open(CONFIG_DIR . '/config.php');
         try {
             return FileConfig::get_Value('debug') ?? false;
-        } catch(ConfigFileException $exception) {
+        } catch (ConfigFileException $exception) {
             exit();
         }
     }
 
     /**
-     * @return RequestContext
+     * @return string[]
      */
-    public function getContext(): RequestContext
+    public static function getRoutes(): array
     {
-        return $this->context;
+        return self::$routes;
     }
 
     /**
-     * @return string[]
+     * @param MiddlewareInterface $middleware
+     * @param Response $response
+     * @return Response
      */
-    public function getRoutes(): array
+    private function pipeMiddleware(MiddlewareInterface $middleware, Response $response): Response
     {
-        return $this->routes;
+        return $middleware->process($this->request, $response);
     }
 }

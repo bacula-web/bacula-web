@@ -23,6 +23,6 @@ namespace Core\Exception;
 
 use Exception;
 
-class NotAuthorizedException extends Exception
+class NotAuthenticatedException extends Exception
 {
 }
