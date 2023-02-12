@@ -31,12 +31,12 @@ class DateTimeUtil
      */
     public static function checkDate(string $date): bool
     {
-        $date_format = 'Y-m-d H:i:s';
+        $dateformat = 'Y-m-d H:i:s';
 
-        $d = DateTime::createFromFormat($date_format, $date);
+        $d = DateTime::createFromFormat($dateformat, $date);
 
         if ($d !== false) {
-            if ($d->format($date_format) === $date) {
+            if ($d->format($dateformat) === $date) {
                 return true;
             } else {
                 return false;
