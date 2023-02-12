@@ -24,6 +24,7 @@ namespace App\Tables;
 use App\Entity\Job;
 use Core\Db\CDBQuery;
 use Core\Db\Table;
+use Core\Exception\AppException;
 use Core\Exception\DatabaseException;
 use Core\Utils\CUtils;
 use Exception;
@@ -315,12 +316,12 @@ class JobTable extends Table
         return $used_types;
     }
 
-    // ==================================================================================
-    // Function:       getWeeklyJobsStats()
-    // Parameters:   none
-    // Return:         array containing stored bytes and files of completed backup jobs for each day of the week
-    // ==================================================================================
-
+    /**
+     * Return an array which contains stored bytes and files of completed backup jobs of each day of the week
+     *
+     * @return array|null
+     * @throws AppException
+     */
     public function getWeeklyJobsStats()
     {
         $fields = ['SUM(Job.Jobbytes) as jobbytes' , 'SUM(Job.Jobfiles) as jobfiles'];
@@ -338,7 +339,10 @@ class JobTable extends Table
                 break;
             case 'sqlite':
                 return null;
-        } // end switch
+                break;
+            default:
+                throw new AppException('This driver is not supported');
+        }
 
         $query = CDBQuery::get_Select(
             [
