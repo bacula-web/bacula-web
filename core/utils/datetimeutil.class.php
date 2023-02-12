@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -23,20 +23,20 @@ use DateTime;
 
 class DateTimeUtil
 {
-    /*
-     * Function:      checkDate()
+    /**
+     * Check if $date is a valid Datetime format
      *
-     * Parameter(s):  $date (date in string format)
-     * Return:        true if $date is a valid date, else otherwise
-     *
+     * @param string $date
+     * @return bool
      */
-
-    public static function checkDate($date)
+    public static function checkDate(string $date): bool
     {
-        $d = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+        $date_format = 'Y-m-d H:i:s';
 
-        if ($d != false) {
-            if ($d->format('Y-m-d H:i:s') === $date) {
+        $d = DateTime::createFromFormat($date_format, $date);
+
+        if ($d !== false) {
+            if ($d->format($date_format) === $date) {
                 return true;
             } else {
                 return false;
@@ -46,14 +46,12 @@ class DateTimeUtil
         }
     }
 
-    /*
-     * Return elapsed time for a job
+    /**
      * @param string $start_time
      * @param string $end_time
      * @return string
      */
-
-    public static function Get_Elapsed_Time($start_time, $end_time)
+    public static function Get_Elapsed_Time(string $start_time, string $end_time): string
     {
         $dateInputFormat = 'Y-m-d H:i:s';
 
@@ -78,14 +76,14 @@ class DateTimeUtil
         }
     }
 
-    // ==================================================================================
-    // Function:        get_ElapsedSeconds()
-    // Parameters:      $end
-    //                  $start
-    // Return:          amount of seconds between two UNIX date string or false
-    // ==================================================================================
-
-    public static function get_ElaspedSeconds($end, $start)
+    /**
+     * Return the amount of seconds between two UNIX date string or false
+     *
+     * @param string $end
+     * @param string $start
+     * @return int|bool
+     */
+    public static function get_ElaspedSeconds(string $end, string $start)
     {
         if (strtotime($start) && strtotime($end)) {
             $seconds = strtotime($end) - strtotime($start);
@@ -101,34 +99,30 @@ class DateTimeUtil
         }
     }
 
-    // ==================================================================================
-    // Function:        get_Day_Intervals()
-    // Parameters:      $day
-    // Return:          array('start' => start_timestamp, 'end' => end_timestamp)
-    // ==================================================================================
-
-    public static function get_Day_Intervals($day)
+    /**
+     * @param int $nb_days
+     * @return array
+     */
+    public static function getLastDaysIntervals(int $nb_days): array
     {
-        $start = strtotime(date("Y-m-d 00:00:00", $day));
-        $end   = strtotime(date("Y-m-d 23:59:59", $day));
-
-        return array('start' => $start, 'end' => $end);
-    }
-
-    // ==================================================================================
-    // Function:        getLastDaysIntervals()
-    // Parameters:      $nb_day
-    // Return:          array('start' => start_timestamp, 'end' => end_timestamp) of last n days
-    // ==================================================================================
-
-    public static function getLastDaysIntervals($nb_days)
-    {
-        $days = array();
+        $days = [];
 
         for ($d = $nb_days; $d >= 0; $d--) {
             $today  = NOW - ($d * DAY);
             $days[] = self::get_Day_Intervals($today);
         }
         return $days;
+    }
+
+    /**
+     * @param int $day
+     * @return array
+     */
+    private static function get_Day_Intervals(int $day): array
+    {
+        $start = strtotime(date("Y-m-d 00:00:00", $day));
+        $end   = strtotime(date("Y-m-d 23:59:59", $day));
+
+        return array('start' => $start, 'end' => $end);
     }
 }
