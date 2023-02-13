@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2021,2022 Davide Franco
+ * Copyright (C) 2021,2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
