@@ -109,11 +109,10 @@ class Controller
             $breadcrumb .= '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
             $breadcrumb .= '<li class="active">' . $pagename . '</li>';
             $breadcrumb .= '</ol> </div> </div> </div>';
+            $this->setVar('breadcrumb', $breadcrumb);
         } else {
             $this->setVar('breadcrumb', '');
         }
-
-        $this->setVar('breadcrumb', $breadcrumb);
 
         /**
          * Show flash message to user
