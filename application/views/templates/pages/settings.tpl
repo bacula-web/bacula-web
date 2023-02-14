@@ -19,7 +19,10 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs tabs-left nav-stacked">
                 <li class="active"><a href="#general" data-toggle="tab">General settings</a></li>
-                <li><a href="#users" data-toggle="tab">Users</a></li>
+                {if $enable_users_auth neq false }
+                  <li> <a href="#users" data-toggle="tab">Users</a></li>
+                {/if}
+
             </ul>
         </div>
         <div class="col-xs-8">

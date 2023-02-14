@@ -113,6 +113,8 @@ class SettingsController extends Controller
 
             if ($config_enable_users_auth == true) {
                 $this->setVar('config_enable_users_auth', 'checked');
+            } else {
+                $this->setVar('config_enable_users_auth', '');
             }
 
             // Parameter <debug> is disabled by default (in case is not specified in config file)

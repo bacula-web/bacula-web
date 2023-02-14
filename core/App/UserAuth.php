@@ -155,6 +155,7 @@ class UserAuth
     public function authenticated(): bool
     {
         $session = new Session();
+
         if ($session->get('user_authenticated') === 'yes') {
             return true;
         }

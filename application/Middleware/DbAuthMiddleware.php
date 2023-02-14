@@ -22,8 +22,7 @@ declare(strict_types=1);
 namespace App\Middleware;
 
 use Core\App\UserAuth;
-use Core\Exception\NotAuthenticatedException;
-use Core\Exception\NotAuthorizedException;
+use Core\Exception\AppException;
 use Core\Middleware\MiddlewareInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,6 +43,7 @@ class DbAuthMiddleware implements MiddlewareInterface
 
     /**
      * @param Session $session
+     * @throws AppException
      */
     public function __construct(Session $session)
     {
@@ -59,21 +59,20 @@ class DbAuthMiddleware implements MiddlewareInterface
      * @param Request $request
      * @param Response $response
      * @return Response
-     * @throws NotAuthenticatedException
      */
     public function process(Request $request, Response $response): Response
     {
         $resultesponse = new Response();
 
-        $appConfigFile = CONFIG_DIR . 'application.php';
-
         /**
          * throw NotAuthenticatedException for all pages except login
          * This avoid an infinite redirect loop to login page
          */
+
         if (!$this->dbAuth->authenticated()) {
             if ($request->get('page') !== 'login') {
-                throw new NotAuthenticatedException();
+                $response = new RedirectResponse('index.php?page=login');
+                $response->send();
             }
         }
 
