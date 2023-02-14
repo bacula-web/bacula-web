@@ -213,6 +213,7 @@ class WebApplication
             FileConfig::open(CONFIG_FILE);
 
             $enable_users_auth = ((FileConfig::get_Value('enable_users_auth') !== null) && is_bool(FileConfig::get_Value('enable_users_auth'))) ? (bool)FileConfig::get_Value('enable_users_auth') : true;
+
             $session->set('enable_users_auth', $enable_users_auth);
 
             if ($enable_users_auth) {

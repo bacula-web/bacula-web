@@ -32,8 +32,6 @@
             {/if}
 
             <ul class="nav navbar-nav navbar-right">
-                {if isset($user_authenticated) }
-                    {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }
                         <!-- Catalog selector -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
@@ -53,11 +51,8 @@
                                 {/foreach}
                             </ul>
                         </li>
-                    {/if}
-                    <!-- end Catalog selector -->
-                {/if}
-
-                <!-- Authenticated user options -->
+                  <!-- end Catalog selector -->
+                  <!-- Authenticated user options -->
                 {if isset($user_authenticated) }
                     {if $enable_users_auth eq 'true' and $user_authenticated eq 'yes' }
                         <li class="dropdown">
@@ -81,21 +76,20 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-cog fa-fw"></i> <span
                                 class="hidden-sm hidden-md hidden-lg">{t}About{/t}</span></a>
+
                     <ul class="dropdown-menu">
-                        {if isset($user_authenticated) }
-                            {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }
-                                <li role="presentation" class="dropdown-header">Tools</li>
-                                <li>
-                                    <a href="index.php?page=settings" title="Settings"><i
-                                                class="fa fa-cogs fa-fw"></i> {t}Settings{/t}</a>
-                                </li>
-                                <li>
-                                    <a href="index.php?page=test" title="Display the test page"><i
-                                                class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
-                                </li>
-                                <li role="presentation" class="divider"></li>
-                            {/if}
-                        {/if}
+
+                            <li role="presentation" class="dropdown-header">Tools</li>
+                            <li>
+                                <a href="index.php?page=settings" title="Settings"><i
+                                            class="fa fa-cogs fa-fw"></i> {t}Settings{/t}</a>
+                            </li>
+                            <li>
+                                <a href="index.php?page=test" title="Display the test page"><i
+                                            class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
+                            </li>
+                            <li role="presentation" class="divider"></li>
+
                         <li role="presentation" class="dropdown-header">Help</li>
                         <li>
                             <a href="https://docs.bacula-web.org/en/latest/" title="Documentation" target="_blank"
@@ -143,8 +137,7 @@
 
 {if $userAlert != ''}
 <div class="container">
-    <div class="alert alert-{$userAlertType} role=" alert
-    ">
+    <div class="alert alert-{$userAlertType} role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
     </button>
     {$userAlert}
