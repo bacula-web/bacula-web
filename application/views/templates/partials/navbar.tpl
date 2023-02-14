@@ -121,17 +121,7 @@
 
 {if isset($user_authenticated) }
     {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }
-        <div class="container-fluid">
-            <!-- Breadcrumb -->
-            <div class="row">
-                <div class="col-xs-12">
-                    <ol class="breadcrumb">
-                        {$breadcrumb}
-                    </ol>
-                </div> <!-- div class="col..." -->
-            </div> <!-- div class="row" -->
-        </div>
-        <!-- div class="container" -->
+      {$breadcrumb}
     {/if}
 {/if}
 
