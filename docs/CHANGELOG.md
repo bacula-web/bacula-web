@@ -1,28 +1,40 @@
-## Bacula-Web 8.7.0 (January 2 2023)
+## Bacula-Web 8.7.0 (February dd 2023)
 
 ### Changelog
 
 - Core
-  - Bumped FontAwesome to version 6.2.0 (see #141)
-  - PHP versions 7.4 is now the minimal supported versions, older versions are not supported anymore (see #143)
-  - Separated some templates into application/views/templates/partials folder (see #144)
+  - Bumped FontAwesome to version 6.2.0 (#141)
+  - PHP versions 7.4 is now the minimal supported versions, older versions are not supported anymore (#143)
+  - Separated some templates into application/views/templates/partials folder (#144)
   - Removed Composer lock file from git repository
-    To avoid any potential issues for users using different version of  PHP, composer.lock has been removed from the Git repo
-  - Fixed how MVC is implemented by using psr-15 http-handler (See #145) 
-  - Improved how exceptions and errors are handled (see #145)
+    To avoid any potential issues for users using different version of PHP, composer.lock has been removed from the Git repo
+  - Fixed how MVC is implemented by using psr-15 http-handler (#145)
+  - Added router and user authentication middlewares
+    Using single pass psr-15 middleware for application routing and user authentication
+  - Improved how exceptions and errors are handled (#145)
+  - Disabling user authentication does not display a blank page anymore (#140)
+
+- General
+  - Breadcrumb navigation is now hidden on home page (Dashboard)
 
 - Documentation
+  - Update documentation about deprecated version and general security information (#142)
   - Updated / fixed documentation
   - The [FAQ](https://docs.bacula-web.org/03_get-help/faq.html) has been fixed / updated
 
 - Security
-  - Added security policy and documented know security vulnerabilities (see #142)
+  - Added security policy and documented know security vulnerabilities (#135 and #140)
 
 ### Fixed bug(s)
 
+- #135 [bugfix] - Fatal error when disabling user authentication
+- #140 [bugfix] - Upgrade 8.5.5 to 8.6.3 failed. Blank pages
+- #142 [doc] - Add security policy & information
 - #145 [bugfix] - Implement MVC and improve error handling
 
 ### New feature(s)
+
+Thanks to @sruckh, @skidoo23 and all community users for their feedback, help and bug reports
 
 ## Bacula-Web 8.6.3 (November 15th 2022)
 
