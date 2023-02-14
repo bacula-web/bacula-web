@@ -35,43 +35,56 @@ return [
     'version' => '8.6.3',
     'routes' => [
         'home' => [
-            'callback' => \App\Controller\HomeController::class
+            'callback' => \App\Controller\HomeController::class,
+            'name' => 'Dashboard'
         ],
         'test' => [
-            'callback' => \App\Controller\TestController::class
+            'callback' => \App\Controller\TestController::class,
+            'name' => 'Test'
         ],
         'jobs' => [
-            'callback' => \App\Controller\JobController::class
+            'callback' => \App\Controller\JobController::class,
+            'name' => 'Jobs'
         ],
         'joblogs' => [
-            'callback' => \App\Controller\JobLogController::class
+            'callback' => \App\Controller\JobLogController::class,
+            'name' => 'Job logs'
         ],
         'volumes' => [
-            'callback' => \App\Controller\VolumeController::class
+            'callback' => \App\Controller\VolumeController::class,
+            'name' => 'Volumes'
         ],
         'pools' => [
-            'callback' => \App\Controller\PoolController::class
+            'callback' => \App\Controller\PoolController::class,
+            'name' => 'Pools'
         ],
         'client' => [
-            'callback' => \App\Controller\ClientController::class
+            'callback' => \App\Controller\ClientController::class,
+            'name' => 'Clients'
         ],
         'backupjob' => [
-            'callback' => \App\Controller\BackupJobController::class
+            'callback' => \App\Controller\BackupJobController::class,
+            'name' => 'Backup job'
         ],
         'login' => [
-            'callback' => \App\Controller\LoginController::class
+            'callback' => \App\Controller\LoginController::class,
+            'name' => 'Login'
         ],
         'usersettings' => [
-            'callback' => \App\Controller\UserController::class
+            'callback' => \App\Controller\UserController::class,
+            'name' => 'User settings'
         ],
         'settings' => [
-            'callback' => \App\Controller\SettingsController::class
+            'callback' => \App\Controller\SettingsController::class,
+            'name' => 'Settings'
         ],
         'directors' => [
-            'callback' => \App\Controller\DirectorController::class
+            'callback' => \App\Controller\DirectorController::class,
+            'name' => 'Directors'
         ],
         'jobfiles' => [
-            'callback' => \App\Controller\JobFilesController::class
+            'callback' => \App\Controller\JobFilesController::class,
+            'name' => 'Job files'
         ]
     ],
     'fallback_controller' => [

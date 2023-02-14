@@ -92,13 +92,27 @@ class Controller
      */
     public function render(string $templateName): string
     {
-        // Build breadcrumb
-        if ($this->request->query->has('page')) {
-            $breadcrumb = '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
-            $breadcrumb .= '<li class="active">' . 'FIX THIS PLEASE' . '</li>';
+        /**
+         * Build breadcrum navigation bar
+         *
+         * Whe the user is on the home page (Dashbard), the breadcrumb nav bar is not displayed
+         */
+        $routes = WebApplication::getRoutes();
+        $route = $routes[$this->request->attributes->get('page', 'home')];
+        $pagename = $route['name'];
+
+        $breadcrumb = '<div class="container-fluid">
+                         <div class="row">
+                           <div class="col-xs-12">
+                             <ol class="breadcrumb">';
+        if ($pagename !== 'Dashboard') {
+            $breadcrumb .= '<li> <a href="index.php" title="' . _("Back to Dashboard") . '"><i class="fa fa-home fa-fw"></i> Dashboard</a> </li>';
+            $breadcrumb .= '<li class="active">' . $pagename . '</li>';
+            $breadcrumb .= '</ol> </div> </div> </div>';
         } else {
-            $breadcrumb = '<li class="active"> <i class="fa-light fa-home fa-fw"></i> ' . 'TO BE FIIIIIXED PLEASE' . '</li>';
+            $this->setVar('breadcrumb', '');
         }
+
         $this->setVar('breadcrumb', $breadcrumb);
 
         /**

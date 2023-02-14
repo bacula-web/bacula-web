@@ -21,7 +21,6 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use App\Controller\HomeController;
 use Core\App\View;
 use Core\App\WebApplication;
 use Core\Exception\PageNotFoundException;
@@ -56,12 +55,12 @@ class RouterMiddleware implements MiddlewareInterface
 
         $routes = WebApplication::getRoutes();
 
-        if ( $requestedpage === null) {
+        if ($requestedpage === null) {
             $fallback = $routes['home']['callback'];
-            $response = call_user_func([(new $fallback($request,(new View()))), 'prepare']);
+            $response = call_user_func([(new $fallback($request, (new View()))), 'prepare']);
         } elseif ((array_key_exists($requestedpage, $routes))) {
             $callback = $routes[$requestedpage]['callback'];
-            $response = call_user_func([(new $callback($request,(new View()))), 'prepare']);
+            $response = call_user_func([(new $callback($request, (new View()))), 'prepare']);
             $response->setStatusCode(200);
         }else {
             throw new PageNotFoundException();
