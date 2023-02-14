@@ -124,13 +124,6 @@ class View
      */
     public function render(string $template): string
     {
-        // TODO: to move somewhere else, but not keep in the view for sure
-        // Set username, if user is connected
-        $session = new Session();
-        if ($session->has('user_authenticated') && $session->get('user_authenticated') === 'yes') {
-            $this->renderer->assign('username', $session->get('username'));
-        }
-
         try {
             return $this->renderer->fetch($template);
         } catch (\Exception $e) {
