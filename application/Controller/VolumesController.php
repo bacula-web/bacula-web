@@ -32,7 +32,7 @@ use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class VolumeController extends Controller
+class VolumesController extends Controller
 {
     /**
      * @return Response
