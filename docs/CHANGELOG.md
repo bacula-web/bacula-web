@@ -4,7 +4,9 @@
 
 - Core
   - Bumped FontAwesome to version 6.2.0 (#141)
-  - PHP versions 7.4 is now the minimal supported versions, older versions are not supported anymore (#143)
+  - PHP versions 
+    - 7.4 is now the minimal supported versions, older versions are not supported anymore (#143)
+    - extended support for PHP 8.1 (#147) 
   - Separated some templates into application/views/templates/partials folder (#144)
   - Removed Composer lock file from git repository
     To avoid any potential issues for users using different version of PHP, composer.lock has been removed from the Git repo
@@ -31,8 +33,11 @@
 - #140 [bugfix] - Upgrade 8.5.5 to 8.6.3 failed. Blank pages
 - #142 [doc] - Add security policy & information
 - #145 [bugfix] - Implement MVC and improve error handling
+- #147 [core] - Add support for PHP 8.1
 
 ### New feature(s)
+
+- #34 - Volumes detail page
 
 Thanks to @sruckh, @skidoo23 and all community users for their feedback, help and bug reports
 
