@@ -89,9 +89,9 @@ class WebApplication
     public string $datetime_format;
 
     /**
-     * @var string
+     * @var array
      */
-    public string $datetime_format_short;
+    public array $datetime_format_short;
 
     /**
      * @var array
