@@ -26,12 +26,16 @@ class DateTimeUtil
     /**
      * Check if $date is a valid Datetime format
      *
-     * @param string $date
+     * @param string|null $date
      * @return bool
      */
-    public static function checkDate(string $date): bool
+    public static function checkDate(string $date = null): bool
     {
         $dateformat = 'Y-m-d H:i:s';
+
+        if ($date === null) {
+            return false;
+        }
 
         $d = DateTime::createFromFormat($dateformat, $date);
 
