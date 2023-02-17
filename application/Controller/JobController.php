@@ -351,7 +351,11 @@ class JobController extends Controller
             }
 
             // Get the job elapsed time completion
-            $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
+            if (DateTimeUtil::checkDate($start_time) && DateTimeUtil::checkDate($end_time)) {
+                $job['elapsed_time'] = DateTimeUtil::Get_Elapsed_Time($start_time, $end_time);
+            } else {
+                $job['elapsed_time'] = 'n/a';
+            }
 
             $job['schedtime'] = date($session->get('datetime_format'), strtotime($job['schedtime']));
 

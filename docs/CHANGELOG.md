@@ -19,6 +19,10 @@
 - General
   - Breadcrumb navigation is now hidden on home page (Dashboard)
 
+- Jobs report
+  - Fixed error with elapsed time when a job haven't been started yet if a job
+	is in pending status, elapsed time column will display 'n/a'
+
 - Documentation
   - Update documentation about deprecated version and general security information (#142)
   - Updated / fixed documentation
