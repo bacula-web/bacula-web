@@ -145,7 +145,7 @@ class BackupJobController extends Controller
             );
 
             $this->setVar('stored_files_chart_id', $storedfileschart->name);
-            $this->setVar('storedfileschart', $storedfileschart->render());
+            $this->setVar('stored_files_chart', $storedfileschart->render());
 
             unset($storedfileschart);
 
@@ -166,7 +166,7 @@ class BackupJobController extends Controller
             );
 
             $this->setVar('stored_bytes_chart_id', $storedbyteschart->name);
-            $this->setVar('storedbyteschart', $storedbyteschart->render());
+            $this->setVar('stored_bytes_chart', $storedbyteschart->render());
             unset($storedbyteschart);
 
             // Backup job name

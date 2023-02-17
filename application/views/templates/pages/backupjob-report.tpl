@@ -42,9 +42,9 @@
 			<div class="panel-body">
 				<dl class="dl-horizontal">
 					<dt>{t}Job name{/t}</dt> <dd>{$backupjob_name}</dd>
-					<dt>{t}Period{/t}</dt> <dd>{$periodDesc}</dd>
-					<dt>{t}Transfered Bytes{/t}</dt> <dd>{$backupjob_bytes}</dd>
-					<dt>{t}Transfered Files{/t}</dt> <dd>{$backupjob_files}</dd>
+					<dt>{t}Period{/t}</dt> <dd>{$perioddesc}</dd>
+					<dt>{t}Transfered Bytes{/t}</dt> <dd>{$backupjobbytes}</dd>
+					<dt>{t}Transfered Files{/t}</dt> <dd>{$backupjobfiles}</dd>
 				</dl>
 			</div>
 		</div> <!-- end div class="panel ..." -->
