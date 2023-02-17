@@ -51,8 +51,12 @@ return [
             'name' => 'Job logs'
         ],
         'volumes' => [
-            'callback' => \App\Controller\VolumeController::class,
+            'callback' => \App\Controller\VolumesController::class,
             'name' => 'Volumes'
+        ],
+        'volume' => [
+            'callback' => \App\Controller\VolumeController::class,
+            'name' => 'Volume details'
         ],
         'pools' => [
             'callback' => \App\Controller\PoolController::class,

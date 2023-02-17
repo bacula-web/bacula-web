@@ -116,8 +116,19 @@ class VolumesController extends Controller
             $this->setVar('inchanger_checked', '');
         }
 
-        $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten',
-        'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
+        $fields = [
+            'Media.mediaid',
+            'Media.volumename',
+            'Media.volbytes',
+            'Media.voljobs',
+            'Media.volstatus',
+            'Media.mediatype',
+            'Media.lastwritten',
+            'Media.volretention',
+            'Media.slot',
+            'Media.inchanger',
+            'Pool.Name AS pool_name'
+        ];
 
         $sqlQuery = CDBQuery::get_Select(array('table' => $volumes->getTableName(),
                                             'fields' => $fields,

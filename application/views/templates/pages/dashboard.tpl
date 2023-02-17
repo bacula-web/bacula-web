@@ -132,7 +132,9 @@
 						
 						{foreach from=$volumes_list item=vol} 
 							<tr>
-								<td>{$vol.volumename}</td>
+                                <td>
+                                    <a href="index.php?page=volume&id={$vol.mediaid}" title="{t}Show volume{/t}">{$vol.volumename}</a>
+                                </td>
 								<td>{$vol.volstatus}</td>
 								<td>{$vol.poolname}</td>
 								<td>{$vol.lastwritten}</td>

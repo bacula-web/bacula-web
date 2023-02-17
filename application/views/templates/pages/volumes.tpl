@@ -30,21 +30,25 @@
 	          <th class="text-center">{t}In Changer{/t}</th>
 	        </tr>
           </thead>
+
 	  {foreach from=$volumes item=volume name=volumes}
-     <tr>
-       <td>{$volume.volumename}</td>
-	    <td>{$volume.volbytes}</td>
-	    <td>{$volume.voljobs}</td>
-	    <td>{$volume.mediatype}</td>
-	    <td>{$volume.pool_name}</td>
-	    <td>{$volume.expire}</td>
-	    <td>{$volume.lastwritten}</td>
-	    <td title="{$volume.volstatus}">
-         <i class="fa {$volume.status_icon}"></i>
-       </td>
-	    <td>{$volume.slot}</td>
-	    <td>{$volume.inchanger}</td>
-	  </tr>
+      <tr>
+         <td>
+             <a href="index.php?page=volume&id={$volume.mediaid}" title="{t}Show volume{/t}">{$volume.volumename}</a>
+         </td>
+	     <td>{$volume.volbytes}</td>
+	     <td>{$volume.voljobs}</td>
+	     <td>{$volume.mediatype}</td>
+	     <td>{$volume.pool_name}</td>
+	     <td>{$volume.expire}</td>
+	     <td>{$volume.lastwritten}</td>
+	     <td title="{$volume.volstatus}">
+             <i class="fa {$volume.status_icon}"></i>
+         </td>
+	     <td>{$volume.slot}</td>
+	     <td>{$volume.inchanger}</td>
+     </tr>
+
      {foreachelse}
      <tr>
        <td colspan="10" class="text-center">

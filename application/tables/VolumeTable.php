@@ -21,24 +21,28 @@ declare(strict_types=1);
 
 namespace App\Tables;
 
+use App\Entity\Volume;
 use Core\Db\Table;
 use Core\Db\CDBQuery;
 use Core\Db\CDBPagination;
+use Exception;
 
 class VolumeTable extends Table
 {
+    /**
+     * @var string|null
+     */
     protected ?string $tablename = 'Media';
 
-    // ==================================================================================
-    // Function:    getDiskUsage()
-    // Parameters:  none
-    // Return:      disk space usage (in Bytes) for all volumes
-    // ==================================================================================
-
-    public function getDiskUsage()
+    /**
+     * return disk space usage (bytes) for all volumes
+     *
+     * @return string
+     */
+    public function getDiskUsage(): string
     {
-        $fields        = array('SUM(Media.VolBytes) as bytes_size');
-        $statment     = array( 'table' => $this->tablename, 'fields' => $fields );
+        $fields = ['SUM(Media.VolBytes) as bytes_size'];
+        $statment = ['table' => $this->tablename, 'fields' => $fields];
 
         // Run SQL query
         $result     = $this->run_query(CDBQuery::get_Select($statment));
@@ -50,13 +54,14 @@ class VolumeTable extends Table
     /**
      * This method return a list of volumes
      *
-     * @param int $pool_id
+     * @param null $pool_id
      * @param string $orderby
      * @param string $orderasc
      * @param boolean $inchanger
-     * @param  mixed $view
+     * @param mixed $view
      *
-     * @return @array
+     * @return array @array
+     * @throws Exception
      */
 
     public function getVolumes($pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $inchanger = false, $view = null)
@@ -97,5 +102,23 @@ class VolumeTable extends Table
         }
 
         return $volumes_list;
+    }
+
+    /**
+     * @param int $volumeId
+     * @return void
+     */
+    public function getJobs(int $volumeId): array
+    {
+        $sql_query = "SELECT DISTINCT Job.JobId as JobId,Job.Name as Name,Job.StartTime as StartTime,
+            Job.Type as Type,Job.Level as Level,Job.JobFiles as Files,
+            Job.JobBytes as Bytes,Job.JobStatus as Status
+            FROM Media,JobMedia,Job
+            WHERE Media.MediaId = $volumeId
+            AND Media.MediaId=JobMedia.MediaId
+            AND JobMedia.JobId=Job.JobId
+            ORDER by Job.StartTime";
+
+        return $this->select($sql_query);
     }
 }
