@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -22,6 +24,7 @@ require_once __DIR__ . '/core/bootstrap.php';
 
 use Core\Db\DatabaseFactory;
 use App\Tables\UserTable;
+use Core\App\View;
 
 /*
  * Function:    printUsage
@@ -137,7 +140,8 @@ switch ($argv[1]) {
         }
 
         // Check Smarty cache folder permissions
-        if (is_writable(VIEW_CACHE_DIR)) {
+        $view = new View();
+        if (is_writable($view->getCacheDir())) {
             echo "\tSmarty cache folder write permission" . hightlight('Ok', 'ok') . PHP_EOL;
         } else {
             echo "\tSmarty cache folder write permission" . hightlight('Error', 'error') . PHP_EOL;
