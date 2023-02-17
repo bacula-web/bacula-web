@@ -27,7 +27,6 @@ use Core\Utils\ConfigFileException;
 use SmartyException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\SessionFactory;
 
 class Controller
 {
@@ -151,6 +150,10 @@ class Controller
         $this->setVar('catalog_current_id', $catalog_current_id);
         $this->setVar('catalog_label', FileConfig::get_Value('label', $catalog_current_id));
         $this->setVar('catalogs', FileConfig::get_Catalogs());
+
+        // Set web app name and version
+        $this->setVar('app_name', WebApplication::getName());
+        $this->setVar('app_version', WebApplication::getVersion());
 
         return $this->view->getRenderer()->fetch($templateName);
     }

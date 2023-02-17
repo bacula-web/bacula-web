@@ -24,7 +24,6 @@ use Core\Utils\ConfigFileException;
 use Smarty;
 use App\Libs\FileConfig;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class View
 {
@@ -93,9 +92,6 @@ class View
         if (FileConfig::get_Value('debug') === true) {
             $this->renderer->debugging = true;
         }
-
-        $this->renderer->assign('app_name', WebApplication::getName());
-        $this->renderer->assign('app_version', WebApplication::getVersion());
     }
 
     /**
