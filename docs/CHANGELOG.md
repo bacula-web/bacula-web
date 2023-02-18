@@ -1,4 +1,4 @@
-## Bacula-Web 8.7.0 (February dd 2023)
+## Bacula-Web 8.7.0 (February 18 2023)
 
 ### Changelog
 
@@ -13,10 +13,12 @@
   - Fixed how MVC is implemented by using psr-15 http-handler (#145)
   - Added router and user authentication middlewares
     Using single pass psr-15 middleware for application routing and user authentication
-  - Improved how exceptions and errors are handled (#145)
   - Disabling user authentication does not display a blank page anymore (#140)
+  - Improved how exceptions and errors are handled (#145)
+  - PHP errors and exception handler and renderer has been refactored (#148)
+  - Instantiate Session instance from the Core Controller (#149)
 
-- General
+- Dashboard
   - Breadcrumb navigation is now hidden on home page (Dashboard)
 
 - Jobs report
@@ -31,17 +33,21 @@
 - Security
   - Added security policy and documented know security vulnerabilities (#135 and #140)
 
-### Fixed bug(s)
+### Fixed
 
 - #135 [bugfix] - Fatal error when disabling user authentication
 - #140 [bugfix] - Upgrade 8.5.5 to 8.6.3 failed. Blank pages
 - #142 [doc] - Add security policy & information
 - #145 [bugfix] - Implement MVC and improve error handling
+- #148 [core] - Instantiate Session instance from the Core Controller
 - #147 [core] - Add support for PHP 8.1
+- #148 [core] - Refactor PHP errors and exceptions handler and renderer
+- #149 [core] - Instantiate Session instance from the Core Controller
 
-### New feature(s)
+### Added
 
-- #34 - Volumes detail page
+- #34 [core] - Volumes detail page
+- #62 [docker] - Could someone create docker-compose file for easy deployment this app?
 
 Thanks to @sruckh, @skidoo23 and all community users for their feedback, help and bug reports
 
