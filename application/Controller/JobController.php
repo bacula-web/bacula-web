@@ -49,7 +49,6 @@ class JobController extends Controller
         );
 
         $where = null;
-        $session = new Session();
         $params = [];
 
         // TODO: Improve how these constants are declared and used
@@ -341,13 +340,13 @@ class JobController extends Controller
             if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
                 $job['starttime'] = 'n/a';
             } else {
-                $job['starttime'] = date($session->get('datetime_format'), strtotime($job['starttime']));
+                $job['starttime'] = date($this->session->get('datetime_format'), strtotime($job['starttime']));
             }
 
             if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
                 $job['endtime'] = 'n/a';
             } else {
-                $job['endtime'] = date($session->get('datetime_format'), strtotime($job['endtime']));
+                $job['endtime'] = date($this->session->get('datetime_format'), strtotime($job['endtime']));
             }
 
             // Get the job elapsed time completion
@@ -357,7 +356,7 @@ class JobController extends Controller
                 $job['elapsed_time'] = 'n/a';
             }
 
-            $job['schedtime'] = date($session->get('datetime_format'), strtotime($job['schedtime']));
+            $job['schedtime'] = date($this->session->get('datetime_format'), strtotime($job['schedtime']));
 
             // Job Level
             if (isset($job_levels[$job['level']])) {

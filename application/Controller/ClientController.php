@@ -45,15 +45,13 @@ class ClientController extends Controller
     {
         require_once BW_ROOT . '/core/const.inc.php';
 
-        $session = new Session();
-
         $period = 7;
         $backup_jobs = array();
         $days_stored_bytes = array();
         $days_stored_files = array();
 
         // Get job names for the client
-        $catalogid = $session->get('catalogid', 0);
+        $catalogid = $this->session->get('catalogid', 0);
         $jobs = new JobTable(DatabaseFactory::getDatabase($catalogid));
         $client = new ClientTable(DatabaseFactory::getDatabase($catalogid));
 
@@ -148,7 +146,7 @@ class ClientController extends Controller
                 $job['level']     = $job_levels[$job['level']];
                 $job['jobfiles']  = CUtils::format_Number($job['jobfiles']);
                 $job['jobbytes']  = CUtils::Get_Human_Size($job['jobbytes']);
-                $job['endtime']   = date($session->get('datetime_format'), strtotime($job['endtime']));
+                $job['endtime']   = date($this->session->get('datetime_format'), strtotime($job['endtime']));
 
                 $backup_jobs[] = $job;
             } // end foreach
