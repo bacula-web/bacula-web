@@ -47,8 +47,6 @@ class DirectorController extends Controller
     {
         require_once BW_ROOT . '/core/const.inc.php';
 
-        $session = new Session();
-
         $no_period = [
             FIRST_DAY,
             NOW
@@ -57,7 +55,7 @@ class DirectorController extends Controller
         $directors = [];
 
         // Save catalog_id from user session
-        $prev_catalog_id = $session->get('catalog_id');
+        $prev_catalog_id = $this->session->get('catalog_id');
 
         FileConfig::open(CONFIG_FILE);
         $directors_count = FileConfig::count_Catalogs();
@@ -65,7 +63,7 @@ class DirectorController extends Controller
         $this->setVar('directors_count', $directors_count);
 
         for ($d = 0; $d < $directors_count; $d++) {
-            $session->set('catalog_id', $d);
+            $this->session->set('catalog_id', $d);
 
             $clients = new ClientTable(DatabaseFactory::getDatabase($d));
             $jobs = new JobTable(DatabaseFactory::getDatabase($d));

@@ -46,7 +46,6 @@ class BackupJobController extends Controller
 
         $interval = array();
         $interval[1] = NOW;
-        $session = new Session();
 
         $daysstoredbytes = array();
         $daysstoredfiles = array();
@@ -56,7 +55,7 @@ class BackupJobController extends Controller
         $this->setVar('periods_list', $periods_list);
 
         // Stored Bytes on the defined period
-        $jobs = new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
+        $jobs = new JobTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
 
         // Get backup job(s) list
         $jobslist = $jobs->get_Jobs_List(null, 'B');
@@ -102,15 +101,15 @@ class BackupJobController extends Controller
 
             switch ($backupjob_period) {
                 case '7':
-                    $perioddesc .= date($session->get('datetime_format_short'), (NOW - WEEK)) . " to " . date($session->get('datetime_format_short'), NOW);
+                    $perioddesc .= date($this->session->get('datetime_format_short'), (NOW - WEEK)) . " to " . date($this->session->get('datetime_format_short'), NOW);
                     $interval[0] = NOW - WEEK;
                     break;
                 case '14':
-                    $perioddesc .= date($session->get('datetime_format_short'), (NOW - (2 * WEEK))) . " to " . date($session->get('datetime_format_short'), NOW);
+                    $perioddesc .= date($this->session->get('datetime_format_short'), (NOW - (2 * WEEK))) . " to " . date($this->session->get('datetime_format_short'), NOW);
                     $interval[0] = NOW - (2 * WEEK);
                     break;
                 case '30':
-                    $perioddesc .= date($session->get('datetime_format_short'), (NOW - MONTH)) . " to " . date($session->get('datetime_format_short'), NOW);
+                    $perioddesc .= date($this->session->get('datetime_format_short'), (NOW - MONTH)) . " to " . date($this->session->get('datetime_format_short'), NOW);
                     $interval[0] = NOW - MONTH;
                     break;
                 default:
@@ -231,8 +230,8 @@ class BackupJobController extends Controller
                 $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
 
                 // Format date/time
-                $job['starttime'] = date($session->get('datetime_format'), strtotime($job['starttime']));
-                $job['endtime'] = date($session->get('datetime_format'), strtotime($job['endtime']));
+                $job['starttime'] = date($this->session->get('datetime_format'), strtotime($job['starttime']));
+                $job['endtime'] = date($this->session->get('datetime_format'), strtotime($job['endtime']));
 
                 $joblist[] = $job;
             } // end while

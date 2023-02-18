@@ -27,6 +27,7 @@ use Core\Utils\ConfigFileException;
 use SmartyException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class Controller
 {
@@ -44,15 +45,27 @@ class Controller
      * @var string
      */
     protected string $userAlert = '';
+
     /**
      * @var string
      */
     protected string $userAlertType = '';
 
+
+    /**
+     * @var Session|callable|SessionInterface
+     */
+    protected Session $session;
+
+    /**
+     * @param Request $request
+     * @param View $view
+     */
     public function __construct(Request $request, View $view)
     {
         $this->request = $request;
         $this->view = $view;
+        $this->session = new Session();
     }
 
     /**
@@ -120,10 +133,9 @@ class Controller
         $this->setVar('userAlert', $this->userAlert);
         $this->setVar('userAlertType', $this->userAlertType);
 
-        $session = new Session();
-        $this->setVar('user_authenticated', $session->get('user_authenticated'));
-        $this->setVar('username', $session->get('username'));
-        $this->setVar('enable_users_auth', $session->get('enable_users_auth'));
+        $this->setVar('user_authenticated', $this->session->get('user_authenticated'));
+        $this->setVar('username', $this->session->get('username'));
+        $this->setVar('enable_users_auth', $this->session->get('enable_users_auth'));
 
         FileConfig::open(CONFIG_FILE);
         $catalog_current_id = 0;
@@ -132,18 +144,18 @@ class Controller
         if ($this->request->query->has('catalog_id')) {
             if (FileConfig::catalogExist($this->request->request->getInt('catalog_id'))) {
                 $catalog_current_id = $this->request->query->getInt('catalog_id');
-                $session->set('catalog_id', $catalog_current_id);
+                $this->session->set('catalog_id', $catalog_current_id);
             } else {
-                $session->set('catalog_id', 0);
+                $this->session->set('catalog_id', 0);
                 $catalog_current_id = 0;
                 // TODO: It should redirect to home with catalog_id = 0 and display a flash message to the user
                 throw new ConfigFileException('The catalog_id value provided does not correspond to a valid catalog, please verify the config.php file');
             }
-        } elseif ($session->has('catalog_id')) {
+        } elseif ($this->session->has('catalog_id')) {
             // Stick with previously selected catalog_id
-            $catalog_current_id = $session->get('catalog_id');
+            $catalog_current_id = $this->session->get('catalog_id');
         } else {
-            $session->set('catalog_id', $catalog_current_id);
+            $this->session->set('catalog_id', $catalog_current_id);
         }
 
         // Define catalog id and catalog label

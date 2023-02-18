@@ -40,8 +40,7 @@ class VolumesController extends Controller
      */
     public function prepare(): Response
     {
-        $session = new Session();
-        $volumes = new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
+        $volumes = new VolumeTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
         $params = [];
 
         $volumes_list = array();
@@ -64,7 +63,7 @@ class VolumesController extends Controller
             'Purged' => 'fa-battery-empty' );
 
         // Pools list filter
-        $pools = new PoolTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
+        $pools = new PoolTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
         $pools_list = array();
 
         // Create pools list
@@ -154,7 +153,7 @@ class VolumesController extends Controller
                 // Calculate expiration date only if volume status is Full or Used
                 if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
                     $expire_date = strtotime($volume['lastwritten']) + $volume['volretention'];
-                    $volume['expire'] = date($session->get('datetime_format_short'), $expire_date);
+                    $volume['expire'] = date($this->session->get('datetime_format_short'), $expire_date);
                 } else {
                     $volume['expire'] = 'n/a';
                 }
@@ -167,7 +166,7 @@ class VolumesController extends Controller
                 $volume['lastwritten'] = 'n/a';
             } else {
                 // Format lastwritten in custom format if defined in config file
-                $volume['lastwritten'] = date($session->get('datetime_format'), strtotime($volume['lastwritten']));
+                $volume['lastwritten'] = date($this->session->get('datetime_format'), strtotime($volume['lastwritten']));
             }
 
             // Sum volumes bytes
