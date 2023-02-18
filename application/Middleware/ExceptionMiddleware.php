@@ -23,6 +23,7 @@ namespace App\Middleware;
 
 use Core\Exception\NotAuthorizedException;
 use Core\Middleware\MiddlewareInterface;
+use Core\Utils\ExceptionRenderer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,34 +50,12 @@ class ExceptionMiddleware implements MiddlewareInterface
      */
     public function process(Request $request, Response $response): Response
     {
-        switch (get_class($this->exception)) {
-            case 'Core\Exception\PageNotFoundException':
-                $response = new Response('Page not found, back to <a href=\'index.php\'>home page</a>', 404);
-                break;
-            case 'Core\Exception\NotAuthorizedException':
-                //$response = new RedirectResponse('index.php?page=home');
-                $response = new Response('', 302);
-                //$response->setStatusCode(302);
-                //$response->headers->set('Location', 'index.php?page=login', true);
-                break;
+       if (is_subclass_of($this->exception, \Exception::class)) {
+           return (new Response())->setContent(ExceptionRenderer::renderException($this->exception));
+       } elseif (is_subclass_of($this->exception, \Error::class)) {
+           return (new Response())->setContent(ExceptionRenderer::renderError($this->exception));
+       }
 
-            case 'Core\Exception\UserAuthenticatedException':
-                $response = new Response();
-                $response->setStatusCode(200);
-                $response->headers->set('Location', 'index.php', true);
-                break;
-
-            default:
-                echo '<pre>exception caught</pre>';
-                $errorbody = 'something bad happen ' .
-                    $this->exception->getCode() . ' ' .
-                    $this->exception->getMessage() . ' ' .
-                    get_class($this->exception);
-                $response->setContent($response->getContent() . $errorbody);
-                break;
-
-        }
-
-        return $response;
+       return $response;
     }
 }
