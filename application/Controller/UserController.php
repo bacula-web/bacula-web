@@ -43,12 +43,11 @@ class UserController extends Controller
      */
     public function prepare(): Response
     {
-        $session = new Session();
         $userTable = new UserTable(DatabaseFactory::getDatabase());
 
         $userauth = new UserAuth();
 
-        $this->username = $session->get('username');
+        $this->username = $this->session->get('username');
         $user = $userTable->findByName($this->username);
 
         $this->setVar('username', $user->getUsername());

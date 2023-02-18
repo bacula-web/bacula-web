@@ -39,7 +39,6 @@ class LoginController extends Controller
      */
     public function prepare(): Response
     {
-        $session = new Session();
         $dbAuth = new UserAuth();
 
         if ($this->request->request->has('action') ) {
@@ -47,14 +46,14 @@ class LoginController extends Controller
                 $input_username = Sanitizer::sanitize($this->request->request->get('username'));
                 $input_password = $this->request->request->get('password');
 
-                $session->set(
+                $this->session->set(
                     'user_authenticated',
                     $dbAuth->authUser($input_username, $input_password)
                 );
 
                 if ($dbAuth->authenticated()) {
                     $username = Sanitizer::sanitize($this->request->request->get('username'));
-                    $session->set('username', $username);
+                    $this->session->set('username', $username);
 
                     return new RedirectResponse('index.php');
                 }

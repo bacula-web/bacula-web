@@ -28,7 +28,6 @@ use Core\Exception\AppException;
 use App\Tables\VolumeTable;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class VolumeController extends Controller
 {
@@ -38,8 +37,7 @@ class VolumeController extends Controller
      */
     public function prepare(): Response
     {
-        $session = new Session();
-        $volume = new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
+        $volume = new VolumeTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
         $params = [];
 
         if ($this->request->get('id') === null) {

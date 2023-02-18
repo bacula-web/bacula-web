@@ -44,11 +44,9 @@ class HomeController extends Controller
      */
     public function prepare(): Response
     {
-        $session = new Session();
-
-        $jobs = new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
-        $pools = new PoolTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
-        $volumes = new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
+        $jobs = new JobTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
+        $pools = new PoolTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
+        $volumes = new VolumeTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
 
         require_once BW_ROOT . '/core/const.inc.php';
 
@@ -238,7 +236,7 @@ class HomeController extends Controller
 
         foreach ($result as $volume) {
             if ($volume['lastwritten'] != '0000-00-00 00:00:00') {
-                $volume['lastwritten'] = date($session->get('datetime_format'), strtotime($volume['lastwritten']));
+                $volume['lastwritten'] = date($this->session->get('datetime_format'), strtotime($volume['lastwritten']));
                 //$volume['lastwritten'] = date($_SESSION['datetime_format'], strtotime($volume['lastwritten']));
             } else {
                 $volume['lastwritten'] = 'n/a';
