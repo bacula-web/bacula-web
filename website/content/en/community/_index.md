@@ -41,15 +41,11 @@ Sponsors
 
 {{< blocks/section type="section" color="white">}}
 
-<span>
-By sponsoring this project, you help encourage the efforts, as well as the development of new features.
-
-A huge thanks to companies and people who already sponsored this project <i class="fas fa-solid fa-heart"></i>
-</span>
-
 [![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
+[![Travis CI](https://www.travis-ci.com/wp-content/uploads/2022/05/TravisCI-Full-Color.png)](https://www.travis-ci.com)
+[![PackageCloud.io](https://assets-production.packagecloud.io/assets/packagecloud-logo-dark-236e49d2e69b2ce80860e97bc2cf28a6d36be61f496d6f1bd39ffe74b3a5d83f.png)](https://packagecloud.io)
 
-> *Huge thanks to JetBrains for his support on open source project*
+> *A huge thanks to [JetBrains](https://www.jetbrains.com/), [Travis CI](https://www.travis-ci.com/) and [PackageCloud](https://packagecloud.io/) for their support on open source project*
 
 {{< /blocks/section >}}
 
@@ -65,8 +61,25 @@ Support the project
 
 Bacula-Web is free and open source software ([FOSS](https://en.wikipedia.org/wiki/Free_and_open-source_software)), I work on it on spare time, with the great help from the community users.
 
+By sponsoring this project, you will
+
+- help encourage the efforts
+- support development infrastructure costs (running almost everything on public cloud)
+- encourage me to develop more features and fix bugs
+
+In return, you should expect
+
+- more frequent releases
+- bugs fixed quicker
+- more great feature
+- etc.
+
 If you enjoy using Bacula-Web and would like to encourage the project efforts, please consider making a small donation using the buttons below.
 
 [![Bacula-Web on BueMeACoffee](https://img.buymeacoffee.com/button-api/?emoji=&slug=baculaweb&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/baculaweb)
+
+<span>
+A huge thanks to companies and people who already sponsored this project <i class="fas fa-solid fa-heart"></i>
+</span>
 
 {{< /blocks/section >}}
