@@ -21,11 +21,8 @@ declare(strict_types=1);
 
 namespace App\Tables;
 
-use App\Entity\Volume;
 use Core\Db\Table;
 use Core\Db\CDBQuery;
-use Core\Db\CDBPagination;
-use Exception;
 
 class VolumeTable extends Table
 {
@@ -42,66 +39,16 @@ class VolumeTable extends Table
     public function getDiskUsage(): string
     {
         $fields = ['SUM(Media.VolBytes) as bytes_size'];
-        $statment = ['table' => $this->tablename, 'fields' => $fields];
+        $statment = [
+            'table' => $this->tablename,
+            'fields' => $fields
+        ];
 
         // Run SQL query
-        $result     = $this->run_query(CDBQuery::get_Select($statment));
+        $result = $this->run_query(CDBQuery::get_Select($statment));
 
-        $result     = $result->fetch();
+        $result = $result->fetch();
         return $result['bytes_size'];
-    }
-
-    /**
-     * This method return a list of volumes
-     *
-     * @param null $pool_id
-     * @param string $orderby
-     * @param string $orderasc
-     * @param boolean $inchanger
-     * @param mixed $view
-     *
-     * @return array @array
-     * @throws Exception
-     */
-
-    public function getVolumes($pool_id = null, $orderby = 'Name', $orderasc = 'DESC', $inchanger = false, $view = null)
-    {
-        $volumes_list = array();
-        $where = null;
-
-        $pagination = new CDBPagination($view);
-        $limit = [ 'count' => $pagination->getLimit(), 'offset' => $pagination->getOffset()];
-
-        if (!is_null($pool_id)) {
-            $this->addParameter('pool_id', $pool_id);
-            $where[] = 'Media.PoolId = :pool_id';
-        }
-
-        if ($inchanger === true) {
-            $this->addParameter('inchanger', 1);
-            $where[] = 'Media.inchanger = :inchanger';
-        }
-
-        $fields = array('Media.volumename', 'Media.volbytes', 'Media.voljobs', 'Media.volstatus', 'Media.mediatype', 'Media.lastwritten',
-        'Media.volretention', 'Media.slot', 'Media.inchanger', 'Pool.Name AS pool_name');
-
-        $query = CDBQuery::get_Select(array('table' => $this->tablename,
-                                            'fields' => $fields,
-                                            'orderby' => "$orderby $orderasc",
-                                            'join' => array(
-                                                array('table' => 'Pool', 'condition' => 'Media.poolid = Pool.poolid')
-                                            ),
-                                            'where' => $where,
-                                            'limit' => $limit
-                                        ), $this->get_driver_name());
-
-        $result = $this->run_query($query);
-
-        foreach ($result->fetchAll() as $volume) {
-            $volumes_list[] = $volume;
-        }
-
-        return $volumes_list;
     }
 
     /**
@@ -110,7 +57,7 @@ class VolumeTable extends Table
      */
     public function getJobs(int $volumeId): array
     {
-        $sql_query = "SELECT DISTINCT Job.JobId as JobId,Job.Name as Name,Job.StartTime as StartTime,
+        $sqlquery = "SELECT DISTINCT Job.JobId as JobId,Job.Name as Name,Job.StartTime as StartTime,
             Job.Type as Type,Job.Level as Level,Job.JobFiles as Files,
             Job.JobBytes as Bytes,Job.JobStatus as Status
             FROM Media,JobMedia,Job
@@ -119,6 +66,6 @@ class VolumeTable extends Table
             AND JobMedia.JobId=Job.JobId
             ORDER by Job.StartTime";
 
-        return $this->select($sql_query);
+        return $this->select($sqlquery);
     }
 }
