@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -30,7 +32,7 @@ class Table
     /**
      * @var PDO
      */
-    protected $pdo;
+    protected PDO $pdo;
 
     /**
      * @var Database
@@ -156,17 +158,15 @@ class Table
     }
 
     /**
-      Function: run_query
-      Parameters:  $query
-      Return:      PDO_Statment
-    */
-
-    public function run_query($query)
+     * @param $query
+     * @return PDOStatement
+     */
+    public function run_query($query): PDOStatement
     {
         // Prepare PDO statement
         $statment = $this->pdo->prepare($query);
 
-        if ($statment == false) {
+        if ($statment === false) {
             throw new DatabaseException("Failed to prepare PDOStatment <br />$query");
         }
 
@@ -191,11 +191,12 @@ class Table
 
         /**
         * Reset $this->parameters to an empty array
-        * Otherwise, next call to Table::run_query() will fail if Table::addParameters() is not called and Table::parameters is not empty
+        * Otherwise, next call to Table::run_query() will fail if Table::addParameters()
+        * is not called and Table::parameters is not empty
         */
         $this->parameters = [];
 
-        if ($result == false) {
+        if ($result === false) {
             throw new PDOException("Failed to execute PDOStatment <br />$query");
         } else {
             return $statment;
@@ -209,13 +210,13 @@ class Table
      * @param  mixed $value
      * @return void
      */
-    public function addParameter($name, $value)
+    public function addParameter(string $name, $value)
     {
         $this->parameters[$name] = $value;
     }
 
     /**
-     * Return PDO connection status
+     * Return PDO connection status or null
      *
      * @return string|null
      */

@@ -31,22 +31,22 @@ class User
     /**
      * @var string
      */
-    private $username;
+    private string $username;
 
     /**
      * @var string
      */
-    private $password;
+    private string $password;
 
     /**
      * @var string
      */
-    private $passwordhash;
+    private string $passwordhash;
 
     /**
      * @var string
      */
-    private $email;
+    private string $email;
 
     /**
      * @return int
@@ -60,7 +60,7 @@ class User
      * @param string $username
      * @return void
      */
-    public function setUsername(string $username)
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }
@@ -82,7 +82,7 @@ class User
     }
 
     /**
-     * @param $email
+     * @param string $email
      * @return void
      */
     public function setEmail(string $email)

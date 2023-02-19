@@ -22,11 +22,11 @@ declare(strict_types=1);
 namespace Core\App;
 
 use App\Libs\FileConfig;
-use Core\Utils\ConfigFileException;
+use Core\Exception\ConfigFileException
 use Symfony\Component\HttpFoundation\Response;
 use Core\Utils\HtmlHelper;
 use Exception;
-use Error;
+use Error;use Throwable;
 
 class ErrorController
 {
@@ -46,11 +46,11 @@ class ErrorController
     private static string $message = '';
 
     /**
-     * @param \Throwable $exception
+     * @param Throwable $exception
      * @return Response
      * @throws ConfigFileException
      */
-    public static function handle(\Throwable $exception): Response
+    public static function handle(Throwable $exception): Response
     {
         switch (get_class($exception)) {
             case 'Core\Exception\PageNotFoundException':

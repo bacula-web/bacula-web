@@ -163,19 +163,17 @@ class JobTable extends Table
         }
     }
 
-    // ==================================================================================
-    // Function:     getStoredBytes()
-    // Parameters: $period_timestamps   Array containing start and end date (unix timestamp format)
-    //               $job_name          Job name (optional)
-    //               $client_id         Client id (optional)
-    // Return:       Total of stored bytes (backup) within the specific period
-    // ==================================================================================
-
-    public function getStoredBytes($period_timestamps = array(), $job_name = 'ALL', $client_id = 'ALL')
+    /**
+     * @param $period_timestamps
+     * @param $job_name
+     * @param $client_id
+     * @return int|mixed
+     */
+    public function getStoredBytes($period_timestamps = [], $job_name = 'ALL', $client_id = 'ALL')
     {
-        $where      = [];
-        $fields     = array( 'SUM(JobBytes) AS stored_bytes' );
-        $jobtype    = 'B';
+        $where = [];
+        $fields  = ['SUM(JobBytes) AS stored_bytes'];
+        $jobtype  = 'B';
 
         // Defined period
         $intervals = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
@@ -211,13 +209,10 @@ class JobTable extends Table
         }
     }
 
-    // ==================================================================================
-    // Function:     count_Job_Names()
-    // Parameters: none
-    // Return:       total of defined jobs name
-    // ==================================================================================
-
-    public function count_Job_Names()
+    /**
+     * @return int
+     */
+    public function count_Job_Names(): int
     {
         $fields = ['COUNT(DISTINCT Name) AS job_name_count'];
 
@@ -233,14 +228,12 @@ class JobTable extends Table
         return $result['job_name_count'];
     }
 
-    // ==================================================================================
-    // Function:     get_Jobs_List()
-    // Parameters: $client_id   Client id (optional)
-    //             $job_type     Job Type (optional)
-    // Return:       List of defined jobs name
-    // ==================================================================================
-
-    public function get_Jobs_List($client_id = null, $job_type = null)
+    /**
+     * @param $client_id
+     * @param $job_type
+     * @return array
+     */
+    public function get_Jobs_List($client_id = null, $job_type = null): array
     {
         $jobs   = [];
         $fields = ['Name'];
@@ -266,7 +259,7 @@ class JobTable extends Table
             'where' => $where
         ];
 
-        $result     = $this->run_query(CDBQuery::get_Select($statment));
+        $result = $this->run_query(CDBQuery::get_Select($statment));
 
         foreach ($result->fetchAll() as $job) {
             $jobs[] = $job['name'];
@@ -275,16 +268,19 @@ class JobTable extends Table
         return $jobs;
     }
 
-    // ==================================================================================
-    // Function:     getLevels()
-    // Parameters: $levels_name - Array containing level name
-    // Return:       array containing level list
-    // ==================================================================================
-
-    public function getLevels($levels_name = array())
+    /**
+     * @param array $levels_name
+     * @return array
+     */
+    public function getLevels(array $levels_name = []): array
     {
         $levels = [];
-        $statment = ['table' => $this->tablename, 'fields' => array('Level'), 'groupby' => 'Level'];
+        $statment = [
+            'table' => $this->tablename,
+            'fields' => ['Level'],
+            'groupby' => 'Level'
+        ];
+
         $result = $this->run_query(CDBQuery::get_Select($statment));
 
         foreach ($result->fetchAll() as $level) {
@@ -298,13 +294,11 @@ class JobTable extends Table
         return $levels;
     }
 
-    // ==================================================================================
-    // Function:       getUsedJobTypes()
-    // Parameters:   array of available Bacula job types
-    // Return:         array containing distinct list of jobs type
-    // ==================================================================================
-
-    public function getUsedJobTypes($job_types)
+    /**
+     * @param array $job_types
+     * @return array
+     */
+    public function getUsedJobTypes(array $job_types): array
     {
         $used_types = [];
         $sql_query = 'SELECT DISTINCT Type FROM ' . $this->tablename;
@@ -377,13 +371,12 @@ class JobTable extends Table
         return $res;
     }
 
-    // ==================================================================================
-    // Function:       getBiggestJobsStats()
-    // Parameters:   none
-    // Return:         array containing 10 biggest backup jobs (stored bytes)
-    // ==================================================================================
-
-    public function getBiggestJobsStats()
+    /**
+     * Return an array of the top 10 backup jobs (used stored bytes)
+     *
+     * @return array
+     */
+    public function getBiggestJobsStats(): array
     {
         $fields = ['Job.Jobbytes', 'Job.Jobfiles', 'Job.Name'];
         $where = ["Job.JobStatus = 'T'", "Job.Type = 'B'"];
@@ -410,6 +403,10 @@ class JobTable extends Table
         return $res;
     }
 
+    /**
+     * @param int $jobid
+     * @return mixed
+     */
     public function findById(int $jobid)
     {
         $fields = ['Job.JobId', 'Job.Name AS Job_name', 'Job.Type',

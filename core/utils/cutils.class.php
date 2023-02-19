@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -21,11 +23,18 @@ namespace Core\Utils;
 
 class CUtils
 {
-    public static function Get_Human_Size($size, $decimal = 2, $unit = 'auto', $display_unit = true)
+    /**
+     * @param $size
+     * @param int $decimal
+     * @param string $unit
+     * @param bool $display_unit
+     * @return string
+     */
+    public static function Get_Human_Size($size, int $decimal = 2, string $unit = 'auto', bool $display_unit = true)
     {
         $unit_id = 0;
         $lisible = false;
-        $units = array('B', 'KB', 'MB', 'GB', 'TB');
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
         $hsize = $size;
 
         switch ($unit) {
@@ -57,13 +66,14 @@ class CUtils
         return $hsize;
     }
 
-    // ==================================================================================
-    // Function:    format_Number()
-    // Parameters:  $number
-    //              $decimal (optional, default = 0)
-    // Return:      formated number depending on current locale
-    // ==================================================================================
-    public static function format_Number($number, $decimal = 0)
+    /**
+     * Return a formated number based on the current locale
+     *
+     * @param $number
+     * @param int $decimal
+     * @return string
+     */
+    public static function format_Number($number, int $decimal = 0)
     {
         // Getting localized numeric formating information
         $locale = localeconv();

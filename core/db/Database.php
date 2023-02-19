@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -94,12 +96,9 @@ class Database
         return $this->connection->getAttribute(PDO::ATTR_DRIVER_NAME);
     }
 
-    // ==================================================================================
-    // Function:    getServerVersion()
-    // Parameters:  none
-    // Return:      database server version
-    // ==================================================================================
-
+    /**
+     * @return mixed|string
+     */
     public function getServerVersion()
     {
         $server_version = $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION);

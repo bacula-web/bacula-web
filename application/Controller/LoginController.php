@@ -24,11 +24,10 @@ namespace App\Controller;
 use Core\App\Controller;
 use Core\App\UserAuth;
 use Core\Helpers\Sanitizer;
-use Core\Utils\ConfigFileException;
+use Core\Exception\ConfigFileException;
 use SmartyException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class LoginController extends Controller
 {

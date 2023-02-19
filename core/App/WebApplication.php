@@ -27,7 +27,7 @@ use App\Middleware\RouterMiddleware;
 use App\Middleware\DbAuthMiddleware;
 use Core\i18n\CTranslation;
 use Core\Middleware\MiddlewareInterface;
-use Core\Utils\ConfigFileException;
+use Core\Exception\ConfigFileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;

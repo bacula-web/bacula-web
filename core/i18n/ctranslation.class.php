@@ -27,14 +27,17 @@ class CTranslation
      * @var string
      */
     private string $language;
+
     /**
      * @var string
      */
     private string $charset;
+
     /**
      * @var string
      */
     private string $localePath;
+
     /**
      * @var string
      */
@@ -45,9 +48,9 @@ class CTranslation
      */
     public function __construct(string $lang = 'en_EN')
     {
-        $this->language     = $lang;
-        $this->charset      = 'UTF-8';
-        $this->domain      = 'messages';
+        $this->language = $lang;
+        $this->charset  = 'UTF-8';
+        $this->domain  = 'messages';
         $this->localePath  = LOCALE_DIR;
     }
 

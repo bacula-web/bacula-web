@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -19,7 +21,6 @@
 
 namespace Core\Db;
 
-use Exception;
 use TypeError;
 
 class CDBQuery
@@ -40,7 +41,6 @@ class CDBQuery
      * @param string|null $driver
      * @return string computed SQL query
      */
-
     public static function get_Select(array $param, string $driver = null): string
     {
         $query = 'SELECT ';

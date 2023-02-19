@@ -20,7 +20,7 @@
 namespace Core\App;
 
 use Core\Exception\AppException;
-use Core\Utils\ConfigFileException;
+use Core\Exception\ConfigFileException;
 use Smarty;
 use App\Libs\FileConfig;
 use Symfony\Component\HttpFoundation\Request;

@@ -26,7 +26,7 @@ use App\Libs\FileConfig;
 use App\Tables\UserTable;
 use Core\Db\DatabaseFactory;
 use Core\Helpers\Sanitizer;
-use Core\Utils\ConfigFileException;
+use Core\Exception\ConfigFileException;
 use Exception;
 use SmartyException;
 use Symfony\Component\HttpFoundation\Response;

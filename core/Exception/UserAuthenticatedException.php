@@ -24,5 +24,4 @@ namespace Core\Exception;
 use Exception;
 
 class UserAuthenticatedException extends Exception
-{
-}
+{}

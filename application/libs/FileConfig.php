@@ -21,38 +21,17 @@ declare(strict_types=1);
 
 namespace App\Libs;
 
-use Core\Utils\ConfigFileException;
+use Core\Exception\ConfigFileException;
 use Core\Utils\File;
-use Exception;
 
 class FileConfig extends File
 {
     /**
-     * Constructor
+     * Return number of Bacula catalog(s) defined in configuration
      *
+     * @return int
      */
-    public function __construct()
-    {
-    }
-
-    // ==================================================================================
-    // Function:    check()
-    // Parameters:  none
-    // Return:      false if something is wrong in the configuration file
-    // ==================================================================================
-
-    public function check()
-    {
-        // Check if all parameters ... to be completed
-    }
-
-    // ==================================================================================
-    // Function:    count_Catalogs()
-    // Parameters:  none
-    // Return:      configured catalog count number or false if something goes wrong
-    // ==================================================================================
-
-    public static function count_Catalogs()
+    public static function count_Catalogs(): int
     {
         $catalog_count = 0;
 
@@ -95,14 +74,13 @@ class FileConfig extends File
         }
     } // end function
 
-    // ==================================================================================
-    // Function:    get_DataSourceName()
-    // Parameters:  $catalog_id
-    // Return:      dsn string
-    // ==================================================================================
-    public static function get_DataSourceName($catalog_id)
+    /**
+     * @param int $catalog_id
+     * @return string
+     */
+    public static function get_DataSourceName(int $catalog_id): string
     {
-        $dsn             = '';
+        $dsn = '';
         $current_catalog = parent::$config[$catalog_id];
 
         switch ($current_catalog['db_type']) {
@@ -127,13 +105,12 @@ class FileConfig extends File
         return $dsn;
     }
 
-    // ==================================================================================
-    // Function:    get_Catalogs()
-    // Parameters:  none
-    // Return:      an array containing all catalogs labels define in the configuration
-    // ==================================================================================
-
-    public static function get_Catalogs()
+    /**
+     * Return an array containing all catalogs labels define in the configuration
+     *
+     * @return array
+     */
+    public static function get_Catalogs(): array
     {
         $catalogs = array();
 
@@ -146,14 +123,14 @@ class FileConfig extends File
         return $catalogs;
     }
 
-    // ==================================================================================
-    // Function:    catalogExist()
-    // Parameters:  $catalog_id
-    // Return:      true or false (depending if catalog exist or not in the configuration)
-    // ==================================================================================
-
-    public static function catalogExist($catalog_id)
+    /**
+     * Verify if catalag with provided id does exist in the configuration
+     *
+     * @param int $catalogid
+     * @return bool
+     */
+    public static function catalogExist(int $catalogid): bool
     {
-        return array_key_exists($catalog_id, parent::$config);
+        return array_key_exists($catalogid, parent::$config);
     }
-} // end class
+}

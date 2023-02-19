@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -25,8 +27,7 @@ class HtmlHelper
     * Return html header
     * @return string
     */
-
-    public static function getHtmlHeader()
+    public static function getHtmlHeader(): string
     {
         $htmlHeader = '<!DOCTYPE html>
                         <html lang="en">
@@ -57,10 +58,10 @@ class HtmlHelper
 
     /**
      * Return Bootstrap navbar
+     *
      * @return string
      */
-
-    public static function getNavBar()
+    public static function getNavBar(): string
     {
         $navbar = '<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                    <div class="container-fluid">
@@ -85,10 +86,9 @@ class HtmlHelper
     * Return html footer
     * @return string
     */
-
-    public static function getHtmlFooter()
+    public static function getHtmlFooter(): string
     {
-        $htmlFooter = '<!-- JQuery and Bootstrap Javascript -->
+        return '<!-- JQuery and Bootstrap Javascript -->
                     <script src="js/jquery.min.js"></script>
                     <script src="js/moment-with-locales.js"></script>
                     <script src="js/bootstrap.min.js"></script>
@@ -97,9 +97,5 @@ class HtmlHelper
                     <script src="js/ie10-viewport-bug-workaround.js"></script>
                     </body>
                     </html>';
-
-        return $htmlFooter;
     }
 }
-
-// end class

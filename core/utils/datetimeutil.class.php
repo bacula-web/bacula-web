@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -124,8 +126,8 @@ class DateTimeUtil
      */
     private static function get_Day_Intervals(int $day): array
     {
-        $start = strtotime(date("Y-m-d 00:00:00", $day));
-        $end   = strtotime(date("Y-m-d 23:59:59", $day));
+        $start = strtotime(date('Y-m-d 00:00:00', $day));
+        $end   = strtotime(date('Y-m-d 23:59:59', $day));
 
         return array('start' => $start, 'end' => $end);
     }

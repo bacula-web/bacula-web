@@ -19,7 +19,6 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-// Include composer autoloader
 use Core\App\WebApplication;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,8 +30,6 @@ require_once __DIR__ . '/../core/bootstrap.php';
 $app = new WebApplication(require CONFIG_DIR . '/application.php');
 
 $request = Request::createFromGlobals();
-try {
-    $response = $app->handle($request);
-    $response->send();
-} catch (\Core\Utils\ConfigFileException $e) {
-}
+
+$response = $app->handle($request);
+$response->send();

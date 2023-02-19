@@ -21,6 +21,8 @@ declare(strict_types=1);
 
 namespace Core\Utils;
 
+use Core\Exception\ConfigFileException;
+
 class File
 {
     /**

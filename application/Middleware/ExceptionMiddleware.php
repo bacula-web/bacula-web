@@ -21,14 +21,11 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use Core\Exception\NotAuthorizedException;
 use Core\Middleware\MiddlewareInterface;
+use Core\Utils\ConfigFileException;
 use Core\Utils\ExceptionRenderer;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\SessionFactory;
 use Throwable;
 
 class ExceptionMiddleware implements MiddlewareInterface
@@ -47,6 +44,7 @@ class ExceptionMiddleware implements MiddlewareInterface
      * @param Request $request
      * @param Response $response
      * @return Response
+     * @throws ConfigFileException
      */
     public function process(Request $request, Response $response): Response
     {

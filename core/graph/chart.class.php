@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -21,7 +23,6 @@ namespace Core\Graph;
 
 use Core\Exception\AppException;
 use Core\Utils\CUtils;
-use Exception;
 use TypeError;
 
 class Chart
@@ -76,7 +77,7 @@ class Chart
     /**
      * @return void
      */
-    private function uniformizeData()
+    private function uniformizeData(): void
     {
         $array_sum = 0;
 

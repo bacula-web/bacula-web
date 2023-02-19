@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * Copyright (C) 2010-2023 Davide Franco
@@ -17,8 +19,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace Core\Utils;
+namespace Core\Exception;
 
-class ConfigFileException extends \Exception
+use Exception;
+
+class ConfigFileException extends Exception
 {
 }

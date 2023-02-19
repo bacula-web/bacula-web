@@ -20,11 +20,11 @@
 namespace App\Tables;
 
 use Core\Db\Table;
-use App\Libs\FileConfig;
-use Core\Db\CDBQuery;
-use Core\Utils\CUtils;
 
 class LogTable extends Table
 {
+    /**
+     * @var string|null
+     */
     protected ?string $tablename = 'Log';
 }

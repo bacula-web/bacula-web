@@ -23,7 +23,7 @@ namespace Core\App;
 
 use App\Libs\FileConfig;
 use Core\Helpers\Sanitizer;
-use Core\Utils\ConfigFileException;
+use Core\Exception\ConfigFileException;
 use SmartyException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -50,7 +50,6 @@ class Controller
      * @var string
      */
     protected string $userAlertType = '';
-
 
     /**
      * @var Session|callable|SessionInterface

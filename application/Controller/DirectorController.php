@@ -30,11 +30,10 @@ use App\Tables\CatalogTable;
 use App\Tables\VolumeTable;
 use App\Tables\PoolTable;
 use App\Tables\FileSetTable;
-use Core\Utils\ConfigFileException;
+use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
 use SmartyException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class DirectorController extends Controller
 {

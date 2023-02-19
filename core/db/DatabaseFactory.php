@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -19,16 +21,19 @@
 
 namespace Core\Db;
 
+use Exception;
+
 class DatabaseFactory
 {
     /**
-     * @param string $catalogId|null
+     * @param null $catalogid
      * @return Database
+     * @throws Exception
      */
-    public static function getDatabase($catalogId = null): Database
+    public static function getDatabase($catalogid = null): Database
     {
-        if ($catalogId !== null) {
-            return new Database($catalogId);
+        if ($catalogid !== null) {
+            return new Database($catalogid);
         }
         return new Database();
     }

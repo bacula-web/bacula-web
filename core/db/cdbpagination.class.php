@@ -34,10 +34,29 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CDBPagination
 {
-    private $totalRow = 0;
-    private $filteredRow = 0;
-    private $currentView;
+    /**
+     * @var int
+     */
+    private int $totalRow = 0;
+
+    /**
+     * @var int
+     */
+    private int $filteredRow = 0;
+
+    /**
+     * @var View
+     */
+    private View $currentView;
+
+    /**
+     * @var float|int
+     */
     private $offset;
+
+    /**
+     * @var int|mixed|null
+     */
     private $limit;
 
     /**
@@ -45,9 +64,25 @@ class CDBPagination
      * @var int
      */
     private $paginationMax;
-    private $paginationSteps = 1;
-    private $paginationLink;
-    private $paginationCurrent = 1;
+
+    /**
+     * @var int
+     */
+    private int $paginationSteps = 1;
+
+    /**
+     * @var string
+     */
+    private string $paginationLink;
+
+    /**
+     * @var int
+     */
+    private int $paginationCurrent = 1;
+
+    /**
+     * @var Request
+     */
     private $request;
 
     /**
@@ -109,12 +144,13 @@ class CDBPagination
 
     /**
      * @param Table $table
-     * @param $query
-     * @param $queryCount
-     * @param $params
+     * @param string $query
+     * @param string $queryCount
+     * @param null $params
      * @return array|false
+     * @throws Exception
      */
-    public function paginate(Table $table, $query, $queryCount, $params = null)
+    public function paginate(Table $table, string $query, string $queryCount, $params = null)
     {
         $this->totalRow = $table->count();
         $this->currentView->set('rowcount', $this->totalRow);

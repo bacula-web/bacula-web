@@ -30,7 +30,7 @@ use App\Tables\VolumeTable;
 use App\Tables\PoolTable;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
+use TypeError;
 
 class VolumesController extends Controller
 {
@@ -43,7 +43,7 @@ class VolumesController extends Controller
         $volumes = new VolumeTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
         $params = [];
 
-        $volumes_list = array();
+        $volumeslist = [];
         $volumes_total_bytes = 0;
         $where = null;
 
@@ -51,7 +51,8 @@ class VolumesController extends Controller
         $pagination = new CDBPagination($this->view);
 
         // Volumes status icon
-        $volume_status = array( 'Full' => 'fa-battery-full',
+        $volumestatus = [
+            'Full' => 'fa-battery-full',
             'Archive' => 'fa-file-archive-o',
             'Append' => 'fa-battery-quarter',
             'Recycle' => 'fa-recycle',
@@ -60,47 +61,50 @@ class VolumesController extends Controller
             'Error' => 'fa-times-circle',
             'Busy' => 'fa-clock-o',
             'Used' => 'fa-battery-quarter',
-            'Purged' => 'fa-battery-empty' );
+            'Purged' => 'fa-battery-empty'
+        ];
 
         // Pools list filter
         $pools = new PoolTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
-        $pools_list = array();
+        $poolslist = [];
 
         // Create pools list
         foreach ($pools->getPools() as $pool) {
-            $pools_list[$pool['poolid']] = $pool['name'];
+            $poolslist[$pool['poolid']] = $pool['name'];
         }
 
-        $pools_list = array( 0 => 'Any') + $pools_list; // Add default pool filter
-        $this->setVar('pools_list', $pools_list);
+        $poolslist = [0 => 'Any'] + $poolslist; // Add default pool filter
+        $this->setVar('pools_list', $poolslist);
 
-        /*
-         * If filter_pool_id parameter is not provided in GET or POST request, use 0 as default
-         */
-        $pool_id = (int) $this->getParameter('filter_pool_id', 0);
+        $poolid = (int) $this->getParameter('filter_pool_id', 0);
 
-        if ($pool_id !== 0) {
+        if ($poolid !== 0) {
             $where[] = 'Media.PoolId = :pool_id';
-            $params['pool_id'] = $pool_id;
+            $params['pool_id'] = $poolid;
         }
 
         // Order by
-        $orderby = array('Name' => 'Name', 'MediaId' => 'Id', 'VolBytes' => 'Bytes', 'VolJobs' => 'Jobs');
+        $orderby = [
+            'Name' => 'Name',
+            'MediaId' => 'Id',
+            'VolBytes' => 'Bytes',
+            'VolJobs' => 'Jobs'
+        ];
 
         // Set order by
         $this->setVar('orderby', $orderby);
 
-        $volume_orderby_filter = $this->getParameter('filter_orderby', 'Name');
-        $this->setVar('orderby_selected', $volume_orderby_filter);
+        $volumeorderby = $this->getParameter('filter_orderby', 'Name');
+        $this->setVar('orderby_selected', $volumeorderby);
 
-        if (!array_key_exists($volume_orderby_filter, $orderby)) {
-            throw new \TypeError("Critical: Provided orderby parameter is not correct");
+        if (!array_key_exists($volumeorderby, $orderby)) {
+            throw new TypeError('Critical: Provided orderby parameter is not correct');
         }
 
         // Set order by filter and checkbox status
-        $volume_orderby_asc = $this->getParameter('filter_orderby_asc', 'DESC');
+        $volumeorderbyasc = $this->getParameter('filter_orderby_asc', 'DESC');
 
-        if ($volume_orderby_asc === 'Asc') {
+        if ($volumeorderbyasc === 'Asc') {
             $this->setVar('orderby_asc_checked', 'checked');
         } else {
             $this->setVar('orderby_asc_checked', '');
@@ -131,7 +135,7 @@ class VolumesController extends Controller
 
         $sqlQuery = CDBQuery::get_Select(array('table' => $volumes->getTableName(),
                                             'fields' => $fields,
-                                            'orderby' => "$volume_orderby_filter $volume_orderby_asc",
+                                            'orderby' => "$volumeorderby $volumeorderbyasc",
                                             'join' => array(
                                                 array('table' => 'Pool', 'condition' => 'Media.poolid = Pool.poolid')
                                             ),
@@ -141,12 +145,12 @@ class VolumesController extends Controller
                                                 'offset' => $pagination->getOffset() ]
                                             ), $volumes->get_driver_name());
 
-        $countQuery = CDBQuery::get_Select([
+        $countquery = CDBQuery::get_Select([
             'table' => $volumes->getTableName(),
             'fields' => ['COUNT(*) as row_count'],
             'where' => $where ]);
 
-        foreach ($pagination->paginate($volumes, $sqlQuery, $countQuery, $params) as $volume) {
+        foreach ($pagination->paginate($volumes, $sqlQuery, $countquery, $params) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
@@ -166,10 +170,12 @@ class VolumesController extends Controller
                 $volume['lastwritten'] = 'n/a';
             } else {
                 // Format lastwritten in custom format if defined in config file
-                $volume['lastwritten'] = date($this->session->get('datetime_format'), strtotime($volume['lastwritten']));
+                $volume['lastwritten'] = date(
+                    $this->session->get('datetime_format'),
+                    strtotime($volume['lastwritten'])
+                );
             }
 
-            // Sum volumes bytes
             $volumes_total_bytes += $volume['volbytes'];
 
             // Get volume used bytes in a human format
@@ -184,17 +190,17 @@ class VolumesController extends Controller
             }
 
             // Set volume status icon
-            $volume['status_icon'] = $volume_status[ $volume['volstatus'] ];
+            $volume['status_icon'] = $volumestatus[ $volume['volstatus'] ];
 
             // Format voljobs
             $volume['voljobs'] = CUtils::format_Number($volume['voljobs']);
 
             // add volume in volumes list array
-            $volumes_list[] = $volume;
-        } // end foreach
+            $volumeslist[] = $volume;
+        }
 
-        $this->setVar('pool_id', $pool_id);
-        $this->setVar('volumes', $volumes_list);
+        $this->setVar('pool_id', $poolid);
+        $this->setVar('volumes', $volumeslist);
 
         $this->setVar('volumes_count', $volumes->count());
         $this->setVar('volumes_total_bytes', CUtils::Get_Human_Size($volumes_total_bytes));
