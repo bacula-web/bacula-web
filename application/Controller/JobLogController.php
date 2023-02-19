@@ -23,7 +23,6 @@ namespace App\Controller;
 
 use App\Tables\LogTable;
 use Core\App\Controller;
-use Core\App\View;
 use Core\Db\CDBQuery;
 use Core\Db\DatabaseFactory;
 use App\Tables\JobTable;
@@ -50,9 +49,7 @@ class JobLogController extends Controller
 
         // Prepare and execute SQL statement
         $jobs = new JobTable(
-            DatabaseFactory::getDatabase(
-                (new Session())->get('catalog_id', 0)
-            )
+            DatabaseFactory::getDatabase($this->session->get('catalog_id'))
         );
 
         $this->setVar('job', $jobs->findById($jobid));
@@ -73,7 +70,7 @@ class JobLogController extends Controller
 
         $this->setVar(
             'joblogs',
-            $logTable->findAll($sql, ['job_id' => $jobid], 'App\Entity\Log')
+            $logTable->findAll($sql, ['jobid' => $jobid], 'App\Entity\Log')
         );
 
         return (new Response($this->render('joblogs.tpl')));

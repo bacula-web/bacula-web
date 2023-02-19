@@ -19,6 +19,8 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+namespace App\Entity;
+
 use Core\Utils\CUtils;
 
 class Job

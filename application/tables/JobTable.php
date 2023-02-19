@@ -42,8 +42,8 @@ class JobTable extends Table
      */
     public function count_Jobs($period_timestamps, $job_status = null, $job_level = null)
     {
-        $where        = null;
-        $fields        = ['COUNT(*) as job_count'];
+        $where = null;
+        $fields = ['COUNT(*) as job_count'];
 
         // Check PDO object
         if (!is_a($this->pdo, 'PDO') && is_null($this->pdo)) {

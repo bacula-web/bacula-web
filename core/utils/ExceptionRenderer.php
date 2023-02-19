@@ -96,26 +96,33 @@ class ExceptionRenderer
     }
 
     /**
-     * @param Exception|Error $e
+     * @param Exception|Error $exception
      * @return string
      */
-    private static function getTrace($e): string
+    private static function getTrace($exception): string
     {
-        $formated_trace = '<table class="table">';
+        $formattedtrace = '<table class="table">';
 
-        foreach ($e->getTrace() as $exception) {
-            $formated_trace .= '<tr>';
-            $formated_trace .= '<td>';
-            $formated_trace .= 'File: <b>' . $exception['file'] . '</b> ';
-            $formated_trace .= 'on line <b>' . $exception['line'] . '</b> ';
-            $formated_trace .= 'in function <b>' . $exception['class'] . $exception['type'] . $exception['function'] . '</b>';
-            $formated_trace .= '</td>';
-            $formated_trace .= '</tr>';
+        foreach ($exception->getTrace() as $trace) {
+            $formattedtrace .= '<tr>';
+            $formattedtrace .= '<td>';
+
+            $file = $trace['file'] ?? 'n/a';
+            $formattedtrace .= "File: <b>$file</b> ";
+
+            $line = $trace['line'] ?? 'n/a';
+            $formattedtrace .= "on line <b>$line</b> ";
+            
+            $class = $trace['class'] ?? '';
+            $type = $trace['type'] ?? '';
+            $formattedtrace .= 'in function <b>' . $class . $type . $trace['function'] . '</b>';
+            $formattedtrace .= '</td>';
+            $formattedtrace .= '</tr>';
         }
 
-        $formated_trace .= '</table>';
+        $formattedtrace .= '</table>';
 
-        return $formated_trace;
+        return $formattedtrace;
     }
 
     /**
