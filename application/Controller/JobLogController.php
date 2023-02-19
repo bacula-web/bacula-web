@@ -73,7 +73,7 @@ class JobLogController extends Controller
 
         $this->setVar(
             'joblogs',
-            $logTable->findAll($sql, ['jobid' => $jobid], 'App\Entity\Log')
+            $logTable->findAll($sql, ['job_id' => $jobid], 'App\Entity\Log')
         );
 
         return (new Response($this->render('joblogs.tpl')));
