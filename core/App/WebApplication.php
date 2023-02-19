@@ -25,7 +25,6 @@ use App\Libs\FileConfig;
 use App\Middleware\ExceptionMiddleware;
 use App\Middleware\RouterMiddleware;
 use App\Middleware\DbAuthMiddleware;
-use Core\i18n\CTranslation;
 use Core\Middleware\MiddlewareInterface;
 use Core\Exception\ConfigFileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,11 +66,6 @@ class WebApplication
      * @var Session
      */
     private Session $session;
-
-    /**
-     * @var CTranslation
-     */
-    public CTranslation $translate;                    // Translation class instance
 
     /**
      * @var int
@@ -161,18 +155,6 @@ class WebApplication
                 $this->session->set('datetime_format_short', 'Y-m-d');
             }
         }
-
-        /**
-         * Initialize smarty gettext function
-         */
-        FileConfig::open(CONFIG_FILE);
-        $language = FileConfig::get_Value('language');
-        if ($language == null) {
-            throw new ConfigFileException('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
-        }
-
-        $this->translate = new CTranslation($language);
-        $this->translate->setLanguage();
 
         // Get catalog_id from http $_GET request
         if ($this->request->query->has('catalog_id')) {

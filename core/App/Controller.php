@@ -24,6 +24,7 @@ namespace Core\App;
 use App\Libs\FileConfig;
 use Core\Helpers\Sanitizer;
 use Core\Exception\ConfigFileException;
+use Core\i18n\CTranslation;
 use SmartyException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -165,6 +166,18 @@ class Controller
         // Set web app name and version
         $this->setVar('app_name', WebApplication::getName());
         $this->setVar('app_version', WebApplication::getVersion());
+
+        /**
+         * Initialize smarty gettext function
+         */
+        $language = FileConfig::get_Value('language');
+        if ($language == null) {
+            throw new ConfigFileException('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
+        }
+
+        $translate = new CTranslation($language);
+        $translate->setLanguage();
+        $this->setVar('language', $language);
 
         return $this->view->getRenderer()->fetch($templateName);
     }
