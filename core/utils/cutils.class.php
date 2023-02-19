@@ -55,8 +55,8 @@ class CUtils
                 $hsize /= pow(1024, $unit_id);
                 break;
         } // end switch
-        // Format human readable value (with dot for decimal separator)
-        $hsize = number_format($hsize, $decimal, '.', '');
+        // Format human-readable value (with dot for decimal separator)
+        $hsize = number_format((float)$hsize, $decimal, '.', '');
 
         // Append unit or not
         if ($display_unit) {
@@ -73,17 +73,14 @@ class CUtils
      * @param int $decimal
      * @return string
      */
-    public static function format_Number($number, int $decimal = 0)
+    public static function format_Number($number, int $decimal = 0): string
     {
-        // Getting localized numeric formating information
         $locale = localeconv();
 
-        // Check if thousands_sep is set
         if (empty($locale['thousands_sep'])) {
             $locale['thousands_sep'] = '.';
         }
 
-        // Return formated number
-        return number_format($number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
+        return number_format((float)$number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
     }
 }
