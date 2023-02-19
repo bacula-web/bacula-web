@@ -1,4 +1,4 @@
-## Bacula-Web 8.7.0 (February 18 2023)
+## Bacula-Web 8.7.0 (February 19th 2023)
 
 ### Changelog
 
@@ -17,6 +17,7 @@
   - Improved how exceptions and errors are handled (#145)
   - PHP errors and exception handler and renderer has been refactored (#148)
   - Instantiate Session instance from the Core Controller (#149)
+  - Disabling users authentication does not create a fatalog error nor blank page anymore (#135)
 
 - Dashboard
   - Breadcrumb navigation is now hidden on home page (Dashboard)
@@ -43,13 +44,14 @@
 - #147 [core] - Add support for PHP 8.1
 - #148 [core] - Refactor PHP errors and exceptions handler and renderer
 - #149 [core] - Instantiate Session instance from the Core Controller
+- #135 [bug] - Fatal error when disabling user authentication
 
-### Added
+### New feature(s)
 
 - #34 [core] - Volumes detail page
 - #62 [docker] - Could someone create docker-compose file for easy deployment this app?
 
-Thanks to @sruckh, @skidoo23 and all community users for their feedback, help and bug reports
+Thanks to @sruckh, @skidoo23 and all community users for their feedback, tests, help and bug reports
 
 ## Bacula-Web 8.6.3 (November 15th 2022)
 
