@@ -106,10 +106,10 @@ class DateTimeUtil
     }
 
     /**
-     * @param int $nb_days
+     * @param $nb_days
      * @return array
      */
-    public static function getLastDaysIntervals(int $nb_days): array
+    public static function getLastDaysIntervals($nb_days): array
     {
         $days = [];
 
@@ -121,10 +121,10 @@ class DateTimeUtil
     }
 
     /**
-     * @param int $day
+     * @param $day
      * @return array
      */
-    private static function get_Day_Intervals(int $day): array
+    private static function get_Day_Intervals($day): array
     {
         $start = strtotime(date('Y-m-d 00:00:00', $day));
         $end   = strtotime(date('Y-m-d 23:59:59', $day));

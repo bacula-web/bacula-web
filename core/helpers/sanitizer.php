@@ -29,6 +29,6 @@ class Sanitizer
      */
     public static function sanitize($value): string
     {
-        return strip_tags(htmlentities($value, ENT_QUOTES, 'UTF-8'));
+        return strip_tags(htmlentities((string)$value, ENT_QUOTES, 'UTF-8'));
     }
 }

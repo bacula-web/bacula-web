@@ -54,10 +54,10 @@ class ClientTable extends Table
     }
 
     /**
-     * @param int $clientid
+     * @param string $clientid
      * @return array
      */
-    public function getClientInfos(int $clientid): array
+    public function getClientInfos(string $clientid): array
     {
         $client = [];
         $fields = ['name','uname'];
