@@ -145,7 +145,6 @@ Bacula-Web source code, web site and documentation are provided under [GPLv2](ht
 
 - Original author: Juan Luis Francés Jimenez
 - Current maintainer: Davide Franco ([@dfranco](https://github.com/dfranco))
-- Contributors: [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/badges.svg)](https://github.com/bacula-web/bacula-web/graphs/contributors)
 
 ---
 
@@ -156,6 +155,11 @@ Bacula-Web source code, web site and documentation are provided under [GPLv2](ht
 </a>
 
 *Powered by [contrib.rocks](https://contrib.rocks)*
+
+### Sponsors
+
+<a href="https://jb.gg/OpenSourceSupport"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo" height="120"></a>
+<a href="https://www.travis-ci.com"><img src="https://www.travis-ci.com/wp-content/uploads/2022/05/TravisCI-Full-Color.png" alt="Travis CI logo" height="80"></a>
 
 ### Support the project
 
