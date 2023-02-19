@@ -68,6 +68,10 @@
                                 <td>{$job.name}</td>
                                 <td>{$job.type}</td>
                             </tr>
+                        {foreachelse}
+                            <tr>
+                                <td colspan="3" class="text-center">{t}No job(s) associated to this volume{/t}</td>
+                            </tr>
                         {/foreach}
                         </thead>
                     </table>
