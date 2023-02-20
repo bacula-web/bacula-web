@@ -24,6 +24,8 @@ namespace App\Middleware;
 use Core\Middleware\MiddlewareInterface;
 use Core\Exception\ConfigFileException;
 use Core\Utils\ExceptionRenderer;
+use Error;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -48,9 +50,9 @@ class ExceptionMiddleware implements MiddlewareInterface
      */
     public function process(Request $request, Response $response): Response
     {
-       if (is_subclass_of($this->exception, \Exception::class)) {
+        if (is_subclass_of($this->exception, Exception::class)) {
            return (new Response())->setContent(ExceptionRenderer::renderException($this->exception));
-       } elseif (is_subclass_of($this->exception, \Error::class)) {
+       } elseif (is_subclass_of($this->exception, Error::class)) {
            return (new Response())->setContent(ExceptionRenderer::renderError($this->exception));
        }
 
