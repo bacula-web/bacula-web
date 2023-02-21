@@ -64,9 +64,6 @@ class SettingsController extends Controller
             }
         }
 
-        // Get users list
-        $this->setVar('users', $userTable->getAll());
-
         // Get parameters set in configuration file
         if (!FileConfig::open(CONFIG_FILE)) {
             throw new ConfigFileException("The configuration file is missing");
@@ -111,7 +108,11 @@ class SettingsController extends Controller
                 $config_enable_users_auth = FileConfig::get_Value('enable_users_auth');
             }
 
-            if ($config_enable_users_auth == true) {
+            if ($config_enable_users_auth === true) {
+
+                // Get users list
+                $this->setVar('users', $userTable->getAll());
+
                 $this->setVar('config_enable_users_auth', 'checked');
             } else {
                 $this->setVar('config_enable_users_auth', '');
