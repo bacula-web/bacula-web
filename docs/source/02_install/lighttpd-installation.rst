@@ -22,6 +22,19 @@ Install Lighttpd package
 
    $ sudo apt-get install -y lighttpd php-fpm
 
+Enable fastcgi configuration
+
+::
+
+   $ sudo lighttpd-enable-mod fastcgi
+   $ sudo lighttpd-enable-mod fastcgi-php
+
+then restart Lighttpd service
+
+::
+
+   $ sudo systemctl restart lighttpd
+
 Install PHP extensions
 
 ::
