@@ -69,7 +69,7 @@ class Database
         ];
 
         if ($this->driver == 'mysql') {
-            $options[] = [PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true];
+            $options[PDO::MYSQL_ATTR_USE_BUFFERED_QUERY] = true;
         }
 
         $this->connection = new PDO(
