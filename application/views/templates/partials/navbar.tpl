@@ -11,24 +11,23 @@
         </div> <!-- div class="navbar-header" -->
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            {if isset($user_authenticated) }
-                {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }
-                    <!-- Reports dropdown menu -->
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                        class="fa fa-file-text-o fa-fw"></i> {t}Reports{/t} <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="index.php?page=jobs">{t}Jobs{/t}</a></li>
-                                <li><a href="index.php?page=pools">{t}Pools{/t}</a></li>
-                                <li><a href="index.php?page=volumes">{t}Volumes{/t}</a></li>
-                                <li><a href="index.php?page=backupjob">{t}Backup job{/t}</a></li>
-                                <li><a href="index.php?page=client">{t}Client{/t}</a></li>
-                                <li><a href="index.php?page=directors">{t}Director(s){/t}</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                {/if}
+
+            {if $user_authenticated eq 'yes' or $enable_users_auth eq false }
+                <!-- Reports dropdown menu -->
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                    class="fa fa-file-text-o fa-fw"></i> {t}Reports{/t} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="index.php?page=jobs">{t}Jobs{/t}</a></li>
+                            <li><a href="index.php?page=pools">{t}Pools{/t}</a></li>
+                            <li><a href="index.php?page=volumes">{t}Volumes{/t}</a></li>
+                            <li><a href="index.php?page=backupjob">{t}Backup job{/t}</a></li>
+                            <li><a href="index.php?page=client">{t}Client{/t}</a></li>
+                            <li><a href="index.php?page=directors">{t}Director(s){/t}</a></li>
+                        </ul>
+                    </li>
+                </ul>
             {/if}
 
             <ul class="nav navbar-nav navbar-right">
