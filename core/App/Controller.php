@@ -97,6 +97,17 @@ class Controller
     }
 
     /**
+     * @param string $type
+     * @param string $message
+     * @return void
+     */
+    public function setFlash(string $type, string $message): void
+    {
+        $flash = $this->session->getFlashBag();
+        $flash->add($type, $message);
+    }
+
+    /**
      * @param string $templateName
      * @return string
      * @throws SmartyException
@@ -178,6 +189,15 @@ class Controller
         $translate = new CTranslation($language);
         $translate->setLanguage();
         $this->setVar('language', $language);
+
+        // Set flash message
+        $flash = $this->session->getFlashBag()->all();
+
+        if (!empty($flash)) {
+            $type = array_keys($flash);
+            $this->setVar('userAlertType', $type[0]);
+            $this->setVar('userAlert', $flash[$type[0]][0]);
+        }
 
         return $this->view->getRenderer()->fetch($templateName);
     }

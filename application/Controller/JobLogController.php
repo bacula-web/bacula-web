@@ -56,7 +56,7 @@ class JobLogController extends Controller
 
         $logTable = new LogTable(
             DatabaseFactory::getDatabase(
-                (new Session())->get('catalog_id', 0)
+                $this->session->get('catalog_id', 0)
             )
         );
 

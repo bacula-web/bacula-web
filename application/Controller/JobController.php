@@ -186,7 +186,7 @@ class JobController extends Controller
         // Pools list filer
         $pools = new PoolTable(
             DatabaseFactory::getDatabase(
-                (new Session())->get('catalog_id', 0)
+                $this->session->get('catalog_id', 0)
             )
         );
         $pools_list = array();

@@ -42,6 +42,7 @@ class LoginController extends Controller
 
         if ($this->request->request->has('action') ) {
             if( $this->request->request->get('action') === 'login') {
+
                 $input_username = Sanitizer::sanitize($this->request->request->get('username'));
                 $input_password = $this->request->request->get('password');
 
@@ -54,6 +55,9 @@ class LoginController extends Controller
                     $username = Sanitizer::sanitize($this->request->request->get('username'));
                     $this->session->set('username', $username);
 
+                    // TODO: This flash message does not appear everytime, to be investigated
+                    $this->setFlash('success', "Successfully authenticated");
+
                     return new RedirectResponse('index.php');
                 }
             } elseif ($this->request->request->get('action') === 'logout') {
@@ -61,6 +65,9 @@ class LoginController extends Controller
                 $this->setAlertType('success');
 
                 $dbAuth->destroySession();
+
+                // TODO: This flash message does not appear everytime, to be investigated
+                $this->setFlash('success', "Successfully sign-out");
 
                 return new RedirectResponse('index.php?page=login');
             }

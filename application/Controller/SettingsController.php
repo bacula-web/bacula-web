@@ -56,7 +56,7 @@ class SettingsController extends Controller
                         $this->request->request->get('password')
                     );
                     if ($result !== false) {
-                        // TODO: replace by session flash message
+                        // TODO: below code should be replace by $this->setFlash(), which does not seem's to work perfectly
                         $this->setAlert($result->rowCount() . ' user created successfully');
                         $this->setAlertType('success');
                     }

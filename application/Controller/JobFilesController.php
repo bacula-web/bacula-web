@@ -52,7 +52,7 @@ class JobFilesController extends Controller
 
         $jobFiles = new JobFileTable(
             DatabaseFactory::getDatabase(
-                (new Session())->get('catalog_id', 0)
+                $this->session->get('catalog_id', 0)
             )
         );
 
