@@ -123,15 +123,15 @@ class JobController extends Controller
         $this->setVar('job_types_list', $job_types_list);
 
         // Job client id filter
-        $filter_clientid = (int) $this->getParameter('filter_clientid', 0);
+        $filter_clientid = $this->getParameter('filter_clientid', '0');
         $this->setVar('filter_clientid', $filter_clientid);
 
         // Job status filter
-        $filter_jobstatus = (int) $this->getParameter('filter_jobstatus', 0);
+        $filter_jobstatus = (int) $this->getParameter('filter_jobstatus', '0');
         $this->setVar('filter_jobstatus', $filter_jobstatus);
 
         // Job type filter
-        $filter_jobtype = $this->getParameter('filter_jobtype', 0);
+        $filter_jobtype = $this->getParameter('filter_jobtype', '0');
         $this->setVar('filter_jobtype', $filter_jobtype);
 
         // Validate filter job type
@@ -145,12 +145,12 @@ class JobController extends Controller
         $this->setVar('levels_list', $levels_list);
 
         // Job level filter
-        $filter_joblevel = $this->getParameter('filter_joblevel', 0);
+        $filter_joblevel = $this->getParameter('filter_joblevel', '0');
 
         $this->setVar('filter_joblevel', $filter_joblevel);
 
         // Job pool filter
-        $filter_poolid = (int) $this->getParameter('filter_poolid', 0);
+        $filter_poolid = $this->getParameter('filter_poolid', '0');
         $this->setVar('filter_poolid', $filter_poolid);
 
         // Job starttime filter
@@ -226,24 +226,24 @@ class JobController extends Controller
         } // end switch
 
         // Selected level filter
-        if ($filter_joblevel !== 0) {
+        if ($filter_joblevel !== '0') {
             $where[] .= "Job.Level = :job_level ";
             $params['job_level'] = $filter_joblevel;
         }
 
         // Selected pool filter
-        if ($filter_poolid !== 0) {
+        if ($filter_poolid !== '0') {
             $where[] .= "Job.PoolId = :pool_id ";
             $params['pool_id'] = $filter_poolid;
         }
 
-        if ($filter_jobtype !== 0) {
+        if ($filter_jobtype !== '0') {
             $where[] = "Job.Type = :job_type";
             $params['job_type'] = $filter_jobtype;
         }
 
         // Selected client filter
-        if ($filter_clientid !== 0) {
+        if ($filter_clientid !== '0') {
             $where[] .= "Job.ClientId = :client_id";
             $params['client_id'] = $filter_clientid;
         }
