@@ -33,7 +33,6 @@
  use Exception;
  use SmartyException;
  use Symfony\Component\HttpFoundation\Response;
- use Symfony\Component\HttpFoundation\Session\Session;
 
 class HomeController extends Controller
 {
