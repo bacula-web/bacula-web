@@ -199,7 +199,7 @@ class WebApplication
             $session->set('enable_users_auth', $enable_users_auth);
 
             if ($enable_users_auth) {
-                $response = $this->pipeMiddleware(new DbAuthMiddleware($session), $response);
+                $response = $this->pipeMiddleware(new DbAuthMiddleware(), $response);
             }
 
             /**

@@ -32,22 +32,15 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class DbAuthMiddleware implements MiddlewareInterface
 {
     /**
-     * @var Session
-     */
-    private Session $session;
-
-    /**
      * @var UserAuth
      */
     private UserAuth $dbAuth;
 
     /**
-     * @param Session $session
      * @throws AppException
      */
-    public function __construct(Session $session)
+    public function __construct()
     {
-        $this->session = $session;
         $this->dbAuth = new UserAuth();
 
         // Check if database exists and is writable
@@ -65,8 +58,9 @@ class DbAuthMiddleware implements MiddlewareInterface
         $resultesponse = new Response();
 
         /**
-         * throw NotAuthenticatedException for all pages except login
-         * This avoid an infinite redirect loop to login page
+         * Redirect to the login page if not authenticated, unless requested page is login
+         *
+         * If already authenticated and requesting the login page, it redirects to the fallback controller (home)
          */
 
         if (!$this->dbAuth->authenticated()) {
@@ -74,10 +68,15 @@ class DbAuthMiddleware implements MiddlewareInterface
                 $response = new RedirectResponse('index.php?page=login');
                 $response->send();
             }
+        } else {
+            if ($request->get('page') === 'login') {
+                $response = new RedirectResponse('index.php?page=home');
+                $response->send();
+            }
         }
 
         $resultesponse->setStatusCode(200);
-        $resultesponse->setContent($response->getContent() . '<pre> you are authentified</pre>');
+        $resultesponse->setContent($response->getContent() . '<pre> you are authenticated</pre>');
         return $resultesponse;
     }
 }
