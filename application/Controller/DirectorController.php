@@ -41,6 +41,7 @@ class DirectorController extends Controller
      * @return Response
      * @throws ConfigFileException
      * @throws SmartyException
+     * @throws \Exception
      */
     public function prepare(): Response
     {
@@ -101,7 +102,7 @@ class DirectorController extends Controller
         }
 
         // Set previous catalog_id in user session
-        $session->set('catalog_id', $prev_catalog_id);
+        $this->session->set('catalog_id', $prev_catalog_id);
 
         $this->setVar('directors', $directors);
 

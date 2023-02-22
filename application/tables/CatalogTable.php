@@ -65,7 +65,7 @@ class CatalogTable extends Table
                         'groupby' => 'table_schema'
                     ];
 
-                    $result  = $this->run_query(CDBQuery::get_Select($statement, $this->pdo));
+                    $result  = $this->run_query(CDBQuery::get_Select($statement, $this->db->getDriverName()));
                     $dbSize = $result->fetch();
                     $dbSize = $dbSize['dbsize'] * 1024 * 1024;
                     return CUtils::Get_Human_Size($dbSize);

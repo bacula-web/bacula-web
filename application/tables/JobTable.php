@@ -225,7 +225,7 @@ class JobTable extends Table
 
         $result = $this->run_query($statment);
         $result = $result->fetch();
-        return $result['job_name_count'];
+        return (int) $result['job_name_count'];
     }
 
     /**
