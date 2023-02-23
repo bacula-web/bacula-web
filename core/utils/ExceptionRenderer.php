@@ -27,6 +27,7 @@ use Core\Exception\PageNotFoundException;
 use Error;
 use Exception;
 use PDOException;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
@@ -34,7 +35,10 @@ use Throwable;
  */
 class ExceptionRenderer
 {
-    private static $header = [
+    /**
+     * @var string[]
+     */
+    private static array $header = [
         PDOException::class => 'Database error',
         ConfigFileException::class => 'Configuration error',
         PageNotFoundException::class => 'Page not found',

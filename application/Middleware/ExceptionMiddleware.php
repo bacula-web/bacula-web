@@ -21,6 +21,9 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use Core\Exception\NotAuthenticatedException;
+use Core\Exception\NotAuthorizedException;
+use Core\Exception\PageNotFoundException;
 use Core\Middleware\MiddlewareInterface;
 use Core\Exception\ConfigFileException;
 use Core\Utils\ExceptionRenderer;
@@ -40,6 +43,8 @@ class ExceptionMiddleware implements MiddlewareInterface
     public function __construct(Throwable $exception)
     {
         $this->exception = $exception;
+        set_exception_handler([$this, 'process']);
+        set_error_handler([$this, 'process']);
     }
 
     /**
@@ -50,12 +55,23 @@ class ExceptionMiddleware implements MiddlewareInterface
      */
     public function process(Request $request, Response $response): Response
     {
-        if (is_subclass_of($this->exception, Exception::class)) {
-           return (new Response())->setContent(ExceptionRenderer::renderException($this->exception));
-       } elseif (is_subclass_of($this->exception, Error::class)) {
-           return (new Response())->setContent(ExceptionRenderer::renderError($this->exception));
-       }
+        $status_code = 500;
 
-       return $response;
+        if (is_subclass_of($this->exception, Exception::class)) {
+           $response->setContent(ExceptionRenderer::renderException($this->exception));
+        } elseif (is_subclass_of($this->exception, Error::class)) {
+           $response->setContent(ExceptionRenderer::renderError($this->exception));
+        }
+
+        if( get_class($this->exception) === PageNotFoundException::class) {
+            $status_code = 404;
+        }
+
+        if( get_class($this->exception) === NotAuthenticatedException::class || get_class($this->exception) === NotAuthorizedException::class) {
+            $status_code = 403;
+        }
+
+        $response->setStatusCode($status_code);
+        return $response;
     }
 }
