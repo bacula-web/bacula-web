@@ -40,7 +40,8 @@
     "smarty/smarty": "4.2.*",
     "smarty-gettext/smarty-gettext": "@stable",
     "components/font-awesome": "6.*",
-    "symfony/http-foundation": "^5.4"
+    "symfony/http-foundation": "^5.4",
+    "vlucas/valitron": "^1.4"
   },
   "require-dev": {
     "sebastian/phpcpd": "@stable",

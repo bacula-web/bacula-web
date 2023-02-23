@@ -72,6 +72,7 @@ Component                    License
 `Font Awesome`_              CC BY 4.0
 `jQuery`_                    MIT
 `bootstrap-datetimepicker`_  MIT
+`Valitron`_                  BSD-3-Clause
 ===========================  ================
 
 Supported browser
@@ -173,3 +174,4 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _Webacula: https://webacula.sourceforge.net/
 .. _list of GUI: https://www.bacula.org/manuals/en/console/console/GUI_Programs.html
 .. _bootstrap-datetimepicker: https://packagist.org/packages/eonasdan/bootstrap-datetimepicker
+.. _Valitron: https://github.com/vlucas/valitron

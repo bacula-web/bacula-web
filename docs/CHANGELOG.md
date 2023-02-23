@@ -1,8 +1,9 @@
-## Bacula-Web 8.7.0 (February 19th 2023)
+## Bacula-Web 8.7.0 (February 26th 2023)
 
 ### Changelog
 
 - Core
+  - Using vcluas/valitron for user input validation 
   - Bumped FontAwesome to version 6.2.0 (#141)
   - PHP versions 
     - 7.4 is now the minimal supported versions, older versions are not supported anymore (#143)

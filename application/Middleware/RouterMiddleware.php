@@ -23,6 +23,7 @@ namespace App\Middleware;
 
 use Core\App\View;
 use Core\App\WebApplication;
+use Core\Exception\AppException;
 use Core\Exception\PageNotFoundException;
 use Core\Middleware\MiddlewareInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,9 +45,14 @@ class RouterMiddleware implements MiddlewareInterface
      * @param Response $response
      * @return Response
      * @throws PageNotFoundException
+     * @throws AppException
      */
     public function process(Request $request, Response $response): Response
     {
+        if ($request->getPathInfo() !== '/') {
+            throw new AppException('Invalid requested path');
+        }
+
         // Inject request params into Request object instance
         $params = $request->query->all();
         $params = array_merge($request->request->all(), $params);

@@ -25,11 +25,13 @@ use Core\App\Controller;
 use App\Libs\FileConfig;
 use App\Tables\UserTable;
 use Core\Db\DatabaseFactory;
+use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
 use Core\Exception\ConfigFileException;
 use Exception;
 use SmartyException;
 use Symfony\Component\HttpFoundation\Response;
+use Valitron\Validator;
 
 class SettingsController extends Controller
 {
@@ -45,22 +47,32 @@ class SettingsController extends Controller
 
         // Create new user
         if ($this->request->attributes->has('action')) {
-            switch (Sanitizer::sanitize($this->request->request->get('action'))) {
-                case 'createuser':
-                    $username = Sanitizer::sanitize($this->request->request->get('username'));
-                    $email = Sanitizer::sanitize($this->request->request->get('email'));
+            if (Sanitizer::sanitize($this->request->request->get('action')) == 'createuser') {
+                $form_data = [
+                    'username' => Sanitizer::sanitize($this->request->request->get('username')),
+                    'password' => $this->request->request->get('password'),
+                    'email' => Sanitizer::sanitize($this->request->request->get('email'))
+                ];
 
-                    $result = $userTable->addUser(
-                        $username,
-                        $email,
-                        $this->request->request->get('password')
-                    );
-                    if ($result !== false) {
-                        // TODO: below code should be replace by $this->setFlash(), which does not seem's to work perfectly
-                        $this->setAlert($result->rowCount() . ' user created successfully');
-                        $this->setAlertType('success');
-                    }
-                    break;
+                $v = new Validator($form_data);
+
+                $v->rule('required', ['username', 'password', 'email']);
+                $v->rule('lengthMin', 'password', 8);
+                $v->rule('email', 'email');
+
+                if (!$v->validate()) {
+                    throw new AppException('Invalid user data provided');
+                }
+
+                $result = $userTable->addUser(
+                    $form_data['username'],
+                    $form_data['email'],
+                    $form_data['password']
+                );
+
+                if ($result !== false) {
+                    $this->setFlash('success', 'User created successfully');
+                }
             }
         }
 

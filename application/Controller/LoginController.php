@@ -23,11 +23,13 @@ namespace App\Controller;
 
 use Core\App\Controller;
 use Core\App\UserAuth;
+use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
 use Core\Exception\ConfigFileException;
 use SmartyException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Valitron\Validator;
 
 class LoginController extends Controller
 {
@@ -35,6 +37,7 @@ class LoginController extends Controller
      * @return Response
      * @throws ConfigFileException
      * @throws SmartyException
+     * @throws AppException
      */
     public function prepare(): Response
     {
@@ -43,13 +46,26 @@ class LoginController extends Controller
         if ($this->request->request->has('action') ) {
             if( $this->request->request->get('action') === 'login') {
 
-                $input_username = Sanitizer::sanitize($this->request->request->get('username'));
-                $input_password = $this->request->request->get('password');
+                $form_data = [
+                    'username' => Sanitizer::sanitize($this->request->request->get('username')),
+                    'password' => $this->request->request->get('password')
+                ];
 
-                $this->session->set(
-                    'user_authenticated',
-                    $dbAuth->authUser($input_username, $input_password)
-                );
+                $v = new Validator($form_data);
+
+                $v->rules([
+                   'required' => [
+                       'username', 'password'
+                   ],
+                    'alphaNum' => ['username'],
+                    'lengthMin' => ['password', 8]
+                ]);
+
+                if (!$v->validate()) {
+                    throw new AppException('Missing or invalid username and password');
+                }
+
+                $this->session->set('user_authenticated', $dbAuth->authUser($form_data['username'], $form_data['password']));
 
                 if ($dbAuth->authenticated()) {
                     $username = Sanitizer::sanitize($this->request->request->get('username'));
