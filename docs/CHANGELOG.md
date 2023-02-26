@@ -1,9 +1,72 @@
-## Bacula-Web 8.6.3 (November dd 2022)
+## Bacula-Web 8.7.0 (February 26th 2023)
+
+### Changelog
+
+- Core
+  - Using vcluas/valitron for user input validation 
+  - Bumped FontAwesome to version 6.2.0 (#141)
+  - PHP versions 
+    - 7.4 is now the minimal supported versions, older versions are not supported anymore (#143)
+    - extended support for PHP 8.1 (#147) 
+  - Separated some templates into application/views/templates/partials folder (#144)
+  - Removed Composer lock file from git repository
+    To avoid any potential issues for users using different version of PHP, composer.lock has been removed from the Git repo
+  - Fixed how MVC is implemented by using psr-15 http-handler (#145)
+  - Added router and user authentication middlewares
+    Using single pass psr-15 middleware for application routing and user authentication
+  - Disabling user authentication does not display a blank page anymore (#140)
+  - Improved how exceptions and errors are handled (#145)
+  - PHP errors and exception handler and renderer has been refactored (#148)
+  - Instantiate Session instance from the Core Controller (#149)
+  - Disabling users authentication does not create a fatalog error nor blank page anymore (#135)
+
+- Dashboard
+  - Breadcrumb navigation is now hidden on home page (Dashboard)
+
+- Jobs report
+  - Fixed error with elapsed time when a job haven't been started yet if a job
+	is in pending status, elapsed time column will display 'n/a'
+
+- Docker image
+  - Provided Docker image on Docker Hub (#153)
+
+- Documentation
+  - Update documentation about deprecated version and general security information (#142)
+  - Updated / fixed documentation
+  - The [FAQ](https://docs.bacula-web.org/03_get-help/faq.html) has been fixed / updated
+
+- Security
+  - Added security policy and documented know security vulnerabilities (#135 and #140)
+
+### Fixed
+
+- #135 [bug] - Fatal error when disabling user authentication
+- #140 [bug] - Upgrade 8.5.5 to 8.6.3 failed. Blank pages
+- #141 [core] - Bump FontAwesome to version 6.2.0
+- #142 [doc] - Add security policy & information
+- #143 [cor] - Remove support of PHP versions prior to 7.4
+- #144 [core] - Split some templates into partials
+- #145 [bug] - Implement MVC and improve error handling
+- #147 [core] - Add support for PHP 8.1
+- #148 [core] - Refactor PHP errors and exceptions handler and renderer
+- #149 [core] - Instantiate Session instance from the Core Controller
+- #154 [bug] - Fatal error while not using default language
+
+### New feature(s)
+
+- #34 [core] - Volumes detail page
+- #62 [docker] - Could someone create docker-compose file for easy deployment this app?
+- #153 [docker] - Provide Docker image
+
+Thanks to @sruckh, @skidoo23 and all community users for their feedback, tests, help and bug reports
+
+## Bacula-Web 8.6.3 (November 15th 2022)
 
 ### Changelog
 
 - General
   - Fixed Composer dependency problem with smarty/smarty (see #131)
+    Big thanks to @lrosenman for his bug report and contribution
   - Bumped smarty/smarty to version 4.2.1
   - Improved support for PHP >= 8.0
   - Fixed PSR12 code style warnings
@@ -19,6 +82,7 @@
 - Documentation
   - Documentation has been fixed/updated (see #138)
   - Added instructions for Lighttpd web server (see #129)
+    Big thanks to @sruckh for his bug report and contribution
 
 ### Fixed bug(s)
 

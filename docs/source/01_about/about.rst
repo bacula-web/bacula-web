@@ -6,7 +6,7 @@ About Bacula-Web
 
 Bacula-Web is a php web based tool that provide you a summarized view of jobs, pools and volumes. Its obtain his information from your bacula catalog database.
 
-This tool provide you informations on the last day jobs status, medias and pool usage, catalog size usage, and even more ...
+This tool provide you information on the last day jobs status, medias and pool usage, catalog size usage, and even more ...
 
 All features are described in the :ref:`about/features` page.
 
@@ -25,35 +25,35 @@ I'd advise to have a look on Bweb, baculum, BAT or Bacula Webmin plugin instead.
 The project history
 ===================
 
-Bacula-Web was originaly created and developed by Juan-Luis Frances Jimenez.
+Bacula-Web was originally created and developed by Juan-Luis Frances Jimenez.
 He made a very nice work.
 
-Since the end of 2010, I was officialy designed the official maintener by Kern S. and Eric B. for this project.
+Since the end of 2010, I was officially designed the official maintainer by Kern S. and Eric B. for this project.
 
 Project timeline
 ****************
 
 **2004 - 2008**
 
-Bacula-Web has been firstly created arround 2004 by Juan Luis Frances.
-He made a really fantastic work and provide to the community a very nice tool that provide usefull informations about Bacula backup jobs, pools and volumes.
+Bacula-Web has been firstly created around 2004 by Juan Luis Frances.
+He made a really fantastic work and provide to the community a very nice tool that provide useful information about Bacula backup jobs, pools and volumes.
 
-Then from 2004 to 2008, the  project was maintened by Juan Luis Frances making bug fixes and improvments.
+Then from 2004 to 2008, the  project was maintained by Juan Luis Frances making bug fixes and improvements.
 
 **2010 - the project revival**
 
 *Why reviving this project ?*
 
-Since November 2010, this project got a new official maintener and a new beginning.
+Since November 2010, this project got a new official maintainer and a new beginning.
 
 Since several years, I use Bacula for personal and professional purpose.
 
-Then I was looking for a web based tool which can provide me usefull information about last backup jobs, pools usage, volumes, etc.
+Then I was looking for a web based tool which can provide me useful information about last backup jobs, pools usage, volumes, etc.
 
 My first look were on webacula and bweb which are very good tool to use and features full but they look maybe pretty much not easy to install and configure.
-Then, I've found Bacula-Web which at this time, wasn't maintened since few years.
+Then, I've found Bacula-Web which at this time, wasn't maintained since few years.
 
-After I've submited some patches to Bacula developpers, I proposed to become the official maintainer of this project. So the project revival started on July 2010.
+After I've submitted some patches to Bacula developers, I proposed to become the official maintainer of this project. So the project revival started on July 2010.
 
 Third-party tools and libraries
 ===============================
@@ -72,12 +72,13 @@ Component                    License
 `Font Awesome`_              CC BY 4.0
 `jQuery`_                    MIT
 `bootstrap-datetimepicker`_  MIT
+`Valitron`_                  BSD-3-Clause
 ===========================  ================
 
 Supported browser
 =================
 
-Bacula-Web was succesfully tested with
+Bacula-Web was successfully tested with
 
    * Mozilla Firefox 94.0.1
    * Google Chrome 95.0.4638.69
@@ -173,3 +174,4 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _Webacula: https://webacula.sourceforge.net/
 .. _list of GUI: https://www.bacula.org/manuals/en/console/console/GUI_Programs.html
 .. _bootstrap-datetimepicker: https://packagist.org/packages/eonasdan/bootstrap-datetimepicker
+.. _Valitron: https://github.com/vlucas/valitron

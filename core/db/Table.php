@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -19,24 +21,38 @@
 
 namespace Core\Db;
 
+use Core\Exception\DatabaseException;
 use PDO;
 use Exception;
 use PDOException;
+use PDOStatement;
 
 class Table
 {
     /**
      * @var PDO
      */
-    protected $pdo;
+    protected PDO $pdo;
 
     /**
      * @var Database
      */
-    protected $db;
-    protected $driver;
+    protected Database $db;
+
+    /**
+     * @var string
+     */
+    protected string $driver;
+
+    /**
+     * @var
+     */
     protected $parameters;
-    protected $tablename = null;
+
+    /**
+     * @var null
+     */
+    protected ?string $tablename = null;
 
     /**
      * @param Database $db
@@ -45,7 +61,7 @@ class Table
     public function __construct(Database $db)
     {
         if ($this->tablename === null) {
-            throw new Exception("\$tablename property is not set in " . static::class . ' class');
+            throw new DatabaseException("\$tablename property is not set in " . static::class . ' class');
         }
 
         // Get PDO instance
@@ -128,7 +144,7 @@ class Table
      * Prepare a query using PDO::prepare() and return false on failure, or a PDOStatement
      * @param string $query SQL query
      * @param array|null $params
-     * @return \PDOStatement|bool
+     * @return PDOStatement|bool
      */
     protected function execute(string $query, array $params = null)
     {
@@ -142,18 +158,16 @@ class Table
     }
 
     /**
-      Function: run_query
-      Parameters:  $query
-      Return:      PDO_Statment
-    */
-
-    public function run_query($query)
+     * @param $query
+     * @return PDOStatement
+     */
+    public function run_query($query): PDOStatement
     {
-        // Prepare PDO statment
-        $statment    = $this->pdo->prepare($query);
+        // Prepare PDO statement
+        $statment = $this->pdo->prepare($query);
 
-        if ($statment == false) {
-            throw new PDOException("Failed to prepare PDOStatment <br />$query");
+        if ($statment === false) {
+            throw new DatabaseException("Failed to prepare PDOStatment <br />$query");
         }
 
         // Bind PHP variables with named placeholders
@@ -177,11 +191,12 @@ class Table
 
         /**
         * Reset $this->parameters to an empty array
-        * Otherwise, next call to Table::run_query() will fail if Table::addParameters() is not called and Table::parameters is not empty
+        * Otherwise, next call to Table::run_query() will fail if Table::addParameters()
+        * is not called and Table::parameters is not empty
         */
         $this->parameters = [];
 
-        if ($result == false) {
+        if ($result === false) {
             throw new PDOException("Failed to execute PDOStatment <br />$query");
         } else {
             return $statment;
@@ -195,17 +210,17 @@ class Table
      * @param  mixed $value
      * @return void
      */
-    public function addParameter($name, $value)
+    public function addParameter(string $name, $value)
     {
         $this->parameters[$name] = $value;
     }
 
     /**
-     * Return PDO connection status
+     * Return PDO connection status or null
      *
      * @return string|null
      */
-    public function getConnectionStatus()
+    public function getConnectionStatus(): ?string
     {
         // If MySQL of postGreSQL
         if ($this->get_driver_name() != 'sqlite') {

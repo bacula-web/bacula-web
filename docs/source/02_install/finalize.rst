@@ -11,7 +11,7 @@ Overview
    :scale: 30 %
    :align: right
 
-Starting from version 8.0.0, users informations are stored in SQLite database.
+Starting from version 8.0.0, users information are stored in SQLite database.
 
 To be able to sign in into Bacula-Web, you'll need to create the first user
 
@@ -50,7 +50,7 @@ Manage users
    :scale: 30 %
    :align: right
 
-You can manage users from the **Genral settings** dropdown menu.
+You can manage users from the **General settings** dropdown menu.
 
 To add more users, simply use the **Add user** form at the bottom of the page (password must be at least 6 characters long).
 

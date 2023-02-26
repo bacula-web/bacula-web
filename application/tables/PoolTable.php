@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -25,7 +27,7 @@ use App\Libs\FileConfig;
 
 class PoolTable extends Table
 {
-    protected $tablename = 'Pool';
+    protected ?string $tablename = 'Pool';
 
     /**
      * @return mixed

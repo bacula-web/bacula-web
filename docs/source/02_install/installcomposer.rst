@@ -16,7 +16,7 @@ Let's start by installing Composer on your system
 Install Composer
 ================
 
-Most Linux distro povides Composer as package, so to install it run this command
+Most Linux distro provides Composer as package, so to install it run this command
 
 ::
 
@@ -26,7 +26,7 @@ Most Linux distro povides Composer as package, so to install it run this command
     On Red Hat, Centos, Fedora
     $ sudo yum install composer
 
-If your distro doesn't provide Composer package, Composer website contains all informations 
+If your distro doesn't provide Composer package, Composer website contains all information
 you can install it manually as explained on `this page <https://getcomposer.org/download/>`_.
 
 .. important::
@@ -49,20 +49,24 @@ Once done, you can check Bacula-Web installation by running the command below
     $ cd bacula-web && composer check
 
     Checking platform requirements for packages in the vendor dir
-    composer-plugin-api  2.1.0       success
+    composer-plugin-api  2.2.0       success
     ext-dom              20031129    success
-    ext-gettext          7.3.32      success
-    ext-json             1.7.0       success
-    ext-mbstring         7.3.32      success
-    ext-openssl          7.3.32      success
-    ext-pcre             7.3.32      success
-    ext-posix            7.3.32      success
-    ext-simplexml        7.3.32      success
-    ext-sqlite3          7.3.32      success
-    ext-tokenizer        7.3.32      success
-    ext-xml              7.3.32      success
-    ext-xmlwriter        7.3.32      success
-    php                  7.3.32      success
+    ext-gettext          7.4.3       success
+    ext-json             7.4.3       success
+    ext-libxml           7.4.3       success
+    ext-mbstring         *           success provided by symfony/polyfill-mbstring
+    ext-openssl          7.4.3       success
+    ext-pcre             7.4.3       success
+    ext-pdo              7.4.3       success
+    ext-phar             7.4.3       success
+    ext-posix            7.4.3       success
+    ext-simplexml        7.4.3       success
+    ext-sqlite3          7.4.3       success
+    ext-tokenizer        7.4.3       success
+    ext-xml              7.4.3       success
+    ext-xmlwriter        7.4.3       success
+    php                  7.4.3       success
+
 
 Fix files/folders ownership and permissions
 

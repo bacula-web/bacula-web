@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -21,11 +23,18 @@ namespace Core\Utils;
 
 class CUtils
 {
-    public static function Get_Human_Size($size, $decimal = 2, $unit = 'auto', $display_unit = true)
+    /**
+     * @param $size
+     * @param int $decimal
+     * @param string $unit
+     * @param bool $display_unit
+     * @return string
+     */
+    public static function Get_Human_Size($size, int $decimal = 2, string $unit = 'auto', bool $display_unit = true)
     {
         $unit_id = 0;
         $lisible = false;
-        $units = array('B', 'KB', 'MB', 'GB', 'TB');
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
         $hsize = $size;
 
         switch ($unit) {
@@ -46,8 +55,8 @@ class CUtils
                 $hsize /= pow(1024, $unit_id);
                 break;
         } // end switch
-        // Format human readable value (with dot for decimal separator)
-        $hsize = number_format($hsize, $decimal, '.', '');
+        // Format human-readable value (with dot for decimal separator)
+        $hsize = number_format((float)$hsize, $decimal, '.', '');
 
         // Append unit or not
         if ($display_unit) {
@@ -57,23 +66,21 @@ class CUtils
         return $hsize;
     }
 
-    // ==================================================================================
-    // Function:    format_Number()
-    // Parameters:  $number
-    //              $decimal (optional, default = 0)
-    // Return:      formated number depending on current locale
-    // ==================================================================================
-    public static function format_Number($number, $decimal = 0)
+    /**
+     * Return a formated number based on the current locale
+     *
+     * @param $number
+     * @param int $decimal
+     * @return string
+     */
+    public static function format_Number($number, int $decimal = 0): string
     {
-        // Getting localized numeric formating information
         $locale = localeconv();
 
-        // Check if thousands_sep is set
         if (empty($locale['thousands_sep'])) {
             $locale['thousands_sep'] = '.';
         }
 
-        // Return formated number
-        return number_format($number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
+        return number_format((float)$number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
     }
 }

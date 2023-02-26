@@ -1,13 +1,22 @@
+# App
+composer.lock
 /vendor
 /application/views/cache/*.tpl
 /application/views/cache/*.php
 /application/config/config.php
 /application/assets/protected/application.db
+
+# Documentation
 docs/build
+
+# Frontend sub-folders
 public/css/*
 public/js/*
 public/fonts/*
+public/webfonts/*
 public/img/*
+
+# IDE & tools
 .idea
 .php-cs-fixer.cache
 .phpunit.result.cache

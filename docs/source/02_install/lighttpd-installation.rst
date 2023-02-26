@@ -22,6 +22,19 @@ Install Lighttpd package
 
    $ sudo apt-get install -y lighttpd php-fpm
 
+Enable fastcgi configuration
+
+::
+
+   $ sudo lighttpd-enable-mod fastcgi
+   $ sudo lighttpd-enable-mod fastcgi-php
+
+then restart Lighttpd service
+
+::
+
+   $ sudo systemctl restart lighttpd
+
 Install PHP extensions
 
 ::
@@ -35,7 +48,7 @@ Update Lighttpd server configuration
 
 ::
 
-   $ cat /etc/lighttpd/lightpd.conf
+   $ cat /etc/lighttpd/lighttpd.conf
    ...
    # vhosts
    include "/etc/lighttpd/vhosts.d/*.conf"
@@ -48,10 +61,9 @@ Create the file below
    $ cat /etc/lighttpd/vhosts.d
 
    $HTTP["host"] == "ltd-bacula-web.domain.local" {
-   server.document-root = "/var/www/html/bacula-web/public"
-   #server.errorlog = "/var/log/lighttpd/bacula-web-error.log"
-   accesslog.filename = "/var/log/lighttpd/bacula-web-access.log"
-}
+     server.document-root = "/var/www/html/bacula-web/public"
+     server.errorlog = "/var/log/lighttpd/bacula-web-error.log"
+   }
 
 Running the config test should return this result
 

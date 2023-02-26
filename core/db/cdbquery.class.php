@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -19,7 +21,7 @@
 
 namespace Core\Db;
 
-use Exception;
+use TypeError;
 
 class CDBQuery
 {
@@ -36,18 +38,16 @@ class CDBQuery
      *      'orderby'   => (string) add ORDER BY field
      *      'limit'     => (array) array ['count' => define the limit, 'offset' => define the OFFSET]
      *
-     * @param string $driver
+     * @param string|null $driver
      * @return string computed SQL query
-     * @throws Exception
      */
-
-    public static function get_Select(array $param, $driver = null): string
+    public static function get_Select(array $param, string $driver = null): string
     {
         $query = 'SELECT ';
         $where = '';
 
         if (empty($param)) {
-            throw new Exception("Missing parameters: you should provide an array");
+            throw new TypeError('Missing parameters: you should provide an array');
         }
 
         // Buidling SQL query
@@ -122,24 +122,23 @@ class CDBQuery
         return $query;
     }
 
-    // ==================================================================================
-    // Function:    get_Timestamp_Interval()
-    // Parameters:  $period array containing start and end timestamp
-    // Return:      return table with correct case
-    // ==================================================================================
-    public static function get_Timestamp_Interval($driver, $period_timestamp = array())
+    /**
+     * @param string $driver
+     * @param [] $period_timestamp
+     * @return array
+     */
+    public static function get_Timestamp_Interval(string $driver, $period_timestamp = []): array
     {
-        $period = array();
+        $period = [];
+        $dateformat = 'Y-m-d H:i:s';
 
-        switch ($driver) {
-            case 'pgsql':
-                $period['starttime']     = "TIMESTAMP '" . date("Y-m-d H:i:s", $period_timestamp[0]) . "'";
-                $period['endtime']       = "TIMESTAMP '" . date("Y-m-d H:i:s", $period_timestamp[1]) . "'";
-                break;
-            default:
-                $period['starttime']     = "'" . date("Y-m-d H:i:s", $period_timestamp[0]) . "'";
-                $period['endtime']       = "'" . date("Y-m-d H:i:s", $period_timestamp[1]) . "'";
-        } // end switch
+        if ($driver === 'pgsql') {
+            $period['starttime'] = "TIMESTAMP '" . date($dateformat, $period_timestamp[0]) . "'";
+            $period['endtime'] = "TIMESTAMP '" . date($dateformat, $period_timestamp[1]) . "'";
+        } else {
+            $period['starttime'] = "'" . date($dateformat, $period_timestamp[0]) . "'";
+            $period['endtime'] = "'" . date($dateformat, $period_timestamp[1]) . "'";
+        }
 
         return $period;
     }

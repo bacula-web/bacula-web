@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -27,6 +29,6 @@ class Sanitizer
      */
     public static function sanitize($value): string
     {
-        return strip_tags(htmlentities($value, ENT_QUOTES, 'UTF-8'));
+        return strip_tags(htmlentities((string)$value, ENT_QUOTES, 'UTF-8'));
     }
 }

@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -67,7 +69,7 @@ class Database
         ];
 
         if ($this->driver == 'mysql') {
-            $options[] = [PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true];
+            $options[PDO::MYSQL_ATTR_USE_BUFFERED_QUERY] = true;
         }
 
         $this->connection = new PDO(
@@ -94,12 +96,9 @@ class Database
         return $this->connection->getAttribute(PDO::ATTR_DRIVER_NAME);
     }
 
-    // ==================================================================================
-    // Function:    getServerVersion()
-    // Parameters:  none
-    // Return:      database server version
-    // ==================================================================================
-
+    /**
+     * @return mixed|string
+     */
     public function getServerVersion()
     {
         $server_version = $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION);

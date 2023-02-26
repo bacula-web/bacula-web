@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -22,8 +22,6 @@
  */
 
  define('BW_ROOT', dirname(__DIR__));
- define('VIEW_DIR', BW_ROOT . "/application/views/templates");
- define('VIEW_CACHE_DIR', BW_ROOT . "/application/views/cache");
 
  // Configuration
  define('CONFIG_DIR', BW_ROOT . "/application/config/");
@@ -31,5 +29,3 @@
 
  // Locales
  define('LOCALE_DIR', BW_ROOT . '/application/locale');
-
- $request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();

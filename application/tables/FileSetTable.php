@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -23,5 +23,8 @@ use Core\Db\Table;
 
 class FileSetTable extends Table
 {
-    protected $tablename = 'FileSet';
+    /**
+     * @var string|null
+     */
+    protected ?string $tablename = 'FileSet';
 }

@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -22,68 +24,83 @@ namespace App\Tables;
 use Core\Db\Table;
 use App\Libs\FileConfig;
 use Core\Db\CDBQuery;
+use Core\Exception\DatabaseException;
 use Core\Utils\CUtils;
+use Exception;
 
 class CatalogTable extends Table
 {
-    protected $tablename = 'Version';
-    private $dbVersionId = '';
+    /**
+     * @var string|null
+     */
+    protected ?string $tablename = 'Version';
 
-    // ==================================================================================
-    // Function:    get_Size()
-    // Parameters:  $pdo_connection - valid PDO object instance
-    // Return:      Database size
-    // ==================================================================================
+    /**
+     * @var int
+     */
+    private int $dbVersionId;
 
-    public function get_Size($catalog_id)
+    /**
+     * @param int $catalogId
+     * @return string Database size in human format
+     * @throws Exception
+     */
+
+    public function get_Size(int $catalogId): string
     {
-        $db_name    = FileConfig::get_Value('db_name', $catalog_id);
+        $dbName = FileConfig::get_Value('db_name', $catalogId);
 
         switch ($this->db->getDriverName()) {
             case 'mysql':
-             // Return N/A for MySQL server prior version 5 (no information_schemas)
+                /**
+                 * Return N/A for MySQL server prior version 5 (no information_schemas)
+                 */
                 if (version_compare($this->db->getServerVersion(), '5.0.0') >= 0) {
-                    // Prepare SQL statment
-                    $statment = array( 'table'   => 'information_schema.TABLES',
-                     'fields'  => array("table_schema AS 'database', (sum( data_length + index_length) / 1024 / 1024 ) AS 'dbsize'"),
-                     'where'   => array( "table_schema = '$db_name'" ),
-                     'groupby' => 'table_schema' );
+                    $statement = [
+                        'table'   => 'information_schema.TABLES',
+                        'fields'  => [
+                            "table_schema AS 'database', (sum( data_length + index_length) / 1024 / 1024 ) AS 'dbsize'"
+                        ],
+                        'where'   => ["table_schema = '$dbName'"],
+                        'groupby' => 'table_schema'
+                    ];
 
-                    $result        = $this->run_query(CDBQuery::get_Select($statment, $this->pdo));
-                    $db_size    = $result->fetch();
-                    $db_size     = $db_size['dbsize'] * 1024 * 1024;
-                    return CUtils::Get_Human_Size($db_size);
+                    $result  = $this->run_query(CDBQuery::get_Select($statement, $this->db->getDriverName()));
+                    $dbSize = $result->fetch();
+                    $dbSize = $dbSize['dbsize'] * 1024 * 1024;
+                    return CUtils::Get_Human_Size($dbSize);
                 } else {
-                    echo 'Not supported (' . $this->db->getServerVersion() . ') <br />';
+                    return 'Not supported (' . $this->db->getServerVersion() . ')';
                 }
                 break;
             case 'pgsql':
-                $statment    = "SELECT pg_database_size('$db_name') AS dbsize";
-                $result        = $this->run_query($statment);
-                $db_size    = $result->fetch();
-                return CUtils::Get_Human_Size($db_size['dbsize']);
+                $statement = "SELECT pg_database_size('$dbName') AS dbsize";
+                $result = $this->run_query($statement);
+                $dbSize = $result->fetch();
+                return CUtils::Get_Human_Size($dbSize['dbsize']);
             case 'sqlite':
-                $db_size     = filesize(FileConfig::get_Value('db_name', $catalog_id));
-                return CUtils::Get_Human_Size($db_size);
+                $dbSize = filesize(FileConfig::get_Value('dbName', $catalogId));
+                return CUtils::Get_Human_Size($dbSize);
+            default:
+                throw new DatabaseException('Catalog db size error: Unsupported PDO driver' . $this->db->getDriverName());
         }
     }
 
     /**
      * Return Bacula catalog id
      * @author Tom Hodder <tom@limepepper.co.uk>
-     * @return string VersionId value from Bacula catalog
-     *
+     * @return int VersionId value from Bacula catalog
+     * @throws Exception
      */
-    public function getCatalogVersion()
+    public function getCatalogVersion(): int
     {
         $sqlQuery = CDBQuery::get_Select(array('table' => $this->tablename,
             'fields' => array('VersionId'),
-            'limit' => array( 'count' => 1, 'offset' => 0)
+            'limit' => array('count' => 1, 'offset' => 0)
         ), $this->db->getDriverName());
 
         $result = $this->run_query($sqlQuery);
-        $this->dbVersionId = intval($result->fetchColumn());
 
-        return $this->dbVersionId;
+        return $this->dbVersionId = (int) $result->fetchColumn();
     }
 }

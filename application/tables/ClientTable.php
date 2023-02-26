@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -22,19 +22,17 @@ namespace App\Tables;
 use Core\Db\Table;
 use Core\Db\CDBQuery;
 use App\Libs\FileConfig;
-use Exception;
+use Core\Exception\ConfigFileException;
 
 class ClientTable extends Table
 {
-    protected $tablename = 'Client';
+    protected ?string $tablename = 'Client';
 
-    // ==================================================================================
-    // Function:    getClients()
-    // Parameters:  $pdo_connection - valide pdo object
-    // Return:      array containing client list or false
-    // ==================================================================================
-
-    public function getClients()
+    /**
+     * @return array
+     * @throws ConfigFileException
+     */
+    public function getClients(): array
     {
         $clients    = [];
         $fields     = ['ClientId, Name'];
@@ -46,7 +44,7 @@ class ClientTable extends Table
             $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
         }
 
-        $result     = $this->run_query(CDBQuery::get_Select($statment));
+        $result = $this->run_query(CDBQuery::get_Select($statment));
 
         foreach ($result->fetchAll() as $client) {
             $clients[ $client['clientid'] ] = $client['name'];
@@ -55,16 +53,14 @@ class ClientTable extends Table
         return $clients;
     }
 
-    // ==================================================================================
-    // Function:    getClientInfos()
-    // Parameters:  client id
-    // Return:      array containing client information
-    // ==================================================================================
-
-    public function getClientInfos($clientid)
+    /**
+     * @param string $clientid
+     * @return array
+     */
+    public function getClientInfos(string $clientid): array
     {
-        $client     = [];
-        $fields     = ['name','uname'];
+        $client = [];
+        $fields = ['name','uname'];
 
         // Filter by clientid
         $this->addParameter('clientid', $clientid);

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -20,11 +20,11 @@
 namespace App\Tables;
 
 use Core\Db\Table;
-use App\Libs\FileConfig;
-use Core\Db\CDBQuery;
-use Core\Utils\CUtils;
 
 class LogTable extends Table
 {
-    protected $tablename = 'Log';
+    /**
+     * @var string|null
+     */
+    protected ?string $tablename = 'Log';
 }

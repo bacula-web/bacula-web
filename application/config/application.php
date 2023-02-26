@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,21 +30,68 @@
  * @since 8.0.0-rc.1
  */
 
-$app = [ 'name' => 'Bacula-Web', 'version' => '8.6.3',
-        'routes' => [   'home' => 'Dashboard',
-                        'test' => 'Test',
-                        'jobs' => 'Jobs',
-                        'joblogs' => 'JobLogs',
-                        'volumes' => 'Volumes',
-                        'pools' => 'Pools',
-                        'client' => 'Client',
-                        'backupjob' => 'BackupJob',
-                        'login' => 'Login',
-                        'usersettings' => 'UserSettings',
-                        'settings' => 'Settings',
-                        'directors' => 'Directors',
-                        'jobfiles' => 'JobFiles'
-            ],
-    'defaultview' => 'DashboardView' ];
-
-return $app;
+return [
+    'name' => 'Bacula-Web',
+    'version' => '8.7.0',
+    'routes' => [
+        'home' => [
+            'callback' => \App\Controller\HomeController::class,
+            'name' => 'Dashboard'
+        ],
+        'test' => [
+            'callback' => \App\Controller\TestController::class,
+            'name' => 'Test'
+        ],
+        'jobs' => [
+            'callback' => \App\Controller\JobController::class,
+            'name' => 'Jobs'
+        ],
+        'joblogs' => [
+            'callback' => \App\Controller\JobLogController::class,
+            'name' => 'Job logs'
+        ],
+        'volumes' => [
+            'callback' => \App\Controller\VolumesController::class,
+            'name' => 'Volumes'
+        ],
+        'volume' => [
+            'callback' => \App\Controller\VolumeController::class,
+            'name' => 'Volume details'
+        ],
+        'pools' => [
+            'callback' => \App\Controller\PoolController::class,
+            'name' => 'Pools'
+        ],
+        'client' => [
+            'callback' => \App\Controller\ClientController::class,
+            'name' => 'Clients'
+        ],
+        'backupjob' => [
+            'callback' => \App\Controller\BackupJobController::class,
+            'name' => 'Backup job'
+        ],
+        'login' => [
+            'callback' => \App\Controller\LoginController::class,
+            'name' => 'Login'
+        ],
+        'usersettings' => [
+            'callback' => \App\Controller\UserController::class,
+            'name' => 'User settings'
+        ],
+        'settings' => [
+            'callback' => \App\Controller\SettingsController::class,
+            'name' => 'Settings'
+        ],
+        'directors' => [
+            'callback' => \App\Controller\DirectorController::class,
+            'name' => 'Directors'
+        ],
+        'jobfiles' => [
+            'callback' => \App\Controller\JobFilesController::class,
+            'name' => 'Job files'
+        ]
+    ],
+    'fallback_controller' => [
+        'callback' => \App\Controller\HomeController::class
+    ]
+];

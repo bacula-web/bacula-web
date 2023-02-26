@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Copyright (C) 2010-2022 Davide Franco
+ * Copyright (C) 2010-2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -19,29 +21,19 @@
 
 namespace Core\Utils;
 
-use Exception;
+use Core\Exception\ConfigFileException;
 
 class File
 {
+    /**
+     * string @var
+     */
     protected static $config_file;
+
+    /**
+     * mixed @var
+     */
     protected static $config;
-
-    // ==================================================================================
-    // Function:    __constructor()
-    // Parameters:  none
-    // Return:      none
-    // ==================================================================================
-
-    private function __construct()
-    {
-        // Nothing to do here
-    }
-
-    // ==================================================================================
-    // Function:    open()
-    // Parameters:  none
-    // Return:      true or false if the file doesn't exist or unreadable
-    // ==================================================================================
 
     /**
      * @param string $file

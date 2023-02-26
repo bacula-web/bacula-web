@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2021,2022 Davide Franco
+ * Copyright (C) 2021,2023 Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -27,17 +27,28 @@
 
 namespace App\Tables;
 
-use Core\Db\Database;
 use Core\Db\CDBQuery;
 use Core\Db\DatabaseFactory;
 use Core\Db\Table;
+use Exception;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class JobFileTable extends Table
 {
-    protected $tablename = 'File';
+    /**
+     * @var string|null
+     */
+    protected ?string $tablename = 'File';
 
-    public function getJobFiles($jobId, $limit, $offset, $filename = '')
+    /**
+     * @param $jobId
+     * @param $limit
+     * @param $offset
+     * @param string $filename
+     * @return array|false
+     * @throws Exception
+     */
+    public function getJobFiles($jobId, $limit, $offset, string $filename = '')
     {
         $catalog = new CatalogTable(
             DatabaseFactory::getDatabase(
@@ -54,19 +65,23 @@ class JobFileTable extends Table
             }
 
             $orderby = 'File.FileIndex ASC';
-            $sqlQuery = CDBQuery::get_Select(array('table' => $this->tablename,
-                'fields' => $fields,
-                'join' =>   array(  array('table' => 'Path', 'condition' => 'Path.PathId = File.PathId'),
-                                    array('table' => 'Filename', 'condition' => 'File.FilenameId = Filename.FilenameId'),
-                                      array('table' => 'Job', 'condition' => 'Job.JobId = File.JobId') ),
-                  'where' => $where,
-                  'orderby' => $orderby,
-                  'limit' => array( 'count' => $limit, 'offset' => $offset * $limit),
-                  'offset' => ($offset * $limit)
-              ), $this->db->getDriverName());
+            $sqlQuery = CDBQuery::get_Select([
+                    'table' => $this->tablename,
+                    'fields' => $fields,
+                    'join' => [
+                        ['table' => 'Path', 'condition' => 'Path.PathId = File.PathId'],
+                        ['table' => 'Filename', 'condition' => 'File.FilenameId = Filename.FilenameId'],
+                        ['table' => 'Job', 'condition' => 'Job.JobId = File.JobId']
+                    ],
+                    'where' => $where,
+                    'orderby' => $orderby,
+                    'limit' => ['count' => $limit, 'offset' => $offset * $limit],
+                    'offset' => ($offset * $limit)
+                ], $this->db->getDriverName()
+            );
         } else {
-            $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'File.Filename AS Filename');
-            $where = array("File.JobId = $jobId");
+            $fields = ['Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'File.Filename AS Filename'];
+            $where = ["File.JobId = $jobId"];
 
             if (!empty($filename)) {
                 $where[] = "(File.Filename LIKE '%$filename%' OR Path.Path LIKE '%$filename%' OR concat(Path.Path, '', File.Filename) = '$filename')";
@@ -87,7 +102,13 @@ class JobFileTable extends Table
         return $this->run_query($sqlQuery)->fetchAll();
     }
 
-    public function countJobFiles($jobId, $filename = '')
+    /**
+     * @param int $jobId
+     * @param string $filename
+     * @return mixed
+     * @throws Exception
+     */
+    public function countJobFiles(int $jobId, string $filename = '')
     {
         $catalog = new CatalogTable(
             DatabaseFactory::getDatabase(
@@ -120,7 +141,7 @@ class JobFileTable extends Table
             }
         }
 
-        $sql_query .= ";";
+        $sql_query .= ';';
 
         $result = $this->run_query($sql_query);
 
@@ -129,7 +150,11 @@ class JobFileTable extends Table
         return $used_types[0]['count'];
     }
 
-    public function getJobNameAndJobStatusByJobId($jobId)
+    /**
+     * @param $jobId
+     * @return array|mixed
+     */
+    public function getJobNameAndJobStatusByJobId(int $jobId)
     {
         $sql_query = "SELECT distinct Job.Name, Job.JobStatus FROM Job WHERE Job.JobId = $jobId;";
 

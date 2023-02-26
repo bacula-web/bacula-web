@@ -11,3 +11,4 @@ About
    features
    release 
    license
+   security
