@@ -27,6 +27,9 @@
   - Fixed error with elapsed time when a job haven't been started yet if a job
 	is in pending status, elapsed time column will display 'n/a'
 
+- Docker image
+  - Provided Docker image on Docker Hub (#153)
+
 - Documentation
   - Update documentation about deprecated version and general security information (#142)
   - Updated / fixed documentation
@@ -37,20 +40,23 @@
 
 ### Fixed
 
-- #135 [bugfix] - Fatal error when disabling user authentication
-- #140 [bugfix] - Upgrade 8.5.5 to 8.6.3 failed. Blank pages
+- #135 [bug] - Fatal error when disabling user authentication
+- #140 [bug] - Upgrade 8.5.5 to 8.6.3 failed. Blank pages
+- #141 [core] - Bump FontAwesome to version 6.2.0
 - #142 [doc] - Add security policy & information
-- #145 [bugfix] - Implement MVC and improve error handling
-- #148 [core] - Instantiate Session instance from the Core Controller
+- #143 [cor] - Remove support of PHP versions prior to 7.4
+- #144 [core] - Split some templates into partials
+- #145 [bug] - Implement MVC and improve error handling
 - #147 [core] - Add support for PHP 8.1
 - #148 [core] - Refactor PHP errors and exceptions handler and renderer
 - #149 [core] - Instantiate Session instance from the Core Controller
-- #135 [bug] - Fatal error when disabling user authentication
+- #154 [bug] - Fatal error while not using default language
 
 ### New feature(s)
 
 - #34 [core] - Volumes detail page
 - #62 [docker] - Could someone create docker-compose file for easy deployment this app?
+- #153 [docker] - Provide Docker image
 
 Thanks to @sruckh, @skidoo23 and all community users for their feedback, tests, help and bug reports
 
