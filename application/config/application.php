@@ -32,7 +32,7 @@ declare(strict_types=1);
 
 return [
     'name' => 'Bacula-Web',
-    'version' => '8.6.3',
+    'version' => '8.7.0',
     'routes' => [
         'home' => [
             'callback' => \App\Controller\HomeController::class,
