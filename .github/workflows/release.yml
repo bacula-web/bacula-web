@@ -1,0 +1,15 @@
+on:
+  push:
+    branches:
+      - master
+name: release
+jobs:
+  release-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        with:
+          token: ${{ secrets.CI_BOT_TOKEN }}
+          command: release-pr
+          release-type: "php"
+          changelog-types: '[{"type":"feat","section":"🚀 Features","hidden":false}, {"type":"docs","section":"Documentation","hidden":false}]'
