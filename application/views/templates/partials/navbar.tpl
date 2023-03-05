@@ -31,6 +31,7 @@
             {/if}
 
             <ul class="nav navbar-nav navbar-right">
+                {if $user_authenticated eq 'yes' or $enable_users_auth eq false }
                         <!-- Catalog selector -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
@@ -51,6 +52,7 @@
                             </ul>
                         </li>
                   <!-- end Catalog selector -->
+                {/if}
                   <!-- Authenticated user options -->
                 {if isset($user_authenticated) }
                     {if $enable_users_auth eq 'true' and $user_authenticated eq 'yes' }
