@@ -89,7 +89,9 @@
       ".readthedocs.yaml",
       ".tx",
       "phpunit.xml",
-      "/tests"
+      "/tests",
+      ".release-please-manifest.json",
+      "release-please-config.json"
     ]
   }
 }
