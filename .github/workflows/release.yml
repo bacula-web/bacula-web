@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - master
+      - develop
 name: release
 jobs:
   release-pr:
