@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - master
-      - develop
 name: release
 jobs:
   release-pr:
@@ -11,5 +10,6 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         with:
           token: ${{ secrets.CI_BOT_TOKEN }}
+          draft: true
           release-type: "php"
-          changelog-types: '[{"type":"feat","section":"🚀 Features","hidden":false}, {"type":"docs","section":"Documentation","hidden":false}]'
+          changelog-types: '[{"type":"fix","section":"🐛 Bug Fixes","hidden":false},{"type":"ci","section":"🐛 CI","hidden":true},{"type":"feat","section":"🚀 Features","hidden":false}, {"type":"docs","section":"Documentation","hidden":false}]'
