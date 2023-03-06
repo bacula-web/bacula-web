@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - master
-      - develop
 name: release
 jobs:
   release-pr:
@@ -12,4 +11,4 @@ jobs:
         with:
           token: ${{ secrets.CI_BOT_TOKEN }}
           release-type: "php"
-          changelog-types: '[{"type":"feat","section":"🚀 Features","hidden":false}, {"type":"docs","section":"Documentation","hidden":false}]'
+          changelog-types: '[{"type":"fix","section":"🐛 Bug Fixes","hidden":false},{"type":"ci","section":"🐛 CI","hidden":true},{"type":"feat","section":"🚀 Features","hidden":false}, {"type":"docs","section":"Documentation","hidden":false}]'
