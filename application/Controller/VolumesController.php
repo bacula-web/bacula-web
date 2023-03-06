@@ -28,6 +28,7 @@ use Core\Db\CDBPagination;
 use Core\Utils\CUtils;
 use App\Tables\VolumeTable;
 use App\Tables\PoolTable;
+use Date_HumanDiff;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use TypeError;
@@ -156,8 +157,9 @@ class VolumesController extends Controller
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
                 // Calculate expiration date only if volume status is Full or Used
                 if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
-                    $expire_date = strtotime($volume['lastwritten']) + $volume['volretention'];
-                    $volume['expire'] = date($this->session->get('datetime_format_short'), $expire_date);
+                    $dh = new Date_HumanDiff();
+                    $volume['expire'] = date($this->session->get('datetime_format_short'),strtotime($volume['lastwritten']) + $volume['volretention']);
+                    $volume['expire'] = $dh->get(strtotime($volume['lastwritten']) + $volume['volretention'], time()) . ' (' . $volume['expire'] . ')';
                 } else {
                     $volume['expire'] = 'n/a';
                 }
