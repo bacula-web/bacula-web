@@ -42,6 +42,12 @@ You can also run this command
 docker run --rm -it -v $(pwd):/src --name website -p 1313:1313 klakegg/hugo:0.105.0-ext-alpine server -D
 ```
 
+By running the command below, you create a new release post (using pre-defined archetypes)
+
+```shell
+docker run --rm -it -v $(pwd):/src --name website -p 1313:1313 klakegg/hugo:0.105.0-ext-alpine new -kcontent/en/blog/releases/post.md -k release
+```
+
 ### Quick note related to git sub-module
 
 Hugo theme is setup as a git submodule. 
