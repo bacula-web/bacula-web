@@ -3,7 +3,7 @@
 ### Changelog
 
 - Core
-  - Using vcluas/valitron for user input validation 
+  - Using vlucas/valitron for user input validation 
   - Bumped FontAwesome to version 6.2.0 (#141)
   - PHP versions 
     - 7.4 is now the minimal supported versions, older versions are not supported anymore (#143)
@@ -44,7 +44,7 @@
 - #140 [bug] - Upgrade 8.5.5 to 8.6.3 failed. Blank pages
 - #141 [core] - Bump FontAwesome to version 6.2.0
 - #142 [doc] - Add security policy & information
-- #143 [cor] - Remove support of PHP versions prior to 7.4
+- #143 [core] - Remove support of PHP versions prior to 7.4
 - #144 [core] - Split some templates into partials
 - #145 [bug] - Implement MVC and improve error handling
 - #147 [core] - Add support for PHP 8.1

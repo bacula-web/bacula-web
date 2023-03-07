@@ -78,25 +78,27 @@ The most recommended way to install Bacula-Web is by using [Composer](https://ge
   
 - Make sure you have Composer installed on your server
 - Run the command below
+
   ```shell
   $ composer create-project --no-dev bacula-web/bacula-web bacula-web
   $ cd bacula-web
   $ composer check 
   ```
 - Update the configuration based on your environment
+
   ```shell
   $ cp application/config.php.sample application/config.php
   $ vim | nano application/config.php
   ```
-- Setup users authentication
-  Run the command below and follow the instructions
-  ```shell
-  $ sudo -u www-data php bwc setupauth
-  ```
-- Test your setup using the two following options
+- Setup users authentication by running
 
   ```shell
   $ sudo -u www-data php bwc setupauth
+  ```
+- Now test your setup by using one of the two options below
+
+  ```shell
+  $ sudo -u www-data php bwc check
   ```
   or use the test page https://bacula-web-url/index.php?page=test
 
