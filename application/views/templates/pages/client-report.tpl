@@ -54,8 +54,8 @@
 			<th class="text-center">{t}Jod Id{/t}</th>
 			<th class="text-center">{t}Level{/t}</th>
 			<th class="text-center">{t}End time{/t}</th>
-			<th class="text-center">{t}Bytes{/t}</th>
-			<th class="text-center">{t}Files{/t}</th>
+			<th class="text-right">{t}Bytes{/t}</th>
+			<th class="text-right">{t}Files{/t}</th>
 			<th class="text-center">{t}Status{/t}</th>
 		</tr>
 		{foreach from=$backup_jobs item=job}
@@ -64,8 +64,8 @@
 			<td>{$job.jobid}</td>
 			<td>{$job.level}</td>
 			<td>{$job.endtime}</td>
-			<td>{$job.jobbytes}</td>
-			<td>{$job.jobfiles}</td>
+			<td class="text-right">{$job.jobbytes}</td>
+			<td class="text-right">{$job.jobfiles}</td>
 			<td>{$job.jobstatuslong}</td>
 		</tr>
 		{/foreach}

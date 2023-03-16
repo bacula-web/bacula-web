@@ -14,7 +14,7 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="table-responsive">
-        <table class="table table-condensed table-striped text-center paginate">
+        <table class="table table-condensed table-striped paginate">
           <thead>
             <tr>
 	          <th class="text-center">{t}Pool name{/t}</th>
@@ -26,9 +26,10 @@
 	      {foreach from=$pools item=pool key=pool_name name=pools}
             <tr>
 	          <td>{$pool.name}</td>
-	          <td>{$pool.numvols}</td>
-	          <td>{$pool.totalbytes}</td>
-	          <td>
+	          <td class="text-center">{$pool.numvols}</td>
+	          <td class="text-center">{$pool.numvols}</td>
+	          <td class="text-right">{$pool.totalbytes}</td>
+	          <td class="text-center">
 	            <a title="{t}Show volumes{/t}" class="btn btn-primary btn-sm {if $pool.numvols == '0'} disabled {/if}" role="button" href="index.php?page=volumes&filter_pool_id={$pool.poolid}">{t}Show Volumes{/t}</a>
 	          </td>
 	        </tr>

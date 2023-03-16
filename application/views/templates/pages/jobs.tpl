@@ -126,8 +126,8 @@
 			<td>{$job.endtime}</td>
 			<td>{$job.elapsed_time}</td>
 			<td>{$job.level}</td>
-			<td>{$job.jobbytes}</td>
-			<td>
+			<td class="text-right">{$job.jobbytes}</td>
+			<td class="text-right">
 				{if $job.jobfiles != 0 && $job.type == 'B'}
 					<a href="index.php?page=jobfiles&jobId={$job.jobid}" title="{t}Show job files{/t}">
 						{$job.jobfiles} <span class="glyphicon glyphicon-folder-open"></span>

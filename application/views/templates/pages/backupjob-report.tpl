@@ -58,12 +58,12 @@
 			<th class="text-center">{t}Job Id{/t}</th>
 			<th class="text-center">{t}Status{/t}</th>
 			<th class="text-center">{t}Level{/t}</th>
-			<th class="text-center">{t}Files{/t}</th>
-			<th class="text-center">{t}Bytes{/t}</th>
+			<th class="text-right">{t}Files{/t}</th>
+			<th class="text-right">{t}Bytes{/t}</th>
 			<th class="text-center">{t}Start time{/t}</th>
 			<th class="text-center">{t}End time{/t}</th>
 			<th class="text-center">{t}Elapsed time{/t}</th>
-			<th class="text-center">{t}Speed{/t}</th>
+			<th class="text-rightr">{t}Speed{/t}</th>
             <th class="text-center">{t}Compression{/t}</th>
 		</tr>
 		{foreach from=$jobs item=job}
@@ -71,18 +71,18 @@
 			<td>{$job.jobid}</td>
             <td>{$job.jobstatuslong}</td>
 			<td>{$job.joblevel}</td>
-			<td>
+			<td class="text-right">
 				{if ($job.jobfiles > 0) }
 					<a href="index.php?page=jobfiles&jobId={$job.jobid}">{$job.jobfiles}</a>
 				{else}
 					{$job.jobfiles}
 				{/if}
 			</td>
-			<td>{$job.jobbytes}</td>
+			<td class="text-right">{$job.jobbytes}</td>
 			<td>{$job.starttime}</td>
 			<td>{$job.endtime}</td>
 			<td>{$job.elapsedtime}</td>
-			<td>{$job.speed}</td>
+			<td class="text-right">{$job.speed}</td>
          <td>{$job.compression}</td>
 		</tr>
       {foreachelse}

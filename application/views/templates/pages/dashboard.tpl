@@ -161,17 +161,17 @@
             <table class="table table-condensed">
                <tr>
                   <th>{t}Job name{/t}</th>
-                  <th>{t}Jobs{/t}</th>
-                  <th>{t}Files{/t}</th>
-                  <th>{t}Bytes{/t}</th>
+                  <th class="text-right">{t}Jobs{/t}</th>
+                  <th class="text-right">{t}Files{/t}</th>
+                  <th class="text-right">{t}Bytes{/t}</th>
                   <th>{t}Type{/t}</th>
                </tr>
                {foreach from=$jobnames_jobs_stats item=jobname}
                <tr>
                   <td>{$jobname.jobname}</td>
-                  <td>{$jobname.jobscount}</td>
-                  <td>{$jobname.jobfiles}</td>
-                  <td>{$jobname.jobbytes}</td>
+                  <td class="text-right">{$jobname.jobscount}</td>
+                  <td class="text-right">{$jobname.jobfiles}</td>
+                  <td class="text-right">{$jobname.jobbytes}</td>
                   <td>{$jobname.type}</td>
                </tr>
                {/foreach}
@@ -182,16 +182,16 @@
             <table class="table table-condensed">
                <tr>
                   <th>{t}Type{/t}</th>
-                  <th>{t}Files{/t}</th>
-                  <th>{t}Bytes{/t}</th>
-                  <th>{t}Jobs{/t}</th>
+                  <th class="text-right">{t}Files{/t}</th>
+                  <th class="text-right">{t}Bytes{/t}</th>
+                  <th class="text-right">{t}Jobs{/t}</th>
                </tr>
                {foreach from=$jobtypes_jobs_stats item=jobtype}
                <tr>
                   <td>{$jobtype.type}</td>
-                  <td>{$jobtype.jobfiles}</td>
-                  <td>{$jobtype.jobbytes}</td>
-                  <td>{$jobtype.jobscount}</td>
+                  <td class="text-right">{$jobtype.jobfiles}</td>
+                  <td class="text-right">{$jobtype.jobbytes}</td>
+                  <td class="text-right">{$jobtype.jobscount}</td>
                </tr>
                {/foreach}
             </table>
@@ -206,14 +206,14 @@
                <table class="table table-condensed table-striped">
                   <tr>
                      <th>{t}Day of week{/t}</th>
-                     <th>{t}Bytes{/t}</th>
-                     <th>{t}Files{/t}</th>
+                     <th class="text-right">{t}Bytes{/t}</th>
+                     <th class="text-right">{t}Files{/t}</th>
                   </tr>
                   {foreach from=$weeklyjobsstats item=day}
                   <tr>
                      <td>{$day.dayofweek}</td>
-                     <td>{$day.jobbytes}</td>
-                     <td>{$day.jobfiles}</td>
+                     <td class="text-right">{$day.jobbytes}</td>
+                     <td class="text-right">{$day.jobfiles}</td>
                   </tr>
                   {foreachelse}
                      <tr> <td colspan="3" class="text-center">{t}Nothing to display{/t}</td> </tr>
@@ -238,14 +238,14 @@
                <table class="table table-condensed table-striped">
                   <tr>
                      <th>{t}Job name{/t}</th>
-                     <th>{t}Bytes{/t}</th>
-                     <th>{t}Files{/t}</th>
+                     <th class="text-right">{t}Bytes{/t}</th>
+                     <th class="text-right">{t}Files{/t}</th>
                   </tr>
                   {foreach from=$biggestjobs item=job}
                      <tr>
                         <td><a href="index.php?page=backupjob&backupjob_name={$job.name}">{$job.name}</a></td>
-                        <td>{$job.jobbytes}</td>
-                        <td>{$job.jobfiles}</td>
+                        <td class="text-right">{$job.jobbytes}</td>
+                        <td class="text-right">{$job.jobfiles}</td>
                      </tr>
                   {foreachelse}
                      <tr> <td colspan="3" class="text-center">{t}Nothing to display{/t}</td> </tr>
