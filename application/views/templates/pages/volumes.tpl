@@ -5,7 +5,7 @@
 {/block}
 
 {block name=body}
-<div class="container">
+<div class="container-fluid">
 
   <div class="page-header">
     <h3>{t}Volumes report{/t}<small>&nbsp;{t}Bacula volume(s) overview {/t}</small></h3>
@@ -20,6 +20,7 @@
             <tr>
 	          <th class="text-center">{t}Volume name{/t}</th>
 	          <th class="text-center">{t}Bytes{/t}</th>
+              <th class="text-center">{t}Files{/t}</th>
               <th class="text-center">{t}Jobs{/t}</th>
 	          <th class="text-center">{t}Media Type{/t}</th>
 	          <th class="text-center">{t}Pool{/t}</th>
@@ -37,6 +38,7 @@
              <a href="index.php?page=volume&id={$volume.mediaid}" title="{t}Show volume{/t}">{$volume.volumename}</a>
          </td>
 	     <td class="text-right">{$volume.volbytes}</td>
+         <td class="text-right">{$volume.volfiles}</td>
 	     <td class="text-right">{$volume.voljobs}</td>
 	     <td>{$volume.mediatype}</td>
 	     <td>{$volume.pool_name}</td>

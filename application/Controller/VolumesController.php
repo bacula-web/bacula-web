@@ -124,6 +124,7 @@ class VolumesController extends Controller
             'Media.mediaid',
             'Media.volumename',
             'Media.volbytes',
+            'Media.volfiles',
             'Media.voljobs',
             'Media.volstatus',
             'Media.mediatype',
