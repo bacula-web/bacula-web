@@ -68,6 +68,25 @@ function getPassword($prompt)
     return $input;
 }
 
+/**
+ * @param string $file
+ * @param string $destinationPath
+ * @return void
+ */
+function safecopy(string $file, string $destinationPath): bool
+{
+    if (file_exists($file) && is_writable($destinationPath)) {
+        echo "Copying $file to " . $destinationPath . PHP_EOL;
+        return copy($file, $destinationPath . '/' . basename($file));
+    } elseif (!file_exists($file)) {
+        echo "Error: Source file $file does not exist or is not writable";
+        return false;
+    } elseif (!is_writable($destinationPath) || !file_exists($destinationPath)) {
+        echo "Error: Destination $destinationPath folder does not exist or is not writable";
+        return false;
+    }
+}
+
 /*
  * Display provided string in different color
  * @param string $string
@@ -275,23 +294,6 @@ switch ($argv[1]) {
                 'vendor/twbs/bootstrap/dist/css/bootstrap.min.css.map',
 
                 /**
-                 * Bootstrap theme CSS
-                 */
-                'vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css',
-                'vendor/twbs/bootstrap/dist/css/bootstrap-theme.css.map',
-                'vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css.map',
-
-                /**
-                 * Bootstrap datetimepicker
-                 */
-                'vendor/components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
-
-                /**
-                 * Bacula-Web custom css
-                 */
-                'application/assets/css/default.css',
-
-                /**
                  * Font Awesome CSS
                  */
                 'vendor/components/font-awesome/css/fontawesome.min.css',
@@ -303,26 +305,16 @@ switch ($argv[1]) {
                 'vendor/novus/nvd3/build/nv.d3.css'
             ],
             'js' => [
+                'vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js',
+                'vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js.map',
                 'vendor/novus/nvd3/build/nv.d3.js',
                 'vendor/novus/nvd3/build/nv.d3.js.map',
-                'vendor/mbostock/d3/d3.min.js',
-                'vendor/components/jquery/jquery.min.js',
-                'vendor/moment/moment/min/moment-with-locales.js',
-                'vendor/twbs/bootstrap/dist/js/bootstrap.min.js',
-                'vendor/components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-                'application/assets/js/default.js',
-                'application/assets/js/ie10-viewport-bug-workaround.js',
+                'vendor/mbostock/d3/d3.min.js'
             ],
             'images' => [
-                'application/assets/images/bacula-web-logo.png'
-            ],
-            'fonts' => [
-                /**
-                 * Bootstrap Gliyph icons
-                 */
-                'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff2',
-                'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff',
-                'vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.ttf',
+                'application/assets/images/bacula-web-logo.png',
+                'application/assets/images/apple-touch-icon.png',
+                'application/assets/images/favicon.ico'
             ],
             'webfonts' => [
                 /**
@@ -336,38 +328,27 @@ switch ($argv[1]) {
                 'vendor/components/font-awesome/webfonts/fa-solid-900.woff2',
                 'vendor/components/font-awesome/webfonts/fa-v4compatibility.ttf',
                 'vendor/components/font-awesome/webfonts/fa-v4compatibility.woff2',
-
             ]
         ];
 
         // Copy css assets
-        foreach ($assets['css'] as $css) {
-            $filename = basename($css);
-            copy($css, "public/css/$filename");
+        foreach ($assets['css'] as $css_file) {
+            safecopy($css_file, 'public/css');
         }
 
         // Copy javascript assets
-        foreach ($assets['js'] as $js) {
-            $filename = basename($js);
-            copy($js, "public/js/$filename");
+        foreach ($assets['js'] as $js_file) {
+            safecopy($js_file, 'public/js');
         }
 
         // Copy images assets
-        foreach ($assets['images'] as $image) {
-            $filename = basename($image);
-            copy($image, "public/img/$filename");
-        }
-
-        // Copy fonts assets
-        foreach ($assets['fonts'] as $font) {
-            $filename = basename($font);
-            copy($font, "public/fonts/$filename");
+        foreach ($assets['images'] as $img_file) {
+            safecopy($img_file, 'public/img');
         }
 
         // Copy web fonts assets
-        foreach ($assets['webfonts'] as $font) {
-            $filename = basename($font);
-            copy($font, "public/webfonts/$filename");
+        foreach ($assets['webfonts'] as $font_file) {
+            safecopy($font_file, 'public/webfonts');
         }
 
         break;

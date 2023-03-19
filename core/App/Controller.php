@@ -81,7 +81,7 @@ class Controller
          */
         $translate = new CTranslation($language);
         $translate->setLanguage();
-        $this->setVar('language', $language);
+        $this->setVar('language', str_replace('_', '-', $language));
     }
 
     /**

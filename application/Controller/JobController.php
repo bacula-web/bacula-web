@@ -294,20 +294,20 @@ class JobController extends Controller
             // Determine icon for job status
             switch ($job['jobstatus']) {
                 case J_RUNNING:
-                    $job['Job_icon'] = "play";
+                    $job['Job_icon'] = 'fa-solid fa-play';
                     break;
                 case J_COMPLETED:
-                    $job['Job_icon'] = "ok";
+                    $job['Job_icon'] = 'fa-solid fa-check';
                     break;
                 case J_CANCELED:
-                    $job['Job_icon'] = "off";
+                    $job['Job_icon'] = 'fa-solid fa-power-off';
                     break;
                 case J_VERIFY_FOUND_DIFFERENCES:
                 case J_COMPLETED_ERROR:
-                    $job['Job_icon'] = "warning-sign";
+                    $job['Job_icon'] = 'fa-solid fa-triangle-exclamation';
                     break;
                 case J_FATAL:
-                    $job['Job_icon'] = "remove";
+                    $job['Job_icon'] = 'fa-solid fa-xmark';
                     break;
                 case J_WAITING_CLIENT:
                 case J_WAITING_SD:
@@ -319,7 +319,7 @@ class JobController extends Controller
                 case J_WAITING_MAX_JOBS:
                 case J_WAITING_START_TIME:
                 case J_NOT_RUNNING:
-                    $job['Job_icon'] = "time";
+                    $job['Job_icon'] = 'fa-solid fa-clock';
                     break;
             } // end switch
 

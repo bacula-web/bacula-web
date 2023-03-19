@@ -71,7 +71,7 @@ Component                    License
 `Bootstrap`_                 MIT
 `Font Awesome`_              CC BY 4.0
 `jQuery`_                    MIT
-`bootstrap-datetimepicker`_  MIT
+`tempus-dominus`_            MIT
 `Valitron`_                  BSD-3-Clause
 `Date_HumanDiff`_            LGPL
 `phpdotenv`_                 BSD-3-Clause
@@ -177,6 +177,7 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _Webacula: https://webacula.sourceforge.net/
 .. _list of GUI: https://www.bacula.org/manuals/en/console/console/GUI_Programs.html
 .. _bootstrap-datetimepicker: https://packagist.org/packages/eonasdan/bootstrap-datetimepicker
+.. _tempus-dominus: https://github.com/Eonasdan/tempus-dominus
 .. _Valitron: https://github.com/vlucas/valitron
 .. _Date_HumanDiff: https://github.com/pear/Date_HumanDiff
 .. _phpdotenv: https://github.com/vlucas/phpdotenv

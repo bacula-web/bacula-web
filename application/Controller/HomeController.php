@@ -122,7 +122,7 @@ class HomeController extends Controller
             $jobs_status_data[] = array($status, $jobs_count );
         }
 
-        $last_jobs_chart = new Chart(array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data, 'linked_report' => 'jobTable' ));
+        $last_jobs_chart = new Chart(array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data, 'linked_report' => 'jobs' ));
         $this->setVar('last_jobs_chart_id', $last_jobs_chart->name);
         $this->setVar('last_jobs_chart', $last_jobs_chart->render());
 
@@ -161,7 +161,7 @@ class HomeController extends Controller
             $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
         }
 
-        $pools_usage_chart = new Chart(array( 'type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool, 'linked_report' => 'poolTable' ));
+        $pools_usage_chart = new Chart(array( 'type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool, 'linked_report' => 'pools' ));
         $this->setVar('pools_usage_chart_id', $pools_usage_chart->name);
         $this->setVar('pools_usage_chart', $pools_usage_chart->render());
         unset($pools_usage_chart);

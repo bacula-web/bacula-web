@@ -35,8 +35,6 @@
     "ext-sqlite3": "*",
     "ext-posix": "*",
     "novus/nvd3": "@stable",
-    "twbs/bootstrap": "3.4.1",
-    "eonasdan/bootstrap-datetimepicker": "@stable",
     "smarty/smarty": "^4",
     "smarty-gettext/smarty-gettext": "@stable",
     "components/font-awesome": "6.*",
@@ -45,7 +43,8 @@
     "cocur/human-date": "^0.1.0",
     "pear/date_humandiff": "^0.5.0",
     "vlucas/phpdotenv": "^5.5",
-    "php-di/php-di": "^7.0"
+    "php-di/php-di": "^7.0",
+    "twbs/bootstrap": "5.2.3"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",

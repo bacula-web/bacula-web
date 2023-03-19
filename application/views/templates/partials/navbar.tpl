@@ -1,47 +1,43 @@
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.php">{$app_name}</a>
-        </div> <!-- div class="navbar-header" -->
+        <a class="navbar-brand" href="index.php">
+            <img src="/img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24" class="d-inline-block align-top">
+            {$app_name}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse" id="navbarcollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="index.php?page=home">{t}Dashboard{/t}</a>
+                </li>
 
-            {if $user_authenticated eq 'yes' or $enable_users_auth eq false }
-                <!-- Reports dropdown menu -->
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                    class="fa fa-file-text-o fa-fw"></i> {t}Reports{/t} <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="index.php?page=jobs">{t}Jobs{/t}</a></li>
-                            <li><a href="index.php?page=pools">{t}Pools{/t}</a></li>
-                            <li><a href="index.php?page=volumes">{t}Volumes{/t}</a></li>
-                            <li><a href="index.php?page=backupjob">{t}Backup job{/t}</a></li>
-                            <li><a href="index.php?page=client">{t}Client{/t}</a></li>
-                            <li><a href="index.php?page=directors">{t}Director(s){/t}</a></li>
+                {if $user_authenticated eq 'yes' or $enable_users_auth eq false }
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">{t}Reports{/t}</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="index.php?page=jobs">{t}Jobs{/t}</a></li>
+                            <li><a class="dropdown-item" href="index.php?page=pools">{t}Pools{/t}</a></li>
+                            <li><a class="dropdown-item" href="index.php?page=volumes">{t}Volumes{/t}</a></li>
+                            <li><a class="dropdown-item" href="index.php?page=backupjob">{t}Backup job{/t}</a></li>
+                            <li><a class="dropdown-item" href="index.php?page=client">{t}Client{/t}</a></li>
+                            <li><a class="dropdown-item" href="index.php?page=directors">{t}Director(s){/t}</a></li>
                         </ul>
                     </li>
-                </ul>
-            {/if}
+                {/if}
+            </ul>
 
-            <ul class="nav navbar-nav navbar-right">
-                {if $user_authenticated eq 'yes' or $enable_users_auth eq false }
-                        <!-- Catalog selector -->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                        class="fa fa-database"></i> {$catalog_label} <span class="caret"></span></a>
-
+            <div class="d-lg-flex col-lg-3 justify-content-lg-end">
+                <ul class="navbar-nav">
+                    {if $user_authenticated eq 'yes' or $enable_users_auth eq false }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-database"></i> {$catalog_label}</a>
                             <ul class="dropdown-menu">
                                 {foreach from=$catalogs key=catalog_id item=catalog_name}
                                     <li>
-                                        <a href="index.php?catalog_id={$catalog_id}{if isset($page) }&page={$page}{/if}">
-
+                                        <a class="dropdown-item" href="index.php?catalog_id={$catalog_id}{if isset($page) }&page={$page}{/if}">
                                             {if $catalog_id eq $catalog_current_id}
                                                 <i class="fa fa-check fa-fw"></i>
                                             {else}
@@ -51,86 +47,77 @@
                                 {/foreach}
                             </ul>
                         </li>
-                  <!-- end Catalog selector -->
-                {/if}
-                  <!-- Authenticated user options -->
+                    {/if}
+                </ul>
+
+                <ul class="navbar-nav">
                 {if isset($user_authenticated) }
                     {if $enable_users_auth eq 'true' and $user_authenticated eq 'yes' }
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toogle" data-toggle="dropdown" role="button">{$username} <i
-                                        class="fa fa-user fa-fw"></i></a>
+                        <li class="nav-item dropdown dropstart">
+
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user"></i> {$username}</a>
                             <ul class="dropdown-menu">
-                                <li><a href="index.php?page=usersettings" title="User settings"> <i
-                                                class="fa fa-wrench fa-fw"></i> {t}User settings{/t}</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="index.php?page=usersettings" title="User settings">
+                                        <i class="fa fa-wrench fa-fw"></i> {t}User settings{/t}
+                                    </a>
+                                </li>
+                                <li>
+                                    <form class="navbar-form navbar-left" action="index.php?page=login" method="POST">
+                                        <input class="form-control" type="hidden" name="action" value="logout">
+                                        <button type="submit" class="btn btn-sm btn-light ms-2" title="Sign out">
+                                            <i class="fa fa-sign-out fa-lg"></i> {t}Sign out{/t}
+                                        </button>
+                                    </form>
+                                </li>
                             </ul>
                         </li>
-                        <form class="navbar-form navbar-left" action="index.php?page=login" method="POST">
-                            <input type="hidden" name="action" value="logout">
-                            <button type="submit" class="btn btn-link" title="Sign out">
-                                <i class="fa fa-sign-out fa-lg"></i>
-                            </button>
-                            <!-- <button type="submit" class="btn btn-default">Submit</button> -->
-                        </form>
                     {/if}
                 {/if}
+                </ul>
 
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-cog fa-fw"></i> <span
-                                class="hidden-sm hidden-md hidden-lg">{t}About{/t}</span></a>
+                <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-gear"></i></button>
+            </div>
 
-                    <ul class="dropdown-menu">
+        </div>
 
-                            <li role="presentation" class="dropdown-header">Tools</li>
-                            <li>
-                                <a href="index.php?page=settings" title="Settings"><i
-                                            class="fa fa-cogs fa-fw"></i> {t}Settings{/t}</a>
-                            </li>
-                            <li>
-                                <a href="index.php?page=test" title="Display the test page"><i
-                                            class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
-                            </li>
-                            <li role="presentation" class="divider"></li>
+    </div>
+</nav>
 
-                        <li role="presentation" class="dropdown-header">Help</li>
-                        <li>
-                            <a href="https://docs.bacula-web.org/en/latest/" title="Documentation" target="_blank"
-                               rel="noopener noreferrer"><i class="fa fa-book fa-fw"></i> {t}Documentation{/t}</a>
-                        </li>
-                        <li>
-                            <a href="https://www.bacula-web.org" title="Visit the official web site" target="_blank"
-                               rel="noopener noreferrer"><i class="fa fa-globe fa-fw"></i> {t}Official web site{/t}</a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/bacula-web/bacula-web/issues"
-                               title="Bug and feature request tracker" target="_blank" rel="noopener noreferrer"><i
-                                        class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a>
-                        </li>
-                        <li><a href="https://github.com/bacula-web/bacula-web" title="Bacula-Web project on GitHub"
-                               target="_blank" rel="noopener noreferrer">
-                                <i class="fa fa-github fa-fw"></i>{t}Project on GitHub{/t}</a>
-                        </li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">{t}Version{/t}</li>
-                        <li class="disabled"><a href="#"><i class="fa fa-info fa-fw"></i> {$app_name} {$app_version}</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div> <!-- div class="collapse navbar-collapse"-->
-    </div> <!-- div class="container-fluid" -->
-</div> <!-- class="navbar" -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">{t}About{/t}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <h6>{t}Settings{/t}</h6>
 
-{if isset($user_authenticated) }
-    {if $user_authenticated eq 'yes' or $enable_users_auth eq 'false' }
-      {$breadcrumb}
-    {/if}
-{/if}
+        <a class="btn btn-primary m-1 w-100" href="index.php?page=settings" title="Settings"><i class="fa fa-cogs fa-fw"></i> {t}Settings{/t}</a>
 
-{if $userAlert != ''}
-<div class="container">
-    <div class="alert alert-{$userAlertType} role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-    </button>
-    {$userAlert}
+        <a class="btn btn-success m-1 w-100" href="index.php?page=test" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
+
+        <hr>
+
+        <h6>{t}Help{/t}</h6>
+
+        <a class="btn btn-light m-1 w-100" href="https://www.bacula-web.org" title="Visit the official web site" target="_blank"
+           rel="noopener noreferrer"><i class="fa fa-globe fa-fw"></i> {t}Official web site{/t}</a>
+
+        <a class="btn btn-light m-1 w-100" href="https://github.com/bacula-web/bacula-web/issues"
+               title="Bug and feature request tracker" target="_blank" rel="noopener noreferrer"><i
+                        class="fa fa-bug fa-fw"></i> {t}Bug tracker{/t}</a>
+
+        <a class="btn btn-light m-1 w-100" href="https://docs.bacula-web.org/en/latest/" title="Documentation" target="_blank"
+           rel="noopener noreferrer"><i class="fa fa-book fa-fw"></i> {t}Documentation{/t}</a>
+
+        <a class="btn btn-light m-1 w-100" href="https://github.com/bacula-web/bacula-web" title="Bacula-Web project on GitHub" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-github"></i> {t}Project on GitHub{/t}
+        </a>
+
+        <hr>
+
+        <h6>{t}Version{/t}</h6>
+        <button type="button" class="btn btn-outline-secondary w-100" disabled>{$app_name} {$app_version}</button>
+
+    </div>
 </div>
-{/if}

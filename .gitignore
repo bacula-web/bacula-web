@@ -15,8 +15,13 @@ public/js/*
 public/fonts/*
 public/webfonts/*
 public/img/*
+public/icons/*
 
 # IDE & tools
 .idea
 .php-cs-fixer.cache
 .phpunit.result.cache
+
+# npm specific
+package-lock.json
+node_modules/*

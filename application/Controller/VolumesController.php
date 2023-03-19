@@ -187,7 +187,7 @@ class VolumesController extends Controller
                 $volume['inchanger'] = '-';
                 $volume['slot'] = 'n/a';
             } else {
-                $volume['inchanger'] = '<span class="glyphicon glyphicon-ok"></span>';
+                $volume['inchanger'] = '<span class="fa-solid fa-check"></span>';
             }
 
             // Set volume status icon

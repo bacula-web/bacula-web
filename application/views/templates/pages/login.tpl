@@ -1,31 +1,55 @@
-{extends file='default.tpl'}
+{extends file='blank.tpl'}
 
 {block name=title}
-  <title>Bacula-Web - {t}Login{/t}</title>
+    <title>Bacula-Web - {t}Login{/t}</title>
 {/block}
 
 {block name=body}
-<div class="container">
-  <div class="row">
-    <div class="col-xs-4 col-xs-offset-4">
-      <div class="jumbotron form-signin">
-        <img class="img-responsive center-block" src="img/bacula-web-logo.png" alt="" />
+    <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card-group d-block d-md-flex row">
+                        <div class="card col-md-7 p-4 mb-0">
+                            <div class="card-body">
+                                <h1>Login</h1>
+                                <p class="text-medium-emphasis">Please sign in</p>
+                                <form action="index.php?page=login" method="post">
+                                    <div class="input-group mb-3">
+                  <span class="input-group-text">
+                    <i class="cil-user"></i>&nbsp;
+                    <input class="form-control" type="text" name="username" id="inputUsername" placeholder="Username" autofocus
+                           required>
+                                    </div>
+                                    <div class="input-group mb-4"><span class="input-group-text">
+                    <i class="cil-lock-locked"></i>&nbsp;
+                    <input class="form-control" type="password" name="password" id="inputPassword"
+                           placeholder="Password" required>
+                                    </div>
 
-        <form action="index.php?page=login" method="POST">
-          <h4>Please sign in</h4>
-        
-          <label for="inputUsername" class="sr-only">Username</label>
-          <input name="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-          <input type="hidden" name="action" value="login">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="hidden" name="action" value="login">
+                                            <button class="btn btn-primary px-4" type="submit">Login</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
 
-          </br>
-
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        </form>
-      </div>
+                        <div class="card col-md-5 text-white bg-light py-5">
+                            <div class="card-body text-center">
+                                <div>
+                                    <img class="img-responsive" src="img/bacula-web-logo.png" alt="Bacula-Web logo"/>
+                                    <div>
+                                        <h2 class="text-black">{$app_name}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div> <!-- end div class=container -->
 {/block}

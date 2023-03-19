@@ -1,32 +1,23 @@
-<hr />
 <div class="row">
     <div class="col-xs-6">
         <p class="pagination">{$pagination_range} / {$count} row(s) out of {$rowcount}</p>
     </div>
     <div class="col-xs-6">
-        <nav aria-label="">
-            <ul class="pagination">
-                <li class="{$first}">
+        <nav aria-label="pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {$first}">
                 {if $first eq "disabled"}
-                    <span>
-                        <span title="{t}First page{/t} aria-hidden="true">&laquo;</span>
-                    </span>
+                    <span title="{t}First page{/t}" class="page-link" aria-hidden="true">&laquo;</span>
                 {else}
-                    <a href="{$pagination_link}&pagination_page=1" aria-label="First">
-                        <span aria-hidden="true" title="{t}First page{/t}">&laquo;</span>
-                    </a>
+                    <a class="page-link" href="{$pagination_link}&pagination_page=1" aria-label="First">&laquo;</a>
                 {/if}
                 </li>
 
-                <li class="{$previous_enabled}">
+                <li class="page-item {$previous_enabled}">
                     {if $previous_enabled eq "disabled"}
-                        <span>
-                            <span title="{t}Previous page{/t} aria-hidden="true">&lang;</span>
-                        </span>
+                        <span class="page-link" title="{t}Previous page{/t} aria-hidden="true">&lang;</span>
                     {else}
-                        <a href="{$pagination_link}&pagination_page={$previous}" aria-label="Previous">
-                            <span aria-hidden="true" title="{t}Previous page{/t}">&lang;</span>
-                        </a>
+                        <a class="page-link" href="{$pagination_link}&pagination_page={$previous}" title="{t}Previous page{/t}" aria-label="Previous">&lang;</a>
                     {/if}
                 </li>
                 {* pagination current page is on last 4 *}
@@ -47,40 +38,34 @@
 
                 {for $page=$pagination_start to $pagination_end}
                     {if $page eq $pagination_current}
-                        <li class="active">
-                            <span>{$page} <span class="sr-only">(current)</span></span>
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">{$page}</span>
                         </li>
                     {else}
-                         <li>
-                            <a href="{$pagination_link}&pagination_page={$page}">{$page}</a>
+                         <li class="page-item">
+                            <a class="page-link" href="{$pagination_link}&pagination_page={$page}">{$page}</a>
                          </li>
                     {/if}
                 {/for}
 
-                <li class="{$next_enabled}">
+                <li class="page-item {$next_enabled}">
                 {if $next_enabled eq "disabled"}
-                    <span>
-                        <span title="{t}Next page{/t} aria-hidden="true">&rang;</span>
-                    </span>
+                    <span class="page-link" title="{t}Next page{/t} aria-hidden="true">&rang;</span>
                 {else}
-                    <a href="{$pagination_link}&pagination_page={$next}" aria-label="Next">
-                        <span aria-hidden="true" title="{t}Next page{/t}">&rang;</span>
-                    </a>
+                    <a class="page-link" href="{$pagination_link}&pagination_page={$next}" title="{t}Next page{/t}" aria-label="Next">&rang;</a>
                 {/if}
                 </li>
 
-                <li class="{$last}">
+                <li class="page-item {$last}">
                 {if $last eq "disabled"}
-                    <span>
-                        <span title="{t}Last page{/t} aria-hidden="true">&raquo;</span>
-                    </span>
+                    <span class="page-link" title="{t}Last page{/t}" aria-hidden="true">&raquo;</span>
                 {else}
-                    <a href="{$pagination_link}&pagination_page={$pagination_max}" aria-label="">
-                            <span aria-hidden="true" title="{t}Last page{/t}">&raquo;</span>
-                    </a>
+                    <a class="page-link" href="{$pagination_link}&pagination_page={$pagination_max}" title="{t}Last page{/t}" aria-label="">&raquo;</a>
                 {/if}
                 </li>
             </ul>
         </nav>
     </div>
 </div>
+
+
