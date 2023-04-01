@@ -60,12 +60,28 @@ class Controller
     /**
      * @param Request $request
      * @param View $view
+     * @throws ConfigFileException
      */
     public function __construct(Request $request, View $view)
     {
         $this->request = $request;
         $this->view = $view;
         $this->session = new Session();
+
+        /**
+         * Initialize smarty gettext function
+         */
+        $language = FileConfig::get_Value('language');
+        if ($language == null) {
+            throw new ConfigFileException('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
+        }
+
+        /**
+         * TODO: For separation of concerne sake, Locale setup should not be part of Controller constructor
+         */
+        $translate = new CTranslation($language);
+        $translate->setLanguage();
+        $this->setVar('language', $language);
     }
 
     /**
@@ -116,9 +132,9 @@ class Controller
     public function render(string $templateName): string
     {
         /**
-         * Build breadcrum navigation bar
+         * Build breadcrumb navigation bar
          *
-         * Whe the user is on the home page (Dashbard), the breadcrumb nav bar is not displayed
+         * Whe the user is on the home page (Dashboard), the breadcrumb nav bar is not displayed
          */
         $routes = WebApplication::getRoutes();
         $route = $routes[$this->request->attributes->get('page', 'home')];
@@ -177,18 +193,6 @@ class Controller
         // Set web app name and version
         $this->setVar('app_name', WebApplication::getName());
         $this->setVar('app_version', WebApplication::getVersion());
-
-        /**
-         * Initialize smarty gettext function
-         */
-        $language = FileConfig::get_Value('language');
-        if ($language == null) {
-            throw new ConfigFileException('<b>Config error:</b> $config[\'language\'] not set correctly, please check configuration file');
-        }
-
-        $translate = new CTranslation($language);
-        $translate->setLanguage();
-        $this->setVar('language', $language);
 
         // Set flash message
         $flash = $this->session->getFlashBag()->all();
