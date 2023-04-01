@@ -251,16 +251,16 @@ class JobController extends Controller
         // Selected job start time filter
         if (!is_null($filter_job_starttime) && !empty($filter_job_starttime)) {
             if (DateTimeUtil::checkDate($filter_job_starttime)) {
-                $where[] = "Job.StartTime >= '$filter_job_starttime'";
-                $params['Job.StartTime'] = $filter_job_starttime;
+                $where[] = 'Job.StartTime >= :job_start_time';
+                $params['job_start_time'] = $filter_job_starttime;
             }
         }
 
         // Selected job end time filter
         if (!is_null($filter_job_endtime) && !empty($filter_job_endtime)) {
             if (DateTimeUtil::checkDate($filter_job_endtime)) {
-                $where[] = "Job.EndTime <= '$filter_job_endtime'";
-                $params['Job.EndTime'] = $filter_job_endtime;
+                $where[] = 'Job.EndTime <= :job_end_time';
+                $params['job_end_time'] = $filter_job_endtime;
             }
         }
 
