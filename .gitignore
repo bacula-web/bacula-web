@@ -4,7 +4,7 @@ composer.lock
 /application/views/cache/*.tpl
 /application/views/cache/*.php
 /application/config/config.php
-/application/assets/protected/application.db
+/application/assets/protected/application.db*
 
 # Documentation
 docs/build
