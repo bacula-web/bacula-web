@@ -27,7 +27,6 @@ use Core\Exception\PageNotFoundException;
 use Error;
 use Exception;
 use PDOException;
-use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
@@ -86,15 +85,21 @@ class ExceptionRenderer
          * display a short message and a link to home page
          */
 
+        $content = $exception->getMessage() . ' ';
+
         if (get_class($exception) === PageNotFoundException::class) {
             $content = 'This page does not exist, please go back to <a href=\'index.php\'>home page</a>';
-        } elseif (FileConfig::get_Value('debug')) {
-            $content = self::getTrace($exception) .
-                $exception->getCode() . ' ' .
-                $exception->getMessage() . ' ' .
-                $exception->getFile() . ' ' .
-                $exception->getLine() . ' ' .
-                get_class($exception);
+        }
+
+        if (FileConfig::get_Value('debug')) {
+            $content .= self::getTrace($exception);
+            if ($exception->getCode() !== 0) {
+                $content .= $exception->getCode();
+            }
+            $exception->getMessage() . ' ' .
+            $exception->getFile() . ' ' .
+            $exception->getLine() . ' ' .
+            get_class($exception);
         }
 
         return self::render($content);
