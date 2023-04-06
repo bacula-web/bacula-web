@@ -84,7 +84,8 @@ class BackupJobController extends Controller
 
             // Make sure provided backupjob_name exist
             if (!in_array($backupjob_name, $jobslist)) {
-                throw new AppException("Critical: provided backupjob_name is not valid");
+                // TODO: Below should be included in flash and redirect user to another page (maybe referer)
+                throw new AppException('Wrong user input: invalid backupjob_name');
             }
 
             $this->setVar('selected_jobname', $backupjob_name);
