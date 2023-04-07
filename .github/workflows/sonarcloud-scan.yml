@@ -1,15 +1,18 @@
-name: ci
+name: sonarcloud-ci
 
 on:
   push:
     branches:
-      - master
-      - develop
-      - 'bugfix/**'
+      - 'master'
+      - 'fix/**'
+      - 'feat/**'
+      - 'chore/**'
+    pull_request:
+      types: [opened, synchronize, reopened]
 
 jobs:
-  tests:
-    name: Tests
+  sonarcloud:
+    name: sonarcloud
 
     runs-on: ubuntu-latest
 
