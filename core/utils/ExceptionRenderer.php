@@ -96,10 +96,6 @@ class ExceptionRenderer
             if ($exception->getCode() !== 0) {
                 $content .= $exception->getCode();
             }
-            $exception->getMessage() . ' ' .
-            $exception->getFile() . ' ' .
-            $exception->getLine() . ' ' .
-            get_class($exception);
         }
 
         return self::render($content);
