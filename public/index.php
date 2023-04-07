@@ -27,7 +27,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 // Bootstrap application
 require_once __DIR__ . '/../core/bootstrap.php';
 
-$app = new WebApplication(require CONFIG_DIR . '/application.php');
+$app = new WebApplication(require_once CONFIG_DIR . '/application.php');
 
 $request = Request::createFromGlobals();
 

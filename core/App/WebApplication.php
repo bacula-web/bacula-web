@@ -121,7 +121,7 @@ class WebApplication
     public static function getApp(): WebApplication
     {
         if (!isset(self::$appInstance)) {
-            self::$appInstance = new WebApplication(require CONFIG_DIR . '/application.php');
+            self::$appInstance = new WebApplication(require_once CONFIG_DIR . '/application.php');
         }
         return self::$appInstance;
     }
