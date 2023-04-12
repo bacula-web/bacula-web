@@ -1,5 +1,35 @@
 # Changelog
 
+## [8.9.0](https://github.com/bacula-web/bacula-web/compare/v8.8.0...v8.9.0) (2023-04-12)
+
+
+### 🚀 Features
+
+* display more informations for volumes ([5e69814](https://github.com/bacula-web/bacula-web/commit/5e69814bfa1c91501d7fa15e78e17376da085323)), closes [#32](https://github.com/bacula-web/bacula-web/issues/32)
+
+
+### 📘 Documentation
+
+* fix copyright year ([34ff29b](https://github.com/bacula-web/bacula-web/commit/34ff29b106eb7ff28fe2260c957bfc63aa5a459d))
+* simplify and fix Readme ([2695d20](https://github.com/bacula-web/bacula-web/commit/2695d20783fe202577a03b01e5f73a2829a8b157))
+
+
+### 🐛 Bug Fixes
+
+* [#161](https://github.com/bacula-web/bacula-web/issues/161) ([c8c51df](https://github.com/bacula-web/bacula-web/commit/c8c51df9e03c35ae937adf8add3bfcdf852c87f7))
+* [#162](https://github.com/bacula-web/bacula-web/issues/162) ([39322e0](https://github.com/bacula-web/bacula-web/commit/39322e029182e932dfa70c3e470100dd8c50f127))
+* [#167](https://github.com/bacula-web/bacula-web/issues/167) ([9042fcd](https://github.com/bacula-web/bacula-web/commit/9042fcd347545fcdc2d8c7b4379ad5c4765c79fb))
+* [#168](https://github.com/bacula-web/bacula-web/issues/168) ([f862469](https://github.com/bacula-web/bacula-web/commit/f86246951b47d28c6d54fbdbd933aa9e623ed496))
+* [#32](https://github.com/bacula-web/bacula-web/issues/32) ([5e69814](https://github.com/bacula-web/bacula-web/commit/5e69814bfa1c91501d7fa15e78e17376da085323))
+* **ci:** configure Travis-CI ([c60ffc2](https://github.com/bacula-web/bacula-web/commit/c60ffc2ea392b7bdabf2f39d05c2aba21ea3a6c2))
+* **ci:** conventional commits check workflow ([61ec6ac](https://github.com/bacula-web/bacula-web/commit/61ec6acf566eef3f9aa523ec7a9aaf42642c766b))
+* **ci:** fix missing changelog path ([2942aaf](https://github.com/bacula-web/bacula-web/commit/2942aafbb66df6c6a2fcdb2ed6083b8571361b30))
+* columns like bytes or files are not right justified ([39322e0](https://github.com/bacula-web/bacula-web/commit/39322e029182e932dfa70c3e470100dd8c50f127)), closes [#162](https://github.com/bacula-web/bacula-web/issues/162)
+* empty error when user database is missing ([f862469](https://github.com/bacula-web/bacula-web/commit/f86246951b47d28c6d54fbdbd933aa9e623ed496)), closes [#168](https://github.com/bacula-web/bacula-web/issues/168)
+* error while using start and end time with other filter options ([9042fcd](https://github.com/bacula-web/bacula-web/commit/9042fcd347545fcdc2d8c7b4379ad5c4765c79fb)), closes [#167](https://github.com/bacula-web/bacula-web/issues/167)
+* **security:** Smarty security vulnerability ([e8e026e](https://github.com/bacula-web/bacula-web/commit/e8e026e81689a161e115b6961eecb46b18bd6ed4))
+* wrong thousand separator ([c8c51df](https://github.com/bacula-web/bacula-web/commit/c8c51df9e03c35ae937adf8add3bfcdf852c87f7)), closes [#161](https://github.com/bacula-web/bacula-web/issues/161)
+
 ## [8.8.0](https://github.com/bacula-web/bacula-web/compare/v8.7.0...v8.8.0) (2023-03-07)
 
 ### Documentation
