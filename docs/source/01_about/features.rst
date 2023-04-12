@@ -199,7 +199,7 @@ Volumes
 
 List all volumes with details like
 
-   * Volume name
+   * Volume name (by clicking on the link, it display the volume details report)
    * Bytes
    * Jobs
    * Media Type
@@ -214,6 +214,26 @@ List all volumes with details like
      If you use a physical tape auto-changer / library, you will know if the volume is inside or outside the library
 
 The total of bytes and number of volumes is displayed at the bottom of the page
+
+----
+
+Volume details
+==============
+
+.. image:: /_static/bacula-web-volume-details.jpg
+   :scale: 20%
+
+Display volume details such as
+
+   * Media Id
+   * Volume Name
+   * Volumes Bytes
+   * Volumes file(s)
+   * Last written date/time
+   * Media Type
+   * List of backup jobs stored on the volume
+
+.. note:: Available since v8.7.0
 
 ----
 
