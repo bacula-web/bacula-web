@@ -74,6 +74,7 @@ Component                    License
 `bootstrap-datetimepicker`_  MIT
 `Valitron`_                  BSD-3-Clause
 `Date_HumanDiff`_            LGPL
+`phpdotenv`_                 BSD-3-Clause
 ===========================  ================
 
 Supported browser
@@ -177,3 +178,4 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _bootstrap-datetimepicker: https://packagist.org/packages/eonasdan/bootstrap-datetimepicker
 .. _Valitron: https://github.com/vlucas/valitron
 .. _Date_HumanDiff: https://github.com/pear/Date_HumanDiff
+.. _phpdotenv: https://github.com/vlucas/phpdotenv

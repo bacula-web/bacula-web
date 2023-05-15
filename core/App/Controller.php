@@ -191,8 +191,8 @@ class Controller
         $this->setVar('catalogs', FileConfig::get_Catalogs());
 
         // Set web app name and version
-        $this->setVar('app_name', WebApplication::getName());
-        $this->setVar('app_version', WebApplication::getVersion());
+        $this->setVar('app_name', $_ENV['APP_NAME']);
+        $this->setVar('app_version', $_ENV['APP_VERSION']);
 
         // Set flash message
         $flash = $this->session->getFlashBag()->all();

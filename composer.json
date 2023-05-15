@@ -43,7 +43,8 @@
     "symfony/http-foundation": "^5.4",
     "vlucas/valitron": "^1.4",
     "cocur/human-date": "^0.1.0",
-    "pear/date_humandiff": "^0.5.0"
+    "pear/date_humandiff": "^0.5.0",
+    "vlucas/phpdotenv": "^5.5"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",

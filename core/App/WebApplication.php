@@ -43,16 +43,6 @@ class WebApplication
     protected static WebApplication $appInstance;
 
     /**
-     * @var string
-     */
-    protected string $name;
-
-    /**
-     * @var string
-     */
-    protected string $version;
-
-    /**
      * @var View
      */
     protected View $view;
@@ -110,6 +100,12 @@ class WebApplication
 
         // Save routes list
         self::$routes = self::$config['routes'];
+
+        /**
+         * Load app name and version from application/config/app using phpdotenv
+         */
+        $dotenv = \Dotenv\Dotenv::createImmutable(CONFIG_DIR, 'app');
+        $dotenv->load();
     }
 
     /**
@@ -216,22 +212,6 @@ class WebApplication
         }
 
         return $response;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getName(): string
-    {
-        return self::$config['name'];
-    }
-
-    /**
-     * @return string
-     */
-    public static function getVersion(): string
-    {
-        return self::$config['version'];
     }
 
     /**
