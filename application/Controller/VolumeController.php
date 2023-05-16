@@ -22,22 +22,23 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Core\App\Controller;
-use Core\Db\DatabaseFactory;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
 use App\Tables\VolumeTable;
-use Exception;
+use Core\Exception\ConfigFileException;
 use Symfony\Component\HttpFoundation\Response;
 
 class VolumeController extends Controller
 {
     /**
+     * @param VolumeTable $volumeTable
      * @return Response
-     * @throws Exception
+     * @throws AppException
+     * @throws ConfigFileException
+     * @throws \SmartyException
      */
-    public function prepare(): Response
+    public function prepare(VolumeTable $volumeTable): Response
     {
-        $volume = new VolumeTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
         $params = [];
 
         if ($this->request->get('id') === null) {
@@ -55,16 +56,16 @@ class VolumeController extends Controller
                 'fields' => ['*'],
                 'where' => $where
             ],
-            $volume->get_driver_name()
+            $volumeTable->get_driver_name()
         );
 
         $this->setVar(
             'volume',
-            $volume->select($sqlquery, $params,'App\Entity\Volume', true)
+            $volumeTable->select($sqlquery, $params, 'App\Entity\Volume', true)
         );
 
-        $this->setVar('jobs', $volume->getJobs($volumeid));
+        $this->setVar('jobs', $volumeTable->getJobs($volumeid));
 
-        return (new Response($this->render('volume.tpl')));
+        return new Response($this->render('volume.tpl'));
     }
 }

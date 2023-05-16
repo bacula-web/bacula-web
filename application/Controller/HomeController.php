@@ -25,28 +25,28 @@
  use App\Tables\VolumeTable;
  use Core\App\Controller;
  use Core\Db\CDBQuery;
- use Core\Db\DatabaseFactory;
+ use Core\Exception\AppException;
+ use Core\Exception\ConfigFileException;
  use Core\Graph\Chart;
  use Core\Utils\CUtils;
  use Core\Utils\DateTimeUtil;
  use Core\Helpers\Sanitizer;
- use Exception;
  use SmartyException;
  use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller
 {
     /**
+     * @param JobTable $jobTable
+     * @param PoolTable $poolTable
+     * @param VolumeTable $volumeTable
      * @return Response
      * @throws SmartyException
-     * @throws Exception
+     * @throws AppException
+     * @throws ConfigFileException
      */
-    public function prepare(): Response
+    public function prepare(JobTable $jobTable, PoolTable $poolTable, VolumeTable $volumeTable): Response
     {
-        $jobs = new JobTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
-        $pools = new PoolTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
-        $volumes = new VolumeTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
-
         require_once BW_ROOT . '/core/const.inc.php';
 
         // Custom period for dashboard
@@ -90,25 +90,25 @@ class HomeController extends Controller
         // Set period start - end for widget header
         $this->setVar('literal_period', strftime("%a %e %b %Y", $custom_period[0]) . ' to ' . strftime("%a %e %b %Y", $custom_period[1]));
 
-        // Running, completed, failed, waiting and canceled jobs status over last 24 hours
-        $this->setVar('running_jobs', $jobs->count_Jobs($custom_period, 'running'));
-        $this->setVar('completed_jobs', $jobs->count_Jobs($custom_period, 'completed'));
-        $this->setVar('completed_with_errors_jobs', $jobs->count_Jobs($custom_period, 'completed with errors'));
-        $this->setVar('failed_jobs', $jobs->count_Jobs($custom_period, 'failed'));
-        $this->setVar('waiting_jobs', $jobs->count_Jobs($custom_period, 'waiting'));
-        $this->setVar('canceled_jobs', $jobs->count_Jobs($custom_period, 'canceled'));
+        // Running, completed, failed, waiting and canceled jobTable status over last 24 hours
+        $this->setVar('running_jobs', $jobTable->count_Jobs($custom_period, 'running'));
+        $this->setVar('completed_jobs', $jobTable->count_Jobs($custom_period, 'completed'));
+        $this->setVar('completed_with_errors_jobs', $jobTable->count_Jobs($custom_period, 'completed with errors'));
+        $this->setVar('failed_jobs', $jobTable->count_Jobs($custom_period, 'failed'));
+        $this->setVar('waiting_jobs', $jobTable->count_Jobs($custom_period, 'waiting'));
+        $this->setVar('canceled_jobs', $jobTable->count_Jobs($custom_period, 'canceled'));
 
         // Stored files number
-        $this->setVar('stored_files', CUtils::format_Number($jobs->getStoredFiles($no_period)));
+        $this->setVar('stored_files', CUtils::format_Number($jobTable->getStoredFiles($no_period)));
 
         // Total bytes and files stored over the last 24 hours
-        $this->setVar('bytes_last', CUtils::Get_Human_Size($jobs->getStoredBytes($custom_period)));
-        $this->setVar('files_last', CUtils::format_Number($jobs->getStoredFiles($custom_period)));
+        $this->setVar('bytes_last', CUtils::Get_Human_Size($jobTable->getStoredBytes($custom_period)));
+        $this->setVar('files_last', CUtils::format_Number($jobTable->getStoredFiles($custom_period)));
 
-        // Incremental, Differential and Full jobs over the last 24 hours
-        $this->setVar('incr_jobs', $jobs->count_Jobs($custom_period, null, J_INCR));
-        $this->setVar('diff_jobs', $jobs->count_Jobs($custom_period, null, J_DIFF));
-        $this->setVar('full_jobs', $jobs->count_Jobs($custom_period, null, J_FULL));
+        // Incremental, Differential and Full jobTable over the last 24 hours
+        $this->setVar('incr_jobs', $jobTable->count_Jobs($custom_period, null, J_INCR));
+        $this->setVar('diff_jobs', $jobTable->count_Jobs($custom_period, null, J_DIFF));
+        $this->setVar('full_jobs', $jobTable->count_Jobs($custom_period, null, J_FULL));
 
         // ==============================================================
         // Last period <Job status graph>
@@ -118,11 +118,11 @@ class HomeController extends Controller
         $jobs_status_data = array();
 
         foreach ($jobs_status as $status) {
-            $jobs_count = $jobs->count_Jobs($custom_period, strtolower($status));
+            $jobs_count = $jobTable->count_Jobs($custom_period, strtolower($status));
             $jobs_status_data[] = array($status, $jobs_count );
         }
 
-        $last_jobs_chart = new Chart(array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data, 'linked_report' => 'jobs' ));
+        $last_jobs_chart = new Chart(array(   'type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data, 'linked_report' => 'jobTable' ));
         $this->setVar('last_jobs_chart_id', $last_jobs_chart->name);
         $this->setVar('last_jobs_chart', $last_jobs_chart->render());
 
@@ -137,21 +137,21 @@ class HomeController extends Controller
         $table_pool = 'Pool';
         $sum_vols = '';
 
-        // Count defined pools in catalog
-        $pools_count = $pools->count();
+        // Count defined poolTable in catalog
+        $pools_count = $poolTable->count();
 
-        // Display 9 biggest pools and rest of volumes in 10th one display as Other
+        // Display 9 biggest poolTable and rest of volumeTable in 10th one display as Other
         if ($pools_count > $max_pools) {
             $query = array( 'table' => $table_pool,
             'fields' => array('SUM(numvols) AS sum_vols'),
             'limit' => array( 'offset' => ($pools_count - $max_pools), 'count' => $pools_count),
             'groupby' => 'name');
-            $result = $pools->run_query(CDBQuery::get_Select($query, $pools->get_driver_name()));
+            $result = $poolTable->run_query(CDBQuery::get_Select($query, $poolTable->get_driver_name()));
             $sum_vols = $result->fetch();
         }
 
-        $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools, $pools->get_driver_name());
-        $result = $pools->run_query(CDBQuery::get_Select($query));
+        $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools, $poolTable->get_driver_name());
+        $result = $poolTable->run_query(CDBQuery::get_Select($query));
 
         foreach ($result as $pool) {
             $vols_by_pool[] = array($pool['name'], $pool['numvols']);
@@ -161,7 +161,7 @@ class HomeController extends Controller
             $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
         }
 
-        $pools_usage_chart = new Chart(array( 'type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool, 'linked_report' => 'pools' ));
+        $pools_usage_chart = new Chart(array( 'type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool, 'linked_report' => 'poolTable' ));
         $this->setVar('pools_usage_chart_id', $pools_usage_chart->name);
         $this->setVar('pools_usage_chart', $pools_usage_chart->render());
         unset($pools_usage_chart);
@@ -173,7 +173,7 @@ class HomeController extends Controller
         $days = DateTimeUtil::getLastDaysIntervals(7);
 
         foreach ($days as $day) {
-            $days_stored_bytes[] = array( date("m-d", $day['start']), $jobs->getStoredBytes(array($day['start'], $day['end'])));
+            $days_stored_bytes[] = array( date("m-d", $day['start']), $jobTable->getStoredBytes(array($day['start'], $day['end'])));
         }
 
         $storedbytes_chart = new Chart(array(   'type' => 'bar', 'name' => 'chart_storedbytes', 'data' => $days_stored_bytes, 'ylabel' => 'Stored Bytes', 'uniformize_data' => true ));
@@ -190,7 +190,7 @@ class HomeController extends Controller
         $days = DateTimeUtil::getLastDaysIntervals(7);
 
         foreach ($days as $day) {
-            $days_stored_files[] = array( date("m-d", $day['start']), $jobs->getStoredFiles(array($day['start'], $day['end'])));
+            $days_stored_files[] = array( date("m-d", $day['start']), $jobTable->getStoredFiles(array($day['start'], $day['end'])));
         }
 
         $storedfiles_chart = new Chart(array(   'type' => 'bar', 'name' => 'chart_storedfiles', 'data' => $days_stored_files, 'ylabel' => 'Stored files' ));
@@ -201,7 +201,7 @@ class HomeController extends Controller
         unset($storedfiles_chart);
 
         // ==============================================================
-        // Last used volumes widget
+        // Last used volumeTable widget
         // ==============================================================
 
         $last_volumes = array();
@@ -210,7 +210,7 @@ class HomeController extends Controller
         $where = array();
         $tmp   = "(Media.Volstatus != 'Disabled') ";
 
-        switch ($volumes->get_driver_name()) {
+        switch ($volumeTable->get_driver_name()) {
             case 'pgsql':
                 $tmp .= "AND (Media.LastWritten IS NOT NULL)";
                 break;
@@ -231,7 +231,7 @@ class HomeController extends Controller
                        'limit' => '10');
 
         // Run the query
-        $result     = $volumes->run_query(CDBQuery::get_Select($statment, $volumes->get_driver_name()));
+        $result     = $volumeTable->run_query(CDBQuery::get_Select($statment, $volumeTable->get_driver_name()));
 
         foreach ($result as $volume) {
             if ($volume['lastwritten'] != '0000-00-00 00:00:00') {
@@ -249,7 +249,7 @@ class HomeController extends Controller
         $job_types = array( 'R' => 'Restore', 'B' => 'Backup' );      // TO IMPROVE
 
         $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes, Name AS JobName FROM Job WHERE Type in ('B','R') GROUP BY Name,Type";
-        $result = $jobs->run_query($query);
+        $result = $jobTable->run_query($query);
         $jobs_result = array();
 
         foreach ($result->fetchAll() as $job) {
@@ -263,7 +263,7 @@ class HomeController extends Controller
 
         // Per job type backup and restore statistics
         $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes FROM Job WHERE Type in ('B','R') GROUP BY Type";
-        $result = $jobs->run_query($query);
+        $result = $jobTable->run_query($query);
         $jobs_result = null;
 
         foreach ($result->fetchAll() as $job) {
@@ -275,12 +275,12 @@ class HomeController extends Controller
 
         $this->setVar('jobtypes_jobs_stats', $jobs_result);
 
-        # Weekly jobs statistics
-        $this->setVar('weeklyjobsstats', $jobs->getWeeklyJobsStats());
+        # Weekly jobTable statistics
+        $this->setVar('weeklyjobsstats', $jobTable->getWeeklyJobsStats());
 
-        # 10 biggest completed backup jobs
-        $this->setVar('biggestjobs', $jobs->getBiggestJobsStats());
+        # 10 biggest completed backup jobTable
+        $this->setVar('biggestjobs', $jobTable->getBiggestJobsStats());
 
-        return (new Response($this->render('dashboard.tpl')));
+        return new Response($this->render('dashboard.tpl'));
     }
 }

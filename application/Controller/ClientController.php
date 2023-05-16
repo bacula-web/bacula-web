@@ -22,26 +22,29 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Core\App\Controller;
+use Core\Exception\AppException;
+use Core\Exception\ConfigFileException;
 use Core\Graph\Chart;
-use Core\Db\DatabaseFactory;
 use Core\Db\CDBQuery;
 use Core\Utils\DateTimeUtil;
 use Core\Utils\CUtils;
 use Core\Helpers\Sanitizer;
 use App\Tables\JobTable;
 use App\Tables\ClientTable;
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use TypeError;
 
 class ClientController extends Controller
 {
     /**
+     * @param JobTable $jobTable
+     * @param ClientTable $clientTable
      * @return Response
-     * @throws Exception
+     * @throws AppException
+     * @throws ConfigFileException
+     * @throws \SmartyException
      */
-    public function prepare(): Response
+    public function prepare(JobTable $jobTable, ClientTable $clientTable): Response
     {
         require_once BW_ROOT . '/core/const.inc.php';
 
@@ -50,13 +53,9 @@ class ClientController extends Controller
         $days_stored_bytes = array();
         $days_stored_files = array();
 
-        // Get job names for the client
-        $catalogid = $this->session->get('catalogid', 0);
-        $jobs = new JobTable(DatabaseFactory::getDatabase($catalogid));
-        $client = new ClientTable(DatabaseFactory::getDatabase($catalogid));
-
         // Clients list
-        $this->setVar('clients_list', $client->getClients());
+        // Clients list
+        $this->setVar('clients_list', $clientTable->getClients());
 
         // Period list
         $periods_list = array( '7' => "Last week", '14' => "Last 2 weeks", '30' => "Last month");
@@ -95,7 +94,7 @@ class ClientController extends Controller
             $this->setVar('selected_client', $clientid);
 
             /**
-             * Filter jobs per $this->requested period
+             * Filter jobTable per $this->requested period
              */
 
             // Get the last n days interval (start and end timestamps)
@@ -104,15 +103,15 @@ class ClientController extends Controller
             $startTime = date('Y-m-d H:i:s', $days[0]['start']);
             $endTime = date('Y-m-d H:i:s', $days[array_key_last($days)]['end']);
 
-            $jobs->addParameter('job_starttime', $startTime);
+            $jobTable->addParameter('job_starttime', $startTime);
             $where[] = 'Job.endtime >= :job_starttime';
-            $jobs->addParameter('job_endtime', $endTime);
+            $jobTable->addParameter('job_endtime', $endTime);
             $where[] = 'Job.endtime <= :job_endtime';
 
             $this->setVar('no_report_options', 'false');
 
             // Client informations
-            $client_info  = $client->getClientInfos($clientid);
+            $client_info  = $clientTable->getClientInfos($clientid);
 
             $this->setVar('client_name', $client_info['name']);
             $this->setVar('client_os', $client_info['os']);
@@ -120,27 +119,27 @@ class ClientController extends Controller
             $this->setVar('client_version', $client_info['version']);
 
             // // Filter by Job status = Completed
-            $jobs->addParameter('jobstatus', 'T');
+            $jobTable->addParameter('jobstatus', 'T');
             $where[] = 'Job.JobStatus = :jobstatus';
 
             // // Filter by Job Type
-            $jobs->addParameter('jobtype', 'B');
+            $jobTable->addParameter('jobtype', 'B');
             $where[] = 'Job.Type = :jobtype';
 
             // Filter by Client id
-            $jobs->addParameter('clientid', $clientid);
+            $jobTable->addParameter('clientid', $clientid);
             $where[] = 'clientid = :clientid';
 
-            $query = CDBQuery::get_Select(['table' => $jobs->getTableName(),
+            $query = CDBQuery::get_Select(['table' => $jobTable->getTableName(),
                 'fields' => ['Job.Name', 'Job.Jobid', 'Job.Level', 'Job.Endtime', 'Job.Jobbytes', 'Job.Jobfiles', 'Status.JobStatusLong'],
                 'join' => [
                     ['table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus']
                 ],
                 'orderby' => 'Job.EndTime DESC',
                 'where' => $where
-                ], $jobs->get_driver_name());
+                ], $jobTable->get_driver_name());
 
-            $jobs_result = $jobs->run_query($query);
+            $jobs_result = $jobTable->run_query($query);
 
             foreach ($jobs_result->fetchAll() as $job) {
                 $job['level']     = $job_levels[$job['level']];
@@ -153,10 +152,9 @@ class ClientController extends Controller
 
             $this->setVar('backup_jobs', $backup_jobs);
 
-            $jobsStats = new JobTable(DatabaseFactory::getDatabase($catalogid));
             // Last n days stored Bytes graph
             foreach ($days as $day) {
-                $stored_bytes = $jobsStats->getStoredBytes(array($day['start'], $day['end']), 'ALL', $clientid);
+                $stored_bytes = $jobTable->getStoredBytes(array($day['start'], $day['end']), 'ALL', $clientid);
                 $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
             } // end foreach
 
@@ -171,11 +169,9 @@ class ClientController extends Controller
 
             unset($stored_bytes_chart);
 
-            $jobsStats = new JobTable(DatabaseFactory::getDatabase($catalogid));
-
             // Last n days stored files graph
             foreach ($days as $day) {
-                $stored_files = $jobsStats->getStoredFiles(array($day['start'], $day['end']), 'ALL', $clientid);
+                $stored_files = $jobTable->getStoredFiles(array($day['start'], $day['end']), 'ALL', $clientid);
                 $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
             }
 
@@ -196,6 +192,6 @@ class ClientController extends Controller
 
         $this->setVar('period', $period);
 
-        return (new Response($this->render('client-report.tpl')));
+        return new Response($this->render('client-report.tpl'));
     }
 }

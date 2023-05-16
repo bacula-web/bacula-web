@@ -106,6 +106,6 @@ class DirectorController extends Controller
 
         $this->setVar('directors', $directors);
 
-        return (new Response($this->render('directors.tpl')));
+        return new Response($this->render('directors.tpl'));
     }
 }

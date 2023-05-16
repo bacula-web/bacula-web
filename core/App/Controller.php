@@ -213,7 +213,7 @@ class Controller
      */
     protected function getParameter(string $parameter, $default)
     {
-        if ($this->request->getMethod() === 'GET') {
+       if ($this->request->getMethod() === 'GET') {
             if ($this->request->query->has($parameter)) {
                 return Sanitizer::sanitize($this->request->query->get($parameter));
             }

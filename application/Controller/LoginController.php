@@ -34,15 +34,14 @@ use Valitron\Validator;
 class LoginController extends Controller
 {
     /**
+     * @param UserAuth $dbAuth
      * @return Response
+     * @throws AppException
      * @throws ConfigFileException
      * @throws SmartyException
-     * @throws AppException
      */
-    public function prepare(): Response
+    public function prepare(UserAuth $dbAuth): Response
     {
-        $dbAuth = new UserAuth();
-
         if ($this->request->request->has('action') ) {
             if( $this->request->request->get('action') === 'login') {
 
@@ -89,6 +88,6 @@ class LoginController extends Controller
             }
         }
 
-        return (new Response($this->render('login.tpl')));
+        return new Response($this->render('login.tpl'));
     }
 }

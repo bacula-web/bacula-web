@@ -24,23 +24,24 @@ namespace App\Controller;
 use App\Tables\JobTable;
 use Core\App\Controller;
 use Core\Db\CDBQuery;
-use Core\Db\DatabaseFactory;
 use Core\Exception\AppException;
+use Core\Exception\ConfigFileException;
 use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class BackupJobController extends Controller
 {
     /**
+     * @param JobTable $jobTable
      * @return Response
-     * @throws Exception|AppException
+     * @throws AppException
+     * @throws ConfigFileException
+     * @throws \SmartyException
      */
-    public function prepare(): Response
+    public function prepare(JobTable $jobTable): Response
     {
         require_once BW_ROOT . '/core/const.inc.php';
 
@@ -54,11 +55,8 @@ class BackupJobController extends Controller
         $periods_list = array( '7' => "Last week", '14' => "Last 2 weeks", '30' => "Last month");
         $this->setVar('periods_list', $periods_list);
 
-        // Stored Bytes on the defined period
-        $jobs = new JobTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
-
         // Get backup job(s) list
-        $jobslist = $jobs->get_Jobs_List(null, 'B');
+        $jobslist = $jobTable->get_Jobs_List(null, 'B');
         $this->setVar('jobs_list', $jobslist);
 
         // Check backup job name from $_POST request
@@ -118,13 +116,13 @@ class BackupJobController extends Controller
             }
 
             // Get start and end datetime for backup jobs report and charts
-            $periods = CDBQuery::get_Timestamp_Interval($jobs->get_driver_name(), $interval);
+            $periods = CDBQuery::get_Timestamp_Interval($jobTable->get_driver_name(), $interval);
 
-            $backupjobbytes = $jobs->getStoredBytes($interval, $backupjob_name);
+            $backupjobbytes = $jobTable->getStoredBytes($interval, $backupjob_name);
             $backupjobbytes = CUtils::Get_Human_Size($backupjobbytes);
 
             // Stored files on the defined period
-            $backupjobfiles = $jobs->getStoredFiles($interval, $backupjob_name);
+            $backupjobfiles = $jobTable->getStoredFiles($interval, $backupjob_name);
             $backupjobfiles = CUtils::format_Number($backupjobfiles);
 
             // Get the last 7 days interval (start and end)
@@ -132,7 +130,7 @@ class BackupJobController extends Controller
 
             // Last 7 days stored files chart
             foreach ($days as $day) {
-                $storedfiles = $jobs->getStoredFiles(array($day['start'], $day['end']), $backupjob_name);
+                $storedfiles = $jobTable->getStoredFiles(array($day['start'], $day['end']), $backupjob_name);
                 $daysstoredfiles[] = array(date("m-d", $day['start']), $storedfiles);
             }
 
@@ -151,7 +149,7 @@ class BackupJobController extends Controller
 
             // Last 7 days stored bytes chart
             foreach ($days as $day) {
-                $storedbytes = $jobs->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
+                $storedbytes = $jobTable->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
                 $daysstoredbytes[] = array(date("m-d", $day['start']), $storedbytes);
             }
 
@@ -170,11 +168,11 @@ class BackupJobController extends Controller
             unset($storedbyteschart);
 
             // Backup job name
-            $jobs->addParameter('jobname', $backupjob_name);
+            $jobTable->addParameter('jobname', $backupjob_name);
             $where[] = 'Name = :jobname';
 
             // Backup job type
-            $jobs->addParameter('jobtype', 'B');
+            $jobTable->addParameter('jobtype', 'B');
             $where[] = "Type = :jobtype";
 
             // Backup job starttime and endtime
@@ -182,7 +180,7 @@ class BackupJobController extends Controller
 
             $query = CDBQuery::get_Select(
                 [
-                    'table' => $jobs->getTableName(),
+                    'table' => $jobTable->getTableName(),
                     'fields' =>
                         ['JobId', 'Level', 'JobFiles', 'JobBytes', 'ReadBytes', 'Job.JobStatus', 'StartTime', 'EndTime', 'Name', 'Status.JobStatusLong'],
                     'where' => $where,
@@ -192,12 +190,12 @@ class BackupJobController extends Controller
                             'table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus'
                         ]
                     ]
-                ], $jobs->get_driver_name()
+                ], $jobTable->get_driver_name()
             );
 
             $joblist = [];
             $joblevel = ['I' => 'Incr', 'D' => 'Diff', 'F' => 'Full'];
-            $result = $jobs->run_query($query);
+            $result = $jobTable->run_query($query);
 
             foreach ($result->fetchAll() as $job) {
                 // Job level description
@@ -245,6 +243,6 @@ class BackupJobController extends Controller
             $this->setVar('backupjobfiles', $backupjobfiles);
         }
 
-        return (new Response($this->render('backupjob-report.tpl')));
+        return new Response($this->render('backupjob-report.tpl'));
     }
 }

@@ -24,22 +24,22 @@ namespace App\Controller;
 use App\Tables\LogTable;
 use Core\App\Controller;
 use Core\Db\CDBQuery;
-use Core\Db\DatabaseFactory;
 use App\Tables\JobTable;
-use Exception;
+use Core\Exception\ConfigFileException;
 use SmartyException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use TypeError;
 
 class JobLogController extends Controller
 {
     /**
+     * @param LogTable $logTable
+     * @param JobTable $jobTable
      * @return Response
      * @throws SmartyException
-     * @throws Exception
+     * @throws ConfigFileException
      */
-    public function prepare(): Response
+    public function prepare(LogTable $logTable, JobTable $jobTable): Response
     {
         $jobid = $this->request->query->getInt('jobid');
 
@@ -47,18 +47,7 @@ class JobLogController extends Controller
             throw new TypeError('Invalid job id (invalid or null) provided in Job logs report');
         }
 
-        // Prepare and execute SQL statement
-        $jobs = new JobTable(
-            DatabaseFactory::getDatabase($this->session->get('catalog_id'))
-        );
-
-        $this->setVar('job', $jobs->findById($jobid));
-
-        $logTable = new LogTable(
-            DatabaseFactory::getDatabase(
-                $this->session->get('catalog_id', 0)
-            )
-        );
+        $this->setVar('job', $jobTable->findById($jobid));
 
         $sql = CDBQuery::get_Select(
             [
@@ -73,6 +62,6 @@ class JobLogController extends Controller
             $logTable->findAll($sql, ['jobid' => $jobid], 'App\Entity\Log')
         );
 
-        return (new Response($this->render('joblogs.tpl')));
+        return new Response($this->render('joblogs.tpl'));
     }
 }

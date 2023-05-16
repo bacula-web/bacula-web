@@ -30,31 +30,25 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Core\App\Controller;
-use Core\Db\DatabaseFactory;
+use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
 use Core\Helpers\Sanitizer;
 use App\Tables\JobFileTable;
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use TypeError;
 
 class JobFilesController extends Controller
 {
     /**
+     * @param JobFileTable $jobFileTable
      * @return Response
-     * @throws Exception
+     * @throws ConfigFileException
+     * @throws \SmartyException
      */
-    public function prepare(): Response
+    public function prepare(JobFileTable $jobFileTable): Response
     {
         $rows_per_page = 10;
         $current_page = null;
-
-        $jobFiles = new JobFileTable(
-            DatabaseFactory::getDatabase(
-                $this->session->get('catalog_id', 0)
-            )
-        );
 
         $filename = '';
 
@@ -71,9 +65,9 @@ class JobFilesController extends Controller
             $filename = Sanitizer::sanitize($filename);
         }
 
-        $jobInfo = $jobFiles->getJobNameAndJobStatusByJobId($jobId);
+        $jobInfo = $jobFileTable->getJobNameAndJobStatusByJobId($jobId);
         $this->setVar('job_info', $jobInfo);
-        $files_count = $jobFiles->countJobFiles($jobId, $filename);
+        $files_count = $jobFileTable->countJobFiles($jobId, $filename);
         $this->setVar('job_files_count', CUtils::format_Number($files_count));
 
         //pagination
@@ -92,10 +86,10 @@ class JobFilesController extends Controller
 
         if (!empty($filename)) {
             // Filter with provided filename if provided
-            $files = $jobFiles->getJobFiles($jobId, $rows_per_page, $current_page, $filename);
+            $files = $jobFileTable->getJobFiles($jobId, $rows_per_page, $current_page, $filename);
         } else {
             // otherwise, get files based on JobId only
-            $files = $jobFiles->getJobFiles($jobId, $rows_per_page, $current_page);
+            $files = $jobFileTable->getJobFiles($jobId, $rows_per_page, $current_page);
         }
 
         $this->setVar('job_files', $files);
@@ -103,6 +97,6 @@ class JobFilesController extends Controller
 
         $this->setVar('filename', $filename);
 
-        return (new Response($this->render('jobfiles.tpl')));
+        return new Response($this->render('jobfiles.tpl'));
     }
 }

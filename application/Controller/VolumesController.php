@@ -22,34 +22,33 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Core\App\Controller;
-use Core\Db\DatabaseFactory;
 use Core\Db\CDBQuery;
 use Core\Db\CDBPagination;
+use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
 use App\Tables\VolumeTable;
 use App\Tables\PoolTable;
 use Date_HumanDiff;
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use TypeError;
 
 class VolumesController extends Controller
 {
     /**
+     * @param VolumeTable $volumeTable
+     * @param PoolTable $poolTable
+     * @param CDBPagination $pagination
      * @return Response
-     * @throws Exception
+     * @throws ConfigFileException
+     * @throws \SmartyException
      */
-    public function prepare(): Response
+    public function prepare(VolumeTable $volumeTable, PoolTable $poolTable, CDBPagination $pagination): Response
     {
-        $volumes = new VolumeTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
         $params = [];
 
         $volumeslist = [];
         $volumes_total_bytes = 0;
         $where = null;
-
-        // Paginate database query result
-        $pagination = new CDBPagination($this->view);
 
         // Volumes status icon
         $volumestatus = [
@@ -66,11 +65,10 @@ class VolumesController extends Controller
         ];
 
         // Pools list filter
-        $pools = new PoolTable(DatabaseFactory::getDatabase($this->session->get('catalog_id', 0)));
         $poolslist = [];
 
-        // Create pools list
-        foreach ($pools->getPools() as $pool) {
+        // Create poolTable list
+        foreach ($poolTable->getPools() as $pool) {
             $poolslist[$pool['poolid']] = $pool['name'];
         }
 
@@ -135,7 +133,7 @@ class VolumesController extends Controller
             'Pool.Name AS pool_name'
         ];
 
-        $sqlQuery = CDBQuery::get_Select(array('table' => $volumes->getTableName(),
+        $sqlQuery = CDBQuery::get_Select(array('table' => $volumeTable->getTableName(),
                                             'fields' => $fields,
                                             'orderby' => "$volumeorderby $volumeorderbyasc",
                                             'join' => array(
@@ -145,14 +143,14 @@ class VolumesController extends Controller
                                             'limit' => [
                                                 'count' => $pagination->getLimit(),
                                                 'offset' => $pagination->getOffset() ]
-                                            ), $volumes->get_driver_name());
+                                            ), $volumeTable->get_driver_name());
 
         $countquery = CDBQuery::get_Select([
-            'table' => $volumes->getTableName(),
+            'table' => $volumeTable->getTableName(),
             'fields' => ['COUNT(*) as row_count'],
             'where' => $where ]);
 
-        foreach ($pagination->paginate($volumes, $sqlQuery, $countquery, $params) as $volume) {
+        foreach ($pagination->paginate($volumeTable, $sqlQuery, $countquery, $params) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
@@ -198,16 +196,16 @@ class VolumesController extends Controller
             // Format voljobs
             $volume['voljobs'] = CUtils::format_Number($volume['voljobs']);
 
-            // add volume in volumes list array
+            // add volume in volumeTable list array
             $volumeslist[] = $volume;
         }
 
         $this->setVar('pool_id', $poolid);
         $this->setVar('volumes', $volumeslist);
 
-        $this->setVar('volumes_count', $volumes->count());
+        $this->setVar('volumes_count', $volumeTable->count());
         $this->setVar('volumes_total_bytes', CUtils::Get_Human_Size($volumes_total_bytes));
 
-        return (new Response($this->render('volumes.tpl')));
+        return new Response($this->render('volumes.tpl'));
     }
 }

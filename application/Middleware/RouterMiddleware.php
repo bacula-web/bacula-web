@@ -21,11 +21,11 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use Core\App\View;
 use Core\App\WebApplication;
 use Core\Exception\AppException;
 use Core\Exception\PageNotFoundException;
 use Core\Middleware\MiddlewareInterface;
+use DI\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -40,6 +40,16 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class RouterMiddleware implements MiddlewareInterface
 {
+    private Container $container;
+
+    /**
+     * @param Container $container
+     */
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @param Request $request
      * @param Response $response
@@ -63,10 +73,10 @@ class RouterMiddleware implements MiddlewareInterface
 
         if ($requestedpage === null) {
             $fallback = $routes['home']['callback'];
-            $response = call_user_func([(new $fallback($request, (new View()))), 'prepare']);
+            $response = $this->container->call([$fallback, 'prepare']);
         } elseif ((array_key_exists($requestedpage, $routes))) {
             $callback = $routes[$requestedpage]['callback'];
-            $response = call_user_func([(new $callback($request, (new View()))), 'prepare']);
+            $response = $this->container->call([$callback, 'prepare']);
             $response->setStatusCode(200);
         }else {
             throw new PageNotFoundException();

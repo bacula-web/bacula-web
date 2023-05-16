@@ -22,31 +22,28 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Core\App\Controller;
-use Core\Db\DatabaseFactory;
+use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
 use App\Tables\PoolTable;
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class PoolController extends Controller
 {
     /**
+     * @param PoolTable $poolTable
      * @return Response
-     * @throws Exception
+     * @throws ConfigFileException
+     * @throws \SmartyException
      */
-    public function prepare(): Response
+    public function prepare(PoolTable $poolTable): Response
     {
-        // Get volumes list (pools.tpl)
-        $pools = new PoolTable(DatabaseFactory::getDatabase((new Session())->get('catalog_id', 0)));
-        $pools_list = array();
-        $plist = $pools->getPools();
+        $pools_list = [];
 
         // Add more details to each pool
-        foreach ($plist as $pool) {
+        foreach ($poolTable->getPools() as $pool) {
             // Total bytes for each pool
             $sql = "SELECT SUM(Media.volbytes) as sumbytes FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
-            $result = $pools->run_query($sql);
+            $result = $poolTable->run_query($sql);
             $result = $result->fetchAll();
             $pool['totalbytes'] = CUtils::Get_Human_Size($result[0]['sumbytes']);
 
@@ -55,6 +52,6 @@ class PoolController extends Controller
 
         $this->setVar('pools', $pools_list);
 
-        return (new Response($this->render('pools.tpl')));
+        return new Response($this->render('pools.tpl'));
     }
 }

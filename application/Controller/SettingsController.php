@@ -24,11 +24,9 @@ namespace App\Controller;
 use Core\App\Controller;
 use App\Libs\FileConfig;
 use App\Tables\UserTable;
-use Core\Db\DatabaseFactory;
 use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
 use Core\Exception\ConfigFileException;
-use Exception;
 use SmartyException;
 use Symfony\Component\HttpFoundation\Response;
 use Valitron\Validator;
@@ -36,15 +34,14 @@ use Valitron\Validator;
 class SettingsController extends Controller
 {
     /**
+     * @param UserTable $userTable
      * @return Response
+     * @throws AppException
      * @throws ConfigFileException
      * @throws SmartyException
-     * @throws Exception
      */
-    public function prepare(): Response
+    public function prepare(UserTable $userTable): Response
     {
-        $userTable = new UserTable(DatabaseFactory::getDatabase());
-
         // Create new user
         if ($this->request->attributes->has('action')) {
             if (Sanitizer::sanitize($this->request->request->get('action')) == 'createuser') {
@@ -145,6 +142,6 @@ class SettingsController extends Controller
             }
         }
 
-        return (new Response($this->render('settings.tpl')));
+        return new Response($this->render('settings.tpl'));
     }
 }

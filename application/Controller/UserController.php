@@ -24,11 +24,10 @@ namespace App\Controller;
 use App\Tables\UserTable;
 use Core\App\Controller;
 use Core\App\UserAuth;
-use Core\Db\DatabaseFactory;
+use Core\Exception\ConfigFileException;
 use Core\Helpers\Sanitizer;
-use Exception;
+use SmartyException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserController extends Controller
 {
@@ -38,15 +37,14 @@ class UserController extends Controller
     protected string $username = '';
 
     /**
+     * @param UserTable $userTable
+     * @param UserAuth $userAuth
      * @return Response
-     * @throws Exception
+     * @throws ConfigFileException
+     * @throws SmartyException
      */
-    public function prepare(): Response
+    public function prepare(UserTable $userTable, UserAuth $userAuth): Response
     {
-        $userTable = new UserTable(DatabaseFactory::getDatabase());
-
-        $userauth = new UserAuth();
-
         $this->username = $this->session->get('username');
         $user = $userTable->findByName($this->username);
 
@@ -58,7 +56,7 @@ class UserController extends Controller
             switch (Sanitizer::sanitize($this->request->request->get('action'))) {
                 case 'passwordreset':
                     // Check if provided current password is correct
-                    if ($userauth->authUser($user->getUsername(), $this->request->request->get('oldpassword')) == 'yes') {
+                    if ($userAuth->authUser($user->getUsername(), $this->request->request->get('oldpassword')) == 'yes') {
                         // Update user password with new one
                         $result = $userTable->setPassword(
                             $user->getUsername(),
@@ -79,6 +77,6 @@ class UserController extends Controller
             }
         }
 
-        return (new Response($this->render('usersettings.tpl')));
+        return new Response($this->render('usersettings.tpl'));
     }
 }

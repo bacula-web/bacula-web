@@ -22,32 +22,34 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Core\App\Controller;
-use Core\Db\DatabaseFactory;
 use Core\Db\CDBPagination;
 use Core\Db\CDBQuery;
+use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
 use App\Tables\JobTable;
 use App\Tables\ClientTable;
 use App\Tables\PoolTable;
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class JobController extends Controller
 {
     /**
+     * @param CDBPagination $pagination
+     * @param JobTable $jobTable
+     * @param ClientTable $clientTable
+     * @param PoolTable $poolTable
      * @return Response
-     * @throws Exception
+     * @throws ConfigFileException
+     * @throws \SmartyException
      */
-    public function prepare(): Response
+    public function prepare(
+        CDBPagination $pagination,
+        JobTable $jobTable,
+        ClientTable $clientTable,
+        PoolTable $poolTable
+    ): Response
     {
-        $jobs = new JobTable(
-            DatabaseFactory::getDatabase(
-                (new Session())->get('catalog_id', 0)
-            )
-        );
-
         $where = null;
         $params = [];
 
@@ -118,7 +120,7 @@ class JobController extends Controller
         );
 
         // Jobs type filter
-        $job_types_list = $jobs->getUsedJobTypes($job_types);
+        $job_types_list = $jobTable->getUsedJobTypes($job_types);
         $job_types_list['0'] = 'Any';
         $this->setVar('job_types_list', $job_types_list);
 
@@ -140,7 +142,7 @@ class JobController extends Controller
         }
 
         // Levels list filter
-        $levels_list = $jobs->getLevels($job_levels);
+        $levels_list = $jobTable->getLevels($job_levels);
         $levels_list['0']  = 'Any';
         $this->setVar('levels_list', $levels_list);
 
@@ -148,10 +150,6 @@ class JobController extends Controller
         $filter_joblevel = $this->getParameter('filter_joblevel', '0');
 
         $this->setVar('filter_joblevel', $filter_joblevel);
-
-        // Job pool filter
-        $filter_poolid = $this->getParameter('filter_poolid', '0');
-        $this->setVar('filter_poolid', $filter_poolid);
 
         // Job starttime filter
         $filter_job_starttime = $this->getParameter('filter_job_starttime', null);
@@ -173,30 +171,24 @@ class JobController extends Controller
         $job_orderby_asc_filter = $this->getParameter('filter_job_orderby_asc', 'DESC');
 
         // Clients list filter
-        $clients = new ClientTable(
-            DatabaseFactory::getDatabase(
-                (new Session())->get('catalog_id', 0)
-            )
-        );
-
-        $clients_list = $clients->getClients();
+        $clients_list = $clientTable->getClients();
         $clients_list[0] = 'Any';
         $this->setVar('clients_list', $clients_list);
 
-        // Pools list filer
-        $pools = new PoolTable(
-            DatabaseFactory::getDatabase(
-                $this->session->get('catalog_id', 0)
-            )
-        );
-        $pools_list = array();
+        /**
+         * Generate drop-down job pool filter
+         */
+        $pools_list = [];
 
-        foreach ($pools->getPools() as $pool) {
+        foreach ($poolTable->getPools() as $pool) {
             $pools_list[$pool['poolid']] = $pool['name'];
         }
 
         $pools_list[0] = 'Any';
         $this->setVar('pools_list', $pools_list);
+
+        $filter_poolid = $this->getParameter('filter_poolid', '0');
+        $this->setVar('filter_poolid', $filter_poolid);
 
         /**
          * Job status filter
@@ -276,9 +268,6 @@ class JobController extends Controller
             $this->setVar('result_order_asc_checked', '');
         }
 
-        // Paginate database query result
-        $pagination = new CDBPagination($this->view);
-
         // Parsing jobs result
         $sqlQuery = CDBQuery::get_Select(array('table' => 'Job',
             'fields' => $fields,
@@ -291,7 +280,7 @@ class JobController extends Controller
             'join' => array(
                 array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
-            ) ), $jobs->get_driver_name());
+            ) ),$jobTable->get_driver_name());
 
         $countQuery = CDBQuery::get_Select(
             [
@@ -301,7 +290,7 @@ class JobController extends Controller
             ]
         );
 
-        foreach ($pagination->paginate($jobs, $sqlQuery, $countQuery, $params) as $job) {
+        foreach ($pagination->paginate($jobTable, $sqlQuery, $countQuery, $params) as $job) {
             // Determine icon for job status
             switch ($job['jobstatus']) {
                 case J_RUNNING:
@@ -414,6 +403,6 @@ class JobController extends Controller
         // Count jobs
         $this->setVar('jobs_found', count($last_jobs));
 
-        return (new Response($this->render('jobs.tpl')));
+        return new Response($this->render('jobs.tpl'));
     }
 }

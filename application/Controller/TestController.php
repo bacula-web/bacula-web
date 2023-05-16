@@ -21,26 +21,25 @@
 namespace App\Controller;
 
 use Core\App\Controller;
-use Core\Db\DatabaseFactory;
 use App\Tables\CatalogTable;
-use Exception;
+use Core\Exception\AppException;
+use Core\Exception\ConfigFileException;
 use PDO;
 use Core\Graph\Chart;
 use SmartyException;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TestController extends Controller
 {
     /**
+     * @param CatalogTable $catalogTable
      * @return Response
      * @throws SmartyException
-     * @throws Exception
+     * @throws AppException
+     * @throws ConfigFileException
      */
-    public function prepare(): Response
+    public function prepare(CatalogTable $catalogTable): Response
     {
-        $catalog = new CatalogTable(DatabaseFactory::getDatabase());
-
         // Installed PDO drivers
         $pdo_drivers = PDO::getAvailableDrivers();
 
@@ -73,7 +72,7 @@ class TestController extends Controller
                     'check_descr' => 'PHP Posix support is required, please compile PHP with this option'),
             array(  'check_cmd' => 'db-connection',
                     'check_label' => 'Database connection status (MySQL and postgreSQL only)',
-                    'check_descr' => 'Current status: ' . $catalog->getConnectionStatus() ),
+                    'check_descr' => 'Current status: ' . $catalogTable->getConnectionStatus() ),
             array(  'check_cmd' => 'smarty-cache',
                     'check_label' => 'Smarty cache folder write permission',
                     'check_descr' => $this->view->getCacheDir() . ' must be writable by Apache'),
@@ -122,7 +121,7 @@ class TestController extends Controller
                     $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '7.4', '>=')];
                     break;
                 case 'db-connection':
-                    $check['check_result'] = $icon_result[$catalog->isConnected()];
+                    $check['check_result'] = $icon_result[$catalogTable->isConnected()];
                     break;
                 case 'php-timezone':
                     $timezone = ini_get('date.timezone');
@@ -167,6 +166,6 @@ class TestController extends Controller
         // Template rendering
         $this->setVar('checks', $check_list);
 
-        return (new Response($this->render('test.tpl')));
+        return new Response($this->render('test.tpl'));
     }
 }

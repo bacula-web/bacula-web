@@ -21,12 +21,18 @@ declare(strict_types=1);
 
 namespace Core\App;
 
+use App\Controller\JobController;
+use App\Controller\TestController;
 use App\Libs\FileConfig;
 use App\Middleware\ExceptionMiddleware;
 use App\Middleware\RouterMiddleware;
 use App\Middleware\DbAuthMiddleware;
+use App\Tables\JobTable;
+use App\Tables\PoolTable;
 use Core\Middleware\MiddlewareInterface;
 use Core\Exception\ConfigFileException;
+use DI\Container;
+use DI\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -90,6 +96,9 @@ class WebApplication
     /**
      * @param array $config Application config
      */
+
+    private Container $container;
+
     public function __construct(array $config)
     {
         // Create session
@@ -100,6 +109,11 @@ class WebApplication
 
         // Save routes list
         self::$routes = self::$config['routes'];
+
+        $containerbuilder = new ContainerBuilder();
+        $containerbuilder->addDefinitions(CONFIG_DIR . 'container-bindings.php');
+
+        $this->container = $containerbuilder->build();
     }
 
     /**
@@ -183,7 +197,6 @@ class WebApplication
             $session = new Session();
 
             FileConfig::open(CONFIG_FILE);
-
             $enable_users_auth = ((FileConfig::get_Value('enable_users_auth') !== null) && is_bool(FileConfig::get_Value('enable_users_auth'))) ? (bool)FileConfig::get_Value('enable_users_auth') : true;
 
             $session->set('enable_users_auth', $enable_users_auth);
@@ -195,7 +208,7 @@ class WebApplication
             /**
              * Add router middleware
              */
-            $response = $this->pipeMiddleware(new RouterMiddleware(), $response);
+            $response = $this->pipeMiddleware($this->container->get(RouterMiddleware::class), $response);
 
             $this->bootstrap();
         } catch (Exception $exception) {

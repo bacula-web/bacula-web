@@ -75,6 +75,7 @@ Component                    License
 `Valitron`_                  BSD-3-Clause
 `Date_HumanDiff`_            LGPL
 `phpdotenv`_                 BSD-3-Clause
+`PHP-DI`_                    MIT
 ===========================  ================
 
 Supported browser
@@ -179,3 +180,4 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _Valitron: https://github.com/vlucas/valitron
 .. _Date_HumanDiff: https://github.com/pear/Date_HumanDiff
 .. _phpdotenv: https://github.com/vlucas/phpdotenv
+.. _PHP-DI: https://github.com/PHP-DI/PHP-DI
