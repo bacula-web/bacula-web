@@ -100,12 +100,6 @@ class WebApplication
 
         // Save routes list
         self::$routes = self::$config['routes'];
-
-        /**
-         * Load app name and version from application/config/app using phpdotenv
-         */
-        $dotenv = \Dotenv\Dotenv::createImmutable(CONFIG_DIR, 'app');
-        $dotenv->load();
     }
 
     /**

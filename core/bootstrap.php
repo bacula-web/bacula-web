@@ -21,7 +21,9 @@
  * Setup app paths
  */
 
- define('BW_ROOT', dirname(__DIR__));
+use Dotenv\Dotenv;
+
+define('BW_ROOT', dirname(__DIR__));
 
  // Configuration
  define('CONFIG_DIR', BW_ROOT . "/application/config/");
@@ -29,3 +31,9 @@
 
  // Locales
  define('LOCALE_DIR', BW_ROOT . '/application/locale');
+
+/**
+ * Load app name and version from application/config/app using phpdotenv
+ */
+$dotenv = Dotenv::createImmutable(CONFIG_DIR, 'app');
+$dotenv->load();

@@ -34,7 +34,7 @@ use Core\App\View;
 
 function printUsage()
 {
-    echo "Bacula-Web version 8.9.0\n\n";
+    echo $_ENV['APP_NAME'] . ' version ' . $_ENV['APP_VERSION'] . "\n\n";
     echo "Usage:\n\n";
     echo "   php bwc [command]\n\n";
     echo "Available commands:\n\n";
