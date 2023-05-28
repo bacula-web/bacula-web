@@ -14,7 +14,7 @@ Install required packages
 
 Follow instructions below to setup Bacula-Web with Nginx instead of Apache www
 
-.. note:: These instruction have been tested with Ubuntu 16.04 (Xenial).
+.. note:: These instruction have been tested with Ubuntu 22.04 (Jammy Jellyfish).
 
 Download latest package lists
 
@@ -48,7 +48,7 @@ Modify PHP-FPM configuration
 
 ::
 
-    $ sudo vim /etc/php/7.4/fpm/php.ini
+    $ sudo vim /etc/php/8.1/fpm/php.ini
     
     cgi.fix_pathinfo=0
     date.timezeone = Europe/Zurich
@@ -57,7 +57,7 @@ Restart PHP-FPM service
 
 ::
 
-    /etc/init.d/php7.4-fpm restart
+    /etc/init.d/php8.1-fpm restart
 
 
 Configure Nginx

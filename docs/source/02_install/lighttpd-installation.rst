@@ -14,7 +14,7 @@ Install required packages
 
 Follow instructions below to setup Bacula-Web using Lighttpd instead of Apache or Nginx web server
 
-.. note:: The following instructions are based on Ubuntu 20.04 (Focal Fossa) using PHP 7.4.3
+.. note:: The following instructions are based on Ubuntu 20.04 (Focal Fossa) using PHP 8.0.28
 
 Install Lighttpd package
 

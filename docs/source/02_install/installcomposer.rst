@@ -49,24 +49,22 @@ Once done, you can check Bacula-Web installation by running the command below
     $ cd bacula-web && composer check
 
     Checking platform requirements for packages in the vendor dir
-    composer-plugin-api  2.2.0       success
-    ext-dom              20031129    success
-    ext-gettext          7.4.3       success
-    ext-json             7.4.3       success
-    ext-libxml           7.4.3       success
-    ext-mbstring         *           success provided by symfony/polyfill-mbstring
-    ext-openssl          7.4.3       success
-    ext-pcre             7.4.3       success
-    ext-pdo              7.4.3       success
-    ext-phar             7.4.3       success
-    ext-posix            7.4.3       success
-    ext-simplexml        7.4.3       success
-    ext-sqlite3          7.4.3       success
-    ext-tokenizer        7.4.3       success
-    ext-xml              7.4.3       success
-    ext-xmlwriter        7.4.3       success
-    php                  7.4.3       success
-
+    ext-dom       20031129   success
+    ext-gettext   8.0.28     success
+    ext-json      8.0.28     success
+    ext-libxml    8.0.28     success
+    ext-mbstring  *          success provided by symfony/polyfill-mbstring
+    ext-openssl   8.0.28     success
+    ext-pcre      8.0.28     success
+    ext-pdo       8.0.28     success
+    ext-phar      8.0.28     success
+    ext-posix     8.0.28     success
+    ext-simplexml 8.0.28     success
+    ext-sqlite3   8.0.28     success
+    ext-tokenizer 8.0.28     success
+    ext-xml       8.0.28     success
+    ext-xmlwriter 8.0.28     success
+    php           8.0.28     success
 
 Fix files/folders ownership and permissions
 

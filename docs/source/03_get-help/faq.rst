@@ -139,9 +139,9 @@ A full :ref:`list of requirements <install/requirements>` is documented in the d
 Which version of PHP is supported ?
 -----------------------------------
 
-As of Bacula-Web version 8.7.0, the recommended PHP version is version <= 7.4
+As of Bacula-Web version 9.0.0, the required PHP version is version <= 8.0
 
-.. important:: PHP versions prior to 7.4 are not supported anymore, theses versions no longer have security support and are exposed to non patched security vulnerabilities.
+.. important:: PHP versions prior to 8.0 are not supported anymore, theses versions no longer have security support and are exposed to non patched security vulnerabilities.
 
 For more details, please have a look at the `currently supported PHP version <http://php.net/supported-versions.php>`_ (PHP.net website)
 

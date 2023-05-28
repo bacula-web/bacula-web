@@ -22,15 +22,15 @@ General requirements
 +-----------------+--------------------------------------------+
 | **PHP version**                                              |
 +-----------------+--------------------------------------------+
-|                 | PHP >= 7.4 (up to >= 8.1)                  |
+|                 | PHP >= 8.0 (up to >= 8.2)                  |
 +-----------------+--------------------------------------------+
-| **PHP extensions**                                              |
+| **PHP extensions**                                           |
 +-----------------+--------------------------------------------+
 |                 | - Gettext                                  |
 |                 | - Session                                  |
 |                 | - PDO                                      |
 |                 | - MySQL, postgreSQL                        |
-|                 | - SQlite (required for user auth)          |
+|                 | - SQlite (required for user authentication)|
 |                 | - CLI                                      |
 |                 | - JSON                                     |
 |                 | - Posix                                    |

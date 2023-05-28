@@ -82,7 +82,7 @@ class TestController extends Controller
                     'check_descr' => 'application/assets/protected folder must be writable by Apache'),
             array(  'check_cmd' => 'php-version',
                     'check_label' => 'PHP version',
-                    'check_descr' => 'PHP version must be at least 7.4 (current version = ' . PHP_VERSION . ')'),
+                    'check_descr' => 'PHP version must be at least 8.0 (current version = ' . PHP_VERSION . ')'),
             array(  'check_cmd' => 'php-timezone',
                     'check_label' => 'PHP timezone',
                     'check_descr' => 'Timezone must be configured in php.ini (current timezone = ' . ini_get('date.timezone') . ')')
@@ -119,7 +119,7 @@ class TestController extends Controller
                     $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/assets/protected')];
                     break;
                 case 'php-version':
-                    $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '7.4', '>=')];
+                    $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '8.0', '>=')];
                     break;
                 case 'db-connection':
                     $check['check_result'] = $icon_result[$catalogTable->isConnected()];
