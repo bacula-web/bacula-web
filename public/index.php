@@ -19,17 +19,72 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-use Core\App\WebApplication;
-use Symfony\Component\HttpFoundation\Request;
+use App\Controller\BackupJobController;
+use App\Controller\DirectorController;
+use App\Controller\HomeController;
+use App\Controller\JobController;
+use App\Controller\LoginController;
+use App\Controller\PoolController;
+use App\Controller\SettingsController;
+use App\Controller\TestController;
+use App\Controller\UserController;
+use App\Controller\VolumesController;
+use DI\ContainerBuilder;
+use Slim\Factory\AppFactory;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // Bootstrap application
 require_once __DIR__ . '/../core/bootstrap.php';
 
-$app = new WebApplication(require_once CONFIG_DIR . '/application.php');
+// TODO: replace below code by middleware
+$session = new Session();
+if (!$session->isStarted()) {
+    $session->start();
+}
 
-$request = Request::createFromGlobals();
+$containerbuilder = new ContainerBuilder();
+$containerbuilder->addDefinitions(CONFIG_DIR . 'container-bindings.php');
 
-$response = $app->handle($request);
-$response->send();
+$container = $containerbuilder->build();
+
+AppFactory::setContainer($container);
+
+$app = AppFactory::create();
+
+$app->addErrorMiddleware(
+    true,
+    true,
+    true
+);
+
+$app->map(['GET', 'POST'], '/', [HomeController::class, 'prepare']);
+
+$app->map(['GET', 'POST'],'/jobs[/{page}]', [JobController::class, 'index']);
+$app->get('/joblog/{jobid}', [JobController::class, 'showLogs']);
+$app->map(['GET', 'POST'],'/jobfiles/{jobid}', [JobController::class, 'showFiles']);
+
+$app->get('/pools', [PoolController::class, 'prepare']);
+
+$app->get('/test', [TestController::class, 'index']);
+
+$app->get('/settings', [SettingsController::class, 'index']);
+$app->post('/settings', [SettingsController::class, 'addUser']);
+
+$app->map(['GET', 'POST'], '/volumes', [VolumesController::class, 'index']);
+$app->get('/volumes/{id}', [VolumesController::class, 'show']);
+
+$app->get('/directors', [DirectorController::class, 'index'] );
+
+$app->map(['GET', 'POST'], '/backupjob', [BackupJobController::class, 'index']);
+
+$app->map(['GET', 'POST'], '/client', [\App\Controller\ClientController::class, 'index']);
+
+$app->map(['GET', 'POST'], '/user', [UserController::class, 'prepare']);
+
+$app->post('/signout', [LoginController::class, 'signOut']);
+$app->get('/login', [LoginController::class, 'index']);
+$app->post('/login', [LoginController::class, 'login']);
+
+$app->run();

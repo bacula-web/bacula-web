@@ -19,7 +19,7 @@
             <!-- Filter jobs form -->
             <div class="col-xs-12 col-sm-3 col-sm-push-9 col-lg-2 col-lg-push-10">
 
-                <form class="form" role="form" action="index.php?page=jobs" method="post">
+                <form class="form" role="form" action="/jobs" method="post">
 
                     <span class="help-block">{t}Filter{/t}</span>
 
@@ -80,7 +80,7 @@
                     <button type="submit" class="btn btn-primary btn-sm pull-right"
                             title="{t}Apply filter and options{/t}">{t}Apply{/t}</button>
 
-                    <a class="btn btn-link btn-sm" title="{t}Reset to default{/t}" href="index.php?page=jobs"
+                    <a class="btn btn-link btn-sm" title="{t}Reset to default{/t}" href="/jobs"
                        role="button">{t}Reset to default{/t}</a>
                 </form>
 
@@ -118,7 +118,11 @@
                                 <td>{$job.jobid}</td>
                                 <td class="text-left">
                                     {if $job.type == 'B'}
-                                        <a href="index.php?page=backupjob&backupjob_name={$job.job_name|escape:'url'}">{$job.job_name}</a>
+                                        <form action="/backupjob" method="post">
+                                            <input type="hidden" name="backupjob_name" value="{$job.job_name}" />
+                                            <input type="hidden" name="backupjob_period" value="7" />
+                                            <button type="submit" class="btn btn-sm btn-link">{$job.job_name}</button>
+                                        </form>
                                     {else}
                                         {$job.job_name}
                                     {/if}
@@ -132,7 +136,7 @@
                                 <td class="text-right">{$job.jobbytes}</td>
                                 <td class="text-right">
                                     {if $job.jobfiles != 0 && $job.type == 'B'}
-                                        <a href="index.php?page=jobfiles&jobId={$job.jobid}"
+                                        <a href="/jobfiles/{$job.jobid}"
                                            title="{t}Show job files{/t}">
                                             {$job.jobfiles} <i class="fa-solid fa-folder"></i>
                                         </a>
@@ -144,7 +148,7 @@
                                 <td>{$job.compression}</td>
                                 <td>{$job.pool_name}</td>
                                 <td>
-                                    <a href="index.php?page=joblogs&jobid={$job.jobid}" title="{t}Show job logs{/t}"> <i
+                                    <a href="/joblog/{$job.jobid}" title="{t}Show job logs{/t}"> <i
                                                 class="fa-solid fa-magnifying-glass"></i> </a>
                                 </td>
                             </tr>

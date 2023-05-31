@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.php">
+        <a class="navbar-brand" href="/">
             <img src="/img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24" class="d-inline-block align-top">
             {$app_name}
         </a>
@@ -11,19 +11,19 @@
         <div class="collapse navbar-collapse" id="navbarcollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="index.php?page=home">{t}Dashboard{/t}</a>
+                    <a class="nav-link" aria-current="page" href="/">{t}Dashboard{/t}</a>
                 </li>
 
                 {if $user_authenticated eq 'yes' or $enable_users_auth eq false }
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">{t}Reports{/t}</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="index.php?page=jobs">{t}Jobs{/t}</a></li>
-                            <li><a class="dropdown-item" href="index.php?page=pools">{t}Pools{/t}</a></li>
-                            <li><a class="dropdown-item" href="index.php?page=volumes">{t}Volumes{/t}</a></li>
-                            <li><a class="dropdown-item" href="index.php?page=backupjob">{t}Backup job{/t}</a></li>
-                            <li><a class="dropdown-item" href="index.php?page=client">{t}Client{/t}</a></li>
-                            <li><a class="dropdown-item" href="index.php?page=directors">{t}Director(s){/t}</a></li>
+                            <li><a class="dropdown-item" href="/jobs">{t}Jobs{/t}</a></li>
+                            <li><a class="dropdown-item" href="/pools">{t}Pools{/t}</a></li>
+                            <li><a class="dropdown-item" href="/volumes">{t}Volumes{/t}</a></li>
+                            <li><a class="dropdown-item" href="/backupjob">{t}Backup job{/t}</a></li>
+                            <li><a class="dropdown-item" href="/client">{t}Client{/t}</a></li>
+                            <li><a class="dropdown-item" href="/directors">{t}Director(s){/t}</a></li>
                         </ul>
                     </li>
                 {/if}
@@ -58,12 +58,12 @@
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user"></i> {$username}</a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="index.php?page=usersettings" title="User settings">
+                                    <a class="dropdown-item" href="/user" title="User settings">
                                         <i class="fa fa-wrench fa-fw"></i> {t}User settings{/t}
                                     </a>
                                 </li>
                                 <li>
-                                    <form class="navbar-form navbar-left" action="index.php?page=login" method="POST">
+                                    <form class="navbar-form navbar-left" action="/signout" method="POST">
                                         <input class="form-control" type="hidden" name="action" value="logout">
                                         <button type="submit" class="btn btn-sm btn-light ms-2" title="Sign out">
                                             <i class="fa fa-sign-out fa-lg"></i> {t}Sign out{/t}
@@ -92,9 +92,9 @@
     <div class="offcanvas-body">
         <h6>{t}Settings{/t}</h6>
 
-        <a class="btn btn-primary m-1 w-100" href="index.php?page=settings" title="Settings"><i class="fa fa-cogs fa-fw"></i> {t}Settings{/t}</a>
+        <a class="btn btn-primary m-1 w-100" href="/settings" title="Settings"><i class="fa fa-cogs fa-fw"></i> {t}Settings{/t}</a>
 
-        <a class="btn btn-success m-1 w-100" href="index.php?page=test" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
+        <a class="btn btn-success m-1 w-100" href="/test" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {t}Test page{/t}</a>
 
         <hr>
 

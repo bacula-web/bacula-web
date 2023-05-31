@@ -22,61 +22,81 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Tables\UserTable;
-use Core\App\Controller;
 use Core\App\UserAuth;
-use Core\Exception\ConfigFileException;
+use Core\App\View;
 use Core\Helpers\Sanitizer;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use SmartyException;
-use Symfony\Component\HttpFoundation\Response;
+use GuzzleHttp\Psr7\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
-class UserController extends Controller
+class UserController
 {
     /**
      * @var string
      */
     protected string $username = '';
+    private View $view;
+    private UserTable $userTable;
+    private UserAuth $userAuth;
+
+    public function __construct(View $view, UserTable $userTable, UserAuth $userAuth)
+    {
+        $this->view = $view;
+        $this->userTable = $userTable;
+        $this->userAuth = $userAuth;
+    }
 
     /**
-     * @param UserTable $userTable
-     * @param UserAuth $userAuth
+     * @param Request $request
+     * @param Response $response
      * @return Response
-     * @throws ConfigFileException
      * @throws SmartyException
      */
-    public function prepare(UserTable $userTable, UserAuth $userAuth): Response
+    public function prepare(Request $request, Response $response): Response
     {
-        $this->username = $this->session->get('username');
-        $user = $userTable->findByName($this->username);
+        $session = new Session();
 
-        $this->setVar('username', $user->getUsername());
-        $this->setVar('email', $user->getEmail());
+        $postData = $request->getParsedBody();
+
+        $this->username = $session->get('username');
+        $user = $this->userTable->findByName($this->username);
+
+        $this->view->set('username', $user->getUsername());
+        $this->view->set('email', $user->getEmail());
 
         // Check if password reset have been requested
-        if ($this->request->request->has('action')) {
-            switch (Sanitizer::sanitize($this->request->request->get('action'))) {
+        if (isset($postData['action'])) {
+            switch (Sanitizer::sanitize($postData['action'])) {
                 case 'passwordreset':
                     // Check if provided current password is correct
-                    if ($userAuth->authUser($user->getUsername(), $this->request->request->get('oldpassword')) == 'yes') {
+                    if ($this->userAuth->authUser($user->getUsername(), $postData['oldpassword']) == 'yes') {
                         // Update user password with new one
-                        $result = $userTable->setPassword(
+                        $result = $this->userTable->setPassword(
                             $user->getUsername(),
-                            $this->request->request->get('newpassword')
+                            $postData['newpassword']
                         );
 
+                        // TODO: fix flash message bloe
+                        /**
                         if ($result !== false) {
                             $this->userAlert = 'Password successfully updated';
                             $this->userAlertType = 'success';
                         } else {
                             // TODO: do we need to check something here ?
                         }
+                         */
                     } else {
+                         /**
                         $this->userAlert = 'Current password do not match';
                         $this->userAlertType = 'danger';
+                          * */
                     }
                     break;
             }
         }
 
-        return new Response($this->render('usersettings.tpl'));
+        $response->getBody()->write($this->view->render('usersettings.tpl'));
+        return $response;
     }
 }

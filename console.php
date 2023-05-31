@@ -309,7 +309,8 @@ switch ($argv[1]) {
                 'vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js.map',
                 'vendor/novus/nvd3/build/nv.d3.js',
                 'vendor/novus/nvd3/build/nv.d3.js.map',
-                'vendor/mbostock/d3/d3.min.js'
+                'vendor/mbostock/d3/d3.min.js',
+                'application/assets/js/default.js'
             ],
             'images' => [
                 'application/assets/images/bacula-web-logo.png',

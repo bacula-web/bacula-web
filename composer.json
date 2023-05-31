@@ -44,7 +44,9 @@
     "pear/date_humandiff": "^0.5.0",
     "vlucas/phpdotenv": "^5.5",
     "php-di/php-di": "^7.0",
-    "twbs/bootstrap": "5.2.3"
+    "twbs/bootstrap": "5.2.3",
+    "slim/slim": "4.*",
+    "guzzlehttp/psr7": "^2"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",

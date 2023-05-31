@@ -163,7 +163,7 @@ First, ensure that running the test page, everything is ok (use the example link
 
 ::
 
-  http://yourserver/bacula-web/?page=test
+  http://yourserver/bacula-web/test
 
 Make sure Composer dependencies are correctly installed by running this command from the root of Bacula-Web installation folder
 

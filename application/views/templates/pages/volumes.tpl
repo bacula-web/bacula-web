@@ -37,7 +37,7 @@
                         {foreach from=$volumes item=volume name=volumes}
                             <tr>
                                 <td>
-                                    <a href="index.php?page=volume&id={$volume.mediaid}"
+                                    <a href="/volumes/{$volume.mediaid}"
                                        title="{t}Show volume{/t}">{$volume.volumename}</a>
                                 </td>
                                 <td class="text-right">{$volume.volbytes}</td>
@@ -68,7 +68,7 @@
             <div class="col-2">
                 <!-- Options -->
                 <!-- <form class="row row-cols-lg-auto g-3 align-items-center align-items-end" action="index.php?page=volumes" method="post"> -->
-                <form class="" action="index.php?page=volumes" method="post">
+                <form class="" action="/volumes" method="post">
                     <!-- Pools -->
                     <div class="mb-3">
                         <label class="form-label" for="filter_pool_id">{t}Pool{/t}</label>

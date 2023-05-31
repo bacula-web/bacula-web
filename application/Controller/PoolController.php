@@ -21,37 +21,57 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Core\App\Controller;
-use Core\Exception\ConfigFileException;
+use Core\App\View;
 use Core\Utils\CUtils;
 use App\Tables\PoolTable;
-use Symfony\Component\HttpFoundation\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use GuzzleHttp\Psr7\Response;
+use SmartyException;
 
-class PoolController extends Controller
+class PoolController
 {
     /**
-     * @param PoolTable $poolTable
-     * @return Response
-     * @throws ConfigFileException
-     * @throws \SmartyException
+     * @var PoolTable
      */
-    public function prepare(PoolTable $poolTable): Response
+
+    private PoolTable $poolTable;
+    /**
+     * @var View
+     */
+    private View $view;
+
+    /**
+     * @param PoolTable $poolTable
+     * @param View $view
+     */
+    public function __construct(PoolTable $poolTable, View $view)
+    {
+        $this->poolTable = $poolTable;
+        $this->view = $view;
+    }
+
+    /**
+     * @return Response
+     * @throws SmartyException
+     */
+    public function prepare(Request $request, Response $response): Response
     {
         $pools_list = [];
 
         // Add more details to each pool
-        foreach ($poolTable->getPools() as $pool) {
+        foreach ($this->poolTable->getPools() as $pool) {
             // Total bytes for each pool
             $sql = "SELECT SUM(Media.volbytes) as sumbytes FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
-            $result = $poolTable->run_query($sql);
+            $result = $this->poolTable->run_query($sql);
             $result = $result->fetchAll();
             $pool['totalbytes'] = CUtils::Get_Human_Size($result[0]['sumbytes']);
 
             $pools_list[] = $pool;
         }
 
-        $this->setVar('pools', $pools_list);
+        $this->view->set('pools', $pools_list);
 
-        return new Response($this->render('pools.tpl'));
+        $response->getBody()->write($this->view->render('pools.tpl'));
+        return $response;
     }
 }

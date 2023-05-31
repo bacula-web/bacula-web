@@ -20,25 +20,38 @@
 
 namespace App\Controller;
 
-use Core\App\Controller;
 use App\Tables\CatalogTable;
+use Core\App\View;
 use Core\Exception\AppException;
-use Core\Exception\ConfigFileException;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use GuzzleHttp\Psr7\Response;
 use PDO;
 use Core\Graph\Chart;
+use Psr\Http\Message\ServerRequestInterface;
 use SmartyException;
-use Symfony\Component\HttpFoundation\Response;
 
-class TestController extends Controller
+class TestController
 {
+    private CatalogTable $catalogTable;
+
+    private View $view;
+
+    public function __construct(
+        View $view,
+        CatalogTable $catalogTable)
+    {
+        $this->catalogTable = $catalogTable;
+        $this->view = $view;
+    }
+
     /**
-     * @param CatalogTable $catalogTable
+     * @param ServerRequestInterface $request
+     * @param Response $response
      * @return Response
-     * @throws SmartyException
      * @throws AppException
-     * @throws ConfigFileException
+     * @throws SmartyException
      */
-    public function prepare(CatalogTable $catalogTable): Response
+    public function index(Request $request, Response $response): Response
     {
         // Installed PDO drivers
         $pdo_drivers = PDO::getAvailableDrivers();
@@ -73,7 +86,7 @@ class TestController extends Controller
                     'check_descr' => 'PHP Posix support is required, please compile PHP with this option'),
             array(  'check_cmd' => 'db-connection',
                     'check_label' => 'Database connection status (MySQL and postgreSQL only)',
-                    'check_descr' => 'Current status: ' . $catalogTable->getConnectionStatus() ),
+                    'check_descr' => 'Current status: ' . $this->catalogTable->getConnectionStatus() ),
             array(  'check_cmd' => 'smarty-cache',
                     'check_label' => 'Smarty cache folder write permission',
                     'check_descr' => $this->view->getCacheDir() . ' must be writable by Apache'),
@@ -122,7 +135,7 @@ class TestController extends Controller
                     $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '8.0', '>=')];
                     break;
                 case 'db-connection':
-                    $check['check_result'] = $icon_result[$catalogTable->isConnected()];
+                    $check['check_result'] = $icon_result[$this->catalogTable->isConnected()];
                     break;
                 case 'php-timezone':
                     $timezone = ini_get('date.timezone');
@@ -148,8 +161,8 @@ class TestController extends Controller
             'name' => 'chart_pie_test',
             'data' => $data ));
 
-        $this->setVar('pie_graph_id', $pie_chart->name);
-        $this->setVar('pie_graph', $pie_chart->render());
+        $this->view->set('pie_graph_id', $pie_chart->name);
+        $this->view->set('pie_graph', $pie_chart->render());
 
         unset($pie_chart);
 
@@ -159,14 +172,15 @@ class TestController extends Controller
             'data' => $data,
             'ylabel' => 'Coffee cups' ));
 
-        $this->setVar('bar_chart_id', $bar_chart->name);
-        $this->setVar('bar_chart', $bar_chart->render());
+        $this->view->set('bar_chart_id', $bar_chart->name);
+        $this->view->set('bar_chart', $bar_chart->render());
 
         unset($bar_chart);
 
         // Template rendering
-        $this->setVar('checks', $check_list);
+        $this->view->set('checks', $check_list);
 
-        return new Response($this->render('test.tpl'));
+        $response->getBody()->write($this->view->render('test.tpl'));
+        return $response;
     }
 }

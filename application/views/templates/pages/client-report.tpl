@@ -18,20 +18,20 @@
         <div class="card border-dark mb-3">
             <div class="card-header">{t}Report options{/t}</div>
             <div class="card-body">
-                <form method="post" action="index.php?page=client" class="form-inline">
+                <form action="/client" method="post" class="form-inline">
                     <!-- Backup job name -->
-                    <div class="form-group">
-                        <label for="clientname">{t}Client{/t}</label>
+                    <div class="mb-3">
+                        <label class="form-label" for="clientname">{t}Client{/t}</label>
                         {html_options class="form-control" name=client_id options=$clients_list values=$clients_list selected=$selected_client}
                     </div>
                     <!-- Period -->
-                    <div class="form-group">
-                        <label for="period">{t}Period{/t}</label>
+                    <div class="mb-3">
+                        <label class="form-label" for="period">{t}Period{/t}</label>
                         {html_options class="form-control" name=period options=$periods_list selected=$selected_period}
                     </div>
 
                     <!-- Submit button -->
-                    <div class="form-group pull-right">
+                    <div class="mb-3 pull-right">
                         <button type="submit" class="btn btn-primary">{t}View report{/t}</button>
                     </div>
                 </form>

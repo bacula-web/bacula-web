@@ -19,7 +19,7 @@
         <div class="card border-dark mb-3">
             <div class="card-header">{t}Report options{/t}</div>
             <div class="card-body">
-                <form method="post" action="index.php?page=backupjob" class="form-inline">
+                <form method="post" action="/backupjob" class="form-inline">
                     <!-- Backup job name -->
                     <div class="form-group">
                         <label for="backupjobname">{t}Backup job name{/t}</label>
@@ -100,9 +100,7 @@
         </div>
     </div>
 
-    <p>&nbsp;</p>
-
-    <!-- Transfered Bytes/Files graph -->
+    <!-- Transferred Bytes/Files graph -->
     {if ($selected_period <= 14) }
     <div class="row">
         <div class="col-xs-12 col-sm-6">
@@ -161,6 +159,6 @@
                  role="alert">{t}Choose the backup job name and the period interval, then click on the{/t}
                 <strong>{t}View report{/t}</strong> {t}button{/t}</div>
             {/if}
-        </div> <!-- div class="row" -->
+        </div>
     </div>
 {/block}

@@ -76,6 +76,9 @@ Component                    License
 `Date_HumanDiff`_            LGPL
 `phpdotenv`_                 BSD-3-Clause
 `PHP-DI`_                    MIT
+`Slim-PHP`_                  MIT
+`GuzzleHttp/psr7`_           MIT
+`cocur/human-date`_          MIT
 ===========================  ================
 
 Supported browser
@@ -176,9 +179,11 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _breport: https://breport.sourceforge.net
 .. _Webacula: https://webacula.sourceforge.net/
 .. _list of GUI: https://www.bacula.org/manuals/en/console/console/GUI_Programs.html
-.. _bootstrap-datetimepicker: https://packagist.org/packages/eonasdan/bootstrap-datetimepicker
 .. _tempus-dominus: https://github.com/Eonasdan/tempus-dominus
 .. _Valitron: https://github.com/vlucas/valitron
 .. _Date_HumanDiff: https://github.com/pear/Date_HumanDiff
 .. _phpdotenv: https://github.com/vlucas/phpdotenv
 .. _PHP-DI: https://github.com/PHP-DI/PHP-DI
+.. _Slim-PHP: https://github.com/slimphp/Slim
+.. _GuzzleHttp/psr7: https://github.com/guzzle/psr7
+.. _cocur/human-date: https://github.com/cocur/human-date

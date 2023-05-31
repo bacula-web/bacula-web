@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Core\App\Controller;
+use Core\App\View;
 use Core\Db\DatabaseFactory;
 use App\Libs\FileConfig;
 use App\Tables\ClientTable;
@@ -32,18 +32,28 @@ use App\Tables\PoolTable;
 use App\Tables\FileSetTable;
 use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use SmartyException;
-use Symfony\Component\HttpFoundation\Response;
+use GuzzleHttp\Psr7\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
-class DirectorController extends Controller
+class DirectorController
 {
+    private View $view;
+
+    public function __construct(View $view)
+    {
+        $this->view = $view;
+    }
+
     /**
+     * @param Request $request
+     * @param Response $response
      * @return Response
      * @throws ConfigFileException
      * @throws SmartyException
-     * @throws \Exception
      */
-    public function prepare(): Response
+    public function index(Request $request, Response $response): Response
     {
         require_once BW_ROOT . '/core/const.inc.php';
 
@@ -52,18 +62,21 @@ class DirectorController extends Controller
             NOW
         ];
 
+        // TODO: Session must be started by middleware, and binding must be configured in container
+        $session = new Session();
+
         $directors = [];
 
         // Save catalog_id from user session
-        $prev_catalog_id = $this->session->get('catalog_id');
+        $prev_catalog_id = $session->get('catalog_id') ?? 0;
 
         FileConfig::open(CONFIG_FILE);
         $directors_count = FileConfig::count_Catalogs();
 
-        $this->setVar('directors_count', $directors_count);
+        $this->view->set('directors_count', $directors_count);
 
         for ($d = 0; $d < $directors_count; $d++) {
-            $this->session->set('catalog_id', $d);
+            $session->set('catalog_id', $d);
 
             $clients = new ClientTable(DatabaseFactory::getDatabase($d));
             $jobs = new JobTable(DatabaseFactory::getDatabase($d));
@@ -102,10 +115,11 @@ class DirectorController extends Controller
         }
 
         // Set previous catalog_id in user session
-        $this->session->set('catalog_id', $prev_catalog_id);
+        $session->set('catalog_id', $prev_catalog_id);
 
-        $this->setVar('directors', $directors);
+        $this->view->set('directors', $directors);
 
-        return new Response($this->render('directors.tpl'));
+        $response->getBody()->write($this->view->render('directors.tpl'));
+        return $response;
     }
 }

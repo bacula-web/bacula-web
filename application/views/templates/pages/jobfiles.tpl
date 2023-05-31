@@ -23,10 +23,14 @@
                     <div class="card-header">{t}Job Info{/t}</div>
                     <div class="card-body">
                         <div>
-                            <b>{t}Job Name{/t}</b>: <a
-                                    href="index.php?page=backupjob&backupjob_name={$job_info.name}">{$job_info.name}</a>
-                            <br>
-                            <b>{t}Job Status{/t}</b>: {$job_info.jobstatus}
+                            <p><b>{t}Job Name{/t}</b>: {$job_info.name}</p>
+                            <p><b>{t}Job Status{/t}</b>: {$job_info.jobstatus}</p>
+                            <form action="/backupjob" method="post">
+                                <input type="hidden" name="backupjob_name" value="{$job_info.name}" />
+                                <input type="hidden" name="backupjob_period" value="7" />
+                                <button type="submit" class="btn btn-sm btn-primary">{t}View backup job{/t}</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -37,13 +41,14 @@
                 <div class="card">
                     <div class="card-header"><b>Search</b></div>
                     <div class="card-body">
-                        <form class="form-inline" action="index.php?page=jobfiles&jobId={$jobid}" method="post">
-                            <div class="form-group">
-                                <label for="InputFilename">Filename</label>
+                        <form action="/jobfiles/{$jobid}" method="post">
+                            <div class="mb-3">
+                                <label for="InputFilename" class="form-label">Filename</label>
                                 <input type="text" class="form-control" name="InputFilename" id="InputFilename"
-                                       placeholder="{$filename}">
+                                       placeholder="search any file or folder name" value="{$filename}">
+                            </div>
                                 <input type="hidden" name="jobId" value="{$jobid}">
-                                <button type="submit" class="btn btn-default">Search</button>
+                                <button type="submit" class="btn btn-primary">Search</button>
                                 <button type="reset" class="btn btn-default" title="{t}Reset{/t}">{t}Reset{/t}</button>
                             </div> <!-- end div class="form-group -->
                         </form>
@@ -83,7 +88,7 @@
                                     {else}
                                 <li class="page-item">
                                     <a class="page-link"
-                                       href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page-1}
+                                       href="/jobfiles/{$jobid}&paginationCurrentPage={$pagination_current_page-1}
                         {if $filename != ''}
                           &InputFilename={$filename}
                         {/if}
@@ -96,7 +101,7 @@
                                     {* if there is only one page *}
                                     {if $job_files_count_paging == $pagination_rows_per_page}
                                         <a class="page-link"
-                                           href="index.php?page=jobfiles&jobId={$jobid}&paginationCurrentPage={$pagination_current_page+1}
+                                           href="/jobfiles/{$jobid}&paginationCurrentPage={$pagination_current_page+1}
                                         {if $filename != ''}
                                             &InputFilename={$filename}
                                         {/if}

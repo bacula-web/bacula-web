@@ -21,8 +21,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Libs\FileConfig;
 use App\Tables\JobTable;
-use Core\App\Controller;
+use Core\App\View;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
 use Core\Exception\ConfigFileException;
@@ -30,55 +31,72 @@ use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
-use Symfony\Component\HttpFoundation\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use GuzzleHttp\Psr7\Response;
+use SmartyException;
 
-class BackupJobController extends Controller
+class BackupJobController
 {
+    private View $view;
+    private JobTable $jobTable;
+
+    public function __construct(View $view, JobTable $jobTable) {
+        $this->view = $view;
+        $this->jobTable = $jobTable;
+    }
+
     /**
-     * @param JobTable $jobTable
+     * @param Request $request
+     * @param Response $response
      * @return Response
      * @throws AppException
+     * @throws SmartyException
      * @throws ConfigFileException
-     * @throws \SmartyException
      */
-    public function prepare(JobTable $jobTable): Response
+    public function index(Request $request, Response $response): Response
     {
         require_once BW_ROOT . '/core/const.inc.php';
 
         $interval = array();
         $interval[1] = NOW;
 
-        $daysstoredbytes = array();
-        $daysstoredfiles = array();
+        $daysstoredbytes = [];
+        $daysstoredfiles = [];
 
         // Period list
         $periods_list = array( '7' => "Last week", '14' => "Last 2 weeks", '30' => "Last month");
-        $this->setVar('periods_list', $periods_list);
+        $this->view->set('periods_list', $periods_list);
 
         // Get backup job(s) list
-        $jobslist = $jobTable->get_Jobs_List(null, 'B');
-        $this->setVar('jobs_list', $jobslist);
+        $jobslist = $this->jobTable->get_Jobs_List(null, 'B');
+        $this->view->set('jobs_list', $jobslist);
+
+        $postData = $request->getParsedBody();
+        $requestData = $request->getQueryParams();
 
         // Check backup job name from $_POST request
         $backupjob_name = null;
 
-        if ($this->request->getMethod() === 'POST') {
-            $backupjob_name = $this->request->request->get('backupjob_name');
-        } elseif ($this->request->getMethod() === 'GET') {
-            $backupjob_name = $this->request->query->get('backupjob_name');
+        if ($request->getMethod() === 'POST') {
+            $backupjob_name = $postData['backupjob_name'];
+        } elseif ($request->getMethod() === 'GET') {
+            if (isset($requestData['backupjob_name'])) {
+                $backupjob_name = $requestData['backupjob_name'];
+            }
         }
+
         $backupjob_name = Sanitizer::sanitize($backupjob_name);
 
-        $where = array();
+        $where = [];
 
         if ($backupjob_name == null) {
-            $this->setVar('selected_jobname', '');
-            $this->setVar('no_report_options', 'true');
+            $this->view->set('selected_jobname', '');
+            $this->view->set('no_report_options', 'true');
 
             // Set selected period
-            $this->setVar('selected_period', 7);
+            $this->view->set('selected_period', 7);
         } else {
-            $this->setVar('no_report_options', 'false');
+            $this->view->set('no_report_options', 'false');
 
             // Make sure provided backupjob_name exist
             if (!in_array($backupjob_name, $jobslist)) {
@@ -86,29 +104,33 @@ class BackupJobController extends Controller
                 throw new AppException('Wrong user input: invalid backupjob_name');
             }
 
-            $this->setVar('selected_jobname', $backupjob_name);
+            $this->view->set('selected_jobname', $backupjob_name);
 
             /**
              * Get selected period from POST request, or set it to default value (7)
              */
-            $backupjob_period = $this->request->request->getInt('period', 7);
+            $backupjob_period = '7';
+
+            if (isset($postData['period'])) {
+                $backupjob_period = $postData['period'];
+            }
 
             // Set selected period
-            $this->setVar('selected_period', $backupjob_period);
+            $this->view->set('selected_period', $backupjob_period);
 
             $perioddesc = 'From ';
 
             switch ($backupjob_period) {
                 case '7':
-                    $perioddesc .= date($this->session->get('datetime_format_short'), (NOW - WEEK)) . " to " . date($this->session->get('datetime_format_short'), NOW);
+                    $perioddesc .= date(FileConfig::get_Value('datetime_format_short'), (NOW - WEEK)) . " to " . date(FileConfig::get_Value('datetime_format_short'), NOW);
                     $interval[0] = NOW - WEEK;
                     break;
                 case '14':
-                    $perioddesc .= date($this->session->get('datetime_format_short'), (NOW - (2 * WEEK))) . " to " . date($this->session->get('datetime_format_short'), NOW);
+                    $perioddesc .= date(FileConfig::get_Value('datetime_format_short'), (NOW - (2 * WEEK))) . " to " . date(FileConfig::get_Value('datetime_format_short'), NOW);
                     $interval[0] = NOW - (2 * WEEK);
                     break;
                 case '30':
-                    $perioddesc .= date($this->session->get('datetime_format_short'), (NOW - MONTH)) . " to " . date($this->session->get('datetime_format_short'), NOW);
+                    $perioddesc .= date(FileConfig::get_Value('datetime_format_short'), (NOW - MONTH)) . " to " . date(FileConfig::get_Value('datetime_format_short'), NOW);
                     $interval[0] = NOW - MONTH;
                     break;
                 default:
@@ -116,13 +138,13 @@ class BackupJobController extends Controller
             }
 
             // Get start and end datetime for backup jobs report and charts
-            $periods = CDBQuery::get_Timestamp_Interval($jobTable->get_driver_name(), $interval);
+            $periods = CDBQuery::get_Timestamp_Interval($this->jobTable->get_driver_name(), $interval);
 
-            $backupjobbytes = $jobTable->getStoredBytes($interval, $backupjob_name);
+            $backupjobbytes = $this->jobTable->getStoredBytes($interval, $backupjob_name);
             $backupjobbytes = CUtils::Get_Human_Size($backupjobbytes);
 
             // Stored files on the defined period
-            $backupjobfiles = $jobTable->getStoredFiles($interval, $backupjob_name);
+            $backupjobfiles = $this->jobTable->getStoredFiles($interval, $backupjob_name);
             $backupjobfiles = CUtils::format_Number($backupjobfiles);
 
             // Get the last 7 days interval (start and end)
@@ -130,7 +152,7 @@ class BackupJobController extends Controller
 
             // Last 7 days stored files chart
             foreach ($days as $day) {
-                $storedfiles = $jobTable->getStoredFiles(array($day['start'], $day['end']), $backupjob_name);
+                $storedfiles = $this->jobTable->getStoredFiles(array($day['start'], $day['end']), $backupjob_name);
                 $daysstoredfiles[] = array(date("m-d", $day['start']), $storedfiles);
             }
 
@@ -142,14 +164,14 @@ class BackupJobController extends Controller
                 ]
             );
 
-            $this->setVar('stored_files_chart_id', $storedfileschart->name);
-            $this->setVar('stored_files_chart', $storedfileschart->render());
+            $this->view->set('stored_files_chart_id', $storedfileschart->name);
+            $this->view->set('stored_files_chart', $storedfileschart->render());
 
             unset($storedfileschart);
 
             // Last 7 days stored bytes chart
             foreach ($days as $day) {
-                $storedbytes = $jobTable->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
+                $storedbytes = $this->jobTable->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
                 $daysstoredbytes[] = array(date("m-d", $day['start']), $storedbytes);
             }
 
@@ -163,16 +185,16 @@ class BackupJobController extends Controller
                 ]
             );
 
-            $this->setVar('stored_bytes_chart_id', $storedbyteschart->name);
-            $this->setVar('stored_bytes_chart', $storedbyteschart->render());
+            $this->view->set('stored_bytes_chart_id', $storedbyteschart->name);
+            $this->view->set('stored_bytes_chart', $storedbyteschart->render());
             unset($storedbyteschart);
 
             // Backup job name
-            $jobTable->addParameter('jobname', $backupjob_name);
+            $this->jobTable->addParameter('jobname', $backupjob_name);
             $where[] = 'Name = :jobname';
 
             // Backup job type
-            $jobTable->addParameter('jobtype', 'B');
+            $this->jobTable->addParameter('jobtype', 'B');
             $where[] = "Type = :jobtype";
 
             // Backup job starttime and endtime
@@ -180,7 +202,7 @@ class BackupJobController extends Controller
 
             $query = CDBQuery::get_Select(
                 [
-                    'table' => $jobTable->getTableName(),
+                    'table' => $this->jobTable->getTableName(),
                     'fields' =>
                         ['JobId', 'Level', 'JobFiles', 'JobBytes', 'ReadBytes', 'Job.JobStatus', 'StartTime', 'EndTime', 'Name', 'Status.JobStatusLong'],
                     'where' => $where,
@@ -190,12 +212,12 @@ class BackupJobController extends Controller
                             'table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus'
                         ]
                     ]
-                ], $jobTable->get_driver_name()
+                ], $this->jobTable->get_driver_name()
             );
 
             $joblist = [];
             $joblevel = ['I' => 'Incr', 'D' => 'Diff', 'F' => 'Full'];
-            $result = $jobTable->run_query($query);
+            $result = $this->jobTable->run_query($query);
 
             foreach ($result->fetchAll() as $job) {
                 // Job level description
@@ -229,20 +251,21 @@ class BackupJobController extends Controller
                 $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
 
                 // Format date/time
-                $job['starttime'] = date($this->session->get('datetime_format'), strtotime($job['starttime']));
-                $job['endtime'] = date($this->session->get('datetime_format'), strtotime($job['endtime']));
+                $job['starttime'] = date(FileConfig::get_Value('datetime_format'), strtotime($job['starttime']));
+                $job['endtime'] = date(FileConfig::get_Value('datetime_format'), strtotime($job['endtime']));
 
                 $joblist[] = $job;
             } // end while
 
             // Assign vars to template
-            $this->setVar('jobs', $joblist);
-            $this->setVar('backupjob_name', $backupjob_name);
-            $this->setVar('perioddesc', $perioddesc);
-            $this->setVar('backupjobbytes', $backupjobbytes);
-            $this->setVar('backupjobfiles', $backupjobfiles);
+            $this->view->set('jobs', $joblist);
+            $this->view->set('backupjob_name', $backupjob_name);
+            $this->view->set('perioddesc', $perioddesc);
+            $this->view->set('backupjobbytes', $backupjobbytes);
+            $this->view->set('backupjobfiles', $backupjobfiles);
         }
 
-        return new Response($this->render('backupjob-report.tpl'));
+        $response->getBody()->write($this->view->render('backupjob-report.tpl'));
+        return $response;
     }
 }

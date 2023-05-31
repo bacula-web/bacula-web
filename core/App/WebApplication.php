@@ -109,11 +109,6 @@ class WebApplication
 
         // Save routes list
         self::$routes = self::$config['routes'];
-
-        $containerbuilder = new ContainerBuilder();
-        $containerbuilder->addDefinitions(CONFIG_DIR . 'container-bindings.php');
-
-        $this->container = $containerbuilder->build();
     }
 
     /**

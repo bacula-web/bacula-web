@@ -21,72 +21,54 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Core\App\Controller;
 use App\Libs\FileConfig;
 use App\Tables\UserTable;
+use Core\App\View;
 use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
 use Core\Exception\ConfigFileException;
-use SmartyException;
-use Symfony\Component\HttpFoundation\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use GuzzleHttp\Psr7\Response;
 use Valitron\Validator;
 
-class SettingsController extends Controller
+class SettingsController
 {
+    private View $view;
+    private UserTable $userTable;
+
     /**
+     * @param View $view
      * @param UserTable $userTable
-     * @return Response
-     * @throws AppException
-     * @throws ConfigFileException
-     * @throws SmartyException
      */
-    public function prepare(UserTable $userTable): Response
+    public function __construct(View $view, UserTable $userTable)
     {
-        // Create new user
-        if ($this->request->attributes->has('action')) {
-            if (Sanitizer::sanitize($this->request->request->get('action')) == 'createuser') {
-                $form_data = [
-                    'username' => Sanitizer::sanitize($this->request->request->get('username')),
-                    'password' => $this->request->request->get('password'),
-                    'email' => Sanitizer::sanitize($this->request->request->get('email'))
-                ];
+        $this->view = $view;
+        $this->userTable = $userTable;
+    }
 
-                $v = new Validator($form_data);
-
-                $v->rule('required', ['username', 'password', 'email']);
-                $v->rule('lengthMin', 'password', 8);
-                $v->rule('email', 'email');
-
-                if (!$v->validate()) {
-                    throw new AppException('Invalid user data provided');
-                }
-
-                $result = $userTable->addUser(
-                    $form_data['username'],
-                    $form_data['email'],
-                    $form_data['password']
-                );
-
-                if ($result !== false) {
-                    $this->setFlash('success', 'User created successfully');
-                }
-            }
-        }
-
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     * @throws ConfigFileException
+     * @throws \SmartyException
+     */
+    public function index(Request $request, Response $response): Response
+    {
         // Get parameters set in configuration file
         if (!FileConfig::open(CONFIG_FILE)) {
             throw new ConfigFileException("The configuration file is missing");
         } else {
             // Check if datetime_format is set, otherwise, set default datetime_format
             if (FileConfig::get_Value('datetime_format') != null) {
-                $this->setVar('config_datetime_format', FileConfig::get_Value('datetime_format'));
+                $this->view->set('config_datetime_format', FileConfig::get_Value('datetime_format'));
             } else {
-                $this->setVar('config_datetime_format', 'Y-m-d H:i:s');
+                $this->view->set('config_datetime_format', 'Y-m-d H:i:s');
             }
 
             // Check if language is set
             if (FileConfig::get_Value('language') != null) {
-                $this->setVar('config_language', FileConfig::get_Value('language'));
+                $this->view->set('config_language', FileConfig::get_Value('language'));
             }
 
             // Check if show_inactive_clients is set
@@ -94,7 +76,7 @@ class SettingsController extends Controller
                 $config_show_inactive_clients = FileConfig::get_Value('show_inactive_clients');
 
                 if ($config_show_inactive_clients == true) {
-                    $this->setVar('config_show_inactive_clients', 'checked');
+                    $this->view->set('config_show_inactive_clients', 'checked');
                 }
             }
 
@@ -103,10 +85,10 @@ class SettingsController extends Controller
                 $config_hide_empty_pools = FileConfig::get_Value('hide_empty_pools');
 
                 if ($config_hide_empty_pools == true) {
-                    $this->setVar('config_hide_empty_pools', 'checked');
+                    $this->view->set('config_hide_empty_pools', 'checked');
                 }
             } else {
-                $this->setVar('config_hide_empty_pools', '');
+                $this->view->set('config_hide_empty_pools', '');
             }
 
             // Parameter <enable_users_auth> is enabled by default (in case is not specified in config file)
@@ -120,11 +102,11 @@ class SettingsController extends Controller
             if ($config_enable_users_auth === true) {
 
                 // Get users list
-                $this->setVar('users', $userTable->getAll());
+                $this->view->set('users', $this->userTable->getAll());
 
-                $this->setVar('config_enable_users_auth', 'checked');
+                $this->view->set('config_enable_users_auth', 'checked');
             } else {
-                $this->setVar('config_enable_users_auth', '');
+                $this->view->set('config_enable_users_auth', '');
             }
 
             // Parameter <debug> is disabled by default (in case is not specified in config file)
@@ -135,13 +117,58 @@ class SettingsController extends Controller
                 $config_debug = FileConfig::get_Value('debug');
             }
 
-            if ($config_debug == true) {
-                $this->setVar('config_debug', 'checked');
+            if ($config_debug === true) {
+                $this->view->set('config_debug', 'checked');
             } else {
-                $this->setVar('config_debug', '');
+                $this->view->set('config_debug', '');
             }
         }
 
-        return new Response($this->render('settings.tpl'));
+        $response->getBody()->write($this->view->render('settings.tpl'));
+        return $response;
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     * @throws AppException
+     * @throws \SmartyException
+     */
+    public function addUser(Request $request, Response $response): Response
+    {
+        $postData = $request->getParsedBody();
+
+        $form_data = [
+            'username' => Sanitizer::sanitize($postData['username']),
+            'password' => $postData['password'],
+            'email' => Sanitizer::sanitize($postData['email'])
+        ];
+
+        $v = new Validator($form_data);
+
+        $v->rule('required', ['username', 'password', 'email']);
+        $v->rule('lengthMin', 'password', 8);
+        $v->rule('email', 'email');
+
+        if (!$v->validate()) {
+            print_r($v->errors());
+            throw new AppException('Invalid user data provided');
+        }
+
+        $result = $this->userTable->addUser(
+            $form_data['username'],
+            $form_data['email'],
+            $form_data['password']
+        );
+
+        if ($result !== false) {
+            //TODO: fix flash message
+            //$this->setFlash('success', 'User created successfully');
+        }
+
+        return $response
+            ->withHeader('Location', '/settings')
+            ->withStatus(302);
     }
 }

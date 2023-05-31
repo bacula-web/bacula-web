@@ -66,7 +66,7 @@
                                 {foreach $jobs as $job}
                                     <tr>
                                         <td>
-                                            <a href="index.php?page=joblogs&jobid={$job.jobid}"
+                                            <a href="/joblog/{$job.jobid}"
                                                title="{t}Show job{/t}">{$job.jobid}</a>
                                         </td>
                                         <td>{$job.name}</td>

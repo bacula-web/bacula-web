@@ -19,7 +19,7 @@
 
                 <h4>User details</h4>
 
-                <form action="index.php?page=usersettings" method="post">
+                <form action="/user" method="post">
                     <div class="mb-3">
                         <label class="form-label" for="inputUsername">Username</label>
                         <input name="username" value="{$username}" type="text" id="inputUsername" class="form-control"
@@ -45,7 +45,7 @@
 
                 <h4>Password management</h4>
 
-                <form action="index.php?page=usersettings" method="post" data-toggle="validator">
+                <form action="/user" method="post" data-toggle="validator">
                     <div class="form-group">
                         <label for="currentpass">Current password</label>
                         <input name="oldpassword" type="password" id="oldpassword" class="form-control"

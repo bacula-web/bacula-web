@@ -34,10 +34,10 @@
                                 <td class="text-center">{$pool.numvols}</td>
                                 <td class="text-right">{$pool.totalbytes}</td>
                                 <td class="text-center">
-                                    <a title="{t}Show volumes{/t}"
-                                       class="btn btn-primary btn-sm {if $pool.numvols == '0'} disabled {/if}"
-                                       role="button"
-                                       href="index.php?page=volumes&filter_pool_id={$pool.poolid}">{t}Show Volumes{/t}</a>
+                                    <form method="post" action="volumes">
+                                        <input type="hidden" name="filter_pool_id" value="{$pool.poolid}" />
+                                        <button class="btn btn-sm btn-primary" type="submit">{t}Show Volumes{/t}</button>
+                                    </form>
                                 </td>
                             </tr>
                         {/foreach}

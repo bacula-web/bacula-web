@@ -22,7 +22,7 @@
                     <div class="card-header"><b>{t}Last period job status{/t}</b> ({$literal_period})</div>
                     <!-- Period selector -->
                     <div class="card-body">
-                        <form class="form-inline pull-right" method="post" role="form" action="index.php">
+                        <form class="form-inline pull-right" method="post" role="form" action="/">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text">{t}Period{/t} </span>
                                 <select class="form-control input-sm" name="period_selector">
@@ -48,36 +48,57 @@
                         <table class="table table-condensed">
                             <tr>
                                 <td><h5>{t}Running jobs{/t}</h5></td>
-                                <td class="text-center"><a href="index.php?page=jobs&filter_jobstatus=1"><h4><span
-                                                    class="label label-default">{$running_jobs}</span></h4></a></td>
+                                <td class="text-center">
+                                    <form action="/jobs" method="post">
+                                        <input type="hidden" name="filter_jobstatus" value="1" />
+                                        <button class="btn btn-lg btn-link type="submit">{$running_jobs}</button>
+                                    </form>
+                                </td>
                             </tr>
                             <tr>
                                 <td><h5>{t}Completed job(s){/t}</h5></td>
-                                <td class="text-center"><a href="index.php?page=jobs&filter_jobstatus=3"><h4><span
-                                                    class="label label-success">{$completed_jobs}</span></h4></a></td>
+                                <td class="text-center">
+                                    <form action="/jobs" method="post">
+                                        <input type="hidden" name="filter_jobstatus" value="3" />
+                                        <button class="btn btn-lg btn-link type="submit">{$completed_jobs}</button>
+                                    </form>
+                                </td>
                             </tr>
                             <tr>
-                                <td>
-                                    <h5>{t}Completed with errors job(s){/t}
-                                        <td class="text-center"><a href="index.php?page=jobs&filter_jobstatus=4"><h4>
-                                                    <span style="background-color: #FFD700;"
-                                                          class="label label-default">{$completed_with_errors_jobs}</span>
-                                                </h4></a></td>
+                                <td><h5>{t}Completed with errors job(s){/t}</h5></td>
+                                <td class="text-center">
+                                    <form action="/jobs" method="post">
+                                        <input type="hidden" name="filter_jobstatus" value="4" />
+                                        <button class="btn btn-lg btn-link type="submit">{$completed_with_errors_jobs}</button>
+                                    </form>
+                                </td>
                             </tr>
                             <tr>
                                 <td><h5>{t}Waiting jobs(s){/t}</h5></td>
-                                <td class="text-center"><a href="index.php?page=jobs&filter_jobstatus=2"><h4><span
-                                                    class="label label-primary">{$waiting_jobs}</span></h4></a></td>
+                                <td class="text-center">
+                                    <form action="/jobs" method="post">
+                                        <input type="hidden" name="filter_jobstatus" value="2" />
+                                        <button class="btn btn-lg btn-link type="submit">{$waiting_jobs}</button>
+                                    </form>
+                                </td>
                             </tr>
                             <tr>
                                 <td><h5>{t}Failed job(s){/t}</h5></td>
-                                <td class="text-center"><a href="index.php?page=jobs&filter_jobstatus=5"><h4><span
-                                                    class="label label-danger">{$failed_jobs}</span></h4></a></td>
+                                <td class="text-center">
+                                    <form action="/jobs" method="post">
+                                        <input type="hidden" name="filter_jobstatus" value="5" />
+                                        <button class="btn btn-lg btn-link type="submit">{$failed_jobs}</button>
+                                    </form>
+                                </td>
                             </tr>
                             <tr>
                                 <td><h5>{t}Canceled job(s){/t}</h5></td>
-                                <td class="text-center"><a href="index.php?page=jobs&filter_jobstatus=6"><h4><span
-                                                    class="label label-warning">{$canceled_jobs}</span></h4></a></td>
+                                <td class="text-center">
+                                    <form action="/jobs" method="post">
+                                        <input type="hidden" name="filter_jobstatus" value="6" />
+                                        <button class="btn btn-lg btn-link type="submit">{$canceled_jobs}</button>
+                                    </form>
+                                </td>
                             </tr>
                             <tr>
                                 <td><h5>{t}Job Level (Incr / Diff / Full){/t}</h5></td>
@@ -170,7 +191,7 @@
                                 {foreach from=$volumes_list item=vol}
                                     <tr>
                                         <td>
-                                            <a href="index.php?page=volume&id={$vol.mediaid}"
+                                            <a href="/volumes/{$vol.mediaid}"
                                                title="{t}Show volume{/t}">{$vol.volumename}</a>
                                         </td>
                                         <td>{$vol.volstatus}</td>
@@ -292,12 +313,16 @@
                             </tr>
                             {foreach from=$biggestjobs item=job}
                                 <tr>
-                                    <td><a href="index.php?page=backupjob&backupjob_name={$job.name}">{$job.name}</a>
+                                    <td>
+                                        <form action="/backupjob" method="post">
+                                            <input type="hidden" name="backupjob_name" value="{$job.name}" />
+                                            <button class="btn btn-link type="submit">{$job.name}</button>
+                                        </form>
                                     </td>
                                     <td class="text-right">{$job.jobbytes}</td>
                                     <td class="text-right">{$job.jobfiles}</td>
                                 </tr>
-                                {foreachelse}
+                            {foreachelse}
                                 <tr>
                                     <td colspan="3" class="text-center">{t}Nothing to display{/t}</td>
                                 </tr>

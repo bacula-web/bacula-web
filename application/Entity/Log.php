@@ -21,7 +21,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use Symfony\Component\HttpFoundation\Session\Session;
+use App\Libs\FileConfig;
+use Core\Exception\ConfigFileException;
 
 class Log
 {
@@ -29,16 +30,21 @@ class Log
 
     private $time;
 
-
-    public function getLogText()
+    /**
+     * @return string
+     */
+    public function getLogText(): string
     {
         return nl2br($this->logtext);
     }
 
-    public function getTime()
+    /**
+     * @return string
+     * @throws ConfigFileException
+     */
+    public function getTime(): string
     {
         // TODO: we may not need to store everything in the session
-        $session = new Session();
-        return date($session->get('datetime_format'), strtotime($this->time));
+        return date(FileConfig::get_Value('datetime_format'), strtotime($this->time));
     }
 }

@@ -21,7 +21,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Core\App\Controller;
+use App\Libs\FileConfig;
+use Core\App\View;
 use Core\Db\CDBQuery;
 use Core\Db\CDBPagination;
 use Core\Exception\ConfigFileException;
@@ -29,20 +30,38 @@ use Core\Utils\CUtils;
 use App\Tables\VolumeTable;
 use App\Tables\PoolTable;
 use Date_HumanDiff;
-use Symfony\Component\HttpFoundation\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use GuzzleHttp\Psr7\Response;
 use TypeError;
 
-class VolumesController extends Controller
+class VolumesController
 {
+    private VolumeTable $volumeTable;
+    private PoolTable $poolTable;
+    private CDBPagination $pagination;
+    private View $view;
+
+    public function __construct(
+        VolumeTable $volumeTable,
+        PoolTable $poolTable,
+        CDBPagination $pagination,
+        View $view
+    ) 
+    {
+        $this->volumeTable = $volumeTable;
+        $this->poolTable = $poolTable;
+        $this->pagination = $pagination;
+        $this->view = $view;
+    }
+
     /**
-     * @param VolumeTable $volumeTable
-     * @param PoolTable $poolTable
-     * @param CDBPagination $pagination
+     * @param Request $request
+     * @param Response $response
      * @return Response
      * @throws ConfigFileException
      * @throws \SmartyException
      */
-    public function prepare(VolumeTable $volumeTable, PoolTable $poolTable, CDBPagination $pagination): Response
+    public function index(Request $request, Response $response): Response
     {
         $params = [];
 
@@ -68,19 +87,26 @@ class VolumesController extends Controller
         $poolslist = [];
 
         // Create poolTable list
-        foreach ($poolTable->getPools() as $pool) {
+        foreach ($this->poolTable->getPools() as $pool) {
             $poolslist[$pool['poolid']] = $pool['name'];
         }
 
         $poolslist = [0 => 'Any'] + $poolslist; // Add default pool filter
-        $this->setVar('pools_list', $poolslist);
+        $this->view->set('pools_list', $poolslist);
 
-        $poolid = (int) $this->getParameter('filter_pool_id', 0);
+        // TODO: fix this
+        $postData = $request->getParsedBody();
 
-        if ($poolid !== 0) {
-            $where[] = 'Media.PoolId = :pool_id';
-            $params['pool_id'] = $poolid;
+        $poolId = '0';
+
+        if (isset($postData['filter_pool_id'])) {
+            if ( $postData['filter_pool_id'] !== '0') {
+                $poolId = $postData['filter_pool_id'];
+                $where[] = 'Media.PoolId = :pool_id';
+                $params['pool_id'] = $poolId;
+            }
         }
+        $this->view->set('pool_id', $poolId);
 
         // Order by
         $orderby = [
@@ -91,31 +117,37 @@ class VolumesController extends Controller
         ];
 
         // Set order by
-        $this->setVar('orderby', $orderby);
+        $this->view->set('orderby', $orderby);
 
-        $volumeorderby = $this->getParameter('filter_orderby', 'Name');
-        $this->setVar('orderby_selected', $volumeorderby);
+        $volumeOrderBy = 'Name';
 
-        if (!array_key_exists($volumeorderby, $orderby)) {
+        if (isset($postData['filter_orderby'])) {
+            $volumeOrderBy = $postData['filter_orderby'];
+        }
+
+        $this->view->set('orderby_selected', $volumeOrderBy);
+
+        if (!array_key_exists($volumeOrderBy, $orderby)) {
             throw new TypeError('Critical: Provided orderby parameter is not correct');
         }
 
-        // Set order by filter and checkbox status
-        $volumeorderbyasc = $this->getParameter('filter_orderby_asc', 'DESC');
-
-        if ($volumeorderbyasc === 'Asc') {
-            $this->setVar('orderby_asc_checked', 'checked');
+        $volumeOrderByDirection = 'Desc';
+        if (isset($postData['filter_orderby_asc'])) {
+            $volumeOrderByDirection = $postData['filter_orderby_asc'];
+        }
+        if ($volumeOrderByDirection === 'Asc') {
+            $this->view->set('orderby_asc_checked', 'checked');
         } else {
-            $this->setVar('orderby_asc_checked', '');
+            $this->view->set('orderby_asc_checked', '');
         }
 
-        // Set inchanger checkbox to unchecked by default
-        if ($this->request->request->has('filter_inchanger')) {
+        // Set "inchanger" checkbox to unchecked by default
+        if (isset($postData['filter_inchanger'])) {
             $where[] = 'Media.inchanger = :inchanger';
             $params['inchanger'] = 1;
-            $this->setVar('inchanger_checked', 'checked');
-        } else {
-            $this->setVar('inchanger_checked', '');
+            $this->view->set('inchanger_checked', 'checked');
+        } else{
+            $this->view->set('inchanger_checked', '');
         }
 
         $fields = [
@@ -133,31 +165,32 @@ class VolumesController extends Controller
             'Pool.Name AS pool_name'
         ];
 
-        $sqlQuery = CDBQuery::get_Select(array('table' => $volumeTable->getTableName(),
+        $sqlQuery = CDBQuery::get_Select(array('table' => $this->volumeTable->getTableName(),
                                             'fields' => $fields,
-                                            'orderby' => "$volumeorderby $volumeorderbyasc",
+                                            'orderby' => "$volumeOrderBy $volumeOrderByDirection",
                                             'join' => array(
                                                 array('table' => 'Pool', 'condition' => 'Media.poolid = Pool.poolid')
                                             ),
                                             'where' => $where,
                                             'limit' => [
-                                                'count' => $pagination->getLimit(),
-                                                'offset' => $pagination->getOffset() ]
-                                            ), $volumeTable->get_driver_name());
+                                                'count' => $this->pagination->getLimit(),
+                                                'offset' => $this->pagination->getOffset() ]
+                                            ), $this->volumeTable->get_driver_name());
 
         $countquery = CDBQuery::get_Select([
-            'table' => $volumeTable->getTableName(),
+            'table' => $this->volumeTable->getTableName(),
             'fields' => ['COUNT(*) as row_count'],
             'where' => $where ]);
 
-        foreach ($pagination->paginate($volumeTable, $sqlQuery, $countquery, $params) as $volume) {
+        foreach ($this->pagination->paginate($this->volumeTable, $sqlQuery, $countquery, $params) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
             if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
                 // Calculate expiration date only if volume status is Full or Used
                 if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
                     $dh = new Date_HumanDiff();
-                    $volume['expire'] = date($this->session->get('datetime_format_short'),strtotime($volume['lastwritten']) + $volume['volretention']);
+                    $dateTimeFormatShort = explode(' ', FileConfig::get_Value('datetime_format'));
+                    $volume['expire'] = date($dateTimeFormatShort[0],strtotime($volume['lastwritten']) + $volume['volretention']);
                     $volume['expire'] = $dh->get(strtotime($volume['lastwritten']) + $volume['volretention'], time()) . ' (' . $volume['expire'] . ')';
                 } else {
                     $volume['expire'] = 'n/a';
@@ -172,7 +205,7 @@ class VolumesController extends Controller
             } else {
                 // Format lastwritten in custom format if defined in config file
                 $volume['lastwritten'] = date(
-                    $this->session->get('datetime_format'),
+                    FileConfig::get_Value('datetime_format'),
                     strtotime($volume['lastwritten'])
                 );
             }
@@ -200,12 +233,43 @@ class VolumesController extends Controller
             $volumeslist[] = $volume;
         }
 
-        $this->setVar('pool_id', $poolid);
-        $this->setVar('volumes', $volumeslist);
+        $this->view->set('volumes', $volumeslist);
 
-        $this->setVar('volumes_count', $volumeTable->count());
-        $this->setVar('volumes_total_bytes', CUtils::Get_Human_Size($volumes_total_bytes));
+        $this->view->set('volumes_count', $this->volumeTable->count());
+        $this->view->set('volumes_total_bytes', CUtils::Get_Human_Size($volumes_total_bytes));
 
-        return new Response($this->render('volumes.tpl'));
+        $response->getBody()->write($this->view->render('volumes.tpl'));
+        return $response;
+    }
+
+    public function show(Request $request, Response $response): Response
+    {
+        $requestData = $request->getAttributes();
+        $params = [];
+
+        $volumeId = (int) $requestData['id'];
+
+        $where[] = 'Media.MediaId = :volume_id';
+
+        $params['volume_id'] = $volumeId;
+
+        $sqlQuery = CDBQuery::get_Select(
+            [
+                'table' => 'Media',
+                'fields' => ['*'],
+                'where' => $where
+            ],
+            $this->volumeTable->get_driver_name()
+        );
+
+        $this->view->set(
+            'volume',
+            $this->volumeTable->select($sqlQuery, $params, 'App\Entity\Volume', true)
+        );
+
+        $this->view->set('jobs', $this->volumeTable->getJobs($volumeId));
+
+        $response->getBody()->write($this->view->render('volume.tpl'));
+        return $response;
     }
 }

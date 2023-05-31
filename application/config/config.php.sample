@@ -33,6 +33,7 @@ $config['hide_empty_pools'] = false;
 // Examples 
 // $config['datetime_format'] = 'd/m/Y H:i:s';
 // $config['datetime_format'] = 'm-d-Y H:i:s';
+$config['datetime_format'] = 'Y-m-d H:i:s';
 
 // Security
 $config['enable_users_auth'] = true;

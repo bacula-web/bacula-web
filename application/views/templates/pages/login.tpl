@@ -14,7 +14,7 @@
                             <div class="card-body">
                                 <h1>Login</h1>
                                 <p class="text-medium-emphasis">Please sign in</p>
-                                <form action="index.php?page=login" method="post">
+                                <form action="/login" method="post">
                                     <div class="input-group mb-3">
                   <span class="input-group-text">
                     <i class="cil-user"></i>&nbsp;
@@ -29,7 +29,6 @@
 
                                     <div class="row">
                                         <div class="col-6">
-                                            <input type="hidden" name="action" value="login">
                                             <button class="btn btn-primary px-4" type="submit">Login</button>
                                         </div>
                                     </div>
