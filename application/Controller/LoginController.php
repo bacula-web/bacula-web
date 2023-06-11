@@ -89,7 +89,9 @@ class LoginController
                'username', 'password'
            ],
             'alphaNum' => ['username'],
-            'lengthMin' => ['password', 8]
+            'lengthMin' => [
+                ['password', 8]
+            ]
         ]);
 
         if (!$v->validate()) {
