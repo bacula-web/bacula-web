@@ -6,7 +6,11 @@
 </head>
 
 <body>
-
+{*
+<div class="container">
+    {include file='flash.tpl'}
+</div>
+*}
 <div class="wrapper d-flex flex-column min-vh-100 bg-light">
     {block name=body}{/block}
 </div>

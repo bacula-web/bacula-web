@@ -21,9 +21,10 @@ namespace Core\App;
 
 use Core\Exception\AppException;
 use Core\Exception\ConfigFileException;
+use Exception;
 use Smarty;
 use App\Libs\FileConfig;
-use Symfony\Component\HttpFoundation\Request;
+use SmartyException;
 
 class View
 {
@@ -48,11 +49,6 @@ class View
     protected string $title;
 
     /**
-     * @var Request
-     */
-    protected Request $request;
-
-    /**
      * @var string
      */
     protected string $templatesRoot = BW_ROOT . '/application/views/templates';
@@ -61,6 +57,7 @@ class View
      * @var string
      */
     protected string $cacheDir = BW_ROOT . '/application/views/cache';
+    public string $template;
 
     /**
      * @throws AppException
@@ -69,6 +66,7 @@ class View
     public function __construct()
     {
         $this->renderer = new Smarty();
+
         $this->renderer->setTemplateDir([
             $this->templatesRoot . '/layouts',
             $this->templatesRoot . '/partials',
@@ -112,18 +110,21 @@ class View
         $this->renderer->assign($name, $value);
     }
 
-    /**
-     * @param string $template
-     * @return string Template content or throw ar either an SmartyException or Exception
-     * @throws \Exception
-     * @throws \SmartyException
-     */
-    public function render(string $template): string
+    public function setTemplate(string $template): void
     {
+        $this->template = $template;
+    }
+
+    /**
+     * @return string Template content or throw ar either an SmartyException or Exception
+     * @throws SmartyException
+     */
+    public function render(): string
+    {;
         try {
-            return $this->renderer->fetch($template);
-        } catch (\Exception $e) {
-            throw new \SmartyException();
+            return $this->renderer->fetch($this->template);
+        } catch (Exception $e) {
+            throw new SmartyException();
         }
     }
 

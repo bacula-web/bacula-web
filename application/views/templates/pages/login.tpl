@@ -5,6 +5,16 @@
 {/block}
 
 {block name=body}
+
+    {if isset($flash) }
+        {if is_array($flash) }
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                {$flash[0]}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {/if}
+    {/if}
+
     <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
         <div class="container">
             <div class="row justify-content-center">

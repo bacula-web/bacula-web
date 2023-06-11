@@ -12,28 +12,43 @@ use App\Tables\VolumeTable;
 use Core\App\View;
 use Core\Db\DatabaseFactory;
 use Core\i18n\CTranslation;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Odan\Session\PhpSession;
+use Odan\Session\SessionInterface;
+use Odan\Session\SessionManagerInterface;
+use Psr\Container\ContainerInterface;
 
 return [
-    JobTable::class => function(Session $session) {
+    'settings' => [
+        'session' => [
+            'name' => $_ENV['APP_NAME'],
+            'lifetime' => 7200,
+            'path' => null,
+            'domain' => null,
+            'secure' => false,
+            'httponly' => true,
+            'cache_limiter' => 'nocache',
+            'cookie_samesite' => 'Lax'
+        ]
+    ],
+    JobTable::class => function(SessionInterface $session) {
       return new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    PoolTable::class => function(Session $session) {
+    PoolTable::class => function(SessionInterface $session) {
         return new PoolTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    ClientTable::class => function(Session $session) {
+    ClientTable::class => function(SessionInterface $session) {
         return new ClientTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    VolumeTable::class => function(Session $session) {
+    VolumeTable::class => function(SessionInterface $session) {
         return new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    JobFileTable::class => function(Session $session) {
+    JobFileTable::class => function(SessionInterface $session) {
         return new JobFileTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    LogTable::class => function(Session $session) {
+    LogTable::class => function(SessionInterface $session) {
         return new LogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    View::class => function(Session $session) {
+    View::class => function(Odan\Session\PhpSession $session) {
         $view = new View();
         $view->set('app_name', $_ENV['APP_NAME']);
         $view->set('app_version', $_ENV['APP_VERSION']);
@@ -52,5 +67,14 @@ return [
         $view->set('language', str_replace('_', '-', $language));
 
         return $view;
+    },
+    SessionManagerInterface::class => function (ContainerInterface $container) {
+        return $container->get(SessionInterface::class);
+    },
+
+    SessionInterface::class => function (ContainerInterface $container) {
+        $options = $container->get('settings')['session'];
+
+        return new PhpSession($options);
     }
 ];

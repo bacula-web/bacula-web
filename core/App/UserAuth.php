@@ -26,8 +26,9 @@ use Core\Db\DatabaseFactory;
 use Core\Exception\AppException;
 use Core\Exception\DatabaseException;
 use Exception;
+use Odan\Session\SessionInterface;
 use PDO;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Odan\Session;
 
 class UserAuth
 {
@@ -135,18 +136,14 @@ class UserAuth
     }
 
     /**
+     * @param SessionInterface $session
      * @return void
      */
-    public function destroySession()
+    public function destroySession(Session\SessionInterface $session): void
     {
-        $session = new Session();
-        $session->clear();
-        $session->invalidate();
-
-        if (ini_get('session.use_cookies')) {
-            $params = session_get_cookie_params();
-            setcookie($session->getName(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
-        }
+        $session->destroy();
+        $session->start();
+        $session->regenerateId();
     }
 
     /**
@@ -154,7 +151,7 @@ class UserAuth
      */
     public function authenticated(): bool
     {
-        $session = new Session();
+        $session = new Session\PhpSession();
 
         if ($session->get('user_authenticated') === 'yes') {
             return true;

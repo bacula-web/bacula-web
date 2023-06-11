@@ -64,7 +64,6 @@ Bacula-Web use the following tools and libraries
 Component                    License
 ===========================  ================
 `PHP`_                       PHP License v3.01
-`Symfony HttpFoundation`_    MIT
 `Smarty`_                    LGPL
 `Smarty Gettext`_            LGPL-2.1
 `NVD3`_                      Apache v2
@@ -79,6 +78,7 @@ Component                    License
 `Slim-PHP`_                  MIT
 `GuzzleHttp/psr7`_           MIT
 `cocur/human-date`_          MIT
+`odan/session`_              MIT
 ===========================  ================
 
 Supported browser
@@ -161,7 +161,6 @@ There are a lot of tool which can help you administering, monitoring and configu
 You can find a complete `list of GUI`_ on the Bacula's web site
 
 .. _PHP: http://www.php.net
-.. _Symfony HttpFoundation: https://github.com/symfony/http-foundation
 .. _Smarty: http://www.smarty.net/
 .. _Smarty Gettext: https://packagist.org/packages/smarty-gettext/smarty-gettext
 .. _NVD3: http://nvd3.org/
@@ -187,3 +186,4 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _Slim-PHP: https://github.com/slimphp/Slim
 .. _GuzzleHttp/psr7: https://github.com/guzzle/psr7
 .. _cocur/human-date: https://github.com/cocur/human-date
+.. _odan/session: https://github.com/odan/session

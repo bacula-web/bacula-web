@@ -29,20 +29,15 @@ use App\Controller\SettingsController;
 use App\Controller\TestController;
 use App\Controller\UserController;
 use App\Controller\VolumesController;
+use App\Middleware\FlashMiddleware;
 use DI\ContainerBuilder;
+use Odan\Session\Middleware\SessionStartMiddleware;
 use Slim\Factory\AppFactory;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // Bootstrap application
 require_once __DIR__ . '/../core/bootstrap.php';
-
-// TODO: replace below code by middleware
-$session = new Session();
-if (!$session->isStarted()) {
-    $session->start();
-}
 
 $containerbuilder = new ContainerBuilder();
 $containerbuilder->addDefinitions(CONFIG_DIR . 'container-bindings.php');
@@ -59,32 +54,37 @@ $app->addErrorMiddleware(
     true
 );
 
-$app->map(['GET', 'POST'], '/', [HomeController::class, 'prepare']);
+$app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
+    $group->map(['GET', 'POST'], '/', [HomeController::class, 'prepare']);
 
-$app->map(['GET', 'POST'],'/jobs[/{page}]', [JobController::class, 'index']);
-$app->get('/joblog/{jobid}', [JobController::class, 'showLogs']);
-$app->map(['GET', 'POST'],'/jobfiles/{jobid}', [JobController::class, 'showFiles']);
+    $group->map(['GET', 'POST'], '/jobs[/{page}]', [JobController::class, 'index']);
+    $group->get('/joblog/{jobid}', [JobController::class, 'showLogs']);
+    $group->map(['GET', 'POST'], '/jobfiles/{jobid}', [JobController::class, 'showFiles']);
 
-$app->get('/pools', [PoolController::class, 'prepare']);
+    $group->get('/pools', [PoolController::class, 'prepare']);
 
-$app->get('/test', [TestController::class, 'index']);
+    $group->get('/test', [TestController::class, 'index']);
 
-$app->get('/settings', [SettingsController::class, 'index']);
-$app->post('/settings', [SettingsController::class, 'addUser']);
+    $group->get('/settings', [SettingsController::class, 'index']);
+    $group->post('/settings', [SettingsController::class, 'addUser']);
 
-$app->map(['GET', 'POST'], '/volumes', [VolumesController::class, 'index']);
-$app->get('/volumes/{id}', [VolumesController::class, 'show']);
+    $group->map(['GET', 'POST'], '/volumes', [VolumesController::class, 'index']);
+    $group->get('/volumes/{id}', [VolumesController::class, 'show']);
 
-$app->get('/directors', [DirectorController::class, 'index'] );
+    $group->get('/directors', [DirectorController::class, 'index']);
 
-$app->map(['GET', 'POST'], '/backupjob', [BackupJobController::class, 'index']);
+    $group->map(['GET', 'POST'], '/backupjob', [BackupJobController::class, 'index']);
 
-$app->map(['GET', 'POST'], '/client', [\App\Controller\ClientController::class, 'index']);
+    $group->map(['GET', 'POST'], '/client', [\App\Controller\ClientController::class, 'index']);
 
-$app->map(['GET', 'POST'], '/user', [UserController::class, 'prepare']);
+    $group->map(['GET', 'POST'], '/user', [UserController::class, 'prepare']);
 
-$app->post('/signout', [LoginController::class, 'signOut']);
-$app->get('/login', [LoginController::class, 'index']);
-$app->post('/login', [LoginController::class, 'login']);
+    $group->post('/signout', [LoginController::class, 'signOut']);
+    $group->get('/login', [LoginController::class, 'index']);
+    $group->post('/login', [LoginController::class, 'login']);
+});
+
+$app->add(SessionStartMiddleware::class)
+    ->add(FlashMiddleware::class)
 
 $app->run();

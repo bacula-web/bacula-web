@@ -27,6 +27,7 @@ use Core\App\View;
 use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
 use Core\Exception\ConfigFileException;
+use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use Valitron\Validator;
@@ -35,15 +36,18 @@ class SettingsController
 {
     private View $view;
     private UserTable $userTable;
+    private SessionInterface $session;
 
     /**
      * @param View $view
      * @param UserTable $userTable
+     * @param SessionInterface $session
      */
-    public function __construct(View $view, UserTable $userTable)
+    public function __construct(View $view, UserTable $userTable, SessionInterface $session)
     {
         $this->view = $view;
         $this->userTable = $userTable;
+        $this->session = $session;
     }
 
     /**
@@ -55,6 +59,13 @@ class SettingsController
      */
     public function index(Request $request, Response $response): Response
     {
+        $flash = $this->session->getFlash();
+
+        if($flash->has('info')) {
+            $this->view->set('flash', $flash->get('info'));
+            $flash->clear();
+        }
+
         // Get parameters set in configuration file
         if (!FileConfig::open(CONFIG_FILE)) {
             throw new ConfigFileException("The configuration file is missing");
@@ -153,8 +164,9 @@ class SettingsController
         $v->rule('email', 'email');
 
         if (!$v->validate()) {
-            print_r($v->errors());
-            throw new AppException('Invalid user data provided');
+            $flash = $this->session->getFlash();
+            $flash->add('info', 'Invalid user data provided');
+            $this->session->save();
         }
 
         $result = $this->userTable->addUser(
@@ -164,8 +176,9 @@ class SettingsController
         );
 
         if ($result !== false) {
-            //TODO: fix flash message
-            //$this->setFlash('success', 'User created successfully');
+            $flash = $this->session->getFlash();
+            $flash->add('info', 'User successfully created');
+            $this->session->save();
         }
 
         return $response

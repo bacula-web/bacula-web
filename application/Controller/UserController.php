@@ -25,10 +25,10 @@ use App\Tables\UserTable;
 use Core\App\UserAuth;
 use Core\App\View;
 use Core\Helpers\Sanitizer;
+use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SmartyException;
 use GuzzleHttp\Psr7\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserController
 {
@@ -39,12 +39,20 @@ class UserController
     private View $view;
     private UserTable $userTable;
     private UserAuth $userAuth;
+    private SessionInterface $session;
 
-    public function __construct(View $view, UserTable $userTable, UserAuth $userAuth)
+    /**
+     * @param View $view
+     * @param UserTable $userTable
+     * @param UserAuth $userAuth
+     * @param SessionInterface $session
+     */
+    public function __construct(View $view, UserTable $userTable, UserAuth $userAuth, SessionInterface $session)
     {
         $this->view = $view;
         $this->userTable = $userTable;
         $this->userAuth = $userAuth;
+        $this->session = $session;
     }
 
     /**
@@ -55,11 +63,9 @@ class UserController
      */
     public function prepare(Request $request, Response $response): Response
     {
-        $session = new Session();
-
         $postData = $request->getParsedBody();
 
-        $this->username = $session->get('username');
+        $this->username = $this->session->get('username');
         $user = $this->userTable->findByName($this->username);
 
         $this->view->set('username', $user->getUsername());

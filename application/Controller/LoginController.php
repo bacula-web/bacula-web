@@ -25,9 +25,10 @@ use Core\App\UserAuth;
 use Core\App\View;
 use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
+use Odan\Session\SessionInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Valitron\Validator;
 
 class LoginController
@@ -35,27 +36,28 @@ class LoginController
 
     private View $view;
     private UserAuth $userAuth;
-    private Session $session;
+    private SessionInterface $session;
 
-    public function __construct(View $view, UserAuth $userAuth)
+    public function __construct(View $view, UserAuth $userAuth, SessionInterface $session)
     {
         $this->view = $view;
+        $this->view->setTemplate('login.tpl');
         $this->userAuth = $userAuth;
-        $this->session = new Session();
+        $this->session = $session;
     }
 
-    public function signOut(Request $request, Response $response)
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return mixed
+     */
+    public function signOut(Request $request, Response $response): Response
     {
-        //TODO: fix flash message
-        /**
-        $this->setAlert('Successfully logged out');
-        $this->setAlertType('success');
-         */
+        $this->userAuth->destroySession($this->session);
+        $this->session->getFlash()->add('info', 'Logged out successfully.');
+        $this->session->save();
 
-        $this->userAuth->destroySession();
-
-        // TODO: This flash message does not appear everytime, to be investigated
-        //$this->setFlash('success', "Successfully sign-out");
+        $this->view->setTemplate('login.tpl');
 
         return $response
             ->withHeader('Location', '/login')
@@ -64,7 +66,9 @@ class LoginController
 
     public function index(Request $request, Response $response): Response
     {
-        $response->getBody()->write($this->view->render('login.tpl'));
+        //$response->getBody()->write($this->view->render('login.tpl'));
+        //$this->view->setTemplate('login.tpl');
+
         return $response;
     }
 
@@ -95,8 +99,9 @@ class LoginController
         ]);
 
         if (!$v->validate()) {
-            //TODO: set flash message and redirect to login page
-            //print_r($v->errors());
+            $this->session->getFlash()->add('info', 'Not valid: Bad username or password');
+            $this->session->save();
+
             return $response
                 ->withHeader('Location', '/login')
                 ->withStatus(302);
@@ -104,21 +109,28 @@ class LoginController
 
         $this->session->set('user_authenticated', $this->userAuth->authUser($form_data['username'], $form_data['password']));
 
-        if ($this->userAuth->authenticated()) {
+        // TODO: fix $userAuth->authenticated()
+        //if ($this->userAuth->authenticated()) {
+
+        if ($this->session->get('user_authenticated') === 'yes') {
             $username = Sanitizer::sanitize($postData['username']);
             $this->session->set('username', $username);
 
-            // TODO: This flash message does not appear everytime, to be investigated
-            //$this->setFlash('success', "Successfully authenticated");
+            $this->session->getFlash()->add('info', 'Successfully authenticated');
+            $this->session->save();
+
+            $this->view->setTemplate('dashboard.tpl');
 
             return $response
                 ->withHeader('Location', '/')
                 ->withStatus(302);
-        }
+        } else {
+            $this->session->getFlash()->add('info', 'Wrong username or password');
+            $this->session->save();
 
-        echo 'bad username/password';
-        return $response
-            ->withHeader('Location', '/login')
-            ->withStatus(302);
+            return $response
+                ->withHeader('Location', '/login')
+                ->withStatus(302);
+        }
     }
 }

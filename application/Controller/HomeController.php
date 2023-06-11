@@ -47,13 +47,14 @@ class HomeController
         JobTable    $jobTable,
         PoolTable   $poolTable,
         VolumeTable $volumeTable,
-        View        $view
+        View        $view,
     )
     {
         $this->jobTable = $jobTable;
         $this->poolTable = $poolTable;
         $this->volumeTable = $volumeTable;
         $this->view = $view;
+        $this->view->setTemplate('dashboard.tpl');
     }
 
     /**
@@ -300,7 +301,7 @@ class HomeController
         # 10 biggest completed backup jobTable
         $this->view->set('biggestjobs', $this->jobTable->getBiggestJobsStats());
 
-        $response->getBody()->write($this->view->render('dashboard.tpl'));
+        //$response->getBody()->write($this->view->render());
         return $response;
     }
 }

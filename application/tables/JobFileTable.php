@@ -31,7 +31,7 @@ use Core\Db\CDBQuery;
 use Core\Db\DatabaseFactory;
 use Core\Db\Table;
 use Exception;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Odan\Session\PhpSession;
 
 class JobFileTable extends Table
 {
@@ -52,8 +52,7 @@ class JobFileTable extends Table
     {
         $catalog = new CatalogTable(
             DatabaseFactory::getDatabase(
-                (new Session())->get('catalog_id', 0)
-            )
+                (new PhpSession())->get('catalog_id', 0)
         );
 
         // Catalog version prior to Bacula 11.0.x

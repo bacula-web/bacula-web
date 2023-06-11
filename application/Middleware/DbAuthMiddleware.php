@@ -24,10 +24,6 @@ namespace App\Middleware;
 use Core\App\UserAuth;
 use Core\Exception\AppException;
 use Core\Middleware\MiddlewareInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class DbAuthMiddleware implements MiddlewareInterface
 {

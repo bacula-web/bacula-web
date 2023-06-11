@@ -20,6 +20,7 @@ declare(strict_types=1);
  */
 
 namespace App\Controller;
+namespace App\Controller;
 
 use Core\App\View;
 use Core\Db\DatabaseFactory;
@@ -32,10 +33,11 @@ use App\Tables\PoolTable;
 use App\Tables\FileSetTable;
 use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
+use Odan\Session\PhpSession;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SmartyException;
 use GuzzleHttp\Psr7\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
+
 
 class DirectorController
 {
@@ -63,7 +65,7 @@ class DirectorController
         ];
 
         // TODO: Session must be started by middleware, and binding must be configured in container
-        $session = new Session();
+        $session = new PhpSession();
 
         $directors = [];
 

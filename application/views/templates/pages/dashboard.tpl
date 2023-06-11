@@ -18,6 +18,7 @@
         <div class="row">
             <!-- Last period job status -->
             <div class="col-6">
+
                 <div class="card border-dark mb-3">
                     <div class="card-header"><b>{t}Last period job status{/t}</b> ({$literal_period})</div>
                     <!-- Period selector -->
