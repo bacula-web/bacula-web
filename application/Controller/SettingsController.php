@@ -148,6 +148,7 @@ class SettingsController
         $v = new Validator($form_data);
 
         $v->rule('required', ['username', 'password', 'email']);
+        $v->rule('alphaNum', 'username');
         $v->rule('lengthMin', 'password', 8);
         $v->rule('email', 'email');
 
