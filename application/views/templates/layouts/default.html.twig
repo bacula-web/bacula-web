@@ -1,0 +1,13 @@
+{{ include("partials/html-head.html.twig") }}
+
+{{ include("partials/navbar.html.twig") }}
+
+{% block title %} {% endblock %}
+
+<div class="container">
+    {{ include('partials/flash.html.twig') }}
+</div>
+
+{%  block body %} {% endblock %}
+
+{{ include("partials/html-footer.html.twig") }}

@@ -9,13 +9,16 @@ use App\Tables\JobTable;
 use App\Tables\LogTable;
 use App\Tables\PoolTable;
 use App\Tables\VolumeTable;
-use Core\App\View;
 use Core\Db\DatabaseFactory;
-use Core\i18n\CTranslation;
 use Odan\Session\PhpSession;
 use Odan\Session\SessionInterface;
 use Odan\Session\SessionManagerInterface;
 use Psr\Container\ContainerInterface;
+use Slim\Views\Twig;
+use Twig\Extension\DebugExtension;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Loader\MoFileLoader;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
 return [
     'settings' => [
@@ -48,26 +51,6 @@ return [
     LogTable::class => function(SessionInterface $session) {
         return new LogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    View::class => function(Odan\Session\PhpSession $session) {
-        $view = new View();
-        $view->set('app_name', $_ENV['APP_NAME']);
-        $view->set('app_version', $_ENV['APP_VERSION']);
-        $view->set('user_authenticated', true);
-        $view->set('enable_users_auth', ((FileConfig::get_Value('enable_users_auth') !== null) && is_bool(FileConfig::get_Value('enable_users_auth'))) ? (bool)FileConfig::get_Value('enable_users_auth') : true);
-
-        $view->set('catalog_label', FileConfig::get_Value('label', 0));
-        $view->set('catalogs', FileConfig::get_Catalogs());
-        $view->set('catalog_current_id', 0);
-
-        $view->set('username', $session->get('username'));
-
-        $language = FileConfig::get_Value('language');
-        $translate = new CTranslation($language);
-        $translate->setLanguage();
-        $view->set('language', str_replace('_', '-', $language));
-
-        return $view;
-    },
     SessionManagerInterface::class => function (ContainerInterface $container) {
         return $container->get(SessionInterface::class);
     },
@@ -76,5 +59,45 @@ return [
         $options = $container->get('settings')['session'];
 
         return new PhpSession($options);
+    },
+    Twig::class => function (ContainerInterface $container, SessionInterface $session) {
+        $twig = Twig::create( BW_ROOT . '/application/views/templates', ['cache' => false]);
+
+        $twig->addExtension(new DebugExtension());
+
+        $twig->getEnvironment()->addGlobal('app_name', $_ENV['APP_NAME']);
+        $twig->getEnvironment()->addGlobal('app_version', $_ENV['APP_VERSION']);
+
+        FileConfig::open(CONFIG_FILE);
+        $twig->getEnvironment()->addGlobal('catalogs', FileConfig::get_Catalogs());
+        // TODO: fix below (using default catalog id value for now)
+        $twig->getEnvironment()->addGlobal('catalog_label', FileConfig::get_Value('label', 0));
+
+        $twig->getEnvironment()->addGlobal('username', 'to change');
+
+        // TODO: fix below (using default values for now)
+        $twig->getEnvironment()->addGlobal('user_authenticated', true);
+        $twig->getEnvironment()->addGlobal('enable_users_auth', true);
+
+        $twig->getEnvironment()->addGlobal('language', str_replace('_', '-', FileConfig::get_Value('language')));
+
+        $translator = $container->get(Translator::class);
+        $twig->addExtension(new TranslationExtension($translator));
+        
+        return $twig;
+    },
+    Translator::class => function (ContainerInterface $container) {
+        $translator = new Translator('en_US');
+
+        $locale = FileConfig::get_Value('language');
+
+        $translator->addLoader('mo', new MoFileLoader());
+        $translator->setLocale($locale);
+        $translator->setFallbackLocales(['en_US']);
+
+        $translationFile = __DIR__ . "/../locale/$locale/LC_MESSAGES/messages.mo";
+        $translator->addResource('mo', $translationFile, $locale);
+
+        return $translator;
     }
 ];

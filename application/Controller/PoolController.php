@@ -21,12 +21,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Core\App\View;
 use Core\Utils\CUtils;
 use App\Tables\PoolTable;
+use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
-use SmartyException;
+use Slim\Views\Twig;
 
 class PoolController
 {
@@ -35,27 +35,26 @@ class PoolController
      */
 
     private PoolTable $poolTable;
-    /**
-     * @var View
-     */
-    private View $view;
 
     /**
      * @param PoolTable $poolTable
-     * @param View $view
      */
-    public function __construct(PoolTable $poolTable, View $view)
+    public function __construct(PoolTable $poolTable)
     {
         $this->poolTable = $poolTable;
-        $this->view = $view;
     }
 
     /**
+     * @param Request $request
+     * @param Response $response
      * @return Response
-     * @throws SmartyException
+     * @throws Exception
      */
     public function prepare(Request $request, Response $response): Response
     {
+        $view = Twig::fromRequest($request);
+        $tplData = [];
+
         $pools_list = [];
 
         // Add more details to each pool
@@ -69,9 +68,8 @@ class PoolController
             $pools_list[] = $pool;
         }
 
-        $this->view->set('pools', $pools_list);
+        $tplData['pools'] = $pools_list;
 
-        $response->getBody()->write($this->view->render('pools.tpl'));
-        return $response;
+        return $view->render($response, 'pages/pools.html.twig', $tplData);
     }
 }

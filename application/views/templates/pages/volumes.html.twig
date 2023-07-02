@@ -1,0 +1,133 @@
+{% extends "layouts/default.html.twig" %}
+
+{% block title %}
+    <title>Bacula-Web - {{ 'Volumes report'|trans }}</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="mt-3 mb-0">{{ 'Volumes report'|trans }}</h3>
+                <p class="mb-0">{{ 'Bacula volume(s) overview'|trans }}</p>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-10">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-striped text-center">
+                        <thead>
+                        <tr>
+                            <th class="text-center">{{ 'Volume name'|trans }}</th>
+                            <th class="text-center">{{ 'Bytes'|trans }}</th>
+                            <th class="text-center">{{ 'Files'|trans }}</th>
+                            <th class="text-center">{{ 'Jobs'|trans }}</th>
+                            <th class="text-center">{{ 'Media Type'|trans }}</th>
+                            <th class="text-center">{{ 'Pool'|trans }}</th>
+                            <th class="text-center">{{ 'Expire'|trans }}</th>
+                            <th class="text-center">{{ 'Last written'|trans }}</th>
+                            <th class="text-center">{{ 'Status'|trans }}</th>
+                            <th class="text-center">{{ 'Slot'|trans }}</th>
+                            <th class="text-center">{{ 'In Changer'|trans }}</th>
+                        </tr>
+                        </thead>
+
+                        {% for volume in volumes %}
+                            <tr>
+                                <td>
+                                    <a href="/volumes/{{ volume.mediaid }}"
+                                       title="{{ 'Show volume'|trans }}">{{ volume.volumename }}</a>
+                                </td>
+                                <td class="text-right">{{ volume.volbytes }}</td>
+                                <td class="text-right">{{ volume.volfiles }}</td>
+                                <td class="text-right">{{ volume.voljobs }}</td>
+                                <td>{{ volume.mediatype }}</td>
+                                <td>{{ volume.pool_name }}</td>
+                                <td>{{ volume.expire }}</td>
+                                <td>{{ volume.lastwritten }}</td>
+                                <td title="{{ volume.volstatus }}">
+                                    <i class="fa {{ volume.status_icon }}"></i>
+                                </td>
+                                <td>{{ volume.slot }}</td>
+                                <td>{{ volume.inchanger|raw }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="10" class="text-center">
+                                    {{ 'No volume(s) to display'|trans }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+                {include file="pagination.tpl"}
+            </div>
+            <div class="col-2">
+                <!-- Options -->
+                <form class="" action="/volumes" method="post">
+                    <!-- Pools -->
+                    <div class="mb-3">
+                        <label class="form-label" for="filter_pool_id">{{ 'Pool'|trans }}</label>
+                        <select class="form-control input-sm" name="filter_pool_id">
+                            {% for poolid, pool in pools_list %}
+                                <option value="{{ poolid }}" {% if poolid == pool_id %}selected{% endif %}>{{ pool }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="inputOrderBy">{{ 'Order by'|trans }}</label>
+                        <select class="form-control input-sm" name="filter_orderby">
+                            {% for key, order in orderby %}
+                                <option value="{{ key }}" {% if orderby_selected == key %}selected{% endif %}>{{ order }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="filter_orderby_asc"
+                                   id="filter_orderby_asc" {{ orderby_asc_checked }}>
+                            <label class="form-check-label" for="filter_orderby_asc">
+                                {{ 'Asc'|trans }}
+                            </label>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="filter_inchanger"
+                                       name="filter_inchanger" {{ inchanger_checked }}>
+                                <label class="form-check-label" for="filter_inchanger">
+                                    {{ 'In changer'|trans }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <button type="submit" class="btn btn-primary btn-sm"
+                                    title="{{ 'Apply filter and options'|trans }}">{{ 'Apply'|trans }}</button>
+                        </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <!-- Found volumes footer -->
+    <div class="card border-dark m-3">
+        <div class="card-header">{{ 'Result'|trans }}</div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    {{ 'Volume(s) found'|trans }} <span class="badge text-bg-dark">{{ volumes_count }}</span>
+                </li>
+                <li class="list-group-item">
+                    {{ 'Total bytes'|trans }} <span class="badge text-bg-dark">{{ volumes_total_bytes }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

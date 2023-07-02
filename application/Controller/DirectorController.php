@@ -20,9 +20,9 @@ declare(strict_types=1);
  */
 
 namespace App\Controller;
+
 namespace App\Controller;
 
-use Core\App\View;
 use Core\Db\DatabaseFactory;
 use App\Libs\FileConfig;
 use App\Tables\ClientTable;
@@ -35,15 +35,18 @@ use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
 use Odan\Session\PhpSession;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use SmartyException;
+use Slim\Views\Twig;
 use GuzzleHttp\Psr7\Response;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 
 class DirectorController
 {
-    private View $view;
+    private Twig $view;
 
-    public function __construct(View $view)
+    public function __construct(Twig $view)
     {
         $this->view = $view;
     }
@@ -53,11 +56,15 @@ class DirectorController
      * @param Response $response
      * @return Response
      * @throws ConfigFileException
-     * @throws SmartyException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function index(Request $request, Response $response): Response
     {
         require_once BW_ROOT . '/core/const.inc.php';
+
+        $tplData = [];
 
         $no_period = [
             FIRST_DAY,
@@ -75,7 +82,7 @@ class DirectorController
         FileConfig::open(CONFIG_FILE);
         $directors_count = FileConfig::count_Catalogs();
 
-        $this->view->set('directors_count', $directors_count);
+        $tplData['directors_count'] = $directors_count;
 
         for ($d = 0; $d < $directors_count; $d++) {
             $session->set('catalog_id', $d);
@@ -94,7 +101,7 @@ class DirectorController
 
             $description = "Connected on $host/$db_name ($db_type) with user $db_user";
 
-            $directors[] = array( 'label' => FileConfig::get_Value('label', $d),
+            $directors[] = array('label' => FileConfig::get_Value('label', $d),
                 'description' => $description,
                 'clients' => $clients->count(),
                 'jobs' => $jobs->count_Job_Names(),
@@ -119,9 +126,8 @@ class DirectorController
         // Set previous catalog_id in user session
         $session->set('catalog_id', $prev_catalog_id);
 
-        $this->view->set('directors', $directors);
+        $tplData['directors'] = $directors;
 
-        $response->getBody()->write($this->view->render('directors.tpl'));
-        return $response;
+        return $this->view->render($response, 'pages/directors.html.twig', $tplData);
     }
 }

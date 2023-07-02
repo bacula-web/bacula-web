@@ -23,7 +23,6 @@ namespace App\Controller;
 
 use App\Libs\FileConfig;
 use App\Tables\JobTable;
-use Core\App\View;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
 use Core\Exception\ConfigFileException;
@@ -33,14 +32,17 @@ use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
-use SmartyException;
+use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class BackupJobController
 {
-    private View $view;
+    private Twig $view;
     private JobTable $jobTable;
 
-    public function __construct(View $view, JobTable $jobTable) {
+    public function __construct(Twig $view, JobTable $jobTable) {
         $this->view = $view;
         $this->jobTable = $jobTable;
     }
@@ -50,12 +52,16 @@ class BackupJobController
      * @param Response $response
      * @return Response
      * @throws AppException
-     * @throws SmartyException
      * @throws ConfigFileException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function index(Request $request, Response $response): Response
     {
         require_once BW_ROOT . '/core/const.inc.php';
+
+        $tplData = [];
 
         $interval = array();
         $interval[1] = NOW;
@@ -63,13 +69,16 @@ class BackupJobController
         $daysstoredbytes = [];
         $daysstoredfiles = [];
 
-        // Period list
-        $periods_list = array( '7' => "Last week", '14' => "Last 2 weeks", '30' => "Last month");
-        $this->view->set('periods_list', $periods_list);
+        $tplData['periods_list'] = [
+            ['days' => '7', 'label' => 'Last week'],
+            ['days' => '14', 'label' => 'Last 2 weeks'],
+            ['days' => '30', 'label' => 'Last month']
+        ];
 
         // Get backup job(s) list
         $jobslist = $this->jobTable->get_Jobs_List(null, 'B');
-        $this->view->set('jobs_list', $jobslist);
+
+        $tplData['jobs_list'] = $jobslist;
 
         $postData = $request->getParsedBody();
         $requestData = $request->getQueryParams();
@@ -90,13 +99,13 @@ class BackupJobController
         $where = [];
 
         if ($backupjob_name == null) {
-            $this->view->set('selected_jobname', '');
-            $this->view->set('no_report_options', 'true');
+            $tplData['selected_jobname'] = '';
+            $tplData['no_report_options'] = 'true';
 
             // Set selected period
-            $this->view->set('selected_period', 7);
+            $tplData['selected_period'] = 7;
         } else {
-            $this->view->set('no_report_options', 'false');
+            $tplData['no_report_options'] = 'false';
 
             // Make sure provided backupjob_name exist
             if (!in_array($backupjob_name, $jobslist)) {
@@ -104,7 +113,7 @@ class BackupJobController
                 throw new AppException('Wrong user input: invalid backupjob_name');
             }
 
-            $this->view->set('selected_jobname', $backupjob_name);
+            $tplData['selected_jobname'] = $backupjob_name;
 
             /**
              * Get selected period from POST request, or set it to default value (7)
@@ -116,7 +125,7 @@ class BackupJobController
             }
 
             // Set selected period
-            $this->view->set('selected_period', $backupjob_period);
+            $tplData['selected_period'] = $backupjob_period;
 
             $perioddesc = 'From ';
 
@@ -164,9 +173,8 @@ class BackupJobController
                 ]
             );
 
-            $this->view->set('stored_files_chart_id', $storedfileschart->name);
-            $this->view->set('stored_files_chart', $storedfileschart->render());
-
+            $tplData['stored_files_chart_id'] = $storedfileschart->name;
+            $tplData['stored_files_chart'] = $storedfileschart->render();
             unset($storedfileschart);
 
             // Last 7 days stored bytes chart
@@ -185,8 +193,8 @@ class BackupJobController
                 ]
             );
 
-            $this->view->set('stored_bytes_chart_id', $storedbyteschart->name);
-            $this->view->set('stored_bytes_chart', $storedbyteschart->render());
+            $tplData['stored_bytes_chart_id'] = $storedbyteschart->name;
+            $tplData['stored_bytes_chart'] = $storedbyteschart->render();
             unset($storedbyteschart);
 
             // Backup job name
@@ -258,14 +266,13 @@ class BackupJobController
             } // end while
 
             // Assign vars to template
-            $this->view->set('jobs', $joblist);
-            $this->view->set('backupjob_name', $backupjob_name);
-            $this->view->set('perioddesc', $perioddesc);
-            $this->view->set('backupjobbytes', $backupjobbytes);
-            $this->view->set('backupjobfiles', $backupjobfiles);
+            $tplData['jobs'] = $joblist;
+            $tplData['backupjob_name'] = $backupjob_name;
+            $tplData['perioddesc'] = $perioddesc;
+            $tplData['backupjobbytes'] = $backupjobbytes;
+            $tplData['backupjobfiles'] = $backupjobfiles;
         }
 
-        $response->getBody()->write($this->view->render('backupjob-report.tpl'));
-        return $response;
+        return $this->view->render($response, 'pages/backupjob-report.html.twig', $tplData);
     }
 }

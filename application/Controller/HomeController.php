@@ -24,7 +24,7 @@ use App\Libs\FileConfig;
 use App\Tables\JobTable;
 use App\Tables\PoolTable;
 use App\Tables\VolumeTable;
-use Core\App\View;
+use Slim\Views\Twig;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
 use Core\Exception\ConfigFileException;
@@ -34,27 +34,26 @@ use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use SmartyException;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class HomeController
 {
     private JobTable $jobTable;
     private PoolTable $poolTable;
     private VolumeTable $volumeTable;
-    private View $view;
+
 
     public function __construct(
         JobTable    $jobTable,
         PoolTable   $poolTable,
         VolumeTable $volumeTable,
-        View        $view,
     )
     {
         $this->jobTable = $jobTable;
         $this->poolTable = $poolTable;
         $this->volumeTable = $volumeTable;
-        $this->view = $view;
-        $this->view->setTemplate('dashboard.tpl');
     }
 
     /**
@@ -63,11 +62,16 @@ class HomeController
      * @return Response
      * @throws AppException
      * @throws ConfigFileException
-     * @throws SmartyException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function prepare(Request $request, Response $response): Response
     {
         require_once BW_ROOT . '/core/const.inc.php';
+
+        $view = Twig::fromRequest($request);
+        $tplData = [];
 
         $selectedPeriod = 'last_day';
         $postData = $request->getParsedBody();
@@ -75,14 +79,14 @@ class HomeController
             $selectedPeriod = Sanitizer::sanitize($postData['period_selector']);
         }
 
-        $this->view->set('custom_period_list_selected', $selectedPeriod);
+        $tplData['custom_period_list_selected'] = $selectedPeriod;
 
-        $this->view->set('custom_period_list', [
-            'last_day' => 'Last 24 hours',
-            'last_week' => 'Last week',
-            'last_month' => 'Last month',
-            'since_bot' => 'Since BOT'
-        ]);
+        $tplData['custom_period_list'] = [
+            ['id' => 'last_day', 'label' => 'Last 24 hours'],
+            ['id' => 'last_week', 'label' => 'Last week'],
+            ['id' => 'last_month', 'label' => 'Last month'],
+            ['id' => 'since_bot', 'label' => 'Since BOT']
+        ];
 
         // Custom period for dashboard
         $no_period = [FIRST_DAY, NOW];
@@ -107,27 +111,27 @@ class HomeController
         }
 
         // Set period start - end for widget header
-        $this->view->set('literal_period', strftime("%a %e %b %Y", $custom_period[0]) . ' to ' . strftime("%a %e %b %Y", $custom_period[1]));
+        $tplData['literal_period'] = strftime("%a %e %b %Y", $custom_period[0]) . ' to ' . strftime("%a %e %b %Y", $custom_period[1]);
 
         // Running, completed, failed, waiting and canceled jobTable status over last 24 hours
-        $this->view->set('running_jobs', $this->jobTable->count_Jobs($custom_period, 'running'));
-        $this->view->set('completed_jobs', $this->jobTable->count_Jobs($custom_period, 'completed'));
-        $this->view->set('completed_with_errors_jobs', $this->jobTable->count_Jobs($custom_period, 'completed with errors'));
-        $this->view->set('failed_jobs', $this->jobTable->count_Jobs($custom_period, 'failed'));
-        $this->view->set('waiting_jobs', $this->jobTable->count_Jobs($custom_period, 'waiting'));
-        $this->view->set('canceled_jobs', $this->jobTable->count_Jobs($custom_period, 'canceled'));
+        $tplData['running_jobs'] = $this->jobTable->count_Jobs($custom_period, 'running');
+        $tplData['completed_jobs'] = $this->jobTable->count_Jobs($custom_period, 'completed');
+        $tplData['completed_with_errors_jobs'] = $this->jobTable->count_Jobs($custom_period, 'completed with errors');
+        $tplData['failed_jobs'] = $this->jobTable->count_Jobs($custom_period, 'failed');
+        $tplData['waiting_jobs'] = $this->jobTable->count_Jobs($custom_period, 'waiting');
+        $tplData['canceled_jobs'] = $this->jobTable->count_Jobs($custom_period, 'canceled');
 
         // Stored files number
-        $this->view->set('stored_files', CUtils::format_Number($this->jobTable->getStoredFiles($no_period)));
+        $tplData['stored_files'] = CUtils::format_Number($this->jobTable->getStoredFiles($no_period));
 
         // Total bytes and files stored over the last 24 hours
-        $this->view->set('bytes_last', CUtils::Get_Human_Size($this->jobTable->getStoredBytes($custom_period)));
-        $this->view->set('files_last', CUtils::format_Number($this->jobTable->getStoredFiles($custom_period)));
+        $tplData['bytes_last'] = CUtils::Get_Human_Size($this->jobTable->getStoredBytes($custom_period));
+        $tplData['files_last'] = CUtils::format_Number($this->jobTable->getStoredFiles($custom_period));
 
         // Incremental, Differential and Full jobTable over the last 24 hours
-        $this->view->set('incr_jobs', $this->jobTable->count_Jobs($custom_period, null, J_INCR));
-        $this->view->set('diff_jobs', $this->jobTable->count_Jobs($custom_period, null, J_DIFF));
-        $this->view->set('full_jobs', $this->jobTable->count_Jobs($custom_period, null, J_FULL));
+        $tplData['incr_jobs'] = $this->jobTable->count_Jobs($custom_period, null, J_INCR);
+        $tplData['diff_jobs'] = $this->jobTable->count_Jobs($custom_period, null, J_DIFF);
+        $tplData['full_jobs'] = $this->jobTable->count_Jobs($custom_period, null, J_FULL);
 
         // ==============================================================
         // Last period <Job status graph>
@@ -142,9 +146,9 @@ class HomeController
         }
 
         $last_jobs_chart = new Chart(array('type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data, 'linked_report' => 'jobs'));
-        $this->view->set('last_jobs_chart_id', $last_jobs_chart->name);
-        $this->view->set('last_jobs_chart', $last_jobs_chart->render());
+        $tplData['last_jobs_chart_id'] = $last_jobs_chart->name;
 
+        $tplData['last_jobs_chart'] = $last_jobs_chart->render();
         unset($last_jobs_chart);
 
         // ==============================================================
@@ -181,8 +185,10 @@ class HomeController
         }
 
         $pools_usage_chart = new Chart(array('type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool, 'linked_report' => 'pools'));
-        $this->view->set('pools_usage_chart_id', $pools_usage_chart->name);
-        $this->view->set('pools_usage_chart', $pools_usage_chart->render());
+
+        $tplData['pools_usage_chart_id'] = $pools_usage_chart->name;
+        $tplData['pools_usage_chart'] = $pools_usage_chart->render();
+
         unset($pools_usage_chart);
 
         // ==============================================================
@@ -197,8 +203,8 @@ class HomeController
 
         $storedbytes_chart = new Chart(array('type' => 'bar', 'name' => 'chart_storedbytes', 'data' => $days_stored_bytes, 'ylabel' => 'Stored Bytes', 'uniformize_data' => true));
 
-        $this->view->set('storedbytes_chart_id', $storedbytes_chart->name);
-        $this->view->set('storedbytes_chart', $storedbytes_chart->render());
+        $tplData['storedbytes_chart_id'] = $storedbytes_chart->name;
+        $tplData['storedbytes_chart'] = $storedbytes_chart->render();
 
         unset($storedbytes_chart);
 
@@ -214,8 +220,8 @@ class HomeController
 
         $storedfiles_chart = new Chart(array('type' => 'bar', 'name' => 'chart_storedfiles', 'data' => $days_stored_files, 'ylabel' => 'Stored files'));
 
-        $this->view->set('storedfiles_chart_id', $storedfiles_chart->name);
-        $this->view->set('storedfiles_chart', $storedfiles_chart->render());
+        $tplData['storedfiles_chart_id'] = $storedfiles_chart->name;
+        $tplData['storedfiles_chart'] = $storedfiles_chart->render();
 
         unset($storedfiles_chart);
 
@@ -263,7 +269,7 @@ class HomeController
             $last_volumes[] = $volume;
         }
 
-        $this->view->set('volumes_list', $last_volumes);
+        $tplData['volumes_list'] = $last_volumes;
 
         // Per job name backup and restore statistics
         $job_types = array('R' => 'Restore', 'B' => 'Backup');      // TO IMPROVE
@@ -279,7 +285,7 @@ class HomeController
             $jobs_result[] = $job;
         }
 
-        $this->view->set('jobnames_jobs_stats', $jobs_result);
+        $tplData['jobnames_jobs_stats'] = $jobs_result;
 
         // Per job type backup and restore statistics
         $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes FROM Job WHERE Type in ('B','R') GROUP BY Type";
@@ -293,15 +299,16 @@ class HomeController
             $jobs_result[] = $job;
         }
 
-        $this->view->set('jobtypes_jobs_stats', $jobs_result);
+        $tplData['jobtypes_jobs_stats'] = $jobs_result;
 
-        # Weekly jobTable statistics
-        $this->view->set('weeklyjobsstats', $this->jobTable->getWeeklyJobsStats());
+        // Weekly jobTable statistics
+        $tplData['weeklyjobsstats'] = $this->jobTable->getWeeklyJobsStats();
 
-        # 10 biggest completed backup jobTable
-        $this->view->set('biggestjobs', $this->jobTable->getBiggestJobsStats());
+        // 10 biggest completed backup jobTable
+        $tplData['biggestjobs'] = $this->jobTable->getBiggestJobsStats();
 
-        //$response->getBody()->write($this->view->render());
-        return $response;
+        //$tplData[] = ['flash' => $this->session->getFlash() ];
+
+        return $view->render($response, 'pages/dashboard.html.twig', $tplData);
     }
 }

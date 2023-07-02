@@ -22,7 +22,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Libs\FileConfig;
-use Core\App\View;
 use Core\Exception\AppException;
 use Core\Exception\ConfigFileException;
 use Core\Graph\Chart;
@@ -34,37 +33,45 @@ use App\Tables\JobTable;
 use App\Tables\ClientTable;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
+use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use TypeError;
 
 class ClientController
 {
     private JobTable $jobTable;
     private ClientTable $clientTable;
-    private View $view;
+    private Twig $view;
 
     /**
-     * @param View $view
+     * @param Twig $view
      * @param JobTable $jobTable
      * @param ClientTable $clientTable
      */
-    public function __construct(View $view, JobTable $jobTable, ClientTable $clientTable)
+    public function __construct(Twig $view, JobTable $jobTable, ClientTable $clientTable)
     {
         $this->view = $view;
         $this->jobTable = $jobTable;
         $this->clientTable = $clientTable;
     }
-    
+
     /**
      * @param Request $request
      * @param Response $response
      * @return Response
      * @throws AppException
      * @throws ConfigFileException
-     * @throws \SmartyException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function index(Request $request, Response $response): Response
     {
         require_once BW_ROOT . '/core/const.inc.php';
+
+        $tplData = [];
 
         $period = 7;
         $backup_jobs = array();
@@ -72,8 +79,7 @@ class ClientController
         $days_stored_files = array();
 
         // Clients list
-        // Clients list
-        $this->view->set('clients_list', $this->clientTable->getClients());
+        $tplData['clients_list'] = $this->clientTable->getClients();
 
         // Period list
         $periods_list = [
@@ -81,7 +87,8 @@ class ClientController
             '14' => "Last 2 weeks",
             '30' => "Last month"
         ];
-        $this->view->set('periods_list', $periods_list);
+
+        $tplData['periods_list'] = $periods_list;
 
         $job_levels = array(
             'D' => 'Differential',
@@ -110,9 +117,8 @@ class ClientController
                 throw new TypeError('Critical: provided value for (period) is unknown or not valid');
             }
 
-            $this->view->set('selected_period', $period);
-            $this->view->set('selected_client', $clientId);
-
+            $tplData['selected_period'] = $period;
+            $tplData['selected_client'] = $clientId;
             /**
              * Filter jobTable per $this->requested period
              */
@@ -128,17 +134,17 @@ class ClientController
             $this->jobTable->addParameter('job_endtime', $endTime);
             $where[] = 'Job.endtime <= :job_endtime';
 
-            $this->view->set('no_report_options', 'false');
+            $tplData['no_report_options'] = 'false';
 
             // Client informations
             $client_info  = $this->clientTable->getClientInfos($clientId);
 
-            $this->view->set('client_name', $client_info['name']);
-            $this->view->set('client_os', $client_info['os']);
-            $this->view->set ('client_arch', $client_info['arch']);
-            $this->view->set('client_version', $client_info['version']);
+            $tplData['client_name'] = $client_info['name'];
+            $tplData['client_os'] = $client_info['os'];
+            $tplData['client_arch'] = $client_info['arch'];
+            $tplData['client_version'] = $client_info['version'];
 
-            // // Filter by Job status = Completed
+            // Filter by Job status = Completed
             $this->jobTable->addParameter('jobstatus', 'T');
             $where[] = 'Job.JobStatus = :jobstatus';
 
@@ -170,13 +176,13 @@ class ClientController
                 $backup_jobs[] = $job;
             } // end foreach
 
-            $this->view->set('backup_jobs', $backup_jobs);
+            $tplData['backup_jobs'] = $backup_jobs;
 
             // Last n days stored Bytes graph
             foreach ($days as $day) {
                 $stored_bytes = $this->jobTable->getStoredBytes(array($day['start'], $day['end']), 'ALL', $clientId);
                 $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
-            } // end foreach
+            }
 
             $stored_bytes_chart = new Chart(array( 'type' => 'bar',
                 'name' => 'chart_storedbytes',
@@ -184,8 +190,8 @@ class ClientController
                 'ylabel' => 'Bytes',
                 'uniformize_data' => true ));
 
-            $this->view->set('stored_bytes_chart_id', $stored_bytes_chart->name);
-            $this->view->set('stored_bytes_chart', $stored_bytes_chart->render());
+            $tplData['stored_bytes_chart_id'] = $stored_bytes_chart->name;
+            $tplData['stored_bytes_chart'] = $stored_bytes_chart->render();
 
             unset($stored_bytes_chart);
 
@@ -200,19 +206,18 @@ class ClientController
                 'data' => $days_stored_files,
                 'ylabel' => 'Files' ));
 
-            $this->view->set('stored_files_chart_id', $stored_files_chart->name);
-            $this->view->set('stored_files_chart', $stored_files_chart->render());
+            $tplData['stored_files_chart_id'] = $stored_files_chart->name;
+            $tplData['stored_files_chart'] = $stored_files_chart->render();
 
             unset($stored_files_chart);
         } else {
-            $this->view->set('selected_period', '');
-            $this->view->set('selected_client', '');
-            $this->view->set('no_report_options', 'true');
+            $tplData['selected_period'] = '';
+            $tplData['selected_client'] = '';
+            $tplData['no_report_options'] = 'true';
         }
 
-        $this->view->set('period', $period);
+        $tplData['period'] = $period;
 
-        $response->getBody()->write($this->view->render('client-report.tpl'));
-        return $response;
+        return $this->view->render($response, 'pages/client-report.html.twig', $tplData);
     }
 }

@@ -7,7 +7,7 @@
             <ul class="pagination justify-content-center">
                 <li class="page-item {$first}">
                 {if $first eq "disabled"}
-                    <span title="{t}First page{/t}" class="page-link" aria-hidden="true">&laquo;</span>
+                    <span title={{ 'First page'|trans }} class="page-link" aria-hidden="true">&laquo;</span>
                 {else}
                     <a class="page-link" href="{$pagination_link}&pagination_page=1" aria-label="First">&laquo;</a>
                 {/if}
@@ -15,9 +15,9 @@
 
                 <li class="page-item {$previous_enabled}">
                     {if $previous_enabled eq "disabled"}
-                        <span class="page-link" title="{t}Previous page{/t} aria-hidden="true">&lang;</span>
+                        <span class="page-link" title="{{ 'Previous page'|trans }} aria-hidden="true">&lang;</span>
                     {else}
-                        <a class="page-link" href="{$pagination_link}&pagination_page={$previous}" title="{t}Previous page{/t}" aria-label="Previous">&lang;</a>
+                        <a class="page-link" href="{$pagination_link}&pagination_page={$previous}" title="{{ 'Previous page'|trans }}" aria-label="Previous">&lang;</a>
                     {/if}
                 </li>
                 {* pagination current page is on last 4 *}
@@ -50,17 +50,17 @@
 
                 <li class="page-item {$next_enabled}">
                 {if $next_enabled eq "disabled"}
-                    <span class="page-link" title="{t}Next page{/t} aria-hidden="true">&rang;</span>
+                    <span class="page-link" title="{{ 'Next page'|trans }}" aria-hidden="true">&rang;</span>
                 {else}
-                    <a class="page-link" href="{$pagination_link}&pagination_page={$next}" title="{t}Next page{/t}" aria-label="Next">&rang;</a>
+                    <a class="page-link" href="{$pagination_link}&pagination_page={$next}" title="{{ 'Next page'|trans }}" aria-label="Next">&rang;</a>
                 {/if}
                 </li>
 
                 <li class="page-item {$last}">
                 {if $last eq "disabled"}
-                    <span class="page-link" title="{t}Last page{/t}" aria-hidden="true">&raquo;</span>
+                    <span class="page-link" title="{{ 'Last page'|trans }}" aria-hidden="true">&raquo;</span>
                 {else}
-                    <a class="page-link" href="{$pagination_link}&pagination_page={$pagination_max}" title="{t}Last page{/t}" aria-label="">&raquo;</a>
+                    <a class="page-link" href="{$pagination_link}&pagination_page={$pagination_max}" title="{{ 'Last page'|trans }}" aria-label="">&raquo;</a>
                 {/if}
                 </li>
             </ul>

@@ -35,7 +35,7 @@ class Log
      */
     public function getLogText(): string
     {
-        return nl2br($this->logtext);
+        return $this->logtext;
     }
 
     /**

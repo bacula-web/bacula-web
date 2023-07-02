@@ -335,7 +335,7 @@ The test page do the following check for you
    * PHP - PDO support
    * PHP timezone setting
    * Bacula catalog database connection (must be improved)
-   * Smarty cache template permissions (required for page rendering purpose)
+   * Twig cache folder permissions (required for page rendering purpose)
    * Protected assets folder permissions
    * PHP version (version 8.0 at least is supported)
 

@@ -23,27 +23,30 @@ namespace App\Controller;
 
 use App\Libs\FileConfig;
 use App\Tables\UserTable;
-use Core\App\View;
+use Slim\Views\Twig;
 use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
 use Core\Exception\ConfigFileException;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
 class SettingsController
 {
-    private View $view;
+    private Twig $view;
     private UserTable $userTable;
     private SessionInterface $session;
 
     /**
-     * @param View $view
+     * @param Twig $view
      * @param UserTable $userTable
      * @param SessionInterface $session
      */
-    public function __construct(View $view, UserTable $userTable, SessionInterface $session)
+    public function __construct(Twig $view, UserTable $userTable, SessionInterface $session)
     {
         $this->view = $view;
         $this->userTable = $userTable;
@@ -55,16 +58,13 @@ class SettingsController
      * @param Response $response
      * @return Response
      * @throws ConfigFileException
-     * @throws \SmartyException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function index(Request $request, Response $response): Response
     {
-        $flash = $this->session->getFlash();
-
-        if($flash->has('info')) {
-            $this->view->set('flash', $flash->get('info'));
-            $flash->clear();
-        }
+        $tplData = [];
 
         // Get parameters set in configuration file
         if (!FileConfig::open(CONFIG_FILE)) {
@@ -72,14 +72,17 @@ class SettingsController
         } else {
             // Check if datetime_format is set, otherwise, set default datetime_format
             if (FileConfig::get_Value('datetime_format') != null) {
-                $this->view->set('config_datetime_format', FileConfig::get_Value('datetime_format'));
+                //$this->view->set('config_datetime_format', FileConfig::get_Value('datetime_format'));
+                $tplData['config_datetime_format'] = FileConfig::get_Value('datetime_format');
             } else {
-                $this->view->set('config_datetime_format', 'Y-m-d H:i:s');
+                //$this->view->set('config_datetime_format', 'Y-m-d H:i:s');
+                $tplData['config_datetime_format'] = 'Y-m-d H:i:s';
             }
 
             // Check if language is set
             if (FileConfig::get_Value('language') != null) {
-                $this->view->set('config_language', FileConfig::get_Value('language'));
+                //$this->view->set('config_language', FileConfig::get_Value('language'));
+                $tplData['config_language'] = FileConfig::get_Value('language');
             }
 
             // Check if show_inactive_clients is set
@@ -87,7 +90,8 @@ class SettingsController
                 $config_show_inactive_clients = FileConfig::get_Value('show_inactive_clients');
 
                 if ($config_show_inactive_clients == true) {
-                    $this->view->set('config_show_inactive_clients', 'checked');
+                    //$this->view->set('config_show_inactive_clients', 'checked');
+                    $tplData['config_show_inactive_clients'] = 'checked';
                 }
             }
 
@@ -96,10 +100,12 @@ class SettingsController
                 $config_hide_empty_pools = FileConfig::get_Value('hide_empty_pools');
 
                 if ($config_hide_empty_pools == true) {
-                    $this->view->set('config_hide_empty_pools', 'checked');
+                    //$this->view->set('config_hide_empty_pools', 'checked');
+                    $tplData['config_hide_empty_pools'] = 'checked';
                 }
             } else {
-                $this->view->set('config_hide_empty_pools', '');
+                //$this->view->set('config_hide_empty_pools', '');
+                $tplData['config_hide_empty_pools'] = '';
             }
 
             // Parameter <enable_users_auth> is enabled by default (in case is not specified in config file)
@@ -113,11 +119,13 @@ class SettingsController
             if ($config_enable_users_auth === true) {
 
                 // Get users list
-                $this->view->set('users', $this->userTable->getAll());
+                //$this->view->set('users', $this->userTable->getAll());
+                $tplData['users'] = $this->userTable->getAll();
 
-                $this->view->set('config_enable_users_auth', 'checked');
+                //$this->view->set('config_enable_users_auth', 'checked');
+                $tplData['config_enable_users_auth'] = 'checked';
             } else {
-                $this->view->set('config_enable_users_auth', '');
+                $tplData['config_enable_users_auth'] = '';
             }
 
             // Parameter <debug> is disabled by default (in case is not specified in config file)
@@ -130,13 +138,14 @@ class SettingsController
 
             if ($config_debug === true) {
                 $this->view->set('config_debug', 'checked');
+                $tplData['config_debug'] = 'checked';
             } else {
-                $this->view->set('config_debug', '');
+                //$this->view->set('config_debug', '');
+                $tplData['config_debug'] = '';
             }
         }
 
-        $response->getBody()->write($this->view->render('settings.tpl'));
-        return $response;
+        return $this->view->render($response, 'pages/settings.html.twig', $tplData);
     }
 
     /**
@@ -144,7 +153,6 @@ class SettingsController
      * @param Response $response
      * @return Response
      * @throws AppException
-     * @throws \SmartyException
      */
     public function addUser(Request $request, Response $response): Response
     {
@@ -164,8 +172,7 @@ class SettingsController
         $v->rule('email', 'email');
 
         if (!$v->validate()) {
-            $flash = $this->session->getFlash();
-            $flash->add('info', 'Invalid user data provided');
+            $this->session->getFlash()->set('error', ['Invalid user data provided']);
             $this->session->save();
         }
 
@@ -176,8 +183,7 @@ class SettingsController
         );
 
         if ($result !== false) {
-            $flash = $this->session->getFlash();
-            $flash->add('info', 'User successfully created');
+            $this->session->getFlash()->set('info', ['User successfully created']);
             $this->session->save();
         }
 

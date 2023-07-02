@@ -1,16 +1,17 @@
-{extends file='default.tpl'}
+{% extends "layouts/default.html.twig" %}
 
-{block name=title}
-    <title>Bacula-Web - {t}Volume details{/t}</title>
-{/block}
+{% block title %}
+    <title>Bacula-Web - {{ 'Volume details'|trans }}</title>
+{% endblock %}
 
-{block name=body}
+{% block body %}
+
     <div class="container-fluid">
 
         <div class="row">
             <div class="col-md-12">
-                <h3 class="mt-3 mb-0">{t}Volume details{/t}</h3>
-                <p class="mb-0">{t}Bacula volume details{/t}</p>
+                <h3 class="mt-3 mb-0">{{ 'Volume details'|trans }}</h3>
+                <p class="mb-0">{{ 'Bacula volume details'|trans }}</p>
                 <hr>
             </div>
         </div>
@@ -25,22 +26,22 @@
                     <div class="card-body">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <b>{t}Media id{/t}:</b> {$volume->mediaid}
+                                <b>{{ 'Media id'|trans }}:</b> {{ volume.mediaid }}
                             </li>
                             <li class="list-group-item">
-                                <b>{t}Volume name{/t}:</b> {$volume->volumename}
+                                <b>{{ 'Volume name'|trans }}:</b> {{ volume.volumename }}
                             </li>
                             <li class="list-group-item">
-                                <b>{t}Volume bytes{/t}:</b> {$volume->getVolbytes()}
+                                <b>{{ 'Volume bytes'|trans }}:</b> {{ volume.getVolbytes() }}
                             </li>
                             <li class="list-group-item">
-                                <b>{t}Volume files{/t}:</b> {$volume->volfiles}
+                                <b>{{ 'Volume files'|trans }}:</b> {{ volume.volfiles }}
                             </li>
                             <li class="list-group-item">
-                                <b>{t}Last written{/t}:</b> {$volume->lastwritten}
+                                <b>{{ 'Last written'|trans }}:</b> {{ volume.lastwritten }}
                             </li>
                             <li class="list-group-item">
-                                <b>{t}Metia Type{/t}:</b> {$volume->mediatype}
+                                <b>{{ 'Media Type'|trans }}:</b> {{ volume.mediatype }}
                             </li>
                         </ul>
                     </div>
@@ -51,33 +52,34 @@
 
                 <div class="card border-dark mb-3">
                     <div class="card-header">
-                        <h3 class="card-title">{t}Jobs{/t}</h3>
+                        <h3 class="card-title">{{ 'Jobs'|trans }}</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-condensed table-striped text-center">
                                 <thead>
                                 <tr>
-                                    <th class="text-center">{t}Job ID{/t}</th>
-                                    <th class="text-left">{t}Name{/t}</th>
-                                    <th class="text-center">{t}Type{/t}</th>
+                                    <th class="text-center">{{ 'Job ID'|trans }}</th>
+                                    <th class="text-left">{{ 'Name'|trans }}</th>
+                                    <th class="text-center">{{ 'Type'|trans }}</th>
                                 </tr>
 
-                                {foreach $jobs as $job}
+                                {% for job in jobs %}
                                     <tr>
                                         <td>
-                                            <a href="/joblog/{$job.jobid}"
-                                               title="{t}Show job{/t}">{$job.jobid}</a>
+                                            <a href="/joblog/{{ job.jobid }}"
+                                               title="{{ 'Show job'|trans }}">{{ job.jobid }}</a>
                                         </td>
-                                        <td>{$job.name}</td>
-                                        <td>{$job.type}</td>
+                                        <td>{{ job.name }}</td>
+                                        <td>{{ job.type }}</td>
                                     </tr>
-                                    {foreachelse}
+                                    {% else %}
                                     <tr>
-                                        <td colspan="3"
-                                            class="text-center">{t}No job(s) associated to this volume{/t}</td>
+                                        <td colspan="3" class="text-center">
+                                            {{ 'No job(s) associated to this volume'|trans }}
+                                        </td>
                                     </tr>
-                                {/foreach}
+                                {% endfor %}
                                 </thead>
                             </table>
                         </div>
@@ -86,4 +88,4 @@
             </div>
         </div>
     </div>
-{/block}
+{% endblock %}

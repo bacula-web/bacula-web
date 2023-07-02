@@ -21,27 +21,25 @@
 namespace App\Controller;
 
 use App\Tables\CatalogTable;
-use Core\App\View;
 use Core\Exception\AppException;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use PDO;
 use Core\Graph\Chart;
 use Psr\Http\Message\ServerRequestInterface;
-use SmartyException;
+use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class TestController
 {
     private CatalogTable $catalogTable;
 
-    private View $view;
-
     public function __construct(
-        View $view,
         CatalogTable $catalogTable)
     {
         $this->catalogTable = $catalogTable;
-        $this->view = $view;
     }
 
     /**
@@ -49,10 +47,15 @@ class TestController
      * @param Response $response
      * @return Response
      * @throws AppException
-     * @throws SmartyException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function index(Request $request, Response $response): Response
     {
+        $view = Twig::fromRequest($request);
+        $tplData = [];
+
         // Installed PDO drivers
         $pdo_drivers = PDO::getAvailableDrivers();
 
@@ -87,9 +90,9 @@ class TestController
             array(  'check_cmd' => 'db-connection',
                     'check_label' => 'Database connection status (MySQL and postgreSQL only)',
                     'check_descr' => 'Current status: ' . $this->catalogTable->getConnectionStatus() ),
-            array(  'check_cmd' => 'smarty-cache',
-                    'check_label' => 'Smarty cache folder write permission',
-                    'check_descr' => $this->view->getCacheDir() . ' must be writable by Apache'),
+            array(  'check_cmd' => 'twig-cache',
+                    'check_label' => 'Twig cache folder write permission',
+                    'check_descr' =>  BW_ROOT . '/application/views/cache' . ' must be writable by Apache'),
             array(  'check_cmd' => 'users-db',
                     'check_label' => 'Protected assets folder write permission',
                     'check_descr' => 'application/assets/protected folder must be writable by Apache'),
@@ -125,8 +128,8 @@ class TestController
                 case 'php-posix':
                     $check['check_result'] = $icon_result[function_exists('posix_getpwuid')];
                     break;
-                case 'smarty-cache':
-                    $check['check_result'] = $icon_result[is_writable($this->view->getCacheDir())];
+                case 'twig-cache':
+                    $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/views/cache')];
                     break;
                 case 'users-db':
                     $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/assets/protected')];
@@ -161,8 +164,8 @@ class TestController
             'name' => 'chart_pie_test',
             'data' => $data ));
 
-        $this->view->set('pie_graph_id', $pie_chart->name);
-        $this->view->set('pie_graph', $pie_chart->render());
+        $tplData['pie_graph_id'] = $pie_chart->name;
+        $tplData['pie_graph'] = $pie_chart->render();
 
         unset($pie_chart);
 
@@ -172,15 +175,17 @@ class TestController
             'data' => $data,
             'ylabel' => 'Coffee cups' ));
 
-        $this->view->set('bar_chart_id', $bar_chart->name);
-        $this->view->set('bar_chart', $bar_chart->render());
+        //$this->view->set('bar_chart_id', $bar_chart->name);
+        //$this->view->set('bar_chart', $bar_chart->render());
+        $tplData['bar_chart_id'] = $bar_chart->name;
+        $tplData['bar_chart'] = $bar_chart->render();
 
         unset($bar_chart);
 
         // Template rendering
-        $this->view->set('checks', $check_list);
+        //$this->view->set('checks', $check_list);
+        $tplData['checks'] = $check_list;
 
-        $response->getBody()->write($this->view->render('test.tpl'));
-        return $response;
+        return $view->render($response, 'pages/test.html.twig', $tplData);
     }
 }

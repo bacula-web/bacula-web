@@ -12,7 +12,7 @@ Using the test page
 A test page exist for this purpose that check the following items
 
    * required package are successfully installed
-   * smarty template cache good permissions
+   * Twig cache folder good permissions
    * application database back-end good permissions
    * php modules are installed and properly configured
 

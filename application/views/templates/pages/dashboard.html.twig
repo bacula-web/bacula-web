@@ -1,15 +1,15 @@
-{extends file='default.tpl'}
+{% extends "layouts/default.html.twig" %}
 
-{block name=title}
-    <title>Bacula-Web - {t}Dashboard{/t}</title>
-{/block}
+{% block title %}
+    <title>Bacula-Web - {{ 'Dashboard'|trans }}</title>
+{% endblock %}
 
-{block name=body}
+{% block body %}
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h3 class="mt-3 mb-0">{t}Dashboard{/t}</h3>
-                <p class="mb-0">{t}General overview{/t}</p>
+                <h3 class="mt-3 mb-0">{{ 'Dashboard'|trans }}</h3>
+                <p class="mb-0">{{ 'General overview'|trans }}</p>
                 <hr>
             </div>
         </div>
@@ -20,21 +20,21 @@
             <div class="col-6">
 
                 <div class="card border-dark mb-3">
-                    <div class="card-header"><b>{t}Last period job status{/t}</b> ({$literal_period})</div>
+                    <div class="card-header"><b>{{ 'Last period job status'|trans }}</b> {{ literal_period }}</div>
                     <!-- Period selector -->
                     <div class="card-body">
                         <form class="form-inline pull-right" method="post" role="form" action="/">
                             <div class="input-group input-group-sm">
-                                <span class="input-group-text">{t}Period{/t} </span>
+                                <span class="input-group-text">{{ 'Period'|trans }} </span>
                                 <select class="form-control input-sm" name="period_selector">
-                                    {foreach from=$custom_period_list key=period_id item=period_label}
-                                        <option value="{$period_id}"
-                                                {if $period_id eq $custom_period_list_selected} selected {/if}>{$period_label}
-                                        </option>
-                                    {/foreach}
+                                    {% for period in custom_period_list %}
+                                        <option value="{{ period.id }}"
+                                                {% if period.id == custom_period_list_selected %}selected{% endif %}>
+                                            {{ period.label }}</option>
+                                    {% endfor %}
                                 </select>
-                                <button title="{t}Update with selected period{/t}" class="btn btn-primary btn-sm"
-                                        type="submit">{t}Submit{/t}</button>
+                                <button title="{{ 'Update with selected period'|trans }}" class="btn btn-primary btn-sm"
+                                        type="submit">{{ 'Submit'|trans }}</button>
                             </div>
                         </form>
                     </div>
@@ -44,70 +44,70 @@
                         <div id="{$last_jobs_chart_id}">
                             <svg></svg>
                         </div>
-                        {$last_jobs_chart}
+                        {{ last_jobs_chart|raw }}
 
                         <table class="table table-condensed">
                             <tr>
-                                <td><h5>{t}Running jobs{/t}</h5></td>
+                                <td><h5>{{ 'Running jobs'|trans }}</h5></td>
                                 <td class="text-center">
                                     <form action="/jobs" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="1" />
-                                        <button class="btn btn-lg btn-link type="submit">{$running_jobs}</button>
+                                        <button class="btn btn-lg btn-link type="submit">{{ running_jobs }}</button>
                                     </form>
                                 </td>
                             </tr>
                             <tr>
-                                <td><h5>{t}Completed job(s){/t}</h5></td>
+                                <td><h5>{{ 'Completed job(s)'|trans }}</h5></td>
                                 <td class="text-center">
                                     <form action="/jobs" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="3" />
-                                        <button class="btn btn-lg btn-link type="submit">{$completed_jobs}</button>
+                                        <button class="btn btn-lg btn-link type="submit">{{ completed_jobs }}</button>
                                     </form>
                                 </td>
                             </tr>
                             <tr>
-                                <td><h5>{t}Completed with errors job(s){/t}</h5></td>
+                                <td><h5>{{ 'Completed with errors job(s)'|trans }}</h5></td>
                                 <td class="text-center">
                                     <form action="/jobs" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="4" />
-                                        <button class="btn btn-lg btn-link type="submit">{$completed_with_errors_jobs}</button>
+                                        <button class="btn btn-lg btn-link type="submit">{{ completed_with_errors_jobs }}</button>
                                     </form>
                                 </td>
                             </tr>
                             <tr>
-                                <td><h5>{t}Waiting jobs(s){/t}</h5></td>
+                                <td><h5>{{ 'Waiting jobs(s)'|trans }}</h5></td>
                                 <td class="text-center">
                                     <form action="/jobs" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="2" />
-                                        <button class="btn btn-lg btn-link type="submit">{$waiting_jobs}</button>
+                                        <button class="btn btn-lg btn-link type="submit">{{ waiting_jobs }}</button>
                                     </form>
                                 </td>
                             </tr>
                             <tr>
-                                <td><h5>{t}Failed job(s){/t}</h5></td>
+                                <td><h5>{{ 'Failed job(s)'|trans }}</h5></td>
                                 <td class="text-center">
                                     <form action="/jobs" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="5" />
-                                        <button class="btn btn-lg btn-link type="submit">{$failed_jobs}</button>
+                                        <button class="btn btn-lg btn-link type="submit">{{ failed_jobs }}</button>
                                     </form>
                                 </td>
                             </tr>
                             <tr>
-                                <td><h5>{t}Canceled job(s){/t}</h5></td>
+                                <td><h5>{{ 'Canceled job(s)'|trans }}</h5></td>
                                 <td class="text-center">
                                     <form action="/jobs" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="6" />
-                                        <button class="btn btn-lg btn-link type="submit">{$canceled_jobs}</button>
+                                        <button class="btn btn-lg btn-link type="submit">{{ canceled_jobs }}</button>
                                     </form>
                                 </td>
                             </tr>
                             <tr>
-                                <td><h5>{t}Job Level (Incr / Diff / Full){/t}</h5></td>
-                                <td class="text-center"><h4>{$incr_jobs} / {$diff_jobs} / {$full_jobs} </h4></td>
+                                <td><h5>{{ 'Job Level (Incr / Diff / Full)'|trans }}</h5></td>
+                                <td class="text-center"><h4>{{ incr_jobs }} / {{ diff_jobs }} / {{ full_jobs }} </h4></td>
                             </tr>
                             <tr>
-                                <td><h5>{t}Transferred Bytes / Files{/t}</h5></td>
-                                <td class="text-center"><h4>{$bytes_last} / {$files_last} </h4></td>
+                                <td><h5>{{ 'Transferred Bytes / Files'|trans }}</h5></td>
+                                <td class="text-center"><h4>{{ bytes_last }} / {{ files_last }} </h4></td>
                             </tr>
                         </table>
                     </div>
@@ -119,13 +119,13 @@
                     <!-- Stored Bytes for last 7 days -->
                     <div class="col-12">
                         <div class="card border-dark mb-3">
-                            <div class="card-header" title="{t}Stored bytes over the last 7 days{/t}">
-                                <b>{t}Stored Bytes (last 7 days){/t}</b></div>
+                            <div class="card-header" title="{{ 'Stored bytes over the last 7 days'|trans }}">
+                                <b>{{ 'Stored Bytes (last 7 days)'|trans }}</b></div>
                             <div class="card-body">
-                                <div id="{$storedbytes_chart_id}">
+                                <div id="{{ storedbytes_chart_id }}">
                                     <svg></svg>
                                 </div>
-                                {$storedbytes_chart}
+                                {{ storedbytes_chart|raw }}
                             </div>
                         </div>
                     </div>
@@ -133,14 +133,14 @@
                     <!-- Stored Files for last 7 days -->
                     <div class="col-12">
                         <div class="card border-dark mb-3">
-                            <div class="card-header" title="{t}Stored files over the last 7 days{/t}">
-                                <b>{t}Stored Files (last 7 days){/t}</b
+                            <div class="card-header" title="{{ 'Stored files over the last 7 days'|trans }}">
+                                <b>{{ 'Stored Files (last 7 days)'|trans }}</b
                             </div>
                             <div class="card-body">
-                                <div id="{$storedfiles_chart_id}">
+                                <div id="{{ storedfiles_chart_id }}">
                                     <svg></svg>
                                 </div>
-                                {$storedfiles_chart}
+                                {{ storedfiles_chart|raw }}
                             </div>
                         </div>
                     </div>
@@ -154,13 +154,13 @@
             <div class="col-xs-12 col-md-6">
                 <div class="card border-dark mb-3">
                     <div class="card-header">
-                        <b>{t}Pools and volumes status{/t}</b>
+                        <b>{{ 'Pools and volumes status'|trans }}</b>
                     </div>
                     <div class="card-body">
-                        <div id="{$pools_usage_chart_id}">
+                        <div id="{{ pools_usage_chart_id }}">
                             <svg></svg>
                         </div>
-                        {$pools_usage_chart}
+                        {{ pools_usage_chart|raw }}
                     </div>
                 </div>
             </div>
@@ -169,11 +169,11 @@
                 <!-- Last used volumes -->
                 <div class="card border-dark mb-3">
                     <div class="card-header">
-                        <b>{t}Last used volumes{/t}</b>
+                        <b>{{ 'Last used volumes'|trans }}</b>
                         <button type="button" class="btn btn-secondary btn-sm"
                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                 data-bs-custom-class="custom-tooltip"
-                                data-bs-title="{t}Displays the last 10 volumes used during backups{/t}">
+                                data-bs-title="{{ 'Displays the last 10 volumes used during backups'|trans }}">
                             <i class="fa-solid fa-info"></i>
                         </button>
                     </div>
@@ -182,25 +182,27 @@
                         <div class="table-responsive">
                             <table class="table table-condensed table-striped">
                                 <tr>
-                                    <th title="{t}Volume name{/t}">Volume</th>
-                                    <th title="{t}Volume status{/t}">Status</th>
-                                    <th title="{t}Volume pool{/t}">Pool</th>
-                                    <th title="{t}Last written date for this volume{/t}">Last written</th>
-                                    <th title="{t}Number of jobs{/t}">Jobs</th>
+                                    <th title="{{ 'Volume name'|trans }}">Volume</th>
+                                    <th title="{{ 'Volume status'|trans }}">Status</th>
+                                    <th title="{{ 'Volume pool'|trans }}">Pool</th>
+                                    <th title="{{ 'Last written date for this volume'|trans }}">Last written</th>
+                                    <th title="{{ 'Number of jobs'|trans }}">Jobs</th>
                                 </tr>
 
-                                {foreach from=$volumes_list item=vol}
+                                {# {foreach from=$volumes_list item=vol} #}
+                                {% for vol in volumes_list %}
                                     <tr>
                                         <td>
-                                            <a href="/volumes/{$vol.mediaid}"
-                                               title="{t}Show volume{/t}">{$vol.volumename}</a>
+                                            <a href="/volumes/{{ vol.mediaid }}"
+                                               title="{{ 'Show volume'|trans }}">{{ vol.volumename }}</a>
                                         </td>
-                                        <td>{$vol.volstatus}</td>
-                                        <td>{$vol.poolname}</td>
-                                        <td>{$vol.lastwritten}</td>
-                                        <td class="strong">{$vol.voljobs}</td>
+                                        <td>{{ vol.volstatus }}</td>
+                                        <td>{{ vol.poolname }}</td>
+                                        <td>{{ vol.lastwritten}}</td>
+                                        <td class="strong">{{ vol.voljobs }}</td>
                                     </tr>
-                                {/foreach}
+                                {% endfor %}
+
                             </table>
                         </div>
                     </div>
@@ -216,47 +218,47 @@
                 <!-- Clients jobs total widget -->
                 <div class="card border-dark mb-3">
                     <div class="card-header">
-                        <b>{t}Clients jobs total{/t}</b>
+                        <b>{{ 'Clients jobs total'|trans }}</b>
                     </div>
                     <div class="card-body">
-                        <p>{t}Per job name backup and restore jobs statistics{/t}</p>
+                        <p>{{ 'Per job name backup and restore jobs statistics'|trans }}</p>
                     </div>
                     <table class="table table-condensed">
                         <tr>
-                            <th>{t}Job name{/t}</th>
-                            <th class="text-right">{t}Jobs{/t}</th>
-                            <th class="text-right">{t}Files{/t}</th>
-                            <th class="text-right">{t}Bytes{/t}</th>
-                            <th>{t}Type{/t}</th>
+                            <th>{{ 'Job name'|trans }}</th>
+                            <th class="text-right">{{ 'Jobs'|trans }}</th>
+                            <th class="text-right">{{ 'Files'|trans }}</th>
+                            <th class="text-right">{{ 'Bytes'|trans }}</th>
+                            <th>{{ 'Type'|trans }}</th>
                         </tr>
-                        {foreach from=$jobnames_jobs_stats item=jobname}
+                        {% for jobname in jobnames_jobs_stats %}
                             <tr>
-                                <td>{$jobname.jobname}</td>
-                                <td class="text-right">{$jobname.jobscount}</td>
-                                <td class="text-right">{$jobname.jobfiles}</td>
-                                <td class="text-right">{$jobname.jobbytes}</td>
-                                <td>{$jobname.type}</td>
+                                <td>{{ jobname.jobname }}</td>
+                                <td class="text-right">{{ jobname.jobscount }}</td>
+                                <td class="text-right">{{ jobname.jobfiles }}</td>
+                                <td class="text-right">{{ jobname.jobbytes }}</td>
+                                <td>{{ jobname.type }}</td>
                             </tr>
-                        {/foreach}
+                        {% endfor %}
                     </table>
                     <div class="card-body">
                         <p>Per job type backup and restore jobs statistics</p>
                     </div>
                     <table class="table table-condensed">
                         <tr>
-                            <th>{t}Type{/t}</th>
-                            <th class="text-right">{t}Files{/t}</th>
-                            <th class="text-right">{t}Bytes{/t}</th>
-                            <th class="text-right">{t}Jobs{/t}</th>
+                            <th>{{ 'Type'|trans }}</th>
+                            <th class="text-right">{{ 'Files'|trans }}</th>
+                            <th class="text-right">{{ 'Bytes'|trans }}</th>
+                            <th class="text-right">{{ 'Jobs'|trans }}</th>
                         </tr>
-                        {foreach from=$jobtypes_jobs_stats item=jobtype}
+                        {% for jobtype in jobtypes_jobs_stats %}
                             <tr>
                                 <td>{$jobtype.type}</td>
-                                <td class="text-right">{$jobtype.jobfiles}</td>
-                                <td class="text-right">{$jobtype.jobbytes}</td>
-                                <td class="text-right">{$jobtype.jobscount}</td>
+                                <td class="text-right">{{ jobtype.jobfiles }}</td>
+                                <td class="text-right">{{ jobtype.jobbytes }}</td>
+                                <td class="text-right">{{ jobtype.jobscount }}</td>
                             </tr>
-                        {/foreach}
+                        {% endfor %}
                     </table>
                 </div>
             </div>
@@ -265,26 +267,26 @@
             <div class="col col-xs-12 col-md-6">
                 <div class="card border-dark mb-3">
                     <div class="card-header">
-                        <b>{t}Weekly jobs statistics{/t}</b>
+                        <b>{{ 'Weekly jobs statistics'|trans }}</b>
                     </div>
                     <div class="card-body">
                         <table class="table table-condensed table-striped">
                             <tr>
-                                <th>{t}Day of week{/t}</th>
-                                <th class="text-right">{t}Bytes{/t}</th>
-                                <th class="text-right">{t}Files{/t}</th>
+                                <th>{{ 'Day of week'|trans }}</th>
+                                <th class="text-right">{{ 'Bytes'|trans }}</th>
+                                <th class="text-right">{{ 'Files'|trans }}</th>
                             </tr>
-                            {foreach from=$weeklyjobsstats item=day}
+                            {% for day in weeklyjobsstats %}
                                 <tr>
-                                    <td>{$day.dayofweek}</td>
-                                    <td class="text-right">{$day.jobbytes}</td>
-                                    <td class="text-right">{$day.jobfiles}</td>
+                                    <td>{{ day.dayofweek }}</td>
+                                    <td class="text-right">{{ day.jobbytes }}</td>
+                                    <td class="text-right">{{ day.jobfiles }}</td>
                                 </tr>
-                                {foreachelse}
+                            {% else %}
                                 <tr>
-                                    <td colspan="3" class="text-center">{t}Nothing to display{/t}</td>
+                                    <td colspan="3" class="text-center">{{ 'Nothing to display'|trans }}</td>
                                 </tr>
-                            {/foreach}
+                            {% endfor %}
                         </table>
                     </div>
                 </div>
@@ -297,37 +299,37 @@
                 <!-- 10th biggest job names -->
                 <div class="card border-dark mb-3">
                     <div class="card-header">
-                        <b>{t}Biggest backup jobs{/t}</b>
+                        <b>{{ 'Biggest backup jobs'|trans }}</b>
                         <button type="button" class="btn btn-secondary btn-sm"
                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                 data-bs-custom-class="custom-tooltip"
-                                data-bs-title="{t}Displays the 10 biggest (Bytes) Bacula backup jobs{/t}">
+                                data-bs-title="{{ 'Displays the 10 biggest (Bytes) Bacula backup jobs'|trans }}">
                             <i class="fa-solid fa-info"></i>
                         </button>
                     </div>
                     <div class="card-body">
                         <table class="table table-condensed table-striped">
                             <tr>
-                                <th>{t}Job name{/t}</th>
-                                <th class="text-right">{t}Bytes{/t}</th>
-                                <th class="text-right">{t}Files{/t}</th>
+                                <th>{{ 'Job name'|trans }}</th>
+                                <th class="text-right">{{ 'Bytes'|trans }}</th>
+                                <th class="text-right">{{ 'Files'|trans }}</th>
                             </tr>
-                            {foreach from=$biggestjobs item=job}
+                            {% for job in biggestjobs %}
                                 <tr>
                                     <td>
                                         <form action="/backupjob" method="post">
-                                            <input type="hidden" name="backupjob_name" value="{$job.name}" />
-                                            <button class="btn btn-link type="submit">{$job.name}</button>
+                                            <input type="hidden" name="backupjob_name" value="{{ job.name }}" />
+                                            <button class="btn btn-link type="submit">{{ job.name }}</button>
                                         </form>
                                     </td>
-                                    <td class="text-right">{$job.jobbytes}</td>
-                                    <td class="text-right">{$job.jobfiles}</td>
+                                    <td class="text-right">{{ job.jobbytes }}</td>
+                                    <td class="text-right">{{ job.jobfiles }}</td>
                                 </tr>
-                            {foreachelse}
+                            {% else %}
                                 <tr>
-                                    <td colspan="3" class="text-center">{t}Nothing to display{/t}</td>
+                                    <td colspan="3" class="text-center">{{ 'Nothing to display'|trans }}</td>
                                 </tr>
-                            {/foreach}
+                            {% endfor %}
                         </table>
                     </div>
                 </div>
@@ -335,4 +337,5 @@
             </div>
         </div>
     </div>
-{/block}
+
+{% endblock %}

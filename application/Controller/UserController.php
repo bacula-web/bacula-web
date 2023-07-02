@@ -23,12 +23,14 @@ namespace App\Controller;
 
 use App\Tables\UserTable;
 use Core\App\UserAuth;
-use Core\App\View;
+use Slim\Views\Twig;
 use Core\Helpers\Sanitizer;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use SmartyException;
 use GuzzleHttp\Psr7\Response;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class UserController
 {
@@ -36,18 +38,18 @@ class UserController
      * @var string
      */
     protected string $username = '';
-    private View $view;
+    private Twig $view;
     private UserTable $userTable;
     private UserAuth $userAuth;
     private SessionInterface $session;
 
     /**
-     * @param View $view
+     * @param Twig $view
      * @param UserTable $userTable
      * @param UserAuth $userAuth
      * @param SessionInterface $session
      */
-    public function __construct(View $view, UserTable $userTable, UserAuth $userAuth, SessionInterface $session)
+    public function __construct(Twig $view, UserTable $userTable, UserAuth $userAuth, SessionInterface $session)
     {
         $this->view = $view;
         $this->userTable = $userTable;
@@ -59,17 +61,21 @@ class UserController
      * @param Request $request
      * @param Response $response
      * @return Response
-     * @throws SmartyException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function prepare(Request $request, Response $response): Response
     {
+        $tplData = [];
         $postData = $request->getParsedBody();
 
-        $this->username = $this->session->get('username');
+        // TODO: get username from session
+        $this->username = $this->session->get('username', 'davide');
         $user = $this->userTable->findByName($this->username);
 
-        $this->view->set('username', $user->getUsername());
-        $this->view->set('email', $user->getEmail());
+        $tplData['username'] = 'davide';
+        $tplData['email'] = $user->getEmail();
 
         // Check if password reset have been requested
         if (isset($postData['action'])) {
@@ -102,7 +108,6 @@ class UserController
             }
         }
 
-        $response->getBody()->write($this->view->render('usersettings.tpl'));
-        return $response;
+        return $this->view->render($response, 'pages/usersettings.html.twig', $tplData);
     }
 }

@@ -33,6 +33,8 @@ use App\Middleware\FlashMiddleware;
 use DI\ContainerBuilder;
 use Odan\Session\Middleware\SessionStartMiddleware;
 use Slim\Factory\AppFactory;
+use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -59,7 +61,7 @@ $app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
 
     $group->map(['GET', 'POST'], '/jobs[/{page}]', [JobController::class, 'index']);
     $group->get('/joblog/{jobid}', [JobController::class, 'showLogs']);
-    $group->map(['GET', 'POST'], '/jobfiles/{jobid}', [JobController::class, 'showFiles']);
+    $group->map(['GET', 'POST'], '/jobfiles[/{jobid}[/{page}[/{filename}]]]', [JobController::class, 'showFiles']);
 
     $group->get('/pools', [PoolController::class, 'prepare']);
 
@@ -85,6 +87,6 @@ $app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
 });
 
 $app->add(SessionStartMiddleware::class)
-    ->add(FlashMiddleware::class)
+    ->add(TwigMiddleware::create($app, $container->get(Twig::class)));
 
 $app->run();

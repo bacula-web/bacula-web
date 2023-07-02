@@ -1,20 +1,10 @@
-{extends file='blank.tpl'}
+{% extends "layouts/blank.html.twig" %}
 
-{block name=title}
-    <title>Bacula-Web - {t}Login{/t}</title>
-{/block}
+{% block title %}
+    <title>Bacula-Web - {{ 'Login'|trans }}</title>
+{% endblock %}
 
-{block name=body}
-
-    {if isset($flash) }
-        {if is_array($flash) }
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                {$flash[0]}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {/if}
-    {/if}
-
+{% block body %}
     <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
         <div class="container">
             <div class="row justify-content-center">
@@ -51,7 +41,7 @@
                                 <div>
                                     <img class="img-responsive" src="img/bacula-web-logo.png" alt="Bacula-Web logo"/>
                                     <div>
-                                        <h2 class="text-black">{$app_name}</h2>
+                                        <h2 class="text-black">{{ app_name }}</h2>
                                     </div>
                                 </div>
                             </div>
@@ -61,4 +51,4 @@
             </div>
         </div>
     </div>
-{/block}
+{% endblock %}

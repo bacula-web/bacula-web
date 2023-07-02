@@ -26,22 +26,18 @@ use Core\App\View;
 use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
 use Odan\Session\SessionInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
+use Slim\Views\Twig;
 use Valitron\Validator;
 
 class LoginController
 {
-
-    private View $view;
     private UserAuth $userAuth;
     private SessionInterface $session;
 
-    public function __construct(View $view, UserAuth $userAuth, SessionInterface $session)
+    public function __construct(UserAuth $userAuth, SessionInterface $session)
     {
-        $this->view = $view;
-        $this->view->setTemplate('login.tpl');
         $this->userAuth = $userAuth;
         $this->session = $session;
     }
@@ -66,8 +62,11 @@ class LoginController
 
     public function index(Request $request, Response $response): Response
     {
-        //$response->getBody()->write($this->view->render('login.tpl'));
-        //$this->view->setTemplate('login.tpl');
+        $view = Twig::fromRequest($request);
+
+        return $view->render($response, 'pages/login.html.twig', [
+            'flash' => $this->session->getFlash()
+        ]);
 
         return $response;
     }
@@ -99,7 +98,7 @@ class LoginController
         ]);
 
         if (!$v->validate()) {
-            $this->session->getFlash()->add('info', 'Not valid: Bad username or password');
+            $this->session->getFlash()->set('error', ['Wrong username or password']);
             $this->session->save();
 
             return $response
@@ -116,16 +115,14 @@ class LoginController
             $username = Sanitizer::sanitize($postData['username']);
             $this->session->set('username', $username);
 
-            $this->session->getFlash()->add('info', 'Successfully authenticated');
+            $this->session->getFlash()->set('info', ['Successfully authenticated']);
             $this->session->save();
-
-            $this->view->setTemplate('dashboard.tpl');
 
             return $response
                 ->withHeader('Location', '/')
                 ->withStatus(302);
         } else {
-            $this->session->getFlash()->add('info', 'Wrong username or password');
+            $this->session->getFlash()->set('error', ['Wrong username or password']);
             $this->session->save();
 
             return $response

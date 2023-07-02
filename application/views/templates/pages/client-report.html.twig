@@ -1,0 +1,154 @@
+{% extends "layouts/default.html.twig" %}
+
+{% block title %}
+    <title>Bacula-Web - {{ 'Client report'|trans }}</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="mt-3 mb-0">{{ 'Client report'|trans }}</h3>
+                <p class="mb-0">{{ 'Report per Bacula client'|trans }}</p>
+                <hr>
+            </div>
+        </div>
+
+        <div class="card border-dark mb-3">
+            <div class="card-header">{{ 'Report options'|trans }}</div>
+            <div class="card-body">
+                <form action="/client" method="post" class="form-inline">
+                    <!-- Backup job name -->
+                    <div class="mb-3">
+                        <label class="form-label" for="clientname">{{ 'Client'|trans }}</label>
+                        <select class="form-control input-sm" name="client_id">
+                            {% for client_id, client_name in clients_list %}
+                                <option value="{{ client_id }}" {% if client_id == selected_client %}selected{% endif %}>{{ client_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- Period -->
+                    <div class="mb-3">
+                        <label class="form-label" for="period">{{ 'Period'|trans }}</label>
+                        <select class="form-control input-sm" name="period">
+                            {% for key, period in periods_list %}
+                                <option value="{{ key }}" {% if key == selected_period %}selected {% endif %}>{{ period }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Submit button -->
+                    <div class="mb-3 pull-right">
+                        <button type="submit" class="btn btn-primary">{{ 'View report'|trans }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if no_report_options == 'false' %}
+            <div class="card border-dark mb-3">
+                <div class="card-header">{{ 'Client informations'|trans }}</div>
+                <div class="card-body">
+                    <dl class="dl-horizontal">
+                        <dt>{{ 'Client name'|trans }}</dt>
+                        <dd>{{ client_name }}</dd>
+                        <dt>{{ 'Client version'|trans }}</dt>
+                        <dd>{{ client_version }}</dd>
+                        <dt>{{ 'Client os'|trans }}</dt>
+                        <dd>{{ client_os }}</dd>
+                        <dt>{{ 'Client arch'|trans }}
+                        <dd>{{ client_arch}}</dd>
+                    </dl>
+                </div>
+            </div>
+            <h4>{{ 'Last good backup job'|trans }}</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-condensed table-striped text-center">
+                    <tr>
+                        <th class="text-center">{{ 'Name'|trans }}</th>
+                        <th class="text-center">{{ 'Job Id'|trans }}</th>
+                        <th class="text-center">{{ 'Level'|trans }}</th>
+                        <th class="text-center">{{ 'End time'|trans }}</th>
+                        <th class="text-right">{{ 'Bytes'|trans }}</th>
+                        <th class="text-right">{{ 'Files'|trans }}</th>
+                        <th class="text-center">{{ 'Status'|trans }}</th>
+                    </tr>
+                    {% for job in backup_jobs %}
+                        <tr>
+                            <td>{{ job.name }}</td>
+                            <td>{{ job.jobid }}</td>
+                            <td>{{ job.level }}</td>
+                            <td>{{ job.endtime }}</td>
+                            <td class="text-right">{{ job.jobbytes }}</td>
+                            <td class="text-right">{{ job.jobfiles }}</td>
+                            <td>{{ job.jobstatuslong }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <h4>{{ 'Statistics'|trans }} - {{ 'Last'|trans }} {{ period }} {{ 'days(s)' }}</h4>
+            <!-- Bytes and files charts -->
+
+            {% if period > 7 %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card border-dark mb-3">
+                            <div class="card-header"><b>{{ 'Bytes'|trans }}</b></div>
+                            <div class="card-body">
+                                <div id="{{ stored_bytes_chart_id }}">
+                                    <svg></svg>
+                                </div>
+                                {{ stored_bytes_chart|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- div class="row" -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card border-dark mb-3">
+                            <div class="card-header"><b>{{ 'Files'|trans }}</b></div>
+                            <div class="card-body">
+                                <div id="{{ stored_files_chart_id }}">
+                                    <svg></svg>
+                                </div>
+                                {{ stored_files_chart|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="card">
+                            <div class="card-header"><b>{{ 'Bytes'|trans }}</b></div>
+                            <div class="card-body">
+                                <div id="{{ stored_bytes_chart_id }}">
+                                    <svg></svg>
+                                </div>
+                                {{ stored_bytes_chart|raw }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="card">
+                            <div class="card-header">{{ 'Files'|trans }}</div>
+                            <div class="card-body">
+                                <div id="{{ stored_files_chart_id }}">
+                                    <svg></svg>
+                                </div>
+                                {{ stored_files_chart|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-info"
+                 role="alert">{{ 'Choose the client name and the period interval, then click on the'|trans }}
+                <strong>{{ 'View report'|trans }}</strong> {{ 'button'|trans }}</div>
+        {% endif %}
+    </div>
+{% endblock %}

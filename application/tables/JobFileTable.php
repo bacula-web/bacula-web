@@ -53,7 +53,7 @@ class JobFileTable extends Table
         $catalog = new CatalogTable(
             DatabaseFactory::getDatabase(
                 (new PhpSession())->get('catalog_id', 0)
-        );
+        ));
 
         // Catalog version prior to Bacula 11.0.x
         if ($catalog->getCatalogVersion() < 1016) {
@@ -111,7 +111,7 @@ class JobFileTable extends Table
     {
         $catalog = new CatalogTable(
             DatabaseFactory::getDatabase(
-                (new Session())->get('catalog_id', 0)
+                (new PhpSession())->get('catalog_id', 0)
             )
         );
 

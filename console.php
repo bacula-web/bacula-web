@@ -158,12 +158,11 @@ switch ($argv[1]) {
             echo "\tProtected assets folder is writable" . hightlight('Error', 'error') . PHP_EOL;
         }
 
-        // Check Smarty cache folder permissions
-        $view = new View();
-        if (is_writable($view->getCacheDir())) {
-            echo "\tSmarty cache folder write permission" . hightlight('Ok', 'ok') . PHP_EOL;
+        // Check Twig cache folder permissions
+        if (is_writable(BW_ROOT . '/application/views/cache')) {
+            echo "\tTwig cache folder write permission" . hightlight('Ok', 'ok') . PHP_EOL;
         } else {
-            echo "\tSmarty cache folder write permission" . hightlight('Error', 'error') . PHP_EOL;
+            echo "\tTwig cache folder write permission" . hightlight('Error', 'error') . PHP_EOL;
         }
 
         // List available PHP PDO drivers

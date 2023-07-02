@@ -35,8 +35,6 @@
     "ext-sqlite3": "*",
     "ext-posix": "*",
     "novus/nvd3": "@stable",
-    "smarty/smarty": "^4",
-    "smarty-gettext/smarty-gettext": "@stable",
     "components/font-awesome": "6.*",
     "vlucas/valitron": "^1.4",
     "cocur/human-date": "^0.1.0",
@@ -46,7 +44,10 @@
     "twbs/bootstrap": "5.2.3",
     "slim/slim": "4.*",
     "guzzlehttp/psr7": "^2",
-    "odan/session": "^6.1"
+    "odan/session": "^6.1",
+    "slim/twig-view": "^3.3",
+    "symfony/translation": "^6.0",
+    "symfony/twig-bridge": "^6.0"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",

@@ -21,41 +21,47 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Job;
 use App\Libs\FileConfig;
 use App\Tables\JobFileTable;
 use App\Tables\LogTable;
-use Core\App\View;
 use Core\Db\CDBPagination;
 use Core\Db\CDBQuery;
+use Core\Exception\ConfigFileException;
 use Core\Helpers\Sanitizer;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
 use App\Tables\JobTable;
 use App\Tables\ClientTable;
 use App\Tables\PoolTable;
+use Exception;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use SmartyException;
+use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+use TypeError;
 
 class JobController
 {
     private LogTable $logTable;
-    private View $view;
     private JobTable $jobTable;
-    private CDBPagination $paginator;
+    //private CDBPagination $paginator;
     private ClientTable $clientTable;
     private PoolTable $poolTable;
 
     private JobFileTable $jobFileTable;
+    private Twig $view;
 
     public function __construct(
         JobTable $jobTable,
         LogTable $logTable,
-        View $view,
-        CDBPagination $paginator,
+        //CDBPagination $paginator,
         ClientTable $clientTable,
         PoolTable $poolTable,
-        JobFileTable $jobFileTable
+        JobFileTable $jobFileTable,
+        Twig $view
     )
     {
         $this->logTable = $logTable;
@@ -72,7 +78,7 @@ class JobController
             $page = $args['page'];
         }
 
-        $this->paginator = $paginator;
+        //$this->paginator = $paginator;
     }
 
     /**
@@ -80,9 +86,12 @@ class JobController
      * @param Response $response
      * @param $args
      * @return Response
+     * @throws ConfigFileException
+     * @throws Exception
      */
     public function index(Request $request, Response $response, $args): Response
     {
+        $tplData = [];
         $where = null;
         $params = [];
         $postRequestData = $request->getParsedBody();
@@ -142,7 +151,7 @@ class JobController
             STATUS_CANCELED => 'Canceled'
         ];
 
-        $this->view->set('job_status', $job_status);
+        $tplData['job_status'] = $job_status;
 
         // Job types
         $job_types = array( 'B' => 'Backup',
@@ -158,31 +167,28 @@ class JobController
         // Jobs type filter
         $job_types_list = $this->jobTable->getUsedJobTypes($job_types);
         $job_types_list['0'] = 'Any';
-        $this->view->set('job_types_list', $job_types_list);
+        $tplData['job_types_list'] = $job_types_list;
 
         // Job client id filter
-        //$filter_clientid = $this->getParameter('filter_clientid', '0');
-
         $filter_clientid = '0';
         if (isset($postRequestData['filter_clientid'])) {
             $filter_clientid = $postRequestData['filter_clientid'];
         }
-        $this->view->set('filter_clientid', $filter_clientid);
+        $tplData['filter_clientid'] = $filter_clientid;
 
         // Job status filter
         $filter_jobstatus = '0';
         if (isset($postRequestData['filter_jobstatus'])) {
             $filter_jobstatus = (int) $postRequestData['filter_jobstatus'] ?? '0';
         }
-
-        $this->view->set('filter_jobstatus', $filter_jobstatus);
+        $tplData['filter_jobstatus'] = $filter_jobstatus;
 
         // Job type filter
         $filter_jobtype = '0';
         if (isset($postRequestData['filter_jobtype'])) {
             $filter_jobtype = $postRequestData['filter_jobtype'];
         }
-        $this->view->set('filter_jobtype', $filter_jobtype);
+        $tplData['filter_jobtype'] = $filter_jobtype;
 
         // Validate filter job type
         if (array_key_exists($filter_jobtype, $job_types)) {
@@ -192,28 +198,28 @@ class JobController
         // Levels list filter
         $levels_list = $this->jobTable->getLevels($job_levels);
         $levels_list['0']  = 'Any';
-        $this->view->set('levels_list', $levels_list);
+        $tplData['levels_list'] = $levels_list;
 
         // Job level filter
         $filter_joblevel = '0';
         if (isset($postRequestData['filter_joblevel'])) {
             $filter_joblevel = $postRequestData['filter_joblevel'];
         }
-        $this->view->set('filter_joblevel', $filter_joblevel);
+        $tplData['filter_joblevel'] = $filter_joblevel;
 
         // Job starttime filter
         $filter_job_starttime = null;
         if (isset($postRequestData['filter_job_starttime'])) {
             $filter_job_starttime = $postRequestData['filter_job_starttime'];
         }
-        $this->view->set('filter_job_starttime', $filter_job_starttime);
+        $tplData['filter_job_starttime'] = $filter_job_starttime;
 
         // Job endtime filter
         $filter_job_endtime = null;
         if (isset($postRequestData['filter_job_endtime'])) {
             $filter_job_endtime = $postRequestData['filter_job_endtime'];
         }
-        $this->view->set('filter_job_endtime', $filter_job_endtime);
+        $tplData['filter_job_endtime'] = $filter_job_endtime;
 
         // Job orderby filter
         $job_orderby_filter = 'jobid';
@@ -235,7 +241,7 @@ class JobController
         // Clients list filter
         $clients_list = $this->clientTable->getClients();
         $clients_list[0] = 'Any';
-        $this->view->set('clients_list', $clients_list);
+        $tplData['clients_list'] = $clients_list;
 
         /**
          * Generate drop-down job pool filter
@@ -247,13 +253,13 @@ class JobController
         }
 
         $pools_list[0] = 'Any';
-        $this->view->set('pools_list', $pools_list);
+        $tplData['pools_list'] = $pools_list;
 
         $filter_poolid = '0';
         if (isset($postRequestData['filter_poolid'])) {
             $filter_poolid = $postRequestData['filter_poolid'];
         }
-        $this->view->set('filter_poolid', $filter_poolid);
+        $tplData['filter_poolid'] = $filter_poolid;
 
         /**
          * Job status filter
@@ -321,16 +327,18 @@ class JobController
             }
         }
 
-        $this->view->set('result_order', $result_order);
+        //$this->view->set('result_order', $result_order);
+        $tplData['result_order'] = $result_order;
+
         $orderby = "$job_orderby_filter $job_orderby_asc_filter ";
 
         // Set selected option in template for Job order and Job order asc (ascendant order)
-        $this->view->set('result_order_field', $job_orderby_filter);
+        $tplData['result_order_field'] = $job_orderby_filter;
 
         if ($job_orderby_asc_filter == 'ASC') {
-            $this->view->set('result_order_asc_checked', 'checked');
+            $tplData['result_order_asc_checked'] = 'checked';
         } else {
-            $this->view->set('result_order_asc_checked', '');
+            $tplData['result_order_asc_checked'] = '';
         }
 
         // Parsing jobs result
@@ -339,8 +347,8 @@ class JobController
             'where' => $where,
             'orderby' => $orderby,
             'limit' => [
-                'count' => $this->paginator->getLimit(),
-                'offset' => $this->paginator->getOffset()
+                'count' => 25, //$pagination->getLimit(),
+                'offset' => 0 //$pagination->getOffset()
             ],
             'join' => array(
                 array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
@@ -355,7 +363,9 @@ class JobController
             ]
         );
 
-        foreach ($this->paginator->paginate($this->jobTable, $sqlQuery, $countQuery, $params) as $job) {
+        // TODO: fix pagination later
+        //foreach ($this->paginator->pag∫inate($this->jobTable, $sqlQuery, $countQuery, $params) as $job) {
+        foreach($this->jobTable->select($sqlQuery, $params) as $job) {
             // Determine icon for job status
             switch ($job['jobstatus']) {
                 case J_RUNNING:
@@ -463,13 +473,14 @@ class JobController
             $last_jobs[] = $job;
         }
 
-        $this->view->set('last_jobs', $last_jobs);
+        //$this->view->set('last_jobs', $last_jobs);
+        $tplData['last_jobs'] = $last_jobs;
 
         // Count jobs
-        $this->view->set('jobs_found', count($last_jobs));
+        //$this->view->set('jobs_found', count($last_jobs));
+        $tplData['jobs_found'] = count($last_jobs);
 
-        $response->getBody()->write($this->view->render('jobs.tpl'));
-        return $response;
+        return $this->view->render($response, 'pages/jobs.html.twig', $tplData);
     }
 
     /**
@@ -477,18 +488,22 @@ class JobController
      * @param Response $response
      * @param $args
      * @return Response
-     * @throws SmartyException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function showLogs(Request $request, Response $response, $args): Response
     {
+        $tplData = [];
+
         // TODO: validate jobid is an integer
         $jobId = (int) $args['jobid'] ?? null;
 
         if( $jobId === null) {
-            throw new \TypeError('Invalid job id (invalid or null) provided in Job logs report');
+            throw new TypeError('Invalid job id (invalid or null) provided in Job logs report');
         }
 
-        $this->view->set('job', $this->jobTable->findById($jobId));
+        $tplData['job'] = $this->jobTable->findById($jobId);
 
         $sql = CDBQuery::get_Select(
             [
@@ -498,47 +513,49 @@ class JobController
             ]
         );
 
-        $this->view->set(
-            'joblogs',
-            $this->logTable->findAll($sql, ['jobid' => $jobId], 'App\Entity\Log')
-        );
+        $tplData['joblogs'] = $this->logTable->findAll($sql, ['jobid' => $jobId], 'App\Entity\Log');
 
-        $response->getBody()->write($this->view->render('joblogs.tpl'));
-        return $response;
+        return $this->view->render($response, 'pages/joblogs.html.twig', $tplData);
     }
 
     /**
      * @param Request $request
      * @param Response $response
+     * @param $args
      * @return Response
-     * @throws SmartyException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function showFiles(Request $request, Response $response): Response
+    public function showFiles(Request $request, Response $response, $args): Response
     {
+        $tplData = [];
         $rows_per_page = 10;
-        $current_page = null;
 
         $filename = '';
 
-        $requestData = $request->getAttributes();
         $postData = $request->getParsedBody();
 
-        $jobId = (int) $requestData['jobid'];
+        $jobId = (int) $args['jobid'];
 
         if ($jobId !== 0) {
-            $this->view->set('jobid', $jobId);
+            $tplData['jobid'] = $jobId;
         } else {
-            throw new \TypeError('Invalid or missing Job Id');
+            throw new TypeError('Invalid or missing Job Id');
         }
 
-        if (isset($postData['InputFilename'])) {
-            $filename = Sanitizer::sanitize($postData['InputFilename']);
+        if (isset($postData['filename'])) {
+            $filename = Sanitizer::sanitize($postData['filename']);
+        }
+
+        if (isset($args['filename'])) {
+            $filename = $args['filename'];
         }
 
         $jobInfo = $this->jobFileTable->getJobNameAndJobStatusByJobId($jobId);
-        $this->view->set('job_info', $jobInfo);
+        $tplData['job_info'] = $jobInfo;
         $files_count = $this->jobFileTable->countJobFiles($jobId, $filename);
-        $this->view->set('job_files_count', CUtils::format_Number($files_count));
+        $tplData['job_files_count'] = CUtils::format_Number($files_count);
 
         //pagination
         $pagination_active = false;
@@ -546,28 +563,25 @@ class JobController
             $pagination_active = true;
         }
 
-        if (isset($requestData['paginationCurrentPage'])) {
-            $current_page = $requestData['paginationCurrentPage'];
-        }
+        $currentPage = $args['page'] ?? 0;
 
-        $this->view->set('pagination_active', $pagination_active);
-        $this->view->set('pagination_current_page', $current_page);
-        $this->view->set('pagination_rows_per_page', $rows_per_page);
+        $tplData['pagination_active'] = $pagination_active;
+        $tplData['pagination_current_page'] = $currentPage;
+        $tplData['pagination_rows_per_page'] = $rows_per_page;
 
         if (!empty($filename)) {
             // Filter with provided filename if provided
-            $files = $this->jobFileTable->getJobFiles($jobId, $rows_per_page, $current_page, $filename);
+            $files = $this->jobFileTable->getJobFiles($jobId, $rows_per_page, $currentPage, $filename);
         } else {
             // otherwise, get files based on JobId only
-            $files = $this->jobFileTable->getJobFiles($jobId, $rows_per_page, $current_page);
+            $files = $this->jobFileTable->getJobFiles($jobId, $rows_per_page, $currentPage);
         }
 
-        $this->view->set('job_files', $files);
-        $this->view->set('job_files_count_paging', count($files));
+        $tplData['job_files'] = $files;
+        $tplData['job_files_count_paging'] = count($files);
 
-        $this->view->set('filename', $filename);
+        $tplData['filename'] = $filename;
 
-        $response->getBody()->write($this->view->render('jobfiles.tpl'));
-        return $response;
+        return $this->view->render($response, 'pages/jobfiles.html.twig', $tplData);
     }
 }
