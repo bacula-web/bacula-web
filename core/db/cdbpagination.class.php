@@ -27,10 +27,10 @@
 namespace Core\Db;
 
 use App\Libs\FileConfig;
-use Core\App\View;
-use Core\Helpers\Sanitizer;
+use Core\Exception\ConfigFileException;
 use Exception;
-use Symfony\Component\HttpFoundation\Request;
+use Psr\Http\Message\ServerRequestInterface;
+use function Core\Helpers\getRequestParams;
 
 class CDBPagination
 {
@@ -50,76 +50,70 @@ class CDBPagination
     private View $currentView;
 
     /**
-     * @var float|int
+     * @var int
      */
-    private $offset;
+    private int $offset;
 
     /**
-     * @var int|mixed|null
+     * @var int
      */
-    private $limit;
+    private int $limit;
 
     /**
      * Maximum number of pagination page
      * @var int
      */
-    private $paginationMax;
+    private int $paginationMax;
 
     /**
      * @var int
      */
-    private int $paginationSteps = 1;
+    private int $paginationCurrent;
+
+    private ServerRequestInterface $request;
 
     /**
-     * @var string
+     * @param ServerRequestInterface $request
+     * @throws ConfigFileException
      */
-    private string $paginationLink;
-
-    /**
-     * @var int
-     */
-    private int $paginationCurrent = 1;
-
-    /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * @param View $view
-     * @throws Exception
-     */
-    public function __construct(View $view)
+    public function __construct(ServerRequestInterface $request)
     {
-        $this->request = Request::createFromGlobals();
-        $this->currentView = $view;
+        $this->request = $request;
+        $parameters = getRequestParams($request);
 
         $this->limit = (FileConfig::get_Value('rows_per_page') !== null) ? FileConfig::get_Value('rows_per_page') : 25;
 
-        // get pagination page from GET
-        $current_page = (int) $this->request->query->get('pagination_page', 1);
-        if ($current_page === 1) {
+        $this->paginationCurrent = $parameters['page'] ?? 1;
+
+        if ($this->paginationCurrent === 1) {
             $this->offset = 0;
         } else {
-            $this->offset = ($current_page - 1) * $this->limit;
+            $this->offset = ($this->paginationCurrent - 1) * $this->limit;
         }
+    }
 
-        $this->paginationLink = 'index.php?page=' . Sanitizer::sanitize($this->request->query->getAlpha('page'));
+    public function getParams(): string
+    {
+        $params = '';
 
-        // Append filter and options from submited form values
+        // Append filter and options from submitted form values
         // from POST
-        foreach ($this->request->request->all() as $key => $value) {
+        foreach ($this->request->getParsedBody() as $key => $value) {
             if (strpos($key, 'filter_') !== false) {
-                $this->paginationLink .= "&$key=$value";
+                $params .= "&$key=$value";
             }
         }
 
-        // from GET
-        foreach ($this->request->query->all() as $key => $value) {
+        // get pagination page from GET
+        $parameters = $this->request->getQueryParams();
+
+        foreach ($parameters as $key => $value) {
             if (strpos($key, 'filter_') !== false) {
-                $this->paginationLink .= "&$key=$value";
+                $params .= "&$key=$value";
             }
         }
+
+        return $params;
     }
 
     /**
@@ -127,7 +121,7 @@ class CDBPagination
      *
      * @return int offset
      */
-    public function getOffset()
+    public function getOffset(): int
     {
         return $this->offset;
     }
@@ -142,6 +136,16 @@ class CDBPagination
         return $this->limit;
     }
 
+    public function getTotalRow(): int
+    {
+        return $this->totalRow;
+    }
+
+    public function getRows(): int
+    {
+        return $this->filteredRow;
+    }
+
     /**
      * @param Table $table
      * @param string $query
@@ -153,76 +157,94 @@ class CDBPagination
     public function paginate(Table $table, string $query, string $queryCount, $params = null)
     {
         $this->totalRow = $table->count();
-        $this->currentView->set('rowcount', $this->totalRow);
 
         $this->filteredRow = $table->select($queryCount, $params)[0]['row_count'];
         $this->paginationMax = ceil($this->filteredRow / $this->limit);
 
-        $this->currentView->set('count', $this->filteredRow);
-
-        $this->currentView->set('pagination_link', $this->paginationLink);
-
-        if ($this->request->query->has('pagination_page')) {
-                $this->paginationCurrent = $this->request->query->getInt('pagination_page');
-                $this->currentView->set('pagination_current', $this->paginationCurrent);
-
-                // if requested pagination page is the first one
-            if ($this->request->query->get('pagination_page') == "1") {
-                $this->currentView->set('first', 'disabled');
-            } else {
-                $this->currentView->set('first', '');
-            }
-
-                // if requested pagination page is the last one
-            if ($this->request->query->getInt('pagination_page') == $this->paginationMax) {
-                $this->currentView->set('last', 'disabled');
-            } else {
-                $this->currentView->set('last', '');
-            }
-
-                // if requested pagination page is in first 4 pages, disable previous button
-            if ($this->request->query->getInt('pagination_page') < $this->paginationSteps) {
-                $this->currentView->set('previous_enabled', 'disabled');
-            } else {
-                $this->currentView->set('previous_enabled', '');
-            }
-
-                // if requested pagination page is within $this->paginationSteps, disable next link
-            if ($this->request->query->getInt('pagination_page') > ($this->paginationMax - $this->paginationSteps)) {
-                $this->currentView->set('next_enabled', 'disabled');
-            } else {
-                $this->currentView->set('next_enabled', '');
-            }
-
-                $this->currentView->set('previous', $this->request->query->getInt('pagination_page') - $this->paginationSteps);
-                $this->currentView->set('next', $this->request->query->getInt('pagination_page') + $this->paginationSteps);
-        } else {
-            $this->currentView->set('pagination_current', $this->paginationCurrent);
-            $this->currentView->set('previous_enabled', 'disabled');
-            $this->currentView->set('previous', '1');
-            $this->currentView->set('next', $this->paginationSteps + 1);
-
-            if ($this->paginationMax == 1) {
-                $this->currentView->set('next_enabled', 'disabled');
-                $this->currentView->set('last', 'disabled');
-            } else {
-                $this->currentView->set('next_enabled', '');
-                $this->currentView->set('last', '');
-            }
-
-            $this->currentView->set('first', 'disabled');
-        }
-
-        // these lines below are buggy :(
-        if ($this->paginationMax == $this->paginationCurrent) {
-            $this->currentView->set('pagination_range', ($this->offset) . ' to ' . $this->filteredRow);
-        } else {
-            $this->currentView->set('pagination_range', ($this->offset) . ' to ' . ($this->offset + $this->limit));
-        }
-
-        $this->currentView->set('pagination_max', $this->paginationMax);
-        $this->currentView->set('pagination_steps', $this->paginationSteps);
-
         return $table->select($query, $params);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaginationRange(): string
+    {
+        if ($this->paginationMax == $this->paginationCurrent) {
+            return ($this->offset) . ' to ' . $this->filteredRow;
+        } else {
+            return ($this->offset) . ' to ' . ($this->offset + $this->limit);
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxPage(): int
+    {
+        return $this->paginationMax;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPreviousPage(): int
+    {
+        if ($this->paginationCurrent == 1)
+        {
+            return 1;
+        }
+
+        return $this->paginationCurrent -1;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNextPage(): int
+    {
+        if ($this->paginationCurrent !== $this->getMaxPage())
+        {
+            return $this->paginationCurrent + 1;
+        }
+
+        return $this->getMaxPage();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCurrentPage(): int
+    {
+        return (int) $this->paginationCurrent;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaginationStart(): int
+    {
+        if ($this->getMaxPage() < 5) {
+            return 1;
+        }
+
+        if ($this->paginationCurrent >= ($this->getMaxPage()-5)) {
+            return ($this->getMaxPage() -5);
+        }
+        return $this->paginationCurrent;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaginationEnd(): int
+    {
+        if ($this->paginationCurrent >= ($this->getMaxPage()-5)) {
+            return $this->getMaxPage();
+        }
+
+        if ($this->getMaxPage() <= 5) {
+            return $this->getMaxPage();
+        }
+        return $this->paginationCurrent + 5;
     }
 }

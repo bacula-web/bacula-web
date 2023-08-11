@@ -36,6 +36,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use TypeError;
+use function Core\Helpers\getRequestParams;
 
 class VolumesController
 {
@@ -98,8 +99,7 @@ class VolumesController
         $poolslist = [0 => 'Any'] + $poolslist; // Add default pool filter
         $tplData['pools_list'] = $poolslist;
 
-        // TODO: fix this
-        $postData = $request->getParsedBody();
+        $postData = getRequestParams($request);
 
         $poolId = '0';
 
@@ -137,7 +137,7 @@ class VolumesController
 
         $volumeOrderByDirection = 'Desc';
         if (isset($postData['filter_orderby_asc'])) {
-            $volumeOrderByDirection = $postData['filter_orderby_asc'];
+            $volumeOrderByDirection = 'Asc';
         }
         if ($volumeOrderByDirection === 'Asc') {
             $tplData['orderby_asc_checked'] = 'checked';
@@ -238,6 +238,8 @@ class VolumesController
             // add volume in volumeTable list array
             $volumeslist[] = $volume;
         }
+
+        $tplData['pagination'] = $pagination;
 
         $tplData['volumes'] = $volumeslist;
         $tplData['volumes_count'] = $this->volumeTable->count();

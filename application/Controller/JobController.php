@@ -42,6 +42,9 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use TypeError;
+use function Core\Helpers\getRequestParams;
+
+;
 
 class JobController
 {
@@ -57,7 +60,6 @@ class JobController
     public function __construct(
         JobTable $jobTable,
         LogTable $logTable,
-        //CDBPagination $paginator,
         ClientTable $clientTable,
         PoolTable $poolTable,
         JobFileTable $jobFileTable,
@@ -70,15 +72,6 @@ class JobController
         $this->poolTable = $poolTable;
         $this->jobFileTable = $jobFileTable;
         $this->view = $view;
-
-        // debug
-        // pagination page
-        $page = 1;
-        if (isset($args['page'])) {
-            $page = $args['page'];
-        }
-
-        //$this->paginator = $paginator;
     }
 
     /**
@@ -94,7 +87,7 @@ class JobController
         $tplData = [];
         $where = null;
         $params = [];
-        $postRequestData = $request->getParsedBody();
+        $postRequestData = getRequestParams($request);
 
         // TODO: Improve how these constants are declared and used
         require_once BW_ROOT . '/core/const.inc.php';
@@ -235,7 +228,7 @@ class JobController
         // Job orderby asc filter
         $job_orderby_asc_filter = 'DESC';
         if( isset($postRequestData['filter_job_orderby_asc'])) {
-            $job_orderby_asc_filter = $postRequestData['filter_job_orderby_asc'];
+            $job_orderby_asc_filter = 'ASC';
         }
 
         // Clients list filter
@@ -327,7 +320,6 @@ class JobController
             }
         }
 
-        //$this->view->set('result_order', $result_order);
         $tplData['result_order'] = $result_order;
 
         $orderby = "$job_orderby_filter $job_orderby_asc_filter ";
@@ -341,14 +333,16 @@ class JobController
             $tplData['result_order_asc_checked'] = '';
         }
 
+        $pagination = new CDBPagination($request);
+
         // Parsing jobs result
         $sqlQuery = CDBQuery::get_Select(array('table' => 'Job',
             'fields' => $fields,
             'where' => $where,
             'orderby' => $orderby,
             'limit' => [
-                'count' => 25, //$pagination->getLimit(),
-                'offset' => 0 //$pagination->getOffset()
+                'count' => $pagination->getLimit(),
+                'offset' => $pagination->getOffset()
             ],
             'join' => array(
                 array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
@@ -363,9 +357,7 @@ class JobController
             ]
         );
 
-        // TODO: fix pagination later
-        //foreach ($this->paginator->pag∫inate($this->jobTable, $sqlQuery, $countQuery, $params) as $job) {
-        foreach($this->jobTable->select($sqlQuery, $params) as $job) {
+        foreach ($pagination->paginate($this->jobTable, $sqlQuery, $countQuery, $params) as $job) {
             // Determine icon for job status
             switch ($job['jobstatus']) {
                 case J_RUNNING:
@@ -472,6 +464,8 @@ class JobController
 
             $last_jobs[] = $job;
         }
+
+        $tplData['pagination'] = $pagination;
 
         //$this->view->set('last_jobs', $last_jobs);
         $tplData['last_jobs'] = $last_jobs;

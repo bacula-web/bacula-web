@@ -29,7 +29,6 @@ use App\Controller\SettingsController;
 use App\Controller\TestController;
 use App\Controller\UserController;
 use App\Controller\VolumesController;
-use App\Middleware\FlashMiddleware;
 use DI\ContainerBuilder;
 use Odan\Session\Middleware\SessionStartMiddleware;
 use Slim\Factory\AppFactory;
@@ -59,7 +58,7 @@ $app->addErrorMiddleware(
 $app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
     $group->map(['GET', 'POST'], '/', [HomeController::class, 'prepare']);
 
-    $group->map(['GET', 'POST'], '/jobs[/{page}]', [JobController::class, 'index']);
+    $group->map(['GET', 'POST'], '/jobs', [JobController::class, 'index']);
     $group->get('/joblog/{jobid}', [JobController::class, 'showLogs']);
     $group->map(['GET', 'POST'], '/jobfiles[/{jobid}[/{page}[/{filename}]]]', [JobController::class, 'showFiles']);
 
