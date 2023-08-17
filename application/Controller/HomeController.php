@@ -24,6 +24,7 @@ use App\Libs\FileConfig;
 use App\Tables\JobTable;
 use App\Tables\PoolTable;
 use App\Tables\VolumeTable;
+use Odan\Session\SessionInterface;
 use Slim\Views\Twig;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
@@ -43,17 +44,20 @@ class HomeController
     private JobTable $jobTable;
     private PoolTable $poolTable;
     private VolumeTable $volumeTable;
+    private SessionInterface $session;
 
 
     public function __construct(
         JobTable    $jobTable,
         PoolTable   $poolTable,
         VolumeTable $volumeTable,
+        SessionInterface $session
     )
     {
         $this->jobTable = $jobTable;
         $this->poolTable = $poolTable;
         $this->volumeTable = $volumeTable;
+        $this->session = $session;
     }
 
     /**
@@ -307,7 +311,7 @@ class HomeController
         // 10 biggest completed backup jobTable
         $tplData['biggestjobs'] = $this->jobTable->getBiggestJobsStats();
 
-        //$tplData[] = ['flash' => $this->session->getFlash() ];
+        $tplData['flash'] = $this->session->getFlash();
 
         return $view->render($response, 'pages/dashboard.html.twig', $tplData);
     }

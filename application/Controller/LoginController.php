@@ -22,7 +22,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Core\App\UserAuth;
-use Core\App\View;
 use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
 use Odan\Session\SessionInterface;
@@ -52,8 +51,6 @@ class LoginController
         $this->userAuth->destroySession($this->session);
         $this->session->getFlash()->add('info', 'Logged out successfully.');
         $this->session->save();
-
-        $this->view->setTemplate('login.tpl');
 
         return $response
             ->withHeader('Location', '/login')
