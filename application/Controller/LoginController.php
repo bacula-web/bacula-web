@@ -64,8 +64,6 @@ class LoginController
         return $view->render($response, 'pages/login.html.twig', [
             'flash' => $this->session->getFlash()
         ]);
-
-        return $response;
     }
 
     /**
