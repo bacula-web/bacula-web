@@ -21,9 +21,16 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use App\Libs\FileConfig;
 use Core\App\UserAuth;
 use Core\Exception\AppException;
-use Core\Middleware\MiddlewareInterface;
+use GuzzleHttp\Psr7\Response;
+use Odan\Session\SessionInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Slim\Views\Twig;
 
 class DbAuthMiddleware implements MiddlewareInterface
 {
@@ -31,48 +38,52 @@ class DbAuthMiddleware implements MiddlewareInterface
      * @var UserAuth
      */
     private UserAuth $dbAuth;
+    private SessionInterface $session;
+
+    private Twig $twig;
 
     /**
      * @throws AppException
      */
-    public function __construct()
+    public function __construct(UserAuth $userAuth, SessionInterface $session, Twig $twig)
     {
-        $this->dbAuth = new UserAuth();
+        $this->dbAuth = new $userAuth;
 
         // Check if database exists and is writable
         $this->dbAuth->check();
         $this->dbAuth->checkSchema();
+
+        $this->session = $session;
+
+        $this->twig = $twig;
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @return Response
+     * @param ServerRequestInterface $request
+     * @param RequestHandlerInterface $handler
+     * @return ResponseInterface
      */
-    public function process(Request $request, Response $response): Response
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $resultesponse = new Response();
+        FileConfig::open(CONFIG_FILE);
+        if (!FileConfig::get_Value('enable_users_auth')) {
+            return $handler->handle($request);
+        }
 
-        /**
-         * Redirect to the login page if not authenticated, unless requested page is login
-         *
-         * If already authenticated and requesting the login page, it redirects to the fallback controller (home)
-         */
+        if ($this->session->has('user_authenticated')) {
+            if ($this->session->get('user_authenticated') === 'yes') {
+                $this->twig->getEnvironment()->addGlobal('username', $this->session->get('username'));
+                $this->twig->getEnvironment()->addGlobal('user_authenticated', true);
 
-        if (!$this->dbAuth->authenticated()) {
-            if ($request->get('page') !== 'login') {
-                $response = new RedirectResponse('index.php?page=login');
-                $response->send();
-            }
-        } else {
-            if ($request->get('page') === 'login') {
-                $response = new RedirectResponse('index.php?page=home');
-                $response->send();
+                return $handler->handle($request);
             }
         }
 
-        $resultesponse->setStatusCode(200);
-        $resultesponse->setContent($response->getContent() . '<pre> you are authenticated</pre>');
-        return $resultesponse;
+        $this->session->getFlash()->set('error',  ['You must be authenticated']);
+        $response = new Response();
+
+        return $response
+            ->withHeader('Location', '/login')
+            ->withStatus(302);
     }
 }

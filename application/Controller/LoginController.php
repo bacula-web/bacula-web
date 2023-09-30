@@ -34,11 +34,13 @@ class LoginController
 {
     private UserAuth $userAuth;
     private SessionInterface $session;
+    private Twig $twig;
 
-    public function __construct(UserAuth $userAuth, SessionInterface $session)
+    public function __construct(UserAuth $userAuth, SessionInterface $session, Twig $twig)
     {
         $this->userAuth = $userAuth;
         $this->session = $session;
+        $this->twig = $twig;
     }
 
     /**
@@ -59,9 +61,7 @@ class LoginController
 
     public function index(Request $request, Response $response): Response
     {
-        $view = Twig::fromRequest($request);
-
-        return $view->render($response, 'pages/login.html.twig', [
+        return $this->twig->render($response, 'pages/login.html.twig', [
             'flash' => $this->session->getFlash()
         ]);
     }
@@ -107,11 +107,12 @@ class LoginController
         //if ($this->userAuth->authenticated()) {
 
         if ($this->session->get('user_authenticated') === 'yes') {
-            $username = Sanitizer::sanitize($postData['username']);
+
+            $username = Sanitizer::sanitize($form_data['username']);
+
             $this->session->set('username', $username);
 
             $this->session->getFlash()->set('info', ['Successfully authenticated']);
-            $this->session->save();
 
             return $response
                 ->withHeader('Location', '/')

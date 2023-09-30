@@ -73,11 +73,8 @@ return [
         // TODO: fix below (using default catalog id value for now)
         $twig->getEnvironment()->addGlobal('catalog_label', FileConfig::get_Value('label', 0));
 
-        $twig->getEnvironment()->addGlobal('username', 'to change');
-
         // TODO: fix below (using default values for now)
-        $twig->getEnvironment()->addGlobal('user_authenticated', true);
-        $twig->getEnvironment()->addGlobal('enable_users_auth', true);
+        $twig->getEnvironment()->addGlobal('enable_users_auth', FileConfig::get_Value('enable_users_auth'));
 
         $twig->getEnvironment()->addGlobal('language', str_replace('_', '-', FileConfig::get_Value('language')));
 

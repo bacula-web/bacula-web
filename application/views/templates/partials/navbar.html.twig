@@ -56,7 +56,9 @@
                     {% if enable_users_auth == true and user_authenticated == true %}
                         <li class="nav-item dropdown dropstart">
 
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user"></i> {{ username }}</a>
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user"></i>
+                                {{ username }}
+                            </a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item" href="/user" title="User settings">

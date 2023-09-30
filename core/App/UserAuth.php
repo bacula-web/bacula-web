@@ -130,7 +130,6 @@ class UserAuth
                 return 'no';
             }
         } else {
-            // TODO: Display a flash message like "User not found or password incorrect"
             return 'no';
         }
     }

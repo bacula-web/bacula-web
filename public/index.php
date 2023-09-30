@@ -29,6 +29,8 @@ use App\Controller\SettingsController;
 use App\Controller\TestController;
 use App\Controller\UserController;
 use App\Controller\VolumesController;
+use App\Middleware\DbAuthMiddleware;
+use App\Middleware\GuestMiddleware;
 use DI\ContainerBuilder;
 use Odan\Session\Middleware\SessionStartMiddleware;
 use Slim\Factory\AppFactory;
@@ -80,12 +82,15 @@ $app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
 
     $group->map(['GET', 'POST'], '/user', [UserController::class, 'prepare']);
 
+})->add(DbAuthMiddleware::class);
+
+$app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
     $group->post('/signout', [LoginController::class, 'signOut']);
     $group->get('/login', [LoginController::class, 'index']);
     $group->post('/login', [LoginController::class, 'login']);
-});
+})->add(GuestMiddleware::class);
 
-$app->add(SessionStartMiddleware::class)
-    ->add(TwigMiddleware::create($app, $container->get(Twig::class)));
+$app->add(TwigMiddleware::create($app, $container->get(Twig::class)))
+    ->add(SessionStartMiddleware::class);
 
 $app->run();
