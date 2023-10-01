@@ -61,9 +61,7 @@ class LoginController
 
     public function index(Request $request, Response $response): Response
     {
-        return $this->twig->render($response, 'pages/login.html.twig', [
-            'flash' => $this->session->getFlash()
-        ]);
+        return $this->twig->render($response, 'pages/login.html.twig');
     }
 
     /**

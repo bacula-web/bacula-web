@@ -30,6 +30,7 @@ use App\Controller\TestController;
 use App\Controller\UserController;
 use App\Controller\VolumesController;
 use App\Middleware\DbAuthMiddleware;
+use App\Middleware\FlashMiddleware;
 use App\Middleware\GuestMiddleware;
 use DI\ContainerBuilder;
 use Odan\Session\Middleware\SessionStartMiddleware;
@@ -90,7 +91,8 @@ $app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
     $group->post('/login', [LoginController::class, 'login']);
 })->add(GuestMiddleware::class);
 
-$app->add(TwigMiddleware::create($app, $container->get(Twig::class)))
+$app->add(FlashMiddleware::class)
+    ->add(TwigMiddleware::create($app, $container->get(Twig::class)))
     ->add(SessionStartMiddleware::class);
 
 $app->run();

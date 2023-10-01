@@ -21,39 +21,37 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use Core\App\View;
 use Odan\Session\SessionInterface;
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Views\Twig;
 
-class FlashMiddleware
+class FlashMiddleware implements MiddlewareInterface
 {
     private SessionInterface $session;
-    private View $view;
+    private Twig $twig;
 
-    public function __construct(SessionInterface $session, View $view)
+    /**
+     * @param SessionInterface $session
+     * @param Twig $twig
+     */
+    public function __construct(SessionInterface $session, Twig $twig)
     {
         $this->session = $session;
-        $this->view = $view;
+        $this->twig = $twig;
     }
 
-    public function __invoke(Request $request, RequestHandler $handler): Response
+    /**
+     * @param Request $request
+     * @param RequestHandler $handler
+     * @return ResponseInterface
+     */
+    public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
-        $response = $handler->handle($request);
+        $this->twig->getEnvironment()->addGlobal('flash', $this->session->getFlash());
 
-        echo '<pre>flash</pre>';
-
-        var_dump($this->session->getFlash()->all());
-
-        die(var_dump($this->session->getFlash()));
-
-        if ($this->session->getFlash()->has('info')) {
-            $this->view->set('flash', $this->session->getFlash()->get('info'));
-
-            $this->session->getFlash()->clear();
-        }
-
-        return $response;
+        return $handler->handle($request);
     }
 }

@@ -311,8 +311,6 @@ class HomeController
         // 10 biggest completed backup jobTable
         $tplData['biggestjobs'] = $this->jobTable->getBiggestJobsStats();
 
-        $tplData['flash'] = $this->session->getFlash();
-
         return $view->render($response, 'pages/dashboard.html.twig', $tplData);
     }
 }
