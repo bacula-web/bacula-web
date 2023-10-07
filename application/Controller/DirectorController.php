@@ -34,6 +34,7 @@ use App\Tables\FileSetTable;
 use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
 use Odan\Session\PhpSession;
+use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 use GuzzleHttp\Psr7\Response;
@@ -45,10 +46,12 @@ use Twig\Error\SyntaxError;
 class DirectorController
 {
     private Twig $view;
+    private SessionInterface $session;
 
-    public function __construct(Twig $view)
+    public function __construct(Twig $view, SessionInterface $session)
     {
         $this->view = $view;
+        $this->session = $session;
     }
 
     /**
@@ -71,13 +74,10 @@ class DirectorController
             NOW
         ];
 
-        // TODO: Session must be started by middleware, and binding must be configured in container
-        $session = new PhpSession();
-
         $directors = [];
 
         // Save catalog_id from user session
-        $prev_catalog_id = $session->get('catalog_id') ?? 0;
+        $prev_catalog_id = $this->session->get('catalog_id') ?? 0;
 
         FileConfig::open(CONFIG_FILE);
         $directors_count = FileConfig::count_Catalogs();
@@ -85,7 +85,7 @@ class DirectorController
         $tplData['directors_count'] = $directors_count;
 
         for ($d = 0; $d < $directors_count; $d++) {
-            $session->set('catalog_id', $d);
+            $this->session->set('catalog_id', $d);
 
             $clients = new ClientTable(DatabaseFactory::getDatabase($d));
             $jobs = new JobTable(DatabaseFactory::getDatabase($d));
@@ -124,7 +124,7 @@ class DirectorController
         }
 
         // Set previous catalog_id in user session
-        $session->set('catalog_id', $prev_catalog_id);
+        $this->session->set('catalog_id', $prev_catalog_id);
 
         $tplData['directors'] = $directors;
 
