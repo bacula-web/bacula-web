@@ -59,7 +59,7 @@ class CatalogSelectorMiddleware implements MiddlewareInterface
         $catalogId = $this->session->get('catalog_id', 0);
 
         if (isset($params['catalog_id'])) {
-            if (FileConfig::catalogExist($catalogId)) {
+            if (FileConfig::catalogExist((int) $params['catalog_id'])) {
                 $catalogId = (int) $params['catalog_id'];
                 $this->session->set('catalog_id', $catalogId);
             } else {
