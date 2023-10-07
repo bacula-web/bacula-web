@@ -29,31 +29,26 @@ class HtmlHelper
     */
     public static function getHtmlHeader(): string
     {
-        $htmlHeader = '<!DOCTYPE html>
+        return '<!DOCTYPE html>
                         <html lang="en">
-
                         <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bacula-Web - Application error</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Bootstrap front-end framework -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <!-- Bootstrap css -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    
+    <title>Bacula-Web - Application error</title>
 
-  <!-- Custom css -->
-  <link rel="stylesheet" href="css/default.css">
+    <!-- FontAwesome css -->
+    <link href="/css/all.css" rel="stylesheet">
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="css/all.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="img/favicon.ico">
+    </head>
 
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
-</head>
-
-<body>';
-
-        return $htmlHeader;
+    <body>';
     }
 
     /**
@@ -63,23 +58,15 @@ class HtmlHelper
      */
     public static function getNavBar(): string
     {
-        $navbar = '<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                   <div class="container-fluid">
-                   <div class="navbar-header">
-                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                   <span class="sr-only">Toggle navigation</span>
-                   <span class="icon-bar"></span>
-                   <span class="icon-bar"></span>
-                   <span class="icon-bar"></span>
-                   </button>
-                   <a class="navbar-brand" href="index.php">Bacula-Web</a>
-                   </div> <!-- div class="navbar-header" -->
-        
-                   </div> <!-- div class="collapse navbar-collapse"-->
-                   </div> <!-- div class="container-fluid" -->
-                   </div> <!-- class="navbar" -->
-                   ';
-        return $navbar;
+        return '<nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="/img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24" class="d-inline-block align-top">
+            Bacula-Web
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button> </nav></div>';
     }
 
     /**
@@ -88,14 +75,9 @@ class HtmlHelper
     */
     public static function getHtmlFooter(): string
     {
-        return '<!-- JQuery and Bootstrap Javascript -->
-                    <script src="js/jquery.min.js"></script>
-                    <script src="js/moment-with-locales.js"></script>
-                    <script src="js/bootstrap.min.js"></script>
-
-                    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-                    <script src="js/ie10-viewport-bug-workaround.js"></script>
-                    </body>
-                    </html>';
+        return '<script src="/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+                <script type="text/javascript" src="js/default.js"></script>
+                </body>
+                </html>';
     }
 }

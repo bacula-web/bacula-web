@@ -27,12 +27,14 @@ use Core\Exception\PageNotFoundException;
 use Error;
 use Exception;
 use PDOException;
+use Slim\Exception\HttpNotFoundException;
+use Slim\Interfaces\ErrorRendererInterface;
 use Throwable;
 
 /**
  * Generate html content for Exception or Error
  */
-class ExceptionRenderer
+class ExceptionRenderer implements ErrorRendererInterface
 {
     /**
      * @var string[]
@@ -135,22 +137,6 @@ class ExceptionRenderer
      * @param string $content
      * @return string
      */
-    private static function render(string $content): string
-    {
-        $errortype = self::$header[get_class(self::$throwable)] ?? 'Core error';
-
-        return HtmlHelper::getHtmlHeader() .
-            HtmlHelper::getNavBar() .
-            '<div class="container">' .
-            "<div class=\"col-xs-8\">" .
-            self::getPageHeader() .
-            "<h3>$errortype</h3>" .
-            $content .
-            '</div>' .
-            '<div class=\'col-xs-4\'> ' . self::getHelpColumn() . '</div>' .
-            '</div>' .
-            HtmlHelper::getHtmlFooter();
-    }
 
     private static function getHelpColumn(): string
     {
@@ -184,5 +170,35 @@ class ExceptionRenderer
         return '<div class="page-header">
               <h3> <i class="fa fa-exclamation-triangle fa-lg"></i><small> Oops, it looks like something went wrong somehow :(</small></h3>
               </div>';
+    }
+
+    public function __invoke(Throwable $exception, bool $displayErrorDetails): string
+    {
+        $content = $exception->getMessage();
+        $title = self::$header[get_class($exception)] ?? 'Core error';
+
+        if ($exception instanceof HttpNotFoundException)
+        {
+            $title = 'Page not found';
+            $content = 'This page does not exists';
+        }
+
+        if ($displayErrorDetails) {
+            $content .= self::getTrace($exception);
+        }
+
+        return HtmlHelper::getHtmlHeader() .
+            HtmlHelper::getNavBar() .
+            '<div class="container">' .
+            '<div class=\'row\'> '.
+            "<div class=\"col-8\">" .
+            self::getPageHeader() .
+            '<hr />'.
+            '<h3>'. $title .'</h3>' .
+            $content .
+            '</div>' .
+            '<div class=\'col-4\'> ' . self::getHelpColumn() . '</div>' .
+            '</div>' .
+            HtmlHelper::getHtmlFooter();
     }
 }

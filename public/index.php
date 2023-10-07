@@ -29,10 +29,12 @@ use App\Controller\SettingsController;
 use App\Controller\TestController;
 use App\Controller\UserController;
 use App\Controller\VolumesController;
+use App\Libs\FileConfig;
 use App\Middleware\CatalogSelectorMiddleware;
 use App\Middleware\DbAuthMiddleware;
 use App\Middleware\FlashMiddleware;
 use App\Middleware\GuestMiddleware;
+use Core\Utils\ExceptionRenderer;
 use DI\ContainerBuilder;
 use Odan\Session\Middleware\SessionStartMiddleware;
 use Slim\Factory\AppFactory;
@@ -52,12 +54,6 @@ $container = $containerbuilder->build();
 AppFactory::setContainer($container);
 
 $app = AppFactory::create();
-
-$app->addErrorMiddleware(
-    true,
-    true,
-    true
-);
 
 $app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
     $group->map(['GET', 'POST'], '/', [HomeController::class, 'prepare']);
@@ -96,5 +92,17 @@ $app->add(CatalogSelectorMiddleware::class)
     ->add(FlashMiddleware::class)
     ->add(TwigMiddleware::create($app, $container->get(Twig::class)))
     ->add(SessionStartMiddleware::class);
+
+// Add Error Middleware
+FileConfig::open(CONFIG_FILE);
+
+$errorMiddleware = $app->addErrorMiddleware(
+    FileConfig::get_Value('debug') ?? false,
+    FileConfig::get_Value('debug') ?? false,
+    FileConfig::get_Value('debug') ?? false
+);
+
+$errorHandler = $errorMiddleware->getDefaultErrorHandler();
+$errorHandler->registerErrorRenderer('text/html', ExceptionRenderer::class);
 
 $app->run();
