@@ -70,12 +70,12 @@ return [
 
         FileConfig::open(CONFIG_FILE);
         $twig->getEnvironment()->addGlobal('catalogs', FileConfig::get_Catalogs());
-        // TODO: fix below (using default catalog id value for now)
-        $twig->getEnvironment()->addGlobal('catalog_label', FileConfig::get_Value('label', 0));
 
-        // TODO: fix below (using default values for now)
+        $twig->getEnvironment()->addGlobal(
+            'catalog_label',
+            FileConfig::get_Value('label', $session->get('catalog_current_id', 0)));
+
         $twig->getEnvironment()->addGlobal('enable_users_auth', FileConfig::get_Value('enable_users_auth'));
-
         $twig->getEnvironment()->addGlobal('language', str_replace('_', '-', FileConfig::get_Value('language')));
 
         $translator = $container->get(Translator::class);

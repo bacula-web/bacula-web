@@ -29,6 +29,7 @@ use App\Controller\SettingsController;
 use App\Controller\TestController;
 use App\Controller\UserController;
 use App\Controller\VolumesController;
+use App\Middleware\CatalogSelectorMiddleware;
 use App\Middleware\DbAuthMiddleware;
 use App\Middleware\FlashMiddleware;
 use App\Middleware\GuestMiddleware;
@@ -91,7 +92,8 @@ $app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
     $group->post('/login', [LoginController::class, 'login']);
 })->add(GuestMiddleware::class);
 
-$app->add(FlashMiddleware::class)
+$app->add(CatalogSelectorMiddleware::class)
+    ->add(FlashMiddleware::class)
     ->add(TwigMiddleware::create($app, $container->get(Twig::class)))
     ->add(SessionStartMiddleware::class);
 

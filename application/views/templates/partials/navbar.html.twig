@@ -38,7 +38,7 @@
                                 {% for catalog_id, catalog_name in catalogs  %}
                                     <li>
                                         <!-- TODO: fix url below -->
-                                        <a class="dropdown-item" href="index.php?catalog_id={$catalog_id}{if isset($page) }&page={$page}{/if}">
+                                        <a class="dropdown-item" href="{{ current_url() }}?catalog_id={{ catalog_id }}">
                                             {% if catalog_id == catalog_current_id %}
                                                 <i class="fa fa-check fa-fw"></i>
                                             {% else %}
