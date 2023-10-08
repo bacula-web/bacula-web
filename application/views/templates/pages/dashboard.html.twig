@@ -253,7 +253,7 @@
                         </tr>
                         {% for jobtype in jobtypes_jobs_stats %}
                             <tr>
-                                <td>{$jobtype.type}</td>
+                                <td>{{ jobtype.type }}</td>
                                 <td class="text-right">{{ jobtype.jobfiles }}</td>
                                 <td class="text-right">{{ jobtype.jobbytes }}</td>
                                 <td class="text-right">{{ jobtype.jobscount }}</td>
