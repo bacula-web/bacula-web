@@ -191,7 +191,7 @@ class VolumesController
         foreach ($pagination->paginate($this->volumeTable, $sqlQuery, $countquery, $params) as $volume) {
             // Calculate volume expiration
             // If volume have already been used
-            if ($volume['lastwritten'] != "0000-00-00 00:00:00") {
+            if ($volume['lastwritten'] != "0000-00-00 00:00:00" && !is_null($volume['lastwritten'])) {
                 // Calculate expiration date only if volume status is Full or Used
                 if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
                     $dh = new Date_HumanDiff();

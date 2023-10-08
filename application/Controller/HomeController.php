@@ -263,7 +263,7 @@ class HomeController
         $result = $this->volumeTable->run_query(CDBQuery::get_Select($statment, $this->volumeTable->get_driver_name()));
 
         foreach ($result as $volume) {
-            if ($volume['lastwritten'] != '0000-00-00 00:00:00') {
+            if ($volume['lastwritten'] != '0000-00-00 00:00:00' && !is_null($volume['lastwritten'])) {
                 $volume['lastwritten'] = date(FileConfig::get_Value('datetime_format'), strtotime($volume['lastwritten']));
                 //$volume['lastwritten'] = date($this->session->get('datetime_format'), strtotime($volume['lastwritten']));
                 //$volume['lastwritten'] = date($_SESSION['datetime_format'], strtotime($volume['lastwritten']));
