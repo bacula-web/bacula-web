@@ -1,5 +1,39 @@
 # Changelog
 
+## [9.0.0](https://github.com/bacula-web/bacula-web/compare/v8.9.0...v9.0.0) (2023-10-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* replace Smarty by Twig template engine
+* Use Slim PHP framework for PSR-15 and routing.
+* minimal required PHP version is 8.0.
+
+### chore
+
+* remove support for PHP 7.4 ([888e900](https://github.com/bacula-web/bacula-web/commit/888e900391dd95c7af45c080355327abafa15065)), closes [#152](https://github.com/bacula-web/bacula-web/issues/152)
+
+
+### 🐛 Bug Fixes
+
+* [#152](https://github.com/bacula-web/bacula-web/issues/152) ([888e900](https://github.com/bacula-web/bacula-web/commit/888e900391dd95c7af45c080355327abafa15065))
+* [#169](https://github.com/bacula-web/bacula-web/issues/169) ([c3959b7](https://github.com/bacula-web/bacula-web/commit/c3959b7db3a47640529cfea4194c0a966bccb4c4))
+* [#175](https://github.com/bacula-web/bacula-web/issues/175) ([b1f33c9](https://github.com/bacula-web/bacula-web/commit/b1f33c97f9a3385e1234dfb173a259d564960091))
+* [#59](https://github.com/bacula-web/bacula-web/issues/59) ([a006ea5](https://github.com/bacula-web/bacula-web/commit/a006ea5f740e4b9be5ae9d44a101b3146692f0cb))
+* **doc:** add missing rtd theme package ([0cdb59a](https://github.com/bacula-web/bacula-web/commit/0cdb59a8be7d4df1df5b28fe9885904009663617))
+* ensure provided username is alphanumeric only ([26ca1c2](https://github.com/bacula-web/bacula-web/commit/26ca1c27f8aa83fb3801973090766f0de045cc30))
+* fix catalog_id query parameter ([4ae8f64](https://github.com/bacula-web/bacula-web/commit/4ae8f64fc880b393e8891f8715693489d4394412))
+* fix error when volume lastwritten is null ([b1f33c9](https://github.com/bacula-web/bacula-web/commit/b1f33c97f9a3385e1234dfb173a259d564960091)), closes [#175](https://github.com/bacula-web/bacula-web/issues/175)
+* fix flash message upon login ([493b530](https://github.com/bacula-web/bacula-web/commit/493b530bbbe8473cb82f777e05eb0a50ba259465))
+* fix Valitron error message upon login ([c3959b7](https://github.com/bacula-web/bacula-web/commit/c3959b7db3a47640529cfea4194c0a966bccb4c4)), closes [#169](https://github.com/bacula-web/bacula-web/issues/169)
+
+
+### 🚀 Features
+
+* replace Smarty by Twig template engine ([b117503](https://github.com/bacula-web/bacula-web/commit/b1175035370095087bd0a5a0d8b65b50caebdf8d))
+* upgrade Bootstrap to latest stable version ([a006ea5](https://github.com/bacula-web/bacula-web/commit/a006ea5f740e4b9be5ae9d44a101b3146692f0cb)), closes [#59](https://github.com/bacula-web/bacula-web/issues/59)
+* use Slim PHP framework ([16e1769](https://github.com/bacula-web/bacula-web/commit/16e1769a392f760e8dd9f896d3d6fd45748020a2))
+
 ## [8.9.0](https://github.com/bacula-web/bacula-web/compare/v8.8.0...v8.9.0) (2023-04-12)
 
 
