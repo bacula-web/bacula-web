@@ -64,7 +64,9 @@
       "core",
       "application"
     ],
-    "files": ["core/helpers/request.php"]
+    "files": [
+      "core/helpers/request.php"
+    ]
   },
   "scripts": {
     "post-install-cmd": [
