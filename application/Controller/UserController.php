@@ -74,7 +74,7 @@ class UserController
         $this->username = $this->session->get('username', 'davide');
         $user = $this->userTable->findByName($this->username);
 
-        $tplData['username'] = 'davide';
+        $tplData['username'] = $this->username;
         $tplData['email'] = $user->getEmail();
 
         // Check if password reset have been requested
