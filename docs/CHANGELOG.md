@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.0.1](https://github.com/bacula-web/bacula-web/compare/v9.0.0...v9.0.1) (2023-10-29)
+
+
+### 🐛 Bug Fixes
+
+* user controller has static username (fixes [#181](https://github.com/bacula-web/bacula-web/issues/181)) ([#182](https://github.com/bacula-web/bacula-web/issues/182)) ([e32f635](https://github.com/bacula-web/bacula-web/commit/e32f6353b080ddfc0b64291ddd1cc22b26be9d41))
+
 ## [9.0.0](https://github.com/bacula-web/bacula-web/compare/v8.9.0...v9.0.0) (2023-10-10)
 
 
