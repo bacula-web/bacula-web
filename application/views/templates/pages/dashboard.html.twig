@@ -23,7 +23,7 @@
                     <div class="card-header"><b>{{ 'Last period job status'|trans }}</b> {{ literal_period }}</div>
                     <!-- Period selector -->
                     <div class="card-body">
-                        <form class="form-inline pull-right" method="post" role="form" action="/">
+                        <form class="form-inline pull-right" method="post" role="form" action="{{ url_for('home') }}">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text">{{ 'Period'|trans }} </span>
                                 <select class="form-control input-sm" name="period_selector">
@@ -50,7 +50,7 @@
                             <tr>
                                 <td><h5>{{ 'Running jobs'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="/jobs" method="post">
+                                    <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="1" />
                                         <button class="btn btn-lg btn-link type="submit">{{ running_jobs }}</button>
                                     </form>
@@ -59,7 +59,7 @@
                             <tr>
                                 <td><h5>{{ 'Completed job(s)'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="/jobs" method="post">
+                                    <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="3" />
                                         <button class="btn btn-lg btn-link type="submit">{{ completed_jobs }}</button>
                                     </form>
@@ -68,7 +68,7 @@
                             <tr>
                                 <td><h5>{{ 'Completed with errors job(s)'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="/jobs" method="post">
+                                    <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="4" />
                                         <button class="btn btn-lg btn-link type="submit">{{ completed_with_errors_jobs }}</button>
                                     </form>
@@ -77,7 +77,7 @@
                             <tr>
                                 <td><h5>{{ 'Waiting jobs(s)'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="/jobs" method="post">
+                                    <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="2" />
                                         <button class="btn btn-lg btn-link type="submit">{{ waiting_jobs }}</button>
                                     </form>
@@ -86,7 +86,7 @@
                             <tr>
                                 <td><h5>{{ 'Failed job(s)'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="/jobs" method="post">
+                                    <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="5" />
                                         <button class="btn btn-lg btn-link type="submit">{{ failed_jobs }}</button>
                                     </form>
@@ -95,7 +95,7 @@
                             <tr>
                                 <td><h5>{{ 'Canceled job(s)'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="/jobs" method="post">
+                                    <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="6" />
                                         <button class="btn btn-lg btn-link type="submit">{{ canceled_jobs }}</button>
                                     </form>
@@ -193,7 +193,7 @@
                                 {% for vol in volumes_list %}
                                     <tr>
                                         <td>
-                                            <a href="/volumes/{{ vol.mediaid }}"
+                                            <a href="{{ url_for('volumes') }}/{{ vol.mediaid }}"
                                                title="{{ 'Show volume'|trans }}">{{ vol.volumename }}</a>
                                         </td>
                                         <td>{{ vol.volstatus }}</td>
@@ -317,7 +317,7 @@
                             {% for job in biggestjobs %}
                                 <tr>
                                     <td>
-                                        <form action="/backupjob" method="post">
+                                        <form action="{{ url_for('backupjob') }}" method="post">
                                             <input type="hidden" name="backupjob_name" value="{{ job.name }}" />
                                             <button class="btn btn-link type="submit">{{ job.name }}</button>
                                         </form>

@@ -21,6 +21,8 @@ declare(strict_types=1);
 
 namespace Core\Utils;
 
+use App\Libs\FileConfig;
+
 class HtmlHelper
 {
     /**
@@ -29,6 +31,9 @@ class HtmlHelper
     */
     public static function getHtmlHeader(): string
     {
+	FileConfig::open(CONFIG_FILE);
+
+        $basePath = FileConfig::get_Value('basepath') ?? null;
         return '<!DOCTYPE html>
                         <html lang="en">
                         <head>
@@ -36,16 +41,16 @@ class HtmlHelper
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap css -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="./css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     
     <title>Bacula-Web - Application error</title>
 
     <!-- FontAwesome css -->
-    <link href="/css/all.css" rel="stylesheet">
+    <link href="./css/all.css" rel="stylesheet">
 
-    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="img/favicon.ico">
+    <link rel="apple-touch-icon" href=".img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href=".img/favicon.ico">
     </head>
 
     <body>';
@@ -61,7 +66,7 @@ class HtmlHelper
         return '<nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
-            <img src="/img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24" class="d-inline-block align-top">
+            <img src="./img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24" class="d-inline-block align-top">
             Bacula-Web
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +80,7 @@ class HtmlHelper
     */
     public static function getHtmlFooter(): string
     {
-        return '<script src="/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+        return '<script src="./js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
                 <script type="text/javascript" src="js/default.js"></script>
                 </body>
                 </html>';

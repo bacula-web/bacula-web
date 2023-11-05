@@ -39,8 +39,8 @@ class DbAuthMiddleware implements MiddlewareInterface
      */
     private UserAuth $dbAuth;
     private SessionInterface $session;
-
     private Twig $twig;
+    private ?string $basePath;
 
     /**
      * @throws AppException
@@ -56,6 +56,9 @@ class DbAuthMiddleware implements MiddlewareInterface
         $this->session = $session;
 
         $this->twig = $twig;
+
+        FileConfig::open(CONFIG_FILE);
+        $this->basePath = FileConfig::get_Value('basepath') ?? null;
     }
 
     /**
@@ -79,11 +82,11 @@ class DbAuthMiddleware implements MiddlewareInterface
             }
         }
 
-        $this->session->getFlash()->set('error',  ['You must be authenticated']);
+        $this->session->getFlash()->set('error', ['You must be authenticated']);
         $response = new Response();
 
         return $response
-            ->withHeader('Location', '/login')
+            ->withHeader('Location', $this->basePath . '/login')
             ->withStatus(302);
     }
 }

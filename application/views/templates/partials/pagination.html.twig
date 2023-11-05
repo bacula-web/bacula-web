@@ -7,25 +7,23 @@
         <nav aria-label="pagination">
             <ul class="pagination">
                 <li class="page-item {% if pagination.getCurrentPage == 1 %}disabled {% endif %}">
-                    <a class="page-link" href="{{ current_url() }}?page=1{{ pagination.getParams }}">&laquo;</a>
+                    <a class="page-link" href="{{ url_for(route) }}?page=1{{ pagination.getParams }}">&laquo;</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link {% if pagination.getCurrentPage == 1 %}disabled {% endif %}" href="{{ current_url() }}?page={{ pagination.getPreviousPage }}{{ pagination.getParams }}">&lang;</a>
+                    <a class="page-link {% if pagination.getCurrentPage == 1 %}disabled {% endif %}" href="{{ url_for(route) }}?page={{ pagination.getPreviousPage }}{{ pagination.getParams }}">&lang;</a>
                 </li>
                 {% for p in range(pagination.getPaginationStart,pagination.getPaginationEnd) %}
                     <li class="page-item {% if pagination.getCurrentPage == p %}disabled {% endif %}">
-                        <a class="page-link" href="{{ current_url() }}?page={{ p }}{{ pagination.getParams }}">{{ p }}</a>
+                        <a class="page-link" href="{{ url_for(route) }}?page={{ p }}{{ pagination.getParams }}">{{ p }}</a>
                     </li>
                 {% endfor %}
                 <li class="page-item">
-                    <a class="page-link {% if pagination.getCurrentPage == pagination.getMaxPage %}disabled {% endif %}" href="{{ current_url() }}?page={{ pagination.getNextPage }}{{ pagination.getParams }}">&rang;</a>
+                    <a class="page-link {% if pagination.getCurrentPage == pagination.getMaxPage %}disabled {% endif %}" href="{{ url_for(route) }}?page={{ pagination.getNextPage }}{{ pagination.getParams }}">&rang;</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link {% if pagination.getCurrentPage == pagination.getMaxPage %}disabled {% endif %}" href="{{ current_url() }}?page={{ pagination.getMaxPage }}{{ pagination.getParams }}">&raquo;</a>
+                    <a class="page-link {% if pagination.getCurrentPage == pagination.getMaxPage %}disabled {% endif %}" href="{{ url_for(route) }}?page={{ pagination.getMaxPage }}{{ pagination.getParams }}">&raquo;</a>
                 </li>
             </ul>
         </nav>
     </div>
 </div>
-
-

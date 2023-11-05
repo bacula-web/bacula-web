@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <img src="/img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24" class="d-inline-block align-top">
+        <a class="navbar-brand" href="{{ base_path() }}/">
+            <img src="{{ base_path() }}/img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24" class="d-inline-block align-top">
             {{ app_name }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,19 +11,19 @@
         <div class="collapse navbar-collapse" id="navbarcollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/">{{ 'Dashboard'|trans }}</a>
+                    <a class="nav-link" aria-current="page" href="{{ base_path() }}/">{{ 'Dashboard'|trans }}</a>
                 </li>
 
                 {% if user_authenticated == true or enable_users_auth == false %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">{{ 'Reports'|trans }}</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/jobs">{{ 'Jobs'|trans }}</a></li>
-                            <li><a class="dropdown-item" href="/pools">{{ 'Pools'|trans }}</a></li>
-                            <li><a class="dropdown-item" href="/volumes">{{ 'Volumes'|trans }}</a></li>
-                            <li><a class="dropdown-item" href="/backupjob">{{ 'Backup job'|trans }}</a></li>
-                            <li><a class="dropdown-item" href="/client">{{ 'Client'|trans }}</a></li>
-                            <li><a class="dropdown-item" href="/directors">{{ 'Director(s)'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ base_path() }}/jobs">{{ 'Jobs'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ base_path() }}/pools">{{ 'Pools'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ base_path() }}/volumes">{{ 'Volumes'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ base_path() }}/backupjob">{{ 'Backup job'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ base_path() }}/client">{{ 'Client'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ base_path() }}/directors">{{ 'Director(s)'|trans }}</a></li>
                         </ul>
                     </li>
                 {% endif %}
@@ -38,7 +38,7 @@
                                 {% for catalog_id, catalog_name in catalogs  %}
                                     <li>
                                         <!-- TODO: fix url below -->
-                                        <a class="dropdown-item" href="{{ current_url() }}?catalog_id={{ catalog_id }}">
+                                        <a class="dropdown-item" href="{{ url_for('home') }}?catalog_id={{ catalog_id }}">
                                             {% if catalog_id == catalog_current_id %}
                                                 <i class="fa fa-check fa-fw"></i>
                                             {% else %}
@@ -66,7 +66,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <form class="navbar-form navbar-left" action="/signout" method="POST">
+                                    <form class="navbar-form navbar-left" action="{{ base_path() }}/signout" method="POST">
                                         <input class="form-control" type="hidden" name="action" value="logout">
                                         <button type="submit" class="btn btn-sm btn-light ms-2" title="Sign out">
                                             <i class="fa fa-sign-out fa-lg"></i> {{ 'Sign out'|trans }}
@@ -95,9 +95,9 @@
     <div class="offcanvas-body">
         <h6>{{ 'Settings'|trans }}</h6>
 
-        <a class="btn btn-primary m-1 w-100" href="/settings" title="Settings"><i class="fa fa-cogs fa-fw"></i> {{ 'Settings'|trans }}</a>
+        <a class="btn btn-primary m-1 w-100" href="{{ base_path() }}/settings" title="Settings"><i class="fa fa-cogs fa-fw"></i> {{ 'Settings'|trans }}</a>
 
-        <a class="btn btn-success m-1 w-100" href="/test" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {{ 'Test page'|trans }}</a>
+        <a class="btn btn-success m-1 w-100" href="{{ base_path() }}/test" title="Display the test page"><i class="fa fa-wrench fa-fw"></i> {{ 'Test page'|trans }}</a>
 
         <hr>
 

@@ -67,7 +67,7 @@
                                 {% for job in jobs %}
                                     <tr>
                                         <td>
-                                            <a href="/joblog/{{ job.jobid }}"
+                                            <a href="{{ url_for('joblog', {'jobid': job.jobid}) }}"
                                                title="{{ 'Show job'|trans }}">{{ job.jobid }}</a>
                                         </td>
                                         <td>{{ job.name }}</td>

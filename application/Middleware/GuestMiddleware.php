@@ -35,11 +35,15 @@ class GuestMiddleware implements MiddlewareInterface
 
     private UserAuth $userAuth;
     private SessionInterface $session;
+    private ?string $basePath;
 
-    public function __construct(UserAuth $userAuth, SessionInterface $session )
+    public function __construct(UserAuth $userAuth, SessionInterface $session)
     {
         $this->userAuth = $userAuth;
         $this->session = $session;
+
+        FileConfig::open(CONFIG_FILE);
+        $this->basePath = FileConfig::get_Value('basepath') ?? null;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
@@ -50,7 +54,7 @@ class GuestMiddleware implements MiddlewareInterface
             if ($this->session->get('user_authenticated') === 'yes' || !FileConfig::get_Value('enable_users_auth')) {
                 $response = new Response();
                 return $response
-                    ->withHeader('Location', '/')
+                    ->withHeader('Location', $this->basePath . '/')
                     ->withStatus(302);
             }
         }

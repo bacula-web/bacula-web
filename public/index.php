@@ -55,12 +55,19 @@ AppFactory::setContainer($container);
 
 $app = AppFactory::create();
 
-$app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
-    $group->map(['GET', 'POST'], '/', [HomeController::class, 'prepare']);
+FileConfig::open(CONFIG_FILE);
 
-    $group->map(['GET', 'POST'], '/jobs', [JobController::class, 'index']);
-    $group->get('/joblog/{jobid}', [JobController::class, 'showLogs']);
-    $group->map(['GET', 'POST'], '/jobfiles[/{jobid}[/{page}[/{filename}]]]', [JobController::class, 'showFiles']);
+$basePath = FileConfig::get_Value('basepath') ?? null;
+if (!is_null($basePath)) {
+    $app->setBasePath($basePath);
+}
+
+$app->group('', function (\Slim\Routing\RouteCollectorProxy $group) {
+    $group->map(['GET', 'POST'], '/', [HomeController::class, 'prepare'])->setName('home');
+
+    $group->map(['GET', 'POST'], '/jobs', [JobController::class, 'index'])->setName('jobs');;
+    $group->get('/joblog/{jobid}', [JobController::class, 'showLogs'])->setName('joblog');
+    $group->map(['GET', 'POST'], '/jobfiles[/{jobid}[/{page}[/{filename}]]]', [JobController::class, 'showFiles'])->setName('jobfiles');
 
     $group->get('/pools', [PoolController::class, 'prepare']);
 
@@ -69,12 +76,13 @@ $app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
     $group->get('/settings', [SettingsController::class, 'index']);
     $group->post('/settings', [SettingsController::class, 'addUser']);
 
-    $group->map(['GET', 'POST'], '/volumes', [VolumesController::class, 'index']);
-    $group->get('/volumes/{id}', [VolumesController::class, 'show']);
+    $group->map(['GET', 'POST'], '/volumes', [VolumesController::class, 'index'])->setName('volumes');
+
+    $group->get('/volume/{id}', [VolumesController::class, 'show'])->setName('volume_detail');
 
     $group->get('/directors', [DirectorController::class, 'index']);
 
-    $group->map(['GET', 'POST'], '/backupjob', [BackupJobController::class, 'index']);
+    $group->map(['GET', 'POST'], '/backupjob', [BackupJobController::class, 'index'])->setName('backupjob');
 
     $group->map(['GET', 'POST'], '/client', [\App\Controller\ClientController::class, 'index']);
 
@@ -82,7 +90,7 @@ $app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
 
 })->add(DbAuthMiddleware::class);
 
-$app->group('', function(\Slim\Routing\RouteCollectorProxy $group) {
+$app->group('', function (\Slim\Routing\RouteCollectorProxy $group) {
     $group->post('/signout', [LoginController::class, 'signOut']);
     $group->get('/login', [LoginController::class, 'index']);
     $group->post('/login', [LoginController::class, 'login']);
@@ -94,7 +102,6 @@ $app->add(CatalogSelectorMiddleware::class)
     ->add(SessionStartMiddleware::class);
 
 // Add Error Middleware
-FileConfig::open(CONFIG_FILE);
 
 $errorMiddleware = $app->addErrorMiddleware(
     FileConfig::get_Value('debug') ?? false,

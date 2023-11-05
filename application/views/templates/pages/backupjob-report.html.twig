@@ -19,7 +19,7 @@
         <div class="card border-dark mb-3">
             <div class="card-header">{{ 'Report options'|trans }}</div>
             <div class="card-body">
-                <form method="post" action="/backupjob" class="form-inline">
+                <form method="post" action="{{ url_for('backupjob') }}" class="form-inline">
                     <!-- Backup job name -->
                     <div class="form-group">
                         <label for="backupjobname">{{ 'Backup job name'|trans }}</label>
@@ -87,7 +87,7 @@
                     <td>{{ job.joblevel }}</td>
                     <td class="text-right">
                         {% if job.jobfiles > 0 %}
-                        <a href="/jobfiles/{{ job.jobid }}">{{ job.jobfiles }}</a>
+                        <a href="{{ base_path() }}/jobfiles/{{ job.jobid }}">{{ job.jobfiles }}</a>
                         {% else %}
                         {{ job.jobfiles }}
                         {% endif %}

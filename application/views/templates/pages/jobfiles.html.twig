@@ -25,7 +25,7 @@
                         <div>
                             <p><b>{{ 'Job Name'|trans }}</b>: {{ job_info.name }}</p>
                             <p><b>{{ 'Job Status'|trans }}</b>: {{ job_info.jobstatus }}</p>
-                            <form action="/backupjob" method="post">
+                            <form action="{{ url_for('backupjob') }}" method="post">
                                 <input type="hidden" name="backupjob_name" value="{{ job_info.name }}"/>
                                 <input type="hidden" name="backupjob_period" value="7"/>
                                 <button type="submit" class="btn btn-sm btn-primary">{{ 'View backup job'|trans }}</button>
@@ -91,7 +91,7 @@
                                 {% else %}
                             <li class="page-item">
                                 <a class="page-link"
-                                   href="/jobfiles/{{ jobid }}/{{ previous_page }}{% if filename != '' %}/{{ filename }}{% endif %}">Previous</a>
+                                   href="{{ url_for('jobfiles') }}/{{ jobid }}/{{ previous_page }}{% if filename != '' %}/{{ filename }}{% endif %}">Previous</a>
                                 {% endif %}
                             </li>
                             <li class="page-item disabled"><a class="page-link">Found <b>{{ job_files_count }}</b>
@@ -100,7 +100,7 @@
                                 {# if there is only one page #}
                                 {% if job_files_count_paging == pagination_rows_per_page %}
                                     <a class="page-link"
-                                       href="/jobfiles/{{ jobid }}/{{ next_page }}{% if filename != '' %}/{{ filename }}{% endif %}
+                                       href="{{ url_for('jobfiles') }}/{{ jobid }}/{{ next_page }}{% if filename != '' %}/{{ filename }}{% endif %}
                                         ">Next</a>
                                 {% else %}
                                     <a class="page-link">Next</a>

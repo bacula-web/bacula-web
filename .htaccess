@@ -1,6 +1,10 @@
-Options +FollowSymLinks -Indexes
+RewriteEngine on
+RewriteRule ^$ public/ [L]
+RewriteRule (.*) public/$1 [L]
 
-<IfModule mod_rewrite.c>
-  RewriteEngine on
-  RewriteRule ^bwc|console.php(.*) - [R=404,L]
-</IfModule>
+#Options +FollowSymLinks -Indexes
+
+#<IfModule mod_rewrite.c>
+#  RewriteEngine on
+#  RewriteRule ^bwc|console.php(.*) - [R=404,L]
+#</IfModule>

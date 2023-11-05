@@ -37,7 +37,7 @@
                         {% for volume in volumes %}
                             <tr>
                                 <td>
-                                    <a href="/volumes/{{ volume.mediaid }}"
+                                    <a href="{{ url_for('volume_detail', {'id': volume.mediaid }) }}"
                                        title="{{ 'Show volume'|trans }}">{{ volume.volumename }}</a>
                                 </td>
                                 <td class="text-right">{{ volume.volbytes }}</td>
@@ -63,7 +63,7 @@
                     </table>
                 </div>
 
-                {{ include("partials/pagination.html.twig") }}
+                {{ include("partials/pagination.html.twig", {route: 'volumes' }) }}
             </div>
             <div class="col-2">
                 <!-- Options -->

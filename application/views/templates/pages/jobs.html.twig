@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-3 col-sm-push-9 col-lg-2 col-lg-push-10">
 
-                <form class="form" role="form" action="/jobs" method="post">
+                <form class="form" role="form" action="{{ url_for('jobs') }}" method="post">
 
                     <span class="help-block">{{ 'Filter'|trans }}</span>
 
@@ -104,7 +104,7 @@
                     <button type="submit" class="btn btn-primary btn-sm pull-right"
                             title="{{ 'Apply filter and options'|trans }}">{{ 'Apply'|trans }}</button>
 
-                    <a class="btn btn-link btn-sm" title="{{ 'Reset to default'|trans }}" href="/jobs"
+                    <a class="btn btn-link btn-sm" title="{{ 'Reset to default'|trans }}" href="{{ base_path() }}/jobs"
                        role="button">{{ 'Reset to default'|trans }}</a>
                 </form>
 
@@ -142,7 +142,7 @@
                                 <td>{{ job.jobid }}</td>
                                 <td class="text-left">
                                     {% if job.type == 'B' %}
-                                        <form action="/backupjob" method="post">
+                                        <form action="{{ url_for('backupjob') }}" method="post">
                                             <input type="hidden" name="backupjob_name" value="{{ job.job_name }}" />
                                             <input type="hidden" name="backupjob_period" value="7" />
                                             <button type="submit" class="btn btn-sm btn-link">{{ job.job_name }}</button>
@@ -160,7 +160,7 @@
                                 <td class="text-right">{{ job.jobbytes }}</td>
                                 <td class="text-right">
                                     {% if job.jobfiles != 0 and job.type == 'B' %}
-                                        <a href="/jobfiles/{{job.jobid}}"
+                                        <a href="{{ base_path() }}/jobfiles/{{job.jobid}}"
                                            title="{{ 'Show job files'|trans }}">
                                             {{ job.jobfiles }} <i class="fa-solid fa-folder"></i>
                                         </a>
@@ -172,7 +172,7 @@
                                 <td>{{ job.compression }}</td>
                                 <td>{{ job.pool_name }}</td>
                                 <td>
-                                    <a href="/joblog/{{ job.jobid }}" title="{{ 'Show job logs'|trans }}"> <i
+                                    <a href="{{ base_path() }}/joblog/{{ job.jobid }}" title="{{ 'Show job logs'|trans }}"> <i
                                                 class="fa-solid fa-magnifying-glass"></i> </a>
                                 </td>
                             </tr>
@@ -184,7 +184,7 @@
                     </table>
                 </div>
 
-                {{ include("partials/pagination.html.twig") }}
+                {{ include('partials/pagination.html.twig', {route: 'jobs' }) }}
 
             </div>
         </div>

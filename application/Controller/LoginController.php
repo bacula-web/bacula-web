@@ -29,18 +29,24 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use Slim\Views\Twig;
 use Valitron\Validator;
+use App\Libs\FileConfig;
 
 class LoginController
 {
     private UserAuth $userAuth;
     private SessionInterface $session;
     private Twig $twig;
+    private ?string $basePath;
 
     public function __construct(UserAuth $userAuth, SessionInterface $session, Twig $twig)
     {
         $this->userAuth = $userAuth;
         $this->session = $session;
         $this->twig = $twig;
+
+        FileConfig::open(CONFIG_FILE);
+
+        $this->basePath = FileConfig::get_Value('basepath') ?? null;
     }
 
     /**
@@ -55,7 +61,7 @@ class LoginController
         $this->session->save();
 
         return $response
-            ->withHeader('Location', '/login')
+            ->withHeader('Location', $this->basePath . '/login')
             ->withStatus(302);
     }
 
@@ -81,9 +87,9 @@ class LoginController
         $v = new Validator($form_data);
 
         $v->rules([
-           'required' => [
-               'username', 'password'
-           ],
+            'required' => [
+                'username', 'password'
+            ],
             'alphaNum' => ['username'],
             'lengthMin' => [
                 ['password', 8]
@@ -95,7 +101,7 @@ class LoginController
             $this->session->save();
 
             return $response
-                ->withHeader('Location', '/login')
+                ->withHeader('Location', $this->basePath . '/login')
                 ->withStatus(302);
         }
 
@@ -113,14 +119,14 @@ class LoginController
             $this->session->getFlash()->set('info', ['Successfully authenticated']);
 
             return $response
-                ->withHeader('Location', '/')
+                ->withHeader('Location', $this->basePath . '/')
                 ->withStatus(302);
         } else {
             $this->session->getFlash()->set('error', ['Wrong username or password']);
             $this->session->save();
 
             return $response
-                ->withHeader('Location', '/login')
+                ->withHeader('Location', $this->basePath . '/login')
                 ->withStatus(302);
         }
     }
