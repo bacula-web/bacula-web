@@ -72,16 +72,13 @@ class SettingsController
         } else {
             // Check if datetime_format is set, otherwise, set default datetime_format
             if (FileConfig::get_Value('datetime_format') != null) {
-                //$this->view->set('config_datetime_format', FileConfig::get_Value('datetime_format'));
                 $tplData['config_datetime_format'] = FileConfig::get_Value('datetime_format');
             } else {
-                //$this->view->set('config_datetime_format', 'Y-m-d H:i:s');
                 $tplData['config_datetime_format'] = 'Y-m-d H:i:s';
             }
 
             // Check if language is set
             if (FileConfig::get_Value('language') != null) {
-                //$this->view->set('config_language', FileConfig::get_Value('language'));
                 $tplData['config_language'] = FileConfig::get_Value('language');
             }
 
@@ -90,7 +87,6 @@ class SettingsController
                 $config_show_inactive_clients = FileConfig::get_Value('show_inactive_clients');
 
                 if ($config_show_inactive_clients == true) {
-                    //$this->view->set('config_show_inactive_clients', 'checked');
                     $tplData['config_show_inactive_clients'] = 'checked';
                 }
             }
@@ -100,11 +96,9 @@ class SettingsController
                 $config_hide_empty_pools = FileConfig::get_Value('hide_empty_pools');
 
                 if ($config_hide_empty_pools == true) {
-                    //$this->view->set('config_hide_empty_pools', 'checked');
                     $tplData['config_hide_empty_pools'] = 'checked';
                 }
             } else {
-                //$this->view->set('config_hide_empty_pools', '');
                 $tplData['config_hide_empty_pools'] = '';
             }
 
@@ -117,12 +111,9 @@ class SettingsController
             }
 
             if ($config_enable_users_auth === true) {
-
                 // Get users list
-                //$this->view->set('users', $this->userTable->getAll());
                 $tplData['users'] = $this->userTable->getAll();
 
-                //$this->view->set('config_enable_users_auth', 'checked');
                 $tplData['config_enable_users_auth'] = 'checked';
             } else {
                 $tplData['config_enable_users_auth'] = '';
@@ -137,10 +128,8 @@ class SettingsController
             }
 
             if ($config_debug === true) {
-                $this->view->set('config_debug', 'checked');
                 $tplData['config_debug'] = 'checked';
             } else {
-                //$this->view->set('config_debug', '');
                 $tplData['config_debug'] = '';
             }
         }
