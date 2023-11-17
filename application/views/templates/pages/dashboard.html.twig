@@ -189,11 +189,10 @@
                                     <th title="{{ 'Number of jobs'|trans }}">Jobs</th>
                                 </tr>
 
-                                {# {foreach from=$volumes_list item=vol} #}
                                 {% for vol in volumes_list %}
                                     <tr>
                                         <td>
-                                            <a href="{{ url_for('volumes') }}/{{ vol.mediaid }}"
+                                            <a href="{{ url_for('volume_detail', {'id': vol.mediaid}) }}"
                                                title="{{ 'Show volume'|trans }}">{{ vol.volumename }}</a>
                                         </td>
                                         <td>{{ vol.volstatus }}</td>
