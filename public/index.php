@@ -65,7 +65,7 @@ if (!is_null($basePath)) {
 $app->group('', function (\Slim\Routing\RouteCollectorProxy $group) {
     $group->map(['GET', 'POST'], '/', [HomeController::class, 'prepare'])->setName('home');
 
-    $group->map(['GET', 'POST'], '/jobs', [JobController::class, 'index'])->setName('jobs');;
+    $group->map(['GET', 'POST'], '/jobs', [JobController::class, 'index'])->setName('jobs');
     $group->get('/joblog/{jobid}', [JobController::class, 'showLogs'])->setName('joblog');
     $group->map(['GET', 'POST'], '/jobfiles[/{jobid}[/{page}[/{filename}]]]', [JobController::class, 'showFiles'])->setName('jobfiles');
 
