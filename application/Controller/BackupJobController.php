@@ -129,17 +129,24 @@ class BackupJobController
 
             $perioddesc = 'From ';
 
+            $datetimeFormatShort = FileConfig::get_Value('datetime_format_short') ?? null;
+
+            if (is_null($datetimeFormatShort)) {
+                $datetimeFormatShort = explode(' ', FileConfig::get_Value('datetime_format'));
+                $datetimeFormatShort = $datetimeFormatShort[0];
+            }
+
             switch ($backupjob_period) {
                 case '7':
-                    $perioddesc .= date(FileConfig::get_Value('datetime_format_short'), (NOW - WEEK)) . " to " . date(FileConfig::get_Value('datetime_format_short'), NOW);
+                    $perioddesc .= date( $datetimeFormatShort, (NOW - WEEK)) . " to " . date( $datetimeFormatShort, NOW);
                     $interval[0] = NOW - WEEK;
                     break;
                 case '14':
-                    $perioddesc .= date(FileConfig::get_Value('datetime_format_short'), (NOW - (2 * WEEK))) . " to " . date(FileConfig::get_Value('datetime_format_short'), NOW);
+                    $perioddesc .= date( $datetimeFormatShort, (NOW - (2 * WEEK))) . " to " . date( $datetimeFormatShort, NOW);
                     $interval[0] = NOW - (2 * WEEK);
                     break;
                 case '30':
-                    $perioddesc .= date(FileConfig::get_Value('datetime_format_short'), (NOW - MONTH)) . " to " . date(FileConfig::get_Value('datetime_format_short'), NOW);
+                    $perioddesc .= date($datetimeFormatShort, (NOW - MONTH)) . " to " . date($datetimeFormatShort, NOW);
                     $interval[0] = NOW - MONTH;
                     break;
                 default:

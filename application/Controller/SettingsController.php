@@ -77,6 +77,14 @@ class SettingsController
                 $tplData['config_datetime_format'] = 'Y-m-d H:i:s';
             }
 
+            // datetime_format_short
+            if (FileConfig::get_Value('datetime_format_short') != null) {
+                $tplData['config_datetime_format_short'] = FileConfig::get_Value('datetime_format_short');
+            } else {
+                $tplData['config_datetime_format_short'] = explode(' ', FileConfig::get_Value('datetime_format'));
+                $tplData['config_datetime_format_short'] = $tplData['config_datetime_format_short'][0];
+            }
+
             // Check if language is set
             if (FileConfig::get_Value('language') != null) {
                 $tplData['config_language'] = FileConfig::get_Value('language');

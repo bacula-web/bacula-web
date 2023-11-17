@@ -58,17 +58,18 @@ Settings
 General settings
 ----------------
 
-================================= ====================================== ================
-Setting                           Description                            Default value
-================================= ====================================== ================
-$config['language']               Set displayed language                 en_US
-$config['hide_empty_pools']       Hide empty pools                       true
-$config['show_inactive_clients']  Show inactive clients or not           true
-$config['datetime_format']        Change default date and time format    Y-m-d H:i:s 
-$config['enable_users_auth']      Enable or disable users authentication true
-$config['rows_per_page']          Rows per pagination page               25
-$config['debug']                  Enable or disable debug mode           false
-================================= ====================================== ================
+================================= ========================================== =====================================
+Setting                           Description                                Default value
+================================= ========================================== =====================================
+$config['language']               Set displayed language                     en_US
+$config['hide_empty_pools']       Hide empty pools                           true
+$config['show_inactive_clients']  Show inactive clients or not               true
+$config['datetime_format']        Change default date and time format        Y-m-d H:i:s
+$config['datetime_format_short']  Change default short date and time format  Generated from above datetime_format
+$config['enable_users_auth']      Enable or disable users authentication     true
+$config['rows_per_page']          Rows per pagination page                   25
+$config['debug']                  Enable or disable debug mode               false
+================================= ========================================== =====================================
 
 language
 --------
@@ -132,7 +133,7 @@ datetime_format
 
 **Description**
 
-Define your customer date & time format (by default Y-m-d H:i:s)
+Define your custom date & time format (by default Y-m-d H:i:s)
 
 For more information on date format, have a look on date() function in `PHP manual`_
 
@@ -145,6 +146,24 @@ For more information on date format, have a look on date() function in `PHP manu
    $config['datetime_format'] = 'm-d-Y H:i:s';
 
 .. note:: this setting is available only since version 7.4.0
+
+datetime_format_short
+---------------------
+
+**description**
+
+Define your custom short date & time format
+
+This config parameter is **optional** (commented out by default in config.php.sample)
+The default value is generated from datetime_format config parameter.
+
+For more information on date format, have a look on date() function in `PHP manual`_
+
+**Example**
+
+::
+
+   $config['datetime_format_short'] = 'd/m/Y';
 
 enable_users_auth
 -----------------

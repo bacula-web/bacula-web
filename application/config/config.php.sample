@@ -35,6 +35,10 @@ $config['hide_empty_pools'] = false;
 // $config['datetime_format'] = 'm-d-Y H:i:s';
 $config['datetime_format'] = 'Y-m-d H:i:s';
 
+// Custom short datetime format (optional)
+// Example
+// $config['datetime_format_short'] = 'd/m/Y';
+
 // Security
 $config['enable_users_auth'] = true;
 
