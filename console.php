@@ -266,8 +266,8 @@ switch ($argv[1]) {
 
             $password = getPassword('Password');
 
-            if (strlen($password) < 6) {
-                die("\tPassword must be at least 6 characters long, aborting" . hightlight('Error', 'error') . PHP_EOL);
+            if (strlen($password) < 8) {
+                die("\tPassword must be at least 8 characters long, aborting" . hightlight('Error', 'error') . PHP_EOL);
             }
 
             $result = $userTable->addUser($username, $email, $password);

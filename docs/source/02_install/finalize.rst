@@ -32,6 +32,8 @@ User creation
 
 Answer the questions, and if everything goes fine, you should be able to sign in
 
+.. warning:: The user password must be at least 8 characters long
+
 Reset user password
 ===================
 
