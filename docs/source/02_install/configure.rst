@@ -69,6 +69,7 @@ $config['datetime_format_short']  Change default short date and time format  Gen
 $config['enable_users_auth']      Enable or disable users authentication     true
 $config['rows_per_page']          Rows per pagination page                   25
 $config['debug']                  Enable or disable debug mode               false
+$config['basepath']               Set base path                              empty
 ================================= ========================================== =====================================
 
 language
@@ -200,7 +201,7 @@ Define how many rows per pagination page will be displayed.
 
    $config['rows_per_page'] = 25;
 
-.. note:: this setting is available since version 8.5.0
+.. note:: This setting is available since version 8.5.0
 
 debug
 -----
@@ -215,10 +216,28 @@ Debug mode could be helpful to troubleshoot Bacula-Web setup problem. Debug mode
 
 ::
 
-    // Enable debug mode
-    $config['debug'] = true;
+   // Enable debug mode
+   $config['debug'] = true;
 
 .. important:: Use debug mode with caution, sensitive information can be disclosed if your Bacula-Web setup is exposed to unsecure network.
+
+basepath
+--------
+
+**Description**
+
+Uncomment this config parameter **only** if you are using Apache mod_alias and have setup Bacula-Web in a sub-folder (eg: http://yourhost/bacula-web)
+
+This config parameter is commented by default in config.php.sample, comment it out only if needed.
+
+**Example**
+
+::
+
+   // Important: Do not forget the starting slash (/)
+   $config['basepath'] = '/bacula-web';
+
+.. note:: This setting is available since version 9.1.0
 
 Database connection settings
 ============================

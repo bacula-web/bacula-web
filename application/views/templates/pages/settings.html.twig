@@ -46,7 +46,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="config_datetime_format_short">Date / Time format (short)</label>
+                                <label class="form-label" for="config_datetime_format_short">Date / Time format
+                                    (short)</label>
                                 <input type="text" class="form-control" id="config_datetime_format_short"
                                        value="{{ config_datetime_format_short }}" disabled>
                             </div>
@@ -98,6 +99,12 @@
                                            id="config_debug" {{ config_debug }} disabled>
                                     <label class="form-check-label" for="config_debug">Enabled</label>
                                 </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="config_basepath">Base path</label>
+                                <input type="text" class="form-control" id="config_basepath"
+                                       value="{{ config_basepath }}" disabled>
                             </div>
                         </form>
                     </div>

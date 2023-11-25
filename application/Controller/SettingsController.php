@@ -140,6 +140,15 @@ class SettingsController
             } else {
                 $tplData['config_debug'] = '';
             }
+
+            // Base path config
+            $configBasePath = FileConfig::get_Value('basepath') ?? null;
+
+            if ($configBasePath == null) {
+                $tplData['config_basepath'] = 'not set';
+            } else {
+                $tplData['config_basepath'] = $configBasePath;
+            }
         }
 
         return $this->view->render($response, 'pages/settings.html.twig', $tplData);

@@ -68,6 +68,10 @@ $config['language'] = 'en_US';
 // Rows per page
 $config['rows_per_page'] = 25;
 
+// Base path
+// Do not comment out if you haven't setup Bacula-Web using Apache Alias
+// $config['basepath'] = '/custom-sub-path';
+
 // Database connection parameters
 // Copy/paste and adjust parameters according to your configuration
 
