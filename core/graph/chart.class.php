@@ -154,6 +154,10 @@ class Chart
         $blob .= '.x(function(d) {return d.label})' . "\n";
         $blob .= '.y(function(d) {return d.value})' . "\n";
 
+        if  ($this->type === 'pie') {
+            $blob .= '.legendPosition("right")';
+        }
+
         // If chart type is pie then show labels outside the slices
         if ($this->type == 'pie') {
             $blob .= '.showLabels(true)' . "\n";
