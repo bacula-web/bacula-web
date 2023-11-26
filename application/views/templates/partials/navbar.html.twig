@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ base_path() }}/">
-            <img src="{{ base_path() }}/img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24" class="d-inline-block align-top">
+            <img src="/img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24" class="d-inline-block align-top">
             {{ app_name }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="/user" title="User settings">
+                                    <a class="dropdown-item" href="{{ url_for('user') }}" title="User settings">
                                         <i class="fa fa-wrench fa-fw"></i> {{ 'User settings'|trans }}
                                     </a>
                                 </li>

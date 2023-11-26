@@ -74,7 +74,7 @@ $app->group('', function (\Slim\Routing\RouteCollectorProxy $group) {
     $group->get('/test', [TestController::class, 'index']);
 
     $group->get('/settings', [SettingsController::class, 'index']);
-    $group->post('/settings', [SettingsController::class, 'addUser']);
+    $group->post('/settings', [SettingsController::class, 'addUser'])->setName('adduser');
 
     $group->map(['GET', 'POST'], '/volumes', [VolumesController::class, 'index'])->setName('volumes');
 
@@ -86,7 +86,7 @@ $app->group('', function (\Slim\Routing\RouteCollectorProxy $group) {
 
     $group->map(['GET', 'POST'], '/client', [\App\Controller\ClientController::class, 'index']);
 
-    $group->map(['GET', 'POST'], '/user', [UserController::class, 'prepare']);
+    $group->map(['GET', 'POST'], '/user', [UserController::class, 'prepare'])->setName('user');
 
 })->add(DbAuthMiddleware::class);
 

@@ -133,7 +133,7 @@
 
                         <h4>Add user</h4>
 
-                        <form action="/settings" method="post" data-toggle="validator">
+                        <form action="{{ url_for('adduser') }}" method="post" data-toggle="validator">
                             <div class="mb-3">
                                 <label class="form-label" for="inputUsername">Username</label>
                                 <input class="form-control" name="username" type="text" id="inputUsername"
