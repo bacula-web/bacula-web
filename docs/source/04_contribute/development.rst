@@ -32,8 +32,9 @@ This section describe how you can contribute to Bacula-Web project development.
    * put useful comment in the code that explain what you're trying to do
    * choose good name for variables
    
-.. important:: As I don't want to waste your time, before changing any tool or library, make sure it's compatible with Bacula-Web license (GPL v2).
-I've seen several people requesting a pull request but the tool license was not compatible with GPL, or even worst, not open source at all.
+.. important::
+   As I don't want to waste your time, before changing any tool or library, make sure it's compatible with Bacula-Web license (GPL v2).
+   I've seen several people requesting a pull request but the tool license was not compatible with GPL, or even worst, not open source at all.
 
 Thanks for your help.
 
