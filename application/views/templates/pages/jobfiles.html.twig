@@ -41,7 +41,7 @@
                 <div class="card">
                     <div class="card-header"><b>Search</b></div>
                     <div class="card-body">
-                        <form action="/jobfiles/{{ jobid }}" method="post">
+                        <form action="{{ url_for('jobfiles') }}/{{ jobid }}" method="post">
                             <div class="mb-3">
                                 <label for="InputFilename" class="form-label">Filename</label>
                                 <input type="text" class="form-control" name="filename" id="InputFilename"

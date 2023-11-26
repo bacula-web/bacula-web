@@ -40,6 +40,10 @@ class SettingsController
     private Twig $view;
     private UserTable $userTable;
     private SessionInterface $session;
+    /**
+     * @var string
+     */
+    private ?string $basePath;
 
     /**
      * @param Twig $view
@@ -51,6 +55,9 @@ class SettingsController
         $this->view = $view;
         $this->userTable = $userTable;
         $this->session = $session;
+
+        FileConfig::open(CONFIG_FILE);
+        $this->basePath = FileConfig::get_Value('basepath') ?? null;
     }
 
     /**
@@ -194,7 +201,7 @@ class SettingsController
         }
 
         return $response
-            ->withHeader('Location', '/settings')
+            ->withHeader('Location', $this->basePath . '/settings')
             ->withStatus(302);
     }
 }
