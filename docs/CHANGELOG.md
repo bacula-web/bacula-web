@@ -1,5 +1,31 @@
 # Changelog
 
+## [9.1.0](https://github.com/bacula-web/bacula-web/compare/v9.0.1...v9.1.0) (2023-11-26)
+
+
+### 🐛 Bug Fixes
+
+* [#173](https://github.com/bacula-web/bacula-web/issues/173) ([b7d8020](https://github.com/bacula-web/bacula-web/commit/b7d802042793c3d8be58624350438d52303a1064))
+* [#179](https://github.com/bacula-web/bacula-web/issues/179) ([8821678](https://github.com/bacula-web/bacula-web/commit/8821678d796c07066a3581559611062a8775d672))
+* [#185](https://github.com/bacula-web/bacula-web/issues/185), [#188](https://github.com/bacula-web/bacula-web/issues/188) ([07f505d](https://github.com/bacula-web/bacula-web/commit/07f505da153481c04343de14fae164a125783b5e))
+* [#186](https://github.com/bacula-web/bacula-web/issues/186) ([c4efa7c](https://github.com/bacula-web/bacula-web/commit/c4efa7c69c727be9b39b890f196c60ec89242ad8))
+* [#189](https://github.com/bacula-web/bacula-web/issues/189) ([85c6c8b](https://github.com/bacula-web/bacula-web/commit/85c6c8ba353f8fa271ab7d4d7bbfa294a817354e))
+* [#190](https://github.com/bacula-web/bacula-web/issues/190) ([da1da01](https://github.com/bacula-web/bacula-web/commit/da1da015785f65062a97ca7af751f2ab7d3d5ff1))
+* legend overlapping pie chart ([b7d8020](https://github.com/bacula-web/bacula-web/commit/b7d802042793c3d8be58624350438d52303a1064)), closes [#173](https://github.com/bacula-web/bacula-web/issues/173)
+* PHP error if datetime_format_short is missing ([07f505d](https://github.com/bacula-web/bacula-web/commit/07f505da153481c04343de14fae164a125783b5e))
+* PHP error in settings page ([c4efa7c](https://github.com/bacula-web/bacula-web/commit/c4efa7c69c727be9b39b890f196c60ec89242ad8)), closes [#186](https://github.com/bacula-web/bacula-web/issues/186)
+* setupauth password length different from login ([da1da01](https://github.com/bacula-web/bacula-web/commit/da1da015785f65062a97ca7af751f2ab7d3d5ff1)), closes [#190](https://github.com/bacula-web/bacula-web/issues/190)
+
+
+### 🚀 Features
+
+* add support for subpath ([8821678](https://github.com/bacula-web/bacula-web/commit/8821678d796c07066a3581559611062a8775d672)), closes [#179](https://github.com/bacula-web/bacula-web/issues/179)
+
+
+### 📘 Documentation
+
+* Update contributor guide ([85c6c8b](https://github.com/bacula-web/bacula-web/commit/85c6c8ba353f8fa271ab7d4d7bbfa294a817354e)), closes [#189](https://github.com/bacula-web/bacula-web/issues/189)
+
 ## [9.0.1](https://github.com/bacula-web/bacula-web/compare/v9.0.0...v9.0.1) (2023-10-29)
 
 
