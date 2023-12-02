@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -17,17 +19,27 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-/**
- * Setup app paths
- */
+namespace App\Command;
 
-use Dotenv\Dotenv;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-const BW_ROOT = __DIR__ . '/../';
-require_once BW_ROOT . '/core/const.inc.php';
+class ShowVersionCommand extends Command
+{
+    protected function configure(): void
+    {
+        $this->setDescription('Show Bacula-Web version')
+            ->setHelp('This command print current Bacula-Web version')
+            ->setName('version');
 
-/**
- * Load app name and version from application/config/app using phpdotenv
- */
-$dotenv = Dotenv::createImmutable(CONFIG_DIR, 'app');
-$dotenv->load();
+        parent::configure();
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $output->writeln($_ENV['APP_NAME'] . ' version ' . $_ENV['APP_VERSION']);
+        return Command::SUCCESS;
+    }
+}
+

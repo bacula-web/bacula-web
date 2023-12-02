@@ -21,6 +21,13 @@ declare(strict_types=1);
 
 use Core\Db\DatabaseFactory;
 
+// Configuration
+const CONFIG_DIR = BW_ROOT . '/application/config/';
+const CONFIG_FILE = CONFIG_DIR . 'config.php';
+
+// Locales
+const LOCALE_DIR = BW_ROOT . 'application/locale';
+
 // Time intervals in secondes
  define('NOW', (DatabaseFactory::getDatabase())->getServerTimestamp());
  define('FIRST_DAY', mktime(0, 0, 0, 1, 1, 1970));
