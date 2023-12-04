@@ -7,17 +7,20 @@
 Welcome to Bacula-Web documentation
 ===================================
 
-.. image:: _static/bacula-web-dashboard-crop.jpeg
-  :scale: 25 %
-  :width: 2555px
-  :height: 2906px
+.. image:: _static/bacula-web-logo.png
+  :scale: 125%
   :align: center
-  :alt: Bacula-Web dashboard
+  :alt: Bacula-Web logo
 
 .. toctree::
    :maxdepth: 2
 
    01_about/index
    02_install/index
+   02_install/requirements
+   02_install/configure
+   02_install/finalize
+   02_install/upgrade
+   02_install/test
    03_get-help/index
    04_contribute/index

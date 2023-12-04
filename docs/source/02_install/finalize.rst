@@ -56,7 +56,7 @@ You can manage users from the **General settings** dropdown menu.
 
 To add more users, simply use the **Add user** form at the bottom of the page (password must be at least 6 characters long).
 
-.. note:: User's email address is not for the moment but it will in a future version
+.. note:: User's email address is not used for the moment, but it will in a future version
 
 .. image:: /_static/bacula-web-users.jpg
    :scale: 60%

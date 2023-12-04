@@ -25,13 +25,11 @@ Bacula-Web can be installed in different way, but the recommended way is by usin
 You will find more details by following the links below
 
    * Install :ref:`using Composer<install/installcomposer>`
-   * Install :ref:`using the archive<install/installarchive>` (see note below)
+   * Install using Docker, more details https://hub.docker.com/r/baculaweb/bacula-web (available since version 8.7.0
+   * Install using the archive is not supported anymore, see note below)
 
-As of version version 8.7.0, Bacula-Web can also be run using **Docker container image** (follow link below for more details)
-
-   * Install using Docker (more details https://hub.docker.com/r/baculaweb/bacula-web)
-
-.. important:: Composer archive installation will be deprecated soon, more installation options will come at the same time
+.. important:: Installation using the archive which used to be available on GitHub releases is not supported anymore due to several issues, such as conflicts
+               between different PHP versions used by community users.
 
 Make sure your system meets the minimal requirements by checking the :ref:`requirement <install/requirements>` page
 

@@ -78,6 +78,7 @@ Component                    License
 `Twig`_                      BSD-3-Clause
 `cocur/human-date`_          MIT
 `odan/session`_              MIT
+`Symfony Console`_           MIT
 ===========================  ================
 
 Supported browser
@@ -185,3 +186,4 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _cocur/human-date: https://github.com/cocur/human-date
 .. _odan/session: https://github.com/odan/session
 .. _Twig: https://github.com/twigphp/Twig
+.. _Symfony Console: https://github.com/symfony/console
