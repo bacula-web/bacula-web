@@ -27,10 +27,6 @@ You should got the same result as shown in the screenshot below
 .. image:: /_static/bacula-web-test-page.jpg
    :scale: 20%
 
-note:: this setting is available since Bacula-Web 5.2.11
-
-.. note:: Default username and password are (admin/bacula)
-
 Using Bacula-Web console
 ========================
 
