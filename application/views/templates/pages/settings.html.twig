@@ -121,13 +121,13 @@
                                 </tr>
                                 {% for user in users %}
                                     <tr>
-                                        <td>{{ user.getUsername() }}</td>
-                                        <td>{{ user.getEmail() }}</td>
+                                        <td>{{ user.username() }}</td>
+                                        <td>{{ user.email() }}</td>
                                         <td></td>
                                     </tr>
                                 {% endfor %}
                             </table>
-                        </div> <!-- end div class=table... -->
+                        </div>
 
                         <hr>
 
@@ -149,8 +149,13 @@
 
                             <div class="mb-3">
                                 <label class="form-label" for="password">Password</label>
-                                <input class="form-control" name="password" type="password" id="inputpassword"
+                                <input class="form-control" name="password" type="password" id="password"
                                        placeholder="password" data-minlength="8" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <input class="form-control" name="confirmPassword" type="password" id="confirmPassword"
+                                       placeholder="Confirm password" data-minlength="8" required>
                                 <div class="form-text">Password must be at least 8 characters</div>
                             </div>
 

@@ -49,6 +49,7 @@ class SettingsController
      * @param Twig $view
      * @param UserTable $userTable
      * @param SessionInterface $session
+     * @throws ConfigFileException
      */
     public function __construct(Twig $view, UserTable $userTable, SessionInterface $session)
     {
@@ -170,35 +171,41 @@ class SettingsController
     public function addUser(Request $request, Response $response): Response
     {
         $postData = $request->getParsedBody();
+        $result = false;
 
         $form_data = [
             'username' => Sanitizer::sanitize($postData['username']),
             'password' => $postData['password'],
+            'confirmPassword' => $postData['confirmPassword'],
             'email' => Sanitizer::sanitize($postData['email'])
         ];
 
         $v = new Validator($form_data);
 
-        $v->rule('required', ['username', 'password', 'email']);
+        $v->rule('required', ['username', 'password', 'confirmPassword', 'email']);
         $v->rule('alphaNum', 'username');
         $v->rule('lengthMin', 'password', 8);
         $v->rule('email', 'email');
+        $v->rule('equals','password', 'confirmPassword')->message('Both passwords must match');
 
         if (!$v->validate()) {
-            $this->session->getFlash()->set('error', ['Invalid user data provided']);
-            $this->session->save();
+            $validationErrors = $v->errors();
+            foreach($validationErrors as $error) {
+                $this->session->getFlash()->add('error', $error[0]);
+            }
+        } else {
+            $result = $this->userTable->addUser(
+                $form_data['username'],
+                $form_data['email'],
+                $form_data['password']
+            );
         }
-
-        $result = $this->userTable->addUser(
-            $form_data['username'],
-            $form_data['email'],
-            $form_data['password']
-        );
 
         if ($result !== false) {
             $this->session->getFlash()->set('info', ['User successfully created']);
-            $this->session->save();
         }
+
+        $this->session->save();
 
         return $response
             ->withHeader('Location', $this->basePath . '/settings')
