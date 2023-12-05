@@ -49,7 +49,7 @@ Full [requirements](https://docs.bacula-web.org/en/latest/02_install/requirement
 
 ### Installation
 
-Bacula-Web can be installed using [Composer](https://docs.bacula-web.org/en/latest/02_install/installcomposer.html#install-installcomposer), [Docker](https://hub.docker.com/r/baculaweb/bacula-web) or using the [Composer archive](https://docs.bacula-web.org/en/latest/02_install/installarchive.html#install-installarchive) (will be soon deprecated, see note below)
+Bacula-Web can be installed using [Composer](https://docs.bacula-web.org/en/latest/02_install/installcomposer.html#install-installcomposer) or [Docker](https://hub.docker.com/r/baculaweb/bacula-web)
 
 #### TLDR; (Installation using Composer)
 
