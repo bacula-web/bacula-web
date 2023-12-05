@@ -78,7 +78,7 @@ Now test your setup by using one of the two options below
 $ sudo -u www-data php bwc check
 ```
 
-or use the test page https://bacula-web-url/index.php?page=test
+or use the test page https://bacula-web-url/test
 
 > **Important note related to installation using Composer archive**
 > 
