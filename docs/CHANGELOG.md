@@ -1,5 +1,25 @@
 # Changelog
 
+## [9.2.0](https://github.com/bacula-web/bacula-web/compare/v9.1.0...v9.2.0) (2023-12-05)
+
+
+### 🐛 Bug Fixes
+
+* missing confirmation on user password reset ([6e4669f](https://github.com/bacula-web/bacula-web/commit/6e4669f2136fc45681b2f9d784ce6abcc4bf240b)), closes [#194](https://github.com/bacula-web/bacula-web/issues/194)
+* new user password confirmation ([722d9c6](https://github.com/bacula-web/bacula-web/commit/722d9c6b99b5859280a565a29951e67bdacbacf2)), closes [#195](https://github.com/bacula-web/bacula-web/issues/195)
+* test page link in Readme ([bf6316f](https://github.com/bacula-web/bacula-web/commit/bf6316f49d51c9f8ff6b7a6b61764072451047cb))
+
+
+### 🚀 Features
+
+* total bytes and files on client report ([ede2106](https://github.com/bacula-web/bacula-web/commit/ede2106c3cc9a1efafd5b484450b59501f5ab0ed)), closes [#24](https://github.com/bacula-web/bacula-web/issues/24)
+* use symfony console ([91d561c](https://github.com/bacula-web/bacula-web/commit/91d561c7513cd57355c847bc77ee384eaec6001a)), closes [#192](https://github.com/bacula-web/bacula-web/issues/192)
+
+
+### 📘 Documentation
+
+* minor update/fix to documentation ([0f1e59c](https://github.com/bacula-web/bacula-web/commit/0f1e59ca8edfe70cf316d4501e5a8004840eaaf6))
+
 ## [9.1.0](https://github.com/bacula-web/bacula-web/compare/v9.0.1...v9.1.0) (2023-11-26)
 
 
