@@ -83,26 +83,19 @@ class UserController
                 case 'passwordreset':
                     // Check if provided current password is correct
                     if ($this->userAuth->authUser($user->getUsername(), $postData['oldpassword']) == 'yes') {
-                        // Update user password with new one
+                        // Reset password
                         $result = $this->userTable->setPassword(
                             $user->getUsername(),
                             $postData['newpassword']
                         );
 
-                        // TODO: fix flash message bloe
-                        /**
                         if ($result !== false) {
-                            $this->userAlert = 'Password successfully updated';
-                            $this->userAlertType = 'success';
+                            $this->session->getFlash()->set('info', ['Password successfully updated']);
                         } else {
-                            // TODO: do we need to check something here ?
+                            $this->session->getFlash()->set('error', ['Password not updated']);
                         }
-                         */
                     } else {
-                         /**
-                        $this->userAlert = 'Current password do not match';
-                        $this->userAlertType = 'danger';
-                          * */
+                        $this->session->getFlash()->set('error', ['Current password is not valid']);
                     }
                     break;
             }
