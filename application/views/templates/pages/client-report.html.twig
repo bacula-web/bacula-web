@@ -80,11 +80,22 @@
                             <td>{{ job.jobid }}</td>
                             <td>{{ job.level }}</td>
                             <td>{{ job.endtime }}</td>
-                            <td class="text-right">{{ job.jobbytes }}</td>
-                            <td class="text-right">{{ job.jobfiles }}</td>
+                            <td>{{ job.jobbytes }}</td>
+                            <td>{{ job.jobfiles }}</td>
                             <td>{{ job.jobstatuslong }}</td>
                         </tr>
                     {% endfor %}
+                    <tr>
+                        <td colspan="4" class="text-end">Total</td>
+                        <td class="text-center">
+                            <b>{{ total_bytes }}</b>
+                        </td>
+                        <td class="text-center" >
+                            <b>{{ total_files }}</b>
+                        </td>
+                        <td></td>
+
+                    </tr>
                 </table>
             </div>
             <h4>{{ 'Statistics'|trans }} - {{ 'Last'|trans }} {{ period }} {{ 'days(s)' }}</h4>

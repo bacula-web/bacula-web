@@ -167,15 +167,19 @@ class ClientController
 
             $jobs_result = $this->jobTable->run_query($query);
 
+            $totalBytes = 0;
+            $totalFiles = 0;
             foreach ($jobs_result->fetchAll() as $job) {
+                $totalBytes += (int) $job['jobbytes'];
+                $totalFiles += (int) $job['jobfiles'];
                 $job['level']     = $job_levels[$job['level']];
                 $job['jobfiles']  = CUtils::format_Number($job['jobfiles']);
                 $job['jobbytes']  = CUtils::Get_Human_Size($job['jobbytes']);
                 $job['endtime']   = date(FileConfig::get_Value('datetime_format'), strtotime($job['endtime']));
-
                 $backup_jobs[] = $job;
-            } // end foreach
-
+            }
+            $tplData['total_bytes'] = CUtils::Get_Human_Size($totalBytes);
+            $tplData['total_files'] = CUtils::format_Number($totalFiles);
             $tplData['backup_jobs'] = $backup_jobs;
 
             // Last n days stored Bytes graph
