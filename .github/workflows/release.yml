@@ -15,3 +15,5 @@ jobs:
           release-type: "php"
           changelog-path: "docs/CHANGELOG.md"
           changelog-types: '[{"type":"fix","section":"🐛 Bug Fixes","hidden":false},{"type":"feat","section":"🚀 Features","hidden":false}, {"type":"docs","section":"📘 Documentation","hidden":false}]'
+          extra-files: |
+            application/config/app
