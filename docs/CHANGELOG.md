@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.2.1](https://github.com/bacula-web/bacula-web/compare/v9.2.0...v9.2.1) (2023-12-06)
+
+
+### 🐛 Bug Fixes
+
+* missing symfony/console dependency ([de02e8f](https://github.com/bacula-web/bacula-web/commit/de02e8f0074d5794e8a154e6ee8370e1ffdbb4be)), closes [#197](https://github.com/bacula-web/bacula-web/issues/197)
+
 ## [9.2.0](https://github.com/bacula-web/bacula-web/compare/v9.1.0...v9.2.0) (2023-12-05)
 
 
