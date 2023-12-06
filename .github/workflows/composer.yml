@@ -1,0 +1,39 @@
+name: Composer test
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'feat/**'
+      - 'fix/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        version: ["8.0", "8.1", "8.2"]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - uses: php-actions/composer@v6
+      with:
+        php_version: "${{ matrix.version }}"
+        php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext openssl pdo sqlite3 posix
+        command: validate
+        #args: --strict
+
+    - uses: php-actions/composer@v6
+      with:
+        php_version: "${{ matrix.version }}"
+        php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext
+        dev: no
+        command: install
+
+    - uses: php-actions/composer@v6
+      with:
+        php_version: "${{ matrix.version }}"
+        php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext openssl pdo sqlite3 posix
+        command: check
