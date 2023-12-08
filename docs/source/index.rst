@@ -13,14 +13,25 @@ Welcome to Bacula-Web documentation
   :alt: Bacula-Web logo
 
 .. toctree::
+   :caption: About
    :maxdepth: 2
 
    01_about/index
+
+.. toctree::
+   :caption: Install & Upgrade
+   :maxdepth: 2
+
    02_install/index
-   02_install/requirements
-   02_install/configure
-   02_install/finalize
-   02_install/upgrade
-   02_install/test
+
+.. toctree::
+   :caption: Get help
+   :maxdepth: 2
+
    03_get-help/index
+
+.. toctree::
+   :caption: Contribute
+   :maxdepth: 2
+
    04_contribute/index

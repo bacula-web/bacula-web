@@ -1,12 +1,5 @@
 .. _install/index:
 
-============
-Installation
-============
-
-.. toctree::
-   :maxdepth: 2
-
 Before you start
 ================
 
@@ -33,8 +26,8 @@ You will find more details by following the links below
 
 Make sure your system meets the minimal requirements by checking the :ref:`requirement <install/requirements>` page
 
-Web server
-==========
+Web server setup
+================
 
 You can pick one of the web server listed below to install Bacula-Web on your server
 
@@ -47,7 +40,10 @@ Configuration
 
 Once Bacula-Web web application is installed, follow :ref:`these instructions <install/configure>` to finalize the configuration
 
-.. important:: **Important:** If you have not disabled user authentication, **you must** :ref:`follow the final steps<install/finalize>` which will setup the user authentication database for you
+Finalize setup
+==============
+
+**Important:** If you have not disabled user authentication, **YOU MUST** :ref:`follow the final steps<install/finalize>` which will setup the user authentication database for you
 
 Test
 ====

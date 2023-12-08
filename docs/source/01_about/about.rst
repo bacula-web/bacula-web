@@ -1,9 +1,5 @@
 .. _about/about:
 
-=================
-About Bacula-Web
-=================
-
 Bacula-Web is a php web based tool that provide you a summarized view of jobs, pools and volumes. Its obtain his information from your bacula catalog database.
 
 This tool provide you information on the last day jobs status, medias and pool usage, catalog size usage, and even more ...
