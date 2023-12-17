@@ -39,7 +39,7 @@ Why changing release numbering ?
 First, to make my developer "life" easier ;)
 And to identify clearly which release is major, minor or a maintenance/bug fix release
 
-As of version 6.0.0, each Bacula-Web releases will be composed of three digits (see below)
+As of version 6.0.0, each Bacula-Web releases follow `semantic versioning <https://semver.org/>`_, and be composed of three digits as below
 
    * first: major release (major new features)
    * second: minor release (minor new features)
@@ -52,3 +52,7 @@ Major Minor Bugfix
 ===== ===== ======
 6     0     0
 ===== ===== ======
+
+.. tip::
+
+   Get more details about **why using semantic versioning** `here <https://semver.org/#why-use-semantic-versioning>`_
