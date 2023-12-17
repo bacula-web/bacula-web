@@ -82,5 +82,4 @@ Restart and check Lighttpd server status
 
 If everything went well, you can now proceed with the installation using Composer, or the Composer package (follow one of the link below)
 
-   * Install :ref:`using the archive<install/installarchive>`
    * Install :ref:`using Composer<install/installcomposer>`

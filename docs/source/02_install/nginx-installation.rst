@@ -104,5 +104,4 @@ Once your web server is ready, you can proceed with Bacula-Web installation.
 
 You have now two different options
 
-   * Install :ref:`using the archive<install/installarchive>`
    * Install :ref:`using Composer<install/installcomposer>`
