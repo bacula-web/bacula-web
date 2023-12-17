@@ -16,7 +16,7 @@ Before proceeding to the upgrade, make sure you do a copy of the config file and
    File: <bacula-web path>/application/config/config.php
    File: <bacula-web path>/application/assets/protected/application.db
 
-   # cp -pv <bacula-web path>/application/config/config.php $HOME/ 
+   # cp -pv <bacula-web path>/application/config/config.php $HOME/
    # cp -pv <bacula-web path>/application/assets/protected/application.db $HOME/
 
 Check the requirements
@@ -61,22 +61,24 @@ Copy configuration and users database to new Bacula-Web folder
     $ sudo cp -pv bacula-web-beforeupgrade/application/config/config.php bacula-web/application/config/
     $ sudo cp -pv bacula-web-beforeupgrade/application/assets/protected/* bacula-web/application/assets/protected/
 
-Fix files ownership
-===================
-
-**Red Hat / Centos / Fedora**
+Fix files ownership and permissions
+===================================
 
 ::
 
-   # chown -v apache: bacula-web/application/config/config.php
-   # chown -Rv apache: bacula-web/application/assets/protected
+    $ sudo mv -v bacula-web /var/www/
+    $ sudo chown -Rv www-data: /var/www/bacula-web
+    $ sudo chmod -Rv 755 /var/www/bacula-web
+    $ sudo chmod -v 775 /var/www/bacula-web/application/views/cache
+    $ sudo chmod -v 775 /var/www/bacula-web/application/assets/protected
 
-**Debian / Ubuntu**
+.. important::
 
-::
+             Above instructions are based on Debian/Ubuntu distro.
 
-    # chown -v www-data: bacula-web/application/config/config.php
-    # chown -Rv www-data: bacula-web/application/assets/protected
+             On rpm based distro, change the user from www-data to **apache**, in case od doubts, please refer to the OS documentation.
+
+             If you've installed Bacula-Web somewhere else than **/var/www/bacula-web**, then you'll need to adapt to your setup.
 
 Test your setup
 ===============

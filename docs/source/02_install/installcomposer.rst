@@ -68,24 +68,22 @@ Once done, you can check Bacula-Web installation by running the command below
 
 Fix files/folders ownership and permissions
 
-On Centos / Red Hat / Fedora
-
 ::
 
-    $ sudo mv -v bacula-web /var/www/html/
-    $ sudo chown -Rv apache: /var/www/html/bacula-web
+   $ sudo mv -v bacula-web /var/www/
+   $ sudo chown -Rv www-data: /var/www/bacula-web
+   $ sudo chmod -Rv 755 /var/www/bacula-web
+   $ sudo chmod -v 775 /var/www/bacula-web/application/views/cache
+   $ sudo chmod -v 775 /var/www/bacula-web/application/assets/protected
 
-On Debian / Ubuntu 
+.. important::
 
-::
+             Above instructions are based on Debian/Ubuntu distro.
 
-    $ sudo mv -v bacula-web /var/www/
-    $ sudo chown -Rv www-data: /var/www/bacula-web
-    $ sudo chmod -Rv 755 /var/www/bacula-web
-    $ sudo chmod -v 775 /var/www/bacula-web/application/views/cache
-    $ sudo chmod -v 775 /var/www/bacula-web/application/assets/protected
+             On rpm based distro, change the user from www-data to **apache**, in case od doubts, please refer to the OS documentation.
 
-.. note:: Depending on your distro, Apache root folder can be /var/www or /var/www/html
+             If you've installed Bacula-Web somewhere else than **/var/www/bacula-web**, then you'll need to adapt to your setup.
+
 
 Once you're done, it's time to :ref:`install/configure`
 
