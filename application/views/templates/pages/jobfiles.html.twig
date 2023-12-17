@@ -1,8 +1,6 @@
 {% extends "layouts/default.html.twig" %}
 
-{% block title %}
-    <title>Bacula-Web - {{ 'Job files'|trans }}</title>
-{% endblock %}
+{% block title %}{{ 'Job files'|trans }}{% endblock %}
 
 {% block body %}
     <div class="container-fluid" id="jobsreport">
@@ -28,7 +26,8 @@
                             <form action="{{ url_for('backupjob') }}" method="post">
                                 <input type="hidden" name="backupjob_name" value="{{ job_info.name }}"/>
                                 <input type="hidden" name="backupjob_period" value="7"/>
-                                <button type="submit" class="btn btn-sm btn-primary">{{ 'View backup job'|trans }}</button>
+                                <button type="submit"
+                                        class="btn btn-sm btn-primary">{{ 'View backup job'|trans }}</button>
                             </form>
 
                         </div>

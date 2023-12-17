@@ -3,20 +3,18 @@
 
 <head>
     {{ include("partials/html-head.html.twig") }}
-
-    {%  block title %} {% endblock %}
+    <title>{{ app_name }} - {% block title %}{% endblock %}</title>
 </head>
 
 <body>
-
 <div class="container">
     {{ include('partials/flash.html.twig') }}
 </div>
 
 <div class="wrapper d-flex flex-column min-vh-100 bg-light">
-    {%  block body %} {% endblock %}
+    {% block body %} {% endblock %}
 </div>
-
 </body>
+
 {{ include('partials/html-footer.html.twig') }}
 </html>

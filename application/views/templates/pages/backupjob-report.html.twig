@@ -1,11 +1,9 @@
 {% extends "layouts/default.html.twig" %}
 
-{% block title %}
-    <title>Bacula-Web - {{ 'Backup job report'|trans }}</title>
-{% endblock %}
+{% block title %}{{ 'Backup job report'|trans }}{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
+<div class="container-fluid">
 
     <div class="row">
         <div class="col-md-12">
@@ -81,28 +79,28 @@
                     <th class="text-center">{{ 'Compression'|trans }}</th>
                 </tr>
                 {% for job in jobs %}
-                <tr>
-                    <td>{{ job.jobid }}</td>
-                    <td>{{ job.jobstatuslong }}</td>
-                    <td>{{ job.joblevel }}</td>
-                    <td class="text-right">
-                        {% if job.jobfiles > 0 %}
-                        <a href="{{ base_path() }}/jobfiles/{{ job.jobid }}">{{ job.jobfiles }}</a>
-                        {% else %}
-                        {{ job.jobfiles }}
-                        {% endif %}
-                    </td>
-                    <td class="text-right">{{ job.jobbytes }}</td>
-                    <td>{{ job.starttime }}</td>
-                    <td>{{ job.endtime }}</td>
-                    <td>{{ job.elapsedtime }}</td>
-                    <td class="text-right">{{ job.speed }}</td>
-                    <td>{{ job.compression }}</td>
-                </tr>
+                    <tr>
+                        <td>{{ job.jobid }}</td>
+                        <td>{{ job.jobstatuslong }}</td>
+                        <td>{{ job.joblevel }}</td>
+                        <td class="text-right">
+                            {% if job.jobfiles > 0 %}
+                                <a href="{{ base_path() }}/jobfiles/{{ job.jobid }}">{{ job.jobfiles }}</a>
+                            {% else %}
+                                {{ job.jobfiles }}
+                            {% endif %}
+                        </td>
+                        <td class="text-right">{{ job.jobbytes }}</td>
+                        <td>{{ job.starttime }}</td>
+                        <td>{{ job.endtime }}</td>
+                        <td>{{ job.elapsedtime }}</td>
+                        <td class="text-right">{{ job.speed }}</td>
+                        <td>{{ job.compression }}</td>
+                    </tr>
                 {% else %}
-                <tr>
-                    <td colspan="9">{{ 'No job(s) to display'|trans }}</td>
-                </tr>
+                    <tr>
+                        <td colspan="9">{{ 'No job(s) to display'|trans }}</td>
+                    </tr>
                 {% endfor %}
             </table>
         </div>
@@ -171,4 +169,4 @@
         </div>
     </div>
 
-{% endblock %}
+    {% endblock %}

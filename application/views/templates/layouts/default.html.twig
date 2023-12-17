@@ -1,13 +1,22 @@
-{{ include("partials/html-head.html.twig") }}
+<!doctype html>
+<html lang="en">
+
+<head>
+    {{ include("partials/html-head.html.twig") }}
+    <title>{{ app_name }} - {%  block title %}{% endblock %}</title>
+</head>
+
+<body>
 
 {{ include("partials/navbar.html.twig") }}
-
-{% block title %} {% endblock %}
 
 <div class="container">
     {{ include('partials/flash.html.twig') }}
 </div>
 
-{%  block body %} {% endblock %}
+{% block body %}{% endblock %}
 
+</body>
+</html>
 {{ include("partials/html-footer.html.twig") }}
+
