@@ -1,4 +1,4 @@
-.. _gethelp/support:
+.. _get-help/support:
 
 =========================
 Bugs and features request
@@ -20,7 +20,7 @@ Bug report guideline
 
 Before submitting a bug report, please make sure that ...
 
-  * check the :ref:`FAQ page <gethelp/faq>`, there might be some useful information which can help you
+  * check the :ref:`FAQ page <get-help/faq>`, there might be some useful information which can help you
   * you're using the latest version of Bacula-Web
   * the config file have been adapted to your configuration (check the documentation)
   * all items are ok in the test page (except for the database engine you don't use)
