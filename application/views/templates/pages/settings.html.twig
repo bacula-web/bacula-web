@@ -104,6 +104,7 @@
                                 <input type="text" class="form-control" id="config_basepath"
                                        value="{{ config_basepath }}" disabled>
                             </div>
+                            {{ csrf|raw }}
                         </form>
                     </div>
 
@@ -158,6 +159,7 @@
                             </div>
 
                             <button class="btn btn-sm btn-primary pull-right" type="submit">Create</button>
+                            {{ csrf|raw }}
                         </form>
 
                     </div>

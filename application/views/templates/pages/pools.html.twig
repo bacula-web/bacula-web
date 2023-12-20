@@ -34,6 +34,7 @@
                                     <form method="post" action="volumes">
                                         <input type="hidden" name="filter_pool_id" value="{{ pool.poolid }}" />
                                         <button class="btn btn-sm btn-primary" type="submit">{{ 'Show Volumes'|trans }}</button>
+                                        {{ csrf|raw }}
                                     </form>
                                 </td>
                             </tr>

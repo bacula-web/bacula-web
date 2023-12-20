@@ -31,8 +31,11 @@
                                             {{ period.label }}</option>
                                     {% endfor %}
                                 </select>
+
                                 <button title="{{ 'Update with selected period'|trans }}" class="btn btn-primary btn-sm"
                                         type="submit">{{ 'Submit'|trans }}</button>
+
+                                {{ csrf|raw }}
                             </div>
                         </form>
                     </div>
@@ -51,6 +54,7 @@
                                     <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="1" />
                                         <button class="btn btn-lg btn-link type="submit">{{ running_jobs }}</button>
+                                        {{ csrf|raw }}
                                     </form>
                                 </td>
                             </tr>
@@ -60,6 +64,7 @@
                                     <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="3" />
                                         <button class="btn btn-lg btn-link type="submit">{{ completed_jobs }}</button>
+                                        {{ csrf|raw }}
                                     </form>
                                 </td>
                             </tr>
@@ -69,6 +74,7 @@
                                     <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="4" />
                                         <button class="btn btn-lg btn-link type="submit">{{ completed_with_errors_jobs }}</button>
+                                        {{ csrf|raw }}
                                     </form>
                                 </td>
                             </tr>
@@ -78,6 +84,7 @@
                                     <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="2" />
                                         <button class="btn btn-lg btn-link type="submit">{{ waiting_jobs }}</button>
+                                        {{ csrf|raw }}
                                     </form>
                                 </td>
                             </tr>
@@ -87,6 +94,7 @@
                                     <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="5" />
                                         <button class="btn btn-lg btn-link type="submit">{{ failed_jobs }}</button>
+                                        {{ csrf|raw }}
                                     </form>
                                 </td>
                             </tr>
@@ -96,6 +104,7 @@
                                     <form action="{{ url_for('jobs') }}" method="post">
                                         <input type="hidden" name="filter_jobstatus" value="6" />
                                         <button class="btn btn-lg btn-link type="submit">{{ canceled_jobs }}</button>
+                                        {{ csrf|raw }}
                                     </form>
                                 </td>
                             </tr>
@@ -317,6 +326,7 @@
                                         <form action="{{ url_for('backupjob') }}" method="post">
                                             <input type="hidden" name="backupjob_name" value="{{ job.name }}" />
                                             <button class="btn btn-link type="submit">{{ job.name }}</button>
+                                            {{ csrf|raw }}
                                         </form>
                                     </td>
                                     <td class="text-right">{{ job.jobbytes }}</td>

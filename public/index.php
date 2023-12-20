@@ -20,6 +20,7 @@ declare(strict_types=1);
  */
 
 use App\Controller\BackupJobController;
+use App\Controller\ClientController;
 use App\Controller\DirectorController;
 use App\Controller\HomeController;
 use App\Controller\JobController;
@@ -31,13 +32,15 @@ use App\Controller\UserController;
 use App\Controller\VolumesController;
 use App\Libs\FileConfig;
 use App\Middleware\CatalogSelectorMiddleware;
+use App\Middleware\CsrfMiddleware;
 use App\Middleware\DbAuthMiddleware;
 use App\Middleware\FlashMiddleware;
 use App\Middleware\GuestMiddleware;
 use Core\Utils\ExceptionRenderer;
 use DI\ContainerBuilder;
 use Odan\Session\Middleware\SessionStartMiddleware;
-use Slim\Factory\AppFactory;
+use Slim\App;
+use Slim\Routing\RouteCollectorProxy;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
@@ -46,14 +49,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 // Bootstrap application
 require_once __DIR__ . '/../core/bootstrap.php';
 
-$containerbuilder = new ContainerBuilder();
-$containerbuilder->addDefinitions(CONFIG_DIR . 'container-bindings.php');
+$containerBuilder = new ContainerBuilder();
+$containerBuilder->addDefinitions(CONFIG_DIR . 'container-bindings.php');
+$container = $containerBuilder->build();
 
-$container = $containerbuilder->build();
-
-AppFactory::setContainer($container);
-
-$app = AppFactory::create();
+$app = $container->get(App::class);
 
 FileConfig::open(CONFIG_FILE);
 
@@ -62,7 +62,7 @@ if (!is_null($basePath)) {
     $app->setBasePath($basePath);
 }
 
-$app->group('', function (\Slim\Routing\RouteCollectorProxy $group) {
+$app->group('', function (RouteCollectorProxy $group) {
     $group->map(['GET', 'POST'], '/', [HomeController::class, 'prepare'])->setName('home');
 
     $group->map(['GET', 'POST'], '/jobs', [JobController::class, 'index'])->setName('jobs');
@@ -84,25 +84,26 @@ $app->group('', function (\Slim\Routing\RouteCollectorProxy $group) {
 
     $group->map(['GET', 'POST'], '/backupjob', [BackupJobController::class, 'index'])->setName('backupjob');
 
-    $group->map(['GET', 'POST'], '/client', [\App\Controller\ClientController::class, 'index']);
+    $group->map(['GET', 'POST'], '/client', [ClientController::class, 'index']);
 
     $group->map(['GET', 'POST'], '/user', [UserController::class, 'prepare'])->setName('user');
 
 })->add(DbAuthMiddleware::class);
 
-$app->group('', function (\Slim\Routing\RouteCollectorProxy $group) {
+$app->group('', function (RouteCollectorProxy $group) {
     $group->post('/signout', [LoginController::class, 'signOut']);
     $group->get('/login', [LoginController::class, 'index']);
     $group->post('/login', [LoginController::class, 'login']);
 })->add(GuestMiddleware::class);
 
-$app->add(CatalogSelectorMiddleware::class)
+$app->add(CsrfMiddleware::class)
+    ->add('csrf')
+    ->add(CatalogSelectorMiddleware::class)
     ->add(FlashMiddleware::class)
     ->add(TwigMiddleware::create($app, $container->get(Twig::class)))
     ->add(SessionStartMiddleware::class);
 
 // Add Error Middleware
-
 $errorMiddleware = $app->addErrorMiddleware(
     FileConfig::get_Value('debug') ?? false,
     FileConfig::get_Value('debug') ?? false,

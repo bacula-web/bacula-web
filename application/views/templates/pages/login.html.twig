@@ -16,7 +16,8 @@
                                     <div class="input-group mb-3">
                   <span class="input-group-text">
                     <i class="cil-user"></i>&nbsp;
-                    <input class="form-control" type="text" name="username" id="inputUsername" placeholder="Username" autofocus
+                    <input class="form-control" type="text" name="username" id="inputUsername" placeholder="Username"
+                           autofocus
                            required>
                                     </div>
                                     <div class="input-group mb-4"><span class="input-group-text">
@@ -30,6 +31,7 @@
                                             <button class="btn btn-primary px-4" type="submit">Login</button>
                                         </div>
                                     </div>
+                                    {{ csrf|raw }}
                                 </form>
                             </div>
                         </div>

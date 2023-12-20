@@ -104,6 +104,7 @@
 
                     <a class="btn btn-link btn-sm" title="{{ 'Reset to default'|trans }}" href="{{ base_path() }}/jobs"
                        role="button">{{ 'Reset to default'|trans }}</a>
+                    {{ csrf|raw }}
                 </form>
 
             </div>
@@ -144,6 +145,7 @@
                                             <input type="hidden" name="backupjob_name" value="{{ job.job_name }}" />
                                             <input type="hidden" name="backupjob_period" value="7" />
                                             <button type="submit" class="btn btn-sm btn-link">{{ job.job_name }}</button>
+                                            {{ csrf|raw }}
                                         </form>
                                     {% else %}
                                         {{ job.job_name }}

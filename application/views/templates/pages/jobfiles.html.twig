@@ -28,6 +28,7 @@
                                 <input type="hidden" name="backupjob_period" value="7"/>
                                 <button type="submit"
                                         class="btn btn-sm btn-primary">{{ 'View backup job'|trans }}</button>
+                                {{ csrf|raw }}
                             </form>
 
                         </div>
@@ -49,6 +50,7 @@
                             <input type="hidden" name="jobId" value="{{ jobid }}">
                             <button type="submit" class="btn btn-primary">Search</button>
                             <button type="reset" class="btn btn-default" title="{{ 'Reset'|trans }}"></button>
+                            {{ csrf|raw }}
                     </div>
                     </form>
                 </div>

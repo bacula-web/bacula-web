@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\CsrfErrorHandler;
 use App\Libs\FileConfig;
 use App\Tables\ClientTable;
 use App\Tables\JobFileTable;
@@ -14,6 +15,10 @@ use Odan\Session\PhpSession;
 use Odan\Session\SessionInterface;
 use Odan\Session\SessionManagerInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Slim\App;
+use Slim\Csrf\Guard;
+use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Twig\Extension\DebugExtension;
 use Symfony\Component\Translation\Translator;
@@ -33,35 +38,47 @@ return [
             'cookie_samesite' => 'Lax'
         ]
     ],
-    JobTable::class => function(SessionInterface $session) {
-      return new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
+    App::class => function (ContainerInterface $container) {
+        AppFactory::setContainer($container);
+        return AppFactory::create();
     },
-    PoolTable::class => function(SessionInterface $session) {
+    ResponseFactoryInterface::class => function (App $app) {
+        return $app->getResponseFactory();
+    },
+    'csrf' => function(ResponseFactoryInterface $responseFactory, CsrfErrorHandler $csrf) {
+        return new Guard(
+            $responseFactory,
+            failureHandler: $csrf->handle($responseFactory),
+            persistentTokenMode: false);
+    },
+    JobTable::class => function (SessionInterface $session) {
+        return new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
+    },
+    PoolTable::class => function (SessionInterface $session) {
         return new PoolTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    ClientTable::class => function(SessionInterface $session) {
+    ClientTable::class => function (SessionInterface $session) {
         return new ClientTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    VolumeTable::class => function(SessionInterface $session) {
+    VolumeTable::class => function (SessionInterface $session) {
         return new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    JobFileTable::class => function(SessionInterface $session) {
+    JobFileTable::class => function (SessionInterface $session) {
         return new JobFileTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    LogTable::class => function(SessionInterface $session) {
+    LogTable::class => function (SessionInterface $session) {
         return new LogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
     SessionManagerInterface::class => function (ContainerInterface $container) {
         return $container->get(SessionInterface::class);
     },
-
     SessionInterface::class => function (ContainerInterface $container) {
         $options = $container->get('settings')['session'];
 
         return new PhpSession($options);
     },
     Twig::class => function (ContainerInterface $container, SessionInterface $session) {
-        $twig = Twig::create( BW_ROOT . '/application/views/templates', ['cache' => false]);
+        $twig = Twig::create(BW_ROOT . '/application/views/templates', ['cache' => false]);
 
         $twig->addExtension(new DebugExtension());
 
@@ -80,7 +97,7 @@ return [
 
         $translator = $container->get(Translator::class);
         $twig->addExtension(new TranslationExtension($translator));
-        
+
         return $twig;
     },
     Translator::class => function (ContainerInterface $container) {

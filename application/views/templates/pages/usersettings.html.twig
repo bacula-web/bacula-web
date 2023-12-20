@@ -33,6 +33,7 @@
                     </div>
 
                     <button class="btn btn-sm btn-primary pull-right" disabled="disabled" type="submit">Update</button>
+                    {{ csrf|raw }}
                 </form>
 
             </div>
@@ -64,6 +65,7 @@
 
                         <br/>
                         <button class="btn btn-sm btn-primary pull-right" type="submit">Reset password</button>
+                        {{ csrf|raw }}
                     </div>
                 </form>
             </div>
