@@ -113,11 +113,14 @@
                         <h4>Users</h4>
                         <div class="table-responsive">
                             <table class="table table-condensed table-striped">
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Action</th>
-                                </tr>
+                                <caption>User(s) list</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
                                 {% for user in users %}
                                     <tr>
                                         <td>{{ user.username() }}</td>
