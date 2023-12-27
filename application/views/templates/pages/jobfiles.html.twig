@@ -60,11 +60,13 @@
         <div class="col-md-12">
             <div class="table-responsive">
                 <table class="table table-condensed table-hover table-striped table-bordered text-center">
-                    <tr>
-                        <th class="text-center">{{ 'File Index'|trans }}</th>
-                        <th class="text-center">{{ 'Filename'|trans }}</th>
-
-                    </tr>
+                    <caption>Job file(s) list</caption>
+                    <thead>
+                        <tr>
+                            <th class="text-center">{{ 'File Index'|trans }}</th>
+                            <th class="text-center">{{ 'Filename'|trans }}</th>
+                        </tr>
+                    </thead>
                     {% for file in job_files %}
                         <tr>
                             <td>#{{ file.fileindex }}</td>

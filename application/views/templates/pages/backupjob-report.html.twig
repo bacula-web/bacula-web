@@ -68,18 +68,21 @@
 
         <div class="table-responsive">
             <table class="table table-condensed table-hover table-striped table-bordered text-center">
-                <tr>
-                    <th class="text-center">{{ 'Job Id'|trans }}</th>
-                    <th class="text-center">{{ 'Status'|trans }}</th>
-                    <th class="text-center">{{ 'Level'|trans }}</th>
-                    <th class="text-right">{{ 'Files'|trans }}</th>
-                    <th class="text-right">{{ 'Bytes'|trans }}</th>
-                    <th class="text-center">{{ 'Start time'|trans }}</th>
-                    <th class="text-center">{{ 'End time'|trans }}</th>
-                    <th class="text-center">{{ 'Elapsed time'|trans }}</th>
-                    <th class="text-rightr">{{ 'Speed'|trans }}</th>
-                    <th class="text-center">{{ 'Compression'|trans }}</th>
-                </tr>
+                <caption>{{ 'Last backup jobs'|trans }}</caption>
+                <thead>
+                    <tr>
+                        <th class="text-center">{{ 'Job Id'|trans }}</th>
+                        <th class="text-center">{{ 'Status'|trans }}</th>
+                        <th class="text-center">{{ 'Level'|trans }}</th>
+                        <th class="text-right">{{ 'Files'|trans }}</th>
+                        <th class="text-right">{{ 'Bytes'|trans }}</th>
+                        <th class="text-center">{{ 'Start time'|trans }}</th>
+                        <th class="text-center">{{ 'End time'|trans }}</th>
+                        <th class="text-center">{{ 'Elapsed time'|trans }}</th>
+                        <th class="text-rightr">{{ 'Speed'|trans }}</th>
+                        <th class="text-center">{{ 'Compression'|trans }}</th>
+                    </tr>
+                </thead>
                 {% for job in jobs %}
                     <tr>
                         <td>{{ job.jobid }}</td>

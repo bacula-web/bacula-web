@@ -64,15 +64,18 @@
             <h4>{{ 'Last good backup job'|trans }}</h4>
             <div class="table-responsive">
                 <table class="table table-bordered table-condensed table-striped text-center">
-                    <tr>
-                        <th class="text-center">{{ 'Name'|trans }}</th>
-                        <th class="text-center">{{ 'Job Id'|trans }}</th>
-                        <th class="text-center">{{ 'Level'|trans }}</th>
-                        <th class="text-center">{{ 'End time'|trans }}</th>
-                        <th class="text-right">{{ 'Bytes'|trans }}</th>
-                        <th class="text-right">{{ 'Files'|trans }}</th>
-                        <th class="text-center">{{ 'Status'|trans }}</th>
-                    </tr>
+                    <caption>{{ 'Last good backup job'|trans }}</caption>
+                    <thead>
+                        <tr>
+                            <th class="text-center">{{ 'Name'|trans }}</th>
+                            <th class="text-center">{{ 'Job Id'|trans }}</th>
+                            <th class="text-center">{{ 'Level'|trans }}</th>
+                            <th class="text-center">{{ 'End time'|trans }}</th>
+                            <th class="text-right">{{ 'Bytes'|trans }}</th>
+                            <th class="text-right">{{ 'Files'|trans }}</th>
+                            <th class="text-center">{{ 'Status'|trans }}</th>
+                        </tr>
+                    </thead>
                     {% for job in backup_jobs %}
                         <tr>
                             <td>{{ job.name }}</td>

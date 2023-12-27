@@ -17,13 +17,14 @@
             <div class="col-xs-12">
                 <div class="table-responsive">
                     <table class="table table-condensed table-striped paginate">
+                        <caption>Pool(s) list</caption>
                         <thead>
-                        <tr>
-                            <th class="text-center">{{ 'Pool name'|trans }}</th>
-                            <th class="text-center">{{ 'Volume count'|trans }}</th>
-                            <th class="text-center">{{ 'Total bytes'|trans }}</th>
-                            <th class="text-center">{{ 'Volumes'|trans }}</th>
-                        </tr>
+                            <tr>
+                                <th class="text-center">{{ 'Pool name'|trans }}</th>
+                                <th class="text-center">{{ 'Volume count'|trans }}</th>
+                                <th class="text-center">{{ 'Total bytes'|trans }}</th>
+                                <th class="text-center">{{ 'Volumes'|trans }}</th>
+                            </tr>
                         </thead>
                         {% for pool in pools %}
                             <tr>

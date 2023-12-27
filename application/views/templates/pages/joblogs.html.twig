@@ -49,10 +49,13 @@
             <div class="col-9">
                 <div class="table-responsive">
                     <table class="table table-hover table-striped table-condensed table-bordered">
-                        <tr>
-                            <th class="text-center">{{ 'Time'|trans }}</th>
-                            <th class="text-center">{{ 'Event'|trans }}</th>
-                        </tr>
+                        <caption>Job event(s) list</caption>
+                        <thead>
+                            <tr>
+                                <th class="text-center">{{ 'Time'|trans }}</th>
+                                <th class="text-center">{{ 'Event'|trans }}</th>
+                            </tr>
+                        </thead>
                         {% for log in joblogs %}
                             <tr>
                                 <td class="text-center">{{ log.getTime() }}</td>

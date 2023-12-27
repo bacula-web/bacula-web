@@ -48,6 +48,12 @@
                         {{ last_jobs_chart|raw }}
 
                         <table class="table table-condensed">
+                            <caption>Jobs status overview</caption>
+                            <thead>
+                                <tr>
+                                    <th colspan="2"></th>
+                                </tr>
+                            </thead>
                             <tr>
                                 <td><h5>{{ 'Running jobs'|trans }}</h5></td>
                                 <td class="text-center">
@@ -315,11 +321,14 @@
                     </div>
                     <div class="card-body">
                         <table class="table table-condensed table-striped">
-                            <tr>
-                                <th>{{ 'Job name'|trans }}</th>
-                                <th class="text-right">{{ 'Bytes'|trans }}</th>
-                                <th class="text-right">{{ 'Files'|trans }}</th>
-                            </tr>
+                            <caption>{{ 'Biggest backup jobs'|trans }}</caption>
+                            <thead>
+                                <tr>
+                                    <th>{{ 'Job name'|trans }}</th>
+                                    <th class="text-right">{{ 'Bytes'|trans }}</th>
+                                    <th class="text-right">{{ 'Files'|trans }}</th>
+                                </tr>
+                            </thead>
                             {% for job in biggestjobs %}
                                 <tr>
                                     <td>

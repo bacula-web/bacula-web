@@ -14,11 +14,14 @@
         </div>
 
         <table class="table table-striped">
-            <tr>
-                <th class="text-center">Status</th>
-                <th class="text-center">Component</th>
-                <th class="text-center">Description</th>
-            </tr>
+            <caption>List of verified requirements</caption>
+            <thead>
+                <tr>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Component</th>
+                    <th class="text-center">Description</th>
+                </tr>
+            </thead>
             {% for check in checks %}
                 <tr>
                     <td class="text-center"><span class="{{ check.check_result }}"></span></td>
