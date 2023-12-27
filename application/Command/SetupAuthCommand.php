@@ -23,6 +23,7 @@ namespace App\Command;
 
 use App\Tables\UserTable;
 use Core\Db\DatabaseFactory;
+use PDOException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
