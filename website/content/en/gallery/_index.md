@@ -16,7 +16,7 @@ Gallery
 
 <br />
 
-### Latest version (8.6.3)
+### Latest version
 
 <br />
 
