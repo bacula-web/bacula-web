@@ -28,6 +28,7 @@
 namespace App\Tables;
 
 use Core\Db\CDBQuery;
+use Core\Db\Database;
 use Core\Db\DatabaseFactory;
 use Core\Db\Table;
 use Exception;
@@ -39,6 +40,13 @@ class JobFileTable extends Table
      * @var string|null
      */
     protected ?string $tablename = 'File';
+    private CatalogTable $catalogTable;
+
+    public function __construct(Database $db, CatalogTable $catalogTable)
+    {
+        parent::__construct($db);
+        $this->catalogTable = $catalogTable;
+    }
 
     /**
      * @param $jobId
@@ -50,13 +58,8 @@ class JobFileTable extends Table
      */
     public function getJobFiles($jobId, $limit, $offset, string $filename = '')
     {
-        $catalog = new CatalogTable(
-            DatabaseFactory::getDatabase(
-                (new PhpSession())->get('catalog_id', 0)
-        ));
-
         // Catalog version prior to Bacula 11.0.x
-        if ($catalog->getCatalogVersion() < 1016) {
+        if ($this->catalogTable->getCatalogVersion() < 1016) {
             $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'Filename.Name AS Filename');
             $where = array("File.JobId = $jobId");
             if (! empty($filename)) {
@@ -109,13 +112,7 @@ class JobFileTable extends Table
      */
     public function countJobFiles(int $jobId, string $filename = '')
     {
-        $catalog = new CatalogTable(
-            DatabaseFactory::getDatabase(
-                (new PhpSession())->get('catalog_id', 0)
-            )
-        );
-
-        if ($catalog->getCatalogVersion() < 1016) {
+        if ($this->catalogTable->getCatalogVersion() < 1016) {
             $sql_query = "SELECT COUNT(*) as count
     			FROM File, Path, Filename, Job
     			WHERE File.JobId = $jobId

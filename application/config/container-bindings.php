@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\CsrfErrorHandler;
 use App\Libs\FileConfig;
+use App\Tables\CatalogTable;
 use App\Tables\ClientTable;
 use App\Tables\JobFileTable;
 use App\Tables\JobTable;
@@ -63,8 +64,13 @@ return [
     VolumeTable::class => function (SessionInterface $session) {
         return new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
-    JobFileTable::class => function (SessionInterface $session) {
-        return new JobFileTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
+    JobFileTable::class => function (SessionInterface $session, ContainerInterface $container) {
+        return new JobFileTable(
+            DatabaseFactory::getDatabase($session->get('catalog_id', 0)),
+            $container->get(CatalogTable::class));
+    },
+    CatalogTable::class => function (SessionInterface $session) {
+        return new CatalogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     },
     LogTable::class => function (SessionInterface $session) {
         return new LogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
