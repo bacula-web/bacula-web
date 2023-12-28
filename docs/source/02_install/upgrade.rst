@@ -1,8 +1,8 @@
 .. _install/upgrade:
 
-=======
+*******
 Upgrade
-=======
+*******
 
 Upgrading Bacula-Web installation is very easy, you only need basic linux administration skills.
 

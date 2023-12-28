@@ -1,16 +1,12 @@
 .. _install/installnginx:
 
-================
 Nginx web server
-================
-
-Before you start
 ================
 
 Before proceeding to Nginx / fpm / PHP installation and configuration, read the :ref:`install/requirements` page.
 
 Install required packages
-=========================
+-------------------------
 
 Follow instructions below to setup Bacula-Web with Nginx instead of Apache www
 
@@ -42,7 +38,7 @@ If you use postgreSQL Bacula catalog
 
 
 Configure PHP-FPM
-=================
+-----------------
 
 Modify PHP-FPM configuration
 
@@ -61,7 +57,7 @@ Restart PHP-FPM service
 
 
 Configure Nginx
-===============
+---------------
 
 Define a new virtual server configuration like below.
 

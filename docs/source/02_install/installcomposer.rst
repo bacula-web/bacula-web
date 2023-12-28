@@ -1,8 +1,8 @@
 .. _install/installcomposer:
 
-=================================
-Install Bacula-Web using Composer
-=================================
+**********************
+Install using Composer
+**********************
 
 Since version 8.0.0, Bacula-Web dependencies are managed using `Composer`_.
 
@@ -33,8 +33,8 @@ you can install it manually as explained on `this page <https://getcomposer.org/
 
    Make sure you're using latest Composer version. Read more on `Packagist.com website <https://getcomposer.org/2>`_
 
-Use Composer to install Bacula-Web 
-==================================
+Install with Composer
+=====================
 
 From your $HOME folder, run the command below
 
@@ -67,6 +67,7 @@ Once done, you can check Bacula-Web installation by running the command below
     php           8.0.28     success
 
 Fix files/folders ownership and permissions
+===========================================
 
 ::
 

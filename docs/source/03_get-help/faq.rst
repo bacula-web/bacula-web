@@ -1,8 +1,8 @@
 .. _get-help/faq:
 
-==========================
+**************************
 Frequently asked questions
-==========================
+**************************
 
 Here's below a summary of most frequently asked questions that might help you to install, upgrade, troubleshoot or contribute to Bacula-Web project
 
@@ -32,8 +32,8 @@ Support
 
   * :ref:`How can I submit a bug report or a feature request ?<bug-feature-request>`
 
-General topics
---------------
+Answers
+=======
 
 .. _supported-web-browser:
 

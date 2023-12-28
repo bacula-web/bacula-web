@@ -23,6 +23,8 @@ Welcome to Bacula-Web documentation
    :maxdepth: 2
 
    02_install/index
+   02_install/webserver-setup
+   02_install/upgrade
 
 .. toctree::
    :caption: Get help

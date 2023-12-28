@@ -1,13 +1,12 @@
 .. _contribute/development:
 
-============
 Development
-============
+===========
 
 Bacula-Web source git repository is publicly available and kindly hosted by GitHub `here <https://github.com/bacula-web/bacula-web>`_
 
 Guidance for developers
-========================
+-----------------------
 
 This section describe how you can contribute to Bacula-Web project development.
 

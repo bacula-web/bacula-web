@@ -1,8 +1,8 @@
 .. _install/test:
 
-===============
+***************
 Test Bacula-Web
-===============
+***************
 
 After installing/upgrading and configuring Bacula-Web, just ensure that Bacula-Web will work fine.
 

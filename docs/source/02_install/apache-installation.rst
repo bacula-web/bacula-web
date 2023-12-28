@@ -1,14 +1,7 @@
 .. _install/apache-installation:
 
-==============================
-Apache web server
-==============================
-
-Installation
-============
-
-Before you start
-----------------
+Apache
+======
 
 Before proceeding to Apache / PHP installation and configuration, read the :ref:`install/requirements` page.
 
@@ -161,10 +154,10 @@ With SQLite bacula catalog
 .. note:: A big thanks to Dean E. Weimer who provided me Bacula-Web installation instructions for \*BSD setup
 
 Apache web server configuration
-===============================
+-------------------------------
 
 PHP configuration
-=================
+-----------------
 
 Update the timezone parameter in your PHP configuration in order to prevent Apache warning messages (see below)
 
@@ -192,7 +185,7 @@ Reload Apache configuration
    $ sudo service httpd reload || sudo /etc/init.d/httpd reload
 
 Apache virtualhost
-==================
+------------------
 
 In order to secure the application folder and avoid exposing sensitive information contained in Bacula-Web configuration.
 

@@ -1,7 +1,8 @@
 .. _install/index:
 
-Before you start
-================
+#####################
+Installation overview
+#####################
 
 Before starting the installation of Bacula-Web, please you meet the requirements listed below
 
@@ -9,9 +10,6 @@ Before starting the installation of Bacula-Web, please you meet the requirements
    * you have root access or sudo privileges
 
 .. important:: Installing Bacula-Web using root account is not recommended, use a regular account with sudo privileges
-
-Installation
-============
 
 Bacula-Web can be installed in different way, but the recommended way is by using Composer
 
@@ -26,31 +24,24 @@ You will find more details by following the links below
 
 Make sure your system meets the minimal requirements by checking the :ref:`requirement <install/requirements>` page
 
-Web server setup
-================
-
-You can pick one of the web server listed below to install Bacula-Web on your server
+You can pick one of the :ref:`web server <install/webserver>` listed below to install Bacula-Web on your server
 
    * :ref:`Apache web server installation<install/apache-installation>`
    * :ref:`Nginx web server installation<install/installnginx>`
    * :ref:`Lighttpd web server installation<install/lighttpd-installation>`
 
-Configuration
-=============
-
 Once Bacula-Web web application is installed, follow :ref:`these instructions <install/configure>` to finalize the configuration
-
-Finalize setup
-==============
 
 **Important:** If you have not disabled user authentication, **YOU MUST** :ref:`follow the final steps<install/finalize>` which will setup the user authentication database for you
 
-Test
-====
-
 To make sure your setup is in good shape, follow instructions in the :ref:`test chapter<install/test>`
 
-Upgrade
-=======
+.. toctree::
+   :maxdepth: 2
 
-Upgrading Bacula-Web is documented in the :ref:`upgrade <install/upgrade>` chapter
+   requirements
+   installcomposer
+   webserver-setup
+   configure
+   finalize
+   test

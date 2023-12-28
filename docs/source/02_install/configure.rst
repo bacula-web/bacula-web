@@ -1,8 +1,8 @@
 .. _install/configure:
 
-====================
+********************
 Configure Bacula-Web
-====================
+********************
 
 This section explain how to create the configuration file which contain your custom settings.
 

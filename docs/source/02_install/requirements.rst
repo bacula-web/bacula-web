@@ -1,8 +1,8 @@
 .. _install/requirements:
 
-============
+************
 Requirements
-============
+************
 
 General requirements
 ====================

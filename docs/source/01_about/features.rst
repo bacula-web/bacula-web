@@ -1,15 +1,11 @@
 .. _about/features:
 
-########
-Features
-########
+Features overview
+=================
 
-********
-Overview
-********
 
 Install once, monitor several directors
-=======================================
+---------------------------------------
 
 You just need to Install Bacula-Web once, then monitor as much Bacula directors you have.
 
@@ -17,14 +13,14 @@ Bacula-Web give you the ability to keep an eye on all your Bacula directors from
 You can Install it on a dedicated server and manage all your Bacula instances from a single Bacula-Web instance.
 
 Keep an eye on Bacula events and resources
-===========================================
+------------------------------------------
 
 Bacula-Web Dashboard provide an overall overview of your Bacula jobs, Volumes, Pools, Catalog statistics, Amount of Bytes/Files protected by Bacula, etc..
 
 You can choose within predefined period like last 24 hours, last week, last month or since beginning of time period.
 
 Bacula-Web in your language
-===========================
+---------------------------
 
 Bacula-Web come by default in english but, with the help of the community, it has been translated in several languages listed below
 
@@ -48,13 +44,13 @@ Translations are a work in progress, if you want to contribute, please read the 
 .. note:: A huge thanks to the community for his help translating Bacula-Web :)
 
 Jobs report page 
-================
+----------------
 
 The jobs report page shows you Bacula jobs with several ordering and filtering options.
 Another useful feature is that you can check log or each jobs and jump to **Backup job report** page from any backup job.
 
 Client backup report
-====================
+--------------------
 
 Client backup report provide you for each Bacula client the details below
 
@@ -63,7 +59,7 @@ Client backup report provide you for each Bacula client the details below
    * last x days stored bytes and files graphs
 
 Backup job report
-=================
+-----------------
 
 Backup job report display useful information about Bacula jobs like
 
@@ -71,33 +67,32 @@ Backup job report display useful information about Bacula jobs like
    * last x days stored bytes and files graphs
 
 Job files report
-================
+----------------
 
 Job files report list all files and folder backed up by a backup job
 
 .. note:: Since Bacula-Web 8.4.0, you can filter the file(s)/folder(s) list using a search box
 
 Pools and volumes
-=================
+-----------------
 
 Pools and volumes provide you a list of all Bacula pools and assigned volumes with details like volume name, Bytes, Media type, expiration date, last written date, status
 
 Directors
-=========
+---------
 
 The directors report display basic information about all Bacula catalog you have configured
 
 Test page
-=========
+---------
 
 Test page give you some useful information about your Bacula-Web installation and configuration
 
-*************
 Features list
-*************
+=============
 
 Dashboard
-=========
+---------
 
 .. image:: /_static/bacula-web-dashboard-crop.jpeg
    :scale: 15%
@@ -117,7 +112,7 @@ Bacula-Web Dashboard provide a lot of information about your Bacula infrastructu
 ----
 
 Jobs report
-===========
+-----------
 
 .. image:: /_static/bacula-web-jobs-report.jpg
    :scale: 15%
@@ -143,7 +138,7 @@ Jobs report display latest Bacula jobs (backup,copy,restore) in a table format c
 ----
 
 Job logs
-========
+--------
 
 .. image:: /_static/bacula-web-job-logs-option.jpg
    :scale: 60%
@@ -152,8 +147,8 @@ Job logs can be displayed by clicking on the loop icon off each job
 
 ----
 
-Filter and options
-==================
+Job filter and options
+----------------------
 
 .. image:: /_static/bacula-web-jobs-report-options.jpg
    :scale: 60%
@@ -163,7 +158,7 @@ You can use different filter and ordering options
 ----
 
 Job logs
-========
+--------
 
 .. image:: /_static/bacula-web-job-logs.jpg
    :scale: 20%
@@ -176,7 +171,7 @@ The Job logs page display
 ----
 
 Pools
-=====
+-----
 
 .. image:: /_static/bacula-web-pools.jpg
    :scale: 20%
@@ -192,7 +187,7 @@ You can display associated volumes of each pool by clicking on **Show volumes** 
 ----
 
 Volumes
-=======
+-------
 
 .. image:: /_static/bacula-web-volumes.jpg
    :scale: 20%
@@ -218,7 +213,7 @@ The total of bytes and number of volumes is displayed at the bottom of the page
 ----
 
 Volume details
-==============
+--------------
 
 .. image:: /_static/bacula-web-volume-details.jpg
    :scale: 20%
@@ -238,7 +233,7 @@ Display volume details such as
 ----
 
 Backup jobs report
-==================
+------------------
 
 .. image:: /_static/bacula-web-backupjob-report.jpg
    :scale: 20%
@@ -259,7 +254,7 @@ You can choose different periods such as last
 ----
 
 Clients backup report
-=====================
+---------------------
 
 .. image:: /_static/bacula-web-client-report.jpg
    :scale: 25%
@@ -282,7 +277,7 @@ You can choose different periods such as last
 ----
 
 Directors
-=========
+---------
 
 .. image:: /_static/bacula-web-directors.jpg
    :scale: 20%
@@ -306,7 +301,7 @@ Bacula director details are
 ----
 
 Job files
-=========
+---------
 
 .. image:: /_static/bacula-web-jobfiles.jpg
    :scale: 20%
@@ -318,7 +313,7 @@ This report list all files of a Bacula backup job with pagination.
 ----
 
 Test page
-=========
+---------
 
 .. image:: /_static/bacula-web-test-page.jpg
    :scale: 20%
@@ -342,7 +337,7 @@ The test page do the following check for you
 ----
 
 General settings
-================
+----------------
 
 .. image:: /_static/bacula-web-settings.jpg
    :scale: 20%
@@ -357,7 +352,7 @@ page in a future version.
 ----
 
 User settings
-=============
+-------------
 
 .. image:: /_static/bacula-web-user-settings.jpg
    :scale: 20%
@@ -370,9 +365,8 @@ It also allow each users to reset their own password.
 
 ----
 
-*****************
 Known limitations
-*****************
+-----------------
 
 As of now, Bacula-Web is only a reporting and monitoring tool, it only access your Bacula director (read only) to retrieve information from Bacula catalog.
 

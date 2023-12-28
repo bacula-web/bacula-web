@@ -1,6 +1,5 @@
 .. _contribute/translations:
 
-============
 Translations
 ============
 
@@ -23,7 +22,7 @@ Bacula-Web web user interface is by default in english, but it is also available
 * Swedish
 
 How to help translating Bacula-Web
-==================================
+----------------------------------
 
 To change the language of your own Bacula-Web installation, read the chapter Configuring Bacula-Web in the documentation.
 
