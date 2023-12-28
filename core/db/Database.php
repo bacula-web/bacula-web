@@ -41,7 +41,7 @@ class Database
      * @param int $catalogId
      * @throws \Exception
      */
-    public function __construct($catalogId = null)
+    public function __construct(int $catalogId = null)
     {
         $username = null;
         $password = null;
