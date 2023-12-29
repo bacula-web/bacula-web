@@ -111,7 +111,7 @@ and if needed, restore the correct SELinux context
 
 ::
 
-    # retorecon -Rv /var/lib/php/session
+    # restorecon -Rv /var/lib/php/session
 
 Resources
 ----------
