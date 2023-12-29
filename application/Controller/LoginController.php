@@ -107,10 +107,7 @@ class LoginController
 
         $this->session->set('user_authenticated', $this->userAuth->authUser($form_data['username'], $form_data['password']));
 
-        // TODO: fix $userAuth->authenticated()
-        //if ($this->userAuth->authenticated()) {
-
-        if ($this->session->get('user_authenticated') === 'yes') {
+        if ($this->userAuth->authenticated()) {
 
             $username = Sanitizer::sanitize($form_data['username']);
 

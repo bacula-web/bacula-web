@@ -46,15 +46,15 @@ class UserAuth
      * @var UserTable
      */
     private UserTable $userTable;
+    private SessionInterface $session;
 
     /**
      * @throws Exception
      */
-    public function __construct()
+    public function __construct(UserTable $userTable, SessionInterface $session)
     {
-        $this->userTable = new UserTable(
-            DatabaseFactory::getDatabase()
-        );
+        $this->userTable = $userTable;
+        $this->session = $session;
     }
 
     /**
@@ -145,9 +145,7 @@ class UserAuth
      */
     public function authenticated(): bool
     {
-        $session = new Session\PhpSession();
-
-        if ($session->get('user_authenticated') === 'yes') {
+        if ($this->session->get('user_authenticated') === 'yes') {
             return true;
         }
 

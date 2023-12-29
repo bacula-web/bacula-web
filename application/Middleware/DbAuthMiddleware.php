@@ -24,6 +24,7 @@ namespace App\Middleware;
 use App\Libs\FileConfig;
 use Core\App\UserAuth;
 use Core\Exception\AppException;
+use Core\Exception\ConfigFileException;
 use GuzzleHttp\Psr7\Response;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -43,11 +44,15 @@ class DbAuthMiddleware implements MiddlewareInterface
     private ?string $basePath;
 
     /**
+     * @param UserAuth $userAuth
+     * @param SessionInterface $session
+     * @param Twig $twig
      * @throws AppException
+     * @throws ConfigFileException
      */
     public function __construct(UserAuth $userAuth, SessionInterface $session, Twig $twig)
     {
-        $this->dbAuth = new $userAuth;
+        $this->dbAuth = $userAuth;
 
         // Check if database exists and is writable
         $this->dbAuth->check();

@@ -10,6 +10,7 @@ use App\Tables\JobFileTable;
 use App\Tables\JobTable;
 use App\Tables\LogTable;
 use App\Tables\PoolTable;
+use App\Tables\UserTable;
 use App\Tables\VolumeTable;
 use Core\Db\DatabaseFactory;
 use Odan\Session\PhpSession;
@@ -71,6 +72,9 @@ return [
     },
     CatalogTable::class => function (SessionInterface $session) {
         return new CatalogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
+    },
+    UserTable::class => function () {
+        return new UserTable(DatabaseFactory::getDatabase());
     },
     LogTable::class => function (SessionInterface $session) {
         return new LogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
