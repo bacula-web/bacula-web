@@ -21,7 +21,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Job;
 use App\Libs\FileConfig;
 use App\Tables\JobFileTable;
 use App\Tables\LogTable;
@@ -36,12 +35,14 @@ use App\Tables\ClientTable;
 use App\Tables\PoolTable;
 use Exception;
 use GuzzleHttp\Psr7\Response;
+use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use TypeError;
+use Valitron\Validator;
 use function Core\Helpers\getRequestParams;
 
 ;
@@ -56,6 +57,7 @@ class JobController
 
     private JobFileTable $jobFileTable;
     private Twig $view;
+    private SessionInterface $session;
 
     public function __construct(
         JobTable $jobTable,
@@ -63,7 +65,8 @@ class JobController
         ClientTable $clientTable,
         PoolTable $poolTable,
         JobFileTable $jobFileTable,
-        Twig $view
+        Twig $view,
+        SessionInterface $session
     )
     {
         $this->logTable = $logTable;
@@ -72,6 +75,10 @@ class JobController
         $this->poolTable = $poolTable;
         $this->jobFileTable = $jobFileTable;
         $this->view = $view;
+        $this->session = $session;
+
+        FileConfig::open(CONFIG_FILE);
+        $this->basePath = FileConfig::get_Value('basepath') ?? null;
     }
 
     /**
@@ -487,12 +494,17 @@ class JobController
     {
         $tplData = [];
 
-        // TODO: validate jobid is an integer
-        $jobId = (int) $args['jobid'] ?? null;
+        $v = new Validator($args);
+        $v->rules(['integer' => 'jobid']);
 
-        if( $jobId === null) {
-            throw new TypeError('Invalid job id (invalid or null) provided in Job logs report');
+        if (!$v->validate()) {
+            $this->session->getFlash()->set('error', ['Invalid job id provided in Job logs report']);
+            return $response
+                ->withHeader('Location', $this->basePath . '/jobs')
+                ->withStatus(302);
         }
+
+        $jobId = (int) $args['jobid'];
 
         $tplData['job'] = $this->jobTable->findById($jobId);
 
