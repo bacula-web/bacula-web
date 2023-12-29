@@ -70,8 +70,7 @@ class UserController
         $tplData = [];
         $postData = $request->getParsedBody();
 
-        // TODO: get username from session
-        $this->username = $this->session->get('username', 'davide');
+        $this->username = $this->session->get('username');
         $user = $this->userTable->findByName($this->username);
 
         $tplData['username'] = $this->username;
