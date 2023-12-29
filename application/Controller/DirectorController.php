@@ -65,8 +65,6 @@ class DirectorController
      */
     public function index(Request $request, Response $response): Response
     {
-        require_once BW_ROOT . '/core/const.inc.php';
-
         $tplData = [];
 
         $no_period = [

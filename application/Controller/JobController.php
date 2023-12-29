@@ -89,9 +89,6 @@ class JobController
         $params = [];
         $postRequestData = getRequestParams($request);
 
-        // TODO: Improve how these constants are declared and used
-        require_once BW_ROOT . '/core/const.inc.php';
-
         FileConfig::open(CONFIG_FILE);
 
         $fields = [

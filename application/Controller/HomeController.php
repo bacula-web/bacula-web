@@ -72,8 +72,6 @@ class HomeController
      */
     public function prepare(Request $request, Response $response): Response
     {
-        require_once BW_ROOT . '/core/const.inc.php';
-
         $view = Twig::fromRequest($request);
         $tplData = [];
 

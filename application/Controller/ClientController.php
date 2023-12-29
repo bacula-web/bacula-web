@@ -69,8 +69,6 @@ class ClientController
      */
     public function index(Request $request, Response $response): Response
     {
-        require_once BW_ROOT . '/core/const.inc.php';
-
         $tplData = [];
 
         $period = 7;
