@@ -263,8 +263,7 @@ Support
 How can I submit a bug and features report ?
 --------------------------------------------
 
-Register or log in (if you already registered) in the `bug tracker`_ and submit your bug and/or feature request.
+Bugs and feature requests are tracked using `GitHub issues <https://github.com/bacula-web/bacula-web/issues>`_.
 
-.. _bug tracker: http://bugs.bacula-web.org
-
-More information on how to submit a bug report can be found :ref:`here <get-help/support>`
+.. hint::
+   You can find more information on how to submit a bug report :ref:`here <get-help/support>`
