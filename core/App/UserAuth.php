@@ -115,12 +115,7 @@ class UserAuth
      */
     public function authUser(string $username, string $password): string
     {
-        // TODO: FILTER_SANITIZE_STRING is deprecated as of PHP 8.1, replace by htmlspecialchars() instead
-
-        // Sanitize username
-        $username = filter_var($username, FILTER_SANITIZE_STRING, array( 'flags' => FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH));
         $username = trim($username, ' ');
-
         $user = $this->userTable->findByName($username);
 
         if ($user) {
