@@ -44,7 +44,6 @@ class Log
      */
     public function getTime(): string
     {
-        // TODO: we may not need to store everything in the session
         return date(FileConfig::get_Value('datetime_format'), strtotime($this->time));
     }
 }
