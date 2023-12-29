@@ -30,6 +30,7 @@ use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
+use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use Slim\Views\Twig;
@@ -41,10 +42,20 @@ class BackupJobController
 {
     private Twig $view;
     private JobTable $jobTable;
+    private SessionInterface $session;
 
-    public function __construct(Twig $view, JobTable $jobTable) {
+    /**
+     * @var string|null
+     */
+    private ?string $basePath;
+
+    public function __construct(Twig $view, JobTable $jobTable, SessionInterface $session) {
         $this->view = $view;
         $this->jobTable = $jobTable;
+        $this->session = $session;
+
+        FileConfig::open(CONFIG_FILE);
+        $this->basePath = FileConfig::get_Value('basepath') ?? null;
     }
 
     /**
@@ -107,10 +118,14 @@ class BackupJobController
         } else {
             $tplData['no_report_options'] = 'false';
 
-            // Make sure provided backupjob_name exist
+            // Make sure provided backupjob_name does exists
             if (!in_array($backupjob_name, $jobslist)) {
-                // TODO: Below should be included in flash and redirect user to another page (maybe referer)
-                throw new AppException('Wrong user input: invalid backupjob_name');
+                $this->session->getFlash()->set('error', ['Invalid Backup Job name']);
+                $this->session->save();
+
+                return $response
+                    ->withHeader('Location', $this->basePath . '/backupjob')
+                    ->withStatus(302);
             }
 
             $tplData['selected_jobname'] = $backupjob_name;
