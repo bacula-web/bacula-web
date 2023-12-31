@@ -1,5 +1,37 @@
 # Changelog
 
+## [9.3.0](https://github.com/bacula-web/bacula-web/compare/v9.2.1...v9.3.0) (2023-12-31)
+
+
+### 🐛 Bug Fixes
+
+* **core:** missing class use statement ([6196128](https://github.com/bacula-web/bacula-web/commit/619612812f5664ac6f4e7d162e39f632936d339e))
+* display flash message on invalid backup job name ([e81b25e](https://github.com/bacula-web/bacula-web/commit/e81b25e0619d67ec368f26bd85dcb5a25180b9ed))
+* **docs:** fix toc tree and navigation ([ff7a826](https://github.com/bacula-web/bacula-web/commit/ff7a8268549128340f9615ee15d3415bdd20911e))
+* **docs:** improve documentation ([e3302e1](https://github.com/bacula-web/bacula-web/commit/e3302e179d23ec5cd49c7defd1909fc43291493d))
+* **docs:** missing upgrade instruction ([a4219e6](https://github.com/bacula-web/bacula-web/commit/a4219e66b1fac498276200bf3c88acb1948e3b21))
+* **docs:** remove link to archive installation ([a952ad2](https://github.com/bacula-web/bacula-web/commit/a952ad2870af5c0b79364188e09dbaa185f467e9))
+* **docs:** selinux command typo ([cf3f411](https://github.com/bacula-web/bacula-web/commit/cf3f41183886fae2b05eaf35ea87fbec0e96650d))
+* **docs:** wrong link to bug tracker ([4dd4a2c](https://github.com/bacula-web/bacula-web/commit/4dd4a2cd52d2d1780ea6fc2db1afdfef79b40e5f))
+* fix/improve html table ([3b064b9](https://github.com/bacula-web/bacula-web/commit/3b064b9e698dc1b83c4aa3fbdbe30d42b91e5323))
+* fix/improve html table ([9d1c4f7](https://github.com/bacula-web/bacula-web/commit/9d1c4f7e8f46ca906747570d31f0c98e776390fd))
+* flash message width ([ade60be](https://github.com/bacula-web/bacula-web/commit/ade60be624359015b807169807030f1cdb35fb62))
+* hardcoded title html tag ([34066e4](https://github.com/bacula-web/bacula-web/commit/34066e4c4b3972c62c1c71fa84e537fb50ef0582)), closes [#200](https://github.com/bacula-web/bacula-web/issues/200)
+* job files report error using Bacula &gt;= 11.0.0 ([4f2bedd](https://github.com/bacula-web/bacula-web/commit/4f2beddcf1efe0356181fe91ed419bdaa7b6706a)), closes [#202](https://github.com/bacula-web/bacula-web/issues/202)
+* missing logo on error page ([f242c95](https://github.com/bacula-web/bacula-web/commit/f242c9508c5f794cd6298c0fd0a4fb2c1a0bb40b))
+* username sanitized twice in UserAuth::authUser() ([61c8330](https://github.com/bacula-web/bacula-web/commit/61c8330101a510a74a5efc6301bde4d59aaf2eb5))
+* validate jobid in job log report ([f9e797e](https://github.com/bacula-web/bacula-web/commit/f9e797e28b106ef69dc478432505db306bd40f7c))
+
+
+### 🚀 Features
+
+* **security:** enforce csrf protection ([41cdcb6](https://github.com/bacula-web/bacula-web/commit/41cdcb668de5bef92463419b864643afecb6bbd7))
+
+
+### 📘 Documentation
+
+* update screenshots ([2c5d4b9](https://github.com/bacula-web/bacula-web/commit/2c5d4b96ebe188274333cc0be0ca857cef9c95c1))
+
 ## [9.2.1](https://github.com/bacula-web/bacula-web/compare/v9.2.0...v9.2.1) (2023-12-06)
 
 
