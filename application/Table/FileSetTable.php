@@ -17,14 +17,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Tables;
+namespace App\Table;
 
 use Core\Db\Table;
 
-class LogTable extends Table
+class FileSetTable extends Table
 {
     /**
      * @var string|null
      */
-    protected ?string $tablename = 'Log';
+    protected ?string $tablename = 'FileSet';
 }

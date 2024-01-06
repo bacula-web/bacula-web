@@ -62,12 +62,8 @@
       "Core\\": "core/",
       "App\\": "application/"
     },
-    "classmap": [
-      "core",
-      "application"
-    ],
     "files": [
-      "core/helpers/request.php"
+      "core/Helpers/request.php"
     ]
   },
   "scripts": {

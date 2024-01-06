@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Tables;
+namespace App\Table;
 
 use Core\Db\Table;
 use Core\Db\CDBQuery;

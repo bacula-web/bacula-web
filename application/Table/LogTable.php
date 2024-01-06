@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -19,36 +17,14 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Tables;
+namespace App\Table;
 
 use Core\Db\Table;
-use Core\Db\CDBQuery;
-use App\Libs\FileConfig;
 
-class PoolTable extends Table
+class LogTable extends Table
 {
-    protected ?string $tablename = 'Pool';
-
     /**
-     * @return mixed
-     * @throws \Exception
+     * @var string|null
      */
-    public function getPools()
-    {
-        $where    = null;
-        $orderby  = 'Name';
-
-        if (FileConfig::get_Value('hide_empty_pools')) {
-            $where[] = "$this->tablename.NumVols > 0";
-        }
-
-        $fields = [ 'poolid', 'name', 'numvols' ];
-
-        $query = CDBQuery::get_Select(array( 'table' => $this->tablename,
-            'fields' => $fields,
-            'where' => $where,
-            'orderby' => $orderby ));
-
-        return $this->select($query);
-    }
+    protected ?string $tablename = 'Log';
 }

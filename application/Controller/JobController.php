@@ -22,17 +22,17 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Libs\FileConfig;
-use App\Tables\JobFileTable;
-use App\Tables\LogTable;
-use Core\Db\CDBPagination;
+use App\Table\JobFileTable;
+use App\Table\LogTable;
+use Core\Db\DBPagination;
 use Core\Db\CDBQuery;
 use Core\Exception\ConfigFileException;
 use Core\Helpers\Sanitizer;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
-use App\Tables\JobTable;
-use App\Tables\ClientTable;
-use App\Tables\PoolTable;
+use App\Table\JobTable;
+use App\Table\ClientTable;
+use App\Table\PoolTable;
 use Exception;
 use GuzzleHttp\Psr7\Response;
 use Odan\Session\SessionInterface;
@@ -337,7 +337,7 @@ class JobController
             $tplData['result_order_asc_checked'] = '';
         }
 
-        $pagination = new CDBPagination($request);
+        $pagination = new DBPagination($request);
 
         // Parsing jobs result
         $sqlQuery = CDBQuery::get_Select(array('table' => 'Job',

@@ -22,7 +22,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Libs\FileConfig;
-use App\Tables\UserTable;
+use App\Table\UserTable;
 use Slim\Views\Twig;
 use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;

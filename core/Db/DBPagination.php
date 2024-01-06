@@ -32,7 +32,7 @@ use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 use function Core\Helpers\getRequestParams;
 
-class CDBPagination
+class DBPagination
 {
     /**
      * @var int

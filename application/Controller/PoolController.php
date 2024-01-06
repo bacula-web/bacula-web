@@ -22,7 +22,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Core\Utils\CUtils;
-use App\Tables\PoolTable;
+use App\Table\PoolTable;
 use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;

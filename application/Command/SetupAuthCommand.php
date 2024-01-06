@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Tables\UserTable;
+use App\Table\UserTable;
 use Core\Db\DatabaseFactory;
 use PDOException;
 use Symfony\Component\Console\Command\Command;

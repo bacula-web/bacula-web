@@ -25,12 +25,12 @@ namespace App\Controller;
 
 use Core\Db\DatabaseFactory;
 use App\Libs\FileConfig;
-use App\Tables\ClientTable;
-use App\Tables\JobTable;
-use App\Tables\CatalogTable;
-use App\Tables\VolumeTable;
-use App\Tables\PoolTable;
-use App\Tables\FileSetTable;
+use App\Table\ClientTable;
+use App\Table\JobTable;
+use App\Table\CatalogTable;
+use App\Table\VolumeTable;
+use App\Table\PoolTable;
+use App\Table\FileSetTable;
 use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
 use Odan\Session\PhpSession;

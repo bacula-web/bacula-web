@@ -25,7 +25,7 @@
  * @copyright 2018-2021 Gabriele Orlando
  */
 
-namespace App\Tables;
+namespace App\Table;
 
 use Core\Db\CDBQuery;
 use Core\Db\Database;

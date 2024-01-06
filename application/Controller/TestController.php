@@ -20,7 +20,7 @@
 
 namespace App\Controller;
 
-use App\Tables\CatalogTable;
+use App\Table\CatalogTable;
 use Core\Exception\AppException;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;

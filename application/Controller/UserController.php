@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Tables\UserTable;
+use App\Table\UserTable;
 use Core\App\UserAuth;
 use Slim\Views\Twig;
 use Core\Helpers\Sanitizer;

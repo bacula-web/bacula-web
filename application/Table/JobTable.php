@@ -19,7 +19,7 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Tables;
+namespace App\Table;
 
 use App\Entity\Job;
 use Core\Db\CDBQuery;

@@ -21,9 +21,9 @@
 namespace App\Controller;
 
 use App\Libs\FileConfig;
-use App\Tables\JobTable;
-use App\Tables\PoolTable;
-use App\Tables\VolumeTable;
+use App\Table\JobTable;
+use App\Table\PoolTable;
+use App\Table\VolumeTable;
 use Odan\Session\SessionInterface;
 use Slim\Views\Twig;
 use Core\Db\CDBQuery;

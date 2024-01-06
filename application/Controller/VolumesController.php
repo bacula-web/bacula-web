@@ -23,11 +23,11 @@ namespace App\Controller;
 
 use App\Libs\FileConfig;
 use Core\Db\CDBQuery;
-use Core\Db\CDBPagination;
+use Core\Db\DBPagination;
 use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
-use App\Tables\VolumeTable;
-use App\Tables\PoolTable;
+use App\Table\VolumeTable;
+use App\Table\PoolTable;
 use Date_HumanDiff;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
@@ -169,7 +169,7 @@ class VolumesController
             'Pool.Name AS pool_name'
         ];
 
-        $pagination = new CDBPagination($request);
+        $pagination = new DBPagination($request);
 
         $sqlQuery = CDBQuery::get_Select(array('table' => $this->volumeTable->getTableName(),
                                             'fields' => $fields,

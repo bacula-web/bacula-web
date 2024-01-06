@@ -22,7 +22,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Libs\FileConfig;
-use App\Tables\JobTable;
+use App\Table\JobTable;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
 use Core\Exception\ConfigFileException;
