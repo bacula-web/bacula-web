@@ -41,7 +41,7 @@
     "pear/date_humandiff": "^0.5.0",
     "vlucas/phpdotenv": "^5.5",
     "php-di/php-di": "^7.0",
-    "twbs/bootstrap": "5.2.3",
+    "twbs/bootstrap": "^5",
     "slim/slim": "4.*",
     "guzzlehttp/psr7": "^2",
     "odan/session": "^6.1",
