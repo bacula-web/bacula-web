@@ -30,11 +30,31 @@ class Volume
      */
     private int $volbytes;
 
+    private int $inchanger;
+
+    private int $slot;
+
     /**
      * @return string
      */
     public function getVolbytes(): string
     {
         return CUtils::Get_Human_Size($this->volbytes);
+    }
+
+    public function getInchanger(): string
+    {
+        if ($this->inchanger === 0) {
+            return '-';
+        }
+        return '<i class="fa fa-check" aria-hidden="true"></i>';
+    }
+
+    public function getSlot(): string|int
+    {
+        if ($this->inchanger === 0) {
+            return 'n/a';
+        }
+        return $this->slot;
     }
 }

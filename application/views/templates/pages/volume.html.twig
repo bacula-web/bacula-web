@@ -36,7 +36,22 @@
                                 <b>{{ 'Volume files'|trans }}:</b> {{ volume.volfiles }}
                             </li>
                             <li class="list-group-item">
+                                <b>{{ 'Volume jobs'|trans }}:</b> {{ volume.voljobs }}
+                            </li>
+                            <li class="list-group-item">
+                                <b>{{ 'First written'|trans }}:</b> {{ volume.firstwritten }}
+                            </li>
+                            <li class="list-group-item">
                                 <b>{{ 'Last written'|trans }}:</b> {{ volume.lastwritten }}
+                            </li>
+                            <li class="list-group-item">
+                                <b>{{ 'Mounts'|trans }}:</b> {{ volume.volmounts }}
+                            </li>
+                            <li class="list-group-item">
+                                <b>{{ 'Slot'|trans }}:</b> {{ volume.slot }}
+                            </li>
+                            <li class="list-group-item">
+                                <b>{{ 'In changer'|trans }}:</b> {{ volume.inchanger|raw }}
                             </li>
                             <li class="list-group-item">
                                 <b>{{ 'Media Type'|trans }}:</b> {{ volume.mediatype }}

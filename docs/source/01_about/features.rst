@@ -224,9 +224,13 @@ Display volume details such as
    * Volume Name
    * Volumes Bytes
    * Volumes file(s)
+   * First written date/time
    * Last written date/time
    * Media Type
    * List of backup jobs stored on the volume
+   * Slot
+   * In changer status
+   * Mounts
 
 .. note:: Available since v8.7.0
 
