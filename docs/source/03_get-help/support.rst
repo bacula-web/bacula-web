@@ -29,12 +29,11 @@ Before submitting a bug report, please make sure that ...
 
     * $ mysql for MySQL
     * $ psql for postgreSQL
-    * $ sqlite3 for SQLite
 
 Then make sure you include those details in the bug report
 
   * PHP version
-  * Which database you're using (SQLite, MySQL or postgreSQL)
+  * Which database you're using (MySQL, MariaDB or postgreSQL)
   * Apache (or any web server) logs
   * Screenshot(s) are useful too sometime
 

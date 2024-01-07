@@ -330,7 +330,7 @@ The test page do the following check for you
    * PHP - session support (used in the Core php code)
    * PHP - MySQL support
    * PHP - PostgreSQL support
-   * PHP - sqlite support
+   * PHP - SQLite support
    * PHP - PDO support
    * PHP timezone setting
    * Bacula catalog database connection (must be improved)

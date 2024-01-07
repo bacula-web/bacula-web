@@ -59,7 +59,11 @@ But, if you encounter any problems with a specific version of Bacula, then feel 
 Which Bacula catalog database engine are supported by Bacula-Web ?
 ------------------------------------------------------------------
 
-As of current version of Bacula-Web (version 8.7.0), Bacula catalog running with MySQL, MariaDB, postgreSQL and SQLite databases are supported.
+As of current version of Bacula-Web (version 9.4.0), Bacula catalog running with MySQL, MariaDB and postgreSQL are supported.
+
+.. important::
+
+   Support of Bacula catalog using SQLite are not supported as of v9.4.0
 
 .. _current-status:
 

@@ -89,7 +89,7 @@ class UserAuth
      */
     public function checkSchema(): void
     {
-        // Check if sqlite db file is writable
+        // Check if SQLite db file is writable
         if (!is_writable($this->appDbBackend)) {
             throw new DatabaseException('Application backend database file is not writable, please fix it');
         }
