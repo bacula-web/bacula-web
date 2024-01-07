@@ -86,8 +86,8 @@ class PublishAssetsCommand extends Command
                 'vendor/novus/nvd3/build/nv.d3.css'
             ],
             'js' => [
-                'vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js',
-                'vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js.map',
+                'vendor/twbs/bootstrap/dist/js/bootstrap.min.js',
+                'vendor/twbs/bootstrap/dist/js/bootstrap.min.js.map',
                 'vendor/novus/nvd3/build/nv.d3.js',
                 'vendor/novus/nvd3/build/nv.d3.js.map',
                 'vendor/mbostock/d3/d3.min.js',
