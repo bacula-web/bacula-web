@@ -71,30 +71,14 @@ Bacula-Web have been translated in many languages on Transifex
 
 {{< blocks/section >}}
 
-<div class="col-12">
-<h2 class="text-center">Getting started</h2>
+<div class="col-lg-6 mb-5 mb-lg-0">
+	<h2>Getting started</h2>
+
+	The easiest way to install Bacula-Web is by using Composer
 </div>
 
-{{< card-code header="" lang="C" >}}
-# Create using composer
-$ composer create-project bacula-web/bacula-web
-
-# Setup the application
-$ cd bacula-web
-$ sudo -u www-data php bwc setupauth
-
-# Configure Bacula catalog database and other parameters
-$ cd application/config && cp config.php.sample config.php
-$ vim config.php
-
-# Check you meet all requirement
-$ sudo -u www-data php bwc check
-
-# Go to the server url
-e.g: http://bacula-web.domain.com
-
-That's it !
-
-{{< /card-code >}}
+<div class="col-lg-6 mb-5 mb-lg-0">
+	<script async id="asciicast-631200" data-autoplay data-loop src="https://asciinema.org/a/631200.js"></script>
+</div>
 
 {{< /blocks/section >}}
