@@ -45,19 +45,16 @@ use TypeError;
 use Valitron\Validator;
 use function Core\Helpers\getRequestParams;
 
-;
-
 class JobController
 {
     private LogTable $logTable;
     private JobTable $jobTable;
-    //private CDBPagination $paginator;
     private ClientTable $clientTable;
     private PoolTable $poolTable;
-
     private JobFileTable $jobFileTable;
     private Twig $view;
     private SessionInterface $session;
+    private ?string $basePath;
 
     public function __construct(
         JobTable $jobTable,
@@ -84,12 +81,13 @@ class JobController
     /**
      * @param Request $request
      * @param Response $response
-     * @param $args
      * @return Response
      * @throws ConfigFileException
-     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function index(Request $request, Response $response, $args): Response
+    public function index(Request $request, Response $response): Response
     {
         $tplData = [];
         $where = null;
@@ -287,13 +285,13 @@ class JobController
 
         // Selected level filter
         if ($filter_joblevel !== '0') {
-            $where[] .= "Job.Level = :job_level ";
+            $where[] = "Job.Level = :job_level ";
             $params['job_level'] = $filter_joblevel;
         }
 
         // Selected pool filter
         if ($filter_poolid !== '0') {
-            $where[] .= "Job.PoolId = :pool_id ";
+            $where[] = "Job.PoolId = :pool_id ";
             $params['pool_id'] = $filter_poolid;
         }
 
@@ -304,7 +302,7 @@ class JobController
 
         // Selected client filter
         if ($filter_clientid !== '0') {
-            $where[] .= "Job.ClientId = :client_id";
+            $where[] = "Job.ClientId = :client_id";
             $params['client_id'] = $filter_clientid;
         }
 
@@ -470,12 +468,7 @@ class JobController
         }
 
         $tplData['pagination'] = $pagination;
-
-        //$this->view->set('last_jobs', $last_jobs);
         $tplData['last_jobs'] = $last_jobs;
-
-        // Count jobs
-        //$this->view->set('jobs_found', count($last_jobs));
         $tplData['jobs_found'] = count($last_jobs);
 
         return $this->view->render($response, 'pages/jobs.html.twig', $tplData);
