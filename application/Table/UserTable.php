@@ -36,18 +36,14 @@ class UserTable extends Table
      */
     public function findByName($username)
     {
-        try {
-            $sqlQuery = "SELECT * FROM 'Users' WHERE username = :username";
+        $sqlQuery = "SELECT * FROM 'Users' WHERE username = :username";
 
-            return $this->select(
-                $sqlQuery,
-                ['username' => $username],
-                '\App\Entity\User',
-                true
-            );
-        } catch (\PDOException $e) {
-            CErrorHandler::displayError($e);
-        }
+        return $this->select(
+            $sqlQuery,
+            ['username' => $username],
+            '\App\Entity\User',
+            true
+        );
     }
 
     /**
