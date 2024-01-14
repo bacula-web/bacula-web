@@ -129,7 +129,7 @@ class ExceptionRenderer implements ErrorRendererInterface
         if ($exception instanceof HttpNotFoundException)
         {
             $title = 'Page not found';
-            $content = 'This page does not exists';
+            $content = 'This page does not exist';
         }
 
         if ($displayErrorDetails) {
