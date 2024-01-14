@@ -45,11 +45,6 @@ class DBPagination
     private int $filteredRow = 0;
 
     /**
-     * @var View
-     */
-    private View $currentView;
-
-    /**
      * @var int
      */
     private int $offset;
