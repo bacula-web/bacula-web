@@ -53,57 +53,6 @@ class ExceptionRenderer implements ErrorRendererInterface
     private static Throwable $throwable;
 
     /**
-     * @param Error $error
-     * @return string
-     */
-    public static function renderError(Error $error): string
-    {
-        self::$throwable = $error;
-
-        $content = 'something bad happen ' .
-            $error->getCode() . ' ' .
-            $error->getMessage() . ' ' .
-            $error->getFile() . ' ' .
-            $error->getLine() . ' ' .
-            get_class($error);
-
-        return self::render($content);
-    }
-
-    /**
-     * @param Exception $exception
-     * @return string
-     * @throws ConfigFileException
-     */
-    public static function renderException(Exception $exception): string
-    {
-        self::$throwable = $exception;
-
-        FileConfig::open(CONFIG_FILE);
-        $content = '';
-
-        /**
-         * Treat PageNotFoundException differently as we just want to
-         * display a short message and a link to home page
-         */
-
-        $content = $exception->getMessage() . ' ';
-
-        if (get_class($exception) === PageNotFoundException::class) {
-            $content = 'This page does not exist, please go back to <a href=\'index.php\'>home page</a>';
-        }
-
-        if (FileConfig::get_Value('debug')) {
-            $content .= self::getTrace($exception);
-            if ($exception->getCode() !== 0) {
-                $content .= $exception->getCode();
-            }
-        }
-
-        return self::render($content);
-    }
-
-    /**
      * @param Exception|Error $exception
      * @return string
      */
