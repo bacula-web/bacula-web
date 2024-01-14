@@ -1,5 +1,22 @@
 # Changelog
 
+## [9.4.0](https://github.com/bacula-web/bacula-web/compare/v9.3.0...v9.4.0) (2024-01-14)
+
+
+### 🐛 Bug Fixes
+
+* bump bootstrap to latest stable ([3eafb6b](https://github.com/bacula-web/bacula-web/commit/3eafb6b7f72d56926fc009cc7aa063b823206d2f))
+* **docker:** add Docker resources ([fb11ade](https://github.com/bacula-web/bacula-web/commit/fb11ade599425605affb98317a97cffc4f46d68b)), closes [#183](https://github.com/bacula-web/bacula-web/issues/183)
+* missing $basePath JobController class property ([86fb67d](https://github.com/bacula-web/bacula-web/commit/86fb67db5f90e218c00847868a8329c8c00c770f))
+* public assets integrity signature ([d47b0bf](https://github.com/bacula-web/bacula-web/commit/d47b0bf88f7517c92abbb930b296ad1ccab4718d))
+* remove support for SQLite Bacula catalog ([17ca036](https://github.com/bacula-web/bacula-web/commit/17ca0364ef57b08b1fa847eadde571aa6f3ac5a3)), closes [#31](https://github.com/bacula-web/bacula-web/issues/31)
+* typo on 404 page ([9818d99](https://github.com/bacula-web/bacula-web/commit/9818d99aae3d31d5b19037591bc7d10126e475ea))
+
+
+### 🚀 Features
+
+* add volume details ([d9b2b6b](https://github.com/bacula-web/bacula-web/commit/d9b2b6bb0d46a0114daf057af69f02f051d6dc7d))
+
 ## [9.3.0](https://github.com/bacula-web/bacula-web/compare/v9.2.1...v9.3.0) (2023-12-31)
 
 
