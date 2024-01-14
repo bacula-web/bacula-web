@@ -83,7 +83,6 @@ class ExceptionRenderer implements ErrorRendererInterface
     }
 
     /**
-     * @param string $content
      * @return string
      */
 
