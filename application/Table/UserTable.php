@@ -22,7 +22,6 @@ declare(strict_types=1);
 namespace App\Table;
 
 use App\Entity\User;
-use Core\App\CErrorHandler;
 use Core\Db\Table;
 use PDOStatement;
 
@@ -34,7 +33,7 @@ class UserTable extends Table
      * @param $username
      * @return mixed
      */
-    public function findByName($username)
+    public function findByName($username): mixed
     {
         $sqlQuery = "SELECT * FROM 'Users' WHERE username = :username";
 
@@ -49,7 +48,7 @@ class UserTable extends Table
     /**
      * @return mixed
      */
-    public function getAll()
+    public function getAll(): mixed
     {
         $getUsersQuery = "SELECT username,email FROM Users";
 
@@ -59,9 +58,9 @@ class UserTable extends Table
     /**
      * @param string $username
      * @param string $password
-     * @return PDOStatement|bool
+     * @return bool|PDOStatement
      */
-    public function setPassword(string $username, string $password)
+    public function setPassword(string $username, string $password): bool|PDOStatement
     {
         $user = $this->findByName($username);
 
@@ -81,9 +80,9 @@ class UserTable extends Table
      * @param $username
      * @param $email
      * @param $password
-     * @return bool|int
+     * @return bool|PDOStatement
      */
-    public function addUser($username, $email, $password)
+    public function addUser($username, $email, $password): bool|PDOStatement
     {
         $user = new User();
 
@@ -103,9 +102,9 @@ class UserTable extends Table
     }
 
     /**
-     * @return false|int
+     * @return bool|int
      */
-    public function createSchema()
+    public function createSchema(): bool|int
     {
         $createSchemaQuery = 'CREATE TABLE IF NOT EXISTS Users (
                         user_id INTEGER PRIMARY KEY,
