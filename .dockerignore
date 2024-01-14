@@ -1,0 +1,12 @@
+**/.github
+**/.git
+**/.gitignore
+**/.phpcs.xml
+**/.readthedocs.yaml
+**/.travis.yml
+**/.tx
+**/phpunit.xml
+**/release-please-config.json
+**/.release-please-manifest.json
+**/sonar-project.properties
+**/tests

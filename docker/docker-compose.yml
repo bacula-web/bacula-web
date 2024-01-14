@@ -1,0 +1,10 @@
+services:
+  web:
+    image: baculaweb/bacula-web:latest
+    container_name: "bacula-web"
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ${PWD}/config.php:/var/www/html/application/config/config.php
+      - ${PWD}/protected:/var/www/html/application/assets/protected
