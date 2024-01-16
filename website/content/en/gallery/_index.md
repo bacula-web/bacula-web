@@ -14,7 +14,7 @@ This page contains some screenshots from latest version of Bacula-Web.
 
 ### Latest version
 
-{{< gallery dir="/gallery/" />}}
+{{< gallery dir="/gallery" />}}
 
 {{< load-photoswipe >}}
 
