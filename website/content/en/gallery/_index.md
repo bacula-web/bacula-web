@@ -10,15 +10,11 @@ menu:
 This page contains some screenshots from latest version of Bacula-Web.
 {{< /blocks/cover >}}
 
-{{% blocks/lead color="dark" %}}
-Gallery
-{{% /blocks/lead %}}
-
 <br />
 
 ### Latest version
 
-<br />
+{{< gallery dir="/gallery/" />}}
 
-{{< image-gallery gallery_dir="gallery" >}}
+{{< load-photoswipe >}}
 

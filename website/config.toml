@@ -1,6 +1,8 @@
 baseURL = "/"
 title = "Bacula-Web"
 
+theme = ["docsy", "hugo-easy-gallery"]
+
 # Language settings
 contentDir = "content/en"
 defaultContentLanguage = "en"
