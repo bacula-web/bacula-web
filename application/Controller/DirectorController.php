@@ -85,19 +85,28 @@ class DirectorController
         for ($d = 0; $d < $directors_count; $d++) {
             $this->session->set('catalog_id', $d);
 
-            $clients = new ClientTable(DatabaseFactory::getDatabase($d));
-            $jobs = new JobTable(DatabaseFactory::getDatabase($d));
-            $catalog = new CatalogTable(DatabaseFactory::getDatabase($d));
-            $volumes = new VolumeTable(DatabaseFactory::getDatabase($d));
-            $pools = new PoolTable(DatabaseFactory::getDatabase($d));
-            $filesets = new FileSetTable(DatabaseFactory::getDatabase($d));
-
             $host = FileConfig::get_Value('host', $d);
             $db_user = FileConfig::get_Value('login', $d);
             $db_name = FileConfig::get_Value('db_name', $d);
             $db_type = FileConfig::get_Value('db_type', $d);
+            $description = "Bacula catalog on host $host, database: $db_name ($db_type) with user $db_user";
 
-            $description = "Connected on $host/$db_name ($db_type) with user $db_user";
+            try {
+                $clients = new ClientTable(DatabaseFactory::getDatabase($d));
+                $jobs = new JobTable(DatabaseFactory::getDatabase($d));
+                $catalog = new CatalogTable(DatabaseFactory::getDatabase($d));
+                $volumes = new VolumeTable(DatabaseFactory::getDatabase($d));
+                $pools = new PoolTable(DatabaseFactory::getDatabase($d));
+                $filesets = new FileSetTable(DatabaseFactory::getDatabase($d));
+            } catch(\PDOException $exception) {
+                $directors[$d]['label'] = FileConfig::get_Value('label', $d);
+                $directors[$d]['description'] = $description;
+                $directors[$d]['error'] = $exception->getMessage();
+
+                $this->session->set('catalog_id', $prev_catalog_id);
+
+                continue;
+            }
 
             $directors[] = array('label' => FileConfig::get_Value('label', $d),
                 'description' => $description,

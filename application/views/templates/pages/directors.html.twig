@@ -22,6 +22,11 @@
                         <div class="card-body">
                             <h4 class="card-title">{{ director.label }}</h4>
                             <p class="card-text">{{ director.description }}</p>
+
+                            {% if director.error is defined %}
+                                <p class="text-danger"><b>Error:</b> {{ director.error }}</p>
+                            {% endif %}
+
                             <hr>
                             <h5 class="card-title">{{ 'Client(s)'|trans }}</h5>
                             <p class="card-text">{{ director.clients }}</p>
