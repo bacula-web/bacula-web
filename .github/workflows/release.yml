@@ -17,3 +17,4 @@ jobs:
           changelog-types: '[{"type":"fix","section":"🐛 Bug Fixes","hidden":false},{"type":"feat","section":"🚀 Features","hidden":false}, {"type":"docs","section":"📘 Documentation","hidden":false}]'
           extra-files: |
             application/config/app
+            docs/source/conf.py

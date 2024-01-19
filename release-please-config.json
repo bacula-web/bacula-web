@@ -9,7 +9,8 @@
       "draft": true,
       "prerelease": false,
       "extra-files": [
-        "application/config/app"
+        "application/config/app",
+        "docs/source/conf.py"
       ]
     }
   },
