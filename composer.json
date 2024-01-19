@@ -37,7 +37,6 @@
     "novus/nvd3": "@stable",
     "components/font-awesome": "6.*",
     "vlucas/valitron": "^1.4",
-    "cocur/human-date": "^0.1.0",
     "pear/date_humandiff": "^0.5.0",
     "vlucas/phpdotenv": "^5.5",
     "php-di/php-di": "^7.0",
