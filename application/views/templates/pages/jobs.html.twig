@@ -185,7 +185,9 @@
                     </table>
                 </div>
 
-                {{ include('partials/pagination.html.twig', {route: 'jobs' }) }}
+                {% if last_jobs|length > 0 %}
+                    {{ include('partials/pagination.html.twig', {route: 'jobs' }) }}
+                {% endif %}
 
             </div>
         </div>

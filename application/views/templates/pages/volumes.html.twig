@@ -62,7 +62,9 @@
                     </table>
                 </div>
 
-                {{ include("partials/pagination.html.twig", {route: 'volumes' }) }}
+                {% if volumes|length > 0 %}
+                    {{ include("partials/pagination.html.twig", {route: 'volumes' }) }}
+                {% endif %}
             </div>
             <div class="col-2">
                 <!-- Options -->
