@@ -22,7 +22,7 @@ declare(strict_types=1);
 use Core\Db\DatabaseFactory;
 
 // Configuration
-const CONFIG_DIR = BW_ROOT . '/application/config/';
+const CONFIG_DIR = BW_ROOT . 'application/config/';
 const CONFIG_FILE = CONFIG_DIR . 'config.php';
 
 // Locales
