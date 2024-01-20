@@ -55,11 +55,22 @@ $container = $containerBuilder->build();
 
 $app = $container->get(App::class);
 
-FileConfig::open(CONFIG_FILE);
+/**
+ * Catch ConfigFileException before Slim's exception handler
+ * This avoid having a "Uncaught exception" ugly error if
+ * config.php is missing.
+ */
+try {
+    FileConfig::open(CONFIG_FILE);
 
-$basePath = FileConfig::get_Value('basepath') ?? null;
-if (!is_null($basePath)) {
-    $app->setBasePath($basePath);
+    $basePath = FileConfig::get_Value('basepath') ?? null;
+    if (!is_null($basePath)) {
+        $app->setBasePath($basePath);
+    }
+} catch(\Core\Exception\ConfigFileException $e) {
+    $exceptionRenderer = new ExceptionRenderer();
+    http_response_code(500);
+    die($exceptionRenderer($e, false));
 }
 
 $app->group('', function (RouteCollectorProxy $group) {

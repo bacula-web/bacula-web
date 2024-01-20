@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-2023 Davide Franco
  *
@@ -18,6 +16,8 @@ declare(strict_types=1);
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+declare(strict_types=1);
 
 namespace Core\Utils;
 
@@ -51,11 +51,17 @@ class File
 
         // Check if config file exist and is readable, then include it
         if (is_readable(self::$config_file)) {
-            require_once(self::$config_file);
+            require_once self::$config_file;
             self::$config = $config;
             return true;
         } else {
-            throw new ConfigFileException('Config file not found or not readable');
+            $message = 'Config file (<b>application/config/config.php</b>) not found or not readable. <br /> <br />
+                        See how to configure Bacula-Web in 
+                        <a href="https://docs.bacula-web.org/en/latest/02_install/configure.html" 
+                        target="_blank" rel="noopener noreferrer" ">
+                        documentation</a>';
+
+            throw new ConfigFileException($message);
         }
     }
 }

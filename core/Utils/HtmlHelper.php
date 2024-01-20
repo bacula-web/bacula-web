@@ -31,9 +31,6 @@ class HtmlHelper
     */
     public static function getHtmlHeader(): string
     {
-	FileConfig::open(CONFIG_FILE);
-
-        $basePath = FileConfig::get_Value('basepath') ?? null;
         return '<!DOCTYPE html>
                         <html lang="en">
                         <head>
