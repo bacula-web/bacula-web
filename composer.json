@@ -91,7 +91,8 @@
       "phpunit.xml",
       "/tests",
       ".release-please-manifest.json",
-      "release-please-config.json"
+      "release-please-config.json",
+      "cog.toml"
     ]
   }
 }
