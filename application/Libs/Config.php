@@ -36,10 +36,7 @@ class Config
         $this->configData = $configData;
     }
 
-    /**
-     * @return mixed|null
-     */
-    public function get(string $key, mixed $default = null)
+    public function get(string $key, $default = null)
     {
         if (isset($this->configData[$key])) {
             return $this->configData[$key];
@@ -68,10 +65,10 @@ class Config
 
     /**
      * @param string $key
-     * @param mixed $value
+     * @param $value
      * @return void
      */
-    public function set(string $key, mixed $value): void
+    public function set(string $key, $value): void
     {
         $this->configData[$key] = $value;
     }

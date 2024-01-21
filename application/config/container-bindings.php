@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-present Davide Franco
+ * Copyright (C) 2023-present Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -19,7 +19,6 @@
 
 declare(strict_types=1);
 
-use App\CsrfErrorHandler;
 use App\Libs\Config;
 use App\Libs\PhpFileConfig;
 use App\Table\CatalogTable;
@@ -33,11 +32,9 @@ use App\Table\VolumeTable;
 use Core\Db\DatabaseFactory;
 use Odan\Session\PhpSession;
 use Odan\Session\SessionInterface;
-use Odan\Session\SessionManagerInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\App;
-use Slim\Csrf\Guard;
 use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Twig\Extension\DebugExtension;
@@ -62,38 +59,50 @@ return ['settings' => [
         return AppFactory::create();
     }, ResponseFactoryInterface::class => function (App $app) {
         return $app->getResponseFactory();
-    }, 'csrf' => function (ResponseFactoryInterface $responseFactory, CsrfErrorHandler $csrf) {
-        return new Guard($responseFactory, failureHandler: $csrf->handle($responseFactory), persistentTokenMode: true);
-    }, JobTable::class => function (SessionInterface $session) {
-        return new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
-    }, PoolTable::class => function (SessionInterface $session) {
-        return new PoolTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
-    }, ClientTable::class => function (SessionInterface $session) {
-        return new ClientTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
-    }, VolumeTable::class => function (SessionInterface $session) {
-        return new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
-    }, JobFileTable::class => function (SessionInterface $session, ContainerInterface $container) {
+    },
+    /*
+    'csrf' => function(ResponseFactoryInterface $responseFactory, CsrfErrorHandler $csrf) {
+        return new Guard(
+            $responseFactory,
+            failureHandler: $csrf->handle($responseFactory),
+            persistentTokenMode: false);
+    },
+    */
+    JobTable::class => function (SessionInterface $session) {
+        return new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id') ?? 0));
+    },
+    PoolTable::class => function (SessionInterface $session) {
+        return new PoolTable(DatabaseFactory::getDatabase($session->get('catalog_id') ?? 0));
+    },
+    ClientTable::class => function (SessionInterface $session) {
+        return new ClientTable(DatabaseFactory::getDatabase($session->get('catalog_id') ?? 0));
+    },
+    VolumeTable::class => function (SessionInterface $session) {
+        return new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id') ?? 0));
+    },
+    JobFileTable::class => function (SessionInterface $session, ContainerInterface $container) {
         return new JobFileTable(
-            DatabaseFactory::getDatabase($session->get('catalog_id', 0)),
-            $container->get(CatalogTable::class)
-        );
-    }, CatalogTable::class => function (SessionInterface $session) {
-        return new CatalogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
-    }, UserTable::class => function () {
+            DatabaseFactory::getDatabase($session->get('catalog_id') ?? 0),
+            $container->get(CatalogTable::class));
+    },
+    CatalogTable::class => function (SessionInterface $session) {
+        return new CatalogTable(DatabaseFactory::getDatabase($session->get('catalog_id') ?? 0));
+    },
+    UserTable::class => function () {
         return new UserTable(DatabaseFactory::getDatabase());
-    }, LogTable::class => function (SessionInterface $session) {
-        return new LogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
-    }, SessionManagerInterface::class => function (ContainerInterface $container) {
-        return $container->get(SessionInterface::class);
+    },
+    LogTable::class => function (SessionInterface $session) {
+        return new LogTable(DatabaseFactory::getDatabase($session->get('catalog_id') ?? 0));
     }, SessionInterface::class => function (ContainerInterface $container) {
-        $options = $container->get('settings')['session'];
-        return new PhpSession($options);
+        $settings = $container->get('settings');
+        $session = new PhpSession();
+        $session->setOptions((array)$settings['session']);
+        return $session;
     }, Twig::class => function (
         ContainerInterface $container,
-        SessionInterface   $session,
+        SessionInterface $session,
         Config             $config) {
         $twig = Twig::create(TPL_DIR, ['cache' => false]);
-
         $twig->addExtension(new DebugExtension());
 
         $twig->getEnvironment()->addGlobal('app_name', $_ENV['APP_NAME']);
@@ -108,16 +117,14 @@ return ['settings' => [
         };
 
         $catalogsList = $config->getArrays();
+
         $twig->getEnvironment()->addGlobal(
             'catalogs',
             $getLabels($catalogsList)
         );
 
-        $twig->getEnvironment()->addGlobal(
-            'catalog_label',
-            $catalogsList[$session->get('catalog_current_id', 0)]['label']
-        );
-
+        $catalogCurrentId = $session->get('catalog_current_id') ?? 0;
+        $twig->getEnvironment()->addGlobal('catalog_label', $catalogsList[$catalogCurrentId]['label']);
         $twig->getEnvironment()->addGlobal('enable_users_auth', $config->get('enable_users_auth', true));
 
         $twig->getEnvironment()->addGlobal(

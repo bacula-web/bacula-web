@@ -118,9 +118,8 @@ class Table
      * @param array|null $params
      * @param string|null $fetchClass
      * @param boolean $single
-     * @return mixed
      */
-    public function select(string $query, array $params = null, string $fetchClass = null, $single = null)
+    public function select(string $query, array $params = null, string $fetchClass = null, bool $single = null)
     {
         if ($params !== null) {
             $statement = $this->pdo->prepare($query);

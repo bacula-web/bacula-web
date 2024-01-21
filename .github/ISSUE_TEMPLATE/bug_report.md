@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. iOS]
  - Browser [e.g. chrome, safari]
  - Version [e.g. 8.5]
- - PHP version [e.g. 7.3]
+ - PHP version [e.g. 8.2]
 
 **Additional context**
 Add any other context about the problem here.

@@ -5,5 +5,5 @@ parameters:
 		- application
 		- public/index.php
 		- bwc
-	phpVersion: 80000
+	phpVersion: 70400
 	errorFormat: github

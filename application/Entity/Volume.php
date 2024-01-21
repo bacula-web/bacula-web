@@ -42,7 +42,7 @@ class Volume
         return CUtils::Get_Human_Size($this->volbytes);
     }
 
-    public function getInchanger(): string
+    public function getInchanger(): string|null
     {
         if ($this->inchanger === 0) {
             return '-';
@@ -50,7 +50,10 @@ class Volume
         return '<i class="fa fa-check" aria-hidden="true"></i>';
     }
 
-    public function getSlot(): string|int
+    /**
+     * @return string|int
+     */
+    public function getSlot()
     {
         if ($this->inchanger === 0) {
             return 'n/a';

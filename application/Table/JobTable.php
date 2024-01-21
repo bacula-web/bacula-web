@@ -37,10 +37,10 @@ class JobTable extends Table
      * @param $period_timestamps
      * @param $job_status
      * @param $job_level
-     * @return mixed
+     * @return int
      * @throws Exception
      */
-    public function count_Jobs($period_timestamps, $job_status = null, $job_level = null)
+    public function count_Jobs($period_timestamps, $job_status = null, $job_level = null): int
     {
         $where = null;
         $fields = ['COUNT(*) as job_count'];
@@ -109,7 +109,7 @@ class JobTable extends Table
         // Execute SQL statment
         $result = $this->run_query($statment);
         $result = $result->fetch();
-        return $result['job_count'];
+        return (int) $result['job_count'];
     }
 
     /**
