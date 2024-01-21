@@ -102,7 +102,7 @@ class Database
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
     public function getServerVersion()
     {

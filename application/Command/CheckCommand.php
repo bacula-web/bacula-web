@@ -58,7 +58,7 @@ class CheckCommand extends Command
                 ''
             ]);
 
-        if (version_compare(PHP_VERSION, '8.0', '>=')) {
+        if (version_compare(PHP_VERSION, '7.4', '>=')) {
             $errorMessages = ['PHP version -> ok'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         } else {

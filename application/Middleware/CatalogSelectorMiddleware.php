@@ -62,7 +62,7 @@ class CatalogSelectorMiddleware implements MiddlewareInterface
         }
 
         $params = $request->getQueryParams();
-        $catalogId = $this->session->get('catalog_id');
+        $catalogId = $this->session->get('catalog_id') ?? 0;
 
         if (isset($params['catalog_id'])) {
             if (array_key_exists($params['catalog_id'], $this->config->getArrays())) {

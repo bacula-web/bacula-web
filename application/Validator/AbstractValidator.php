@@ -54,7 +54,7 @@ abstract class AbstractValidator
      * @param string|null $field
      * @return array|bool
      */
-    public function getErrors(string $field = null): array|bool
+    public function getErrors(string $field = null)
     {
         if ($field) {
             return $this->validator->errors($field);

@@ -30,9 +30,6 @@ class File
      */
     protected static $config_file;
 
-    /**
-     * mixed @var
-     */
     protected static $config;
 
     /**

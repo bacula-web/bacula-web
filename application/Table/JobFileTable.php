@@ -105,10 +105,10 @@ class JobFileTable extends Table
     /**
      * @param int $jobId
      * @param string $filename
-     * @return mixed
+     * @return int
      * @throws Exception
      */
-    public function countJobFiles(int $jobId, string $filename = '')
+    public function countJobFiles(int $jobId, string $filename = ''): int
     {
         if ($this->catalogTable->getCatalogVersion() < 1016) {
             $sql_query = "SELECT COUNT(*) as count

@@ -31,7 +31,7 @@ class PublishAssetsCommand extends Command
     {
         $this->setDescription('Publish web assets')
             ->setHelp('Publish css, javascript, etc. web resources in public folder')
-            ->setHidden()
+            ->setHidden(true)
             ->setName('publishAssets');
 
         parent::configure();

@@ -33,7 +33,7 @@ class UserTable extends Table
      * @param $username
      * @return mixed
      */
-    public function findByName($username): mixed
+    public function findByName(string $username)
     {
         $sqlQuery = "SELECT * FROM 'Users' WHERE username = :username";
 
@@ -48,7 +48,7 @@ class UserTable extends Table
     /**
      * @return mixed
      */
-    public function getAll(): mixed
+    public function getAll()
     {
         $getUsersQuery = "SELECT username,email FROM Users";
 
@@ -60,7 +60,7 @@ class UserTable extends Table
      * @param string $password
      * @return bool|PDOStatement
      */
-    public function setPassword(string $username, string $password): bool|PDOStatement
+    public function setPassword(string $username, string $password)
     {
         $user = $this->findByName($username);
 
@@ -82,7 +82,7 @@ class UserTable extends Table
      * @param $password
      * @return bool|PDOStatement
      */
-    public function addUser($username, $email, $password): bool|PDOStatement
+    public function addUser($username, $email, $password)
     {
         $user = new User();
 
@@ -104,7 +104,7 @@ class UserTable extends Table
     /**
      * @return bool|int
      */
-    public function createSchema(): bool|int
+    public function createSchema()
     {
         $createSchemaQuery = 'CREATE TABLE IF NOT EXISTS Users (
                         user_id INTEGER PRIMARY KEY,

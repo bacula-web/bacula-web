@@ -25,6 +25,7 @@ use App\Libs\Config;
 use App\Validator\LoginValidator;
 use Core\App\UserAuth;
 use Odan\Session\SessionInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use Slim\Views\Twig;
@@ -57,9 +58,9 @@ class LoginController
     /**
      * @param Request $request
      * @param Response $response
-     * @return mixed
+     * @return ResponseInterface
      */
-    public function signOut(Request $request, Response $response): Response
+    public function signOut(Request $request, Response $response): ResponseInterface
     {
         $this->userAuth->destroySession($this->session);
         $this->session->getFlash()->add('auth_info', 'Successfully logged out');
