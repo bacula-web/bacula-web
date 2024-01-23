@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.4.1](https://github.com/bacula-web/bacula-web/compare/v9.4.0...v9.4.1) (2024-01-23)
+
+
+### 🐛 Bug Fixes
+
+* disable 'show volumes' if pool is empty ([e3088aa](https://github.com/bacula-web/bacula-web/commit/e3088aa71a1e641f535f533d1ec642454780071d)), closes [#208](https://github.com/bacula-web/bacula-web/issues/208)
+* exceptions handling on directors report ([970f339](https://github.com/bacula-web/bacula-web/commit/970f3395bb263b554fae97f8761e46a83efd5f01))
+* improve error on missing config ([803a5b7](https://github.com/bacula-web/bacula-web/commit/803a5b7066a8f2989407f68c27ef0be764ff5ac7))
+* pagination with zero row ([1d06366](https://github.com/bacula-web/bacula-web/commit/1d06366e2f5d549e02b1da4e5ccccf73206dea29)), closes [#207](https://github.com/bacula-web/bacula-web/issues/207)
+* translated order by direction input field ([562eeaa](https://github.com/bacula-web/bacula-web/commit/562eeaa89f620bb9873914898c5a8fcce5ceaee3))
+* wrong column number ([5cbc5df](https://github.com/bacula-web/bacula-web/commit/5cbc5df43471c0e533f6c3db98acf92f70ffc6bd))
+
 ## [9.4.0](https://github.com/bacula-web/bacula-web/compare/v9.3.0...v9.4.0) (2024-01-14)
 
 
