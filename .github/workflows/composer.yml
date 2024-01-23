@@ -3,9 +3,10 @@ name: Composer test
 on:
   push:
     branches:
-      - 'main'
+      - 'master'
       - 'feat/**'
       - 'fix/**'
+      - 'chore/**'
 
 jobs:
   build:
