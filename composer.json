@@ -18,6 +18,17 @@
       "role": "Developer"
     }
   ],
+  "support": {
+    "email": "hello@bacula-web.org",
+    "issues": "https://github.com/bacula-web/bacula-web/issues",
+    "forum": "https://github.com/bacula-web/bacula-web/discussions"
+  },
+  "funding": [
+    {
+      "type": "buymeacoffee",
+      "url": "https://www.buymeacoffee.com/baculaweb"
+    }
+  ],
   "config": {
     "component-dir": "vendor/components",
     "allow-plugins": {
