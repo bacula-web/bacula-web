@@ -33,7 +33,6 @@ use Core\Utils\DateTimeUtil;
 use App\Table\JobTable;
 use App\Table\ClientTable;
 use App\Table\PoolTable;
-use Exception;
 use GuzzleHttp\Psr7\Response;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;

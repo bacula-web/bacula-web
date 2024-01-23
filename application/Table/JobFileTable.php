@@ -29,10 +29,8 @@ namespace App\Table;
 
 use Core\Db\CDBQuery;
 use Core\Db\Database;
-use Core\Db\DatabaseFactory;
 use Core\Db\Table;
 use Exception;
-use Odan\Session\PhpSession;
 
 class JobFileTable extends Table
 {

@@ -21,7 +21,6 @@ declare(strict_types=1);
 
 namespace Core\Utils;
 
-use App\Libs\FileConfig;
 use Core\Exception\ConfigFileException;
 use Core\Exception\PageNotFoundException;
 use Error;

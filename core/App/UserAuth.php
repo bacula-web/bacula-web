@@ -22,7 +22,6 @@ declare(strict_types=1);
 namespace Core\App;
 
 use App\Table\UserTable;
-use Core\Db\DatabaseFactory;
 use Core\Exception\AppException;
 use Core\Exception\DatabaseException;
 use Exception;

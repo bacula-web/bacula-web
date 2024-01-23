@@ -33,8 +33,8 @@ use App\Table\PoolTable;
 use App\Table\FileSetTable;
 use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
-use Odan\Session\PhpSession;
 use Odan\Session\SessionInterface;
+use PDOException;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 use GuzzleHttp\Psr7\Response;
@@ -98,7 +98,7 @@ class DirectorController
                 $volumes = new VolumeTable(DatabaseFactory::getDatabase($d));
                 $pools = new PoolTable(DatabaseFactory::getDatabase($d));
                 $filesets = new FileSetTable(DatabaseFactory::getDatabase($d));
-            } catch(\PDOException $exception) {
+            } catch(PDOException $exception) {
                 $directors[$d]['label'] = FileConfig::get_Value('label', $d);
                 $directors[$d]['description'] = $description;
                 $directors[$d]['error'] = $exception->getMessage();
