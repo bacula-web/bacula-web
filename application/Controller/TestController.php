@@ -2,7 +2,7 @@
 
 /**
  * Copyright (C) 2004 Juan Luis Frances Jimenez
- * Copyright (C) 2010-2023 Davide Franco
+ * Copyright (C) 2010-present Davide Franco
  *
  * This file is part of Bacula-Web.
  *

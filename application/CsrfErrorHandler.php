@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Copyright (C) 2023 Davide Franco
+ * Copyright (C) 2023-present Davide Franco
  *
  * This file is part of Bacula-Web.
  *
