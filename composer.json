@@ -64,7 +64,8 @@
   "require-dev": {
     "phpmd/phpmd": "@stable",
     "squizlabs/php_codesniffer": "@stable",
-    "phpunit/phpunit": "9.5.26"
+    "phpunit/phpunit": "9.5.26",
+    "phpstan/phpstan": "^1.10"
   },
   "autoload": {
     "psr-4": {
