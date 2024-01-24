@@ -28,7 +28,7 @@ use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -36,14 +36,23 @@ use Valitron\Validator;
 
 class SettingsController
 {
+    /**
+     * @var Twig
+     */
     private Twig $view;
+
     private UserTable $userTable;
+
+    /**
+     * @var SessionInterface
+     */
     private SessionInterface $session;
 
     /**
-     * @var string|null
+     * @var ?string
      */
     private ?string $basePath;
+
     private Config $config;
 
     /**
@@ -153,7 +162,6 @@ class SettingsController
      * @param Request $request
      * @param Response $response
      * @return Response
-     * @throws AppException
      */
     public function addUser(Request $request, Response $response): Response
     {

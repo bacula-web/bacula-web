@@ -24,10 +24,10 @@ namespace Core\Helpers;
 class Sanitizer
 {
     /**
-     * @param $value
+     * @param string $value
      * @return string
      */
-    public static function sanitize($value): string
+    public static function sanitize(string $value): string
     {
         return strip_tags(htmlentities((string)$value, ENT_QUOTES, 'UTF-8'));
     }

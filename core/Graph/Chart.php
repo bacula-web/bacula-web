@@ -27,13 +27,40 @@ use TypeError;
 
 class Chart
 {
-    public $name;
-    protected $type;
-    protected $data = array();
-    protected $margin = 30;
+    /**
+     * @var string
+     */
+    public string $name;
+
+    /**
+     * @var string
+     */
+    protected string $type;
+
+    /**
+     * @var array<string,mixed>
+     */
+    protected array $data = [];
+
+    /**
+     * @var int
+     */
+    protected int $margin = 30;
+
+    /**
+     * @var string|null
+     */
     protected $ylabel = null;
+
+    /**
+     * @var bool|string
+     */
     protected $uniformize_data = false;
-    protected $linkedReport;
+
+    /**
+     * @var string
+     */
+    protected string $linkedReport;
 
     /**
      * $chart_data is an array which the structure below
@@ -45,9 +72,9 @@ class Chart
      * uniformize_data => do we normalize data ? (boolean)
      * linked_report => linked report page
      *
-     * @param [] $chart_data
+     * @param array<string,mixed> $chart_data
      */
-    public function __construct($chart_data)
+    public function __construct(array $chart_data)
     {
         if (!is_array($chart_data)) {
             throw new TypeError('Bad parameters provided to Chart constructor');

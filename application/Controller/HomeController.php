@@ -28,6 +28,7 @@ use Core\Db\DatabaseFactory;
 use Exception;
 use Odan\Session\SessionInterface;
 use Slim\Routing\RouteContext;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Views\Twig;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
@@ -35,7 +36,7 @@ use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -43,14 +44,27 @@ use Twig\Error\SyntaxError;
 
 class HomeController
 {
+    /**
+     * @var JobTable
+     */
     private JobTable $jobTable;
+    /**
+     * @var PoolTable
+     */
     private PoolTable $poolTable;
+    /**
+     * @var VolumeTable
+     */
     private VolumeTable $volumeTable;
     private SessionInterface $session;
     private Config $config;
     private Twig $view;
 
-
+    /**
+     * @param JobTable $jobTable
+     * @param PoolTable $poolTable
+     * @param VolumeTable $volumeTable
+     */
     public function __construct(
         JobTable         $jobTable,
         PoolTable        $poolTable,

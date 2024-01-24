@@ -98,7 +98,7 @@ class Database
      */
     public function getDriverName(): string
     {
-        return $this->connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+        return (string) $this->connection->getAttribute(PDO::ATTR_DRIVER_NAME);
     }
 
     /**

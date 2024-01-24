@@ -47,11 +47,6 @@ class ExceptionRenderer implements ErrorRendererInterface
     ];
 
     /**
-     * @var Throwable
-     */
-    private static Throwable $throwable;
-
-    /**
      * @param Exception|Error $exception
      * @return string
      */
@@ -136,6 +131,7 @@ class ExceptionRenderer implements ErrorRendererInterface
         }
 
         if ($displayErrorDetails) {
+            /** @phpstan-ignore-next-line */
             $content .= self::getTrace($exception);
         }
 

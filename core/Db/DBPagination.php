@@ -145,16 +145,16 @@ class DBPagination
      * @param Table $table
      * @param string $query
      * @param string $queryCount
-     * @param null $params
-     * @return array|false
+     * @param (mixed)[] $params
+     * @return (mixed)[]|false
      * @throws Exception
      */
-    public function paginate(Table $table, string $query, string $queryCount, $params = null)
+    public function paginate(Table $table, string $query, string $queryCount, array $params = [])
     {
         $this->totalRow = $table->count();
 
         $this->filteredRow = $table->select($queryCount, $params)[0]['row_count'];
-        $this->paginationMax = ceil($this->filteredRow / $this->limit);
+        $this->paginationMax = (int) ceil($this->filteredRow / $this->limit);
 
         return $table->select($query, $params);
     }

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,6 +17,8 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace Core\Db;
 
 use DateTimeImmutable;
@@ -30,7 +30,7 @@ class CDBQuery
     /**
      * get_Select
      *
-     * @param array $param array which could contain key listed below
+     * @param array<string,mixed> $param array which could contain key listed below
      *  $param = [
      *      'table'     => (string) name of the table for FROM
      *      'fields'    => (array) array of fields
@@ -71,7 +71,7 @@ class CDBQuery
         $query .= 'FROM ' . $param['table'] . ' ';
 
         // Join
-        if (isset($param['join']) && !is_null($param['join']) && is_array($param['join'])) {
+        if (isset($param['join']) && is_array($param['join'])) {
             foreach ($param['join'] as $join) {
                 $query .= 'LEFT JOIN ' . $join['table'] . ' ON ' . $join['condition'] . ' ';
             }
@@ -85,23 +85,23 @@ class CDBQuery
                 } else {
                     $where .= "$where_item ";
                 }
-            } // end foreach
+            }
 
             $query .= 'WHERE ' . $where . ' ';
         }
 
         // Group by
-        if (isset($param['groupby']) && !is_null($param['groupby'])) {
+        if (isset($param['groupby'])) {
             $query .= 'GROUP BY ' . $param['groupby'] . ' ';
         }
 
         // Order by
-        if (isset($param['orderby']) && !is_null($param['orderby'])) {
+        if (isset($param['orderby'])) {
             $query .= 'ORDER BY ' . $param['orderby'] . ' ';
         }
 
         // Limit
-        if (isset($param['limit']) && !is_null($param['limit'])) {
+        if (isset($param['limit'])) {
             $limit = $param['limit'];
 
             // we passed an array( 'count' => $count, 'offset' => $offset)
@@ -126,11 +126,11 @@ class CDBQuery
 
     /**
      * @param string $driver
-     * @param [] $period_timestamp
-     * @return array
+     * @param array<int,int> $period_timestamp
+     * @return array<string,string>
      * @throws Exception
      */
-    public static function get_Timestamp_Interval(string $driver, $period_timestamp = []): array
+    public static function get_Timestamp_Interval(string $driver, array $period_timestamp = []): array
     {
         $period = [];
         $dateformat = 'Y-m-d H:i:s';

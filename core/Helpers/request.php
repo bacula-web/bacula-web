@@ -27,7 +27,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * Sanitize GET query and POST request user input.
  *
  * @param ServerRequestInterface $request
- * @return array
+ * @return (mixed)[]
  */
 function getRequestParams(ServerRequestInterface $request): array
 {

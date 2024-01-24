@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,8 +17,11 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace Core\Db;
 
+use App\Entity\Log;
 use Core\Exception\DatabaseException;
 use PDO;
 use Exception;
@@ -29,29 +30,17 @@ use PDOStatement;
 
 class Table
 {
-    /**
-     * @var PDO
-     */
     protected PDO $pdo;
 
-    /**
-     * @var Database
-     */
     protected Database $db;
 
-    /**
-     * @var string
-     */
     protected string $driver;
 
     /**
-     * @var
+     * @var (mixed)[]
      */
-    protected $parameters;
+    protected array $parameters;
 
-    /**
-     * @var null
-     */
     protected ?string $tablename = null;
 
     /**
@@ -66,7 +55,12 @@ class Table
 
         // Get PDO instance
         $this->db = $db;
+
+        // Check PDO object
         $this->pdo = $this->db->getDb();
+        if ( !is_a($this->pdo, 'PDO')) {
+            throw new DatabaseException('Invalid PDO object provided in count_Jobs() function');
+        }
     }
 
     /**
@@ -80,19 +74,17 @@ class Table
     /**
      * Return table row count or 0
      *
-     * @param $filter
      * @return int
      * @throws Exception
      */
-    public function count($filter = null): int
+    public function count(): int
     {
         $fields = array( 'COUNT(*) as row_count' );
 
         // Prepare and execute query
         $statement = CDBQuery::get_Select([
                 'table' => $this->tablename,
-                'fields' => $fields,
-                'where' => $filter
+                'fields' => $fields
             ]);
 
         $result = $this->select($statement, null, null, true);
@@ -106,7 +98,7 @@ class Table
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function get_driver_name(): string
     {
@@ -115,9 +107,10 @@ class Table
 
     /**
      * @param string $query
-     * @param array|null $params
+     * @param array<string,mixed>|null $params
      * @param string|null $fetchClass
-     * @param boolean $single
+     * @param bool|null $single
+     * @return mixed
      */
     public function select(string $query, array $params = null, string $fetchClass = null, bool $single = null)
     {
@@ -142,7 +135,7 @@ class Table
     /**
      * Prepare a query using PDO::prepare() and return false on failure, or a PDOStatement
      * @param string $query SQL query
-     * @param array|null $params
+     * @param array<string, mixed>|null $params
      * @return PDOStatement|bool
      */
     protected function execute(string $query, array $params = null)
@@ -157,16 +150,16 @@ class Table
     }
 
     /**
-     * @param $query
+     * @param string $query
      * @return PDOStatement
      */
-    public function run_query($query): PDOStatement
+    public function run_query(string $query): PDOStatement
     {
         // Prepare PDO statement
         $statment = $this->pdo->prepare($query);
 
         if ($statment === false) {
-            throw new DatabaseException("Failed to prepare PDOStatment <br />$query");
+            throw new DatabaseException("Problem to prepare PDO statement with query $query");
         }
 
         // Bind PHP variables with named placeholders
@@ -182,7 +175,7 @@ class Table
                     }
                 }
             } catch (PDOException $pdoException) {
-                $pdoException->getMessage();
+                throw new DatabaseException('Problem to prepare PDO statement');
             }
         }
 
@@ -234,47 +227,24 @@ class Table
      */
     public function isConnected(): bool
     {
-        // If MySQL of postGreSQL
-        switch ($this->get_driver_name()) {
-            case 'mysql':
-            case 'pgsql':
-                $pdo_connection = $this->getConnectionStatus();
-                break;
-            default:
-               // We assume that the user running Apache has access to the SQLite database file (must be improved)
-                $pdo_connection = true;
-        }
-
-        // Test connection status
-        if ($pdo_connection !== false) {
+        if ($this->get_driver_name() === 'mysql' || $this->get_driver_name() === 'pgsql') {
+            if ($this->getConnectionStatus() !== null) {
+                return true;
+            }
+        } elseif( $this->get_driver_name() === 'sqlite') {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
-     * @param $criteria
-     * @param $parameters
-     * @return array|bool
+     * @param string $sql
+     * @param array<string, mixed> $parameters
+     * @param string $fetchClass
+     * @return array<int,Log>|false
      */
-    public function find($criteria, $parameters = null)
-    {
-        $sql = 'SELECT * FROM ' . $this->getTableName() . ' WHERE ';
-        $sql .= implode(' AND ', $criteria);
-
-        $statement = $this->execute($sql, $parameters);
-
-        return $statement->fetch();
-    }
-
-    /**
-     * @param $sql
-     * @param $parameters
-     * @param $fetchClass
-     * @return array|false
-     */
-    public function findAll($sql, $parameters, $fetchClass)
+    public function findAll(string $sql, array $parameters, string $fetchClass)
     {
         $statement = $this->execute($sql, $parameters);
 

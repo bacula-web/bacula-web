@@ -54,7 +54,7 @@ class VolumeTable extends Table
 
     /**
      * @param int $volumeId
-     * @return void
+     * @return array<int,array<string,mixed>>
      */
     public function getJobs(int $volumeId): array
     {

@@ -23,12 +23,15 @@ namespace App\Entity;
 
 class Log
 {
-    private $logtext;
+    /**
+     * @var string
+     */
+    private string $logtext;
 
     /**
      * @var string $time
      */
-    private $time;
+    private string $time;
 
     /**
      * @return string
@@ -50,7 +53,7 @@ class Log
      * @param $time
      * @return void
      */
-    public function setTime($time): void
+    public function setTime(string $time): void
     {
         $this->time = $time;
     }

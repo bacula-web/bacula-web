@@ -35,8 +35,8 @@ use Core\Utils\CUtils;
 use Odan\Session\SessionInterface;
 use PDOException;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
-use GuzzleHttp\Psr7\Response;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -96,11 +96,11 @@ class DirectorController
                     'label' => $director['label'],
                     'clients' => $clients->count(),
                     'jobs' => $jobs->count_Job_Names(),
-                    'totalbytes' => CUtils::Get_Human_Size($jobs->getStoredBytes()),
+                    'totalbytes' => CUtils::Get_Human_Size((int)$jobs->getStoredBytes()),
                     'totalfiles' => CUtils::format_Number($jobs->getStoredFiles()),
                     'dbsize' => $catalog->get_Size($director['db_name'], $id),
                     'volumes' => $volumes->count(),
-                    'volumesize' => CUtils::Get_Human_Size($volumes->getDiskUsage()),
+                    'volumesize' => CUtils::Get_Human_Size((int)$volumes->getDiskUsage()),
                     'pools' => $pools->count(),
                     'filesets' => $filesets->count(),
                     'description' => $description

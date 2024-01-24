@@ -23,6 +23,9 @@ namespace App\Validator;
 
 class LoginValidator extends AbstractValidator
 {
+    /**
+     * @param array<string,mixed> $parameters
+     */
     public function __construct(array $parameters)
     {
         parent::__construct($parameters, ['username', 'password']);

@@ -36,6 +36,11 @@ class Config
         $this->configData = $configData;
     }
 
+    /**
+     * @param string $key
+     * @param mixed $default
+     * @return mixed|null
+     */
     public function get(string $key, $default = null)
     {
         if (isset($this->configData[$key])) {
@@ -65,7 +70,7 @@ class Config
 
     /**
      * @param string $key
-     * @param $value
+     * @param mixed $value
      * @return void
      */
     public function set(string $key, $value): void
@@ -101,7 +106,7 @@ class Config
     /**
      * Return label key if key is an array (used for Bacula database catalog)
      *
-     * @return array
+     * @return array<int<0, max>, array>
      */
     public function getArrays(): array
     {

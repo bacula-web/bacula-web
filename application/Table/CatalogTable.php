@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -18,6 +16,8 @@ declare(strict_types=1);
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+declare(strict_types=1);
 
 namespace App\Table;
 
@@ -62,19 +62,18 @@ class CatalogTable extends Table
                         'groupby' => 'table_schema'
                     ];
 
-                    $result  = $this->run_query(CDBQuery::get_Select($statement, $this->db->getDriverName()));
+                    $result = $this->run_query(CDBQuery::get_Select($statement, $this->db->getDriverName()));
                     $dbSize = $result->fetch();
                     $dbSize = $dbSize['dbsize'] * 1024 * 1024;
-                    return CUtils::Get_Human_Size($dbSize);
                 } else {
-                    return 'Not supported (' . $this->db->getServerVersion() . ')';
+                    throw new DatabaseException('Not supported (' . $this->db->getServerVersion() . ')');
                 }
                 break;
             case 'pgsql':
                 $statement = "SELECT pg_database_size('$dbName') AS dbsize";
                 $result = $this->run_query($statement);
-                $dbSize = $result->fetch();
-                return CUtils::Get_Human_Size($dbSize['dbsize']);
+                $dbSize = $result->fetch()['dbsize'];
+                break;
             case 'sqlite':
                 $dbSize = filesize(BW_ROOT . '/application/assets/protected/application.db');
                 return CUtils::Get_Human_Size($dbSize);
@@ -83,6 +82,8 @@ class CatalogTable extends Table
                     'Catalog db size error: Unsupported PDO driver' . $this->db->getDriverName()
                 );
         }
+
+        return CUtils::Get_Human_Size((int)$dbSize);
     }
 
     /**

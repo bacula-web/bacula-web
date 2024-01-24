@@ -23,7 +23,7 @@ namespace App\Controller;
 use App\Table\CatalogTable;
 use Core\Exception\AppException;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use PDO;
 use Core\Graph\Chart;
 use Psr\Http\Message\ServerRequestInterface;

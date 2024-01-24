@@ -24,13 +24,13 @@ namespace Core\Utils;
 class CUtils
 {
     /**
-     * @param $size
+     * @param int $size
      * @param int $decimal
      * @param string $unit
      * @param bool $display_unit
      * @return string
      */
-    public static function Get_Human_Size($size, int $decimal = 2, string $unit = 'auto', bool $display_unit = true)
+    public static function Get_Human_Size(int $size, int $decimal = 2, string $unit = 'auto', bool $display_unit = true)
     {
         $unit_id = 0;
         $lisible = false;
@@ -69,7 +69,7 @@ class CUtils
     /**
      * Return a formated number based on the current locale
      *
-     * @param $number
+     * @param mixed $number
      * @param int $decimal
      * @return string
      */
