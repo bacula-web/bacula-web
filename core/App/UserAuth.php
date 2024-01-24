@@ -58,8 +58,9 @@ class UserAuth
 
     /**
      * @throws AppException
+     * @return void
      */
-    public function check()
+    public function check(): void
     {
         // Throw an exception if PHP SQLite is not installed
         $pdo_drivers = PDO::getAvailableDrivers();

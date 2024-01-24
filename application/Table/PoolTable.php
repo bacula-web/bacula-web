@@ -30,7 +30,7 @@ class PoolTable extends Table
     protected ?string $tablename = 'Pool';
 
     /**
-     * @var bool $hideEmptyPools
+     * @param bool $hideEmptyPools
      * @return mixed
      * @throws Exception
      */

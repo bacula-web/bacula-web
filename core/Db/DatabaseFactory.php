@@ -26,11 +26,11 @@ use Exception;
 class DatabaseFactory
 {
     /**
-     * @param null $catalogid
+     * @param ?int $catalogid
      * @return Database
      * @throws Exception
      */
-    public static function getDatabase($catalogid = null): Database
+    public static function getDatabase(int $catalogid = null): Database
     {
         if ($catalogid !== null) {
             return new Database($catalogid);

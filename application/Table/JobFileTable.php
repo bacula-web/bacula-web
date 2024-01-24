@@ -47,14 +47,14 @@ class JobFileTable extends Table
     }
 
     /**
-     * @param $jobId
-     * @param $limit
-     * @param $offset
+     * @param int $jobId
+     * @param int $limit
+     * @param int $offset
      * @param string $filename
-     * @return array|false
+     * @return array<int,array<string,int|string>>|false
      * @throws Exception
      */
-    public function getJobFiles($jobId, $limit, $offset, string $filename = '')
+    public function getJobFiles(int $jobId, int $limit, int $offset, string $filename = '')
     {
         // Catalog version prior to Bacula 11.0.x
         if ($this->catalogTable->getCatalogVersion() < 1016) {

@@ -119,7 +119,7 @@ class SetupAuthCommand extends Command
 
             $output->writeln('You can now connect to your Bacula-Web instance using provided credentials');
         } catch (PDOException $e) {
-            die('Database error ' . $e->getMessage() . ' code(' . $e->getCode() . ')');
+            $output->writeln('<error>Database error</error>' . $e->getMessage() . ' code(' . $e->getCode() . ')');
             return Command::FAILURE;
         }
 

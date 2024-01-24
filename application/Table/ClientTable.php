@@ -29,7 +29,7 @@ class ClientTable extends Table
 
     /**
      * @param bool $showInactiveClients
-     * @return array
+     * @return array<int,string>
      */
     public function getClients(bool $showInactiveClients = true): array
     {
@@ -54,7 +54,7 @@ class ClientTable extends Table
 
     /**
      * @param string $clientid
-     * @return array
+     * @return array<string,string>
      */
     public function getClientInfos(string $clientid): array
     {

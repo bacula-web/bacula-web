@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -18,6 +16,8 @@ declare(strict_types=1);
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+declare(strict_types=1);
 
 namespace Core\Utils;
 
@@ -54,20 +54,20 @@ class DateTimeUtil
 
     /**
      * @param string $start_time
-     * @param string|null $end_time
+     * @param string $end_time
      * @return string
      */
-    public static function Get_Elapsed_Time(string $start_time, string $end_time = null): string
+    public static function Get_Elapsed_Time(string $start_time, string $end_time): string
     {
         $dateInputFormat = 'Y-m-d H:i:s';
 
-        if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
+        if ($start_time == '0000-00-00 00:00:00' || $start_time == 0) {
             return 'n/a';
         } else {
             $start = DateTime::createFromFormat($dateInputFormat, $start_time);
         }
 
-        if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
+        if ($end_time == '0000-00-00 00:00:00' || $end_time == 0) {
             $end = new DateTime();
         } else {
             $end = DateTime::createFromFormat($dateInputFormat, $end_time);
@@ -108,7 +108,7 @@ class DateTimeUtil
     /**
      * @param int $datetime
      * @param int $nb_days
-     * @return array
+     * @return array<int<0,max>,array<int|bool>>
      */
     public static function getLastDaysIntervals(int $datetime, int $nb_days): array
     {
@@ -118,14 +118,15 @@ class DateTimeUtil
             $today  = $datetime - ($d * DAY);
             $days[] = self::get_Day_Intervals($today);
         }
+
         return $days;
     }
 
     /**
-     * @param $day
-     * @return array
+     * @param int $day
+     * @return array<string,int|bool>
      */
-    private static function get_Day_Intervals($day): array
+    private static function get_Day_Intervals(int $day): array
     {
         $start = strtotime(date('Y-m-d 00:00:00', $day));
         $end   = strtotime(date('Y-m-d 23:59:59', $day));

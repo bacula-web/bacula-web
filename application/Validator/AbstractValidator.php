@@ -34,8 +34,8 @@ abstract class AbstractValidator
     abstract protected function setRules(): void;
 
     /**
-     * @param array $parameters
-     * @param array $fields
+     * @param array<string,mixed> $parameters
+     * @param array<string> $fields
      */
     public function __construct(array $parameters, array $fields)
     {
@@ -52,7 +52,7 @@ abstract class AbstractValidator
 
     /**
      * @param string|null $field
-     * @return array|bool
+     * @return array<string,array>|bool
      */
     public function getErrors(string $field = null)
     {

@@ -53,7 +53,7 @@ class PublishAssetsCommand extends Command
         } elseif (!file_exists($file)) {
             $output->writeln("<error>Error: Source file $file does not exist or is not writable</error>");
             return Command::FAILURE;
-        } elseif (!is_writable($destinationPath) || !file_exists($destinationPath)) {
+        } elseif (!is_writable($destinationPath) ) {
             $output->writeln(
                 "<error>Error: Destination $destinationPath folder does not exist or is not writable</error>"
             );

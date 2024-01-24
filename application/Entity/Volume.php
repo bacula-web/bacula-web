@@ -42,7 +42,10 @@ class Volume
         return CUtils::Get_Human_Size($this->volbytes);
     }
 
-    public function getInchanger(): string|null
+    /**
+     * @return ?string
+     */
+    public function getInchanger()
     {
         if ($this->inchanger === 0) {
             return '-';

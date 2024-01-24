@@ -30,7 +30,7 @@ class UserTable extends Table
     protected ?string $tablename = 'Users';
 
     /**
-     * @param $username
+     * @param string $username
      * @return mixed
      */
     public function findByName(string $username)
@@ -77,12 +77,12 @@ class UserTable extends Table
     }
 
     /**
-     * @param $username
-     * @param $email
-     * @param $password
+     * @param string $username
+     * @param string $email
+     * @param string $password
      * @return bool|PDOStatement
      */
-    public function addUser($username, $email, $password)
+    public function addUser(string $username, string $email, string $password)
     {
         $user = new User();
 

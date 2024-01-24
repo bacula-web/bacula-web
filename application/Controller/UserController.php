@@ -27,7 +27,7 @@ use Slim\Views\Twig;
 use Core\Helpers\Sanitizer;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;

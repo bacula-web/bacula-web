@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,13 +17,14 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Table;
 
 use App\Entity\Job;
 use Core\Db\CDBQuery;
 use Core\Db\Table;
 use Core\Exception\AppException;
-use Core\Exception\DatabaseException;
 use Core\Utils\CUtils;
 use Exception;
 
@@ -34,21 +33,16 @@ class JobTable extends Table
     protected ?string $tablename = 'Job';
 
     /**
-     * @param $period_timestamps
-     * @param $job_status
-     * @param $job_level
+     * @param array<int,int> $period_timestamps
+     * @param string|null $job_status
+     * @param string|null $job_level
      * @return int
      * @throws Exception
      */
-    public function count_Jobs($period_timestamps, $job_status = null, $job_level = null): int
+    public function count_Jobs(array $period_timestamps, string $job_status = null, string $job_level = null): int
     {
         $where = null;
         $fields = ['COUNT(*) as job_count'];
-
-        // Check PDO object
-        if (!is_a($this->pdo, 'PDO') && is_null($this->pdo)) {
-            throw new DatabaseException('Unvalid PDO object provided in count_Jobs() function');
-        }
 
         // Getting timestamp interval
         $intervals = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
@@ -102,7 +96,7 @@ class JobTable extends Table
             $where[] = "Level = '$job_level' ";
         }
 
-        // Building SQL statment
+        // Building SQL statement
         $statment = ['table' => $this->tablename, 'fields' => $fields, 'where' => $where];
         $statment = CDBQuery::get_Select($statment);
 
@@ -113,21 +107,16 @@ class JobTable extends Table
     }
 
     /**
-     * @param array $period_timestamps Array containing start and end date (unix timestamp format)
+     * @param array<int,int> $period_timestamps Array containing start and end date (unix timestamp format)
      * @param string $job_name
      * @param string $client_id
      * @return int|mixed
      * @throws Exception
      */
-    public function getStoredFiles($period_timestamps = [], string $job_name = 'ALL', string $client_id = 'ALL')
+    public function getStoredFiles(array $period_timestamps = [], string $job_name = 'ALL', string $client_id = 'ALL')
     {
         $where      = [];
         $fields     = ['SUM(JobFiles) AS stored_files'];
-
-        // Check PDO object
-        if (!is_a($this->pdo, 'PDO') || is_null($this->pdo)) {
-            throw new DatabaseException('Unvalid PDO object provided in count_Jobs() function');
-        }
 
         // Defined period
         if (!empty($period_timestamps)) {
@@ -166,12 +155,12 @@ class JobTable extends Table
     }
 
     /**
-     * @param $period_timestamps
-     * @param $job_name
-     * @param $client_id
+     * @param array<int,int> $period_timestamps
+     * @param string $job_name
+     * @param string $client_id
      * @return int|mixed
      */
-    public function getStoredBytes($period_timestamps = [], $job_name = 'ALL', $client_id = 'ALL')
+    public function getStoredBytes(array $period_timestamps = [], string $job_name = 'ALL', string $client_id = 'ALL')
     {
         $where = [];
         $fields  = ['SUM(JobBytes) AS stored_bytes'];
@@ -233,21 +222,16 @@ class JobTable extends Table
     }
 
     /**
-     * @param $client_id
-     * @param $job_type
-     * @return array
+     * Return backup jobs list
+     *
+     * @param ?string $job_type
+     * @return array<int,string>
      */
-    public function get_Jobs_List($client_id = null, $job_type = null): array
+    public function get_Jobs_List(string $job_type = null): array
     {
         $jobs   = [];
         $fields = ['Name'];
         $where  = null;
-
-        // Prepare and execute query
-        if (!is_null($client_id)) {
-            $this->addParameter('clientid', $client_id);
-            $where[] = 'clientid = :clientid';
-        }
 
         // Job type filter
         if (!is_null($job_type)) {
@@ -273,8 +257,8 @@ class JobTable extends Table
     }
 
     /**
-     * @param array $levels_name
-     * @return array
+     * @param array<string,string> $levels_name
+     * @return array<string,string>
      */
     public function getLevels(array $levels_name = []): array
     {
@@ -299,8 +283,8 @@ class JobTable extends Table
     }
 
     /**
-     * @param array $job_types
-     * @return array
+     * @param array<string,string> $job_types
+     * @return array<string,string>
      */
     public function getUsedJobTypes(array $job_types): array
     {
@@ -320,10 +304,10 @@ class JobTable extends Table
     /**
      * Return an array which contains stored bytes and files of completed backup jobs of each day of the week
      *
-     * @return array|null
+     * @return array<int,array<string,string>>|null
      * @throws AppException
      */
-    public function getWeeklyJobsStats()
+    public function getWeeklyJobsStats(): ?array
     {
         $fields = ['SUM(Job.Jobbytes) as jobbytes' , 'SUM(Job.Jobfiles) as jobfiles'];
         $where = ["Job.JobStatus = 'T'", "Job.Type = 'B'"];
@@ -331,18 +315,12 @@ class JobTable extends Table
         $groupby = 'dayofweek';
         $res = [];
 
-        switch ($this->db->getDriverName()) {
-            case 'mysql':
-                $fields[] = "FROM_UNIXTIME(Job.JobTDate, '%W') AS dayofweek";
-                break;
-            case 'pgsql':
-                $fields[] = 'extract(dow from Job.EndTime::timestamp) AS dayofweek';
-                break;
-            case 'sqlite':
-                return null;
-                break;
-            default:
-                throw new AppException('This driver is not supported');
+        if ($this->db->getDriverName() === 'mysql') {
+            $fields[] = "FROM_UNIXTIME(Job.JobTDate, '%W') AS dayofweek";
+        } elseif ($this->db->getDriverName() === 'pgsql') {
+            $fields[] = 'extract(dow from Job.EndTime::timestamp) AS dayofweek';
+        } else {
+            throw new AppException('This driver is not supported');
         }
 
         $query = CDBQuery::get_Select(
@@ -378,7 +356,7 @@ class JobTable extends Table
     /**
      * Return an array of the top 10 backup jobs (used stored bytes)
      *
-     * @return array
+     * @return array<int,array<string,string>>
      */
     public function getBiggestJobsStats(): array
     {

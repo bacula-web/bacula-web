@@ -33,9 +33,9 @@ use Core\Utils\DateTimeUtil;
 use App\Table\JobTable;
 use App\Table\ClientTable;
 use App\Table\PoolTable;
-use GuzzleHttp\Psr7\Response;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -174,7 +174,7 @@ class JobController
         $filter_jobstatus = '0';
 
         if (isset($postRequestData['filter_jobstatus'])) {
-            $filter_jobstatus = (int) $postRequestData['filter_jobstatus'] ?? '0';
+            $filter_jobstatus = (int) $postRequestData['filter_jobstatus'];
         }
         $tplData['filter_jobstatus'] = $filter_jobstatus;
 

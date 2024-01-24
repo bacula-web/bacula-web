@@ -1,9 +1,9 @@
 parameters:
-	level: 6
-	paths:
-		- core
-		- application
-		- public/index.php
-		- bwc
-	phpVersion: 70400
-	errorFormat: github
+    level: 6
+    paths:
+        - core
+        - application
+        - public/index.php
+        - bwc
+    phpVersion: 70400
+    errorFormat: github

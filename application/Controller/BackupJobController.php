@@ -34,11 +34,12 @@ use Core\Helpers\Sanitizer;
 use Exception;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use function DI\string;
 
 class BackupJobController
 {
@@ -90,7 +91,7 @@ class BackupJobController
         ];
 
         // Get backup job(s) list
-        $jobslist = $this->jobTable->get_Jobs_List(null, 'B');
+        $jobslist = $this->jobTable->get_Jobs_List( 'B');
 
         $tplData['jobs_list'] = $jobslist;
 
@@ -98,7 +99,7 @@ class BackupJobController
         $requestData = $request->getQueryParams();
 
         // Check backup job name from $_POST request
-        $backupjob_name = null;
+        $backupjob_name = '';
 
         if ($request->getMethod() === 'POST') {
             $backupjob_name = $postData['backupjob_name'];
@@ -151,17 +152,17 @@ class BackupJobController
 
             switch ($backupjob_period) {
                 case '7':
-                    $start = new \DateTimeImmutable('@' . $currentDateTime - WEEK);
+                    $start = new \DateTimeImmutable('@' . ($currentDateTime - WEEK));
                     $end = new \DateTimeImmutable('@' . $currentDateTime);
                     $interval[0] = $currentDateTime - WEEK;
                     break;
                 case '14':
-                    $start = new \DateTimeImmutable('@' . $currentDateTime - (2 * WEEK));
+                    $start = new \DateTimeImmutable('@' . ($currentDateTime - (2 * WEEK)));
                     $end = new \DateTimeImmutable('@' . $currentDateTime);
                     $interval[0] = $currentDateTime - (2 * WEEK);
                     break;
                 case '30':
-                    $start = new \DateTimeImmutable('@' . $currentDateTime - MONTH);
+                    $start = new \DateTimeImmutable('@' . ($currentDateTime - MONTH));
                     $end = new \DateTimeImmutable('@' . $currentDateTime);
                     $interval[0] = $currentDateTime - MONTH;
                     break;

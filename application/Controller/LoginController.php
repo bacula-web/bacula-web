@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,6 +17,8 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Libs\Config;
@@ -27,7 +27,7 @@ use Core\App\UserAuth;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;

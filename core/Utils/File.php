@@ -26,11 +26,14 @@ use Core\Exception\ConfigFileException;
 class File
 {
     /**
-     * string @var
+     * @var string
      */
-    protected static $config_file;
+    protected static string $config_file;
 
-    protected static $config;
+    /**
+     * @var (mixed)[]|null
+     */
+    protected static ?array $config = null;
 
     /**
      * @param string $file
@@ -42,7 +45,7 @@ class File
         global $config;
 
         // static variable singleton
-        if (!self::$config_file) {
+        if (!isset(self::$config_file)) {
             self::$config_file = $file;
         }
 
