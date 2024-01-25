@@ -51,7 +51,7 @@ I'd be glad to help you fixing any potential issue you are facing.
 ### Before submitting an issue
 
 - make sure an issue haven't been created already [here](https://github.com/bacula-web/bacula-web/issues)
-- please read the [bugs and features request guideline](https://docs.bacula-web.org/en/latest/03_gethelp/support.html#bug-report-guideline)
+- please read the [bugs and features request guideline](https://docs.bacula-web.org/en/latest/03_get-help/support.html#bug-report-guideline)
 
 ### Submitting an issue
 
