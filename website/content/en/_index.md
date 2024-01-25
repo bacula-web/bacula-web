@@ -3,7 +3,7 @@ title: "Bacula-Web"
 linkTitle: "Bacula-Web"
 ---
 
-{{< blocks/cover title="Welcome to Bacula-Web" image_anchor="top" height="full" >}}
+{{< blocks/cover title="Welcome to Bacula-Web project" image_anchor="top" height="full" >}}
 <a class="btn btn-lg btn-primary me-3 mb-4" href="/blog/">
 Latest news <i class="fas fa-arrow-alt-circle-right" ms-2"></i>
 </a>
@@ -13,7 +13,7 @@ Documentation
 <a class="btn btn-lg btn-secondary me-3 mb-4" target="_blank" href="https://github.com/bacula-web/bacula-web/releases">
 Releases <i class="fab fa-github ms-2 "></i>
 </a>
-<p class="lead mt-5">Open Source monitoring and reporting for Bacula</p>
+<p class="lead mt-5">Open Source monitoring and reporting tool for Bacula</p>
 {{< blocks/link-down color="info" >}}
 {{< /blocks/cover >}}
 
