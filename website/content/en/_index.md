@@ -1,22 +1,21 @@
-+++
-title = "Bacula-Web"
-linkTitle = "Bacula-Web"
+---
+title: "Bacula-Web"
+linkTitle: "Bacula-Web"
+---
 
-+++
-
-{{< blocks/cover title="Bacula-Web: The reporting tool for Bacula" image_anchor="top" height="min" color="orange" >}}
-<div class="mx-auto">
-	<a class="btn btn-lg btn-primary mr-3 mb-4" href="{{< relref "/about" >}}">
-		Learn More <i class="fas fa-arrow-alt-circle-right ml-2"></i>
-	</a>
-	<a class="btn btn-lg btn-secondary mr-3 mb-4" href="https://github.com/bacula-web/bacula-web" target="_blank">
-		Download <i class="fab fa-github ml-2 "></i>
-	</a>
-	<p class="lead mt-5">The Bacula backup reporting tool</p>
-	{{< blocks/link-down color="info" >}}
-</div>
+{{< blocks/cover title="Welcome to Bacula-Web" image_anchor="top" height="full" >}}
+<a class="btn btn-lg btn-primary me-3 mb-4" href="/blog/">
+Latest news <i class="fas fa-arrow-alt-circle-right" ms-2"></i>
+</a>
+<a class="btn btn-lg btn-primary me-3 mb-4" target="_blank" href="https://docs.bacula-web.org">
+Documentation
+</a>
+<a class="btn btn-lg btn-secondary me-3 mb-4" target="_blank" href="https://github.com/bacula-web/bacula-web/releases">
+Releases <i class="fab fa-github ms-2 "></i>
+</a>
+<p class="lead mt-5">Open Source monitoring and reporting for Bacula</p>
+{{< blocks/link-down color="info" >}}
 {{< /blocks/cover >}}
-
 
 {{% blocks/lead color="primary" %}}
 
