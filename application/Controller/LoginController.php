@@ -21,6 +21,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Libs\Config;
 use Core\App\UserAuth;
 use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
@@ -28,8 +29,10 @@ use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Valitron\Validator;
-use App\Libs\FileConfig;
 
 class LoginController
 {
@@ -37,16 +40,20 @@ class LoginController
     private SessionInterface $session;
     private Twig $twig;
     private ?string $basePath;
+    private Config $config;
 
-    public function __construct(UserAuth $userAuth, SessionInterface $session, Twig $twig)
+    public function __construct(
+        UserAuth $userAuth,
+        SessionInterface $session,
+        Twig $twig,
+        Config $config)
     {
         $this->userAuth = $userAuth;
         $this->session = $session;
         $this->twig = $twig;
+        $this->config = $config;
 
-        FileConfig::open(CONFIG_FILE);
-
-        $this->basePath = FileConfig::get_Value('basepath') ?? null;
+        $this->basePath = $this->config->get('basepath', null);
     }
 
     /**
@@ -65,6 +72,11 @@ class LoginController
             ->withStatus(302);
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function index(Request $request, Response $response): Response
     {
         return $this->twig->render($response, 'pages/login.html.twig');

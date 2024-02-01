@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use App\Libs\FileConfig;
+use App\Libs\Config;
 use Core\App\UserAuth;
 use Core\Exception\AppException;
 use Core\Exception\ConfigFileException;
@@ -42,15 +42,17 @@ class DbAuthMiddleware implements MiddlewareInterface
     private SessionInterface $session;
     private Twig $twig;
     private ?string $basePath;
+    private Config $config;
 
     /**
      * @param UserAuth $userAuth
      * @param SessionInterface $session
      * @param Twig $twig
+     * @param Config $config
      * @throws AppException
      * @throws ConfigFileException
      */
-    public function __construct(UserAuth $userAuth, SessionInterface $session, Twig $twig)
+    public function __construct(UserAuth $userAuth, SessionInterface $session, Twig $twig, Config $config)
     {
         $this->dbAuth = $userAuth;
 
@@ -59,22 +61,21 @@ class DbAuthMiddleware implements MiddlewareInterface
         $this->dbAuth->checkSchema();
 
         $this->session = $session;
-
         $this->twig = $twig;
+        $this->config = $config;
 
-        FileConfig::open(CONFIG_FILE);
-        $this->basePath = FileConfig::get_Value('basepath') ?? null;
+        $this->basePath = $this->config->get('basepath', null);
     }
 
     /**
      * @param ServerRequestInterface $request
      * @param RequestHandlerInterface $handler
      * @return ResponseInterface
+     * @throws ConfigFileException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        FileConfig::open(CONFIG_FILE);
-        if (!FileConfig::get_Value('enable_users_auth')) {
+        if ($this->config->get('enable_users_auth') === false) {
             return $handler->handle($request);
         }
 

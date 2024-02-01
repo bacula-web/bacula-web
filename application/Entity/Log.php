@@ -21,13 +21,13 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Libs\FileConfig;
-use Core\Exception\ConfigFileException;
-
 class Log
 {
     private $logtext;
 
+    /**
+     * @var string $time
+     */
     private $time;
 
     /**
@@ -40,10 +40,18 @@ class Log
 
     /**
      * @return string
-     * @throws ConfigFileException
      */
     public function getTime(): string
     {
-        return date(FileConfig::get_Value('datetime_format'), strtotime($this->time));
+        return $this->time;
+    }
+
+    /**
+     * @param $time
+     * @return void
+     */
+    public function setTime($time): void
+    {
+        $this->time = $time;
     }
 }

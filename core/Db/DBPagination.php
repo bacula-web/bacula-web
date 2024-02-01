@@ -26,7 +26,7 @@
 
 namespace Core\Db;
 
-use App\Libs\FileConfig;
+use App\Libs\Config;
 use Core\Exception\ConfigFileException;
 use Exception;
 use Psr\Http\Message\ServerRequestInterface;
@@ -69,14 +69,14 @@ class DBPagination
 
     /**
      * @param ServerRequestInterface $request
-     * @throws ConfigFileException
+     * @param Config $config
      */
-    public function __construct(ServerRequestInterface $request)
+    public function __construct(ServerRequestInterface $request, Config $config)
     {
         $this->request = $request;
         $parameters = getRequestParams($request);
 
-        $this->limit = (FileConfig::get_Value('rows_per_page') !== null) ? FileConfig::get_Value('rows_per_page') : 25;
+        $this->limit = $config->get('rows_per_page', 25);
 
         $this->paginationCurrent = $parameters['page'] ?? 1;
 

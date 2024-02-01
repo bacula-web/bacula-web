@@ -30,12 +30,13 @@ use App\Controller\SettingsController;
 use App\Controller\TestController;
 use App\Controller\UserController;
 use App\Controller\VolumesController;
-use App\Libs\FileConfig;
+use App\Libs\Config;
 use App\Middleware\CatalogSelectorMiddleware;
 use App\Middleware\CsrfMiddleware;
 use App\Middleware\DbAuthMiddleware;
 use App\Middleware\FlashMiddleware;
 use App\Middleware\GuestMiddleware;
+use Core\Exception\ConfigFileException;
 use Core\Utils\ExceptionRenderer;
 use DI\ContainerBuilder;
 use Odan\Session\Middleware\SessionStartMiddleware;
@@ -61,13 +62,11 @@ $app = $container->get(App::class);
  * config.php is missing.
  */
 try {
-    FileConfig::open(CONFIG_FILE);
-
-    $basePath = FileConfig::get_Value('basepath') ?? null;
+    $basePath = $container->get(Config::class)->get('basepath', null);
     if (!is_null($basePath)) {
         $app->setBasePath($basePath);
     }
-} catch(\Core\Exception\ConfigFileException $e) {
+} catch(ConfigFileException $e) {
     $exceptionRenderer = new ExceptionRenderer();
     http_response_code(500);
     die($exceptionRenderer($e, false));
@@ -107,6 +106,7 @@ $app->group('', function (RouteCollectorProxy $group) {
     $group->post('/login', [LoginController::class, 'login']);
 })->add(GuestMiddleware::class);
 
+
 $app->add(CsrfMiddleware::class)
     ->add('csrf')
     ->add(CatalogSelectorMiddleware::class)
@@ -115,11 +115,8 @@ $app->add(CsrfMiddleware::class)
     ->add(SessionStartMiddleware::class);
 
 // Add Error Middleware
-$errorMiddleware = $app->addErrorMiddleware(
-    FileConfig::get_Value('debug') ?? false,
-    FileConfig::get_Value('debug') ?? false,
-    FileConfig::get_Value('debug') ?? false
-);
+$isDebug = $container->get(Config::class)->get('debug', false);
+$errorMiddleware = $app->addErrorMiddleware( $isDebug, $isDebug, $isDebug);
 
 $errorHandler = $errorMiddleware->getDefaultErrorHandler();
 $errorHandler->registerErrorRenderer('text/html', ExceptionRenderer::class);

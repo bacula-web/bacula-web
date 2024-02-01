@@ -21,8 +21,7 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use App\Libs\FileConfig;
-use Core\Exception\ConfigFileException;
+use App\Libs\Config;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -34,32 +33,35 @@ class CatalogSelectorMiddleware implements MiddlewareInterface
 {
     private SessionInterface $session;
     private Twig $twig;
+    private Config $config;
 
     /**
      * @param SessionInterface $session
      * @param Twig $twig
+     * @param Config $config
      */
-    public function __construct(SessionInterface $session, Twig $twig)
+    public function __construct(SessionInterface $session, Twig $twig, Config $config)
     {
         $this->session = $session;
         $this->twig = $twig;
+        $this->config = $config;
     }
 
     /**
      * @param Request $request
      * @param RequestHandler $handler
      * @return ResponseInterface
-     * @throws ConfigFileException
      */
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
-        FileConfig::open(CONFIG_FILE);
-
+        /**
+         * TODO: check user input here
+         */
         $params = $request->getQueryParams();
         $catalogId = $this->session->get('catalog_id', 0);
 
         if (isset($params['catalog_id'])) {
-            if (FileConfig::catalogExist((int) $params['catalog_id'])) {
+            if (array_key_exists($params['catalog_id'], $this->config->getArrays())) {
                 $catalogId = (int) $params['catalog_id'];
                 $this->session->set('catalog_id', $catalogId);
             } else {
@@ -69,7 +71,7 @@ class CatalogSelectorMiddleware implements MiddlewareInterface
         }
 
         $this->twig->getEnvironment()->addGlobal('catalog_current_id', $catalogId);
-        $this->twig->getEnvironment()->addGlobal('catalog_label', FileConfig::get_Value('label', $catalogId));
+        $this->twig->getEnvironment()->addGlobal('catalog_label', $this->config->getArrays()[$catalogId]['label']);
 
         return $handler->handle($request);
     }

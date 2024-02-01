@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Libs\FileConfig;
+use App\Libs\Config;
 use Core\Exception\AppException;
 use Core\Exception\ConfigFileException;
 use Core\Graph\Chart;
@@ -44,17 +44,19 @@ class ClientController
     private JobTable $jobTable;
     private ClientTable $clientTable;
     private Twig $view;
+    private Config $config;
 
     /**
      * @param Twig $view
      * @param JobTable $jobTable
      * @param ClientTable $clientTable
      */
-    public function __construct(Twig $view, JobTable $jobTable, ClientTable $clientTable)
+    public function __construct(Twig $view, JobTable $jobTable, ClientTable $clientTable, Config $config)
     {
         $this->view = $view;
         $this->jobTable = $jobTable;
         $this->clientTable = $clientTable;
+        $this->config = $config;
     }
 
     /**
@@ -173,7 +175,7 @@ class ClientController
                 $job['level']     = $job_levels[$job['level']];
                 $job['jobfiles']  = CUtils::format_Number($job['jobfiles']);
                 $job['jobbytes']  = CUtils::Get_Human_Size($job['jobbytes']);
-                $job['endtime']   = date(FileConfig::get_Value('datetime_format'), strtotime($job['endtime']));
+                $job['endtime']   = date($this->config->get('datetime_format', 'Y-m-d H:i:s'), strtotime($job['endtime']));
                 $backup_jobs[] = $job;
             }
             $tplData['total_bytes'] = CUtils::Get_Human_Size($totalBytes);

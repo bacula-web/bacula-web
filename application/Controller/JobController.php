@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,9 +17,11 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Libs\FileConfig;
+use App\Libs\Config;
 use App\Table\JobFileTable;
 use App\Table\LogTable;
 use Core\Db\DBPagination;
@@ -54,6 +54,7 @@ class JobController
     private Twig $view;
     private SessionInterface $session;
     private ?string $basePath;
+    private Config $config;
 
     public function __construct(
         JobTable $jobTable,
@@ -62,7 +63,8 @@ class JobController
         PoolTable $poolTable,
         JobFileTable $jobFileTable,
         Twig $view,
-        SessionInterface $session
+        SessionInterface $session,
+        Config $config
     )
     {
         $this->logTable = $logTable;
@@ -72,9 +74,9 @@ class JobController
         $this->jobFileTable = $jobFileTable;
         $this->view = $view;
         $this->session = $session;
+        $this->config = $config;
 
-        FileConfig::open(CONFIG_FILE);
-        $this->basePath = FileConfig::get_Value('basepath') ?? null;
+        $this->basePath = $this->config->get('basepath', null);
     }
 
     /**
@@ -92,8 +94,6 @@ class JobController
         $where = null;
         $params = [];
         $postRequestData = getRequestParams($request);
-
-        FileConfig::open(CONFIG_FILE);
 
         $fields = [
             'Job.JobId', 'Job.Name AS Job_name', 'Job.Type', 'Job.SchedTime', 'Job.StartTime', 'Job.EndTime', 'Job.Level',
@@ -172,6 +172,7 @@ class JobController
 
         // Job status filter
         $filter_jobstatus = '0';
+
         if (isset($postRequestData['filter_jobstatus'])) {
             $filter_jobstatus = (int) $postRequestData['filter_jobstatus'] ?? '0';
         }
@@ -334,7 +335,7 @@ class JobController
             $tplData['result_order_asc_checked'] = '';
         }
 
-        $pagination = new DBPagination($request);
+        $pagination = new DBPagination($request, $this->config);
 
         // Parsing jobs result
         $sqlQuery = CDBQuery::get_Select(array('table' => 'Job',
@@ -397,13 +398,17 @@ class JobController
             if ($start_time == '0000-00-00 00:00:00' || is_null($start_time) || $start_time == 0) {
                 $job['starttime'] = 'n/a';
             } else {
-                $job['starttime'] = date(FileConfig::get_Value('datetime_format'), strtotime($job['starttime']));
+                $job['starttime'] = date(
+                    $this->config->get('datetime_format', 'Y-m-d H:i:s'), strtotime($job['starttime'])
+                );
             }
 
             if ($end_time == '0000-00-00 00:00:00' || is_null($end_time) || $end_time == 0) {
                 $job['endtime'] = 'n/a';
             } else {
-                $job['endtime'] = date(FileConfig::get_Value('datetime_format'), strtotime($job['endtime']));
+                $job['endtime'] = date(
+                    $this->config->get('datetime_format', 'Y-m-d H:i:s'), strtotime($job['endtime'])
+                );
             }
 
             // Get the job elapsed time completion
@@ -413,7 +418,9 @@ class JobController
                 $job['elapsed_time'] = 'n/a';
             }
 
-            $job['schedtime'] = date(FileConfig::get_Value('datetime_format'), strtotime($job['schedtime']));
+            $job['schedtime'] = date(
+                $this->config->get('datetime_format', 'Y-m-d H:i:s'), strtotime($job['schedtime'])
+            );
 
             // Job Level
             if (isset($job_levels[$job['level']])) {
@@ -508,7 +515,14 @@ class JobController
             ]
         );
 
-        $tplData['joblogs'] = $this->logTable->findAll($sql, ['jobid' => $jobId], 'App\Entity\Log');
+        $jobLogs = $this->logTable->findAll($sql, ['jobid' => $jobId], 'App\Entity\Log');
+
+        $tplData['joblogs'] = array_filter($jobLogs, function($element) {
+            $element->setTime(
+                date($this->config->get('datetime_format', 'Y-m-d H:i:s'),strtotime($element->getTime()))
+            );
+            return $element;
+        });
 
         return $this->view->render($response, 'pages/joblogs.html.twig', $tplData);
     }

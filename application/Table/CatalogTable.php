@@ -22,8 +22,8 @@ declare(strict_types=1);
 namespace App\Table;
 
 use Core\Db\Table;
-use App\Libs\FileConfig;
 use Core\Db\CDBQuery;
+use Core\Exception\ConfigFileException;
 use Core\Exception\DatabaseException;
 use Core\Utils\CUtils;
 use Exception;
@@ -41,15 +41,12 @@ class CatalogTable extends Table
     private int $dbVersionId;
 
     /**
+     * @param string $dbName
      * @param int $catalogId
      * @return string Database size in human format
-     * @throws Exception
      */
-
-    public function get_Size(int $catalogId): string
+    public function get_Size(string $dbName, int $catalogId): string
     {
-        $dbName = FileConfig::get_Value('db_name', $catalogId);
-
         switch ($this->db->getDriverName()) {
             case 'mysql':
                 /**
@@ -79,10 +76,12 @@ class CatalogTable extends Table
                 $dbSize = $result->fetch();
                 return CUtils::Get_Human_Size($dbSize['dbsize']);
             case 'sqlite':
-                $dbSize = filesize(FileConfig::get_Value('dbName', $catalogId));
+                $dbSize = filesize(BW_ROOT . '/application/assets/protected/application.db');
                 return CUtils::Get_Human_Size($dbSize);
             default:
-                throw new DatabaseException('Catalog db size error: Unsupported PDO driver' . $this->db->getDriverName());
+                throw new DatabaseException(
+                    'Catalog db size error: Unsupported PDO driver' . $this->db->getDriverName()
+                );
         }
     }
 

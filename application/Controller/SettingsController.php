@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,14 +17,15 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Libs\FileConfig;
+use App\Libs\Config;
 use App\Table\UserTable;
 use Slim\Views\Twig;
 use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
-use Core\Exception\ConfigFileException;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
@@ -40,32 +39,33 @@ class SettingsController
     private Twig $view;
     private UserTable $userTable;
     private SessionInterface $session;
+
     /**
-     * @var string
+     * @var string|null
      */
     private ?string $basePath;
+    private Config $config;
 
     /**
      * @param Twig $view
      * @param UserTable $userTable
      * @param SessionInterface $session
-     * @throws ConfigFileException
+     * @param Config $config
      */
-    public function __construct(Twig $view, UserTable $userTable, SessionInterface $session)
+    public function __construct(Twig $view, UserTable $userTable, SessionInterface $session, Config $config)
     {
         $this->view = $view;
         $this->userTable = $userTable;
         $this->session = $session;
+        $this->config = $config;
 
-        FileConfig::open(CONFIG_FILE);
-        $this->basePath = FileConfig::get_Value('basepath') ?? null;
+        $this->basePath = $this->config->get('basepath', null);
     }
 
     /**
      * @param Request $request
      * @param Response $response
      * @return Response
-     * @throws ConfigFileException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -74,89 +74,76 @@ class SettingsController
     {
         $tplData = [];
 
-        // Get parameters set in configuration file
-        if (!FileConfig::open(CONFIG_FILE)) {
-            throw new ConfigFileException("The configuration file is missing");
+        $tplData['config_datetime_format'] = $this->config->get('datetime_format', 'Y-m-d H:i:s (default value)');
+
+        if ($this->config->has('datetime_format_short') ) {
+            $tplData['config_datetime_format_short'] = $this->config->get('datetime_format_short');
         } else {
-            // Check if datetime_format is set, otherwise, set default datetime_format
-            if (FileConfig::get_Value('datetime_format') != null) {
-                $tplData['config_datetime_format'] = FileConfig::get_Value('datetime_format');
-            } else {
-                $tplData['config_datetime_format'] = 'Y-m-d H:i:s';
+            $datetimeFormatShort = explode(' ',
+                $this->config->get('datetime_format', 'Y-m-d H:i:s'));
+            $tplData['config_datetime_format_short'] = $datetimeFormatShort[0] . ' (default value)';
+        }
+
+        // Check if language is set
+        $tplData['config_language'] = $this->config->get('language', 'en_US (default value)');
+
+        if ($this->config->has('show_inactive_clients')) {
+            $config_show_inactive_clients = $this->config->get('show_inactive_clients');
+
+            if ($config_show_inactive_clients === true) {
+                $tplData['config_show_inactive_clients'] = 'checked';
             }
+        }
 
-            // datetime_format_short
-            if (FileConfig::get_Value('datetime_format_short') != null) {
-                $tplData['config_datetime_format_short'] = FileConfig::get_Value('datetime_format_short');
-            } else {
-                $tplData['config_datetime_format_short'] = explode(' ', FileConfig::get_Value('datetime_format'));
-                $tplData['config_datetime_format_short'] = $tplData['config_datetime_format_short'][0];
+        if ($this->config->has('hide_empty_pools')) {
+            $config_hide_empty_pools = $this->config->get('hide_empty_pools');
+
+            if ($config_hide_empty_pools === true) {
+                $tplData['config_hide_empty_pools'] = 'checked';
             }
+        } else {
+            $tplData['config_hide_empty_pools'] = '';
+        }
 
-            // Check if language is set
-            if (FileConfig::get_Value('language') != null) {
-                $tplData['config_language'] = FileConfig::get_Value('language');
-            }
+        // Parameter <enable_users_auth> is enabled by default (in case is not specified in config file)
+        $config_enable_users_auth = true;
 
-            // Check if show_inactive_clients is set
-            if (FileConfig::get_Value('show_inactive_clients') != null) {
-                $config_show_inactive_clients = FileConfig::get_Value('show_inactive_clients');
+        if ($this->config->has('enable_users_auth') && is_bool($this->config->get('enable_users_auth'))) {
+            $config_enable_users_auth = $this->config->get('enable_users_auth');
+        }
 
-                if ($config_show_inactive_clients == true) {
-                    $tplData['config_show_inactive_clients'] = 'checked';
-                }
-            }
+        /**
+         * TODO: split users in a different controller/page
+         */
 
-            // Check if hide_empty_pools is set
-            if (FileConfig::get_Value('hide_empty_pools') != null) {
-                $config_hide_empty_pools = FileConfig::get_Value('hide_empty_pools');
+        if ($config_enable_users_auth === true) {
+            // Get users list
+            $tplData['users'] = $this->userTable->getAll();
 
-                if ($config_hide_empty_pools == true) {
-                    $tplData['config_hide_empty_pools'] = 'checked';
-                }
-            } else {
-                $tplData['config_hide_empty_pools'] = '';
-            }
+            $tplData['config_enable_users_auth'] = 'checked';
+        } else {
+            $tplData['config_enable_users_auth'] = '';
+        }
 
-            // Parameter <enable_users_auth> is enabled by default (in case is not specified in config file)
-            $config_enable_users_auth = true;
+        // Parameter <debug> is disabled by default (in case is not specified in config file)
+        $config_debug = false;
 
-            // If enable_users_auth is defined in config file, take the value
-            if (FileConfig::get_Value('enable_users_auth') !== null && is_bool(FileConfig::get_Value('enable_users_auth'))) {
-                $config_enable_users_auth = FileConfig::get_Value('enable_users_auth');
-            }
+        if ($this->config->has('debug') && is_bool($this->config->get('debug'))) {
+            $config_debug = $this->config->get('debug');
+        }
 
-            if ($config_enable_users_auth === true) {
-                // Get users list
-                $tplData['users'] = $this->userTable->getAll();
+        if ($config_debug === true) {
+            $tplData['config_debug'] = 'checked';
+        } else {
+            $tplData['config_debug'] = '';
+        }
 
-                $tplData['config_enable_users_auth'] = 'checked';
-            } else {
-                $tplData['config_enable_users_auth'] = '';
-            }
+        $configBasePath = $this->config->get('basepath', null);
 
-            // Parameter <debug> is disabled by default (in case is not specified in config file)
-            $config_debug = false;
-
-            // If debug is defined in config file, take the value
-            if (FileConfig::get_Value('debug') !== null && is_bool(FileConfig::get_Value('debug'))) {
-                $config_debug = FileConfig::get_Value('debug');
-            }
-
-            if ($config_debug === true) {
-                $tplData['config_debug'] = 'checked';
-            } else {
-                $tplData['config_debug'] = '';
-            }
-
-            // Base path config
-            $configBasePath = FileConfig::get_Value('basepath') ?? null;
-
-            if ($configBasePath == null) {
-                $tplData['config_basepath'] = 'not set';
-            } else {
-                $tplData['config_basepath'] = $configBasePath;
-            }
+        if ($configBasePath == null) {
+            $tplData['config_basepath'] = 'not set';
+        } else {
+            $tplData['config_basepath'] = $configBasePath;
         }
 
         return $this->view->render($response, 'pages/settings.html.twig', $tplData);

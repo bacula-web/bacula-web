@@ -24,6 +24,7 @@ namespace App\Table;
 use Core\Db\Table;
 use Core\Db\CDBQuery;
 use App\Libs\FileConfig;
+use Exception;
 
 class PoolTable extends Table
 {
@@ -31,7 +32,7 @@ class PoolTable extends Table
 
     /**
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPools()
     {

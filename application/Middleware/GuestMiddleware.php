@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use App\Libs\FileConfig;
+use App\Libs\Config;
 use Core\App\UserAuth;
 use GuzzleHttp\Psr7\Response;
 use Odan\Session\SessionInterface;
@@ -36,26 +36,31 @@ class GuestMiddleware implements MiddlewareInterface
     private UserAuth $userAuth;
     private SessionInterface $session;
     private ?string $basePath;
+    private Config $config;
 
-    public function __construct(UserAuth $userAuth, SessionInterface $session)
+    public function __construct(UserAuth $userAuth, SessionInterface $session, Config $config)
     {
         $this->userAuth = $userAuth;
         $this->session = $session;
-
-        FileConfig::open(CONFIG_FILE);
-        $this->basePath = FileConfig::get_Value('basepath') ?? null;
+        $this->config = $config;
+        $this->basePath = $config->get('basepath', null);
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        FileConfig::open(CONFIG_FILE);
-
         if ($request->getMethod() == 'GET') {
-            if ($this->session->get('user_authenticated') === 'yes' || !FileConfig::get_Value('enable_users_auth')) {
+            if ($this->config->get('enable_users_auth') === false) {
                 $response = new Response();
                 return $response
                     ->withHeader('Location', $this->basePath . '/')
                     ->withStatus(302);
+            } else {
+                if ($this->session->get('user_authenticated') === 'yes') {
+                    $response = new Response();
+                    return $response
+                        ->withHeader('Location', $this->basePath . '/')
+                        ->withStatus(302);
+                }
             }
         }
 

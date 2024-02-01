@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Libs\FileConfig;
+use App\Libs\Config;
 use Core\Db\CDBQuery;
 use Core\Db\DBPagination;
 use Core\Exception\ConfigFileException;
@@ -44,23 +44,25 @@ class VolumesController
     private PoolTable $poolTable;
 
     private Twig $view;
+    private Config $config;
 
     public function __construct(
         VolumeTable $volumeTable,
         PoolTable $poolTable,
-        Twig $view
-    ) 
+        Twig $view,
+        Config $config
+    )
     {
         $this->volumeTable = $volumeTable;
         $this->poolTable = $poolTable;
         $this->view = $view;
+        $this->config = $config;
     }
 
     /**
      * @param Request $request
      * @param Response $response
      * @return Response
-     * @throws ConfigFileException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -139,6 +141,7 @@ class VolumesController
         if (isset($postData['filter_orderby_asc'])) {
             $volumeOrderByDirection = 'Asc';
         }
+
         if ($volumeOrderByDirection === 'Asc') {
             $tplData['orderby_asc_checked'] = 'checked';
         } else {
@@ -169,7 +172,7 @@ class VolumesController
             'Pool.Name AS pool_name'
         ];
 
-        $pagination = new DBPagination($request);
+        $pagination = new DBPagination($request, $this->config);
 
         $sqlQuery = CDBQuery::get_Select(array('table' => $this->volumeTable->getTableName(),
                                             'fields' => $fields,
@@ -195,9 +198,14 @@ class VolumesController
                 // Calculate expiration date only if volume status is Full or Used
                 if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
                     $dh = new Date_HumanDiff();
-                    $dateTimeFormatShort = explode(' ', FileConfig::get_Value('datetime_format'));
-                    $volume['expire'] = date($dateTimeFormatShort[0],strtotime($volume['lastwritten']) + $volume['volretention']);
-                    $volume['expire'] = $dh->get(strtotime($volume['lastwritten']) + $volume['volretention'], time()) . ' (' . $volume['expire'] . ')';
+                    $dateTimeFormatShort = explode(' ', $this->config->get('datetime_format', 'Y-m-d H:i:s'));
+                    $volume['expire'] = date(
+                        $dateTimeFormatShort[0],
+                        strtotime($volume['lastwritten']) + $volume['volretention']
+                    );
+                    $volume['expire'] = $dh->get(
+                        strtotime($volume['lastwritten']) + $volume['volretention'],
+                        time()) . ' (' . $volume['expire'] . ')';
                 } else {
                     $volume['expire'] = 'n/a';
                 }
@@ -211,7 +219,7 @@ class VolumesController
             } else {
                 // Format lastwritten in custom format if defined in config file
                 $volume['lastwritten'] = date(
-                    FileConfig::get_Value('datetime_format'),
+                    $this->config->get('datetime_format', 'Y-m-d H:i:s'),
                     strtotime($volume['lastwritten'])
                 );
             }

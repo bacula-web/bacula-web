@@ -23,8 +23,8 @@ namespace App\Controller;
 
 namespace App\Controller;
 
+use App\Libs\Config;
 use Core\Db\DatabaseFactory;
-use App\Libs\FileConfig;
 use App\Table\ClientTable;
 use App\Table\JobTable;
 use App\Table\CatalogTable;
@@ -47,11 +47,13 @@ class DirectorController
 {
     private Twig $view;
     private SessionInterface $session;
+    private Config $config;
 
-    public function __construct(Twig $view, SessionInterface $session)
+    public function __construct(Twig $view, SessionInterface $session, Config $config)
     {
         $this->view = $view;
         $this->session = $session;
+        $this->config = $config;
     }
 
     /**
@@ -72,56 +74,50 @@ class DirectorController
             NOW
         ];
 
-        $directors = [];
-
         // Save catalog_id from user session
         $prev_catalog_id = $this->session->get('catalog_id') ?? 0;
 
-        FileConfig::open(CONFIG_FILE);
-        $directors_count = FileConfig::count_Catalogs();
+        $directors = $this->config->getArrays();
+        $directors_count = count($directors);
 
         $tplData['directors_count'] = $directors_count;
 
-        for ($d = 0; $d < $directors_count; $d++) {
-            $this->session->set('catalog_id', $d);
+        foreach ($directors as $id => $director) {
+            $this->session->set('catalog_id', $id);
 
-            $host = FileConfig::get_Value('host', $d);
-            $db_user = FileConfig::get_Value('login', $d);
-            $db_name = FileConfig::get_Value('db_name', $d);
-            $db_type = FileConfig::get_Value('db_type', $d);
+            $host = $director['host'];
+            $db_user = $director['login'];
+            $db_name = $director['db_name'];
+            $db_type = $director['db_type'];
             $description = "Bacula catalog on host $host, database: $db_name ($db_type) with user $db_user";
 
             try {
-                $clients = new ClientTable(DatabaseFactory::getDatabase($d));
-                $jobs = new JobTable(DatabaseFactory::getDatabase($d));
-                $catalog = new CatalogTable(DatabaseFactory::getDatabase($d));
-                $volumes = new VolumeTable(DatabaseFactory::getDatabase($d));
-                $pools = new PoolTable(DatabaseFactory::getDatabase($d));
-                $filesets = new FileSetTable(DatabaseFactory::getDatabase($d));
+                $clients = new ClientTable(DatabaseFactory::getDatabase($id));
+                $jobs = new JobTable(DatabaseFactory::getDatabase($id));
+                $catalog = new CatalogTable(DatabaseFactory::getDatabase($id));
+                $volumes = new VolumeTable(DatabaseFactory::getDatabase($id));
+                $pools = new PoolTable(DatabaseFactory::getDatabase($id));
+                $filesets = new FileSetTable(DatabaseFactory::getDatabase($id));
+
+                $directors[$id] = [
+                    'label' => $director['label'],
+                    'clients' => $clients->count(),
+                    'jobs' => $jobs->count_Job_Names(),
+                    'totalbytes' => CUtils::Get_Human_Size($jobs->getStoredBytes($no_period)),
+                    'totalfiles' => CUtils::format_Number($jobs->getStoredFiles($no_period)),
+                    'dbsize' => $catalog->get_Size($director['db_name'], $id),
+                    'volumes' => $volumes->count(),
+                    'volumesize' => CUtils::Get_Human_Size($volumes->getDiskUsage()),
+                    'pools' => $pools->count(),
+                    'filesets' => $filesets->count(),
+                    'description' => $description
+                ];
             } catch(PDOException $exception) {
-                $directors[$d]['label'] = FileConfig::get_Value('label', $d);
-                $directors[$d]['description'] = $description;
-                $directors[$d]['error'] = $exception->getMessage();
-
+                $directors[$id]['error'] = $exception->getMessage();
                 $this->session->set('catalog_id', $prev_catalog_id);
-
                 continue;
             }
 
-            $directors[] = array('label' => FileConfig::get_Value('label', $d),
-                'description' => $description,
-                'clients' => $clients->count(),
-                'jobs' => $jobs->count_Job_Names(),
-                'totalbytes' => CUtils::Get_Human_Size($jobs->getStoredBytes($no_period)),
-                'totalfiles' => CUtils::format_Number($jobs->getStoredFiles($no_period)),
-                'dbsize' => $catalog->get_Size($d),
-                'volumes' => $volumes->count(),
-                'volumesize' => CUtils::Get_Human_Size($volumes->getDiskUsage()),
-                'pools' => $pools->count(),
-                'filesets' => $filesets->count()
-            );
-
-            // Destroy CatalogTable object
             unset($clients);
             unset($jobs);
             unset($catalog);

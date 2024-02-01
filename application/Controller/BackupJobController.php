@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Libs\FileConfig;
+use App\Libs\Config;
 use App\Table\JobTable;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
@@ -49,13 +49,15 @@ class BackupJobController
      */
     private ?string $basePath;
 
-    public function __construct(Twig $view, JobTable $jobTable, SessionInterface $session) {
+    private Config $config;
+
+    public function __construct(Twig $view, JobTable $jobTable, SessionInterface $session, Config $config) {
         $this->view = $view;
         $this->jobTable = $jobTable;
         $this->session = $session;
+        $this->config = $config;
 
-        FileConfig::open(CONFIG_FILE);
-        $this->basePath = FileConfig::get_Value('basepath') ?? null;
+        $this->basePath = $this->config->get('basepath', null);
     }
 
     /**
@@ -142,12 +144,7 @@ class BackupJobController
 
             $perioddesc = 'From ';
 
-            $datetimeFormatShort = FileConfig::get_Value('datetime_format_short') ?? null;
-
-            if (is_null($datetimeFormatShort)) {
-                $datetimeFormatShort = explode(' ', FileConfig::get_Value('datetime_format'));
-                $datetimeFormatShort = $datetimeFormatShort[0];
-            }
+            $datetimeFormatShort = $this->config->get('datetime_format_short', 'Y-m-d');
 
             switch ($backupjob_period) {
                 case '7':
@@ -279,8 +276,15 @@ class BackupJobController
                 $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
 
                 // Format date/time
-                $job['starttime'] = date(FileConfig::get_Value('datetime_format'), strtotime($job['starttime']));
-                $job['endtime'] = date(FileConfig::get_Value('datetime_format'), strtotime($job['endtime']));
+                $job['starttime'] = date(
+                    $this->config->get('datetime_format', 'Y-m-d H:i:s'),
+                    strtotime($job['starttime'])
+                );
+
+                $job['endtime'] = date(
+                    $this->config->get('datetime_format', 'Y-m-d H:i:s'),
+                    strtotime($job['endtime'])
+                );
 
                 $joblist[] = $job;
             } // end while

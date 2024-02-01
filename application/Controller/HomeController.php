@@ -20,7 +20,7 @@
 
 namespace App\Controller;
 
-use App\Libs\FileConfig;
+use App\Libs\Config;
 use App\Table\JobTable;
 use App\Table\PoolTable;
 use App\Table\VolumeTable;
@@ -45,19 +45,22 @@ class HomeController
     private PoolTable $poolTable;
     private VolumeTable $volumeTable;
     private SessionInterface $session;
+    private Config $config;
 
 
     public function __construct(
         JobTable    $jobTable,
         PoolTable   $poolTable,
         VolumeTable $volumeTable,
-        SessionInterface $session
+        SessionInterface $session,
+        Config $config
     )
     {
         $this->jobTable = $jobTable;
         $this->poolTable = $poolTable;
         $this->volumeTable = $volumeTable;
         $this->session = $session;
+        $this->config = $config;
     }
 
     /**
@@ -262,9 +265,11 @@ class HomeController
 
         foreach ($result as $volume) {
             if ($volume['lastwritten'] != '0000-00-00 00:00:00' && !is_null($volume['lastwritten'])) {
-                $volume['lastwritten'] = date(FileConfig::get_Value('datetime_format'), strtotime($volume['lastwritten']));
-                //$volume['lastwritten'] = date($this->session->get('datetime_format'), strtotime($volume['lastwritten']));
-                //$volume['lastwritten'] = date($_SESSION['datetime_format'], strtotime($volume['lastwritten']));
+
+                $volume['lastwritten'] = date(
+                    $this->config->get('datetime_format', 'Y-m-d H:i:s'),
+                    strtotime($volume['lastwritten'])
+                );
             } else {
                 $volume['lastwritten'] = 'n/a';
             }

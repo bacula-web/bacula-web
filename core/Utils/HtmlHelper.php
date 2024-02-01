@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2018-present Davide Franco
  *
@@ -19,9 +17,9 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace Core\Utils;
+declare(strict_types=1);
 
-use App\Libs\FileConfig;
+namespace Core\Utils;
 
 class HtmlHelper
 {
