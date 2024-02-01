@@ -89,7 +89,7 @@ or use the test page https://bacula-web-url/test
 
 The best way to get help or ask a question is to submit a bug report using [GitHub project issues](https://github.com/bacula-web/bacula-web/issues).
 
-> Before submitting any issues, please have a look at the [Bugs and feature request guide](https://docs.bacula-web.org/en/latest/03_gethelp/support.html)
+> Before submitting any issues, please have a look at the [Bugs and feature request guide](https://docs.bacula-web.org/en/latest/03_get-help/support.html)
 
 For general questions or feedbacks, you can use [GitHub discussions](https://github.com/bacula-web/bacula-web/discussions)
 
