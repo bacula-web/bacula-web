@@ -60,6 +60,14 @@ class SetupAuthCommand extends Command
         $answer = $helper->ask($input, $output, $question);
         $output->writeln('You have selected: ' . $answer );
 
+        if ($answer !== 'yes') {
+            $errorMessages = ['Aborted', 'Auth database creation canceled by user, exiting.'];
+            $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
+            $output->writeln($formattedBlock);
+
+            return Command::INVALID;
+        }
+
         $output->writeln('Deleting users authentication database');
 
         if (file_exists('application/assets/protected/application.db')) {
