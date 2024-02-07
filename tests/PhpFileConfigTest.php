@@ -1,6 +1,6 @@
 <?php
 
-namespace Libs;
+namespace App\Tests;
 
 use App\Libs\PhpFileConfig;
 use Core\Exception\ConfigFileException;

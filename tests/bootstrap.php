@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-present Davide Franco
+ * Copyright (C) 2024-present Davide Franco
  *
  * This file is part of Bacula-Web.
  *

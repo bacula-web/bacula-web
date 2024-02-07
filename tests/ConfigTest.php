@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace App\Tests;
+
 use Core\Exception\ConfigFileException;
 use PHPUnit\Framework\TestCase;
 use App\Libs\Config;
@@ -70,6 +72,9 @@ final class ConfigTest extends TestCase
         $this->assertIsInt($this->config->write($this::CONFIG_FILE));
     }
 
+    /**
+     * @throws ConfigFileException
+     */
     public function testWriteWithSet()
     {
         $this->config->set('user', 'Bob');

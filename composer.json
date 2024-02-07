@@ -76,6 +76,11 @@
       "core/Helpers/request.php"
     ]
   },
+  "autoload-dev": {
+    "psr-4": {
+      "App\\Tests\\": "tests/"
+    }
+  },
   "scripts": {
     "post-install-cmd": [
       "php bwc publishAssets"

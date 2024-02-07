@@ -1,4 +1,8 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+namespace App\Tests;
 
 use Core\Utils\DateTimeUtil;
 use PHPUnit\Framework\TestCase;
