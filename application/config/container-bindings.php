@@ -20,7 +20,6 @@
 declare(strict_types=1);
 
 use App\CsrfErrorHandler;
-use App\Entity\Log;
 use App\Libs\Config;
 use App\Libs\PhpFileConfig;
 use App\Table\CatalogTable;

@@ -21,6 +21,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Libs\Config;
 use Core\Utils\CUtils;
 use App\Table\PoolTable;
 use Exception;
@@ -35,13 +36,15 @@ class PoolController
      */
 
     private PoolTable $poolTable;
+    private Config $config;
 
     /**
      * @param PoolTable $poolTable
      */
-    public function __construct(PoolTable $poolTable)
+    public function __construct(PoolTable $poolTable, Config $config)
     {
         $this->poolTable = $poolTable;
+        $this->config = $config;
     }
 
     /**
@@ -58,7 +61,7 @@ class PoolController
         $pools_list = [];
 
         // Add more details to each pool
-        foreach ($this->poolTable->getPools() as $pool) {
+        foreach ($this->poolTable->getPools($this->config->get('hide_empty_pools')) as $pool) {
             // Total bytes for each pool
             $sql = "SELECT SUM(Media.volbytes) as sumbytes FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
             $result = $this->poolTable->run_query($sql);

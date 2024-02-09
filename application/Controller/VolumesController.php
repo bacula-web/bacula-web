@@ -24,7 +24,6 @@ namespace App\Controller;
 use App\Libs\Config;
 use Core\Db\CDBQuery;
 use Core\Db\DBPagination;
-use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
 use App\Table\VolumeTable;
 use App\Table\PoolTable;
@@ -94,7 +93,7 @@ class VolumesController
         $poolslist = [];
 
         // Create poolTable list
-        foreach ($this->poolTable->getPools() as $pool) {
+        foreach ($this->poolTable->getPools($this->config->get('hide_empty_pools')) as $pool) {
             $poolslist[$pool['poolid']] = $pool['name'];
         }
 

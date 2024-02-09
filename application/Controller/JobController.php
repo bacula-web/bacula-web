@@ -234,7 +234,7 @@ class JobController
         }
 
         // Clients list filter
-        $clients_list = $this->clientTable->getClients();
+        $clients_list = $this->clientTable->getClients($this->config->get('show_inactive_clients'));
         $clients_list[0] = 'Any';
         $tplData['clients_list'] = $clients_list;
 
@@ -243,7 +243,7 @@ class JobController
          */
         $pools_list = [];
 
-        foreach ($this->poolTable->getPools() as $pool) {
+        foreach ($this->poolTable->getPools($this->config->get('hide_empty_pools')) as $pool) {
             $pools_list[$pool['poolid']] = $pool['name'];
         }
 

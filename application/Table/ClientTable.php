@@ -21,7 +21,6 @@ namespace App\Table;
 
 use Core\Db\Table;
 use Core\Db\CDBQuery;
-use App\Libs\FileConfig;
 use Core\Exception\ConfigFileException;
 
 class ClientTable extends Table
@@ -29,10 +28,10 @@ class ClientTable extends Table
     protected ?string $tablename = 'Client';
 
     /**
+     * @param bool $showInactiveClients
      * @return array
-     * @throws ConfigFileException
      */
-    public function getClients(): array
+    public function getClients(bool $showInactiveClients = true): array
     {
         $clients    = [];
         $fields     = ['ClientId, Name'];
@@ -40,7 +39,7 @@ class ClientTable extends Table
 
         $statment     = ['table' => $this->tablename, 'fields' => $fields, 'orderby' => $orderby];
 
-        if (FileConfig::get_Value('show_inactive_clients') != null) {
+        if ($showInactiveClients) {
             $statment['where'] = "FileRetention > '0' AND JobRetention > '0' ";
         }
 

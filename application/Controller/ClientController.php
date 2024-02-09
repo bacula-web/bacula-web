@@ -50,6 +50,7 @@ class ClientController
      * @param Twig $view
      * @param JobTable $jobTable
      * @param ClientTable $clientTable
+     * @param Config $config
      */
     public function __construct(Twig $view, JobTable $jobTable, ClientTable $clientTable, Config $config)
     {
@@ -79,7 +80,7 @@ class ClientController
         $days_stored_files = array();
 
         // Clients list
-        $tplData['clients_list'] = $this->clientTable->getClients();
+        $tplData['clients_list'] = $this->clientTable->getClients($this->config->get('show_inactive_clients'));
 
         // Period list
         $periods_list = [

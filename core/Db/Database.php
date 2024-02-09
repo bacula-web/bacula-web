@@ -23,6 +23,7 @@ namespace Core\Db;
 
 use App\Libs\FileConfig;
 use Core\App\CErrorHandler;
+use Core\Exception\ConfigFileException;
 use PDO;
 
 class Database
@@ -38,8 +39,8 @@ class Database
     private $driver;
 
     /**
-     * @param int $catalogId
-     * @throws \Exception
+     * @param int|null $catalogId
+     * @throws ConfigFileException
      */
     public function __construct(int $catalogId = null)
     {

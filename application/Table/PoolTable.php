@@ -23,7 +23,6 @@ namespace App\Table;
 
 use Core\Db\Table;
 use Core\Db\CDBQuery;
-use App\Libs\FileConfig;
 use Exception;
 
 class PoolTable extends Table
@@ -31,15 +30,16 @@ class PoolTable extends Table
     protected ?string $tablename = 'Pool';
 
     /**
+     * @var bool $hideEmptyPools
      * @return mixed
      * @throws Exception
      */
-    public function getPools()
+    public function getPools(bool $hideEmptyPools = true)
     {
         $where    = null;
         $orderby  = 'Name';
 
-        if (FileConfig::get_Value('hide_empty_pools')) {
+        if ($hideEmptyPools) {
             $where[] = "$this->tablename.NumVols > 0";
         }
 
