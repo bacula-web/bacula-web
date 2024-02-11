@@ -44,7 +44,7 @@ class PhpFileConfig
             }
         } catch (ConfigFileException $e)
         {
-            throw new ConfigFileException('PHP config file {$phpConfigFile} does not exists or is not readable');
+            throw new ConfigFileException("PHP config file {$phpConfigFile} does not exists or is not readable");
         }
     }
 }
