@@ -138,7 +138,7 @@ return ['settings' => [
         $translator->setLocale($locale);
         $translator->setFallbackLocales(['en_US']);
 
-        $translationFile = __DIR__ . "/../locale/$locale/LC_MESSAGES/messages.mo";
+        $translationFile = LOCALE_DIR . "/$locale/LC_MESSAGES/messages.mo";
         $translator->addResource('mo', $translationFile, $locale);
 
         return $translator;
