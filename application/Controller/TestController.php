@@ -92,7 +92,7 @@ class TestController
                     'check_descr' => 'Current status: ' . $this->catalogTable->getConnectionStatus() ),
             array(  'check_cmd' => 'twig-cache',
                     'check_label' => 'Twig cache folder write permission',
-                    'check_descr' =>  BW_ROOT . '/application/views/cache' . ' must be writable by Apache'),
+                    'check_descr' =>  TPL_CACHE . ' must be writable by Apache'),
             array(  'check_cmd' => 'users-db',
                     'check_label' => 'Protected assets folder write permission',
                     'check_descr' => 'application/assets/protected folder must be writable by Apache'),
@@ -129,7 +129,7 @@ class TestController
                     $check['check_result'] = $icon_result[function_exists('posix_getpwuid')];
                     break;
                 case 'twig-cache':
-                    $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/views/cache')];
+                    $check['check_result'] = $icon_result[is_writable(TPL_CACHE)];
                     break;
                 case 'users-db':
                     $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/assets/protected')];

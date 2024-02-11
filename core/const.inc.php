@@ -25,6 +25,9 @@ use Core\Db\DatabaseFactory;
 const CONFIG_DIR = BW_ROOT . 'application/config/';
 const CONFIG_FILE = CONFIG_DIR . 'config.php';
 
+const TPL_DIR = BW_ROOT . 'application/views/templates';
+const TPL_CACHE = BW_ROOT . 'application/view/cache';
+
 // Locales
 const LOCALE_DIR = BW_ROOT . 'application/locale';
 

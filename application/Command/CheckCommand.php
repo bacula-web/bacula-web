@@ -120,7 +120,7 @@ class CheckCommand extends Command
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         }
         $output->writeln($formattedBlock);
-        $output->writeln(['[Info] Folder <options=bold>/application/views/cache</> must be writable by web server user', '']);
+        $output->writeln(['[Info] Folder <options=bold>' . TPL_CACHE . '</> must be writable by web server user', '']);
 
         // List available PHP PDO drivers
         $output->writeln(

@@ -92,7 +92,7 @@ return ['settings' => [
         ContainerInterface $container,
         SessionInterface   $session,
         Config             $config) {
-        $twig = Twig::create(BW_ROOT . '/application/views/templates', ['cache' => false]);
+        $twig = Twig::create(TPL_DIR, ['cache' => false]);
 
         $twig->addExtension(new DebugExtension());
 
