@@ -46,6 +46,7 @@ class HomeController
     private VolumeTable $volumeTable;
     private SessionInterface $session;
     private Config $config;
+    private Twig $view;
 
 
     public function __construct(
@@ -53,7 +54,8 @@ class HomeController
         PoolTable   $poolTable,
         VolumeTable $volumeTable,
         SessionInterface $session,
-        Config $config
+        Config $config,
+        Twig $view
     )
     {
         $this->jobTable = $jobTable;
@@ -61,6 +63,7 @@ class HomeController
         $this->volumeTable = $volumeTable;
         $this->session = $session;
         $this->config = $config;
+        $this->view = $view;
     }
 
     /**
@@ -75,7 +78,6 @@ class HomeController
      */
     public function prepare(Request $request, Response $response): Response
     {
-        $view = Twig::fromRequest($request);
         $tplData = [];
 
         $selectedPeriod = 'last_day';
@@ -314,6 +316,6 @@ class HomeController
         // 10 biggest completed backup jobTable
         $tplData['biggestjobs'] = $this->jobTable->getBiggestJobsStats();
 
-        return $view->render($response, 'pages/dashboard.html.twig', $tplData);
+        return $this->view->render($response, 'pages/dashboard.html.twig', $tplData);
     }
 }
