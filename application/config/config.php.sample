@@ -48,6 +48,7 @@ $config['debug'] = false;
 // Translations
 $config['language'] = 'en_US';
 
+// en_GB -> English (United Kingdom)
 // be_BY -> Belarusian
 // ca_ES -> Catalan
 // de_DE -> German

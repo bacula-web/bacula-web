@@ -80,9 +80,9 @@ language
 As Bacula-Web is translated into not less than 15 languages, the language setting allow you to change the displayed 
 language of Bacula-Web.
 
-You can simply change from english to your language by modifying the $config['language'] value.
+You can simply change from the default english (en_US), to your language by setting the $config['language'] parameter value.
 
-**Example** 
+**Example**
 
 ::
 
