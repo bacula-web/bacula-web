@@ -98,6 +98,6 @@ Restart Nginx to apply configuration changes
 
 Once your web server is ready, you can proceed with Bacula-Web installation.
 
-You have now two different options
+Proceed with installation using Composer
 
    * Install :ref:`using Composer<install/installcomposer>`
