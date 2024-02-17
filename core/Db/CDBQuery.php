@@ -21,6 +21,8 @@ declare(strict_types=1);
 
 namespace Core\Db;
 
+use DateTimeImmutable;
+use Exception;
 use TypeError;
 
 class CDBQuery
@@ -126,18 +128,25 @@ class CDBQuery
      * @param string $driver
      * @param [] $period_timestamp
      * @return array
+     * @throws Exception
      */
     public static function get_Timestamp_Interval(string $driver, $period_timestamp = []): array
     {
         $period = [];
         $dateformat = 'Y-m-d H:i:s';
 
+        $start = new DateTimeImmutable('@'.strval($period_timestamp[0]));
+        $formattedStartTime = $start->format($dateformat);
+
+        $end = new DateTimeImmutable('@'.strval($period_timestamp[1]));
+        $formattedEndTime = $end->format($dateformat);
+
         if ($driver === 'pgsql') {
-            $period['starttime'] = "TIMESTAMP '" . date($dateformat, $period_timestamp[0]) . "'";
-            $period['endtime'] = "TIMESTAMP '" . date($dateformat, $period_timestamp[1]) . "'";
+            $period['starttime'] = "TIMESTAMP '" . $formattedStartTime . "'";
+            $period['endtime'] = "TIMESTAMP '" . $formattedEndTime . "'";
         } else {
-            $period['starttime'] = "'" . date($dateformat, $period_timestamp[0]) . "'";
-            $period['endtime'] = "'" . date($dateformat, $period_timestamp[1]) . "'";
+            $period['starttime'] = "'" . $formattedStartTime . "'";
+            $period['endtime'] = "'" . $formattedEndTime . "'";
         }
 
         return $period;

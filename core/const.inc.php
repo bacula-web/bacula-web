@@ -19,8 +19,6 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-use Core\Db\DatabaseFactory;
-
 // Configuration
 const CONFIG_DIR = BW_ROOT . 'application/config/';
 const CONFIG_FILE = CONFIG_DIR . 'config.php';
@@ -32,39 +30,33 @@ const TPL_CACHE = BW_ROOT . 'application/view/cache';
 const LOCALE_DIR = BW_ROOT . 'application/locale';
 
 // Time intervals in secondes
- define('NOW', (DatabaseFactory::getDatabase())->getServerTimestamp());
- define('FIRST_DAY', mktime(0, 0, 0, 1, 1, 1970));
- define('DAY', 86400);
- define('WEEK', 7 * DAY);
- define('MONTH', 4 * WEEK);
+define('FIRST_DAY', mktime(0, 0, 0, 1, 1, 1970));
+define('DAY', 86400);
+define('WEEK', 7 * DAY);
+define('MONTH', 4 * WEEK);
 
- // Timestamp constants
- define('LAST_DAY', NOW - DAY);
- define('LAST_WEEK', NOW - (7 * DAY));
- define('LAST_MONTH', NOW - (4 * WEEK));
+// Job status code
+define('J_NOT_RUNNING', 'C');
+define('J_RUNNING', 'R');
+define('J_BLOCKED', 'B');
+define('J_COMPLETED', 'T');
+define('J_COMPLETED_ERROR', 'E');
+define('J_NO_FATAL_ERROR', 'e');
+define('J_FATAL', 'f');
+define('J_CANCELED', 'A');
+define('J_WAITING_CLIENT', 'F');
+define('J_WAITING_SD', 'S');
+define('J_WAITING_NEW_MEDIA', 'm');
+define('J_WAITING_MOUNT_MEDIA', 'M');
+define('J_WAITING_STORAGE_RES', 's');
+define('J_WAITING_JOB_RES', 'j');
+define('J_WAITING_CLIENT_RES', 'c');
+define('J_WAITING_MAX_JOBS', 'd');
+define('J_WAITING_START_TIME', 't');
+define('J_WAITING_HIGH_PR_JOB', 'p');
+define('J_VERIFY_FOUND_DIFFERENCES', 'D');
 
- // Job status code
- define('J_NOT_RUNNING', 'C');
- define('J_RUNNING', 'R');
- define('J_BLOCKED', 'B');
- define('J_COMPLETED', 'T');
- define('J_COMPLETED_ERROR', 'E');
- define('J_NO_FATAL_ERROR', 'e');
- define('J_FATAL', 'f');
- define('J_CANCELED', 'A');
- define('J_WAITING_CLIENT', 'F');
- define('J_WAITING_SD', 'S');
- define('J_WAITING_NEW_MEDIA', 'm');
- define('J_WAITING_MOUNT_MEDIA', 'M');
- define('J_WAITING_STORAGE_RES', 's');
- define('J_WAITING_JOB_RES', 'j');
- define('J_WAITING_CLIENT_RES', 'c');
- define('J_WAITING_MAX_JOBS', 'd');
- define('J_WAITING_START_TIME', 't');
- define('J_WAITING_HIGH_PR_JOB', 'p');
- define('J_VERIFY_FOUND_DIFFERENCES', 'D');
-
- // Job levels
- define('J_FULL', 'F');
- define('J_DIFF', 'D');
- define('J_INCR', 'I');
+// Job levels
+define('J_FULL', 'F');
+define('J_DIFF', 'D');
+define('J_INCR', 'I');

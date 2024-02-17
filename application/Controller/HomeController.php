@@ -24,11 +24,12 @@ use App\Libs\Config;
 use App\Table\JobTable;
 use App\Table\PoolTable;
 use App\Table\VolumeTable;
+use Core\Db\DatabaseFactory;
+use Exception;
 use Odan\Session\SessionInterface;
 use Slim\Views\Twig;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
-use Core\Exception\ConfigFileException;
 use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
@@ -50,12 +51,12 @@ class HomeController
 
 
     public function __construct(
-        JobTable    $jobTable,
-        PoolTable   $poolTable,
-        VolumeTable $volumeTable,
+        JobTable         $jobTable,
+        PoolTable        $poolTable,
+        VolumeTable      $volumeTable,
         SessionInterface $session,
-        Config $config,
-        Twig $view
+        Config           $config,
+        Twig             $view
     )
     {
         $this->jobTable = $jobTable;
@@ -71,10 +72,10 @@ class HomeController
      * @param Response $response
      * @return Response
      * @throws AppException
-     * @throws ConfigFileException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws Exception
      */
     public function prepare(Request $request, Response $response): Response
     {
@@ -82,7 +83,7 @@ class HomeController
 
         $selectedPeriod = 'last_day';
         $postData = $request->getParsedBody();
-        if ( isset($postData['period_selector'])) {
+        if (isset($postData['period_selector'])) {
             $selectedPeriod = Sanitizer::sanitize($postData['period_selector']);
         }
 
@@ -96,21 +97,29 @@ class HomeController
         ];
 
         // Custom period for dashboard
-        $no_period = [FIRST_DAY, NOW];
-        $last_day = [LAST_DAY, NOW];
+        $currentDateTime = DatabaseFactory::getDatabase($this->session->get('catalog_id'))->getServerTimestamp();
+
+        $no_period = [
+            FIRST_DAY, $currentDateTime
+        ];
+        $last_day = [
+            $currentDateTime - DAY, $currentDateTime
+        ];
 
         // Default period (last day)
         $custom_period = $last_day;
 
         switch ($selectedPeriod) {
             case 'last_day':
-                $custom_period = [LAST_DAY, NOW];
+                $custom_period = [
+                    $currentDateTime - DAY, $currentDateTime
+                ];
                 break;
             case 'last_week':
-                $custom_period = [LAST_WEEK, NOW];
+                $custom_period = [$currentDateTime - WEEK, $currentDateTime];
                 break;
             case 'last_month':
-                $custom_period = [LAST_MONTH, NOW];
+                $custom_period = [$currentDateTime - MONTH, $currentDateTime];
                 break;
             case 'since_bot':
                 $custom_period = $no_period;
@@ -202,7 +211,7 @@ class HomeController
         // Last 7 days stored Bytes widget
         // ==============================================================
         $days_stored_bytes = array();
-        $days = DateTimeUtil::getLastDaysIntervals(7);
+        $days = DateTimeUtil::getLastDaysIntervals($currentDateTime, 7);
 
         foreach ($days as $day) {
             $days_stored_bytes[] = array(date("m-d", $day['start']), $this->jobTable->getStoredBytes(array($day['start'], $day['end'])));
@@ -219,7 +228,7 @@ class HomeController
         // Last 7 days Stored Files widget
         // ==============================================================
         $days_stored_files = array();
-        $days = DateTimeUtil::getLastDaysIntervals(7);
+        $days = DateTimeUtil::getLastDaysIntervals($currentDateTime, 7);
 
         foreach ($days as $day) {
             $days_stored_files[] = array(date("m-d", $day['start']), $this->jobTable->getStoredFiles(array($day['start'], $day['end'])));

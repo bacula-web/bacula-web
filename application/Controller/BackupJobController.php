@@ -24,12 +24,14 @@ namespace App\Controller;
 use App\Libs\Config;
 use App\Table\JobTable;
 use Core\Db\CDBQuery;
+use Core\Db\DatabaseFactory;
 use Core\Exception\AppException;
 use Core\Exception\ConfigFileException;
 use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
+use Exception;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
@@ -51,7 +53,8 @@ class BackupJobController
 
     private Config $config;
 
-    public function __construct(Twig $view, JobTable $jobTable, SessionInterface $session, Config $config) {
+    public function __construct(Twig $view, JobTable $jobTable, SessionInterface $session, Config $config)
+    {
         $this->view = $view;
         $this->jobTable = $jobTable;
         $this->session = $session;
@@ -69,13 +72,13 @@ class BackupJobController
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws Exception
      */
     public function index(Request $request, Response $response): Response
     {
         $tplData = [];
-
-        $interval = array();
-        $interval[1] = NOW;
+        $currentDateTime = DatabaseFactory::getDatabase($this->session->get('catalog_id'))->getServerTimestamp();
+        $interval[1] = $currentDateTime;
 
         $daysstoredbytes = [];
         $daysstoredfiles = [];
@@ -148,20 +151,25 @@ class BackupJobController
 
             switch ($backupjob_period) {
                 case '7':
-                    $perioddesc .= date( $datetimeFormatShort, (NOW - WEEK)) . " to " . date( $datetimeFormatShort, NOW);
-                    $interval[0] = NOW - WEEK;
+                    $start = new \DateTimeImmutable('@' . $currentDateTime - WEEK);
+                    $end = new \DateTimeImmutable('@' . $currentDateTime);
+                    $interval[0] = $currentDateTime - WEEK;
                     break;
                 case '14':
-                    $perioddesc .= date( $datetimeFormatShort, (NOW - (2 * WEEK))) . " to " . date( $datetimeFormatShort, NOW);
-                    $interval[0] = NOW - (2 * WEEK);
+                    $start = new \DateTimeImmutable('@' . $currentDateTime - (2 * WEEK));
+                    $end = new \DateTimeImmutable('@' . $currentDateTime);
+                    $interval[0] = $currentDateTime - (2 * WEEK);
                     break;
                 case '30':
-                    $perioddesc .= date($datetimeFormatShort, (NOW - MONTH)) . " to " . date($datetimeFormatShort, NOW);
-                    $interval[0] = NOW - MONTH;
+                    $start = new \DateTimeImmutable('@' . $currentDateTime - MONTH);
+                    $end = new \DateTimeImmutable('@' . $currentDateTime);
+                    $interval[0] = $currentDateTime - MONTH;
                     break;
                 default:
                     throw new AppException('Provided backup job period not supported');
             }
+
+            $perioddesc .= $start->format($datetimeFormatShort) . " to " . $end->format($datetimeFormatShort);
 
             // Get start and end datetime for backup jobs report and charts
             $periods = CDBQuery::get_Timestamp_Interval($this->jobTable->get_driver_name(), $interval);
@@ -174,12 +182,15 @@ class BackupJobController
             $backupjobfiles = CUtils::format_Number($backupjobfiles);
 
             // Get the last 7 days interval (start and end)
-            $days = DateTimeUtil::getLastDaysIntervals($backupjob_period);
+            $days = DateTimeUtil::getLastDaysIntervals($interval[1], (int) $backupjob_period);
 
             // Last 7 days stored files chart
             foreach ($days as $day) {
-                $storedfiles = $this->jobTable->getStoredFiles(array($day['start'], $day['end']), $backupjob_name);
-                $daysstoredfiles[] = array(date("m-d", $day['start']), $storedfiles);
+                $storedfiles = $this->jobTable->getStoredFiles([$day['start'], $day['end']], $backupjob_name);
+                $dayStartTime = new \DateTimeImmutable('@' . $day['start']);
+                $daysstoredfiles[] = [
+                    $dayStartTime->format('m-d'), $storedfiles
+                ];
             }
 
             $storedfileschart = new Chart( [
@@ -197,7 +208,10 @@ class BackupJobController
             // Last 7 days stored bytes chart
             foreach ($days as $day) {
                 $storedbytes = $this->jobTable->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
-                $daysstoredbytes[] = array(date("m-d", $day['start']), $storedbytes);
+                $dayStartTime = new \DateTimeImmutable('@' . $day['start']);
+                $daysstoredbytes[] = [
+                    $dayStartTime->format('m-d'), $storedbytes
+                ];
             }
 
             $storedbyteschart = new Chart(
@@ -276,14 +290,14 @@ class BackupJobController
                 $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
 
                 // Format date/time
-                $job['starttime'] = date(
-                    $this->config->get('datetime_format', 'Y-m-d H:i:s'),
-                    strtotime($job['starttime'])
+                $jobStartTime = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $job['starttime']);
+                $job['starttime'] = $jobStartTime->format(
+                    $this->config->get('datetime_format', 'Y-m-d H:i:s')
                 );
 
-                $job['endtime'] = date(
-                    $this->config->get('datetime_format', 'Y-m-d H:i:s'),
-                    strtotime($job['endtime'])
+                $jobEndTime = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $job['endtime']);
+                $job['endtime'] = $jobEndTime->format(
+                    $this->config->get('datetime_format', 'Y-m-d H:i:s')
                 );
 
                 $joblist[] = $job;

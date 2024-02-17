@@ -31,7 +31,6 @@ use App\Table\CatalogTable;
 use App\Table\VolumeTable;
 use App\Table\PoolTable;
 use App\Table\FileSetTable;
-use Core\Exception\ConfigFileException;
 use Core\Utils\CUtils;
 use Odan\Session\SessionInterface;
 use PDOException;
@@ -41,7 +40,6 @@ use GuzzleHttp\Psr7\Response;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-
 
 class DirectorController
 {
@@ -60,7 +58,6 @@ class DirectorController
      * @param Request $request
      * @param Response $response
      * @return Response
-     * @throws ConfigFileException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -68,11 +65,6 @@ class DirectorController
     public function index(Request $request, Response $response): Response
     {
         $tplData = [];
-
-        $no_period = [
-            FIRST_DAY,
-            NOW
-        ];
 
         // Save catalog_id from user session
         $prev_catalog_id = $this->session->get('catalog_id') ?? 0;
@@ -103,8 +95,8 @@ class DirectorController
                     'label' => $director['label'],
                     'clients' => $clients->count(),
                     'jobs' => $jobs->count_Job_Names(),
-                    'totalbytes' => CUtils::Get_Human_Size($jobs->getStoredBytes($no_period)),
-                    'totalfiles' => CUtils::format_Number($jobs->getStoredFiles($no_period)),
+                    'totalbytes' => CUtils::Get_Human_Size($jobs->getStoredBytes()),
+                    'totalfiles' => CUtils::format_Number($jobs->getStoredFiles()),
                     'dbsize' => $catalog->get_Size($director['db_name'], $id),
                     'volumes' => $volumes->count(),
                     'volumesize' => CUtils::Get_Human_Size($volumes->getDiskUsage()),

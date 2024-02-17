@@ -22,8 +22,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Libs\Config;
+use Core\Db\DatabaseFactory;
 use Core\Exception\AppException;
-use Core\Exception\ConfigFileException;
 use Core\Graph\Chart;
 use Core\Db\CDBQuery;
 use Core\Utils\DateTimeUtil;
@@ -31,6 +31,8 @@ use Core\Utils\CUtils;
 use Core\Helpers\Sanitizer;
 use App\Table\JobTable;
 use App\Table\ClientTable;
+use Exception;
+use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use Slim\Views\Twig;
@@ -45,19 +47,22 @@ class ClientController
     private ClientTable $clientTable;
     private Twig $view;
     private Config $config;
+    private SessionInterface $session;
 
     /**
      * @param Twig $view
      * @param JobTable $jobTable
      * @param ClientTable $clientTable
      * @param Config $config
+     * @param SessionInterface $session
      */
-    public function __construct(Twig $view, JobTable $jobTable, ClientTable $clientTable, Config $config)
+    public function __construct(Twig $view, JobTable $jobTable, ClientTable $clientTable, Config $config, SessionInterface $session)
     {
         $this->view = $view;
         $this->jobTable = $jobTable;
         $this->clientTable = $clientTable;
         $this->config = $config;
+        $this->session = $session;
     }
 
     /**
@@ -65,10 +70,10 @@ class ClientController
      * @param Response $response
      * @return Response
      * @throws AppException
-     * @throws ConfigFileException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws Exception
      */
     public function index(Request $request, Response $response): Response
     {
@@ -120,16 +125,17 @@ class ClientController
 
             $tplData['selected_period'] = $period;
             $tplData['selected_client'] = $clientId;
-            /**
-             * Filter jobTable per $this->requested period
-             */
 
             // Get the last n days interval (start and end timestamps)
-            $days = DateTimeUtil::getLastDaysIntervals($period);
+            $currentDateTime = DatabaseFactory::getDatabase($this->session->get('catalog_id'))->getServerTimestamp();
+            $days = DateTimeUtil::getLastDaysIntervals($currentDateTime, $period);
 
             $startTime = date('Y-m-d H:i:s', $days[0]['start']);
             $endTime = date('Y-m-d H:i:s', $days[array_key_last($days)]['end']);
 
+            /**
+             * Filter jobTable per $this->requested period
+             */
             $this->jobTable->addParameter('job_starttime', $startTime);
             $where[] = 'Job.endtime >= :job_starttime';
             $this->jobTable->addParameter('job_endtime', $endTime);
@@ -137,7 +143,7 @@ class ClientController
 
             $tplData['no_report_options'] = 'false';
 
-            // Client informations
+            // Client information
             $client_info  = $this->clientTable->getClientInfos($clientId);
 
             $tplData['client_name'] = $client_info['name'];

@@ -55,10 +55,17 @@ class CatalogSelectorMiddleware implements MiddlewareInterface
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
         /**
+         * Make sure the session has catalog_id set
+         */
+        if (! $this->session->has('catalog_id')) {
+            $this->session->set('catalog_id', 0);
+        }
+
+        /**
          * TODO: check user input here
          */
         $params = $request->getQueryParams();
-        $catalogId = $this->session->get('catalog_id', 0);
+        $catalogId = $this->session->get('catalog_id');
 
         if (isset($params['catalog_id'])) {
             if (array_key_exists($params['catalog_id'], $this->config->getArrays())) {

@@ -106,15 +106,16 @@ class DateTimeUtil
     }
 
     /**
-     * @param $nb_days
+     * @param int $datetime
+     * @param int $nb_days
      * @return array
      */
-    public static function getLastDaysIntervals($nb_days): array
+    public static function getLastDaysIntervals(int $datetime, int $nb_days): array
     {
         $days = [];
 
         for ($d = $nb_days; $d >= 0; $d--) {
-            $today  = NOW - ($d * DAY);
+            $today  = $datetime - ($d * DAY);
             $days[] = self::get_Day_Intervals($today);
         }
         return $days;

@@ -130,8 +130,10 @@ class JobTable extends Table
         }
 
         // Defined period
-        $intervals     = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
-        $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
+        if (!empty($period_timestamps)) {
+            $intervals     = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
+            $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
+        }
 
         if ($job_name != 'ALL') {
             $this->addParameter('jobname', $job_name);
@@ -176,8 +178,10 @@ class JobTable extends Table
         $jobtype  = 'B';
 
         // Defined period
-        $intervals = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
-        $where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
+        if (!empty($period_timestamps)) {
+            $intervals = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
+            $where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
+        }
 
         if ($job_name != 'ALL') {
             $this->addParameter('jobname', $job_name);
