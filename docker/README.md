@@ -27,6 +27,21 @@ docker buildx build --load \
 -f Dockerfile .
 ```
 
+### PHP timezone
+
+PHP timezone is set by default to UTC, to set another timezone run
+
+*Example with timezone America/Los_Angeles*
+
+```shell
+docker buildx build --load \
+--no-cache \
+--platform linux/amd64 \
+--tag baculaweb/bacula-web:latest \
+--build-arg PHP_TZ="America/Los_Angeles" \
+-f Dockerfile .
+```
+
 Clean-up temp source folder
 ```shell
 rm -rf src

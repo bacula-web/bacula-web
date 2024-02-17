@@ -1,6 +1,7 @@
 FROM php:8.1-apache
 
 ARG ENV=production
+ARG PHP_TZ=UTC
 
 RUN apt-get update && \
 apt-get upgrade -y && \
@@ -18,6 +19,9 @@ RUN composer install --prefer-dist --no-dev
 
 RUN mv "$PHP_INI_DIR/php.ini-${ENV}" "$PHP_INI_DIR/php.ini"
 
+# Set PHP date.timezone to UTC
+RUN sed -ri -e "s!;date.timezone =!date.timezone = ${PHP_TZ}!g" "$PHP_INI_DIR/php.ini"
+
 COPY config/apache-vhost.config /etc/apache2/sites-enabled/000-default.conf
 
 # locales
@@ -27,6 +31,7 @@ RUN apt-get install -y gettext locales && \
     echo 'de_DE.UTF-8 UTF-8' >> /etc/locale.gen && \
     echo 'es_ES.UTF-8 UTF-8' >> /etc/locale.gen && \
     echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && \
+    echo 'en_GB.UTF-8 UTF-8' >> /etc/locale.gen && \
     echo 'fr_FR.UTF-8 UTF-8' >> /etc/locale.gen && \
     echo 'it_IT.UTF-8 UTF-8' >> /etc/locale.gen && \
     echo 'ja_JP.UTF-8 UTF-8' >> /etc/locale.gen && \
