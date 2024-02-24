@@ -42,7 +42,7 @@ class HtmlHelper
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap css -->
-    <link rel="stylesheet" href="' . self::$basePath . '/css/bootstrap.min.css" integrity="sha256-MBffSnbbXwHCuZtgPYiwMQbfE7z+GOZ7fBPCNB06Z98=" crossorigin="anonymous">
+    <link rel="stylesheet" href="' . self::$basePath . '/css/bootstrap.min.css" integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     
     <title>Bacula-Web - Application error</title>
@@ -81,7 +81,7 @@ class HtmlHelper
      */
     public static function getHtmlFooter(): string
     {
-        return '<script src="' . self::$basePath . '/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script>
+        return '<script src="' . self::$basePath . '/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                 <script type="text/javascript" src="' . self::$basePath . '/js/default.js"></script>
                 </body>
                 </html>';
