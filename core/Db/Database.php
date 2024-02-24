@@ -25,18 +25,19 @@ use App\Libs\FileConfig;
 use Core\App\CErrorHandler;
 use Core\Exception\ConfigFileException;
 use PDO;
+use RuntimeException;
 
 class Database
 {
     /**
-     * @var PDO
+     * @var PDO $connection
      */
-    private $connection;
+    private PDO $connection;
 
     /**
      * @var string
      */
-    private $driver;
+    private string $driver;
 
     /**
      * @param int|null $catalogId
@@ -56,9 +57,12 @@ class Database
             // Bacula catalog is not using SQLite
             if ($this->driver != 'sqlite') {
                 $username = FileConfig::get_Value('login', $catalogId);
-                $password  = FileConfig::get_Value('password', $catalogId);
+                $password = FileConfig::get_Value('password', $catalogId);
             }
         } else {
+            if (!is_writable(BW_ROOT . '/application/assets/protected')) {
+                throw new RuntimeException('Path application/assets/protected is not writable, please fix the permissions');
+            }
             $this->driver = 'sqlite';
             $dsn = $this->driver . ':' . BW_ROOT . '/application/assets/protected/application.db';
         }
