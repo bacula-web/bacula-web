@@ -92,7 +92,7 @@ class ExceptionRenderer implements ErrorRendererInterface
                         '<li class="list-group-item">' .
                             '<h4>Health check</h4>' .
                                 '<p>Use the <b>test page</b> to make sure your setup health is fine</p>' .
-                                '<a class="btn btn-default btn-sm btn-info" href="/test" target="_blank" rel="noopener noreferrer" role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a>' .
+                                '<a class="btn btn-default btn-sm btn-info" href="' . HtmlHelper::getBasePath() .'/test" target="_blank" rel="noopener noreferrer" role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a>' .
                         '</li>' .
                         '<li class="list-group-item">' .
                             '<h4>Official documentation</h4>' .

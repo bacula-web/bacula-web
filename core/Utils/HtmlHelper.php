@@ -86,4 +86,12 @@ class HtmlHelper
                 </body>
                 </html>';
     }
+
+    /**
+     * @return string
+     */
+    public static function getBasePath(): string
+    {
+        return self::$basePath;
+    }
 }
