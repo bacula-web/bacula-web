@@ -23,12 +23,18 @@ namespace Core\Utils;
 
 class HtmlHelper
 {
+    private static string $basePath = '';
+
     /**
-    * Return html header
-    * @return string
-    */
+     * Return html header
+     * @return string
+     */
     public static function getHtmlHeader(): string
     {
+        if (isset($_SERVER['BASE'])) {
+            self::$basePath = $_SERVER['BASE'];
+        }
+
         return '<!DOCTYPE html>
                         <html lang="en">
                         <head>
@@ -36,16 +42,16 @@ class HtmlHelper
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap css -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha256-MBffSnbbXwHCuZtgPYiwMQbfE7z+GOZ7fBPCNB06Z98=" crossorigin="anonymous">
+    <link rel="stylesheet" href="' . self::$basePath . '/css/bootstrap.min.css" integrity="sha256-MBffSnbbXwHCuZtgPYiwMQbfE7z+GOZ7fBPCNB06Z98=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     
     <title>Bacula-Web - Application error</title>
 
     <!-- FontAwesome css -->
-    <link href="./css/all.css" rel="stylesheet">
+    <link href="' . self::$basePath . '/css/all.css" rel="stylesheet">
 
-    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon.ico">
+    <link rel="apple-touch-icon" href="' . self::$basePath . '/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="' . self::$basePath . '/img/favicon.ico">
     </head>
 
     <body>';
@@ -61,7 +67,7 @@ class HtmlHelper
         return '<nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
-            <img src="/img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24" class="d-inline-block align-top">
+            <img src="' . self::$basePath . '/img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24" class="d-inline-block align-top">
             Bacula-Web
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,13 +76,13 @@ class HtmlHelper
     }
 
     /**
-    * Return html footer
-    * @return string
-    */
+     * Return html footer
+     * @return string
+     */
     public static function getHtmlFooter(): string
     {
-        return '<script src="/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script>
-                <script type="text/javascript" src="/js/default.js"></script>
+        return '<script src="' . self::$basePath . '/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script>
+                <script type="text/javascript" src="' . self::$basePath . '/js/default.js"></script>
                 </body>
                 </html>';
     }
