@@ -9,7 +9,6 @@
     <file>core</file>
     <file>application</file>
     <file>public/index.php</file>
-    <file>console.php</file>
     <file>bwc</file>
 
     <rule ref="PSR12"></rule>
