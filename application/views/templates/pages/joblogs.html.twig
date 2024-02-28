@@ -59,7 +59,7 @@
                         {% for log in joblogs %}
                             <tr>
                                 <td class="text-center">{{ log.time }}</td>
-                                <td class="text-left">{{ log.getLogText() }}</td>
+                                <td class="text-left">{{ log.logtext|nl2br }}</td>
                             </tr>
                         {% else %}
                             <tr>
