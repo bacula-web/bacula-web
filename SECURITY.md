@@ -19,4 +19,4 @@ Please describe the security vulnerability as much as you can, and share any exp
 
 ## Know security vulnerabilities
 
-For more information about known security vulnerabilities affecting Bacula-Web, please check the [security section](https://docs.bacula-web.org/01_about/security.html) from the official documentation.
+For more information about known security vulnerabilities affecting Bacula-Web, please check the [security section](https://docs.bacula-web.org/en/latest/01_about/security.html) from the official documentation.
