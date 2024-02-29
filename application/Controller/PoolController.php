@@ -37,14 +37,18 @@ class PoolController
 
     private PoolTable $poolTable;
     private Config $config;
+    private Twig $view;
 
     /**
      * @param PoolTable $poolTable
+     * @param Config $config
+     * @param Twig $view
      */
-    public function __construct(PoolTable $poolTable, Config $config)
+    public function __construct(PoolTable $poolTable, Config $config, Twig $view)
     {
         $this->poolTable = $poolTable;
         $this->config = $config;
+        $this->view = $view;
     }
 
     /**
@@ -55,7 +59,6 @@ class PoolController
      */
     public function prepare(Request $request, Response $response): Response
     {
-        $view = Twig::fromRequest($request);
         $tplData = [];
 
         $pools_list = [];
@@ -73,6 +76,6 @@ class PoolController
 
         $tplData['pools'] = $pools_list;
 
-        return $view->render($response, 'pages/pools.html.twig', $tplData);
+        return $this->view->render($response, 'pages/pools.html.twig', $tplData);
     }
 }

@@ -35,11 +35,12 @@ use Twig\Error\SyntaxError;
 class TestController
 {
     private CatalogTable $catalogTable;
+    private Twig $view;
 
-    public function __construct(
-        CatalogTable $catalogTable)
+    public function __construct(CatalogTable $catalogTable, Twig $view)
     {
         $this->catalogTable = $catalogTable;
+        $this->view = $view;
     }
 
     /**
@@ -53,7 +54,6 @@ class TestController
      */
     public function index(Request $request, Response $response): Response
     {
-        $view = Twig::fromRequest($request);
         $tplData = [];
 
         // Installed PDO drivers
@@ -66,42 +66,42 @@ class TestController
 
         // Checks list
         $check_list = array(
-            array(  'check_cmd' => 'php-gettext',
-                    'check_label' => 'PHP - Gettext support',
-                    'check_descr' => 'If you want Bacula-web in your language, please compile PHP with Gettext support'),
-            array(  'check_cmd' => 'php-session',
-                    'check_label' => 'PHP - Session support',
-                    'check_descr' => 'PHP session support is required'),
-            array(  'check_cmd' => 'php-mysql',
-                    'check_label' => 'PHP - MySQL support',
-                    'check_descr' => 'PHP MySQL support must be installed in order to run bacula-web with MySQL bacula catalog'),
-            array(  'check_cmd' => 'php-postgres',
-                    'check_label' => 'PHP - PostgreSQL support',
-                    'check_descr' => 'PHP PostgreSQL support must be installed in order to run bacula-web with PostgreSQL bacula catalog'),
-            array(  'check_cmd' => 'php-sqlite',
-                    'check_label' => 'PHP - SQLite support',
-                    'check_descr' => 'PHP SQLite support must be installed to use SQLite bacula catalog and for Bacula-Web back-end'),
-            array(  'check_cmd' => 'php-pdo',
-                    'check_label' => 'PHP - PDO support',
-                    'check_descr' => 'PHP PDO support is required, please compile PHP with this option'),
-            array(  'check_cmd' => 'php-posix',
-                    'check_label' => 'PHP - Posix support',
-                    'check_descr' => 'PHP Posix support is required, please compile PHP with this option'),
-            array(  'check_cmd' => 'db-connection',
-                    'check_label' => 'Database connection status (MySQL and postgreSQL only)',
-                    'check_descr' => 'Current status: ' . $this->catalogTable->getConnectionStatus() ),
-            array(  'check_cmd' => 'twig-cache',
-                    'check_label' => 'Twig cache folder write permission',
-                    'check_descr' =>  TPL_CACHE . ' must be writable by Apache'),
-            array(  'check_cmd' => 'users-db',
-                    'check_label' => 'Protected assets folder write permission',
-                    'check_descr' => 'application/assets/protected folder must be writable by Apache'),
-            array(  'check_cmd' => 'php-version',
-                    'check_label' => 'PHP version',
-                    'check_descr' => 'PHP version must be at least 8.0 (current version = ' . PHP_VERSION . ')'),
-            array(  'check_cmd' => 'php-timezone',
-                    'check_label' => 'PHP timezone',
-                    'check_descr' => 'Timezone must be configured in php.ini (current timezone = ' . ini_get('date.timezone') . ')')
+            array('check_cmd' => 'php-gettext',
+                'check_label' => 'PHP - Gettext support',
+                'check_descr' => 'If you want Bacula-web in your language, please compile PHP with Gettext support'),
+            array('check_cmd' => 'php-session',
+                'check_label' => 'PHP - Session support',
+                'check_descr' => 'PHP session support is required'),
+            array('check_cmd' => 'php-mysql',
+                'check_label' => 'PHP - MySQL support',
+                'check_descr' => 'PHP MySQL support must be installed in order to run bacula-web with MySQL bacula catalog'),
+            array('check_cmd' => 'php-postgres',
+                'check_label' => 'PHP - PostgreSQL support',
+                'check_descr' => 'PHP PostgreSQL support must be installed in order to run bacula-web with PostgreSQL bacula catalog'),
+            array('check_cmd' => 'php-sqlite',
+                'check_label' => 'PHP - SQLite support',
+                'check_descr' => 'PHP SQLite support must be installed to use SQLite bacula catalog and for Bacula-Web back-end'),
+            array('check_cmd' => 'php-pdo',
+                'check_label' => 'PHP - PDO support',
+                'check_descr' => 'PHP PDO support is required, please compile PHP with this option'),
+            array('check_cmd' => 'php-posix',
+                'check_label' => 'PHP - Posix support',
+                'check_descr' => 'PHP Posix support is required, please compile PHP with this option'),
+            array('check_cmd' => 'db-connection',
+                'check_label' => 'Database connection status (MySQL and postgreSQL only)',
+                'check_descr' => 'Current status: ' . $this->catalogTable->getConnectionStatus()),
+            array('check_cmd' => 'twig-cache',
+                'check_label' => 'Twig cache folder write permission',
+                'check_descr' => TPL_CACHE . ' must be writable by Apache'),
+            array('check_cmd' => 'users-db',
+                'check_label' => 'Protected assets folder write permission',
+                'check_descr' => 'application/assets/protected folder must be writable by Apache'),
+            array('check_cmd' => 'php-version',
+                'check_label' => 'PHP version',
+                'check_descr' => 'PHP version must be at least 8.0 (current version = ' . PHP_VERSION . ')'),
+            array('check_cmd' => 'php-timezone',
+                'check_label' => 'PHP timezone',
+                'check_descr' => 'Timezone must be configured in php.ini (current timezone = ' . ini_get('date.timezone') . ')')
         );
 
         // Doing all checks
@@ -152,7 +152,7 @@ class TestController
         }
 
         // Testing graph capabilities
-        $data = array( array('test', 100),
+        $data = array(array('test', 100),
             array('test1', 150),
             array('test2', 180),
             array('test3', 270),
@@ -160,9 +160,9 @@ class TestController
         );
 
         // Dummy Pie chart
-        $pie_chart = new Chart(array(   'type' => 'pie',
+        $pie_chart = new Chart(array('type' => 'pie',
             'name' => 'chart_pie_test',
-            'data' => $data ));
+            'data' => $data));
 
         $tplData['pie_graph_id'] = $pie_chart->name;
         $tplData['pie_graph'] = $pie_chart->render();
@@ -170,22 +170,18 @@ class TestController
         unset($pie_chart);
 
         // Dummy bar graph
-        $bar_chart = new Chart(array(   'type' => 'bar',
+        $bar_chart = new Chart(array('type' => 'bar',
             'name' => 'chart_bar_test',
             'data' => $data,
-            'ylabel' => 'Coffee cups' ));
+            'ylabel' => 'Coffee cups'));
 
-        //$this->view->set('bar_chart_id', $bar_chart->name);
-        //$this->view->set('bar_chart', $bar_chart->render());
         $tplData['bar_chart_id'] = $bar_chart->name;
         $tplData['bar_chart'] = $bar_chart->render();
 
         unset($bar_chart);
 
-        // Template rendering
-        //$this->view->set('checks', $check_list);
         $tplData['checks'] = $check_list;
 
-        return $view->render($response, 'pages/test.html.twig', $tplData);
+        return $this->view->render($response, 'pages/test.html.twig', $tplData);
     }
 }
