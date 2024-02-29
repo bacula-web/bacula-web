@@ -31,11 +31,13 @@
             <div class="col-8">
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div class="tab-pane container active" id="general"><h4>General settings</h4>
+                    <div class="tab-pane container active" id="general"><h3>General settings</h3>
 
                         <br/>
 
                         <form>
+                            <h4 class="mt-4">Date & time format</h4>
+
                             <div class="mb-3">
                                 <label class="form-label" for="config_datetime_format">Date / Time
                                     format</label>
@@ -50,6 +52,8 @@
                                        value="{{ config_datetime_format_short }}" disabled>
                             </div>
 
+                            <h4 class="mt-4">Translations</h4>
+
                             <div class="mb-3">
                                 <label class="form-label" for="config_language">Language</label>
 
@@ -57,54 +61,53 @@
                                        value="{{ config_language }}" disabled>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label" for="config_show_inactive_clients">Show inactive
-                                    clients</label>
+                            <h4 class="mt-4">Options</h4>
 
+                            <div class="mb-3">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch"
                                            id="config_show_inactive_clients" {{ config_show_inactive_clients }}
                                            disabled>
-                                    <label class="form-check-label" for="config_show_inactive_clients">Enabled</label>
+                                    <label class="form-check-label" for="config_show_inactive_clients">Show inactive
+                                        clients</label>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="config_hide_empty_pools">Hide empty pools</label>
-
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch"
                                            id="config_hide_empty_pools" {{ config_hide_empty_pools }} disabled>
-                                    <label class="form-check-label" for="config_hide_empty_pools">Enabled</label>
+                                    <label class="form-check-label" for="config_hide_empty_pools">Hide empty
+                                        pools</label>
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label" for="config_enable_users_auth">Users authentication</label>
+                            <h4>Authentication</h4>
 
+                            <div class="mb-3">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch"
                                            id="config_enable_users_auth" {{ config_enable_users_auth }} disabled>
-                                    <label class="form-check-label" for="config_enable_users_auth">Enabled</label>
+                                    <label class="form-check-label" for="config_enable_users_auth">Users
+                                        authentication</label>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="config_debug">Debug mode</label>
-
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch"
-                                           id="config_debug" {{ config_debug }} disabled>
-                                    <label class="form-check-label" for="config_debug">Enabled</label>
+                                           id="config-debug" {{ config_debug }} disabled>
+                                    <label class="form-check-label" for="config-debug">Debug mode</label>
                                 </div>
                             </div>
+
+                            <h4 class="mt-4">Web app path</h4>
 
                             <div class="mb-3">
                                 <label class="form-label" for="config_basepath">Base path</label>
                                 <input type="text" class="form-control" id="config_basepath"
                                        value="{{ config_basepath }}" disabled>
                             </div>
-                            {{ csrf|raw }}
                         </form>
                     </div>
 
@@ -115,11 +118,11 @@
                             <table class="table table-condensed table-striped">
                                 <caption>User(s) list</caption>
                                 <thead>
-                                    <tr>
-                                        <th>Username</th>
-                                        <th>Email</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
                                 </thead>
                                 {% for user in users %}
                                     <tr>
