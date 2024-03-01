@@ -30,7 +30,7 @@ You can find the complete documentation of Bacula-Web at [https://docs.bacula-we
 
 > Huge thanks to [Read The Docs](https://readthedocs.org/) for supporting open source projects documentation :heart:
 
-## Getting start
+## Getting started
 
 Bacula-Web can be installed using Composer, [Docker](docker/README.md) or from source (require advanced skills)
 
