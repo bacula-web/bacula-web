@@ -32,6 +32,10 @@ You can find the complete documentation of Bacula-Web at [https://docs.bacula-we
 
 ## Getting start
 
+Bacula-Web can be installed using Composer, [Docker](docker/README.md) or from source (require advanced skills)
+
+### Using Composer
+
 - Required [PHP](https://www.php.net/) version is >= 8.0 
 - Make sure PHP CLI installed and extensions [SQlite3](https://www.php.net/manual/en/book.sqlite3.php), [Gettext](https://www.php.net/manual/en/book.gettext.php), [Session](https://www.php.net/manual/en/refs.basic.session.php), [PDO](https://www.php.net/manual/en/book.pdo.php), [MySQL](https://www.php.net/manual/en/set.mysqlinfo.php), [postgreSQL](https://www.php.net/manual/en/book.pgsql.php), [Json](https://www.php.net/manual/en/book.json.php) and [Posix](https://www.php.net/manual/en/book.posix.php) are installed and enabled.
 - Install [Composer](https://getcomposer.org/doc/00-intro.md)
