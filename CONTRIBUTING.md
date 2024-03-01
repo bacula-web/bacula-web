@@ -1,5 +1,7 @@
-# Contributing to Bacula-Web
+# Contributing
 
-You can find information for contributing to Bacula-Web project in the link below
+Contributions to this project are welcome and will be fully **credited**
 
-[Contribute to Bacula-Web](http://docs.bacula-web.org/en/latest/04_contribute/index.html)
+We accept contributions via Pull Requests on [GitHub](https://github.com/bacula-web/bacula-web).
+
+Please see [contributor guide](http://docs.bacula-web.org/en/latest/04_contribute/index.html) for more details.
