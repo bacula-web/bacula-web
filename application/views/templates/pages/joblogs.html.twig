@@ -4,13 +4,7 @@
 
 {% block body %}
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="mt-3 mb-0">{{ 'Job logs'|trans }}</h3>
-                <p class="mb-0">{{ 'Bacula job log'|trans }}</p>
-                <hr>
-            </div>
-        </div>
+        {{ include('partials/_page_header.html.twig', {header: 'Job logs'|trans, description: 'Bacula job log'|trans}) }}
 
         <div class="row">
             <div class="col-3">
@@ -51,10 +45,10 @@
                     <table class="table table-hover table-striped table-condensed table-bordered">
                         <caption>Job event(s) list</caption>
                         <thead>
-                            <tr>
-                                <th class="text-center">{{ 'Time'|trans }}</th>
-                                <th class="text-center">{{ 'Event'|trans }}</th>
-                            </tr>
+                        <tr>
+                            <th class="text-center">{{ 'Time'|trans }}</th>
+                            <th class="text-center">{{ 'Event'|trans }}</th>
+                        </tr>
                         </thead>
                         {% for log in joblogs %}
                             <tr>

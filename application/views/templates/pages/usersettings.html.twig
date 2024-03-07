@@ -5,12 +5,7 @@
 {% block body %}
     <div class="container-fluid">
 
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="mt-3 mb-0">{{ 'User settings'|trans }}</h3>
-                <hr>
-            </div>
-        </div>
+        {{ include('partials/_page_header.html.twig', {header: 'User settings'|trans, description:''}) }}
 
         <div class="row">
             <div class="col col-xs-6">
@@ -20,7 +15,8 @@
                 <form action="/user" method="post">
                     <div class="mb-3">
                         <label class="form-label" for="inputUsername">Username</label>
-                        <input name="username" value="{{ username }}" type="text" id="inputUsername" class="form-control"
+                        <input name="username" value="{{ username }}" type="text" id="inputUsername"
+                               class="form-control"
                                placeholder="Username" aria-describedby="username_helpblock" disabled>
                         <div id="username_helpblock" class="form-text">Username can't be changed</div>
                     </div>
@@ -51,7 +47,7 @@
                                placeholder="Current password" aria-describedby="currentpass" required>
                         <span id="currentpass" class="form-text">Your current password (required)</span>
 
-                        <br />
+                        <br/>
                         <label for="newpass">New password</label>
                         <input name="newpassword" type="password" id="inputpassword" class="form-control"
                                placeholder="New password" data-minlength="6" required>

@@ -12,10 +12,6 @@
 
         <div class="collapse navbar-collapse" id="navbarcollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ base_path() }}/">{{ 'Dashboard'|trans }}</a>
-                </li>
-
                 {% if user_authenticated == true or enable_users_auth == false %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"

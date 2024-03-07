@@ -4,13 +4,8 @@
 
 {% block body %}
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <h3 class="mt-3 mb-0">{{ 'Volumes report'|trans }}</h3>
-                <p class="mb-0">{{ 'Bacula volume(s) overview'|trans }}</p>
-                <hr>
-            </div>
-        </div>
+
+        {{ include('partials/_page_header.html.twig', {header: 'Volumes report'|trans, description: 'Bacula volume(s) overview'|trans }) }}
 
         <div class="row">
             <div class="col-10">

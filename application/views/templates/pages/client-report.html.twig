@@ -5,13 +5,7 @@
 {% block body %}
     <div class="container-fluid">
 
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="mt-3 mb-0">{{ 'Client report'|trans }}</h3>
-                <p class="mb-0">{{ 'Report per Bacula client'|trans }}</p>
-                <hr>
-            </div>
-        </div>
+        {{ include('partials/_page_header.html.twig', {header: 'Client report'|trans, description: 'Report per Bacula client'|trans }) }}
 
         <div class="card border-dark mb-3">
             <div class="card-header">{{ 'Report options'|trans }}</div>
@@ -22,7 +16,8 @@
                         <label class="form-label" for="clientname">{{ 'Client'|trans }}</label>
                         <select class="form-control input-sm" name="client_id">
                             {% for client_id, client_name in clients_list %}
-                                <option value="{{ client_id }}" {% if client_id == selected_client %}selected{% endif %}>{{ client_name }}</option>
+                                <option value="{{ client_id }}"
+                                        {% if client_id == selected_client %}selected{% endif %}>{{ client_name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -31,7 +26,8 @@
                         <label class="form-label" for="period">{{ 'Period'|trans }}</label>
                         <select class="form-control input-sm" name="period">
                             {% for key, period in periods_list %}
-                                <option value="{{ key }}" {% if key == selected_period %}selected {% endif %}>{{ period }}</option>
+                                <option value="{{ key }}"
+                                        {% if key == selected_period %}selected {% endif %}>{{ period }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -57,7 +53,7 @@
                         <dt>{{ 'Client os'|trans }}</dt>
                         <dd>{{ client_os }}</dd>
                         <dt>{{ 'Client arch'|trans }}
-                        <dd>{{ client_arch}}</dd>
+                        <dd>{{ client_arch }}</dd>
                     </dl>
                 </div>
             </div>
@@ -66,15 +62,15 @@
                 <table class="table table-bordered table-condensed table-striped text-center">
                     <caption>{{ 'Last good backup job'|trans }}</caption>
                     <thead>
-                        <tr>
-                            <th class="text-center">{{ 'Name'|trans }}</th>
-                            <th class="text-center">{{ 'Job Id'|trans }}</th>
-                            <th class="text-center">{{ 'Level'|trans }}</th>
-                            <th class="text-center">{{ 'End time'|trans }}</th>
-                            <th class="text-right">{{ 'Bytes'|trans }}</th>
-                            <th class="text-right">{{ 'Files'|trans }}</th>
-                            <th class="text-center">{{ 'Status'|trans }}</th>
-                        </tr>
+                    <tr>
+                        <th class="text-center">{{ 'Name'|trans }}</th>
+                        <th class="text-center">{{ 'Job Id'|trans }}</th>
+                        <th class="text-center">{{ 'Level'|trans }}</th>
+                        <th class="text-center">{{ 'End time'|trans }}</th>
+                        <th class="text-right">{{ 'Bytes'|trans }}</th>
+                        <th class="text-right">{{ 'Files'|trans }}</th>
+                        <th class="text-center">{{ 'Status'|trans }}</th>
+                    </tr>
                     </thead>
                     {% for job in backup_jobs %}
                         <tr>
@@ -92,7 +88,7 @@
                         <td class="text-center">
                             <b>{{ total_bytes }}</b>
                         </td>
-                        <td class="text-center" >
+                        <td class="text-center">
                             <b>{{ total_files }}</b>
                         </td>
                         <td></td>

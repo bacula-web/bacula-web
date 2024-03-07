@@ -5,13 +5,7 @@
 {% block body %}
     <div class="container-fluid" id="jobsreport">
 
-        <div class="row">
-            <div class="col-12">
-                <h3 class="mt-3 mb-0">{{ 'Jobs report'|trans }}</h3>
-                <p class="mb-0">{{ 'Bacula jobs overview'|trans }}</p>
-                <hr>
-            </div>
-        </div>
+        {{ include('partials/_page_header.html.twig', {header: 'Jobs report'|trans, description: 'Bacula jobs overview'|trans }) }}
 
         <div class="row">
             <div class="col-xs-12 col-sm-3 col-sm-push-9 col-lg-2 col-lg-push-10">
@@ -23,9 +17,9 @@
                     <div class="form-group">
                         <label>{{ 'Job status'|trans }}</label>
                         <select class="form-control input-sm" name="filter_jobstatus">
-                        {% for id, status in job_status %}
-                            <option value="{{ id }}" {% if id == filter_jobstatus %} selected {% endif %}>{{ status }}</option>
-                        {% endfor %}
+                            {% for id, status in job_status %}
+                                <option value="{{ id }}" {% if id == filter_jobstatus %} selected {% endif %}>{{ status }}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
@@ -68,17 +62,24 @@
 
                     <div class="form-group">
                         <label for="datetimepicker1Input" class="form-label">{{ 'Start time'|trans }}</label>
-                        <div class="input-group log-event" id="datetimepicker1" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                            <input id="datetimepicker1Input" name="filter_job_starttime" type="text" class="form-control" data-td-target="#datetimepicker1" value="{{ filter_job_starttime }}" />
-                            <span class="input-group-text" data-td-target="#datetimepicker1" data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
+                        <div class="input-group log-event" id="datetimepicker1" data-td-target-input="nearest"
+                             data-td-target-toggle="nearest">
+                            <input id="datetimepicker1Input" name="filter_job_starttime" type="text"
+                                   class="form-control" data-td-target="#datetimepicker1"
+                                   value="{{ filter_job_starttime }}"/>
+                            <span class="input-group-text" data-td-target="#datetimepicker1"
+                                  data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="datetimepicker1Input" class="form-label">{{ 'End time'|trans }}</label>
-                        <div class="input-group log-event" id="datetimepicker2" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                            <input id="datetimepicker1Input" name="filter_job_endtime" type="text" class="form-control" data-td-target="#datetimepicker2" value="{{ filter_job_endtime }}" />
-                            <span class="input-group-text" data-td-target="#datetimepicker2" data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
+                        <div class="input-group log-event" id="datetimepicker2" data-td-target-input="nearest"
+                             data-td-target-toggle="nearest">
+                            <input id="datetimepicker1Input" name="filter_job_endtime" type="text" class="form-control"
+                                   data-td-target="#datetimepicker2" value="{{ filter_job_endtime }}"/>
+                            <span class="input-group-text" data-td-target="#datetimepicker2"
+                                  data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
                         </div>
                     </div>
 
@@ -137,15 +138,16 @@
                         {% for job in last_jobs %}
                             <tr>
                                 <td>
-                                    <i title="{{ job.jobstatuslong }}" class="{{ job.Job_icon   }}"></i>
+                                    <i title="{{ job.jobstatuslong }}" class="{{ job.Job_icon }}"></i>
                                 </td>
                                 <td>{{ job.jobid }}</td>
                                 <td class="text-left">
                                     {% if job.type == 'B' %}
                                         <form action="{{ url_for('backupjob') }}" method="post">
-                                            <input type="hidden" name="backupjob_name" value="{{ job.job_name }}" />
-                                            <input type="hidden" name="backupjob_period" value="7" />
-                                            <button type="submit" class="btn btn-sm btn-link">{{ job.job_name }}</button>
+                                            <input type="hidden" name="backupjob_name" value="{{ job.job_name }}"/>
+                                            <input type="hidden" name="backupjob_period" value="7"/>
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-link">{{ job.job_name }}</button>
                                             {{ csrf|raw }}
                                         </form>
                                     {% else %}
@@ -161,7 +163,7 @@
                                 <td class="text-right">{{ job.jobbytes }}</td>
                                 <td class="text-right">
                                     {% if job.jobfiles != 0 and job.type == 'B' %}
-                                        <a href="{{ base_path() }}/jobfiles/{{job.jobid}}"
+                                        <a href="{{ base_path() }}/jobfiles/{{ job.jobid }}"
                                            title="{{ 'Show job files'|trans }}">
                                             {{ job.jobfiles }} <i class="fa-solid fa-folder"></i>
                                         </a>
@@ -173,11 +175,12 @@
                                 <td>{{ job.compression }}</td>
                                 <td>{{ job.pool_name }}</td>
                                 <td>
-                                    <a href="{{ base_path() }}/joblog/{{ job.jobid }}" title="{{ 'Show job logs'|trans }}"> <i
+                                    <a href="{{ base_path() }}/joblog/{{ job.jobid }}"
+                                       title="{{ 'Show job logs'|trans }}"> <i
                                                 class="fa-solid fa-magnifying-glass"></i> </a>
                                 </td>
                             </tr>
-                            {% else %}
+                        {% else %}
                             <tr>
                                 <td colspan="15">{{ 'No job(s) to display'|trans }}</td>
                             </tr>
@@ -194,14 +197,14 @@
     </div>
 
     <script type="text/javascript">
-		const datetimepicker1 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'),{
-			localization: {
-				locale: '{{ language }}',
-				format: 'yyyy-MM-dd HH:mm:ss',
-			}
-		});
+        const datetimepicker1 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+            localization: {
+                locale: '{{ language }}',
+                format: 'yyyy-MM-dd HH:mm:ss',
+            }
+        });
 
-        const datetimepicker2 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'),{
+        const datetimepicker2 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'), {
             localization: {
                 locale: '{{ language }}',
                 format: 'yyyy-MM-dd HH:mm:ss',

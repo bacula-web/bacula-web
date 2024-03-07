@@ -36,6 +36,8 @@ use App\Middleware\CsrfMiddleware;
 use App\Middleware\DbAuthMiddleware;
 use App\Middleware\FlashMiddleware;
 use App\Middleware\GuestMiddleware;
+use App\Middleware\RefererMiddleware;
+use App\Middleware\TrailingSlashMiddleware;
 use Core\Exception\ConfigFileException;
 use Core\Utils\ExceptionRenderer;
 use DI\ContainerBuilder;
@@ -106,8 +108,9 @@ $app->group('', function (RouteCollectorProxy $group) {
     $group->post('/login', [LoginController::class, 'login']);
 })->add(GuestMiddleware::class);
 
-
 $app->add(CsrfMiddleware::class)
+    ->add(RefererMiddleware::class)
+    ->add(TrailingSlashMiddleware::class)
     ->add('csrf')
     ->add(CatalogSelectorMiddleware::class)
     ->add(FlashMiddleware::class)

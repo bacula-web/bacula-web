@@ -1,0 +1,15 @@
+<div class="d-flex justify-content-between bg-gradient mt-1">
+    <div class="p-1 mb-auto mt-auto">
+        <h3>{{ header }}</h3>
+        {{ description }}
+    </div>
+    <div class="p-1">
+        <a href="{% if referer %}{{ referer }} {% endif %}"
+           class="btn btn-secondary {% if not referer %} disabled {% endif %}">Back</a>
+        <a href="{{ url_for('home') }}" class="btn btn-dark {% if is_current_url('home') %} disabled {% endif %}" title="{{ 'Back to Dashboard'|trans }}">
+            <i class="fa-solid fa-home"></i></a>
+    </div>
+
+</div>
+
+<hr>
