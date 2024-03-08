@@ -109,10 +109,10 @@ $app->group('', function (RouteCollectorProxy $group) {
 })->add(GuestMiddleware::class);
 
 $app->add(CsrfMiddleware::class)
+    ->add(CatalogSelectorMiddleware::class)
     ->add(RefererMiddleware::class)
     ->add(TrailingSlashMiddleware::class)
     ->add('csrf')
-    ->add(CatalogSelectorMiddleware::class)
     ->add(FlashMiddleware::class)
     ->add(TwigMiddleware::create($app, $container->get(Twig::class)))
     ->add(SessionStartMiddleware::class);
