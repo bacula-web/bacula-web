@@ -316,7 +316,7 @@ db_port           database port number                                  - mysql,
 
    <?php
    // Language
-   $config[0]['language'] = 'en_EN';
+   $config[0]['language'] = 'en_US';
 
    // Show inactive clients
    $config['show_inactive_clients'] = false;
