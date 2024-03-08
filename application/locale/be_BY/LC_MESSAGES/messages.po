@@ -4,6 +4,7 @@
 # Davide Franco <bacula-dev@dflc.ch>, 2012-2021.
 # 
 # Translators:
+# Davide Franco, 2023
 # Igor Zhukovets <zhukovets.igor@gmail.com>, 2017
 msgid ""
 msgstr ""
@@ -11,8 +12,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
 "POT-Creation-Date: 2012-07-26 18:49+0200\n"
 "PO-Revision-Date: 2014-12-09 08:00+0000\n"
-"Last-Translator: Igor Zhukovets <zhukovets.igor@gmail.com>, 2017\n"
-"Language-Team: Belarusian (http://www.transifex.com/bacula-web/bacula-web/language/be/)\n"
+"Last-Translator: Davide Franco, 2023\n"
+"Language-Team: Belarusian (http://app.transifex.com/bacula-web/bacula-web/language/be/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,7 +30,7 @@ msgstr "Прымяніць"
 
 #: lang.c:26 messages.c:36
 msgid "Apply filter and options"
-msgstr "Прыняць фільтры і налады"
+msgstr "Ужывайце фільтры і налады"
 
 #: lang.c:57
 msgid "Back"

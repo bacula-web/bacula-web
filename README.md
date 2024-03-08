@@ -20,7 +20,7 @@ and only require read-only access to the Bacula director catalog database.
 - Bacula Directors report which gives you an overview of each Bacula director(s) statistics
 - Browse backup jobs files and folders
 - Users authentication
-- Translated in more than 15 languages with the help from community users :heart: [project on Transifex](https://www.transifex.com/bacula-web/public/).
+- Translated in more than 15 languages with the help from community users :heart: [project on Transifex](https://explore.transifex.com/bacula-web/bacula-web/).
 
 Please see the full [the documentation](https://docs.bacula-web.org/en/latest/01_about/features.html) for the full list of features. 
 

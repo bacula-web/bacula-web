@@ -4,6 +4,7 @@
 # Davide Franco <bacula-dev@dflc.ch>, 2012-2021.
 # 
 # Translators:
+# Davide Franco, 2023
 # Florian Heigl <UNKNOWN@ADDRESS>, 2005
 # J Jaco <j.jacobs029@gmail.com>, 2020
 msgid ""
@@ -12,8 +13,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: bacula-dev@dflc.ch\n"
 "POT-Creation-Date: 2012-07-26 18:49+0200\n"
 "PO-Revision-Date: 2014-12-09 08:00+0000\n"
-"Last-Translator: J Jaco <j.jacobs029@gmail.com>, 2020\n"
-"Language-Team: German (Germany) (http://www.transifex.com/bacula-web/bacula-web/language/de_DE/)\n"
+"Last-Translator: Davide Franco, 2023\n"
+"Language-Team: German (Germany) (http://app.transifex.com/bacula-web/bacula-web/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -107,11 +108,11 @@ msgstr "Clientinformationen"
 
 #: lang.c:54 lang.c:29 messages.c:112
 msgid "Client name"
-msgstr "Clientname:"
+msgstr "Clientname"
 
 #: lang.c:56 lang.c:31 messages.c:114
 msgid "Client os"
-msgstr "Client OS:"
+msgstr "Client OS"
 
 #: lang.c:96 messages.c:75
 msgid "Client report"
