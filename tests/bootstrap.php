@@ -23,9 +23,7 @@
 
 use Dotenv\Dotenv;
 
-defined('BW_ROOT') || define('BW_ROOT', __DIR__ . '/../');
-
-require_once BW_ROOT . '/core/const.inc.php';
+require_once __DIR__ . '/../core/bootstrap.php';
 
 /**
  * Load app name and version from application/config/app using phpdotenv
