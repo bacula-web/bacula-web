@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2022-present Davide Franco
  *
@@ -19,20 +17,27 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace Core\Helpers;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-function getRequestParams(ServerRequestInterface $request)
+/**
+ * Sanitize GET query and POST request user input.
+ *
+ * @param ServerRequestInterface $request
+ * @return array
+ */
+function getRequestParams(ServerRequestInterface $request): array
 {
     if ($request->getMethod() === 'POST') {
         $params = $request->getParsedBody();
-    } else{
+    } else {
         $params = $request->getQueryParams();
     }
 
-    foreach ($params as $key => $value)
-    {
+    foreach ($params as $key => $value) {
         $params[$key] = Sanitizer::sanitize($value);
     }
     return $params;
