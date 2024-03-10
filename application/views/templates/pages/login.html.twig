@@ -13,17 +13,19 @@
                                 <h1>Login</h1>
                                 <p class="text-medium-emphasis">Please sign in</p>
                                 <form action="{{ base_path() }}/login" method="post">
-                                    <div class="input-group mb-3">
-                  <span class="input-group-text">
-                    <i class="cil-user"></i>&nbsp;
-                    <input class="form-control" type="text" name="username" id="inputUsername" placeholder="Username"
-                           autofocus
-                           required>
+                                    <label for="inputUsername" class="form-label">{{ 'Username'|trans }}</label>
+                                    <div class="input-group mb-4">
+                                        <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                        <input class="form-control" type="text" name="username" id="inputUsername"
+                                               placeholder="Username"
+                                               autofocus required>
                                     </div>
-                                    <div class="input-group mb-4"><span class="input-group-text">
-                    <i class="cil-lock-locked"></i>&nbsp;
-                    <input class="form-control" type="password" name="password" id="inputPassword"
-                           placeholder="Password" required>
+
+                                    <label for="inputPassword" class="form-label">{{ 'Password'|trans }}</label>
+                                    <div class="input-group mb-4">
+                                        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                        <input class="form-control" type="password" name="password" id="inputPassword"
+                                               placeholder="Password" required>
                                     </div>
 
                                     <div class="row">
@@ -39,7 +41,8 @@
                         <div class="card col-md-5 text-white bg-light py-5">
                             <div class="card-body text-center">
                                 <div>
-                                    <img class="img-responsive" src="{{ base_path() }}/img/bacula-web-logo.png" alt="Bacula-Web logo"/>
+                                    <img class="img-responsive" src="{{ base_path() }}/img/bacula-web-logo.png"
+                                         alt="Bacula-Web logo"/>
                                     <div>
                                         <h2 class="text-black">{{ app_name }}</h2>
                                     </div>
