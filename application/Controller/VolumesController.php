@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,6 +17,8 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Libs\Config;
@@ -28,6 +28,7 @@ use Core\Utils\CUtils;
 use App\Table\VolumeTable;
 use App\Table\PoolTable;
 use Date_HumanDiff;
+use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use Slim\Views\Twig;
@@ -35,6 +36,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use TypeError;
+
 use function Core\Helpers\getRequestParams;
 
 class VolumesController
@@ -50,8 +52,7 @@ class VolumesController
         PoolTable $poolTable,
         Twig $view,
         Config $config
-    )
-    {
+    ) {
         $this->volumeTable = $volumeTable;
         $this->poolTable = $poolTable;
         $this->view = $view;
@@ -65,6 +66,7 @@ class VolumesController
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws Exception
      */
     public function index(Request $request, Response $response): Response
     {
@@ -89,29 +91,24 @@ class VolumesController
             'Purged' => 'fa-battery-empty'
         ];
 
-        // Pools list filter
         $poolslist = [];
 
-        // Create poolTable list
         foreach ($this->poolTable->getPools($this->config->get('hide_empty_pools')) as $pool) {
             $poolslist[$pool['poolid']] = $pool['name'];
         }
 
-        $poolslist = [0 => 'Any'] + $poolslist; // Add default pool filter
         $tplData['pools_list'] = $poolslist;
 
         $postData = getRequestParams($request);
 
-        $poolId = '0';
-
         if (isset($postData['filter_pool_id'])) {
-            if ( $postData['filter_pool_id'] !== '0') {
-                $poolId = $postData['filter_pool_id'];
+            $poolId = (int) $postData['filter_pool_id'];
+            if ($poolId !== 0) {
                 $where[] = 'Media.PoolId = :pool_id';
                 $params['pool_id'] = $poolId;
             }
         }
-        $tplData['pool_id'] = $poolId;
+        $tplData['pool_id'] = $poolId ?? 0;
 
         // Order by
         $orderby = [
@@ -124,37 +121,22 @@ class VolumesController
         // Set order by
         $tplData['orderby'] = $orderby;
 
-        $volumeOrderBy = 'Name';
-
-        if (isset($postData['filter_orderby'])) {
-            $volumeOrderBy = $postData['filter_orderby'];
-        }
-
+        $volumeOrderBy = $postData['filter_orderby'] ?? 'Name';
         $tplData['orderby_selected'] = $volumeOrderBy;
 
         if (!array_key_exists($volumeOrderBy, $orderby)) {
             throw new TypeError('Critical: Provided orderby parameter is not correct');
         }
 
-        $volumeOrderByDirection = 'Desc';
-        if (isset($postData['filter_orderby_asc'])) {
-            $volumeOrderByDirection = 'Asc';
-        }
+        $volumeOrderByDirection = $postData['filter_orderby_asc'] ?? 'DESC';
+        $tplData['orderby_asc_checked'] = $volumeOrderByDirection === 'ASC' ? 'checked' : '';
 
-        if ($volumeOrderByDirection === 'Asc') {
-            $tplData['orderby_asc_checked'] = 'checked';
-        } else {
-            $tplData['orderby_asc_checked'] = '';
-        }
-
-        // Set "inchanger" checkbox to unchecked by default
         if (isset($postData['filter_inchanger'])) {
             $where[] = 'Media.inchanger = :inchanger';
             $params['inchanger'] = 1;
-            $tplData['inchanger_checked'] = 'checked';
-        } else{
-            $tplData['inchanger_checked'] = '';
         }
+
+        $tplData['inchanger_checked'] = isset($postData['filter_inchanger']) ? 'checked' : '';
 
         $fields = [
             'Media.mediaid',
@@ -204,7 +186,8 @@ class VolumesController
                     );
                     $volume['expire'] = $dh->get(
                         strtotime($volume['lastwritten']) + $volume['volretention'],
-                        time()) . ' (' . $volume['expire'] . ')';
+                        time()
+                    ) . ' (' . $volume['expire'] . ')';
                 } else {
                     $volume['expire'] = 'n/a';
                 }
@@ -255,6 +238,11 @@ class VolumesController
         return $this->view->render($response, 'pages/volumes.html.twig', $tplData);
     }
 
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
     public function show(Request $request, Response $response): Response
     {
         $tplData = [];

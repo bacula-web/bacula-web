@@ -68,6 +68,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="filter_pool_id">{{ 'Pool'|trans }}</label>
                         <select class="form-control input-sm" name="filter_pool_id">
+                            <option value="0" {% if pool_id == 0 %}selected{% endif %}>Any</option>
                             {% for poolid, pool in pools_list %}
                                 <option value="{{ poolid }}" {% if poolid == pool_id %}selected{% endif %}>{{ pool }}</option>
                             {% endfor %}
@@ -86,7 +87,7 @@
                     <div class="col-12">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="filter_orderby_asc"
-                                   id="filter_orderby_asc" {{ orderby_asc_checked }}>
+                                   id="filter_orderby_asc" value="ASC" {{ orderby_asc_checked }}>
                             <label class="form-check-label" for="filter_orderby_asc">
                                 {{ 'Asc'|trans }}
                             </label>
