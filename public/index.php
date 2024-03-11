@@ -105,7 +105,7 @@ $app->group('', function (RouteCollectorProxy $group) {
 $app->group('', function (RouteCollectorProxy $group) {
     $group->post('/signout', [LoginController::class, 'signOut']);
     $group->get('/login', [LoginController::class, 'index']);
-    $group->post('/login', [LoginController::class, 'login']);
+    $group->post('/login', [LoginController::class, 'index']);
 })->add(GuestMiddleware::class);
 
 $app->add(CsrfMiddleware::class)

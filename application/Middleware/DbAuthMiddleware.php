@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -18,6 +16,8 @@ declare(strict_types=1);
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+declare(strict_types=1);
 
 namespace App\Middleware;
 
@@ -88,7 +88,10 @@ class DbAuthMiddleware implements MiddlewareInterface
             }
         }
 
-        $this->session->getFlash()->set('error', ['You must be authenticated']);
+        /**
+         * If the user is not authenticated, Redirect to login page with a flash message
+         */
+        $this->session->getFlash()->set('last_auth_error', ['Authentication is required']);
         $response = new Response();
 
         return $response

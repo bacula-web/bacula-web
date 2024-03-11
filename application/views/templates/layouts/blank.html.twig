@@ -7,14 +7,11 @@
 </head>
 
 <body>
-<div class="container-fluid">
-    {{ include('partials/flash.html.twig') }}
-</div>
 
 <div class="wrapper d-flex flex-column min-vh-100 bg-light">
     {% block body %} {% endblock %}
 </div>
-</body>
 
+</body>
 {{ include('partials/html-footer.html.twig') }}
 </html>

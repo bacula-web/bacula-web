@@ -23,8 +23,6 @@ namespace App\Controller;
 
 use App\Libs\Config;
 use Core\App\UserAuth;
-use Core\Exception\AppException;
-use Core\Helpers\Sanitizer;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
@@ -43,10 +41,10 @@ class LoginController
     private Config $config;
 
     public function __construct(
-        UserAuth $userAuth,
+        UserAuth         $userAuth,
         SessionInterface $session,
-        Twig $twig,
-        Config $config)
+        Twig             $twig,
+        Config           $config)
     {
         $this->userAuth = $userAuth;
         $this->session = $session;
@@ -64,7 +62,7 @@ class LoginController
     public function signOut(Request $request, Response $response): Response
     {
         $this->userAuth->destroySession($this->session);
-        $this->session->getFlash()->add('info', 'Logged out successfully.');
+        $this->session->getFlash()->add('auth_info', 'Successfully logged out');
         $this->session->save();
 
         return $response
@@ -79,64 +77,67 @@ class LoginController
      */
     public function index(Request $request, Response $response): Response
     {
-        return $this->twig->render($response, 'pages/login.html.twig');
-    }
+        if ($request->getMethod() === 'POST') {
+            $postData = $request->getParsedBody();
 
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     * @throws AppException
-     */
-    public function login(Request $request, Response $response): Response
-    {
-        $postData = $request->getParsedBody();
-        $form_data = [
-            'username' => Sanitizer::sanitize($postData['username']),
-            'password' => $postData['password']
-        ];
+            $form_data = [
+                'username' => $postData['username'],
+                'password' => $postData['password']
+            ];
 
-        $v = new Validator($form_data);
+            $v = new Validator($form_data, ['username', 'password']);
 
-        $v->rules([
-            'required' => [
-                'username', 'password'
-            ],
-            'alphaNum' => ['username'],
-            'lengthMin' => [
-                ['password', 8]
-            ]
+            $v->rules([
+                'required' => [
+                    'username', 'password'
+                ],
+                'alphaNum' => ['username'],
+                'lengthMin' => [
+                    ['password', 8]
+                ]
+            ]);
+
+            if (!$v->validate()) {
+                $validationErrors = $v->errors();
+
+                if (!isset($validationErrors['username'])) {
+                    $this->session->getFlash()->add('username', $form_data['username']);
+                }
+
+                $this->session->getFlash()->set('errors', $validationErrors);
+
+                return $response
+                    ->withHeader('Location', $this->basePath . '/login')
+                    ->withStatus(302);
+
+            } else {
+                // TODO: this should be the responsibility of the auth class
+                $this->session->set('user_authenticated', $this->userAuth->authUser($form_data['username'], $form_data['password']));
+
+                if ($this->userAuth->authenticated()) {
+                    // TODO: this is not the responsibility of the login controller
+                    $this->session->set('username', $form_data['username']);
+
+                    return $response
+                        ->withHeader('Location', $this->basePath . '/')
+                        ->withStatus(302);
+                } else {
+                    // TODO: last auth error should come from the Auth class
+                    $this->session->getFlash()->add('last_auth_error', 'Wrong username or password');
+                    $this->session->getFlash()->add('username', $form_data['username'] );
+
+                    return $response
+                        ->withHeader('Location', $this->basePath . '/login')
+                        ->withStatus(302);
+                }
+            }
+        }
+
+        return $this->twig->render($response, 'pages/login.html.twig', [
+            'errors' => $this->session->getFlash()->get('errors'),
+            'username' => $this->session->getFlash()->get('username'),
+            'last_auth_error' => $this->session->getFlash()->get('last_auth_error'),
+            'auth_info' => $this->session->getFlash()->get('auth_info')
         ]);
-
-        if (!$v->validate()) {
-            $this->session->getFlash()->set('error', ['Wrong username or password']);
-            $this->session->save();
-
-            return $response
-                ->withHeader('Location', $this->basePath . '/login')
-                ->withStatus(302);
-        }
-
-        $this->session->set('user_authenticated', $this->userAuth->authUser($form_data['username'], $form_data['password']));
-
-        if ($this->userAuth->authenticated()) {
-
-            $username = Sanitizer::sanitize($form_data['username']);
-
-            $this->session->set('username', $username);
-
-            $this->session->getFlash()->set('info', ['Successfully authenticated']);
-
-            return $response
-                ->withHeader('Location', $this->basePath . '/')
-                ->withStatus(302);
-        } else {
-            $this->session->getFlash()->set('error', ['Wrong username or password']);
-            $this->session->save();
-
-            return $response
-                ->withHeader('Location', $this->basePath . '/login')
-                ->withStatus(302);
-        }
     }
 }

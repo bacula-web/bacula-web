@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,6 +17,8 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Middleware;
 
 use App\Libs\Config;
@@ -32,7 +32,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class GuestMiddleware implements MiddlewareInterface
 {
-
     private UserAuth $userAuth;
     private SessionInterface $session;
     private ?string $basePath;
@@ -57,6 +56,7 @@ class GuestMiddleware implements MiddlewareInterface
             } else {
                 if ($this->session->get('user_authenticated') === 'yes') {
                     $response = new Response();
+
                     return $response
                         ->withHeader('Location', $this->basePath . '/')
                         ->withStatus(302);

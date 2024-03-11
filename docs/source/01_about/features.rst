@@ -83,6 +83,48 @@ Directors
 
 The directors report display basic information about all Bacula catalog you have configured
 
+Authentication
+--------------
+
+Users authentication is enforced by default, storing user information in a locale database with encrypted (hashed using Bcrypt) passwords.
+
+This ensures that only authorized users can access the Bacula infrastructure information,
+providing better security and control over the data.
+
+.. image:: /_static/bacula-web-login.jpg
+   :alt: Bacula-Web login
+   :align: center
+   :width: 75%
+
+Users won't be able to connect until they provide valid credentials.
+
+.. image:: /_static/bacula-web-login-form-auth-feedbacks.jpg
+
+The login form does require a valid username and password.
+
+The username must be only composed of alphanumeric characters.
+
+.. list-table:: Valid and invalid user credentials
+   :header-rows: 1
+
+   * - Field
+     - Valid
+     - Invalid
+     - Description
+   * - Username
+     - johndoe
+     - john#25
+     - only of alphanumeric characters are accepted (Aa-Zz0-9)
+   * - Password
+     - Ohngoo0alohz
+     - john123
+     - password must be at least 8 characters long
+
+If the username or password does not comply with above described rules, the login form display
+validation errors as you see below.
+
+.. image:: /_static/bacula-web-login-form-validation-errors.jpg
+
 Test page
 ---------
 
