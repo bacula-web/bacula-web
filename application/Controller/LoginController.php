@@ -22,6 +22,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Libs\Config;
+use App\Validator\LoginValidator;
 use Core\App\UserAuth;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -30,7 +31,6 @@ use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use Valitron\Validator;
 
 class LoginController
 {
@@ -80,28 +80,16 @@ class LoginController
         if ($request->getMethod() === 'POST') {
             $postData = $request->getParsedBody();
 
-            $form_data = [
-                'username' => $postData['username'],
-                'password' => $postData['password']
-            ];
+            $loginValidator = new LoginValidator($postData);
 
-            $v = new Validator($form_data, ['username', 'password']);
+            if (!$loginValidator->validate()) {
+                $validationErrors = $loginValidator->getErrors();
 
-            $v->rules([
-                'required' => [
-                    'username', 'password'
-                ],
-                'alphaNum' => ['username'],
-                'lengthMin' => [
-                    ['password', 8]
-                ]
-            ]);
-
-            if (!$v->validate()) {
-                $validationErrors = $v->errors();
-
+                /**
+                 * Set username in flash ONLY if it passed the validation
+                 */
                 if (!isset($validationErrors['username'])) {
-                    $this->session->getFlash()->add('username', $form_data['username']);
+                    $this->session->getFlash()->add('username', $postData['username']);
                 }
 
                 $this->session->getFlash()->set('errors', $validationErrors);
@@ -112,11 +100,11 @@ class LoginController
 
             } else {
                 // TODO: this should be the responsibility of the auth class
-                $this->session->set('user_authenticated', $this->userAuth->authUser($form_data['username'], $form_data['password']));
+                $this->session->set('user_authenticated', $this->userAuth->authUser($postData['username'], $postData['password']));
 
                 if ($this->userAuth->authenticated()) {
                     // TODO: this is not the responsibility of the login controller
-                    $this->session->set('username', $form_data['username']);
+                    $this->session->set('username', $postData['username']);
 
                     return $response
                         ->withHeader('Location', $this->basePath . '/')
@@ -124,7 +112,7 @@ class LoginController
                 } else {
                     // TODO: last auth error should come from the Auth class
                     $this->session->getFlash()->add('last_auth_error', 'Wrong username or password');
-                    $this->session->getFlash()->add('username', $form_data['username'] );
+                    $this->session->getFlash()->add('username', $postData['username'] );
 
                     return $response
                         ->withHeader('Location', $this->basePath . '/login')
