@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-present Davide Franco
+ * Copyright (C) 2017-present Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -22,6 +22,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Libs\Config;
+use App\Validator\VolumesRequestValidator;
 use Core\Db\CDBQuery;
 use Core\Db\DBPagination;
 use Core\Utils\CUtils;
@@ -31,11 +32,11 @@ use Date_HumanDiff;
 use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use TypeError;
 
 use function Core\Helpers\getRequestParams;
 
@@ -75,7 +76,17 @@ class VolumesController
 
         $volumeslist = [];
         $volumes_total_bytes = 0;
+        $volumeOrderBy = 'Name';
+        $volumeOrderByDirection = 'DESC';
         $where = null;
+
+        // Order by
+        $orderby = [
+            'Name' => 'Name',
+            'MediaId' => 'Id',
+            'VolBytes' => 'Bytes',
+            'VolJobs' => 'Jobs'
+        ];
 
         // Volumes status icon
         $volumestatus = [
@@ -101,42 +112,33 @@ class VolumesController
 
         $postData = getRequestParams($request);
 
-        if (isset($postData['filter_pool_id'])) {
-            $poolId = (int) $postData['filter_pool_id'];
-            if ($poolId !== 0) {
-                $where[] = 'Media.PoolId = :pool_id';
-                $params['pool_id'] = $poolId;
+        $volumesRequestValidator = new VolumesRequestValidator($postData);
+
+        if (!empty($postData)) {
+            if (!$volumesRequestValidator->validate()) {
+                $message = 'Invalid parameter(s) provided' ;
+                throw new HttpBadRequestException($request, $message);
+            } else {
+                $poolId = $postData['filter_pool_id'] ?? 0;
+                if ($poolId !== '0') {
+                    $where[] = 'Media.PoolId = :pool_id';
+                    $params['pool_id'] = (int) $poolId;
+                }
+
+                $tplData['pool_id'] = $poolId;
+
+                $tplData['orderby'] = $orderby;
+                $volumeOrderBy = $postData['filter_orderby'] ?? 'Name';
+                $tplData['orderby_selected'] = $volumeOrderBy;
+
+                $volumeOrderByDirection = $postData['filter_orderby_asc'] ?? 'DESC';
+                $tplData['orderby_asc_checked'] = $volumeOrderByDirection === 'ASC' ? 'checked' : '';
+
+                $where[] = 'Media.inchanger = :inchanger';
+                $params['inchanger'] = 1;
+                $tplData['inchanger_checked'] = isset($postData['filter_inchanger']) ? 'checked' : '';
             }
         }
-        $tplData['pool_id'] = $poolId ?? 0;
-
-        // Order by
-        $orderby = [
-            'Name' => 'Name',
-            'MediaId' => 'Id',
-            'VolBytes' => 'Bytes',
-            'VolJobs' => 'Jobs'
-        ];
-
-        // Set order by
-        $tplData['orderby'] = $orderby;
-
-        $volumeOrderBy = $postData['filter_orderby'] ?? 'Name';
-        $tplData['orderby_selected'] = $volumeOrderBy;
-
-        if (!array_key_exists($volumeOrderBy, $orderby)) {
-            throw new TypeError('Critical: Provided orderby parameter is not correct');
-        }
-
-        $volumeOrderByDirection = $postData['filter_orderby_asc'] ?? 'DESC';
-        $tplData['orderby_asc_checked'] = $volumeOrderByDirection === 'ASC' ? 'checked' : '';
-
-        if (isset($postData['filter_inchanger'])) {
-            $where[] = 'Media.inchanger = :inchanger';
-            $params['inchanger'] = 1;
-        }
-
-        $tplData['inchanger_checked'] = isset($postData['filter_inchanger']) ? 'checked' : '';
 
         $fields = [
             'Media.mediaid',
