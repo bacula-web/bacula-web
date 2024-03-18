@@ -63,7 +63,7 @@ return ['settings' => [
     }, ResponseFactoryInterface::class => function (App $app) {
         return $app->getResponseFactory();
     }, 'csrf' => function (ResponseFactoryInterface $responseFactory, CsrfErrorHandler $csrf) {
-        return new Guard($responseFactory, failureHandler: $csrf->handle($responseFactory), persistentTokenMode: false);
+        return new Guard($responseFactory, failureHandler: $csrf->handle($responseFactory), persistentTokenMode: true);
     }, JobTable::class => function (SessionInterface $session) {
         return new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     }, PoolTable::class => function (SessionInterface $session) {
