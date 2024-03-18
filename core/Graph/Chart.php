@@ -209,7 +209,7 @@ class Chart
 
         // Handle click event
         if ($this->type === 'pie' && !empty($this->linkedReport)) {
-            $blob .= 'chart.pie.dispatch.on("elementClick", function(e) { window.location = "/' . $this->linkedReport . '"; });';
+            $blob .= 'chart.pie.dispatch.on("elementClick", function(e) { window.location = "' . $this->linkedReport . '"; });';
         }
 
         $blob .= 'return chart;';

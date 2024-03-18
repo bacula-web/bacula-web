@@ -27,6 +27,7 @@ use App\Table\VolumeTable;
 use Core\Db\DatabaseFactory;
 use Exception;
 use Odan\Session\SessionInterface;
+use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
@@ -80,6 +81,11 @@ class HomeController
     public function prepare(Request $request, Response $response): Response
     {
         $tplData = [];
+
+        $routeContext = RouteContext::fromRequest($request);
+        $routeParser = $routeContext->getRouteParser();
+        $jobsPageUrl = $routeParser->fullUrlFor($request->getUri(), 'jobs');
+        $poolsPageUrl = $routeParser->fullUrlFor($request->getUri(), 'pools');
 
         $selectedPeriod = 'last_day';
         $postData = $request->getParsedBody();
@@ -161,7 +167,13 @@ class HomeController
             $jobs_status_data[] = array($status, $jobs_count);
         }
 
-        $last_jobs_chart = new Chart(array('type' => 'pie', 'name' => 'chart_lastjobs', 'data' => $jobs_status_data, 'linked_report' => 'jobs'));
+        $last_jobs_chart = new Chart([
+                'type' => 'pie',
+                'name' => 'chart_lastjobs',
+                'data' => $jobs_status_data,
+                'linked_report' => $jobsPageUrl
+            ]
+        );
         $tplData['last_jobs_chart_id'] = $last_jobs_chart->name;
 
         $tplData['last_jobs_chart'] = $last_jobs_chart->render();
@@ -200,7 +212,13 @@ class HomeController
             $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
         }
 
-        $pools_usage_chart = new Chart(array('type' => 'pie', 'name' => 'chart_pools_usage', 'data' => $vols_by_pool, 'linked_report' => 'pools'));
+        $pools_usage_chart = new Chart([
+                'type' => 'pie',
+                'name' => 'chart_pools_usage',
+                'data' => $vols_by_pool,
+                'linked_report' => $poolsPageUrl
+            ]
+        );
 
         $tplData['pools_usage_chart_id'] = $pools_usage_chart->name;
         $tplData['pools_usage_chart'] = $pools_usage_chart->render();
