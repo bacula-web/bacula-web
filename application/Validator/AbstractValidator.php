@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2024-present Davide Franco
  *
@@ -19,12 +17,14 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Validator;
 
 use Valitron\Validator;
 
-abstract class AbstractValidator {
-
+abstract class AbstractValidator
+{
     protected Validator $validator;
     protected array $rules;
 
