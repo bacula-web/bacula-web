@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2023-present Davide Franco
  *
@@ -19,6 +17,8 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App;
 
 use Closure;
@@ -34,7 +34,10 @@ class CsrfErrorHandler
     {
         return function () use ($responseFactory) {
             $response = $responseFactory->createResponse()->withStatus(403);
-            $response->getBody()->write('Invalid CSRF token, go back to <a href="/">Home page</a>');
+
+            $basePath = $_SERVER['BASE'] ?? null;
+
+            $response->getBody()->write('Invalid CSRF token, go back to <a href=' . $basePath . '/>Home page</a>');
             return $response;
         };
     }
