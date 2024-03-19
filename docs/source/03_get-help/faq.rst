@@ -154,9 +154,13 @@ For more details, please have a look at the `currently supported PHP version <ht
 Where can I download latest version of Bacula-Web ?
 ---------------------------------------------------
 
-There's no binary package (rpm, deb) that you can download from anywhere.
+Even I would love too, unfortunately, there's no rpm or deb binary package available (yet).
 
-The only "package" provided is a pre-installed Composer dependency package which is available in each `GitHub release notes <https://github.com/bacula-web/bacula-web/releases>`_
+I used to publish a "package" provided which were available in each releases `GitHub release notes <https://github.com/bacula-web/bacula-web/releases>`_
+
+But as it was causing more issues than really helping users, I decided to stop publishing this "package" (which consists only of pre-installed Composer dependencies).
+
+I may think again about this for a future major version.
 
 .. _troubleshoot-blank-page:
 
@@ -196,17 +200,14 @@ Bacula-Web is currently developed and tested under Centos 6 and Red Hat EL versi
 
 But it should work fine on your preferred Linux distributions as
 
-  * Debian/Ubuntu (or any kind of Debian based distros)
+  * Debian / Ubuntu (any deb based Linux OS)
+  * Fedora / Centos / Rocky Linux / AlmaLinux / Oracle Linux (any rpm based Linux OS)
   * Gentoo
   * Slackware
   * OpenSuse
-  * Fedora
-  * etc.
 
-Bacula-Web should work as well on XAMPP but without any warranty (not tested yet).
-
-If you intend to install Bacula-web on WAMP (Windows + Apache + PHP + MySQL), it should work without problems. 
-You just need to ensure that PHP has been compiled with the bacula's database support (MySQL, postgreSQL, SQLite) and PDO as well.
+I've never tried running Bacula-Web on MS Windows using XAMPP or WampServer, but I don't see anything blocking
+users to do it.
 
 In case you need further help, don't hesitate to get back to me by mail (bacula-dev at dflc dot ch)
 
@@ -241,11 +242,11 @@ or
 Does Bacula-Web can run on a system having SELinux enforced ?
 -------------------------------------------------------------
 
-The short answer is **yes**.
+Yes
 
-The long answer is below
+If you are facing issues while using SELinux in enforced mode, make sure bacula-web files and folders must have the correct SELinux context.
 
-If nothing seems to be working and you are using SELinux, please remember that you must have the correct contexts for the bacula-web files. Assuming you have installed the files in this directory
+Assuming you have installed the files in this directory
 
 :: 
 
@@ -270,4 +271,5 @@ How can I submit a bug and features report ?
 Bugs and feature requests are tracked using `GitHub issues <https://github.com/bacula-web/bacula-web/issues>`_.
 
 .. hint::
+
    You can find more information on how to submit a bug report :ref:`here <get-help/support>`
