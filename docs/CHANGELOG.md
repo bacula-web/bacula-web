@@ -1,5 +1,46 @@
 # Changelog
 
+## [9.5.0](https://github.com/bacula-web/bacula-web/compare/v9.4.1...v9.5.0) (2024-03-19)
+
+
+### 🐛 Bug Fixes
+
+* add missing basepath in csrf error page ([bc500f1](https://github.com/bacula-web/bacula-web/commit/bc500f1e3c74015439ab66b55164c23e4a2c926c))
+* auth setup command ([ca154d1](https://github.com/bacula-web/bacula-web/commit/ca154d12a1d1c9e02cd1a60ff9c2a6519be7214e)), closes [#214](https://github.com/bacula-web/bacula-web/issues/214)
+* catalog(s) drop-down with user auth disabled ([f8a5031](https://github.com/bacula-web/bacula-web/commit/f8a50311d359b018be883ec8a96574437aa946b0)), closes [#219](https://github.com/bacula-web/bacula-web/issues/219)
+* checkbox switches in settings page ([8740f5f](https://github.com/bacula-web/bacula-web/commit/8740f5f19fd508179371fbbd23aec32fa51fd853))
+* **docker:** php timezone not set ([c33b29b](https://github.com/bacula-web/bacula-web/commit/c33b29bb6498bb9d0b8c364da5fbe7046b33d939)), closes [#209](https://github.com/bacula-web/bacula-web/issues/209)
+* **docs:** fix(docs):  ([daf167c](https://github.com/bacula-web/bacula-web/commit/daf167c4d34b8941f4414e7f587021e545473097))
+* **docs:** fix apache and nginx versions ([82312e0](https://github.com/bacula-web/bacula-web/commit/82312e087126c97e1e3e91dc191c8f258ab33230))
+* **docs:** link to security in documentation ([a852836](https://github.com/bacula-web/bacula-web/commit/a852836974464827b438309d0c9cb22bcb8cd2cf))
+* **docs:** link to support guideline ([5017758](https://github.com/bacula-web/bacula-web/commit/5017758f5c015a54bd8e7b91e6f4fd18b4057202))
+* **docs:** missing lighttpd version ([3124d87](https://github.com/bacula-web/bacula-web/commit/3124d875e5d85058d68d99a220e5c1230bdbe0bb))
+* **docs:** update faq ([bcec4bc](https://github.com/bacula-web/bacula-web/commit/bcec4bce74b7ce1a6c609ef06f19bca5405bcbbc))
+* **docs:** update readme ([c258bc9](https://github.com/bacula-web/bacula-web/commit/c258bc9073ee655304f6df4138c9763eefe7538d))
+* fix invalid request parameters http response status code ([70360e1](https://github.com/bacula-web/bacula-web/commit/70360e1d91c7eae30fc320d0aebb1c1c9288eb85))
+* graphs link while using basepath ([be5dd0f](https://github.com/bacula-web/bacula-web/commit/be5dd0fdc9b162e2dae802686c317c3833e0dc14))
+* link to test page in error page ([e93b006](https://github.com/bacula-web/bacula-web/commit/e93b006a4f65b9e5d2c3127033148d3c948388e7))
+* missing base_path to resources ([#215](https://github.com/bacula-web/bacula-web/issues/215)) ([7923fb2](https://github.com/bacula-web/bacula-web/commit/7923fb234db2ebb2c57fb202264827180009f84a)), closes [#210](https://github.com/bacula-web/bacula-web/issues/210)
+* missing error on missing core database ([3ebee84](https://github.com/bacula-web/bacula-web/commit/3ebee8430ee94670989e01263fc8be6cdb179ced)), closes [#213](https://github.com/bacula-web/bacula-web/issues/213)
+* missing icons in login page ([20cbbe2](https://github.com/bacula-web/bacula-web/commit/20cbbe21deada71e75eccac606fadcd0d78f5341))
+* missing new line in job log text ([6bddc5a](https://github.com/bacula-web/bacula-web/commit/6bddc5a8adb34d40c0a0437a6ad3cedeef8e326d))
+* password constraint in password reset form ([7ecd357](https://github.com/bacula-web/bacula-web/commit/7ecd35706879ab4b01b87006962b809728adee06))
+* public assets not available on error page ([52b51af](https://github.com/bacula-web/bacula-web/commit/52b51af185c2441a1e162b2c0c1e837bc71fd158)), closes [#218](https://github.com/bacula-web/bacula-web/issues/218)
+* rename default locale folder ([978cce3](https://github.com/bacula-web/bacula-web/commit/978cce374f384c1adb311e03ad915e0e8def7d5b))
+* **security:** single csrf token per user session ([ef2f411](https://github.com/bacula-web/bacula-web/commit/ef2f411c89f98bcc013bf5e8745f74fe8e7786f4))
+* **security:** symfony twig-bridge ([bc0b10c](https://github.com/bacula-web/bacula-web/commit/bc0b10c3320a58779ae848ddb1bd229b97e55556))
+* specify bootstrap version ([9083bd0](https://github.com/bacula-web/bacula-web/commit/9083bd015881827663ae50daa3965df0754fe148))
+* statistics with timezone difference ([bffd655](https://github.com/bacula-web/bacula-web/commit/bffd655d7bb78b9be4a090ed686f703a91f49b7c))
+* update translations ([806172e](https://github.com/bacula-web/bacula-web/commit/806172e3affc59ab9afd1e2252c3a7338d8c55ad))
+
+
+### 🚀 Features
+
+* add back button on each pages ([fb3e0ed](https://github.com/bacula-web/bacula-web/commit/fb3e0ed8cd0c7d5ab8e0958dd8a408ded0a78a74)), closes [#220](https://github.com/bacula-web/bacula-web/issues/220)
+* add form validation errors to login form. ([daf167c](https://github.com/bacula-web/bacula-web/commit/daf167c4d34b8941f4414e7f587021e545473097))
+* **console:** display template cache full path using bwc check command ([d2838bd](https://github.com/bacula-web/bacula-web/commit/d2838bd8669c7140caa3ca32abaa2f62b1c84a8b))
+* **lang:** add english united kingdom ([f19ac17](https://github.com/bacula-web/bacula-web/commit/f19ac175272b8f7eeb5dd7fcc57782fec571d406))
+
 ## [9.4.1](https://github.com/bacula-web/bacula-web/compare/v9.4.0...v9.4.1) (2024-01-23)
 
 
