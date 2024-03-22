@@ -63,21 +63,14 @@ Bacula-Web use the following tools and libraries
 Component                    License
 ===========================  ================
 `PHP`_                       PHP License v3.01
+`Symfony`_                   MIT
+`Twig`_                      BSD-3-Clause
 `NVD3`_                      Apache v2
 `Bootstrap`_                 MIT
 `Font Awesome`_              CC BY 4.0
-`jQuery`_                    MIT
 `tempus-dominus`_            MIT
-`Valitron`_                  BSD-3-Clause
 `Date_HumanDiff`_            LGPL
-`phpdotenv`_                 BSD-3-Clause
-`PHP-DI`_                    MIT
-`Slim-PHP`_                  MIT
-`GuzzleHttp/psr7`_           MIT
-`Twig`_                      BSD-3-Clause
 `cocur/human-date`_          MIT
-`odan/session`_              MIT
-`Symfony Console`_           MIT
 ===========================  ================
 
 Supported browser
@@ -163,7 +156,6 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _NVD3: http://nvd3.org/
 .. _Bootstrap: http://getbootstrap.com/
 .. _Font Awesome: http://fontawesome.io/
-.. _jQuery: http://jquery.com
 .. _www.bacula.org: http://www.bacula.org
 .. _Slackware: http://www.slackware.com/
 .. _Gentoo: https://www.gentoo.org/
@@ -176,13 +168,7 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _Webacula: https://webacula.sourceforge.net/
 .. _list of GUI: https://www.bacula.org/manuals/en/console/console/GUI_Programs.html
 .. _tempus-dominus: https://github.com/Eonasdan/tempus-dominus
-.. _Valitron: https://github.com/vlucas/valitron
 .. _Date_HumanDiff: https://github.com/pear/Date_HumanDiff
-.. _phpdotenv: https://github.com/vlucas/phpdotenv
-.. _PHP-DI: https://github.com/PHP-DI/PHP-DI
-.. _Slim-PHP: https://github.com/slimphp/Slim
-.. _GuzzleHttp/psr7: https://github.com/guzzle/psr7
 .. _cocur/human-date: https://github.com/cocur/human-date
-.. _odan/session: https://github.com/odan/session
 .. _Twig: https://github.com/twigphp/Twig
-.. _Symfony Console: https://github.com/symfony/console
+.. _Symfony: https://github.com/symfony

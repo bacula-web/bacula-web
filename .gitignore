@@ -1,6 +1,5 @@
 # App
 composer.lock
-/vendor
 /application/views/cache/*.tpl
 /application/views/cache/*.php
 /application/config/config.php
@@ -20,8 +19,33 @@ public/icons/*
 # IDE & tools
 .idea
 .php-cs-fixer.cache
-.phpunit.result.cache
 
 # npm specific
 package-lock.json
 node_modules/*
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+.env
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
