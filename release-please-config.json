@@ -9,7 +9,7 @@
       "draft": true,
       "prerelease": false,
       "extra-files": [
-        "application/config/app",
+        "config/services.yaml",
         "docs/source/conf.py"
       ]
     }
