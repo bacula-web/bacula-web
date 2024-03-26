@@ -1,24 +1,15 @@
-# App
+# IDE & tools
+.idea
+.php-cs-fixer.cache
+
+# Composer
 composer.lock
-/application/views/cache/*.tpl
-/application/views/cache/*.php
+
 /application/config/config.php
 /application/assets/protected/application.db*
 
 # Documentation
 docs/build
-
-# Frontend sub-folders
-public/css/*
-public/js/*
-public/fonts/*
-public/webfonts/*
-public/img/*
-public/icons/*
-
-# IDE & tools
-.idea
-.php-cs-fixer.cache
 
 ###> symfony/framework-bundle ###
 /.env.local
