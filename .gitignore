@@ -20,10 +20,6 @@ public/icons/*
 .idea
 .php-cs-fixer.cache
 
-# npm specific
-package-lock.json
-node_modules/*
-
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -49,3 +45,10 @@ phpstan.neon
 /.phpcs-cache
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/assets/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
