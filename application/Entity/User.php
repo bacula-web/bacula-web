@@ -21,32 +21,45 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-class User
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+/**
+ * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Table(name="Users")
+ * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ */
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
-     * @var int
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="user_id")
      */
     private $id;
 
     /**
-     * @var string
+     * @ORM\Column(type="text", unique=true)
      */
     private string $username;
 
     /**
-     * @var string
-     */
-    private string $password;
-
-    /**
-     * @var string
+     * @ORM\Column(type="text")
      */
     private string $passwordhash;
 
     /**
-     * @var string
+     * @ORM\Column(type="text")
      */
     private string $email;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
     /**
      * @return int
@@ -70,7 +83,17 @@ class User
      */
     public function getUsername(): string
     {
-        return $this->username;
+        return (string) $this->username;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->username;
     }
 
     /**
@@ -95,16 +118,36 @@ class User
      */
     public function getPassword(): string
     {
-        return $this->password;
+        return $this->passwordhash;
     }
 
     /**
      * @param string $password
      * @return void
      */
-    public function setPassword(string $password)
+    public function setPassword(string $password): self
     {
-        $this->passwordhash = password_hash($password, CRYPT_BLOWFISH);
+        $this->passwordhash = $password;
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     /**
@@ -113,5 +156,15 @@ class User
     public function getPasswordHash(): string
     {
         return $this->passwordhash;
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

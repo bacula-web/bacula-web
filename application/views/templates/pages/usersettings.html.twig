@@ -3,19 +3,19 @@
 {% block title %}{{ 'User settings'|trans }}{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
+    <div class="container">
 
         {{ include('partials/_page_header.html.twig', {header: 'User settings'|trans, description:''}) }}
 
         <div class="row">
             <div class="col col-xs-6">
 
-                <h4>User details</h4>
+                <h4>User profile</h4>
 
                 <form action="{{ url_for('user') }}" method="post">
                     <div class="mb-3">
                         <label class="form-label" for="inputUsername">Username</label>
-                        <input name="username" value="{{ username }}" type="text" id="inputUsername"
+                        <input name="username" value="{{ app.user.username }}" type="text" id="inputUsername"
                                class="form-control"
                                placeholder="Username" aria-describedby="username_helpblock" disabled>
                         <div id="username_helpblock" class="form-text">Username can't be changed</div>
@@ -23,13 +23,12 @@
 
                     <div class="mb-3">
                         <label class="form-label" for="inputEmail">Email</label>
-                        <input name="email" value="{{ email }}" type="email" id="inputEmail" class="form-control"
+                        <input name="email" value="{{ app.user.email }}" type="email" id="inputEmail" class="form-control"
                                placeholder="Email address" readonly>
                         <div id="email_helpblock" class="form-text">This will come in a next version ;)</div>
                     </div>
 
                     <button class="btn btn-sm btn-primary pull-right" disabled="disabled" type="submit">Update</button>
-                    {{ csrf|raw }}
                 </form>
 
             </div>
@@ -40,7 +39,7 @@
 
                 <h4>Password management</h4>
 
-                <form action="{{ url_for('user') }}" method="post" data-toggle="validator">
+                <form action="{{ path('app_user_resetpassword') }}" method="post" data-toggle="validator">
                     <div class="form-group">
                         <label for="currentpass">Current password</label>
                         <input name="oldpassword" type="password" id="oldpassword" class="form-control"
@@ -61,7 +60,7 @@
 
                         <br/>
                         <button class="btn btn-sm btn-primary pull-right" type="submit">Reset password</button>
-                        {{ csrf|raw }}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                     </div>
                 </form>
             </div>

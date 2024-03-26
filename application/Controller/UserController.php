@@ -21,51 +21,46 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Table\UserTable;
-use Core\App\UserAuth;
-use Slim\Views\Twig;
-use Core\Helpers\Sanitizer;
-use Odan\Session\SessionInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class UserController
+class UserController extends AbstractController
 {
-    /**
-     * @var string
-     */
-    protected string $username = '';
-    private Twig $view;
-    private UserTable $userTable;
-    private UserAuth $userAuth;
-    private SessionInterface $session;
+    private EntityManagerInterface $entityManager;
 
-    /**
-     * @param Twig $view
-     * @param UserTable $userTable
-     * @param UserAuth $userAuth
-     * @param SessionInterface $session
-     */
-    public function __construct(Twig $view, UserTable $userTable, UserAuth $userAuth, SessionInterface $session)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->view = $view;
-        $this->userTable = $userTable;
-        $this->userAuth = $userAuth;
-        $this->session = $session;
+        $this->entityManager = $entityManager;
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
+     * @Route(name="app_user_profile", path="/profile")
+     *
+     * @return Response
+     */
+    public function index(): Response
+    {
+        return $this->render('pages/usersettings.html.twig' );
+    }
+
+    /**
+     * @Route(name="app_user_create", path="/user/create")
+     *
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function prepare(Request $request, Response $response): Response
+    public function create(): Response
     {
         $tplData = [];
         $postData = $request->getParsedBody();
@@ -76,30 +71,36 @@ class UserController
         $tplData['username'] = $this->username;
         $tplData['email'] = $user->getEmail();
 
-        // Check if password reset have been requested
-        if (isset($postData['action'])) {
-            switch (Sanitizer::sanitize($postData['action'])) {
-                case 'passwordreset':
-                    // Check if provided current password is correct
-                    if ($this->userAuth->authUser($user->getUsername(), $postData['oldpassword']) == 'yes') {
-                        // Reset password
-                        $result = $this->userTable->setPassword(
-                            $user->getUsername(),
-                            $postData['newpassword']
-                        );
+        return $this->view->render($response, 'pages/usersettings.html.twig', $tplData);
+    }
 
-                        if ($result !== false) {
-                            $this->session->getFlash()->set('info', ['Password successfully updated']);
-                        } else {
-                            $this->session->getFlash()->set('error', ['Password not updated']);
-                        }
-                    } else {
-                        $this->session->getFlash()->set('error', ['Current password is not valid']);
-                    }
-                    break;
-            }
+    /**
+     * @Route(path="/logout", name="app_logout")
+     *
+     */
+    public function logout(): void {}
+
+    /**
+     * @Route(path="/user/resetpassword", name="app_user_resetpassword", methods={"POST"})
+     *
+     * @param Request $request
+     * @param UserPasswordHasherInterface $passwordHasher
+     * @return RedirectResponse
+     */
+    public function resetPassword(Request $request, UserPasswordHasherInterface $passwordHasher): RedirectResponse
+    {
+        $currentPassword = $request->request->get('oldpassword');
+
+        if ($passwordHasher->isPasswordValid($this->getUser(), $currentPassword)) {
+            $newPassword = $request->request->get('newpassword');
+            $newPassword = $passwordHasher->hashPassword($this->getUser(), $newPassword);
+            $this->entityManager->getRepository(User::class)->upgradePassword($this->getUser(),$newPassword);
+
+            $this->addFlash('success', 'Password successfully updated');
+        } else {
+            $this->addFlash('danger', 'Provided current password is not valid');
         }
 
-        return $this->view->render($response, 'pages/usersettings.html.twig', $tplData);
+        return $this->redirectToRoute('app_user_profile');
     }
 }

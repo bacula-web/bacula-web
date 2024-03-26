@@ -1,10 +1,11 @@
-{% extends "layouts/blank.html.twig" %}
+{% extends "layouts/default.html.twig" %}
 
 {% block title %}{{ 'Login'|trans }}{% endblock %}
 
 {% block body %}
     <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
         <div class="container">
+
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="card-group d-block d-md-flex row">
@@ -12,63 +13,29 @@
                             <div class="card-body">
                                 <h1>Login</h1>
                                 <p class="text-medium-emphasis">Please sign in</p>
-                                <form method="POST" {% if errors is not empty %} class="was-validated" {% endif %}>
 
-                                    <label for="inputUsername" class="form-label">{{ 'Username'|trans }}</label>
-                                    <div class="input-group has-validation mb-4">
-                                        <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                                        <input class="form-control" type="text" name="username" id="inputUsername"
-                                               placeholder="" value="{{ username|first|default('') }}"
-                                               autofocus required>
-                                        <div class="invalid-feedback">
-                                            {% if errors.username is not empty %}
-                                                {{ errors.username|first }}
-                                            {% endif %}
-                                        </div>
-                                    </div>
+                                {{ form_start(form) }}
+                                    {{ form_row(form.username) }}
+                                    {{ form_row(form.password) }}
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                                    <label for="inputPassword" class="form-label">{{ 'Password'|trans }}</label>
-                                    <div class="input-group has-validation mb-4">
-                                        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                                        <input class="form-control" type="password" name="password" id="inputPassword"
-                                               placeholder="" required>
-                                            <div class="invalid-feedback">
-                                                {% if errors.password is not empty %}
-                                                    {{ errors.password|first }}
-                                                {% endif %}
-                                            </div>
-                                    </div>
+                                    <button class="btn btn-primary px-4" type="submit">Login</button>
+                                {{ form_end(form) }}
 
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <button class="btn btn-primary px-4" type="submit">Login</button>
-                                        </div>
-                                    </div>
-                                    {{ csrf|raw }}
-                                </form>
-
-                                {% if last_auth_error is not empty %}
+                                {% if error %}
                                     <p class="text-bg-danger p-2 mt-4">
-                                        <i class="fa-solid fa-triangle-exclamation"></i> {{ last_auth_error|first }}
+                                        <i class="fa-solid fa-triangle-exclamation"></i> {{ error.messageKey|trans(error.messageData, 'security') }}
                                     </p>
                                 {% endif %}
-
-                                {% if auth_info is not empty %}
-                                    <p class="text-bg-success p-2 mt-4">
-                                        <i class="fa-solid fa-circle-info"></i> {{ auth_info|first }}
-                                    </p>
-                                {% endif %}
-
                             </div>
                         </div>
 
                         <div class="card col-md-5 text-white bg-light py-5">
                             <div class="card-body text-center">
                                 <div>
-                                    <img class="img-fluid" src="{{ base_path() }}/img/bacula-web-logo.png"
-                                         alt="Bacula-Web logo"/>
+                                    <img class="img-fluid" src="{{ asset('assets/images/bacula-web-logo.png')}} " alt="Bacula-Web logo"/>
                                     <div>
-                                        <h2 class="text-text-black">{{ app_name }}</h2>
+                                        <h2 class="text-black">{{ app_name }}</h2>
                                     </div>
                                 </div>
                             </div>
