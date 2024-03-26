@@ -8,7 +8,9 @@
 
 <body>
 
-{{ include("partials/navbar.html.twig") }}
+{% if app.user %}
+    {{ include("partials/navbar.html.twig") }}
+{% endif %}
 
 <div class="container-fluid">
     {{ include('partials/flash.html.twig') }}

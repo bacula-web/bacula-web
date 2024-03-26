@@ -14,11 +14,9 @@
                         <a class="nav-link active" data-bs-toggle="tab" aria-current="page" href="#general">General
                             settings</a>
                     </li>
-                    {% if enable_users_auth != false %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="#users" data-bs-toggle="tab">Users</a>
-                        </li>
-                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#users" data-bs-toggle="tab">Users</a>
+                    </li>
                 </ul>
             </div>
 
@@ -45,6 +43,8 @@
                                 <input type="text" class="form-control" id="config_datetime_format_short"
                                        value="{{ config_datetime_format_short }}" disabled>
                             </div>
+
+                            {#
 
                             <h4 class="mt-4">Translations</h4>
 
@@ -102,8 +102,9 @@
                                 <input type="text" class="form-control" id="config_basepath"
                                        value="{{ config_basepath }}" disabled>
                             </div>
-                            {{ csrf|raw }}
+                            #}
                         </form>
+
                     </div>
 
                     <!-- Users tab -->
@@ -119,6 +120,7 @@
                                     <th>Action</th>
                                 </tr>
                                 </thead>
+
                                 {% for user in users %}
                                     <tr>
                                         <td>{{ user.username() }}</td>
@@ -133,35 +135,11 @@
 
                         <h4>Add user</h4>
 
-                        <form action="{{ url_for('adduser') }}" method="post" data-toggle="validator">
-                            <div class="mb-3">
-                                <label class="form-label" for="inputUsername">Username</label>
-                                <input class="form-control" name="username" type="text" id="inputUsername"
-                                       placeholder="username" aria-describedby="username_helpblock" required>
-                            </div>
+                        {{ form_start(new_user_form) }}
+                            {{ form_rest(new_user_form) }}
 
-                            <div class="mb-3">
-                                <label class="form-label" for="inputEmail">Email</label>
-                                <input class="form-control" name="email" value="" type="email" id="inputEmail"
-                                       placeholder="email address" data-error="Invalid email address" required>
-                                <div class="help-block with-errors"></div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="password">Password</label>
-                                <input class="form-control" name="password" type="password" id="password"
-                                       placeholder="password" data-minlength="8" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <input class="form-control" name="confirmPassword" type="password" id="confirmPassword"
-                                       placeholder="Confirm password" data-minlength="8" required>
-                                <div class="form-text">Password must be at least 8 characters</div>
-                            </div>
-
-                            <button class="btn btn-sm btn-primary pull-right" type="submit">Create</button>
-                            {{ csrf|raw }}
-                        </form>
+                            <button class="btn btn-sm btn-primary pull-right" type="submit">Create user</button>
+                        {{ form_end(new_user_form) }}
 
                     </div>
 

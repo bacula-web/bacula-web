@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ base_path() }}/">
-            <img src="{{ base_path() }}/img/bacula-web-logo.png" alt="Bacula-Web logo" width="22" height="24"
+        <a class="navbar-brand" href="{{ path('app_home') }}">
+            <img src="{{ asset('assets/images/bacula-web-logo.png') }}" alt="Bacula-Web logo" width="22" height="24"
                  class="d-inline-block align-top">
             {{ app_name }}
         </a>
@@ -12,25 +12,24 @@
 
         <div class="collapse navbar-collapse" id="navbarcollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                {% if user_authenticated == true or enable_users_auth == false %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                           aria-expanded="false">{{ 'Reports'|trans }}</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ base_path() }}/jobs">{{ 'Jobs'|trans }}</a></li>
-                            <li><a class="dropdown-item" href="{{ base_path() }}/pools">{{ 'Pools'|trans }}</a></li>
-                            <li><a class="dropdown-item" href="{{ base_path() }}/volumes">{{ 'Volumes'|trans }}</a></li>
-                            <li><a class="dropdown-item" href="{{ base_path() }}/backupjob">{{ 'Backup job'|trans }}</a>
-                            </li>
-                            <li><a class="dropdown-item" href="{{ base_path() }}/client">{{ 'Client'|trans }}</a></li>
-                            <li><a class="dropdown-item"
-                                   href="{{ base_path() }}/directors">{{ 'Director(s)'|trans }}</a></li>
-                        </ul>
-                    </li>
-                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                       aria-expanded="false">{{ 'Reports'|trans }}</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_jobs') }}">{{ 'Jobs'|trans }}</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_pools') }}">{{ 'Pools'|trans }}</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_volumes') }}">{{ 'Volumes'|trans }}</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_backupjob') }}">{{ 'Backup job'|trans }}</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ path('app_clients') }}">{{ 'Client'|trans }}</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_directors') }}">{{ 'Director(s)'|trans }}</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
 
             <div class="d-lg-flex col-lg-3 justify-content-lg-end">
+                {#
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i
@@ -38,7 +37,8 @@
                         <ul class="dropdown-menu">
                             {% for catalog_id, catalog_name in catalogs %}
                                 <li>
-                                    <a class="dropdown-item" href="{{ url_for('home') }}?catalog_id={{ catalog_id }}">
+                                    <!-- TODO: fix url below -->
+                                    <a class="dropdown-item" href="{{ path('app_home') }}?catalog_id={{ catalog_id }}">
                                         {% if catalog_id == catalog_current_id %}
                                             <i class="fa fa-check fa-fw"></i>
                                         {% else %}
@@ -49,36 +49,30 @@
                         </ul>
                     </li>
                 </ul>
+                #}
 
                 <ul class="navbar-nav">
-                    {% if user_authenticated is not empty %}
-                        {% if enable_users_auth == true and user_authenticated == true %}
-                            <li class="nav-item dropdown dropstart">
+                    <li class="nav-item dropdown dropstart">
 
-                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                   aria-expanded="false"><i class="fa-solid fa-user"></i>
-                                    {{ username }}
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                           aria-expanded="false"><i class="fa-solid fa-user"></i>
+                            {{ app.user.userIdentifier }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_user_profile') }}"
+                                   title="User settings">
+                                    <i class="fa fa-wrench fa-fw"></i> {{ 'User settings'|trans }}
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="{{ url_for('user') }}" title="User settings">
-                                            <i class="fa fa-wrench fa-fw"></i> {{ 'User settings'|trans }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <form class="navbar-form navbar-left" action="{{ base_path() }}/signout"
-                                              method="POST">
-                                            <input class="form-control" type="hidden" name="action" value="logout">
-                                            <button type="submit" class="btn btn-sm btn-light ms-2" title="Sign out">
-                                                <i class="fa fa-sign-out fa-lg"></i> {{ 'Sign out'|trans }}
-                                            </button>
-                                            {{ csrf|raw }}
-                                        </form>
-                                    </li>
-                                </ul>
                             </li>
-                        {% endif %}
-                    {% endif %}
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_logout') }}"
+                                   title="Sign out">
+                                    <i class="fa fa-sign-out fa-lg"></i> {{ 'Sign out'|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
 
                 <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
@@ -86,7 +80,6 @@
             </div>
 
         </div>
-
     </div>
 </nav>
 
@@ -98,10 +91,12 @@
     <div class="offcanvas-body">
         <h6>{{ 'Settings'|trans }}</h6>
 
-        <a class="btn btn-primary m-1 w-100" href="{{ base_path() }}/settings" title="Settings"><i
+        {# <a class="btn btn-primary m-1 w-100" href="{{ base_path() }}/settings" title="Settings"><i #}
+        <a class="btn btn-primary m-1 w-100" href="/settings" title="Settings"><i
                     class="fa fa-cogs fa-fw"></i> {{ 'Settings'|trans }}</a>
 
-        <a class="btn btn-success m-1 w-100" href="{{ base_path() }}/test" title="Display the test page"><i
+        {# <a class="btn btn-success m-1 w-100" href="{{ base_path() }}/test" title="Display the test page"><i #}
+        <a class="btn btn-success m-1 w-100" href="/test" title="Display the test page"><i
                     class="fa fa-wrench fa-fw"></i> {{ 'Test page'|trans }}</a>
 
         <hr>

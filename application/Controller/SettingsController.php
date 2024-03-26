@@ -21,78 +21,46 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Libs\Config;
-use App\Table\UserTable;
-use Slim\Views\Twig;
-use Core\Exception\AppException;
-use Core\Helpers\Sanitizer;
-use Odan\Session\SessionInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
-use Valitron\Validator;
+use App\Entity\User;
+use App\Form\CreateUserFormType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
-class SettingsController
+class SettingsController extends AbstractController
 {
-    /**
-     * @var Twig
-     */
-    private Twig $view;
+    private $entityManager;
 
-    private UserTable $userTable;
-
-    /**
-     * @var SessionInterface
-     */
-    private SessionInterface $session;
-
-    /**
-     * @var ?string
-     */
-    private ?string $basePath;
-
-    private Config $config;
-
-    /**
-     * @param Twig $view
-     * @param UserTable $userTable
-     * @param SessionInterface $session
-     * @param Config $config
-     */
-    public function __construct(Twig $view, UserTable $userTable, SessionInterface $session, Config $config)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->view = $view;
-        $this->userTable = $userTable;
-        $this->session = $session;
-        $this->config = $config;
-
-        $this->basePath = $this->config->get('basepath', null);
+        $this->entityManager = $entityManager;
     }
 
     /**
+     * @Route(path="/settings", name="app_settings")
+     *
      * @param Request $request
-     * @param Response $response
+     * @param ParameterBagInterface $parameterBag
+     * @param UserPasswordHasherInterface $userPasswordHasher
      * @return Response
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      */
-    public function index(Request $request, Response $response): Response
+    public function index(
+        Request $request,
+        ParameterBagInterface $parameterBag,
+        UserPasswordHasherInterface $userPasswordHasher
+    ): Response
     {
-        $tplData = [];
+        $users = $this->entityManager->getRepository(User::class)->findAll();
 
-        $tplData['config_datetime_format'] = $this->config->get('datetime_format', 'Y-m-d H:i:s (default value)');
+        $configDatetimeFormat = $parameterBag->get('app_datetime_format') ?? 'Y-m-d H:i:s';
 
-        if ($this->config->has('datetime_format_short') ) {
-            $tplData['config_datetime_format_short'] = $this->config->get('datetime_format_short');
-        } else {
-            $datetimeFormatShort = explode(' ',
-                $this->config->get('datetime_format', 'Y-m-d H:i:s'));
-            $tplData['config_datetime_format_short'] = $datetimeFormatShort[0] . ' (default value)';
-        }
+        $configDateTimeFormatShort = $parameterBag->get('app_datetime_format_short') ?? 'Y-m-d';
 
+        /*
         // Check if language is set
         $tplData['config_language'] = $this->config->get('language', 'en_US (default value)');
 
@@ -121,19 +89,6 @@ class SettingsController
             $config_enable_users_auth = $this->config->get('enable_users_auth');
         }
 
-        /**
-         * TODO: split users in a different controller/page
-         */
-
-        if ($config_enable_users_auth === true) {
-            // Get users list
-            $tplData['users'] = $this->userTable->getAll();
-
-            $tplData['config_enable_users_auth'] = 'checked';
-        } else {
-            $tplData['config_enable_users_auth'] = '';
-        }
-
         // Parameter <debug> is disabled by default (in case is not specified in config file)
         $config_debug = false;
 
@@ -146,7 +101,10 @@ class SettingsController
         } else {
             $tplData['config_debug'] = '';
         }
+        */
 
+        /*
+         * TODO: remove $basepath from user config and make sure documentation is updated
         $configBasePath = $this->config->get('basepath', null);
 
         if ($configBasePath == null) {
@@ -154,56 +112,30 @@ class SettingsController
         } else {
             $tplData['config_basepath'] = $configBasePath;
         }
+        */
+        $user = new User();
+        $newUserForm = $this->createForm(CreateUserFormType::class, $user);
 
-        return $this->view->render($response, 'pages/settings.html.twig', $tplData);
-    }
+        $newUserForm->handleRequest($request);
 
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function addUser(Request $request, Response $response): Response
-    {
-        $postData = $request->getParsedBody();
-        $result = false;
+        if ($newUserForm->isSubmitted() && $newUserForm->isValid()) {
+            $user->setPassword($userPasswordHasher->hashPassword(
+                $user,
+                $newUserForm->get('password')->getData()
+            ));
+            
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
-        $form_data = [
-            'username' => Sanitizer::sanitize($postData['username']),
-            'password' => $postData['password'],
-            'confirmPassword' => $postData['confirmPassword'],
-            'email' => Sanitizer::sanitize($postData['email'])
-        ];
-
-        $v = new Validator($form_data);
-
-        $v->rule('required', ['username', 'password', 'confirmPassword', 'email']);
-        $v->rule('alphaNum', 'username');
-        $v->rule('lengthMin', 'password', 8);
-        $v->rule('email', 'email');
-        $v->rule('equals','password', 'confirmPassword')->message('Both passwords must match');
-
-        if (!$v->validate()) {
-            $validationErrors = $v->errors();
-            foreach($validationErrors as $error) {
-                $this->session->getFlash()->add('error', $error[0]);
-            }
-        } else {
-            $result = $this->userTable->addUser(
-                $form_data['username'],
-                $form_data['email'],
-                $form_data['password']
-            );
+            $this->addFlash('success', 'User successfully created');
+            return $this->redirectToRoute('app_settings');
         }
 
-        if ($result !== false) {
-            $this->session->getFlash()->set('info', ['User successfully created']);
-        }
-
-        $this->session->save();
-
-        return $response
-            ->withHeader('Location', $this->basePath . '/settings')
-            ->withStatus(302);
+        return $this->render('pages/settings.html.twig', [
+            'users' => $users,
+            'config_datetime_format' => $configDatetimeFormat,
+            'config_datetime_format_short' => $configDateTimeFormatShort,
+            'new_user_form' => $newUserForm->createView()
+        ]);
     }
 }
