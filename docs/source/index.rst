@@ -43,10 +43,17 @@ The :ref:`How to get help <gethelp/index>` section should also contain some info
 
 .. toctree::
    :hidden:
-   :caption: About
-   :maxdepth: 2
+   :caption: Install & Upgrade
+   :maxdepth: 1
 
-   01_about/index
+   02_install/index
+   02_install/upgrade
+
+.. toctree::
+   :caption: Admin guide
+   :maxdepth: 1
+
+   admin-guide/index
 
 .. toctree::
    :hidden:
@@ -67,13 +74,13 @@ The :ref:`How to get help <gethelp/index>` section should also contain some info
 .. toctree::
    :hidden:
    :caption: Get help
-   :maxdepth: 2
+   :maxdepth: 1
 
    03_get-help/index
 
 .. toctree::
    :hidden:
    :caption: Contribute
-   :maxdepth: 2
+   :maxdepth: 1
 
    04_contribute/index

@@ -1,14 +1,16 @@
 .. _about/index:
 
-#####
-About
-#####
+#################
+About the project
+#################
+
+Add some explanations here please
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    about
    features
-   release
    license
+   release
    security

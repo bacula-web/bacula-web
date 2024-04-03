@@ -83,7 +83,7 @@
     "squizlabs/php_codesniffer": "@stable",
     "phpunit/phpunit": "9.5.26",
     "phpstan/phpstan": "^1.10",
-    "symfony/var-dumper": "^5.4"
+    "symfony/var-dumper": "^5.4",
     "symfony/apache-pack": "^1.0",
     "symfony/maker-bundle": "^1.43",
     "symfony/debug-bundle": "^5.4",

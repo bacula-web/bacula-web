@@ -4,8 +4,12 @@
 Contributor guide
 *****************
 
-.. toctree::
-   :maxdepth: 2
+This section contains information for contributors.
 
-   translations
+Whether you would like to contribute to the code, or update translations, use one of the link below.
+
+.. toctree::
+   :maxdepth: 1
+
    development
+   translations

@@ -1,11 +1,13 @@
-.. _gethelp/index:
+.. _get-help/index:
 
 ########
 Get help
 ########
 
-.. toctree::
-   :maxdepth: 2
+This section contains the :ref:`frequently asked question <get-help/faq>` and how to :ref:`get support <get-help/support>`.
 
-   support
+.. toctree::
+   :maxdepth: 1
+
    faq
+   support
