@@ -4,57 +4,49 @@
 Frequently asked questions
 **************************
 
-Here's below a summary of most frequently asked questions that might help you to install, upgrade, troubleshoot or contribute to Bacula-Web project
+This page contain the answer to the most frequent questions from community users organised by topics.
 
 General topics
 ==============
 
-  * :ref:`Which web browsers can be used with Bacula-Web ?<supported-web-browser>`
-  * :ref:`Which version of Bacula can be used with Bacula-Web ?<supported-bacula-version>`
-  * :ref:`Which Bacula catalog database engine are supported by Bacula-Web ?<supported-db>`
-  * :ref:`What's the current status of Bacula-Web ?<current-status>`
-  * :ref:`Why reviving Bacula-Web project ?<project-revive>`
-  * :ref:`How much does Bacula-Web cost ? Is it free of charge ?<project-license>`
+What is Bacula-Web ?
+--------------------
 
-Installation
-============
+Bacula-Web goal is to provide a reporting and monitoring solution for your Bacula backup infrastructure.
+It provides useful information about Bacula Jobs, Pools, Volumes, clients, etc.
 
-  * :ref:`What do I need to install and run Bacula-Web ? <requirements>`
-  * :ref:`Which version of PHP is supported ?<supported-php-version>`
-  * :ref:`Where can I download latest version of Bacula-Web ?<download-latest-version>`
-  * :ref:`After installing Bacula-Web, I only get a blank page, what could be wrong ?<troubleshoot-blank-page>`
-  * :ref:`On which OS can I install Bacula-Web ?<supported-os>`
-  * :ref:`Why I cannot connect to remote database server with SELinux enforced ?<troubleshoot-selinux>`
-  * :ref:`Does Bacula-Web can run on a system having SELinux enforced ?<troubleshoot-selinux-enforced>`
+How much does Bacula-Web cost ? Is it free of charge ?
+------------------------------------------------------
 
-Support
-=======
+**Do I need to pay anything to use it ?**
 
-  * :ref:`How can I submit a bug report or a feature request ?<bug-feature-request>`
+Nope, I'm glad to say that Bacula-Web, as an open source project, can be downloaded and used without any costs, and it always will be.
 
-Answers
-=======
+**What about the license ?**
 
-.. _supported-web-browser:
+Unless it's clearly written, Bacula-Web project source code, documentations, logo, website, etc. are released under the terms of GPLv2 (for more details, see `LICENSE <https://github.com/bacula-web/bacula-web/blob/master/LICENSE>`_)
 
-Which web browsers can be used with Bacula-Web ?
-------------------------------------------------
 
-Bacula-Web is compatible with almost all well known web browser. The only thing you’ve to worry about is to make sure that Javascript is enabled.
+Does Bacula-Web supports any web browser ?
+------------------------------------------
 
-Before releasing a new version, I usually make some tests with latest version of Firefox, Chrome and Brave.
-Don't hesitate to share your experience with any other web browser by giving to me feedback.
+As far as I know, Bacula-Web there is no known compatibility issue with any recent web browser.
 
-.. _supported-bacula-version:
+Bacula-Web works without problem using latest version of Chrome, Firefox, Brave (used during development process).
 
-Which version of Bacula can be used with Bacula-Web ?
------------------------------------------------------
+If you would like to share some feedback using a specific one, don't hesitate to share your experience with any other web browser by giving to `a feedback <https://github.com/bacula-web/bacula-web/discussions>`_.
+
+The only thing you’ve to worry about is to make sure that Javascript is not disabled.
+
+Which version of Bacula are supported ?
+---------------------------------------
 
 You can use Bacula-Web with any version of Bacula.
 
-But, if you encounter any problems with a specific version of Bacula, then feel free to submit a bug report and I'll do my best to help you or make a bug fix.
+.. note::
+    You may face problems while using really old or latest versions of Bacula.
 
-.. _supported-db:
+    If you face any problem, feel free to submit a bug report and I'll do my best to help you or make a bug fix.
 
 Which Bacula catalog database engine are supported by Bacula-Web ?
 ------------------------------------------------------------------
@@ -63,22 +55,35 @@ As of current version of Bacula-Web (version 9.4.0), Bacula catalog running with
 
 .. important::
 
-   Support of Bacula catalog using SQLite are not supported as of v9.4.0
+    Support for SQLite Bacula catalog was removed on version v9.4.0
 
-.. _current-status:
+On which OS can I install Bacula-Web ?
+--------------------------------------
+
+Bacula-Web is currently developed and tested under Centos 6 and Red Hat EL version 5.
+
+But it should work fine on your preferred Linux distributions as
+
+  * Debian / Ubuntu (any deb based Linux OS)
+  * Fedora / Centos / Rocky Linux / AlmaLinux / Oracle Linux (any rpm based Linux OS)
+  * Gentoo
+  * Slackware
+  * OpenSuse
+
+I've never tried running Bacula-Web on MS Windows using XAMPP or WampServer, but I don't see anything blocking
+users to do it.
+
+In case you need further help, don't hesitate to get back to me by mail (bacula-dev at dflc dot ch)
 
 What's the current status of Bacula-Web ?
 -----------------------------------------
 
-As described in the :ref:`about/about` section, I revived the Bacula-Web project since end of 2010 after few years without bug fixes and improvements.
-As you already know, a lot of effort has been made a provide more stable, secure and useful tool.
+As described in the :ref:`about/about` section, I revived the Bacula-Web project since end of 2010 after few years without bug fixes and improvements,
+and a lot of effort has been made a provide more stable, secure and useful tool, with the precious help from the `community <https://github.com/bacula-web/bacula-web/graphs/contributors>`_.
 
-But there's still a lot of things to do but since version 5.1.0 alpha, Bacula-Web is slightly stable.
+**So what is the current status ?**
 
-For people that use Bacula-Web on a daily basis, you already know that they're a lot improvement to achieve.
-That's what I'll try to do on my spare time and hope you'll enjoy
-
-.. _project-revive:
+Despite the fact that I think there's still a lot to potential improvements, latest released version is stable and bug free.
 
 Why reviving Bacula-Web project ?
 ---------------------------------
@@ -112,44 +117,25 @@ I do use Bacula-Web for personal usage several time per week, and the idea was s
   * Improved design
   * Fixed some SQL query bugs (MySQL and postgreSQL)
 
-.. _project-license:
-
-How much does Bacula-Web cost ? Is it free of charge ?
-------------------------------------------------------
-
-**Bacula-Web is open source**
-
-Bacula-Web source code, documentations, logo, website, etc. are released under the terms of GPLv2 (for more details, see `LICENSE <https://github.com/bacula-web/bacula-web/blob/master/LICENSE>`_)
-
-**Bacula-Web is free**
-
-I'm glad to say that Bacula-Web is open source and free (like a bird).
-
-If you find Bacula-Web useful and would like to encourage the project's efforts, Then I'd be happy to see you part of
-the list of bakers. Use `this link <https://www.buymeacoffee.com/baculaweb>`_ if you want to know more about it.
 
 Installation
-------------
-
-.. _requirements:
+============
 
 What are the requirements to use Bacula-Web on my server ?
 ----------------------------------------------------------
 
 A full :ref:`list of requirements <install/requirements>` is documented in the documentation section.
 
-.. _supported-php-version:
-
 Which version of PHP is supported ?
 -----------------------------------
 
 As of Bacula-Web version 9.0.0, the required PHP version is version <= 8.0
 
-.. important:: PHP versions prior to 8.0 are not supported anymore, theses versions no longer have security support and are exposed to non patched security vulnerabilities.
+.. important::
 
-For more details, please have a look at the `currently supported PHP version <http://php.net/supported-versions.php>`_ (PHP.net website)
+    PHP versions prior to 8.0 are EOL, theses versions no longer have security support and are exposed to non patched security vulnerabilities.
 
-.. _download-latest-version:
+    For more details, please have a look at the `currently supported PHP version <http://php.net/supported-versions.php>`_ (PHP.net website)
 
 Where can I download latest version of Bacula-Web ?
 ---------------------------------------------------
@@ -160,9 +146,23 @@ I used to publish a "package" provided which were available in each releases `Gi
 
 But as it was causing more issues than really helping users, I decided to stop publishing this "package" (which consists only of pre-installed Composer dependencies).
 
-I may think again about this for a future major version.
+But, I may think again about this for a future major version.
 
-.. _troubleshoot-blank-page:
+Support
+=======
+
+How can I submit a bug and features report ?
+--------------------------------------------
+
+Bugs and feature requests are tracked using `GitHub issues <https://github.com/bacula-web/bacula-web/issues>`_.
+
+.. hint::
+
+   You can find more information on how to submit a bug report :ref:`here <get-help/support>`
+
+
+Troubleshooting
+===============
 
 After installing Bacula-Web, I only get a blank page, what could be wrong ?
 ---------------------------------------------------------------------------
@@ -191,28 +191,6 @@ Also, make sure you ran Bacula-Web console check tool
 
 If above instructions didn't help, then you can get some help by creating an issue on the `GitHub project <https://github.com/bacula-web/bacula-web/issues>`_
 
-.. _supported-os:
-
-On which OS can I install Bacula-Web ?
---------------------------------------
-
-Bacula-Web is currently developed and tested under Centos 6 and Red Hat EL version 5.
-
-But it should work fine on your preferred Linux distributions as
-
-  * Debian / Ubuntu (any deb based Linux OS)
-  * Fedora / Centos / Rocky Linux / AlmaLinux / Oracle Linux (any rpm based Linux OS)
-  * Gentoo
-  * Slackware
-  * OpenSuse
-
-I've never tried running Bacula-Web on MS Windows using XAMPP or WampServer, but I don't see anything blocking
-users to do it.
-
-In case you need further help, don't hesitate to get back to me by mail (bacula-dev at dflc dot ch)
-
-.. _troubleshoot-selinux:
-
 Why I can't connect to remote db server with SELinux enforced ?
 ---------------------------------------------------------------
 
@@ -237,12 +215,13 @@ or
 
   $ sudo setenforce disabled
 
-.. _troubleshoot-selinux-enforced:
+  * :ref:`Does Bacula-Web can run on a system having SELinux enforced ?<troubleshoot-selinux-enforced>`
+
 
 Does Bacula-Web can run on a system having SELinux enforced ?
 -------------------------------------------------------------
 
-Yes
+Short answer, Yes
 
 If you are facing issues while using SELinux in enforced mode, make sure bacula-web files and folders must have the correct SELinux context.
 
@@ -260,16 +239,11 @@ you can fix the SELinux context by running the command below
 
 Otherwise, the simplest would be to set SELinux to Permissive or Disabled
 
-Support
--------
 
-.. _bug-feature-request:
+Support the project
+===================
 
-How can I submit a bug and features report ?
---------------------------------------------
+.. note::
 
-Bugs and feature requests are tracked using `GitHub issues <https://github.com/bacula-web/bacula-web/issues>`_.
-
-.. hint::
-
-   You can find more information on how to submit a bug report :ref:`here <get-help/support>`
+    If you find Bacula-Web useful and would like to encourage the project's efforts, Then I'd be happy to see you part of
+    the list of bakers. Use `this link <https://www.buymeacoffee.com/baculaweb>`_ if you want to know more about it.
