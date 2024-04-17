@@ -5,7 +5,7 @@
                  class="d-inline-block align-top">
             {{ app_name }}
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarcollapse"
                 aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -38,7 +38,6 @@
                         <ul class="dropdown-menu">
                             {% for catalog_id, catalog_name in catalogs %}
                                 <li>
-                                    <!-- TODO: fix url below -->
                                     <a class="dropdown-item" href="{{ url_for('home') }}?catalog_id={{ catalog_id }}">
                                         {% if catalog_id == catalog_current_id %}
                                             <i class="fa fa-check fa-fw"></i>
