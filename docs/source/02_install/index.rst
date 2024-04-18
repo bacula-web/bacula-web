@@ -1,8 +1,8 @@
-.. _install/index:
+.. _getting-started:
 
-#####################
-Installation overview
-#####################
+###############
+Getting started
+###############
 
 Before starting the installation of Bacula-Web, please you meet the requirements listed below
 
@@ -35,13 +35,3 @@ Once Bacula-Web web application is installed, follow :ref:`these instructions <i
 **Important:** If you have not disabled user authentication, **YOU MUST** :ref:`follow the final steps<install/finalize>` which will setup the user authentication database for you
 
 To make sure your setup is in good shape, follow instructions in the :ref:`test chapter<install/test>`
-
-.. toctree::
-   :maxdepth: 2
-
-   requirements
-   installcomposer
-   webserver-setup
-   configure
-   finalize
-   test
