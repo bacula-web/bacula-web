@@ -135,8 +135,10 @@ class VolumesController
                 $volumeOrderByDirection = $postData['filter_orderby_asc'] ?? 'DESC';
                 $tplData['orderby_asc_checked'] = $volumeOrderByDirection === 'ASC' ? 'checked' : '';
 
-                $where[] = 'Media.inchanger = :inchanger';
-                $params['inchanger'] = 1;
+                if (isset($postData['filter_inchanger'])) {
+                    $where[] = 'Media.inchanger = :inchanger';
+                    $params['inchanger'] = 1;
+                }
                 $tplData['inchanger_checked'] = isset($postData['filter_inchanger']) ? 'checked' : '';
             }
         }
