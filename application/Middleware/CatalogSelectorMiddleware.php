@@ -61,9 +61,6 @@ class CatalogSelectorMiddleware implements MiddlewareInterface
             $this->session->set('catalog_id', 0);
         }
 
-        /**
-         * TODO: check user input here
-         */
         $params = $request->getQueryParams();
         $catalogId = $this->session->get('catalog_id');
 
