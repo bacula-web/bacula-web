@@ -85,18 +85,18 @@ Install Apache and PHP
 
    With MySQL support
    
-   $ sudo apt-get install php7.0-mysql
+   $ sudo apt-get install php-mysql
 
    With postgreSQL support
 
-   $ sudo apt-get install php7.0-pgsql
-
-.. note:: On older Debian or Ubuntu versions, you need to use PHP 5
-
-   $ sudo apt-get install apache2 libapache2-mod-php5 php5-sqlite 
+   $ sudo apt-get install php-pgsql
 
 Install requirements on FreeBSD
 -------------------------------
+
+.. warning::
+
+    Instructions below are outdated, for more accurate instructions, please look at the `Bacula-Web port on FreshPorts.org <https://www.freshports.org/www/bacula-web/>`_
 
 You can start with a fresh FreeBSD 9.0 installation, with ports from original CD media, not updated to keep as simple as possible.
 
@@ -189,7 +189,9 @@ with the content below
      ServerName bacula-web.domain.com
          
      <Directory /var/www/html/bacula-web/public>
+       Options Indexes FollowSymLinks
        AllowOverride All
+       Require all granted
      </Directory>
 
      # More directives here ...
@@ -202,7 +204,6 @@ You might need to adapt Bacula-Web installation path in the above configuration 
 Enable the configuration
 
 ::
-
     $ sudo a2ensite bacula-web
 
 Then restart Apache to apply the configuration change
@@ -210,8 +211,7 @@ Then restart Apache to apply the configuration change
 **Red Hat / Centos / Fedora**
 
 ::
-
-   $ sudo /etc/init.d/httpd restart
+    $ sudo /etc/init.d/httpd restart
 
 **Debian / Ubuntu**
 
