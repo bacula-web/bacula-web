@@ -88,6 +88,8 @@ class VolumesController
             'VolJobs' => 'Jobs'
         ];
 
+        $tplData['orderby'] = $orderby;
+
         // Volumes status icon
         $volumestatus = [
             'Full' => 'fa-battery-full',
@@ -127,7 +129,6 @@ class VolumesController
 
                 $tplData['pool_id'] = $poolId;
 
-                $tplData['orderby'] = $orderby;
                 $volumeOrderBy = $postData['filter_orderby'] ?? 'Name';
                 $tplData['orderby_selected'] = $volumeOrderBy;
 
