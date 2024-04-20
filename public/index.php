@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -18,6 +16,8 @@ declare(strict_types=1);
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+declare(strict_types=1);
 
 use App\Controller\BackupJobController;
 use App\Controller\ClientController;
@@ -68,7 +68,7 @@ try {
     if (!is_null($basePath)) {
         $app->setBasePath($basePath);
     }
-} catch(ConfigFileException $e) {
+} catch (ConfigFileException $e) {
     $exceptionRenderer = new ExceptionRenderer();
     http_response_code(500);
     die($exceptionRenderer($e, false));
@@ -99,7 +99,6 @@ $app->group('', function (RouteCollectorProxy $group) {
     $group->map(['GET', 'POST'], '/client', [ClientController::class, 'index']);
 
     $group->map(['GET', 'POST'], '/user', [UserController::class, 'prepare'])->setName('user');
-
 })->add(DbAuthMiddleware::class);
 
 $app->group('', function (RouteCollectorProxy $group) {
@@ -108,7 +107,9 @@ $app->group('', function (RouteCollectorProxy $group) {
     $group->post('/login', [LoginController::class, 'index']);
 })->add(GuestMiddleware::class);
 
-$app->add(CsrfMiddleware::class)
+$app
+    ->add(\App\Middleware\ClickJackingProtectionMiddleware::class)
+    ->add(CsrfMiddleware::class)
     ->add(CatalogSelectorMiddleware::class)
     ->add(RefererMiddleware::class)
     ->add(TrailingSlashMiddleware::class)
@@ -119,7 +120,7 @@ $app->add(CsrfMiddleware::class)
 
 // Add Error Middleware
 $isDebug = $container->get(Config::class)->get('debug', false);
-$errorMiddleware = $app->addErrorMiddleware( $isDebug, $isDebug, $isDebug);
+$errorMiddleware = $app->addErrorMiddleware($isDebug, $isDebug, $isDebug);
 
 $errorHandler = $errorMiddleware->getDefaultErrorHandler();
 $errorHandler->registerErrorRenderer('text/html', ExceptionRenderer::class);
