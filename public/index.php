@@ -36,6 +36,7 @@ use App\Middleware\CsrfMiddleware;
 use App\Middleware\DbAuthMiddleware;
 use App\Middleware\FlashMiddleware;
 use App\Middleware\GuestMiddleware;
+use App\Middleware\HttpHeadersMiddleware;
 use App\Middleware\RefererMiddleware;
 use App\Middleware\TrailingSlashMiddleware;
 use Core\Exception\ConfigFileException;
@@ -108,7 +109,7 @@ $app->group('', function (RouteCollectorProxy $group) {
 })->add(GuestMiddleware::class);
 
 $app
-    ->add(\App\Middleware\ClickJackingProtectionMiddleware::class)
+    ->add(HttpHeadersMiddleware::class)
     ->add(CsrfMiddleware::class)
     ->add(CatalogSelectorMiddleware::class)
     ->add(RefererMiddleware::class)

@@ -26,7 +26,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
-class ClickJackingProtectionMiddleware implements MiddlewareInterface
+class HttpHeadersMiddleware implements MiddlewareInterface
 {
     /**
      * @param Request $request
@@ -37,6 +37,8 @@ class ClickJackingProtectionMiddleware implements MiddlewareInterface
     {
         $response = $handler->handle($request);
 
-        return $response->withHeader('X-Frame-Options', 'DENY');
+        return $response
+            ->withHeader('X-Frame-Options', 'DENY')
+            ->withHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
     }
 }
