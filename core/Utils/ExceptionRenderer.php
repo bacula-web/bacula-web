@@ -130,6 +130,11 @@ class ExceptionRenderer implements ErrorRendererInterface
             $content = 'This page does not exist';
         }
 
+        if ($exception instanceof \InvalidArgumentException)
+        {
+            $title = 'Invalid user input';
+        }
+
         if ($displayErrorDetails) {
             $content .= self::getTrace($exception);
         }

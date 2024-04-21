@@ -545,12 +545,12 @@ class JobController
 
         $postData = $request->getParsedBody();
 
-        $jobId = (int) $args['jobid'];
+        $jobId = isset($args['jobid']) ? (int) $args['jobid'] : null;
 
-        if ($jobId !== 0) {
+        if ($jobId) {
             $tplData['jobid'] = $jobId;
         } else {
-            throw new TypeError('Invalid or missing Job Id');
+            throw new \InvalidArgumentException('Invalid or missing Job Id');
         }
 
         if (isset($postData['filename'])) {
