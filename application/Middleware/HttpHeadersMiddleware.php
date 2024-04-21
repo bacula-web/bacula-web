@@ -39,6 +39,8 @@ class HttpHeadersMiddleware implements MiddlewareInterface
 
         return $response
             ->withHeader('X-Frame-Options', 'DENY')
-            ->withHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+            ->withHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload')
+            ->withHeader('X-Content-Type-Options', 'nosniff')
+            ;
     }
 }
