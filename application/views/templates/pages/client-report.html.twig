@@ -10,7 +10,7 @@
         <div class="card border-dark mb-3">
             <div class="card-header">{{ 'Report options'|trans }}</div>
             <div class="card-body">
-                <form action="/client" method="post" class="form-inline">
+                <form action="{{ url_for('app_client_report') }}" method="post" class="form-inline">
                     <!-- Backup job name -->
                     <div class="mb-3">
                         <label class="form-label" for="clientname">{{ 'Client'|trans }}</label>

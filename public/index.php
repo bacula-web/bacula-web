@@ -97,7 +97,7 @@ $app->group('', function (RouteCollectorProxy $group) {
 
     $group->map(['GET', 'POST'], '/backupjob', [BackupJobController::class, 'index'])->setName('backupjob');
 
-    $group->map(['GET', 'POST'], '/client', [ClientController::class, 'index']);
+    $group->map(['GET', 'POST'], '/client', [ClientController::class, 'index'])->setName('app_client_report');
 
     $group->map(['GET', 'POST'], '/user', [UserController::class, 'prepare'])->setName('user');
 })->add(DbAuthMiddleware::class);
