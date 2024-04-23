@@ -20,14 +20,14 @@ declare(strict_types=1);
  */
 
 // Configuration
-const CONFIG_DIR = BW_ROOT . 'application/config/';
+const CONFIG_DIR = BW_ROOT . '/application/config/';
 const CONFIG_FILE = CONFIG_DIR . 'config.php';
 
-const TPL_DIR = BW_ROOT . 'application/views/templates';
-const TPL_CACHE = BW_ROOT . 'application/views/cache';
+const TPL_DIR = BW_ROOT . '/application/views/templates';
+const TPL_CACHE = BW_ROOT . '/application/views/cache';
 
 // Locales
-const LOCALE_DIR = BW_ROOT . 'application/locale';
+const LOCALE_DIR = BW_ROOT . '/application/locale';
 
 // Time intervals in secondes
 define('FIRST_DAY', mktime(0, 0, 0, 1, 1, 1970));

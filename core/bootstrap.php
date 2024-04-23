@@ -23,7 +23,7 @@
 
 use Dotenv\Dotenv;
 
-define('BW_ROOT', dirname(__DIR__) . '/');
+define('BW_ROOT', dirname(__DIR__));
 
 require_once BW_ROOT . '/core/const.inc.php';
 
