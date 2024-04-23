@@ -1,4 +1,4 @@
 APP_NAME="Bacula-Web"
 # x-release-please-start-version
-APP_VERSION="9.5.0"
+APP_VERSION="9.5.1"
 # x-release-please-end

@@ -1,5 +1,22 @@
 # Changelog
 
+## [9.5.1](https://github.com/bacula-web/bacula-web/compare/v9.5.0...v9.5.1) (2024-04-23)
+
+
+### 🐛 Bug Fixes
+
+* **docs:** fix and update documentation ([3244f2a](https://github.com/bacula-web/bacula-web/commit/3244f2a81dc383abad47779ead04a3c1bf123ca1))
+* **docs:** fix and update faq ([356a4bc](https://github.com/bacula-web/bacula-web/commit/356a4bc144ba8a3316f0ab583a818de779de6215))
+* empty volumes order by options ([28c031f](https://github.com/bacula-web/bacula-web/commit/28c031fe61c771a3febb5317b614b053085bcb9a))
+* fix internal core constant ([3766ac8](https://github.com/bacula-web/bacula-web/commit/3766ac8e3f2546a3d47b111db1ffb51737a9efbc))
+* jobfiles report missing jobid query parameter ([113b0a2](https://github.com/bacula-web/bacula-web/commit/113b0a28c02abd89b9e19f253c0bdc6b5d40b313))
+* navbar toggler not expanding ([85d46c1](https://github.com/bacula-web/bacula-web/commit/85d46c13addb4474c7d4306dbc24e728d654f9f1))
+* **security:** add click-jacking protection ([83ded20](https://github.com/bacula-web/bacula-web/commit/83ded20936dcfa724582e17557ced3e876b55ca1))
+* **security:** anti-mime sniffing header ([d1d1921](https://github.com/bacula-web/bacula-web/commit/d1d1921fd34e863305b419b178b84e7dd1f1f160))
+* **security:** enforce hsts ([a67df86](https://github.com/bacula-web/bacula-web/commit/a67df869e13db6a6b9d6988a504102ac1158f8a4))
+* volumes not in changer not visible ([ec69df8](https://github.com/bacula-web/bacula-web/commit/ec69df850cdfca79dad48350e47c2fcce3d9c887))
+* wrong form action url while in sub-folder ([a2ce826](https://github.com/bacula-web/bacula-web/commit/a2ce826cdd505921bee159435f1d3edf6671a027))
+
 ## [9.5.0](https://github.com/bacula-web/bacula-web/compare/v9.4.1...v9.5.0) (2024-03-19)
 
 
