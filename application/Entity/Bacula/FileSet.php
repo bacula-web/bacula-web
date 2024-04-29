@@ -21,68 +21,37 @@ declare(strict_types=1);
 
 namespace App\Entity\Bacula;
 
+use App\Entity\Bacula\Repository\FileSetRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Bacula\Repository\LogRepository;
 
 /**
- * @ORM\Entity(repositoryClass=LogRepository::class)
- * @ORM\Table(name="Log")
+ * @ORM\Entity(repositoryClass=FileSetRepository::class)
+ * @ORM\Table(name="FileSet")
  */
-class Log
+class FileSet
 {
     /**
-     * @ORM\Column(type="integer", name="LogId")
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue()
-     *
-     * @var int
+     * @ORM\Column(type="integer", name="FileSetId")
      */
     private int $id;
 
     /**
-     * @ORM\Column(type="integer", name="JobId")
-     *
-     * @var int
+     * @ORM\Column(type="string", name="FileSet")
      */
-    private int $jobid;
+    private string $fileset;
 
     /**
-     * @ORM\Column(type="text", name="LogText")
-     *
-     * @var string
+     * @ORM\Column(type="string", name="MD5")
      */
-    private string $logtext;
+    private string $md5;
 
     /**
-     * @ORM\Column(type="string", name="Time")
-     *
-     * @var string $time
+     * @ORM\Column(type="datetime", name="CreateTime")
      */
-    private string $time;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Bacula\Job", inversedBy="logs")
-     * @ORM\JoinColumn(name="JobId", referencedColumnName="JobId")
-     *
-     * @var Job
-     */
-    private Job $job;
-
-    /**
-     * @return string
-     */
-    public function getLogText(): string
-    {
-        return $this->logtext;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTime(): string
-    {
-        return $this->time;
-    }
+    private DateTime $createdAt;
 
     /**
      * @return int
@@ -93,10 +62,26 @@ class Log
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getJobid(): int
+    public function getFileset(): string
     {
-        return $this->jobid;
+        return $this->fileset;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMd5(): string
+    {
+        return $this->md5;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
     }
 }

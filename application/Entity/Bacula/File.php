@@ -22,18 +22,18 @@ declare(strict_types=1);
 namespace App\Entity\Bacula;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Bacula\Repository\LogRepository;
+use App\Entity\Bacula\Repository\FileRepository;
 
 /**
- * @ORM\Entity(repositoryClass=LogRepository::class)
- * @ORM\Table(name="Log")
+ * @ORM\Entity(repositoryClass=FileRepository::class)(repositoryClass=FileRepository::class)
+ * @ORM\Table(name="File")
  */
-class Log
+class File
 {
     /**
-     * @ORM\Column(type="integer", name="LogId")
-     * @ORM\Id()
      * @ORM\GeneratedValue()
+     * @ORM\Id()
+     * @ORM\Column(type="integer", name="FileId")
      *
      * @var int
      */
@@ -47,42 +47,39 @@ class Log
     private int $jobid;
 
     /**
-     * @ORM\Column(type="text", name="LogText")
+     * @ORM\Column(type="integer", name="PathId")
      *
-     * @var string
+     * @var int|null
      */
-    private string $logtext;
+    private ?int $pathid;
 
     /**
-     * @ORM\Column(type="string", name="Time")
+     * @ORM\Column(type="integer", name="FileIndex")
      *
-     * @var string $time
+     * @var int|null
      */
-    private string $time;
+    private ?int $fileindex;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Bacula\Job", inversedBy="logs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Bacula\Job", inversedBy="files")
      * @ORM\JoinColumn(name="JobId", referencedColumnName="JobId")
-     *
-     * @var Job
      */
     private Job $job;
 
     /**
-     * @return string
+     * @ORM\OneToOne(targetEntity="App\Entity\Bacula\Path")
+     * @ORM\JoinColumn(name="PathId", referencedColumnName="PathId")
+     *
+     * @var Path
      */
-    public function getLogText(): string
-    {
-        return $this->logtext;
-    }
+    private Path $path;
 
     /**
-     * @return string
+     * @ORM\Column(type="string", name="Filename")
+     *
+     * @var string
      */
-    public function getTime(): string
-    {
-        return $this->time;
-    }
+    private string $filename;
 
     /**
      * @return int
@@ -98,5 +95,45 @@ class Log
     public function getJobid(): int
     {
         return $this->jobid;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getFileindex(): int
+    {
+        return $this->fileindex;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPathid(): int
+    {
+        return $this->pathid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilename(): string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @return Path
+     */
+    public function getPath(): Path
+    {
+        return $this->path;
+    }
+
+    /**
+     * @return Job
+     */
+    public function getJob(): Job
+    {
+        return $this->job;
     }
 }

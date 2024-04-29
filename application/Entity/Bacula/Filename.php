@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -19,36 +17,47 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Table;
+declare(strict_types=1);
 
-use Core\Db\Table;
-use Core\Db\CDBQuery;
+namespace App\Entity\Bacula;
 
-class VolumeTable extends Table
+use App\Entity\Bacula\Repository\FilenameRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass=FilenameRepository::class)
+ */
+class Filename
 {
     /**
-     * @var string|null
+     * @ORM\Id
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer", name="FilenameId")
+     *
+     * @var int
      */
-    protected ?string $tablename = 'Media';
+    private int $id;
 
     /**
-     * return disk space usage (bytes) for all volumes
+     * @ORM\Column(type="string", name="Name")
      *
+     * @var string
+     */
+    private string $name;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
-    public function getDiskUsage(): string
+    public function getName(): string
     {
-        $fields = ['SUM(Media.VolBytes) as bytes_size'];
-        $statment = [
-            'table' => $this->tablename,
-            'fields' => $fields
-        ];
-
-        // Run SQL query
-        $result = $this->run_query(CDBQuery::get_Select($statment));
-
-        $result = $result->fetch();
-
-        return (string) $result['bytes_size'];
+        return $this->name;
     }
 }

@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -19,10 +17,12 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Entity;
+declare(strict_types=1);
+
+namespace App\Entity\Core;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UserRepository;
+use App\Entity\Core\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -39,7 +39,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer", name="user_id")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="text", unique=true)
@@ -59,7 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @return int
@@ -83,7 +83,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return $this->username;
     }
 
     /**
@@ -93,7 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return $this->username;
     }
 
     /**
@@ -123,7 +123,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @param string $password
-     * @return void
+     * @return User
      */
     public function setPassword(string $password): self
     {
@@ -143,6 +143,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -158,12 +162,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->passwordhash;
     }
 
-    public function getSalt()
+    /**
+     * @return void
+     */
+    public function getSalt(): void
     {
         // TODO: Implement getSalt() method.
     }
 
-    public function eraseCredentials()
+    /**
+     * @return void
+     */
+    public function eraseCredentials(): void
     {
         // TODO: Implement eraseCredentials() method.
     }
