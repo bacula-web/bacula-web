@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -19,35 +17,27 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Table;
+declare(strict_types=1);
 
-use Core\Db\Table;
-use Core\Db\CDBQuery;
+namespace App\Entity\Core\Repository;
 
-class VolumeTable extends Table
+use App\Entity\Core\User;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @method User|null find($id, $lockMode = null, $lockVersion = null)
+ * @method User|null findOneBy(array $criteria, array $orderBy = null)
+ * @method User[] findAll()
+ * @method User[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class UserRepository extends ServiceEntityRepository
 {
     /**
-     * @var string|null
+     * @param ManagerRegistry $registry
      */
-    protected ?string $tablename = 'Media';
-
-    /**
-     * return disk space usage (bytes) for all volumes
-     *
-     * @return string
-     */
-    public function getDiskUsage(): string
+    public function __construct(ManagerRegistry $registry)
     {
-        $fields = ['SUM(Media.VolBytes) as bytes_size'];
-        $statment = [
-            'table' => $this->tablename,
-            'fields' => $fields
-        ];
-
-        // Run SQL query
-        $result = $this->run_query(CDBQuery::get_Select($statment));
-
-        $result = $result->fetch();
-        return $result['bytes_size'];
+        parent::__construct($registry, User::class);
     }
 }

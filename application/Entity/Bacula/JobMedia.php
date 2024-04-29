@@ -22,20 +22,18 @@ declare(strict_types=1);
 namespace App\Entity\Bacula;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Bacula\Repository\LogRepository;
+use App\Entity\Bacula\Repository\JobMediaRepository;
 
 /**
- * @ORM\Entity(repositoryClass=LogRepository::class)
- * @ORM\Table(name="Log")
+ * @ORM\Entity(repositoryClass=JobMediaRepository::class)
+ * @ORM\Table(name="JobMedia")
  */
-class Log
+class JobMedia
 {
     /**
-     * @ORM\Column(type="integer", name="LogId")
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     *
-     * @var int
+     * @ORM\Column(type="integer", name="JobMediaId")
+     * @ORM\Id
+     * @ORM\GeneratedValue
      */
     private int $id;
 
@@ -47,42 +45,11 @@ class Log
     private int $jobid;
 
     /**
-     * @ORM\Column(type="text", name="LogText")
+     * @ORM\Column(type="integer", name="MediaId")
      *
-     * @var string
+     * @var int
      */
-    private string $logtext;
-
-    /**
-     * @ORM\Column(type="string", name="Time")
-     *
-     * @var string $time
-     */
-    private string $time;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Bacula\Job", inversedBy="logs")
-     * @ORM\JoinColumn(name="JobId", referencedColumnName="JobId")
-     *
-     * @var Job
-     */
-    private Job $job;
-
-    /**
-     * @return string
-     */
-    public function getLogText(): string
-    {
-        return $this->logtext;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTime(): string
-    {
-        return $this->time;
-    }
+    private int $mediaid;
 
     /**
      * @return int
@@ -90,6 +57,14 @@ class Log
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMediaid(): int
+    {
+        return $this->mediaid;
     }
 
     /**

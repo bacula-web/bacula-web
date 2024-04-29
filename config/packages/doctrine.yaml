@@ -1,17 +1,36 @@
 doctrine:
     dbal:
-        url: '%env(resolve:DATABASE_URL)%'
-        use_savepoints: true
+        connections:
+            default:
+                url: "sqlite:///%kernel.project_dir%/var/application.db"
+            bacula:
+                url: '%env(resolve:BACULA_DATABASE_URL)%'
+                options:
+                    PDO::ATTR_CASE: PDO::CASE_LOWER,
+
+        default_connection: default
+
     orm:
-        auto_generate_proxy_classes: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        auto_mapping: true
-        mappings:
-            App:
-                is_bundle: false
-                dir: '%kernel.project_dir%/application/Entity'
-                prefix: 'App\Entity'
-                alias: App
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    Main:
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/application/Entity/Core'
+                        prefix: 'App\Entity\Core'
+                        alias: default
+                        type: annotation
+            bacula:
+                connection: bacula
+                mappings:
+                    Bacula:
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/application/Entity/Bacula'
+                        prefix: 'App\Entity\Bacula'
+                        alias: bacula
+                        type: annotation
 
 when@test:
     doctrine:

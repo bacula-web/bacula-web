@@ -3,7 +3,7 @@
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -17,14 +17,31 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Table;
+declare(strict_types=1);
 
-use Core\Db\Table;
+namespace App\Entity\Bacula;
 
-class LogTable extends Table
+use App\Entity\Bacula\Repository\VersionRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass=VersionRepository::class)
+ */
+class Version
 {
     /**
-     * @var string|null
+     * @ORM\Column(type="integer", name="VersionId")
+     * @ORM\Id()
+     *
+     * @var int
      */
-    protected ?string $tablename = 'Log';
+    private int $id;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }

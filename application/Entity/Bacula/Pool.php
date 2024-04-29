@@ -21,67 +21,46 @@ declare(strict_types=1);
 
 namespace App\Entity\Bacula;
 
+use App\Entity\Bacula\Repository\PoolRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Bacula\Repository\LogRepository;
 
 /**
- * @ORM\Entity(repositoryClass=LogRepository::class)
- * @ORM\Table(name="Log")
+ * @ORM\Entity(repositoryClass=PoolRepository::class)
+ * @ORM\Table(name="Pool")
  */
-class Log
+class Pool
 {
     /**
-     * @ORM\Column(type="integer", name="LogId")
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     *
-     * @var int
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="PoolId")
+     * @ORM\GeneratedValue
      */
     private int $id;
 
     /**
-     * @ORM\Column(type="integer", name="JobId")
-     *
-     * @var int
-     */
-    private int $jobid;
-
-    /**
-     * @ORM\Column(type="text", name="LogText")
+     * @ORM\Column(type="string", name="Name")
      *
      * @var string
      */
-    private string $logtext;
+    private string $name;
 
     /**
-     * @ORM\Column(type="string", name="Time")
+     * @ORM\Column(type="integer")
+     */
+    private int $numvols;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Volume", mappedBy="pool")
      *
-     * @var string $time
+     * @var Collection
      */
-    private string $time;
+    private Collection $volumes;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Bacula\Job", inversedBy="logs")
-     * @ORM\JoinColumn(name="JobId", referencedColumnName="JobId")
-     *
-     * @var Job
-     */
-    private Job $job;
-
-    /**
-     * @return string
-     */
-    public function getLogText(): string
+    public function __construct()
     {
-        return $this->logtext;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTime(): string
-    {
-        return $this->time;
+        $this->volumes = new ArrayCollection();
     }
 
     /**
@@ -93,10 +72,18 @@ class Log
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
      * @return int
      */
-    public function getJobid(): int
+    public function getNumVols(): int
     {
-        return $this->jobid;
+        return $this->numvols;
     }
 }

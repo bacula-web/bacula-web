@@ -85,22 +85,4 @@ class CatalogTable extends Table
 
         return CUtils::Get_Human_Size((int)$dbSize);
     }
-
-    /**
-     * Return Bacula catalog id
-     * @author Tom Hodder <tom@limepepper.co.uk>
-     * @return int VersionId value from Bacula catalog
-     * @throws Exception
-     */
-    public function getCatalogVersion(): int
-    {
-        $sqlQuery = CDBQuery::get_Select(array('table' => $this->tablename,
-            'fields' => array('VersionId'),
-            'limit' => array('count' => 1, 'offset' => 0)
-        ), $this->db->getDriverName());
-
-        $result = $this->run_query($sqlQuery);
-
-        return $this->dbVersionId = (int) $result->fetchColumn();
-    }
 }
