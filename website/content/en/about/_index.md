@@ -59,7 +59,7 @@ Please use Bacula-Web [issues](https://github.com/bacula-web/bacula-web/issues) 
 
 ## FAQ
 
-You may find an answer from the FAQ (Frequently Asked Questions) section available on the [official documentation](https://docs.bacula-web.org/en/latest/03_gethelp/faq.html) website.
+You may find an answer from the FAQ (Frequently Asked Questions) section available on the [official documentation](https://docs.bacula-web.org/en/latest/03_get-help/faq.html) website.
 
 > *Note: the FAQ content is still a work in progress, but any contribution from the community is more than welcome*
 

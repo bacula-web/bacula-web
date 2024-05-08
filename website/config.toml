@@ -181,7 +181,7 @@ enable = false
 
 [[params.links.user]]
   name ="Twitter"
-  url = "https://twitter.com/baculaweb"
+  url = "https://twitter.com/BaculaWeb"
   icon = "fab fa-twitter"
   desc = "Follow the project on Twitter to get the latest news!"
 
