@@ -23,6 +23,8 @@ namespace App\Entity\Bacula\Repository;
 
 use App\Entity\Bacula\Volume;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,5 +41,20 @@ class VolumeRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Volume::class);
+    }
+
+    /**
+     * @return int
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function getStoredSize(): int
+    {
+        $queryBuilder = $this->createQueryBuilder('v');
+
+        return (int) $queryBuilder
+            ->select('SUM(v.volbytes)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

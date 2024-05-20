@@ -35,14 +35,13 @@ General requirements
 |                 | - SQLite (required for user authentication)|
 |                 | - CLI                                      |
 |                 | - JSON                                     |
-|                 | - Posix                                    |
 +-----------------+--------------------------------------------+
 
 .. important::
 
    PHP SQLite is required since version 8.0.0-rc2
 
-   PHP Posix is required since version 8.0.0
+   PHP Posix used to be required since version 8.0.0, but this requirements has been remove since version 10.0
 
 Using SELinux
 =============

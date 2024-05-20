@@ -5,18 +5,20 @@
 {% block body %}
     <div class="container-fluid" id="jobsreport">
 
-        {{ include('partials/_page_header.html.twig', {header: 'Jobs report'|trans, description: 'Bacula jobs overview'|trans }) }}
+        {{ include('partials/_page_header.html.twig', { header: 'Jobs report', description: 'Bacula jobs overview' }) }}
 
         <div class="row">
             <div class="col-xs-12 col-sm-3 col-sm-push-9 col-lg-2 col-lg-push-10">
 
-                <form class="form" role="form" action="{{ url_for('jobs') }}" method="post">
+                <form class="form" role="form" action="{{ path('jobs') }}" method="GET">
 
                     <span class="help-block">{{ 'Filter'|trans }}</span>
+
 
                     <div class="form-group">
                         <label>{{ 'Job status'|trans }}</label>
                         <select class="form-control input-sm" name="filter_jobstatus">
+                            <option value="0" {% if filter_jobstatus == '0' %} selected {% endif %}>All</option>
                             {% for id, status in job_status %}
                                 <option value="{{ id }}" {% if id == filter_jobstatus %} selected {% endif %}>{{ status }}</option>
                             {% endfor %}
@@ -26,6 +28,7 @@
                     <div class="form-group">
                         <label>{{ 'Level'|trans }}</label>
                         <select class="form-control input-sm" name="filter_joblevel">
+                            <option value="0" {% if filter_joblevel == '0' %} selected {% endif %}>Any</option>
                             {% for id, level in levels_list %}
                                 <option value="{{ id }}" {% if id == filter_joblevel %} selected {% endif %}>{{ level }}</option>
                             {% endfor %}
@@ -35,8 +38,9 @@
                     <div class="form-group">
                         <label>{{ 'Type'|trans }}</label>
                         <select class="form-control input-sm" name="filter_jobtype">
-                            {% for id, job_type in job_types_list %}
-                                <option value="{{ id }}" {% if id == filter_jobtype %} selected {% endif %}>{{ job_type }}</option>
+                            <option value='0' {% if filter_jobtype == '0' %} selected {% endif %}>Any</option>
+                            {% for id, type in job_types_list %}
+                                <option value="{{ id }}" {% if id == filter_jobtype %} selected {% endif %}>{{ type }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -44,40 +48,41 @@
                     <div class="form-group">
                         <label>{{ 'Client'|trans }}</label>
                         <select class="form-control input-sm" name="filter_clientid">
-                            {% for id, client in clients_list %}
-                                <option value="{{ id }}" {% if id == filter_clientid %} selected {% endif %}>{{ client }}</option>
+                            <option value="0" {% if filter_clientid == 0 %} selected {% endif %}>Any</option>
+                            {% for client in clients_list %}
+                                <option value="{{ client.id }}" {% if client.id == filter_clientid %} selected {% endif %}>{{ client.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label>{{ 'Pool'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_poolid">
-                            {% for id, pool in pools_list %}
-                                <option value="{{ id }}" {% if id == filter_poolid %} selected {% endif %}>{{ pool }}</option>
+                        <select class="form-control input-sm" name="filter_pool">
+                            <option value="0" {% if filter_pool == '0' %} selected {% endif %}>Any</option>
+                            {% for pool in pools_list %}
+                                <option value="{{ pool.id }}" {% if pool.id == filter_pool %} selected {% endif %}>{{ pool.name }}</option>
                             {% endfor %}
                         </select>
-
                     </div>
 
                     <div class="form-group">
-                        <label for="datetimepicker1Input" class="form-label">{{ 'Start time'|trans }}</label>
+                        <label for="datetimepicker1Input1" class="form-label">{{ 'Start time'|trans }}</label>
                         <div class="input-group log-event" id="datetimepicker1" data-td-target-input="nearest"
                              data-td-target-toggle="nearest">
-                            <input id="datetimepicker1Input" name="filter_job_starttime" type="text"
-                                   class="form-control" data-td-target="#datetimepicker1"
-                                   value="{{ filter_job_starttime }}"/>
+                            <input id="datetimepicker1Input1" name="filter_starttime" type="text"
+                                   class="form-control form-control-sm" data-td-target="#datetimepicker1"
+                                   value="{{ filter_starttime }}"/>
                             <span class="input-group-text" data-td-target="#datetimepicker1"
                                   data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="datetimepicker1Input" class="form-label">{{ 'End time'|trans }}</label>
+                        <label for="datetimepicker1Input2" class="form-label">{{ 'End time'|trans }}</label>
                         <div class="input-group log-event" id="datetimepicker2" data-td-target-input="nearest"
                              data-td-target-toggle="nearest">
-                            <input id="datetimepicker1Input" name="filter_job_endtime" type="text" class="form-control"
-                                   data-td-target="#datetimepicker2" value="{{ filter_job_endtime }}"/>
+                            <input id="datetimepicker1Input2" name="filter_endtime" type="text" class="form-control form-control-sm"
+                                   data-td-target="#datetimepicker2" value="{{ filter_endtime }}"/>
                             <span class="input-group-text" data-td-target="#datetimepicker2"
                                   data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
                         </div>
@@ -86,16 +91,16 @@
                     <span class="help-block">{{ 'Options'|trans }}</span>
 
                     <label>{{ 'Order by'|trans }}</label>
-                    <select class="form-control input-sm" name="filter_job_orderby">
-                        {% for id, order in result_order %}
-                            <option value="{{ id }}" {% if id == result_order_field %} selected {% endif %}>{{ order }}</option>
+                    <select class="form-control input-sm" name="filter_orderby">
+                        {% for id, order in job_order %}
+                            <option value="{{ id }}" {% if id == filter_orderby %} selected {% endif %}>{{ order }}</option>
                         {% endfor %}
                     </select>
 
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="filter_job_orderby_asc"
-                                   value="ASC" {{ result_order_asc_checked }}> Asc
+                            <input type="checkbox" name="filter_orderby_direction"
+                                   value="ASC" {% if filter_orderby_direction == 'ASC' %} checked {% endif %}> Asc
                         </label>
                     </div>
 
@@ -103,9 +108,11 @@
                     <button type="submit" class="btn btn-primary btn-sm pull-right"
                             title="{{ 'Apply filter and options'|trans }}">{{ 'Apply'|trans }}</button>
 
-                    <a class="btn btn-link btn-sm" title="{{ 'Reset to default'|trans }}" href="{{ base_path() }}/jobs"
+
+                    <a class="btn btn-link btn-sm" title="{{ 'Reset to default'|trans }}" href="{{ path('jobs') }}"
                        role="button">{{ 'Reset to default'|trans }}</a>
-                    {{ csrf|raw }}
+                    <input type="hidden" name="token" value="{{ csrf_token('jobs') }}">
+
                 </form>
 
             </div>
@@ -134,48 +141,51 @@
                         </tr>
                         </thead>
 
-                        <!-- <div class="listbox"> -->
-                        {% for job in last_jobs %}
+                        {% for job in pagination %}
                             <tr>
                                 <td>
-                                    <i title="{{ job.jobstatuslong }}" class="{{ job.Job_icon }}"></i>
+                                    <i title="{{ job.status.statuslong }}" class="{{ job.statusicon }}"></i>
                                 </td>
-                                <td>{{ job.jobid }}</td>
+                                <td>{{ job.id }}</td>
                                 <td class="text-left">
-                                    {% if job.type == 'B' %}
-                                        <form action="{{ url_for('backupjob') }}" method="post">
-                                            <input type="hidden" name="backupjob_name" value="{{ job.job_name }}"/>
+                                    {% if job.type == 'Backup' %}
+                                        <form action="{{ path('backupjob') }}" method="post">
+                                            <input type="hidden" name="backupjob_name" value="{{ job.name }}"/>
                                             <input type="hidden" name="backupjob_period" value="7"/>
                                             <button type="submit"
-                                                    class="btn btn-sm btn-link">{{ job.job_name }}</button>
-                                            {{ csrf|raw }}
+                                                    class="btn btn-sm btn-link">{{ job.name }}</button>
+                                            <input type="hidden" name="token" value="{{ csrf_token('jobs') }}">
                                         </form>
                                     {% else %}
-                                        {{ job.job_name }}
+                                        {{ job.name }}
                                     {% endif %}
                                 </td>
                                 <td>{{ job.type }}</td>
-                                <td>{{ job.schedtime }}</td>
-                                <td>{{ job.starttime }}</td>
-                                <td>{{ job.endtime }}</td>
-                                <td>{{ job.elapsed_time }}</td>
+                                <td>{{ job.scheduledtime|date(app_datetime_format)|default('n/a') }}</td>
+                                <td>{{ job.starttime|date(app_datetime_format)|default('n/a') }}</td>
+                                <td>{{ job.endtime|date(app_datetime_format)|default('n/a') }}</td>
+                                <td>
+                                    {{ job.elapsedTime }}
+                                </td>
                                 <td>{{ job.level }}</td>
-                                <td class="text-right">{{ job.jobbytes }}</td>
+                                <td class="text-right">{{ readable_size(job.jobbytes) }}</td>
                                 <td class="text-right">
-                                    {% if job.jobfiles != 0 and job.type == 'B' %}
-                                        <a href="{{ base_path() }}/jobfiles/{{ job.jobid }}"
+                                    {% if job.jobfiles > 0 and job.type == 'Backup' %}
+                                        <a href="{{ path('jobfiles', {jobId: job.id}) }}"
                                            title="{{ 'Show job files'|trans }}">
-                                            {{ job.jobfiles }} <i class="fa-solid fa-folder"></i>
+                                            {{ job.jobfiles|format_number }} <i class="fa-solid fa-folder"></i>
                                         </a>
                                     {% else %}
-                                        {{ job.jobfiles }}
+                                        {{ job.jobfiles|format_number }}
                                     {% endif %}
                                 </td>
-                                <td>{{ job.speed }}</td>
-                                <td>{{ job.compression }}</td>
-                                <td>{{ job.pool_name }}</td>
+                                <td>{{ readable_size(job.speed) }}/s</td>
+                                <td>{{ job.compression|number_format(2) }}</td>
                                 <td>
-                                    <a href="{{ base_path() }}/joblog/{{ job.jobid }}"
+                                    {{ job.pool.name|default('n/a') }}
+                                </td>
+                                <td>
+                                    <a href="{{ path('joblog', { jobid: job.id } ) }}"
                                        title="{{ 'Show job logs'|trans }}"> <i
                                                 class="fa-solid fa-magnifying-glass"></i> </a>
                                 </td>
@@ -187,29 +197,29 @@
                         {% endfor %}
                     </table>
                 </div>
-
-                {% if last_jobs|length > 0 %}
-                    {{ include('partials/pagination.html.twig', {route: 'jobs' }) }}
-                {% endif %}
-
             </div>
         </div>
+
+        {{ include('partials/pagination.html.twig', {route: 'jobs' }) }}
+
     </div>
 
-    <script type="text/javascript">
-        const datetimepicker1 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
-            localization: {
-                locale: '{{ language }}',
-                format: 'yyyy-MM-dd HH:mm:ss',
-            }
-        });
+    {% block javascripts %}
+        <script type="text/javascript">
+            const datetimepicker1 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+                localization: {
+                    locale: '{{ app_language }}',
+                    format: 'yyyy-MM-dd HH:mm:ss',
+                }
+            })
 
-        const datetimepicker2 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'), {
-            localization: {
-                locale: '{{ language }}',
-                format: 'yyyy-MM-dd HH:mm:ss',
-            }
-        });
-    </script>
+            const datetimepicker2 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'), {
+                localization: {
+                    locale: '{{ app_language }}',
+                    format: 'yyyy-MM-dd HH:mm:ss',
+                }
+            })
+        </script>
+    {% endblock %}
 
 {% endblock %}

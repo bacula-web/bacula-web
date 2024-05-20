@@ -5,9 +5,6 @@
 # Composer
 composer.lock
 
-/application/config/config.php
-/application/assets/protected/application.db*
-
 # Documentation
 docs/build
 

@@ -2,44 +2,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Bootstrap css -->
-<link rel="stylesheet" href="{{ base_path() }}/css/bootstrap.min.css"
-      integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
-      crossorigin="anonymous">
+<link rel="apple-touch-icon" href="{{ asset('assets/images/apple-touch-icon.png') }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/images/favicon.ico') }}">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
 
-<!-- FontAwesome css -->
-<link href="{{ base_path() }}/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.6/nv.d3.min.css" integrity="sha512-5HktH3p+qBNLzxpOLnpICH2uwArYE/Fi7fdKCQee15piDqN3X3Q1iqo8D43oc8DJgYP4xxA7sdEjNCfmeLLYeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
 
-<!-- nvd3 css -->
-<link href="{{ base_path() }}/css/nv.d3.css" rel="stylesheet" type="text/css">
+{% block javascript %}
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
 
-<!-- nvd3 javascript -->
-<script src="{{ base_path() }}/js/d3.min.js" charset="utf-8"></script>
-<script src="{{ base_path() }}/js/nv.d3.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
 
-<link rel="apple-touch-icon" href="{{ base_path() }}/img/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="{{ base_path() }}/img/favicon.ico">
-
-<!-- Popperjs -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-
-<!-- Tempus Dominus JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/js/tempus-dominus.min.js"
-        integrity="sha384-MxHp+/TqTjbku1jSTIe1e/4l6CZTLhACLDbWyxYaFRgD3AM4oh99AY8bxsGhIoRc"
-        crossorigin="anonymous"></script>
-
-<!-- Tempus Dominus Styles -->
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/css/tempus-dominus.min.css"
-      crossorigin="anonymous">
-
-<style>
-    [id^="chart"] {
-        height: 300px;
-        width: 100%;
-    }
-</style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js" integrity="sha512-GAMZpEJEgFfWY5/4t5/IO92znEWuhne393BAK7jnzPQxFgm8kqVh8vp06ZIYRwbGqe7EXrtKqJVb1u2YBq8gdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.6/nv.d3.min.js" integrity="sha512-ldXL88WIgBA+vAsJu2PepKp3VUvwuyqmXKEbcf8rKeAI56K8GZMb2jfKSm1a36m5AfUzyDp3TIY0iVKY8ciqSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}

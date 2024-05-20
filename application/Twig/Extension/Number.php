@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -19,29 +17,56 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace Core\Utils;
+declare(strict_types=1);
 
-class CUtils
+namespace App\Twig\Extension;
+
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+/**
+ * Provide a Twig function which convert a size (bytes, files, etc.) and divide it automatically
+ * using the best unit such as KB, MG, TB, etc.
+ */
+class Number extends AbstractExtension
 {
     /**
-     * @param int $size
+     * @return string
+     */
+    public function getName(): string
+    {
+        return 'Number';
+    }
+
+    /**
+     * @return TwigFunction[]
+     */
+    public function getFunctions(): array
+    {
+        return [
+            new TwigFunction('readable_size', [$this, 'readableSize'])
+        ];
+    }
+
+    /**
+     * @param int $number
      * @param int $decimal
      * @param string $unit
      * @param bool $display_unit
      * @return string
      */
-    public static function Get_Human_Size(int $size, int $decimal = 2, string $unit = 'auto', bool $display_unit = true)
+    public function readableSize(int $number, int $decimal = 2, string $unit = 'auto', bool $display_unit = true): string
     {
         $unit_id = 0;
         $lisible = false;
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
-        $hsize = $size;
+        $humanSize = $number;
 
         switch ($unit) {
             case 'auto':
                 while (!$lisible) {
-                    if ($hsize >= 1024) {
-                        $hsize /= 1024;
+                    if ($humanSize >= 1024) {
+                        $humanSize /= 1024;
                         $unit_id++;
                     } else {
                         $lisible = true;
@@ -52,35 +77,17 @@ class CUtils
             default:
                 $exp = array_keys($units, $unit);
                 $unit_id = current($exp);
-                $hsize /= pow(1024, $unit_id);
+                $humanSize /= pow(1024, $unit_id);
                 break;
-        } // end switch
+        }
         // Format human-readable value (with dot for decimal separator)
-        $hsize = number_format((float)$hsize, $decimal, '.', '');
+        $humanSize = number_format((float)$humanSize, $decimal, '.', '');
 
         // Append unit or not
         if ($display_unit) {
-            $hsize .= ' ' . $units[$unit_id];
+            $humanSize .= ' ' . $units[$unit_id];
         }
 
-        return $hsize;
-    }
-
-    /**
-     * Return a formated number based on the current locale
-     *
-     * @param mixed $number
-     * @param int $decimal
-     * @return string
-     */
-    public static function format_Number($number, int $decimal = 0): string
-    {
-        $locale = localeconv();
-
-        if (empty($locale['thousands_sep'])) {
-            $locale['thousands_sep'] = '.';
-        }
-
-        return number_format((float)$number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
+        return $humanSize;
     }
 }

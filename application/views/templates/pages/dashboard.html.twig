@@ -4,357 +4,70 @@
 
 {% block body %}
     <div class="container-fluid">
-
-        {{ include('partials/_page_header.html.twig', {header: 'Dashboard'|trans, description: 'General overview'|trans }) }}
-
-        <!-- First row with Jobs statistics, stored bytes and stored files widgets -->
-        <div class="row">
-            <!-- Last period job status -->
-            <div class="col-6">
-
-                <div class="card border-dark mb-3">
-                    <div class="card-header"><b>{{ 'Last period job status'|trans }}</b> {{ literal_period }}</div>
-                    <!-- Period selector -->
-                    <div class="card-body">
-                        <form class="form-inline pull-right" method="post" role="form" action="{{ url_for('home') }}">
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-text">{{ 'Period'|trans }} </span>
-                                <select class="form-control input-sm" name="period_selector">
-                                    {% for period in custom_period_list %}
-                                        <option value="{{ period.id }}"
-                                                {% if period.id == custom_period_list_selected %}selected{% endif %}>
-                                            {{ period.label }}</option>
-                                    {% endfor %}
-                                </select>
-
-                                <button title="{{ 'Update with selected period'|trans }}" class="btn btn-primary btn-sm"
-                                        type="submit">{{ 'Submit'|trans }}</button>
-
-                                {{ csrf|raw }}
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Last period job status graph -->
-                    <div class="card-body">
-                        <div id="{{ last_jobs_chart_id }}">
-                            <svg></svg>
-                        </div>
-                        {{ last_jobs_chart|raw }}
-
-                        <table class="table table-condensed">
-                            <caption>Jobs status overview</caption>
-                            <thead>
-                            <tr>
-                                <th colspan="2"></th>
-                            </tr>
-                            </thead>
-                            <tr>
-                                <td><h5>{{ 'Running jobs'|trans }}</h5></td>
-                                <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="1"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ running_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><h5>{{ 'Completed job(s)'|trans }}</h5></td>
-                                <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="3"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ completed_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><h5>{{ 'Completed with errors job(s)'|trans }}</h5></td>
-                                <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="4"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ completed_with_errors_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><h5>{{ 'Waiting jobs(s)'|trans }}</h5></td>
-                                <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="2"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ waiting_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><h5>{{ 'Failed job(s)'|trans }}</h5></td>
-                                <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="5"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ failed_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><h5>{{ 'Canceled job(s)'|trans }}</h5></td>
-                                <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="6"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ canceled_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><h5>{{ 'Job Level (Incr / Diff / Full)'|trans }}</h5></td>
-                                <td class="text-center"><h4>{{ incr_jobs }} / {{ diff_jobs }} / {{ full_jobs }} </h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><h5>{{ 'Transferred Bytes / Files'|trans }}</h5></td>
-                                <td class="text-center"><h4>{{ bytes_last }} / {{ files_last }} </h4></td>
-                            </tr>
-                        </table>
-                    </div>
+        {{ include('partials/_page_header.html.twig', { header: 'Dashboard', description: 'General overview' }) }}
+            <!-- First row with Jobs statistics, stored bytes and stored files widgets -->
+            <div class="row">
+                <!-- Last period job status -->
+                <div class="col-6">
+                    {{ render(
+                        controller('App\\Controller\\Widget\\LastPeriodJobStatusController::index', {period: period})
+                    )
+                    }}
                 </div>
-            </div>
 
             <div class="col-6">
                 <div class="row">
-                    <!-- Stored Bytes for last 7 days -->
+
                     <div class="col-12">
-                        <div class="card border-dark mb-3">
-                            <div class="card-header" title="{{ 'Stored bytes over the last 7 days'|trans }}">
-                                <b>{{ 'Stored Bytes (last 7 days)'|trans }}</b></div>
-                            <div class="card-body">
-                                <div id="{{ storedbytes_chart_id }}">
-                                    <svg></svg>
-                                </div>
-                                {{ storedbytes_chart|raw }}
-                            </div>
-                        </div>
+                        {{ render(
+                            controller('App\\Controller\\Widget\\LastWeekStoredBytesController::index')
+                        ) }}
                     </div>
 
-                    <!-- Stored Files for last 7 days -->
                     <div class="col-12">
-                        <div class="card border-dark mb-3">
-                            <div class="card-header" title="{{ 'Stored files over the last 7 days'|trans }}">
-                                <b>{{ 'Stored Files (last 7 days)'|trans }}</b
-                            </div>
-                            <div class="card-body">
-                                <div id="{{ storedfiles_chart_id }}">
-                                    <svg></svg>
-                                </div>
-                                {{ storedfiles_chart|raw }}
-                            </div>
-                        </div>
+                        {{ render(
+                            controller('App\\Controller\\Widget\\LastWeekStoredFilesController::index')
+                        ) }}
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Third row with Pools and volumes status + Last used volumes widgets -->
         <div class="row">
-            <!-- Pools and volumes status -->
             <div class="col-xs-12 col-md-6">
-                <div class="card border-dark mb-3">
-                    <div class="card-header">
-                        <b>{{ 'Pools and volumes status'|trans }}</b>
-                    </div>
-                    <div class="card-body">
-                        <div id="{{ pools_usage_chart_id }}">
-                            <svg></svg>
-                        </div>
-                        {{ pools_usage_chart|raw }}
-                    </div>
-                </div>
+                {{ render(
+                        controller('App\\Controller\\Widget\\PoolsVolumesStatusController::index')
+                ) }}
             </div>
 
             <div class="col-xs-12 col-md-6">
-                <!-- Last used volumes -->
-                <div class="card border-dark mb-3">
-                    <div class="card-header">
-                        <b>{{ 'Last used volumes'|trans }}</b>
-                        <button type="button" class="btn btn-secondary btn-sm"
-                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-custom-class="custom-tooltip"
-                                data-bs-title="{{ 'Displays the last 10 volumes used during backups'|trans }}">
-                            <i class="fa-solid fa-info"></i>
-                        </button>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-condensed table-striped">
-                                <tr>
-                                    <th title="{{ 'Volume name'|trans }}">Volume</th>
-                                    <th title="{{ 'Volume status'|trans }}">Status</th>
-                                    <th title="{{ 'Volume pool'|trans }}">Pool</th>
-                                    <th title="{{ 'Last written date for this volume'|trans }}">Last written</th>
-                                    <th title="{{ 'Number of jobs'|trans }}">Jobs</th>
-                                </tr>
-
-                                {% for vol in volumes_list %}
-                                    <tr>
-                                        <td>
-                                            <a href="{{ url_for('volume_detail', {'id': vol.mediaid}) }}"
-                                               title="{{ 'Show volume'|trans }}">{{ vol.volumename }}</a>
-                                        </td>
-                                        <td>{{ vol.volstatus }}</td>
-                                        <td>{{ vol.poolname }}</td>
-                                        <td>{{ vol.lastwritten }}</td>
-                                        <td class="strong">{{ vol.voljobs }}</td>
-                                    </tr>
-                                {% endfor %}
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
+                {{ render(
+                        controller('App\\Controller\\Widget\\LastUsedVolumesController::index')
+                ) }}
             </div>
         </div>
 
-        <!-- Clients job total -->
         <div class="row">
             <div class="col-xs-12 col-md-6">
-
-                <!-- Clients jobs total widget -->
-                <div class="card border-dark mb-3">
-                    <div class="card-header">
-                        <b>{{ 'Clients jobs total'|trans }}</b>
-                    </div>
-                    <div class="card-body">
-                        <p>{{ 'Per job name backup and restore jobs statistics'|trans }}</p>
-                    </div>
-                    <table class="table table-condensed">
-                        <tr>
-                            <th>{{ 'Job name'|trans }}</th>
-                            <th class="text-right">{{ 'Jobs'|trans }}</th>
-                            <th class="text-right">{{ 'Files'|trans }}</th>
-                            <th class="text-right">{{ 'Bytes'|trans }}</th>
-                            <th>{{ 'Type'|trans }}</th>
-                        </tr>
-                        {% for jobname in jobnames_jobs_stats %}
-                            <tr>
-                                <td>{{ jobname.jobname }}</td>
-                                <td class="text-right">{{ jobname.jobscount }}</td>
-                                <td class="text-right">{{ jobname.jobfiles }}</td>
-                                <td class="text-right">{{ jobname.jobbytes }}</td>
-                                <td>{{ jobname.type }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                    <div class="card-body">
-                        <p>Per job type backup and restore jobs statistics</p>
-                    </div>
-                    <table class="table table-condensed">
-                        <tr>
-                            <th>{{ 'Type'|trans }}</th>
-                            <th class="text-right">{{ 'Files'|trans }}</th>
-                            <th class="text-right">{{ 'Bytes'|trans }}</th>
-                            <th class="text-right">{{ 'Jobs'|trans }}</th>
-                        </tr>
-                        {% for jobtype in jobtypes_jobs_stats %}
-                            <tr>
-                                <td>{{ jobtype.type }}</td>
-                                <td class="text-right">{{ jobtype.jobfiles }}</td>
-                                <td class="text-right">{{ jobtype.jobbytes }}</td>
-                                <td class="text-right">{{ jobtype.jobscount }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
+                {{ render(
+                        controller('App\\Controller\\Widget\\ClientJobsTotalController::index')
+                ) }}
             </div>
 
             <!-- Weekly jobs statistics -->
             <div class="col col-xs-12 col-md-6">
-                <div class="card border-dark mb-3">
-                    <div class="card-header">
-                        <b>{{ 'Weekly jobs statistics'|trans }}</b>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-condensed table-striped">
-                            <tr>
-                                <th>{{ 'Day of week'|trans }}</th>
-                                <th class="text-right">{{ 'Bytes'|trans }}</th>
-                                <th class="text-right">{{ 'Files'|trans }}</th>
-                            </tr>
-                            {% for day in weeklyjobsstats %}
-                                <tr>
-                                    <td>{{ day.dayofweek }}</td>
-                                    <td class="text-right">{{ day.jobbytes }}</td>
-                                    <td class="text-right">{{ day.jobfiles }}</td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="3" class="text-center">{{ 'Nothing to display'|trans }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
+                {{ render(
+                        controller('App\\Controller\\Widget\\WeeklyJobStatsController::index')
+                ) }}
+            </div>
+
+            <div class="row">
+                <div class="col col-xs-12 col-md-6">
+                    {{ render(
+                            controller('App\\Controller\\Widget\\BiggestBackupJobsController::index')
+                    ) }}
                 </div>
             </div>
-        </div>
-
-        <!-- Biggest backup jobs -->
-        <div class="row">
-            <div class="col col-xs-12 col-md-6">
-                <!-- 10th biggest job names -->
-                <div class="card border-dark mb-3">
-                    <div class="card-header">
-                        <b>{{ 'Biggest backup jobs'|trans }}</b>
-                        <button type="button" class="btn btn-secondary btn-sm"
-                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-custom-class="custom-tooltip"
-                                data-bs-title="{{ 'Displays the 10 biggest (Bytes) Bacula backup jobs'|trans }}">
-                            <i class="fa-solid fa-info"></i>
-                        </button>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-condensed table-striped">
-                            <caption>{{ 'Biggest backup jobs'|trans }}</caption>
-                            <thead>
-                            <tr>
-                                <th>{{ 'Job name'|trans }}</th>
-                                <th class="text-right">{{ 'Bytes'|trans }}</th>
-                                <th class="text-right">{{ 'Files'|trans }}</th>
-                            </tr>
-                            </thead>
-                            {% for job in biggestjobs %}
-                                <tr>
-                                    <td>
-                                        <form action="{{ url_for('backupjob') }}" method="post">
-                                            <input type="hidden" name="backupjob_name" value="{{ job.name }}"/>
-                                            <button class="btn btn-link type=" submit
-                                            ">{{ job.name }}</button>
-                                            {{ csrf|raw }}
-                                        </form>
-                                    </td>
-                                    <td class="text-right">{{ job.jobbytes }}</td>
-                                    <td class="text-right">{{ job.jobfiles }}</td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="3" class="text-center">{{ 'Nothing to display'|trans }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-        </div>
     </div>
 
 {% endblock %}

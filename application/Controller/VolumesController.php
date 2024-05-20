@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Copyright (C) 2017-present Davide Franco
+ * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -21,258 +21,170 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Libs\Config;
-use App\Validator\VolumesRequestValidator;
-use Core\Db\CDBQuery;
-use Core\Db\DBPagination;
-use Core\Utils\CUtils;
-use App\Table\VolumeTable;
-use App\Table\PoolTable;
-use Date_HumanDiff;
-use Exception;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Exception\HttpBadRequestException;
-use Psr\Http\Message\ResponseInterface as Response;
-use Slim\Views\Twig;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
+use App\Entity\Bacula\Job;
+use App\Entity\Bacula\JobMedia;
+use App\Entity\Bacula\Repository\PoolRepository;
+use App\Entity\Bacula\Repository\VolumeRepository;
+use App\Entity\Bacula\Volume;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
-use function Core\Helpers\getRequestParams;
-
-class VolumesController
+/**
+ * Volumes report controller
+ */
+class VolumesController extends AbstractController
 {
-    private VolumeTable $volumeTable;
-    private PoolTable $poolTable;
+    private EntityManagerInterface $entityManager;
 
-    private Twig $view;
-    private Config $config;
-
-    public function __construct(
-        VolumeTable $volumeTable,
-        PoolTable $poolTable,
-        Twig $view,
-        Config $config
-    ) {
-        $this->volumeTable = $volumeTable;
-        $this->poolTable = $poolTable;
-        $this->view = $view;
-        $this->config = $config;
+    /**
+     * @param ManagerRegistry $doctrine
+     */
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        /**
+         * TODO: check if using the repository will be enough
+         */
+        $this->entityManager = $doctrine->getManager('bacula');
     }
 
     /**
+     * @Route("/volumes", name="volumes")
+     *
      * @param Request $request
-     * @param Response $response
+     * @param PoolRepository $poolRepository
+     * @param VolumeRepository $volumeRepository
+     * @param PaginatorInterface $paginator
+     * @param ParameterBagInterface $parameters
      * @return Response
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws Exception
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function index(Request $request, Response $response): Response
-    {
-        $tplData = [];
-        $params = [];
-
-        $volumeslist = [];
-        $volumes_total_bytes = 0;
-        $volumeOrderBy = 'Name';
-        $volumeOrderByDirection = 'DESC';
-        $where = null;
+    public function index(
+        Request $request,
+        PoolRepository $poolRepository,
+        VolumeRepository $volumeRepository,
+        PaginatorInterface $paginator,
+        ParameterBagInterface $parameters
+    ): Response {
+        $poolId = 0;
 
         // Order by
-        $orderby = [
-            'Name' => 'Name',
-            'MediaId' => 'Id',
-            'VolBytes' => 'Bytes',
-            'VolJobs' => 'Jobs'
+        $orderByOptions = [
+            'name' => 'Name',
+            'id' => 'Id',
+            'volbytes' => 'Bytes',
+            'voljobs' => 'Jobs'
         ];
 
-        $tplData['orderby'] = $orderby;
+        $inChangerChecked = '';
+        $orderByField = 'name';
+        $orderByDirection = 'ASC';
+        $orderByChecked = '';
 
-        // Volumes status icon
-        $volumestatus = [
-            'Full' => 'fa-battery-full',
-            'Archive' => 'fa-file-archive-o',
-            'Append' => 'fa-battery-quarter',
-            'Recycle' => 'fa-recycle',
-            'Read-Only' => 'fa-lock',
-            'Disabled' => 'fa-ban',
-            'Error' => 'fa-times-circle',
-            'Busy' => 'fa-clock-o',
-            'Used' => 'fa-battery-quarter',
-            'Purged' => 'fa-battery-empty'
-        ];
+        $pools = $poolRepository->getPools();
 
-        $poolslist = [];
+        $queryBuilder = $this->entityManager->createQueryBuilder();
 
-        foreach ($this->poolTable->getPools($this->config->get('hide_empty_pools')) as $pool) {
-            $poolslist[$pool['poolid']] = $pool['name'];
+        $queryBuilder
+            ->select('v', 'p')
+            ->from(Volume::class, 'v')
+            ->leftJoin('v.pool', 'p')
+        ;
+
+        $postData = $request->request->all();
+
+        /**
+         * TODO: refactor using Symfony Form component
+         */
+        if ($request->getMethod() === 'POST') {
+            /**
+             * TODO: add missing validation
+             */
+            $poolId = $postData['filter_pool_id'] ?? 0;
+
+            if ($poolId !== '0') {
+                $queryBuilder
+                    ->where('v.poolId = :poolid')
+                    ->setParameter('poolid', $poolId);
+            }
+
+            $orderByField = isset($postData['filter_orderby']) ? $postData['filter_orderby'] : 'name';
+
+            if (isset($postData['filter_orderby_asc'])) {
+                $orderByChecked = 'checked';
+            }
+
+            $orderByDirection = $postData['filter_orderby_asc'] ?? 'DESC';
+
+            if (isset($postData['filter_inchanger'])) {
+                $queryBuilder
+                    ->andWhere('v.inchanger = :inchanger')
+                    ->setParameter('inchanger', 1);
+            }
+            $inChangerChecked = isset($postData['filter_inchanger']) ? 'checked' : '';
         }
 
-        $tplData['pools_list'] = $poolslist;
+        $queryBuilder->orderBy('v.' . $orderByField, $orderByDirection);
 
-        $postData = getRequestParams($request);
+        $volumes = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            $parameters->get('app.rows_per_page')
+        );
 
-        $volumesRequestValidator = new VolumesRequestValidator($postData);
-
-        if (!empty($postData)) {
-            if (!$volumesRequestValidator->validate()) {
-                $message = 'Invalid parameter(s) provided' ;
-                throw new HttpBadRequestException($request, $message);
-            } else {
-                $poolId = $postData['filter_pool_id'] ?? 0;
-                if ($poolId !== '0') {
-                    $where[] = 'Media.PoolId = :pool_id';
-                    $params['pool_id'] = (int) $poolId;
-                }
-
-                $tplData['pool_id'] = $poolId;
-
-                $volumeOrderBy = $postData['filter_orderby'] ?? 'Name';
-                $tplData['orderby_selected'] = $volumeOrderBy;
-
-                $volumeOrderByDirection = $postData['filter_orderby_asc'] ?? 'DESC';
-                $tplData['orderby_asc_checked'] = $volumeOrderByDirection === 'ASC' ? 'checked' : '';
-
-                if (isset($postData['filter_inchanger'])) {
-                    $where[] = 'Media.inchanger = :inchanger';
-                    $params['inchanger'] = 1;
-                }
-                $tplData['inchanger_checked'] = isset($postData['filter_inchanger']) ? 'checked' : '';
-            }
-        }
-
-        $fields = [
-            'Media.mediaid',
-            'Media.volumename',
-            'Media.volbytes',
-            'Media.volfiles',
-            'Media.voljobs',
-            'Media.volstatus',
-            'Media.mediatype',
-            'Media.lastwritten',
-            'Media.volretention',
-            'Media.slot',
-            'Media.inchanger',
-            'Pool.Name AS pool_name'
-        ];
-
-        $pagination = new DBPagination($request, $this->config);
-
-        $sqlQuery = CDBQuery::get_Select(array('table' => $this->volumeTable->getTableName(),
-                                            'fields' => $fields,
-                                            'orderby' => "$volumeOrderBy $volumeOrderByDirection",
-                                            'join' => array(
-                                                array('table' => 'Pool', 'condition' => 'Media.poolid = Pool.poolid')
-                                            ),
-                                            'where' => $where,
-                                            'limit' => [
-                                                'count' => $pagination->getLimit(),
-                                                'offset' => $pagination->getOffset() ]
-                                            ), $this->volumeTable->get_driver_name());
-
-        $countquery = CDBQuery::get_Select([
-            'table' => $this->volumeTable->getTableName(),
-            'fields' => ['COUNT(*) as row_count'],
-            'where' => $where ]);
-
-        foreach ($pagination->paginate($this->volumeTable, $sqlQuery, $countquery, $params) as $volume) {
-            // Calculate volume expiration
-            // If volume have already been used
-            if ($volume['lastwritten'] != "0000-00-00 00:00:00" && !is_null($volume['lastwritten'])) {
-                // Calculate expiration date only if volume status is Full or Used
-                if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
-                    $dh = new Date_HumanDiff();
-                    $dateTimeFormatShort = explode(' ', $this->config->get('datetime_format', 'Y-m-d H:i:s'));
-                    $volume['expire'] = date(
-                        $dateTimeFormatShort[0],
-                        strtotime($volume['lastwritten']) + $volume['volretention']
-                    );
-                    $volume['expire'] = $dh->get(
-                        strtotime($volume['lastwritten']) + $volume['volretention'],
-                        time()
-                    ) . ' (' . $volume['expire'] . ')';
-                } else {
-                    $volume['expire'] = 'n/a';
-                }
-            } else {
-                $volume['expire'] = 'n/a';
-            }
-
-            // Set lastwritten for the volume
-            if (($volume['lastwritten'] == '0000-00-00 00:00:00') || empty($volume['lastwritten'])) {
-                $volume['lastwritten'] = 'n/a';
-            } else {
-                // Format lastwritten in custom format if defined in config file
-                $volume['lastwritten'] = date(
-                    $this->config->get('datetime_format', 'Y-m-d H:i:s'),
-                    strtotime($volume['lastwritten'])
-                );
-            }
-
-            $volumes_total_bytes += $volume['volbytes'];
-
-            // Get volume used bytes in a human format
-            $volume['volbytes'] = CUtils::Get_Human_Size($volume['volbytes']);
-
-            // Update volume inchanger
-            if ($volume['inchanger'] == '0') {
-                $volume['inchanger'] = '-';
-                $volume['slot'] = 'n/a';
-            } else {
-                $volume['inchanger'] = '<i class="fa fa-check" aria-hidden="true"></i>';
-            }
-
-            // Set volume status icon
-            $volume['status_icon'] = $volumestatus[ $volume['volstatus'] ];
-
-            // Format voljobs
-            $volume['voljobs'] = CUtils::format_Number($volume['voljobs']);
-
-            // add volume in volumeTable list array
-            $volumeslist[] = $volume;
-        }
-
-        $tplData['pagination'] = $pagination;
-
-        $tplData['volumes'] = $volumeslist;
-        $tplData['volumes_count'] = $this->volumeTable->count();
-        $tplData['volumes_total_bytes'] = CUtils::Get_Human_Size($volumes_total_bytes);
-
-        return $this->view->render($response, 'pages/volumes.html.twig', $tplData);
+        return $this->render('pages/volumes.html.twig', [
+                'pagination' => $volumes,
+                'datetime_format' => $this->getParameter('app.datetime_format'),
+                'datetime_format_short' => $this->getParameter('app.datetime_format_short'),
+                'volumes_total_bytes' => $volumeRepository->getStoredSize(),
+                'pools' => $pools,
+                'pool_id' => $poolId,
+                'orderby_options' => $orderByOptions,
+                'orderby_selected' => $orderByField,
+                'orderby_asc_checked' => $orderByChecked,
+                'inchanger_checked' => $inChangerChecked
+            ]);
     }
 
     /**
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws LoaderError
+     * @Route("/volume/{id}", name="volume_detail")
+     *
+     * @param int $id
+     * @return Response
      */
-    public function show(Request $request, Response $response): Response
+    public function show(int $id): Response
     {
-        $tplData = [];
+        /**
+         * List jobs for a specific volume
+         */
+        $queryBuilder = $this->entityManager->createQueryBuilder();
 
-        $requestData = $request->getAttributes();
-        $params = [];
+        $query = $queryBuilder
+            ->select('v', 'j.id', 'j.name', 'j.type')
+            ->distinct()
+            ->from(Volume::class, 'v')
+            ->innerJoin(JobMedia::class, 'jm', Join::WITH, 'v.id = jm.mediaid')
+            ->innerJoin(Job::class, 'j', Join::WITH, 'jm.jobid = j.id')
+            ->where('v.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+        ;
+        $jobs = $query->getArrayResult();
 
-        $volumeId = (int) $requestData['id'];
+        $volume = $this->entityManager->getRepository(Volume::class)->find($id);
 
-        $where[] = 'Media.MediaId = :volume_id';
-
-        $params['volume_id'] = $volumeId;
-
-        $sqlQuery = CDBQuery::get_Select(
-            [
-                'table' => 'Media',
-                'fields' => ['*'],
-                'where' => $where
-            ],
-            $this->volumeTable->get_driver_name()
-        );
-
-        $tplData['volume'] = $this->volumeTable->select($sqlQuery, $params, 'App\Entity\Volume', true);
-        $tplData['jobs'] = $this->volumeTable->getJobs($volumeId);
-
-        return $this->view->render($response, 'pages/volume.html.twig', $tplData);
+        return $this->render('pages/volume.html.twig', [
+                'volume' => $volume,
+                'jobs' => $jobs
+            ]);
     }
 }

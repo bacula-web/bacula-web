@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container-fluid" id="jobsreport">
 
-        {{ include('partials/_page_header.html.twig', {header: 'Job files'|trans, description: 'Bacula History Files'|trans}) }}
+        {{ include('partials/_page_header.html.twig', { header: 'Job files', description: 'Bacula History Files' }) }}
 
         <div class="row">
             <div class="col-md-7">
@@ -15,16 +15,16 @@
                     <div class="card-header">{{ 'Job Info'|trans }}</div>
                     <div class="card-body">
                         <div>
-                            <p><b>{{ 'Job Name'|trans }}</b>: {{ job_info.name }}</p>
-                            <p><b>{{ 'Job Status'|trans }}</b>: {{ job_info.jobstatus }}</p>
-                            <form action="{{ url_for('backupjob') }}" method="post">
-                                <input type="hidden" name="backupjob_name" value="{{ job_info.name }}"/>
+                            <p><b>{{ 'Job Name'|trans }}</b>: {{ job.name }}</p>
+                            <p><b>{{ 'Job Status'|trans }}</b>: {{ job.status.statuslong }}</p>
+                            <form {# action="{{ url_for('backupjob') }}" #} method="post">
+                                <input type="hidden" name="backupjob_name" value="{{ job.name }}"/>
                                 <input type="hidden" name="backupjob_period" value="7"/>
                                 <button type="submit"
                                         class="btn btn-sm btn-primary">{{ 'View backup job'|trans }}</button>
-                                {{ csrf|raw }}
-                            </form>
 
+                                <input type="hidden" name="csrf" value="{{ csrf_token('jobfiles') }}" />
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -35,18 +35,20 @@
                 <div class="card">
                     <div class="card-header"><b>Search</b></div>
                     <div class="card-body">
-                        <form action="{{ url_for('jobfiles') }}/{{ jobid }}" method="post">
+                        <form {# action="{{ url_for('jobfiles') }}/{{ jobid }}" #} method="GET">
                             <div class="mb-3">
                                 <label for="InputFilename" class="form-label">Filename</label>
-                                <input type="text" class="form-control" name="filename" id="InputFilename"
+                                <input type="text" class="form-control" name="filter_filename" id="InputFilename"
                                        placeholder="search any file or folder name" value="{{ filename }}">
                             </div>
-                            <input type="hidden" name="jobId" value="{{ jobid }}">
+                            <input type="hidden" name="jobId" value="{{ job.id }}">
                             <button type="submit" class="btn btn-primary">Search</button>
                             <button type="reset" class="btn btn-default" title="{{ 'Reset'|trans }}"></button>
-                            {{ csrf|raw }}
+
+                            <input type="hidden" name="csrf" value="{{ csrf_token('jobfiles') }}" />
+                        </form>
                     </div>
-                    </form>
+
                 </div>
             </div>
         </div>
@@ -61,10 +63,10 @@
                             <th class="text-center">{{ 'Filename'|trans }}</th>
                         </tr>
                     </thead>
-                    {% for file in job_files %}
+                    {% for file in pagination %}
                         <tr>
-                            <td>#{{ file.fileindex }}</td>
-                            <td class="text-left">{{ file.path }}{{ file.filename }}</td>
+                            <td>{{ file.fileindex }}</td>
+                            <td class="text-left">{{ file.path.path }}{{ file.filename }}</td>
                         </tr>
                     {% else %}
                         <tr>
@@ -74,42 +76,8 @@
                 </table>
             </div>
 
-            <div class="col-12">
-                {# {if $pagination_active} #}
-                {% if pagination_active == true %}
-                    {% set previous_page = pagination_current_page - 1 %}
-                    {% set next_page = pagination_current_page + 1 %}
-                    <nav aria-label="pagination">
-                        <ul class="pagination justify-content-center">
-                            {# if we are on first page * #}
-                            {% if pagination_current_page == 0 %}
-                            <li class="page-item disabled">
-                                <a class="page-link">Previous</a>
-                                {% else %}
-                            <li class="page-item">
-                                <a class="page-link"
-                                   href="{{ url_for('jobfiles') }}/{{ jobid }}/{{ previous_page }}{% if filename != '' %}/{{ filename }}{% endif %}">Previous</a>
-                                {% endif %}
-                            </li>
-                            <li class="page-item disabled"><a class="page-link">Found <b>{{ job_files_count }}</b>
-                                    File(s)</a></li>
-                            <li class="page-item">
-                                {# if there is only one page #}
-                                {% if job_files_count_paging == pagination_rows_per_page %}
-                                    <a class="page-link"
-                                       href="{{ url_for('jobfiles') }}/{{ jobid }}/{{ next_page }}{% if filename != '' %}/{{ filename }}{% endif %}
-                                        ">Next</a>
-                                {% else %}
-                                    <a class="page-link">Next</a>
-                                {% endif %}
-                            </li>
-                        </ul>
-                    </nav>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    </div>
+            {{ include('partials/pagination.html.twig') }}
 
+        </div>
     </div>
 {% endblock %}

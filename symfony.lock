@@ -38,6 +38,9 @@
             "migrations/.gitignore"
         ]
     },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.9.0"
+    },
     "phpstan/phpstan": {
         "version": "1.10",
         "recipe": {

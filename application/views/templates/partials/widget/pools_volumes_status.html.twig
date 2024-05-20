@@ -1,0 +1,11 @@
+<div class="card border-dark mb-3">
+    <div class="card-header">
+        <b>{{ 'Pools and volumes status'|trans }}</b>
+    </div>
+    <div class="card-body">
+        <div id="{{ pools_usage_chart_id }}">
+            <svg></svg>
+        </div>
+        {{ pools_usage_chart|raw }}
+    </div>
+</div>

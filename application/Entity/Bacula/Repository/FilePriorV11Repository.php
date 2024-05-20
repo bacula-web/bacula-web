@@ -43,22 +43,29 @@ class FilePriorV11Repository extends ServiceEntityRepository
 
     /**
      * @param int $jobId
+     * @param string|null $filename
      * @return array
      */
-    public function findFilesByJobid(int $jobId): array
+    public function findFilesByJobid(int $jobId, string $filename = null): array
     {
         $queryBuilder = $this->createQueryBuilder('f');
 
-        $query = $queryBuilder
+        $queryBuilder
             ->select('f')
             ->join('f.job', 'j')
             ->join('f.path', 'p')
             ->join('f.filename', 'fn') // <- update annotations on Filename table
             ->where('f.jobid = :jobId')
-            ->setParameter('jobId', $jobId)
-            ->getQuery()
-        ;
+            ->setParameter('jobId', $jobId);
 
-        return $query->getResult();
+        if ($filename) {
+            $queryBuilder
+                ->andWhere('fn.name LIKE :filename')
+                ->setParameter('filename', '%' . $filename . '%');
+        }
+
+        return [
+            'files' => $queryBuilder
+        ];
     }
 }

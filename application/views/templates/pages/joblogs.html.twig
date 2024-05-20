@@ -4,7 +4,8 @@
 
 {% block body %}
     <div class="container-fluid">
-        {{ include('partials/_page_header.html.twig', {header: 'Job logs'|trans, description: 'Bacula job log'|trans}) }}
+
+        {{ include('partials/_page_header.html.twig', { header: 'Job logs', description: 'Bacula job log' }) }}
 
         <div class="row">
             <div class="col-3">
@@ -12,31 +13,31 @@
                     <div class="card-header">{{ 'Job details'|trans }}</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ 'Job id'|trans }}</h5>
-                        <p class="card-text">{{ job.jobid }}</p>
+                        <p class="card-text">{{ job.id }}</p>
 
                         <h5 class="card-title">{{ 'Job name'|trans }}</h5>
-                        <p class="card-text">{{ job.job_name }}</p>
+                        <p class="card-text">{{ job.name }}</p>
 
                         <h5 class="card-title">{{ 'Job status'|trans }}</h5>
-                        <p class="card-text">{{ job.jobstatuslong }}</p>
+                        <p class="card-text">{{ job.status.statuslong }}</p>
 
                         <h5 class="card-title">{{ 'Job bytes'|trans }}</h5>
-                        <p class="card-text">{{ job.getJobBytes() }}</p>
+                        <p class="card-text">{{ job.jobbytes }}</p>
 
                         <h5 class="card-title">{{ 'Scheduled time'|trans }}</h5>
-                        <p class="card-text">{{ job.schedtime }}</p>
+                        <p class="card-text">{{ job.scheduledtime|date(app_datetime_format)|default('n/a') }}</p>
 
                         <h5 class="card-title">{{ 'Job start time'|trans }}</h5>
-                        <p class="card-text">{{ job.starttime }}</p>
+                        <p class="card-text">{{ job.starttime|date(app_datetime_format)|default('n/a') }}</p>
 
                         <h5 class="card-title">{{ 'Job end time'|trans }}</h5>
-                        <p class="card-text">{{ job.endtime }}</p>
+                        <p class="card-text">{{ job.endtime|date(app_datetime_format)|default('n/a') }}</p>
 
                         <h5 class="card-title">{{ 'Job level'|trans }}</h5>
-                        <p class="card-text">{{ job.getLevel() }}</p>
+                        <p class="card-text">{{ job.level }}</p>
 
                         <h5 class="card-title">{{ 'Pool'|trans }}</h5>
-                        <p class="card-text">{{ job.pool_name }}</p>
+                        <p class="card-text">{{ job.pool.name|default('n/a') }}</p>
                     </div>
                 </div>
             </div>
@@ -50,7 +51,7 @@
                             <th class="text-center">{{ 'Event'|trans }}</th>
                         </tr>
                         </thead>
-                        {% for log in joblogs %}
+                        {% for log in job.logs %}
                             <tr>
                                 <td class="text-center">{{ log.time }}</td>
                                 <td class="text-left">{{ log.logtext|nl2br }}</td>

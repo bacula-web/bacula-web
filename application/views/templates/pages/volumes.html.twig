@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container-fluid">
 
-        {{ include('partials/_page_header.html.twig', {header: 'Volumes report'|trans, description: 'Bacula volume(s) overview'|trans }) }}
+        {{ include('partials/_page_header.html.twig', { header: 'Volumes report', description: 'Bacula volume(s) overview' }) }}
 
         <div class="row">
             <div class="col-10">
@@ -28,24 +28,43 @@
                         </tr>
                         </thead>
 
-                        {% for volume in volumes %}
+                        {% for volume in pagination %}
                             <tr>
                                 <td>
-                                    <a href="{{ url_for('volume_detail', {'id': volume.mediaid }) }}"
-                                       title="{{ 'Show volume'|trans }}">{{ volume.volumename }}</a>
+                                    <a href="{{ path('volume_detail', {'id': volume.id }) }}"
+                                       title="{{ 'Show volume'|trans }}">{{ volume.name }}</a>
                                 </td>
-                                <td class="text-right">{{ volume.volbytes }}</td>
-                                <td class="text-right">{{ volume.volfiles }}</td>
+                                <td class="text-right">
+                                    {{ readable_size(volume.volbytes) }}
+                                </td>
+                                <td class="text-right">{{ readable_size(volume.volfiles, 0, '', false) }}</td>
                                 <td class="text-right">{{ volume.voljobs }}</td>
                                 <td>{{ volume.mediatype }}</td>
-                                <td>{{ volume.pool_name }}</td>
-                                <td>{{ volume.expire }}</td>
-                                <td>{{ volume.lastwritten }}</td>
-                                <td title="{{ volume.volstatus }}">
-                                    <i class="fa {{ volume.status_icon }}"></i>
+                                <td>{{ volume.pool.name }}</td>
+                                <td>
+                                    {% if volume.expire %}
+                                        {{ volume.expirationDate }} ({{ volume.expire|date(datetime_format) }})
+                                    {% else %}
+                                        n/a
+                                    {% endif %}
                                 </td>
-                                <td>{{ volume.slot }}</td>
-                                <td>{{ volume.inchanger|raw }}</td>
+                                <td>
+                                    {% if volume.lastwritten is empty or volume.lastwritten == '0000-00-00 00:00:00'%}
+                                        n/a
+                                    {% else %}
+                                        {{ volume.lastwritten|date(datetime_format) }}
+                                    {% endif %}
+                                </td>
+                                <td title="{{ volume.status }}">
+                                    {{ volume.status }}
+                                    <i class="fa {{ volume.statusicon }}"></i>
+                                </td>
+                                <td>
+                                    {% if volume.inchanger %} {{ volume.slot }} {% else %} n/a {% endif %}
+                                </td>
+                                <td>
+                                    {% if volume.inchanger %}<i class="fa fa-check" aria-hidden="true"></i>{% else %} - {% endif %}
+                                </td>
                             </tr>
                         {% else %}
                             <tr>
@@ -57,20 +76,20 @@
                     </table>
                 </div>
 
-                {% if volumes|length > 0 %}
-                    {{ include("partials/pagination.html.twig", {route: 'volumes' }) }}
-                {% endif %}
+                {{ include("partials/pagination.html.twig", {route: 'volumes' }) }}
+
             </div>
+
             <div class="col-2">
                 <!-- Options -->
-                <form class="" action="{{ url_for('volumes') }}" method="post">
+                <form class="" action="{{ path('volumes') }}" method="post">
                     <!-- Pools -->
                     <div class="mb-3">
                         <label class="form-label" for="filter_pool_id">{{ 'Pool'|trans }}</label>
                         <select class="form-control input-sm" name="filter_pool_id">
                             <option value="0" {% if pool_id == 0 %}selected{% endif %}>Any</option>
-                            {% for poolid, pool in pools_list %}
-                                <option value="{{ poolid }}" {% if poolid == pool_id %}selected{% endif %}>{{ pool }}</option>
+                            {% for pool in pools %}
+                                <option value="{{ pool.id }}" {% if pool.id == pool_id %}selected{% endif %}>{{ pool.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -78,7 +97,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="inputOrderBy">{{ 'Order by'|trans }}</label>
                         <select class="form-control input-sm" name="filter_orderby">
-                            {% for key, order in orderby %}
+                            {% for key, order in orderby_options %}
                                 <option value="{{ key }}" {% if orderby_selected == key %}selected{% endif %}>{{ order }}</option>
                             {% endfor %}
                         </select>
@@ -107,22 +126,24 @@
                             <button type="submit" class="btn btn-primary btn-sm"
                                     title="{{ 'Apply filter and options'|trans }}">{{ 'Apply'|trans }}</button>
                         </div>
-                        {{ csrf|raw }}
+                        <input type="hidden" name="token" value="{{ csrf_token('app') }}">
+                    </div>
                 </form>
             </div>
         </div>
     </div>
     <hr/>
+
     <!-- Found volumes footer -->
     <div class="card border-dark m-3">
         <div class="card-header">{{ 'Result'|trans }}</div>
         <div class="card-body">
             <ul class="list-group">
                 <li class="list-group-item">
-                    {{ 'Volume(s) found'|trans }} <span class="badge text-bg-dark">{{ volumes_count }}</span>
+                    {{ 'Volume(s) found'|trans }} <span class="badge text-bg-dark">{{ pagination.getTotalItemCount }}</span>
                 </li>
                 <li class="list-group-item">
-                    {{ 'Total bytes'|trans }} <span class="badge text-bg-dark">{{ volumes_total_bytes }}</span>
+                    {{ 'Total bytes'|trans }} <span class="badge text-bg-dark">{{ readable_size(volumes_total_bytes) }}</span>
                 </li>
             </ul>
         </div>

@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container-fluid">
 
-        {{ include('partials/_page_header.html.twig', {header: 'Pools report'|trans, description: 'Bacula pool(s) overview'|trans }) }}
+        {{ include('partials/_page_header.html.twig', { header: 'Pools report', description: 'Bacula pool(s) overview' }) }}
 
         <div class="row">
             <div class="col-xs-12">
@@ -13,36 +13,33 @@
                     <table class="table table-condensed table-striped paginate">
                         <caption>Pool(s) list</caption>
                         <thead>
-                            <tr>
-                                <th class="text-center">{{ 'Pool name'|trans }}</th>
-                                <th class="text-center">{{ 'Volume count'|trans }}</th>
-                                <th class="text-center">{{ 'Total bytes'|trans }}</th>
-                                <th class="text-center">{{ 'Volumes'|trans }}</th>
-                            </tr>
+                        <tr>
+                            <th class="text-center">{{ 'Pool name'|trans }}</th>
+                            <th class="text-center">{{ 'Volume count'|trans }}</th>
+                            <th class="text-center">{{ 'Total bytes'|trans }}</th>
+                            <th class="text-center">{{ 'Volumes'|trans }}</th>
+                        </tr>
                         </thead>
                         {% for pool in pools %}
                             <tr>
                                 <td>{{ pool.name }}</td>
                                 <td class="text-center">{{ pool.numvols }}</td>
-                                <td class="text-right">{{ pool.totalbytes }}</td>
+                                <td class="text-right">{{ readable_size(pool.total_bytes) }}</td>
                                 <td class="text-center">
-                                    <form method="post" action="{{ url_for('volumes') }}">
-                                        <input type="hidden" name="filter_pool_id" value="{{ pool.poolid }}" />
+                                    <form method="post" action="{{ path('volumes') }}">
+                                        <input type="hidden" name="filter_pool_id" value="{{ pool.id }}" />
+
                                         <button class="btn btn-sm btn-primary" type="submit"
                                                 {% if pool.numvols == 0 %}disabled{% endif %}
                                         >{{ 'Show Volumes'|trans }}</button>
-                                        {{ csrf|raw }}
+                                        <input type="hidden" name="token" value="{{ csrf_token('volumes') }}">
                                     </form>
                                 </td>
                             </tr>
                         {% endfor %}
                     </table>
-
-                </div> <!-- end div class=table-responsive -->
-
-            </div> <!-- end div class=col- -->
-
-        </div> <!-- end div class="row" -->
-
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

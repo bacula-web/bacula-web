@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container-fluid">
 
-        {{ include('partials/_page_header.html.twig', {header: 'Directors'|trans, description: 'Bacula director(s) overview'|trans }) }}
+        {{ include('partials/_page_header.html.twig', { header: 'Directors', description: 'Bacula director(s) overview' }) }}
 
         <p>Found {{ directors_count }} Bacula director catalog(s) in your configuration</p>
 
@@ -17,6 +17,9 @@
                             <h4 class="card-title">{{ director.label }}</h4>
                             <p class="card-text">{{ director.description }}</p>
 
+                            <!--
+                            TODO: catch database connection error and add some useful content below
+                            -->
                             {% if director.error is defined %}
                                 <p class="text-danger"><b>Error:</b> {{ director.error }}</p>
                             {% endif %}
@@ -26,22 +29,22 @@
                             <p class="card-text">{{ director.clients }}</p>
 
                             <h5 class="card-title">{{ 'Jobs'|trans }}</h5>
-                            <p class="card-text">{{ director.jobs }}</p>
+                            <p class="card-text">{{ director.jobs|number_format }}</p>
 
                             <h5 class="card-title">{{ 'Total bytes'|trans }}</h5>
-                            <p class="card-text">{{ director.totalbytes }}</p>
+                            <p class="card-text">{{ readable_size(director.totalbytes) }}</p>
 
                             <h5 class="card-title">{{ 'Total files'|trans }}</h5>
-                            <p class="card-text">{{ director.totalfiles }}</p>
+                            <p class="card-text">{{ director.totalfiles|number_format }}</p>
 
                             <h5 class="card-title">{{ 'Database size'|trans }}</h5>
-                            <p class="card-text">{{ director.dbsize }}</p>
+                            <p class="card-text">{{ readable_size(director.dbsize) }}</p>
 
                             <h5 class="card-title">{{ 'Volume(s)'|trans }}</h5>
                             <p class="card-text">{{ director.volumes }}</p>
 
                             <h5 class="card-title">{{ 'Volume(s) size'|trans }}</h5>
-                            <p class="card-text">{{ director.volumesize }}</p>
+                            <p class="card-text">{{ readable_size(director.volumesize) }}</p>
 
                             <h5 class="card-title">{{ 'Pool(s)'|trans }}</h5>
                             <p class="card-text">{{ director.pools }}</p>
