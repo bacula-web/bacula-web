@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container-fluid">
 
-        {{ include('partials/_page_header.html.twig', {header: 'Settings'|trans, description: 'General settings'|trans }) }}
+        {{ include('partials/_page_header.html.twig', { header: 'Settings', description: 'General settings' }) }}
 
         <div class="row">
             <div class="col-3">
@@ -44,8 +44,6 @@
                                        value="{{ config_datetime_format_short }}" disabled>
                             </div>
 
-                            {#
-
                             <h4 class="mt-4">Translations</h4>
 
                             <div class="mb-3">
@@ -61,7 +59,12 @@
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch"
                                            id="config_show_inactive_clients" {{ config_show_inactive_clients }}
-                                           disabled>
+                                            {% if config_show_inactive_clients != true %}
+                                                disabled
+                                                {% else %}
+                                                checked
+                                            {% endif %}
+                                    >
                                     <label class="form-check-label" for="config_show_inactive_clients">Show inactive
                                         clients</label>
                                 </div>
@@ -70,41 +73,18 @@
                             <div class="mb-3">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch"
-                                           id="config_hide_empty_pools" {{ config_hide_empty_pools }} disabled>
+                                           id="config_hide_empty_pools" {{ config_hide_empty_pools }}
+                                            {% if config_hide_empty_pools != true %}
+                                                disabled
+                                            {% else %}
+                                                checked
+                                            {% endif %}
+                                    >
                                     <label class="form-check-label" for="config_hide_empty_pools">Hide empty
                                         pools</label>
                                 </div>
                             </div>
-
-                            <h4>Authentication</h4>
-
-                            <div class="mb-3">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                           id="config_enable_users_auth" {{ config_enable_users_auth }} disabled>
-                                    <label class="form-check-label" for="config_enable_users_auth">Users
-                                        authentication</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                           id="config-debug" {{ config_debug }} disabled>
-                                    <label class="form-check-label" for="config-debug">Debug mode</label>
-                                </div>
-                            </div>
-
-                            <h4 class="mt-4">Web app path</h4>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="config_basepath">Base path</label>
-                                <input type="text" class="form-control" id="config_basepath"
-                                       value="{{ config_basepath }}" disabled>
-                            </div>
-                            #}
                         </form>
-
                     </div>
 
                     <!-- Users tab -->
@@ -140,9 +120,7 @@
 
                             <button class="btn btn-sm btn-primary pull-right" type="submit">Create user</button>
                         {{ form_end(new_user_form) }}
-
                     </div>
-
                 </div>
 
                 <div class="clearfix"></div>

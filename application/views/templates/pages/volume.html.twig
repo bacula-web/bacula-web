@@ -6,7 +6,7 @@
 
     <div class="container-fluid">
 
-        {{ include('partials/_page_header.html.twig', {header: 'Volume details'|trans, description: 'Bacula volume details'|trans }) }}
+        {{ include('partials/_page_header.html.twig', { header: 'Volume details', description: 'Bacula volume details' }) }}
 
         <div class="row">
             <div class="col-4">
@@ -18,13 +18,13 @@
                     <div class="card-body">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <b>{{ 'Media id'|trans }}:</b> {{ volume.mediaid }}
+                                <b>{{ 'Media id'|trans }}:</b> {# {{ volume.id }} #}
                             </li>
                             <li class="list-group-item">
-                                <b>{{ 'Volume name'|trans }}:</b> {{ volume.volumename }}
+                                <b>{{ 'Volume name'|trans }}:</b> {{ volume.name }}
                             </li>
                             <li class="list-group-item">
-                                <b>{{ 'Volume bytes'|trans }}:</b> {{ volume.getVolbytes() }}
+                                <b>{{ 'Volume bytes'|trans }}:</b> {{ volume.volbytes }}
                             </li>
                             <li class="list-group-item">
                                 <b>{{ 'Volume files'|trans }}:</b> {{ volume.volfiles }}
@@ -33,7 +33,7 @@
                                 <b>{{ 'Volume jobs'|trans }}:</b> {{ volume.voljobs }}
                             </li>
                             <li class="list-group-item">
-                                <b>{{ 'First written'|trans }}:</b> {{ volume.firstwritten }}
+                                <b>{{ 'First written'|trans }}:</b> {{ volume.firstwritten|date(app_datetime_format) }}
                             </li>
                             <li class="list-group-item">
                                 <b>{{ 'Last written'|trans }}:</b> {{ volume.lastwritten }}
@@ -75,8 +75,8 @@
                                 {% for job in jobs %}
                                     <tr>
                                         <td>
-                                            <a href="{{ url_for('joblog', {'jobid': job.jobid}) }}"
-                                               title="{{ 'Show job'|trans }}">{{ job.jobid }}</a>
+                                            <a href="{{ path('joblog', {'jobid': job.id}) }}"
+                                               title="{{ 'Show job'|trans }}">{{ job.id }}</a>
                                         </td>
                                         <td>{{ job.name }}</td>
                                         <td>{{ job.type }}</td>

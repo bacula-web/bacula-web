@@ -1,0 +1,11 @@
+<div class="card border-dark mb-3">
+    <div class="card-header" title="{{ 'Stored Bytes over the last 7 days'|trans }}">
+        <strong>{{ 'Stored Bytes (last 7 days)'|trans }}</strong>
+    </div>
+    <div class="card-body">
+        <div id="{{ stored_bytes_chart_id }}">
+            <svg></svg>
+        </div>
+        {{ stored_bytes_chart|raw }}
+    </div>
+</div>

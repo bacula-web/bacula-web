@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -19,9 +17,11 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,14 +29,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 class UserController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -49,39 +49,23 @@ class UserController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('pages/usersettings.html.twig' );
+        $form = $this->createForm(UserType::class, $this->getUser());
+
+        return $this->render('pages/usersettings.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
-     * @Route(name="app_user_create", path="/user/create")
+     * @Route("/logout", name="app_logout")
      *
-     * @return Response
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      */
-    public function create(): Response
+    public function logout(): void
     {
-        $tplData = [];
-        $postData = $request->getParsedBody();
-
-        $this->username = $this->session->get('username');
-        $user = $this->userTable->findByName($this->username);
-
-        $tplData['username'] = $this->username;
-        $tplData['email'] = $user->getEmail();
-
-        return $this->view->render($response, 'pages/usersettings.html.twig', $tplData);
     }
 
     /**
-     * @Route(path="/logout", name="app_logout")
-     *
-     */
-    public function logout(): void {}
-
-    /**
-     * @Route(path="/user/resetpassword", name="app_user_resetpassword", methods={"POST"})
+     * @Route("/user/resetpassword", name="app_user_resetpassword", methods={"POST"})
      *
      * @param Request $request
      * @param UserPasswordHasherInterface $passwordHasher
@@ -90,11 +74,18 @@ class UserController extends AbstractController
     public function resetPassword(Request $request, UserPasswordHasherInterface $passwordHasher): RedirectResponse
     {
         $currentPassword = $request->request->get('oldpassword');
+        $user = $this->getUser();
 
-        if ($passwordHasher->isPasswordValid($this->getUser(), $currentPassword)) {
+        if ($passwordHasher->isPasswordValid($user, $currentPassword)) {
             $newPassword = $request->request->get('newpassword');
-            $newPassword = $passwordHasher->hashPassword($this->getUser(), $newPassword);
-            $this->entityManager->getRepository(User::class)->upgradePassword($this->getUser(),$newPassword);
+
+            $user->setPassword($passwordHasher->hashPassword(
+                $user,
+                $newPassword
+            ));
+
+            $this->entityManager->flush();
+            $this->entityManager->persist($user);
 
             $this->addFlash('success', 'Password successfully updated');
         } else {

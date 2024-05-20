@@ -1,0 +1,56 @@
+<div class="card border-dark mb-3">
+    <div class="card-header">
+        <b>{{ 'Clients jobs total'|trans }}</b>
+    </div>
+    <div class="card-body">
+        <p>{{ 'Per job name backup and restore jobs statistics'|trans }}</p>
+    </div>
+    <table class="table table-condensed">
+        <tr>
+            <th>{{ 'Job name'|trans }}</th>
+            <th class="text-right">{{ 'Jobs'|trans }}</th>
+            <th class="text-right">{{ 'Files'|trans }}</th>
+            <th class="text-right">{{ 'Bytes'|trans }}</th>
+            <th>{{ 'Type'|trans }}</th>
+        </tr>
+        {% for job_entry in jobs_list %}
+        <tr>
+            <td>{{ job_entry.name }}</td>
+            <td class="text-right">{{ job_entry.jobs_count }}</td>
+            <td class="text-right">{{ job_entry.jobs_files|number_format }}</td>
+            <td class="text-right">{{ readable_size(job_entry.jobs_bytes) }}</td>
+            <td>{{ job_entry.type }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+    <div class="card-body">
+        <p>Per job type backup and restore jobs statistics</p>
+    </div>
+    <table class="table table-condensed">
+        <tr>
+            <th>{{ 'Type'|trans }}</th>
+            <th class="text-right">{{ 'Files'|trans }}</th>
+            <th class="text-right">{{ 'Bytes'|trans }}</th>
+            <th class="text-right">{{ 'Jobs'|trans }}</th>
+        </tr>
+        <tr>
+            <td>{{ 'Backup'|trans }}</td>
+            <td class="text-right">{{ job_types_jobs_stats[0].jobs_files|number_format }}</td>
+            <td class="text-right">{{ readable_size(job_types_jobs_stats[0].jobs_bytes) }}</td>
+            <td class="text-right">{{ job_types_jobs_stats[0].jobs_count }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Restore'|trans }}</td>
+            {% if job_types_jobs_stats[1] is defined %}
+                <td class="text-right">{{ job_types_jobs_stats[1].jobs_files|number_format }}</td>
+                <td class="text-right">{{ readable_size(job_types_jobs_stats[1].jobs_bytes) }}</td>
+                <td class="text-right">{{ job_types_jobs_stats[1].jobs_count }}</td>
+            {% else %}
+                <td class="text-right">{{ 0|number_format }}</td>
+                <td class="text-right">{{ readable_size(0) }}</td>
+                <td class="text-right">{{ 0|number_format }}</td>
+            {% endif %}
+        </tr>
+    </table>
+</div>

@@ -1,15 +1,23 @@
 <div class="d-flex justify-content-between bg-gradient mt-1">
     <div class="p-1 mb-auto mt-auto">
-        <h3>{{ header }}</h3>
-        {{ description }}
+        <h3>{{ header|trans }}</h3>
+        {{ description|trans }}
     </div>
     <div class="p-1">
-        <a href="{% if referer %}{{ referer }} {% endif %}"
-           class="btn btn-secondary {% if not referer %} disabled {% endif %}">{{ 'Back'|trans }}</a>
-        <a href="{{ url_for('home') }}" class="btn btn-dark {% if is_current_url('home') %} disabled {% endif %}" title="{{ 'Back to Dashboard'|trans }}">
+        {% set referer = app.request.headers.get('referer') %}
+        {% set route = app.request.attributes.get('_route') %}
+
+        <!-- TODO: fix back link when previous route has parameters
+        <a href="{{ referer }}" class="btn btn-secondary
+        -->
+        <a href="#" class="btn btn-secondary disabled
+             {% if referer is not defined %}
+                disabled
+            {% endif %}"
+            >{{ 'Back'|trans }}</a>
+
+        <a href="{{ path('app_home') }}" class="btn btn-dark {% if route == 'app_home' %} disabled {% endif %}" title="{{ 'Back to Dashboard'|trans }}">
             <i class="fa-solid fa-home"></i></a>
     </div>
-
 </div>
-
 <hr>

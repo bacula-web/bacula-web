@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -19,216 +17,130 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Libs\Config;
-use Core\Db\DatabaseFactory;
+use App\Entity\Bacula\Repository\ClientRepository;
+use App\Entity\Bacula\Repository\JobRepository;
+use App\Entity\Bacula\Repository\VersionRepository;
+use App\Form\ClientType;
 use Core\Exception\AppException;
-use Core\Graph\Chart;
-use Core\Db\CDBQuery;
-use Core\Utils\DateTimeUtil;
-use Core\Utils\CUtils;
-use Core\Helpers\Sanitizer;
-use App\Table\JobTable;
-use App\Table\ClientTable;
+use App\Service\Chart;
 use Exception;
-use Odan\Session\SessionInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
-use Slim\Views\Twig;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
-use TypeError;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
-class ClientController
+/**
+ *
+ */
+class ClientController extends AbstractController
 {
-    private JobTable $jobTable;
-    private ClientTable $clientTable;
-    private Twig $view;
-    private Config $config;
-    private SessionInterface $session;
+    /**
+     * @var ParameterBagInterface
+     */
+    private ParameterBagInterface $parameter;
 
     /**
-     * @param Twig $view
-     * @param JobTable $jobTable
-     * @param ClientTable $clientTable
-     * @param Config $config
-     * @param SessionInterface $session
+     * @var JobRepository
      */
-    public function __construct(Twig $view, JobTable $jobTable, ClientTable $clientTable, Config $config, SessionInterface $session)
-    {
-        $this->view = $view;
-        $this->jobTable = $jobTable;
-        $this->clientTable = $clientTable;
-        $this->config = $config;
-        $this->session = $session;
+    private JobRepository $jobRepository;
+
+    /**
+     * @var ClientRepository
+     */
+    private ClientRepository $clientRepository;
+
+    /**
+     * @var VersionRepository
+     */
+    private VersionRepository $catalog;
+
+    /**
+     * @param VersionRepository $catalog
+     * @param ClientRepository $clientRepository
+     * @param JobRepository $jobRepository
+     * @param ParameterBagInterface $parameter
+     */
+    public function __construct(
+        VersionRepository $catalog,
+        ClientRepository $clientRepository,
+        JobRepository $jobRepository,
+        ParameterBagInterface $parameter
+    ) {
+        $this->clientRepository = $clientRepository;
+        $this->jobRepository = $jobRepository;
+        $this->parameter = $parameter;
+        $this->catalog = $catalog;
     }
 
     /**
+     * @Route("/client/{clientId?}", name="clients", methods={"GET"})
+     *
      * @param Request $request
-     * @param Response $response
+     * @param int|null $clientId
      * @return Response
      * @throws AppException
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      * @throws Exception
      */
-    public function index(Request $request, Response $response): Response
+    public function index(Request $request, ?int $clientId): Response
     {
-        $tplData = [];
+        $form = $this->createForm(ClientType::class);
 
-        $period = 7;
-        $backup_jobs = array();
-        $days_stored_bytes = array();
-        $days_stored_files = array();
+        $form->handleRequest($request);
 
-        // Clients list
-        $tplData['clients_list'] = $this->clientTable->getClients($this->config->get('show_inactive_clients'));
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+            $client = $formData['client'];
 
-        // Period list
-        $periods_list = [
-            '7' => "Last week",
-            '14' => "Last 2 weeks",
-            '30' => "Last month"
-        ];
+            $client = $this->clientRepository->find($client->getId());
 
-        $tplData['periods_list'] = $periods_list;
+            if (!$client) {
+                throw $this->createNotFoundException("Client with id $clientId not found");
+            }
 
-        $job_levels = array(
-            'D' => 'Differential',
-            'I' => 'Incremental',
-            'F' => 'Full',
-            'V' => 'InitCatalog',
-            'C' => 'Catalog',
-            'O' => 'VolumeToCatalog',
-            'd' => 'DiskToCatalog',
-            'A' => 'Data'
-        );
+            $to = $this->catalog->getCurrentDateTime();
+            $from = $this->catalog->getCurrentDateTime()->subDays($formData['period']);
 
-        // Check client_id and period received by POST $this->request
-        $postData = $request->getParsedBody();
+            $storedBytesChart = new Chart(
+                [
+                    'type' => 'bar',
+                    'name' => 'chart_storedbytes',
+                    'uniformize_data' => true,
+                    'data' => $this->jobRepository->getJobStoredBytes($from, $to, null, $clientId),
+                    'ylabel' => 'Bytes'
+                ]
+            );
 
-        $clientId = null;
-        if (isset($postData['client_id'])) {
-            $clientId = Sanitizer::sanitize($postData['client_id']);
+            $storedFilesChart = new Chart(
+                [
+                    'type' => 'bar',
+                    'name' => 'chart_storedfiles',
+                    'uniformize_data' => true,
+                    'data' => $this->jobRepository->getJobStoredFiles($from, $to, null, $clientId),
+                    'ylabel' => 'Files'
+                ]
+            );
+
+            $backupJobs = $this->jobRepository->getClientJobs($client->getId(), $from, $to);
+
+            return $this->render('pages/client-report.html.twig', [
+                'form' => $form->createView(),
+                'client' => $client,
+                'period' => $form->get('period')->getData(),
+                'backup_jobs' => $backupJobs,
+                'stored_bytes_chart_id' => $storedBytesChart->getName(),
+                'stored_bytes_chart' => $storedBytesChart->render(),
+                'stored_files_chart_id' => $storedFilesChart->getName(),
+                'stored_files_chart' => $storedFilesChart->render()
+            ]);
         }
 
-        if (isset($postData['period'])) {
-            $period = (int) Sanitizer::sanitize($postData['period']);
-
-            // Check if period is an integer and listed in known periods
-            if (!array_key_exists($period, $periods_list)) {
-                throw new TypeError('Critical: provided value for (period) is unknown or not valid');
-            }
-
-            $tplData['selected_period'] = $period;
-            $tplData['selected_client'] = $clientId;
-
-            // Get the last n days interval (start and end timestamps)
-            $currentDateTime = DatabaseFactory::getDatabase($this->session->get('catalog_id'))->getServerTimestamp();
-            $days = DateTimeUtil::getLastDaysIntervals($currentDateTime, $period);
-
-            $startTime = date('Y-m-d H:i:s', $days[0]['start']);
-            $endTime = date('Y-m-d H:i:s', $days[array_key_last($days)]['end']);
-
-            /**
-             * Filter jobTable per $this->requested period
-             */
-            $this->jobTable->addParameter('job_starttime', $startTime);
-            $where[] = 'Job.endtime >= :job_starttime';
-            $this->jobTable->addParameter('job_endtime', $endTime);
-            $where[] = 'Job.endtime <= :job_endtime';
-
-            $tplData['no_report_options'] = 'false';
-
-            // Client information
-            $client_info  = $this->clientTable->getClientInfos($clientId);
-
-            $tplData['client_name'] = $client_info['name'];
-            $tplData['client_os'] = $client_info['os'];
-            $tplData['client_arch'] = $client_info['arch'];
-            $tplData['client_version'] = $client_info['version'];
-
-            // Filter by Job status = Completed
-            $this->jobTable->addParameter('jobstatus', 'T');
-            $where[] = 'Job.JobStatus = :jobstatus';
-
-            // // Filter by Job Type
-            $this->jobTable->addParameter('jobtype', 'B');
-            $where[] = 'Job.Type = :jobtype';
-
-            // Filter by Client id
-            $this->jobTable->addParameter('clientid', $clientId);
-            $where[] = 'clientid = :clientid';
-
-            $query = CDBQuery::get_Select(['table' => $this->jobTable->getTableName(),
-                'fields' => ['Job.Name', 'Job.Jobid', 'Job.Level', 'Job.Endtime', 'Job.Jobbytes', 'Job.Jobfiles', 'Status.JobStatusLong'],
-                'join' => [
-                    ['table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus']
-                ],
-                'orderby' => 'Job.EndTime DESC',
-                'where' => $where
-                ], $this->jobTable->get_driver_name());
-
-            $jobs_result = $this->jobTable->run_query($query);
-
-            $totalBytes = 0;
-            $totalFiles = 0;
-            foreach ($jobs_result->fetchAll() as $job) {
-                $totalBytes += (int) $job['jobbytes'];
-                $totalFiles += (int) $job['jobfiles'];
-                $job['level']     = $job_levels[$job['level']];
-                $job['jobfiles']  = CUtils::format_Number($job['jobfiles']);
-                $job['jobbytes']  = CUtils::Get_Human_Size($job['jobbytes']);
-                $job['endtime']   = date($this->config->get('datetime_format', 'Y-m-d H:i:s'), strtotime($job['endtime']));
-                $backup_jobs[] = $job;
-            }
-            $tplData['total_bytes'] = CUtils::Get_Human_Size($totalBytes);
-            $tplData['total_files'] = CUtils::format_Number($totalFiles);
-            $tplData['backup_jobs'] = $backup_jobs;
-
-            // Last n days stored Bytes graph
-            foreach ($days as $day) {
-                $stored_bytes = $this->jobTable->getStoredBytes(array($day['start'], $day['end']), 'ALL', $clientId);
-                $days_stored_bytes[] = array(date("m-d", $day['start']), $stored_bytes);
-            }
-
-            $stored_bytes_chart = new Chart(array( 'type' => 'bar',
-                'name' => 'chart_storedbytes',
-                'data' => $days_stored_bytes,
-                'ylabel' => 'Bytes',
-                'uniformize_data' => true ));
-
-            $tplData['stored_bytes_chart_id'] = $stored_bytes_chart->name;
-            $tplData['stored_bytes_chart'] = $stored_bytes_chart->render();
-
-            unset($stored_bytes_chart);
-
-            // Last n days stored files graph
-            foreach ($days as $day) {
-                $stored_files = $this->jobTable->getStoredFiles(array($day['start'], $day['end']), 'ALL', $clientId);
-                $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
-            }
-
-            $stored_files_chart = new Chart(array( 'type' => 'bar',
-                'name' => 'chart_storedfiles',
-                'data' => $days_stored_files,
-                'ylabel' => 'Files' ));
-
-            $tplData['stored_files_chart_id'] = $stored_files_chart->name;
-            $tplData['stored_files_chart'] = $stored_files_chart->render();
-
-            unset($stored_files_chart);
-        } else {
-            $tplData['selected_period'] = '';
-            $tplData['selected_client'] = '';
-            $tplData['no_report_options'] = 'true';
-        }
-
-        $tplData['period'] = $period;
-
-        return $this->view->render($response, 'pages/client-report.html.twig', $tplData);
+        return $this->render('pages/client-report.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

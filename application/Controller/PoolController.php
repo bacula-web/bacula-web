@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -19,63 +17,74 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Libs\Config;
-use Core\Utils\CUtils;
-use App\Table\PoolTable;
-use Exception;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
-use Slim\Views\Twig;
+use App\Entity\Bacula\Pool;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
-class PoolController
+/**
+ * Pools report controller
+ */
+class PoolController extends AbstractController
 {
-    /**
-     * @var PoolTable
-     */
-
-    private PoolTable $poolTable;
-    private Config $config;
-    private Twig $view;
+    private EntityManagerInterface $entityManager;
 
     /**
-     * @param PoolTable $poolTable
-     * @param Config $config
-     * @param Twig $view
+     * @param ManagerRegistry $doctrine
      */
-    public function __construct(PoolTable $poolTable, Config $config, Twig $view)
+    public function __construct(ManagerRegistry $doctrine)
     {
-        $this->poolTable = $poolTable;
-        $this->config = $config;
-        $this->view = $view;
+        $this->entityManager = $doctrine->getManager('bacula');
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
+     * @Route("/pools", name="pools")
+     *
+     * @param ParameterBagInterface $parameters
      * @return Response
-     * @throws Exception
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function prepare(Request $request, Response $response): Response
+    public function prepare(ParameterBagInterface $parameters): Response
     {
-        $tplData = [];
+        $queryBuilder = $this->entityManager->createQueryBuilder();
 
-        $pools_list = [];
+        $queryBuilder
+            ->select('p', 'v')
+            ->from(Pool::class, 'p')
+            ->leftJoin('p.volumes', 'v')
+            ->orderBy('p.name')
+        ;
 
-        // Add more details to each pool
-        foreach ($this->poolTable->getPools($this->config->get('hide_empty_pools')) as $pool) {
-            // Total bytes for each pool
-            $sql = "SELECT SUM(Media.volbytes) as sumbytes FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
-            $result = $this->poolTable->run_query($sql);
-            $result = $result->fetchAll();
-            $pool['totalbytes'] = CUtils::Get_Human_Size($result[0]['sumbytes']);
-
-            $pools_list[] = $pool;
+        if ($parameters->get('app.hide_empty_pools') === true) {
+            $queryBuilder->andWhere('p.numvols > 0');
         }
 
-        $tplData['pools'] = $pools_list;
+        /**
+         * TODO: refactor code below with a single query
+         */
+        $pools = $queryBuilder->getQuery()->getArrayResult();
 
-        return $this->view->render($response, 'pages/pools.html.twig', $tplData);
+        $dql = 'SELECT SUM(m.volbytes) as sumbytes FROM App\Entity\Bacula\Volume m WHERE m.poolId = :poolid';
+
+        foreach ($pools as $id => $pool) {
+            $query = $this->entityManager->createQuery($dql);
+            $query->setParameter('poolid', $pool['id']);
+            $totalBytes = $query->getSingleScalarResult();
+            $pools[$id]['total_bytes'] = (int) $totalBytes;
+        }
+
+        return $this->render('pages/pools.html.twig', [
+            'pools' => $pools
+        ]);
     }
 }

@@ -1,0 +1,39 @@
+<div class="card border-dark mb-3">
+    <div class="card-header">
+        <b>{{ 'Last used volumes'|trans }}</b>
+        <button type="button" class="btn btn-secondary btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="top"
+                data-bs-custom-class="custom-tooltip"
+                data-bs-title="{{ 'Displays the last 10 volumes used during backups'|trans }}">
+            <i class="fa-solid fa-info"></i>
+        </button>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-condensed table-striped">
+                <tr>
+                    <th title="{{ 'Volume name'|trans }}">Volume</th>
+                    <th title="{{ 'Volume status'|trans }}">Status</th>
+                    <th title="{{ 'Volume pool'|trans }}">Pool</th>
+                    <th title="{{ 'Last written date for this volume'|trans }}">Last written</th>
+                    <th title="{{ 'Number of jobs'|trans }}">Jobs</th>
+                </tr>
+
+                {% for volume in volumes %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('volume_detail', {'id': volume.id}) }}"
+                               title="{{ 'Show volume'|trans }}">{{ volume.name }}</a>
+                        </td>
+                        <td>{{ volume.status }}</td>
+                        <td>{{ volume.pool.name }}</td>
+                        <td>{{ volume.lastwritten }}</td>
+                        <td class="strong">{{ volume.voljobs }}</td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+</div>

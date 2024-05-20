@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -19,18 +17,23 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace Core\Graph;
+declare(strict_types=1);
 
+namespace App\Service;
+
+use App\Service\Helper\Number;
 use Core\Exception\AppException;
-use Core\Utils\CUtils;
 use TypeError;
 
+/**
+ * Help class to generate Charts using PHP
+ */
 class Chart
 {
     /**
      * @var string
      */
-    public string $name;
+    private string $name;
 
     /**
      * @var string
@@ -106,29 +109,23 @@ class Chart
      */
     private function uniformizeData(): void
     {
-        $array_sum = 0;
-
-        // Uniformize data array element based on best unit
-        foreach ($this->data as $key => $data) {
-            if (is_null($data[1])) {
-                $this->data[$key][1] = 0;
-            }
-        }
+        $arraySum = 0;
 
         // Calculate sum of all values
         foreach ($this->data as $value) {
-            $array_sum += $value[1];
+            $arraySum += $value;
         }
 
         // Calculate average value and best unit
-        $avg = $array_sum  / count($this->data);
-        list($value, $best_unit) = explode(' ', CUtils::Get_Human_Size($avg, 1));
+        $avg = $arraySum  / count($this->data);
+        list($value, $bestUnit) = explode(' ', Number::humanReadable($avg, 1));
 
         foreach ($this->data as $key => $value) {
-            $this->data[$key][1] = CUtils::Get_Human_Size($value[1], 1, $best_unit, false);
+            $this->data[$key] = Number::humanReadable($value, 1, $bestUnit, false);
         }
 
-        $this->ylabel = $best_unit;
+        $this->ylabel = $bestUnit;
+        //$this->ylabel = 'Bytes';
     }
 
     /**
@@ -147,8 +144,11 @@ class Chart
         // Transform PHP array to JSON
         $json_data = array();
 
-        foreach ($this->data as $key => $val) {
-            $json_data[] = array( 'label' => $val[0], 'value' => intval($val[1]));
+        foreach ($this->data as $date => $value) {
+            $json_data[] =  [
+                'label' => $date,
+                'value' => $value
+            ];
         }
 
         // If the chart type is <bar>, prepare JSON data differently
@@ -181,7 +181,7 @@ class Chart
         $blob .= '.x(function(d) {return d.label})' . "\n";
         $blob .= '.y(function(d) {return d.value})' . "\n";
 
-        if  ($this->type === 'pie') {
+        if ($this->type === 'pie') {
             $blob .= '.legendPosition("right")';
         }
 
@@ -245,5 +245,13 @@ class Chart
         $blob .= '</script>';
 
         return $blob;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

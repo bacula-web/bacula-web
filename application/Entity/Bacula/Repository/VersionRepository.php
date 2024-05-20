@@ -22,10 +22,13 @@ declare(strict_types=1);
 namespace App\Entity\Bacula\Repository;
 
 use App\Entity\Bacula\Version;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use PDO;
 
 /**
  * @method Version|null find($id, $lockMode = null, $lockVersion = null)
@@ -57,5 +60,84 @@ class VersionRepository extends ServiceEntityRepository
             ->select('v')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * Return current timestamp from database server as Carbon instance
+     *
+     * @return Carbon
+     */
+    public function getCurrentDateTime(): Carbon
+    {
+        $sql = 'SELECT j.id, CURRENT_TIMESTAMP() as current_timestamp FROM App\Entity\Bacula\Version j';
+        $result = $this
+            ->getEntityManager()
+            ->createQuery($sql)
+            ->getArrayResult();
+
+        return Carbon::create($result[0]['current_timestamp']);
+    }
+
+    /**
+     * Get Bacula directory catalog database size
+     *
+     * @return float
+     * @throws Exception
+     */
+    public function getDatabaseSize(): float
+    {
+        $size = 0;
+        $connection = $this->getEntityManager()->getConnection();
+        $dbName = $connection->getDatabase();
+
+        $platform = $connection->getDriver()->getDatabasePlatform();
+
+        /**
+         * @var PDO $pdo
+         */
+        $pdo = $connection->getNativeConnection();
+
+        switch (get_class($platform)) {
+            case 'Doctrine\DBAL\Platforms\MySQLPlatform':
+            case 'Doctrine\DBAL\Platforms\MySQL57Platform':
+            case 'Doctrine\DBAL\Platforms\MySQL80Platform':
+            case 'Doctrine\DBAL\Platforms\MariaDbPlatform':
+            case 'Doctrine\DBAL\Platforms\MariaDb1043Platform':
+            case 'Doctrine\DBAL\Platforms\MariaDb1052Platform':
+            case 'Doctrine\DBAL\Platforms\MariaDb1060Platform':
+                $sqlQuery = "SELECT table_schema AS 'database', 
+                             (sum( data_length + index_length) / 1024 / 1024 ) AS 'dbsize' 
+                             FROM information_schema.TABLES
+                             WHERE table_schema = '$dbName'
+                             GROUP BY table_schema";
+
+                $statement = $pdo->prepare($sqlQuery);
+                $result = $statement->execute();
+
+                if ($result) {
+                    $size = $statement->fetch()['dbsize'];
+                }
+
+                break;
+            case 'Doctrine\DBAL\Platforms\PostgreSqlPlatform':
+            case 'Doctrine\DBAL\Platforms\PostgreSQL94Platform':
+            case 'Doctrine\DBAL\Platforms\PostgreSQL100Platform':
+                $sqlQuery = "SELECT pg_database_size('$dbName') AS dbsize";
+
+                $statement = $pdo->prepare($sqlQuery);
+                $result = $statement->execute();
+
+                if ($result) {
+                    $size = $statement->fetch()['dbsize'];
+                }
+                break;
+            default:
+                /**
+                 * TODO: throw an error or exception here
+                 */
+                dd('Unsupported database platform');
+        }
+
+        return (float) $size;
     }
 }

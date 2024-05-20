@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -21,13 +21,43 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Service\AppCheck;
 use PDO;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
+/**
+ * Check server requirements from the console
+ */
 class CheckCommand extends Command
 {
+    /**
+     * @var AppCheck
+     */
+    private AppCheck $appCheck;
+
+    /**
+     * @var ParameterBagInterface
+     */
+    private ParameterBagInterface $parameters;
+
+    /**
+     * @param AppCheck $appCheck
+     * @param ParameterBagInterface $parameters
+     */
+    public function __construct(AppCheck $appCheck, ParameterBagInterface $parameters)
+    {
+        parent::__construct();
+
+        $this->appCheck = $appCheck;
+        $this->parameters = $parameters;
+    }
+
+    /**
+     * @return void
+     */
     protected function configure(): void
     {
         $this->setDescription('Check requirements')
@@ -37,6 +67,11 @@ class CheckCommand extends Command
         parent::configure();
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $formatter = $this->getHelper('formatter');
@@ -49,7 +84,7 @@ class CheckCommand extends Command
             ]);
 
         // Check PHP version
-        $phpversion = phpversion();
+        $phpVersionCheck = $this->appCheck->checkPhpVersion();
 
         $output->writeln(
             [
@@ -58,15 +93,20 @@ class CheckCommand extends Command
                 ''
             ]);
 
-        if (version_compare(PHP_VERSION, '7.4', '>=')) {
+        if ($phpVersionCheck['result']) {
             $errorMessages = ['PHP version -> ok'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         } else {
-            $errorMessages = ['Wrong PHP version', 'You have to upgrade PHP to at least version 8.0'];
+            $errorMessages = [
+                'Wrong PHP version',
+                'You have to upgrade PHP to at least version' . $this->parameters->get('app.min_php_version')
+                ];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
         }
         $output->writeln($formattedBlock);
-        $output->writeln(["[Info] Current version is $phpversion", '']);
+        $output->writeln([
+            '[Info] Current version is ' . PHP_VERSION
+        ]);
 
         // Check PHP timezone
         $output->writeln(
@@ -75,13 +115,15 @@ class CheckCommand extends Command
                 '============',
                 ''
             ]);
-        $timezone = ini_get('date.timezone');
 
-        if (!empty($timezone)) {
+        $timezone = ini_get('date.timezone');
+        $timezoneCheck = $this->appCheck->checkTimezone();
+
+        if ($timezoneCheck['result']) {
             $errorMessages = ['PHP timezone -> ok'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         } else {
-            $timezone = '<not set>';
+            $timezone = '[empty]';
             $errorMessages = ['PHP timezone not set', 'PHP timezone is not configured in php.ini'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
         }
@@ -91,46 +133,35 @@ class CheckCommand extends Command
         // Check assets folder permissions
         $output->writeln(
             [
-                'Protected assets folder is writable',
+                'Cache folder is writable',
                 '===================================',
                 ''
             ]);
-        if (is_writable('application/assets/protected')) {
-            $errorMessages = ['Protected assets folder iw writable -> ok'];
+
+        $cacheFolderCheck = $this->appCheck->checkCacheDirIsWritable();
+        $cacheFolder = $this->parameters->get('kernel.cache_dir');
+
+        if ($cacheFolderCheck['result']) {
+            $errorMessages = ['Cache folder iw writable -> ok'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         } else {
-            $errorMessages = ['Protected assets folder iw writable -> error'];
+            $errorMessages = ['Cache folder iw writable -> error'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
         }
         $output->writeln($formattedBlock);
-        $output->writeln(['[Info] Folder <options=bold>application/assets/protected</> must be writable by web server user', '']);
-
-        // Check Twig cache folder permissions
-        $output->writeln(
-            [
-                'Twig cache folder is writable',
-                '=============================',
-                ''
-            ]);
-        if (is_writable(BW_ROOT . '/application/views/cache')) {
-            $errorMessages = ['Twig cache folder write permission -> ok'];
-            $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
-        } else {
-            $errorMessages = ['Twig cache folder write permission -> error'];
-            $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
-        }
-        $output->writeln($formattedBlock);
-        $output->writeln(['[Info] Folder <options=bold>' . TPL_CACHE . '</> must be writable by web server user', '']);
+        $output->writeln([
+            "[Info] Folder <options=bold>$cacheFolder</> must be writable by web server user"
+        ]);
 
         // List available PHP PDO drivers
         $output->writeln(
             [
-                'Checking installed PHP database extensions',
-                '==========================================',
+                'Checking installed PHP PDO available drivers',
+                '============================================',
                 ''
             ]);
 
-        foreach ($pdo_drivers = PDO::getAvailableDrivers() as $driver) {
+        foreach (PDO::getAvailableDrivers() as $driver) {
             $output->writeln(["PDO $driver installed <info>Ok</info>", '']);
         }
 
@@ -149,8 +180,9 @@ class CheckCommand extends Command
         }
         $output->writeln(['[Info] PHP PDO Sqlite extension must be installed', '']);
 
+
         // Check PHP Gettext support
-        if (function_exists('gettext')) {
+        if ($this->appCheck->hasGettextExtension()) {
             $output->writeln('Gettext support -> <info>Ok</info>');
         } else {
             $output->writeln('Gettext support -> <error>Error</error>');
@@ -158,28 +190,21 @@ class CheckCommand extends Command
         $output->writeln(['[Info] PHP Gettext extension must be installed', '']);
 
         // Check PHP Session support
-        if (function_exists('session_start')) {
+        if ($this->appCheck->hasSessionExtension()) {
             $output->writeln('PHP Session support -> <info>Ok</info>');
         } else {
             $output->writeln('PHP Session support -> <error>Error</error>');
         }
         $output->writeln(['[Info] PHP Session extension must be installed', '']);
 
+
         // Check PHP PDO support
-        if (class_exists('PDO')) {
+        if ($this->appCheck->hasPdoExtension()) {
             $output->writeln('PHP PDO support -> <info>Ok</info>');
         } else {
             $output->writeln('PHP PDO support -> <error>Error</error>');
         }
         $output->writeln(['[Info] PHP PDO extension must be installed', '']);
-
-        // Check PHP Posix support
-        if (function_exists('posix_getpwuid')) {
-            $output->writeln('PHP Posix support -> <info>Ok</info>');
-        } else {
-            $output->writeln('PHP Posix support -> <error>Error</error>');
-        }
-        $output->writeln(['[Info] PHP Posix extension must be installed', '']);
 
         return Command::SUCCESS;
     }

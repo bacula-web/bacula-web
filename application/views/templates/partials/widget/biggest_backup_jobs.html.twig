@@ -1,0 +1,40 @@
+<div class="card border-dark mb-3">
+    <div class="card-header">
+        <b>{{ 'Biggest backup jobs'|trans }}</b>
+        <button type="button" class="btn btn-secondary btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="top"
+                data-bs-custom-class="custom-tooltip"
+                data-bs-title="{{ 'Displays the 10 biggest (Bytes) Bacula backup jobs'|trans }}">
+            <i class="fa-solid fa-info"></i>
+        </button>
+    </div>
+    <div class="card-body">
+        <table class="table table-condensed table-striped">
+            <caption>{{ 'Biggest backup jobs'|trans }}</caption>
+            <thead>
+                <tr>
+                    <th>{{ 'Job name'|trans }}</th>
+                    <th class="text-right">{{ 'Bytes'|trans }}</th>
+                    <th class="text-right">{{ 'Files'|trans }}</th>
+                </tr>
+            </thead>
+            {% for job in biggest_jobs %}
+            <tr>
+                <td>
+                    <form action="{{ path('backupjob') }}" method="post">
+                        <input type="hidden" name="backupjob_name" value="{{ job.name }}"/>
+                        <button class="btn btn-link" type="submit">{{ job.name }}</button>
+                        <input type="hidden" name="csrf" value="{{ csrf_token('backupjob') }}">
+                </form>
+            </td>
+            <td class="text-right">{{ readable_size(job.jobbytes) }}</td>
+            <td class="text-right">{{ job.jobfiles|number_format }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="3" class="text-center">{{ 'Nothing to display'|trans }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

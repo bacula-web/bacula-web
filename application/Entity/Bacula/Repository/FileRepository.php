@@ -23,6 +23,7 @@ namespace App\Entity\Bacula\Repository;
 
 use App\Entity\Bacula\File;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -43,21 +44,28 @@ class FileRepository extends ServiceEntityRepository
 
     /**
      * @param int $jobId
+     * @param string|null $filename
      * @return array
      */
-    public function findFilesByJobid(int $jobId): array
+    public function findFilesByJobid(int $jobId, string $filename = null): array
     {
         $queryBuilder = $this->createQueryBuilder('f');
 
-        $query = $queryBuilder
+        $queryBuilder
             ->select('f')
             ->join('f.job', 'j')
             ->join('f.path', 'p')
             ->where('f.jobid = :jobId')
-            ->setParameter('jobId', $jobId)
-            ->getQuery()
-        ;
+            ->setParameter('jobId', $jobId);
 
-        return $query->getResult();
+        if ($filename) {
+            $queryBuilder
+                ->andWhere('f.name LIKE :filename')
+                ->setParameter('filename', '%' . $filename . '%');
+        }
+
+        return [
+            'files' => $queryBuilder
+        ];
     }
 }

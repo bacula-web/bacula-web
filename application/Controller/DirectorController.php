@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 /**
- * Copyright (C) 2011-present Davide Franco
+ * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -19,111 +17,117 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Controller;
+declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Libs\Config;
-use Core\Db\DatabaseFactory;
-use App\Table\ClientTable;
-use App\Table\JobTable;
-use App\Table\CatalogTable;
-use App\Table\VolumeTable;
-use App\Table\PoolTable;
-use App\Table\FileSetTable;
-use Core\Utils\CUtils;
-use Odan\Session\SessionInterface;
-use PDOException;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
-use Slim\Views\Twig;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
+use App\Entity\Bacula\Repository\ClientRepository;
+use App\Entity\Bacula\Repository\FileSetRepository;
+use App\Entity\Bacula\Repository\JobRepository;
+use App\Entity\Bacula\Repository\PoolRepository;
+use App\Entity\Bacula\Repository\VersionRepository;
+use App\Entity\Bacula\Repository\VolumeRepository;
+use Doctrine\DBAL\Exception;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
-class DirectorController
+/**
+ * Controller for Director report page
+ */
+class DirectorController extends AbstractController
 {
-    private Twig $view;
-    private SessionInterface $session;
-    private Config $config;
+    /**
+     * @var PoolRepository
+     */
+    private PoolRepository $poolRepository;
 
-    public function __construct(Twig $view, SessionInterface $session, Config $config)
-    {
-        $this->view = $view;
-        $this->session = $session;
-        $this->config = $config;
+    /**
+     * @var FileSetRepository
+     */
+    private FileSetRepository $fileSetRepository;
+
+    /**
+     * @var VolumeRepository
+     */
+    private VolumeRepository $volumeRepository;
+
+    /**
+     * @var JobRepository
+     */
+    private JobRepository $jobRepository;
+
+    /**
+     * @var ClientRepository
+     */
+    private ClientRepository $clientRepository;
+
+    /**
+     * @param PoolRepository $poolRepository
+     * @param FileSetRepository $fileSetRepository
+     * @param VolumeRepository $volumeRepository
+     * @param JobRepository $jobRepository
+     * @param ClientRepository $clientRepository
+     */
+    public function __construct(
+        PoolRepository $poolRepository,
+        FileSetRepository $fileSetRepository,
+        VolumeRepository $volumeRepository,
+        JobRepository $jobRepository,
+        ClientRepository $clientRepository
+    ) {
+        $this->poolRepository = $poolRepository;
+        $this->fileSetRepository = $fileSetRepository;
+        $this->volumeRepository = $volumeRepository;
+        $this->jobRepository = $jobRepository;
+        $this->clientRepository = $clientRepository;
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
+     * @Route("/directors", name="directors")
+     *
+     * @param VersionRepository $catalog
      * @return Response
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     * @throws Exception
      */
-    public function index(Request $request, Response $response): Response
-    {
-        $tplData = [];
+    public function index(
+        VersionRepository $catalog
+    ): Response {
+        /**
+         * Get Bacula directors list once Bacula directors are stored in user settings
+         * and multi-tenancy is completed
+         * Currently, there's only one Bacula director defined in .env in BACULA_DATABASE_URL
+         */
+        $directors[] = [
+            /**
+             * TODO: Use label from user settings once implemented
+             */
+            'label' => 'Backup server',
+            'clients' => $this->clientRepository->count([]),
+            'jobs' => $this->jobRepository->count([]),
+            'totalbytes' => $this->jobRepository->getTotalStoredBytes(),
+            'totalfiles' => $this->jobRepository->getTotalStoredFiles(),
+            'dbsize' => $catalog->getDatabaseSize(),
+            'volumes' => $this->volumeRepository->count([]),
+            'volumesize' => $this->volumeRepository->getStoredSize(),
+            'pools' => $this->poolRepository->count([]),
+            'filesets' => $this->fileSetRepository->count([]),
+            /**
+             * TODO: Use description from user settings once implemented
+             *
+             * Description should look like
+             * Bacula catalog on host $host, database: $db_name ($db_type) with user $db_user
+             */
+            'description' => 'Bacula backup server'
+        ];
 
-        // Save catalog_id from user session
-        $prev_catalog_id = $this->session->get('catalog_id') ?? 0;
-
-        $directors = $this->config->getArrays();
-
-        $directors_count = count($directors);
-
-        $tplData['directors_count'] = $directors_count;
-
-        foreach ($directors as $id => $director) {
-            $this->session->set('catalog_id', $id);
-
-            $host = $director['host'] ?? null;
-            $db_user = $director['login'] ?? null;
-            $db_name = $director['db_name'];
-            $db_type = $director['db_type'];
-            $description = "Bacula catalog on host $host, database: $db_name ($db_type) with user $db_user";
-
-            try {
-                $clients = new ClientTable(DatabaseFactory::getDatabase($id));
-                $jobs = new JobTable(DatabaseFactory::getDatabase($id));
-                $catalog = new CatalogTable(DatabaseFactory::getDatabase($id));
-                $volumes = new VolumeTable(DatabaseFactory::getDatabase($id));
-                $pools = new PoolTable(DatabaseFactory::getDatabase($id));
-                $filesets = new FileSetTable(DatabaseFactory::getDatabase($id));
-
-                $directors[$id] = [
-                    'label' => $director['label'],
-                    'clients' => $clients->count(),
-                    'jobs' => $jobs->count_Job_Names(),
-                    'totalbytes' => CUtils::Get_Human_Size((int)$jobs->getStoredBytes()),
-                    'totalfiles' => CUtils::format_Number($jobs->getStoredFiles()),
-                    'dbsize' => $catalog->get_Size($director['db_name'], $id),
-                    'volumes' => $volumes->count(),
-                    'volumesize' => CUtils::Get_Human_Size((int)$volumes->getDiskUsage()),
-                    'pools' => $pools->count(),
-                    'filesets' => $filesets->count(),
-                    'description' => $description
-                ];
-            } catch(PDOException $exception) {
-                $directors[$id]['error'] = $exception->getMessage();
-                $this->session->set('catalog_id', $prev_catalog_id);
-                continue;
-            }
-
-            unset($clients);
-            unset($jobs);
-            unset($catalog);
-            unset($volumes);
-            unset($pools);
-            unset($filesets);
-        }
-
-        // Set previous catalog_id in user session
-        $this->session->set('catalog_id', $prev_catalog_id);
-
-        $tplData['directors'] = $directors;
-
-        return $this->view->render($response, 'pages/directors.html.twig', $tplData);
+        return $this->render('pages/directors.html.twig', [
+            'directors' => $directors,
+            'directors_count' => count($directors)
+        ]);
     }
 }

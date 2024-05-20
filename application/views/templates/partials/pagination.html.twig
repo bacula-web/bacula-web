@@ -1,29 +1,14 @@
-<div class="row">
-    <div class="col-6">
-        <p class="pagination">{{ pagination.getPaginationRange }} / {{ pagination.getRows }} row(s) out of {{ pagination.getTotalRow }}</p>
+<div class="row justify-content-end">
+    <div class="col-4">
+        <div class="count text-end p-1 fs-6">
+            {% set range_start = pagination.getItemNumberPerPage * (pagination.getCurrentPageNumber -1) %}
+            {% set range_end = range_start + pagination.getItemNumberPerPage %}
+            {{ range_start +1 }} to {{ range_end }} / {{ pagination.getTotalItemCount }} row(s)
+        </div>
     </div>
-
-    <div class="col-6">
-        <nav aria-label="pagination">
-            <ul class="pagination">
-                <li class="page-item {% if pagination.getCurrentPage == 1 %}disabled {% endif %}">
-                    <a class="page-link" href="{{ url_for(route) }}?page=1{{ pagination.getParams }}">&laquo;</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link {% if pagination.getCurrentPage == 1 %}disabled {% endif %}" href="{{ url_for(route) }}?page={{ pagination.getPreviousPage }}{{ pagination.getParams }}">&lang;</a>
-                </li>
-                {% for p in range(pagination.getPaginationStart,pagination.getPaginationEnd) %}
-                    <li class="page-item {% if pagination.getCurrentPage == p %}disabled {% endif %}">
-                        <a class="page-link" href="{{ url_for(route) }}?page={{ p }}{{ pagination.getParams }}">{{ p }}</a>
-                    </li>
-                {% endfor %}
-                <li class="page-item">
-                    <a class="page-link {% if pagination.getCurrentPage == pagination.getMaxPage %}disabled {% endif %}" href="{{ url_for(route) }}?page={{ pagination.getNextPage }}{{ pagination.getParams }}">&rang;</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link {% if pagination.getCurrentPage == pagination.getMaxPage %}disabled {% endif %}" href="{{ url_for(route) }}?page={{ pagination.getMaxPage }}{{ pagination.getParams }}">&raquo;</a>
-                </li>
-            </ul>
-        </nav>
+    <div class="col-4">
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 </div>

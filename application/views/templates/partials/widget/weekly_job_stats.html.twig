@@ -1,0 +1,25 @@
+<div class="card border-dark mb-3">
+    <div class="card-header">
+        <b>{{ 'Weekly jobs statistics'|trans }}</b>
+    </div>
+    <div class="card-body">
+        <table class="table table-condensed table-striped">
+            <tr>
+                <th>{{ 'Day of week'|trans }}</th>
+                <th class="text-right">{{ 'Bytes'|trans }}</th>
+                <th class="text-right">{{ 'Files'|trans }}</th>
+            </tr>
+            {% for day, daily_stats in weekly_jobs_stats %}
+            <tr>
+                <td>{{ day }}</td>
+                <td class="text-right">{{ readable_size(daily_stats.job_bytes) }}</td>
+                <td class="text-right">{{ daily_stats.job_files|number_format }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3" class="text-center">{{ 'Nothing to display'|trans }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

@@ -22,7 +22,9 @@ declare(strict_types=1);
 namespace App\Entity\Bacula;
 
 use App\Entity\Bacula\Repository\VolumeRepository;
+use Carbon\Carbon;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,6 +34,19 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Volume
 {
+    private const VOLUME_STATUS_ICON = [
+        'Full' => 'fa-battery-full',
+        'Archive' => 'fa-file-archive-o',
+        'Append' => 'fa-battery-quarter',
+        'Recycle' => 'fa-recycle',
+        'Read-Only' => 'fa-lock',
+        'Disabled' => 'fa-ban',
+        'Error' => 'fa-times-circle',
+        'Busy' => 'fa-clock-o',
+        'Used' => 'fa-battery-quarter',
+        'Purged' => 'fa-battery-empty'
+    ];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -97,24 +112,6 @@ class Volume
     private int $expire = 0;
 
     /**
-     * One can have one to several volume(s)
-     * One volume can be used by Many jobs
-     */
-
-    private const VOLUME_STATUS_ICON = [
-        'Full' => 'fa-battery-full',
-        'Archive' => 'fa-file-archive-o',
-        'Append' => 'fa-battery-quarter',
-        'Recycle' => 'fa-recycle',
-        'Read-Only' => 'fa-lock',
-        'Disabled' => 'fa-ban',
-        'Error' => 'fa-times-circle',
-        'Busy' => 'fa-clock-o',
-        'Used' => 'fa-battery-quarter',
-        'Purged' => 'fa-battery-empty'
-    ];
-
-    /**
      * @ORM\Column(type="string", name="VolStatus")
      */
     private string $status;
@@ -154,6 +151,11 @@ class Volume
      * @var int
      */
     private $retention;
+
+    /**
+     * @var DateTimeInterface
+     */
+    private string $expirationDate;
 
     public function __construct()
     {
@@ -234,11 +236,10 @@ class Volume
     public function getExpire(): int
     {
         if ($this->status === 'Full' || $this->status === 'Used') {
-            return (
-                strtotime($this->lastwritten) + $this->retention);
-        } else {
-            return 0;
+            $this->expire = strtotime($this->lastwritten) + $this->retention;
         }
+
+        return $this->expire;
     }
 
     /**
@@ -249,11 +250,17 @@ class Volume
         return $this->status;
     }
 
+    /**
+     * @return string
+     */
     public function getLastwritten(): string
     {
         return $this->lastwritten;
     }
 
+    /**
+     * @return int
+     */
     public function getRetention(): int
     {
         return $this->retention;
@@ -267,6 +274,9 @@ class Volume
         return $this->pool;
     }
 
+    /**
+     * @return string
+     */
     public function getStatusicon(): string
     {
         return self::VOLUME_STATUS_ICON[$this->status];
@@ -296,16 +306,22 @@ class Volume
         return $this->poolId;
     }
 
-    public function isInchanger(): ?bool
-    {
-        return $this->inchanger;
-    }
-
     /**
      * @return int|null
      */
     public function getMediaId(): ?int
     {
         return $this->mediaId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExpirationDate(): string
+    {
+        $expireOn = Carbon::createFromTimestamp($this->expire);
+        $this->expirationDate = $expireOn->longRelativeDiffForHumans();
+
+        return $this->expirationDate;
     }
 }
