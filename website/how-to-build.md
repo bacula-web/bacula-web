@@ -1,6 +1,6 @@
 # How to build this website
 
-## Running the website locally using Docker
+## Using Docker
 
 Clone the git repository
 
@@ -42,15 +42,19 @@ You can also run this command
 docker run --rm -it -v $(pwd):/src --name website -p 1313:1313 klakegg/hugo:0.105.0-ext-alpine server -D
 ```
 
-By running the command below, you create a new release post (using pre-defined archetypes)
+To create a new release post, run the command below (use -k to specify the content type)
 
 ```shell
-docker run --rm -it -v $(pwd):/src --name website -p 1313:1313 klakegg/hugo:0.105.0-ext-alpine new -kcontent/en/blog/releases/post.md -k release
+docker run --rm -it -v $(pwd):/src \
+  --name website -p 1313:1313 \
+  klakegg/hugo:0.105.0-ext-alpine \
+  new content/en/blog/releases/post.md \
+  -k release
 ```
 
 ### Quick note related to git sub-module
 
-Hugo theme is setup as a git submodule. 
+Hugo theme is setup as a git submodule.
 
 Once you have cloned the git repo from GitHub, run this command to update the git submodule
 
