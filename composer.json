@@ -123,10 +123,12 @@
       "cache:clear": "symfony-cmd",
       "assets:install %PUBLIC_DIR%": "symfony-cmd"
     },
+    "copy-env": "if [ ! -e .env ]; then cp -v .env.sample .env; fi",
     "post-install-cmd": [
       "@auto-scripts"
     ],
     "post-update-cmd": [
+      "@copy-env",
       "@auto-scripts"
     ]
   }
