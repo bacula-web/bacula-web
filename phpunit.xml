@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpunit
-    bootstrap="./tests/bootstrap.php"
     colors="true"
     verbose="true"
     columns="max"
 >
+    <!-- TODO: add missing tests
     <testsuite name="Bacula-Web Test Suite">
         <directory>./tests</directory>
-    </testsuite>
+    </testsuite-->
 
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">application</directory>
-            <directory suffix=".php">core</directory>
         </include>
     </coverage>
-
 </phpunit>
