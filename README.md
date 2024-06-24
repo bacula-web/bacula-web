@@ -32,7 +32,7 @@ Please read the documentation of Bacula-Web at [https://www.bacula-web.org/docs]
 >
 > Huge thanks to [Read The Docs](https://readthedocs.org/) for hosting open source projects documentation over the past few years :heart:
 
-## Getting started
+## How to install
 
 Bacula-Web can be installed using [Composer](https://getcomposer.org/), [Docker](https://www.docker.com/), or from source (require advanced skills)
 
@@ -46,7 +46,7 @@ Please read the [Getting started](https://www.bacula-web.org/docs/install/gettin
 > 
 > Pre-installed (or pre-built) Bacula-Web package might be available again soon ...
 
-## Getting help
+## How to get help
 
 To report an issue or request a new feature, use [GitHub project issues](https://github.com/bacula-web/bacula-web/issues).
 
@@ -55,23 +55,27 @@ To report an issue or request a new feature, use [GitHub project issues](https:/
 For questions or feedbacks, please use [GitHub discussions](https://github.com/bacula-web/bacula-web/discussions) or 
 contact me at [hello@bacula-web.org](mailto:hello@bacula-web.org).
 
-## Contributing
+## How to contribute
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
 
 ### Contributors
 
 <a href="https://github.com/bacula-web/bacula-web/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=bacula-web/bacula-web" />
+  <img src="https://contrib.rocks/image?repo=bacula-web/bacula-web" alt="Bacula-Web dashboard" />
 </a>
 
 ## License
 
-The GPLv2. Please see [license file](LICENSE) for more information.
+GPLv2 or later
+
+See the [license file](LICENSE) for further details.
 
 ## Security
 
-If you discover a security issue, see [SECURITY.md](SECURITY.md)
+You've found a security issue ? Good catch!
+
+See [SECURITY.md](SECURITY.md) for further information.
 
 ## Credits
 
