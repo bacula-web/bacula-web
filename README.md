@@ -30,43 +30,70 @@ You can find the complete documentation of Bacula-Web at [https://docs.bacula-we
 
 > Huge thanks to [Read The Docs](https://readthedocs.org/) for supporting open source projects documentation :heart:
 
-## Getting started
+## How to install
 
-Bacula-Web can be installed using Composer, [Docker](docker/README.md) or from source (require advanced skills)
+Bacula-Web can be installed using
 
-### Using Composer
+- [Composer package](https://packagist.org/packages/bacula-web/bacula-web)
+- [Docker](docker/README.md)
+- From source (for advanced users)
 
-- Required [PHP](https://www.php.net/) version is >= 7.4
-- Make sure PHP CLI installed and extensions [SQlite3](https://www.php.net/manual/en/book.sqlite3.php), [Gettext](https://www.php.net/manual/en/book.gettext.php), [Session](https://www.php.net/manual/en/refs.basic.session.php), [PDO](https://www.php.net/manual/en/book.pdo.php), [MySQL](https://www.php.net/manual/en/set.mysqlinfo.php), [postgreSQL](https://www.php.net/manual/en/book.pgsql.php), [Json](https://www.php.net/manual/en/book.json.php) and [Posix](https://www.php.net/manual/en/book.posix.php) are installed and enabled.
-- Install [Composer](https://getcomposer.org/doc/00-intro.md)
-- Install Bacula-Web from [Packagist](https://packagist.org/packages/bacula-web/bacula-web)
-  ``` shell
-  composer create-project --no-dev bacula-web/bacula-web bacula-web
-  ```
-- Copy configuration file and adapt it to your setup
-  ```shell
-  cd bacula-web
-  cp -pv application/config/config.php.sample application/config/config.php 
-  ```
-- Make sure `application/views/cache` and `application/assets/protected` are writable by the web server process user (see section in [documentation](https://docs.bacula-web.org/en/latest/02_install/installcomposer.html#fix-files-folders-ownership-and-permissions))
-- Setup either Apache, Nginx or Lighttpd (see [Web server setup and configuration](https://docs.bacula-web.org/en/latest/02_install/webserver-setup.html#web-server-setup-and-configuration))
-- Create your first user
-  ```shell
-  $ sudo -u www-data php bwc setupauth
-  ``` 
-- Test your setup
-  ```shell
-  $ sudo -u www-data php bwc check
-  ```
-  or use the test page https://bacula-web-url/test
+### Requirements
 
-> **Note related to installation using Composer archive**
->
-> The main purpose of this pre-installed archive was to provide an easy way for users who weren't able to install
-> Composer on their servers
-> Composer archive installation option will not be supported anymore from next major version (v9.0.0)
+- [PHP](https://www.php.net/) >= 8.1 (*7.4 supported, but using EOL versions is not recommended*)
+- PHP extensions
+  - [Ctype](https://www.php.net/book.ctype)
+  - [iconv](https://www.php.net/book.iconv)
+  - [JSON](https://www.php.net/book.json)
+  - [PCRE](https://www.php.net/book.pcre)
+  - [Session](https://www.php.net/book.session)
+  - [SimpleXML](https://www.php.net/book.simplexml)
+  - [Sqlite](https://www.php.net/manual/en/book.sqlite3.php) (used for local users authentication)
+  - [PDO](https://www.php.net/manual/en/book.pdo.php)
+  - [MySQL](https://www.php.net/manual/en/set.mysqlinfo.php)
+  - [postgreSQL](https://www.php.net/manual/en/book.pgsql.php)
+  - [Tokenizer](https://www.php.net/book.tokenizer)
+- [npm](https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager)
+- [Composer](https://getcomposer.org/doc/00-intro.md) installed
 
-## Getting help
+### Getting started
+
+Use composer cli
+```shell
+$ composer create-project --no-dev bacula-web/bacula-web bacula-web
+```
+
+Install Javascript and CSS dependencies
+```shell
+$ npm install && npm run build
+```
+
+Update `.env` with your configuration 
+
+Ensure `var` folder is writable by the web server process user (see section in [documentation](https://docs.bacula-web.org/en/latest/02_install/installcomposer.html#fix-files-folders-ownership-and-permissions))
+
+Setup users authentication database
+```shell
+$ php bin/console doctrine:migrations:migration
+```
+
+[Set up the webserver](https://docs.bacula-web.org/en/latest/02_install/webserver-setup.html#web-server-setup-and-configuration) of your choice (Apache, Nginx or Lighttpd)
+
+Create your first user
+
+```shell
+$ sudo -u www-data php bwc user-create <username>
+```
+
+Test your setup using the console
+
+```shell
+$ sudo -u www-data php bwc check
+```
+
+or use the test page https://bacula-web-url/test
+
+## How to get help
 
 To report an issue or request a new feature, use [GitHub project issues](https://github.com/bacula-web/bacula-web/issues).
 
@@ -75,23 +102,27 @@ To report an issue or request a new feature, use [GitHub project issues](https:/
 For questions or feedbacks, please use [GitHub discussions](https://github.com/bacula-web/bacula-web/discussions) or 
 contact me at [hello@bacula-web.org](mailto:hello@bacula-web.org).
 
-## Contributing
+## How to contribute
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
 
 ### Contributors
 
 <a href="https://github.com/bacula-web/bacula-web/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=bacula-web/bacula-web" />
+  <img src="https://contrib.rocks/image?repo=bacula-web/bacula-web" alt="Bacula-Web dashboard" />
 </a>
 
 ## License
 
-The GPLv2. Please see [license file](LICENSE) for more information.
+GPLv2 or later
+
+See the [license file](LICENSE) for further details.
 
 ## Security
 
-If you discover a security issue, see [SECURITY.md](SECURITY.md)
+You've found a security issue ? Good catch!
+
+See [SECURITY.md](SECURITY.md) for further information.
 
 ## Credits
 
