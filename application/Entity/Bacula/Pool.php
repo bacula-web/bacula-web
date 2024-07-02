@@ -63,6 +63,11 @@ class Pool
         $this->volumes = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->name . ' - ' . $this->numvols . ' volume(s)';
+    }
+
     /**
      * @return int
      */

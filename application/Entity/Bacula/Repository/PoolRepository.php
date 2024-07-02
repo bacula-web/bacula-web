@@ -52,26 +52,6 @@ class PoolRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return the list of Bacula pools, optionally omitting empty pools
-     * if "hide_empty_pools is set to true in user parameters
-     *
-     * @return array
-     */
-    public function getPools(): array
-    {
-        $queryBuilder = $this->createQueryBuilder('p');
-        $queryBuilder->select('p.id, p.name, p.numvols');
-
-        if ($this->parameters->get('app.hide_empty_pools')) {
-            $queryBuilder->where('p.numvols > 0');
-        }
-
-        return $queryBuilder
-            ->getQuery()
-            ->getArrayResult();
-    }
-
-    /**
      * Return 9 biggest pools based on volumes usage.
      * Empty pools are not displayed in the pie chart.
      *

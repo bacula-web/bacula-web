@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2010-present Davide Franco
+ * Copyright (C) 2010-present Davide Franco.
  *
  * This file is part of the Bacula-Web project.
  *
@@ -23,9 +23,12 @@ namespace App\Controller;
 
 use App\Entity\Bacula\Job;
 use App\Entity\Bacula\JobMedia;
+use App\Entity\Bacula\Pool;
 use App\Entity\Bacula\Repository\PoolRepository;
 use App\Entity\Bacula\Repository\VolumeRepository;
 use App\Entity\Bacula\Volume;
+use App\Entity\Bacula\VolumeSearch;
+use App\Form\VolumeSearchType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -39,18 +42,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Volumes report controller
+ * Volumes report controller.
  */
 class VolumesController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
 
-    /**
-     * @param ManagerRegistry $doctrine
-     */
     public function __construct(ManagerRegistry $doctrine)
     {
-        /**
+        /*
          * TODO: check if using the repository will be enough
          */
         $this->entityManager = $doctrine->getManager('bacula');
@@ -59,12 +59,6 @@ class VolumesController extends AbstractController
     /**
      * @Route("/volumes", name="volumes")
      *
-     * @param Request $request
-     * @param PoolRepository $poolRepository
-     * @param VolumeRepository $volumeRepository
-     * @param PaginatorInterface $paginator
-     * @param ParameterBagInterface $parameters
-     * @return Response
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -75,65 +69,51 @@ class VolumesController extends AbstractController
         PaginatorInterface $paginator,
         ParameterBagInterface $parameters
     ): Response {
-        $poolId = 0;
+        $volumeSearch = new VolumeSearch($poolRepository);
 
-        // Order by
-        $orderByOptions = [
-            'name' => 'Name',
-            'id' => 'Id',
-            'volbytes' => 'Bytes',
-            'voljobs' => 'Jobs'
-        ];
+        $form = $this->createForm(VolumeSearchType::class, $volumeSearch);
+        $form->handleRequest($request);
 
-        $inChangerChecked = '';
-        $orderByField = 'name';
-        $orderByDirection = 'ASC';
-        $orderByChecked = '';
+        $queryBuilder = $volumeRepository->createQueryBuilder('v');
 
-        $pools = $poolRepository->getPools();
+        // $pool = $poolRepository->findOneBy(['id' => 3]);
 
-        $queryBuilder = $this->entityManager->createQueryBuilder();
+        // $orderDirection = 'ASC';
 
         $queryBuilder
             ->select('v', 'p')
-            ->from(Volume::class, 'v')
-            ->leftJoin('v.pool', 'p')
-        ;
+            ->join('v.pool', 'p')
+            ->orderBy('v.name', 'ASC');
 
-        $postData = $request->request->all();
-
-        /**
-         * TODO: refactor using Symfony Form component
-         */
-        if ($request->getMethod() === 'POST') {
+        if ($form->isSubmitted() && $form->isValid()) {
             /**
-             * TODO: add missing validation
+             * @var VolumeSearch $volumeSearch
              */
-            $poolId = $postData['filter_pool_id'] ?? 0;
+            $volumeSearch = $form->getData();
 
-            if ($poolId !== '0') {
+            /**
+             * @var Pool $pool
+             */
+            $pool = $volumeSearch->getPool();
+
+            if (!is_null($pool)) {
                 $queryBuilder
-                    ->where('v.poolId = :poolid')
-                    ->setParameter('poolid', $poolId);
+                    ->andWhere('v.pool = :pool')
+                    ->setParameter('pool', $pool);
             }
 
-            $orderByField = isset($postData['filter_orderby']) ? $postData['filter_orderby'] : 'name';
+            $orderBy = 'v.'.$volumeSearch->getOrderBy();
 
-            if (isset($postData['filter_orderby_asc'])) {
-                $orderByChecked = 'checked';
-            }
+            $orderDirection = $volumeSearch->getOrderDirection();
 
-            $orderByDirection = $postData['filter_orderby_asc'] ?? 'DESC';
+            $queryBuilder
+                ->orderBy($orderBy, $orderDirection);
 
-            if (isset($postData['filter_inchanger'])) {
+            if ($volumeSearch->isInChanger()) {
                 $queryBuilder
-                    ->andWhere('v.inchanger = :inchanger')
-                    ->setParameter('inchanger', 1);
+                    ->andWhere('v.inchanger = 1');
             }
-            $inChangerChecked = isset($postData['filter_inchanger']) ? 'checked' : '';
         }
-
-        $queryBuilder->orderBy('v.' . $orderByField, $orderByDirection);
 
         $volumes = $paginator->paginate(
             $queryBuilder,
@@ -142,29 +122,19 @@ class VolumesController extends AbstractController
         );
 
         return $this->render('pages/volumes.html.twig', [
-                'pagination' => $volumes,
-                'datetime_format' => $this->getParameter('app.datetime_format'),
-                'datetime_format_short' => $this->getParameter('app.datetime_format_short'),
-                'volumes_total_bytes' => $volumeRepository->getStoredSize(),
-                'pools' => $pools,
-                'pool_id' => $poolId,
-                'orderby_options' => $orderByOptions,
-                'orderby_selected' => $orderByField,
-                'orderby_asc_checked' => $orderByChecked,
-                'inchanger_checked' => $inChangerChecked
-            ]);
+            'pagination' => $volumes,
+            'volumes_total_bytes' => $volumeRepository->getStoredSize(),
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
      * @Route("/volume/{id}", name="volume_detail")
-     *
-     * @param int $id
-     * @return Response
      */
     public function show(int $id): Response
     {
         /**
-         * List jobs for a specific volume
+         * List jobs for a specific volume.
          */
         $queryBuilder = $this->entityManager->createQueryBuilder();
 
@@ -183,8 +153,8 @@ class VolumesController extends AbstractController
         $volume = $this->entityManager->getRepository(Volume::class)->find($id);
 
         return $this->render('pages/volume.html.twig', [
-                'volume' => $volume,
-                'jobs' => $jobs
-            ]);
+            'volume' => $volume,
+            'jobs' => $jobs,
+        ]);
     }
 }

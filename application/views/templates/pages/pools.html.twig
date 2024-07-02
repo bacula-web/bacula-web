@@ -26,14 +26,9 @@
                                 <td class="text-center">{{ pool.numvols }}</td>
                                 <td class="text-right">{{ readable_size(pool.total_bytes) }}</td>
                                 <td class="text-center">
-                                    <form method="post" action="{{ path('volumes') }}">
-                                        <input type="hidden" name="filter_pool_id" value="{{ pool.id }}" />
-
-                                        <button class="btn btn-sm btn-primary" type="submit"
-                                                {% if pool.numvols == 0 %}disabled{% endif %}
-                                        >{{ 'Show Volumes'|trans }}</button>
-                                        <input type="hidden" name="token" value="{{ csrf_token('volumes') }}">
-                                    </form>
+                                    <a class="btn btn-sm btn-primary" href="{{ path('volumes', { pool: pool.id }) }}">
+                                        {{ 'Show Volumes'|trans }}
+                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}
