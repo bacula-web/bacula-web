@@ -43,7 +43,7 @@
                                 <td>{{ volume.pool.name }}</td>
                                 <td>
                                     {% if volume.expire %}
-                                        {{ volume.expirationDate }} ({{ volume.expire|date(datetime_format) }})
+                                        {{ volume.expirationDate }} ({{ volume.expire|date(app_datetime_format) }})
                                     {% else %}
                                         n/a
                                     {% endif %}
@@ -52,7 +52,7 @@
                                     {% if volume.lastwritten is empty or volume.lastwritten == '0000-00-00 00:00:00'%}
                                         n/a
                                     {% else %}
-                                        {{ volume.lastwritten|date(datetime_format) }}
+                                        {{ volume.lastwritten|date(app_datetime_format) }}
                                     {% endif %}
                                 </td>
                                 <td title="{{ volume.status }}">
@@ -81,55 +81,23 @@
             </div>
 
             <div class="col-2">
-                <!-- Options -->
-                <form class="" action="{{ path('volumes') }}" method="post">
-                    <!-- Pools -->
-                    <div class="mb-3">
-                        <label class="form-label" for="filter_pool_id">{{ 'Pool'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_pool_id">
-                            <option value="0" {% if pool_id == 0 %}selected{% endif %}>Any</option>
-                            {% for pool in pools %}
-                                <option value="{{ pool.id }}" {% if pool.id == pool_id %}selected{% endif %}>{{ pool.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="inputOrderBy">{{ 'Order by'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_orderby">
-                            {% for key, order in orderby_options %}
-                                <option value="{{ key }}" {% if orderby_selected == key %}selected{% endif %}>{{ order }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                <div>
+                    <div class="container">
+                        {{ form_start(form) }}
+                        {{ form_row(form.pool) }}
+                        {{ form_row(form.order_by) }}
+                        {{ form_row(form.order_direction) }}
+                        {{ form_row(form.in_changer) }}
 
-                    <div class="col-12">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="filter_orderby_asc"
-                                   id="filter_orderby_asc" value="ASC" {{ orderby_asc_checked }}>
-                            <label class="form-check-label" for="filter_orderby_asc">
-                                {{ 'Asc'|trans }}
-                            </label>
+                        <div class="mt-3 mb-3">
+                            <button class="btn btn-primary" type="submit">Search</button>
                         </div>
 
-                        <div class="col-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="filter_inchanger"
-                                       name="filter_inchanger" {{ inchanger_checked }}>
-                                <label class="form-check-label" for="filter_inchanger">
-                                    {{ 'In changer'|trans }}
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-12 mt-3">
-                            <button type="submit" class="btn btn-primary btn-sm"
-                                    title="{{ 'Apply filter and options'|trans }}">{{ 'Apply'|trans }}</button>
-                        </div>
-                        <input type="hidden" name="token" value="{{ csrf_token('app') }}">
+                        {{ form_end(form) }}
                     </div>
-                </form>
-            </div>
+                </div>
+            </div> <!-- end div class="col... -->
         </div>
     </div>
     <hr/>
