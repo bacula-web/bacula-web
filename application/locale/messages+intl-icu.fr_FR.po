@@ -1,0 +1,266 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_FR\n"
+
+msgid "Apply"
+msgstr "Appliquer"
+
+msgid "Apply filter and options"
+msgstr "Appliquer le filtre et les options"
+
+msgid "Back"
+msgstr "Retour"
+
+msgid "Back to Dashboard"
+msgstr "Retour au tableau de bord"
+
+msgid "Backup"
+msgstr "Sauvegarde"
+
+msgid "Backup job name"
+msgstr "Nom du travail de sauvegarde"
+
+msgid "Bug tracker"
+msgstr "Bug tracker"
+
+msgid "Bytes"
+msgstr "Octets"
+
+msgid "Canceled job(s)"
+msgstr "Travaux annulé(s)"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Client arch"
+msgstr "Architecture du client"
+
+msgid "Client informations"
+msgstr "Informations sur le client"
+
+msgid "Client name"
+msgstr "Nom du client"
+
+msgid "Client os"
+msgstr "Système d'exploitation du client"
+
+msgid "Client report"
+msgstr "Rapport du client"
+
+msgid "Client version"
+msgstr "Version du client"
+
+msgid "Completed job(s)"
+msgstr "Travaux terminé(s)"
+
+msgid "Completed with errors job(s)"
+msgstr "Travaux terminés avec erreurs"
+
+msgid "Compression"
+msgstr "Compression"
+
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "Database size"
+msgstr "Taille de la base de données"
+
+msgid "Day of week"
+msgstr "Jour de la semaine"
+
+msgid "Displays the last 10 volumes used during backups"
+msgstr "Afficher les dix derniers volumes utilisés"
+
+msgid "Elapsed time"
+msgstr "Durée"
+
+msgid "End time"
+msgstr "Heure de fin"
+
+msgid "Event"
+msgstr "Événement"
+
+msgid "Expire"
+msgstr "Expiration"
+
+msgid "Failed job(s)"
+msgstr "Travail(aux) échoué(s)"
+
+msgid "Files"
+msgstr "Fichiers"
+
+msgid "Filter"
+msgstr "Filtre"
+
+msgid "Job ID"
+msgstr "ID du travail"
+
+msgid "Job Id"
+msgstr "Id du travail"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Niveau du travail (Incr / Diff / Comp)"
+
+msgid "Job details"
+msgstr "Détails du travail"
+
+msgid "Job id"
+msgstr "Id du travail"
+
+msgid "Job status"
+msgstr "Etat du travail"
+
+msgid "Jobs"
+msgstr "Travaux"
+
+msgid "Jobs report"
+msgstr "Rapport des tâches"
+
+msgid "Last period job status"
+msgstr "Status du travail pour la dernière période"
+
+msgid "Last used volumes"
+msgstr "Derniers volumes utilisés"
+
+msgid "Last written"
+msgstr "Dernière écriture"
+
+msgid "Last written date for this volume"
+msgstr "Date de dernière écriture pour ce volume"
+
+msgid "Level"
+msgstr "Niveau"
+
+msgid "Log"
+msgstr "Événement"
+
+msgid "Media Type"
+msgstr "Type de média"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "No job(s) to display"
+msgstr "Aucun travail(aux) à afficher"
+
+msgid "No log(s) for this job"
+msgstr "Aucun évenement(s) pour ce travail"
+
+msgid "Number of jobs"
+msgstr "Nombre de travaux"
+
+msgid "Official web site"
+msgstr "Site web officiel"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Order by"
+msgstr "Trier par"
+
+msgid "Period"
+msgstr "Période"
+
+msgid "Pool"
+msgstr "Pool"
+
+msgid "Pool(s)"
+msgstr "Pool(s)"
+
+msgid "Pools and volumes status"
+msgstr "Etat des pools et volumes"
+
+msgid "Reports"
+msgstr "Rapports"
+
+msgid "Reset"
+msgstr "Réinitialiser"
+
+msgid "Running jobs"
+msgstr "Travaux en cours"
+
+msgid "Show job logs"
+msgstr "Afficher le journal du travail"
+
+msgid "Slot"
+msgstr "Slot"
+
+msgid "Speed"
+msgstr "Vitesse"
+
+msgid "Start time"
+msgstr "Heure de début"
+
+msgid "Statistics"
+msgstr "Statistiques"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "Octets stockés (7 derniers jours)"
+
+msgid "Stored Files (last 7 days)"
+msgstr "Fichiers stockés (7 derniers jours)"
+
+msgid "Stored files over the last 7 days"
+msgstr "Fichiers stockés durant les 7 derniers jours"
+
+msgid "Submit"
+msgstr "Soumettre"
+
+msgid "Test page"
+msgstr "Page de test"
+
+msgid "Time"
+msgstr "Heure"
+
+msgid "Total bytes"
+msgstr "Total des octets stockés"
+
+msgid "Total files"
+msgstr "Nombre total de fichiers"
+
+msgid "Transfered Bytes"
+msgstr "Octets transférés"
+
+msgid "Transfered Files"
+msgstr "Fichiers transférés"
+
+msgid "Transferred Bytes / Files"
+msgstr "Fichiers / Octets transférés"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Update with selected period"
+msgstr "Mettre à jour avec la période sélectionée"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "View report"
+msgstr "Afficher le rapport"
+
+msgid "Volume name"
+msgstr "Nom du Volume"
+
+msgid "Volume pool"
+msgstr "Set de volume"
+
+msgid "Volume status"
+msgstr "Status du volume"
+
+msgid "Volume(s)"
+msgstr "Volume(s)"
+
+msgid "Volume(s) size"
+msgstr "Taile du(des) volume(s)"
+
+msgid "Waiting jobs(s)"
+msgstr "Travaux en attente"
+
+msgid "Weekly jobs statistics"
+msgstr "Statistiques des travaux hebdomadaire"

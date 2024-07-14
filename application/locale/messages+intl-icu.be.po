@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: be\n"
+
+msgid "Apply"
+msgstr "Прымяніць"
+
+msgid "Apply filter and options"
+msgstr "Ужывайце фільтры і налады"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Back to Dashboard"
+msgstr "Вярнуцца на інфармацыйную панэль"
+
+msgid "Backup job name"
+msgstr "Назва задачы рэзервовага капіявання"
+
+msgid "Bug tracker"
+msgstr "Баг трэкер"
+
+msgid "Bytes"
+msgstr "Байт"
+
+msgid "Canceled job(s)"
+msgstr "Адмененая задача(ы)"
+
+msgid "Client"
+msgstr "Кліент"
+
+msgid "Client arch"
+msgstr "Архітэктура кліента"
+
+msgid "Client informations"
+msgstr "Звесткі пра кліента"
+
+msgid "Client name"
+msgstr "Назва кліента"
+
+msgid "Client os"
+msgstr "АС кліента"
+
+msgid "Client report"
+msgstr "Даклад кліента"
+
+msgid "Client version"
+msgstr "Версія кліента"
+
+msgid "Completed job(s)"
+msgstr "Завершанае заданне(і)"
+
+msgid "Compression"
+msgstr "Кампрэсія"
+
+msgid "Dashboard"
+msgstr "Інфармацыйная панэль"
+
+msgid "Database size"
+msgstr "Памер базы дадзеных"
+
+msgid "Elapsed time"
+msgstr "Часу затрачана"
+
+msgid "End time"
+msgstr "Час заканчэння"
+
+msgid "Event"
+msgstr "Здарэнне"
+
+msgid "Expire"
+msgstr "Заканчваецца"
+
+msgid "Failed job(s)"
+msgstr "Няўдалае заданне(і)"
+
+msgid "Files"
+msgstr "Файлаў"
+
+msgid "Filter"
+msgstr "Фільтр"
+
+msgid "Job ID"
+msgstr "ID задання"
+
+msgid "Job Id"
+msgstr "Id задання"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Узровень задання (Інкрыментны / Дыферэнцыяльны / Поўны)"
+
+msgid "Job details"
+msgstr "Дэталі задання"
+
+msgid "Job id"
+msgstr "Id задання"
+
+msgid "Job status"
+msgstr "Статус задання"
+
+msgid "Jobs"
+msgstr "Заданні"
+
+msgid "Jobs report"
+msgstr "Даклад па заданню"
+
+msgid "Last period job status"
+msgstr "Статус задання за апошні перыяд"
+
+msgid "Last used volumes"
+msgstr "Апошнія выкарыстаныя тамы"
+
+msgid "Last written"
+msgstr "Апошнія запісы"
+
+msgid "Last written date for this volume"
+msgstr "Дата апошніх запісаў для гэтага тома"
+
+msgid "Level"
+msgstr "Узровень"
+
+msgid "Log"
+msgstr "Лог"
+
+msgid "Media Type"
+msgstr "Тып носьбіта"
+
+msgid "Name"
+msgstr "Назва"
+
+msgid "No job(s) to display"
+msgstr "Няма задання(ў) для адлюстравання"
+
+msgid "No log(s) for this job"
+msgstr "Няма лога(ў) для адлюстравання"
+
+msgid "Number of jobs"
+msgstr "Колькасць заданняў"
+
+msgid "Official web site"
+msgstr "Афіцыйны вэб-сайт"
+
+msgid "Options"
+msgstr "Опцыі"
+
+msgid "Order by"
+msgstr "Сартаваць па"
+
+msgid "Period"
+msgstr "Перыяд"
+
+msgid "Pool"
+msgstr "Пуля"
+
+msgid "Pool(s)"
+msgstr "Пуля(і)"
+
+msgid "Pools and volumes status"
+msgstr "Статус пуль і тамоў"
+
+msgid "Reports"
+msgstr "Даклады"
+
+msgid "Reset"
+msgstr "Скід"
+
+msgid "Running jobs"
+msgstr "Заданні ў працэсе выканання"
+
+msgid "Show job logs"
+msgstr "Паказаць логі задання"
+
+msgid "Slot"
+msgstr "Слот"
+
+msgid "Speed"
+msgstr "Хуткасць"
+
+msgid "Start time"
+msgstr "Час пачатку"
+
+msgid "Statistics"
+msgstr "Статыстыка"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "Захавана байт (апошнія 7 дзён)"
+
+msgid "Stored Files (last 7 days)"
+msgstr "Захавана файлаў (апошнія 7 дзён)"
+
+msgid "Stored files over the last 7 days"
+msgstr "Захавана файлаў за апошнія 7 дзён"
+
+msgid "Submit"
+msgstr "Адправіць"
+
+msgid "Test page"
+msgstr "Тэставая старонка"
+
+msgid "Time"
+msgstr "Час"
+
+msgid "Total bytes"
+msgstr "Усяго байт"
+
+msgid "Total files"
+msgstr "Усяго файлаў"
+
+msgid "Transfered Bytes"
+msgstr "Перанесена байт"
+
+msgid "Transfered Files"
+msgstr "Перанесена файлаў"
+
+msgid "Transferred Bytes / Files"
+msgstr "Перанесена байт / файлаў"
+
+msgid "Type"
+msgstr "Тып"
+
+msgid "Update with selected period"
+msgstr "Абнаўленне з абраным перыядам"
+
+msgid "Version"
+msgstr "Версія"
+
+msgid "View report"
+msgstr "Паказаць даклад"
+
+msgid "Volume name"
+msgstr "Назва тома"
+
+msgid "Volume pool"
+msgstr "Пуля тома"
+
+msgid "Volume status"
+msgstr "Статус тома"
+
+msgid "Volume(s)"
+msgstr "Том(тамы)"
+
+msgid "Volume(s) size"
+msgstr "Велічыня тома(тамоў)"
+
+msgid "Waiting jobs(s)"
+msgstr "Заданне(я) у чаканні"

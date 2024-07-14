@@ -1,0 +1,164 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro\n"
+
+msgid "Apply"
+msgstr "Aplica"
+
+msgid "Apply filter and options"
+msgstr "Aplica filtre si optiuni"
+
+msgid "Back"
+msgstr "Inapoi"
+
+msgid "Back to Dashboard"
+msgstr "Inapoi la Dashboard"
+
+msgid "Backup job name"
+msgstr "Nume Job copie de siguranta"
+
+msgid "Bug tracker"
+msgstr "Urmarire defecte"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Canceled job(s)"
+msgstr "Job(-uri) anulate"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Client arch"
+msgstr "Architectura Client"
+
+msgid "Client informations"
+msgstr "Informatii client"
+
+msgid "Client name"
+msgstr "Nume client"
+
+msgid "Client os"
+msgstr "OS Client"
+
+msgid "Client report"
+msgstr "Raport Client"
+
+msgid "Client version"
+msgstr "Versiune client"
+
+msgid "Completed job(s)"
+msgstr "Activitati () finalizate"
+
+msgid "Compression"
+msgstr "Compresie"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Database size"
+msgstr "Dimensiuni baza de date"
+
+msgid "Elapsed time"
+msgstr "Interval de timp"
+
+msgid "End time"
+msgstr "Timp sfarsit"
+
+msgid "Event"
+msgstr "Eveniment"
+
+msgid "Expire"
+msgstr "Expira"
+
+msgid "Failed job(s)"
+msgstr "Activitati esuate ()"
+
+msgid "Files"
+msgstr "Fisiere"
+
+msgid "Filter"
+msgstr "Filtru"
+
+msgid "Job ID"
+msgstr "ID Job"
+
+msgid "Job Id"
+msgstr "Id Job"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Nivel Job (Inc/Dif/Complet)"
+
+msgid "Job details"
+msgstr "Detalii Job"
+
+msgid "Job id"
+msgstr "Id Job"
+
+msgid "Job status"
+msgstr "Stadiu Job"
+
+msgid "Jobs"
+msgstr "Job-uri"
+
+msgid "Jobs report"
+msgstr "Raport Job-uri"
+
+msgid "Last period job status"
+msgstr "Stadiu job-uri in ultima perioada"
+
+msgid "Last used volumes"
+msgstr "Ultimul volum folosit"
+
+msgid "Last written"
+msgstr "Ultima scriere"
+
+msgid "Last written date for this volume"
+msgstr "Data ultimei scrieri pentru acest volum"
+
+msgid "Level"
+msgstr "Nivel"
+
+msgid "Log"
+msgstr "Jurnal"
+
+msgid "Media Type"
+msgstr "Tip media"
+
+msgid "Name"
+msgstr "Nume"
+
+msgid "No job(s) to display"
+msgstr "Nici o activitate de afisat()"
+
+msgid "No log(s) for this job"
+msgstr "Nici un log() pentru acest job"
+
+msgid "Number of jobs"
+msgstr "Numar job-uri"
+
+msgid "Official web site"
+msgstr "Site web oficial"
+
+msgid "Options"
+msgstr "Optiuni"
+
+msgid "Order by"
+msgstr "Ordonat dupa"
+
+msgid "Period"
+msgstr "Perioada"
+
+msgid "Pool"
+msgstr "Grup resurse"
+
+msgid "Pool(s)"
+msgstr "Grup(uri)"
+
+msgid "Pools and volumes status"
+msgstr "Stadiu volume si grupuri"
+
+msgid "Reports"
+msgstr "Rapoarte"

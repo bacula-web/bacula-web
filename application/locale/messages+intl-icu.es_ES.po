@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Apply filter and options"
+msgstr "Aplicar filtros y opciones"
+
+msgid "Back"
+msgstr "Atrás"
+
+msgid "Back to Dashboard"
+msgstr "Atrás a Tablero"
+
+msgid "Backup job name"
+msgstr "Nombre de Tarea de Respaldo"
+
+msgid "Bug tracker"
+msgstr "Seguimiento de bugs"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Canceled job(s)"
+msgstr "Tarea(s) cancelada(s)"
+
+msgid "Client"
+msgstr "Cliente"
+
+msgid "Client arch"
+msgstr "Arquitectura de Cliente"
+
+msgid "Client informations"
+msgstr "Informaciones de Cliente"
+
+msgid "Client name"
+msgstr "Nombre de cliente"
+
+msgid "Client os"
+msgstr "SO del cliente"
+
+msgid "Client report"
+msgstr "Informe del cliente"
+
+msgid "Client version"
+msgstr "Versión del cliente"
+
+msgid "Completed job(s)"
+msgstr "Tarea(s) completada(s)"
+
+msgid "Compression"
+msgstr "Compresión"
+
+msgid "Dashboard"
+msgstr "Tablero"
+
+msgid "Database size"
+msgstr "Tamaño de base de datos"
+
+msgid "Elapsed time"
+msgstr "Tiempo transcurrido"
+
+msgid "End time"
+msgstr "Hora de finalización"
+
+msgid "Event"
+msgstr "Evento"
+
+msgid "Expire"
+msgstr "Expira"
+
+msgid "Failed job(s)"
+msgstr "Tarea(s) fallada(s)"
+
+msgid "Files"
+msgstr "Archivos"
+
+msgid "Filter"
+msgstr "Filtro"
+
+msgid "Job ID"
+msgstr "ID de Tarea"
+
+msgid "Job Id"
+msgstr "Id de Tarea"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Nivel de Tarea (Incr / Dif / Completa)"
+
+msgid "Job details"
+msgstr "Detalles de tarea"
+
+msgid "Job id"
+msgstr "Id de tarea"
+
+msgid "Job status"
+msgstr "Estado de tarea"
+
+msgid "Jobs"
+msgstr "Tareas"
+
+msgid "Jobs report"
+msgstr "Informe de Tareas"
+
+msgid "Last period job status"
+msgstr "Último periodo de estado de tarea"
+
+msgid "Last used volumes"
+msgstr "Últimos volúmenes usados"
+
+msgid "Last written"
+msgstr "Última escritura"
+
+msgid "Last written date for this volume"
+msgstr "Última escritura para este volumen"
+
+msgid "Level"
+msgstr "Nivel"
+
+msgid "Log"
+msgstr "Registro"
+
+msgid "Media Type"
+msgstr "Tipo de Media"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "No job(s) to display"
+msgstr "No hay tareas a mostrar"
+
+msgid "No log(s) for this job"
+msgstr "No hay registro(s) para esta tarea"
+
+msgid "Number of jobs"
+msgstr "Número de tareas"
+
+msgid "Official web site"
+msgstr "Sitio web oficial"
+
+msgid "Options"
+msgstr "Opciones"
+
+msgid "Order by"
+msgstr "Ordenar por"
+
+msgid "Period"
+msgstr "Período"
+
+msgid "Pool"
+msgstr "Fondo"
+
+msgid "Pool(s)"
+msgstr "Fondo(s)"
+
+msgid "Pools and volumes status"
+msgstr "Fondos y estado de volúmenes"
+
+msgid "Reports"
+msgstr "Informes"
+
+msgid "Reset"
+msgstr "Reiniciar"
+
+msgid "Running jobs"
+msgstr "Tareas en curso"
+
+msgid "Show job logs"
+msgstr "Mostrar registro de tarea"
+
+msgid "Slot"
+msgstr "Ranura"
+
+msgid "Speed"
+msgstr "Velocidad"
+
+msgid "Start time"
+msgstr "Hora de inicio"
+
+msgid "Statistics"
+msgstr "Estadísticas"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "Bytes Almacenados (últimos 7 días)"
+
+msgid "Stored Files (last 7 days)"
+msgstr "Archivos Almacenados (últimos 7 días)"
+
+msgid "Stored files over the last 7 days"
+msgstr "Archivos almacenados los últimos 7 días"
+
+msgid "Submit"
+msgstr "Enviar"
+
+msgid "Test page"
+msgstr "Página de prueba"
+
+msgid "Time"
+msgstr "Hora"
+
+msgid "Total bytes"
+msgstr "Total de bytes"
+
+msgid "Total files"
+msgstr "Total de archivos:"
+
+msgid "Transfered Bytes"
+msgstr "Bytes Transferidos"
+
+msgid "Transfered Files"
+msgstr "Archivos Transferidos"
+
+msgid "Transferred Bytes / Files"
+msgstr "Bytes / Archivos Transferidos"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Update with selected period"
+msgstr "Actualizar con el período seleccionado"
+
+msgid "Version"
+msgstr "Versión"
+
+msgid "View report"
+msgstr "Ver informe"
+
+msgid "Volume name"
+msgstr "Nombre de volúmen"
+
+msgid "Volume pool"
+msgstr "Fondo de volúmen"
+
+msgid "Volume status"
+msgstr "Estado de volúmen"
+
+msgid "Volume(s)"
+msgstr "Volúmen(es)"
+
+msgid "Volume(s) size"
+msgstr "Tamaño de volúmen(es)"
+
+msgid "Waiting jobs(s)"
+msgstr "Tarea(s) en espera"

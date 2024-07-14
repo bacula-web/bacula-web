@@ -34,10 +34,11 @@ Bacula-Web come by default in english but, with the help of the community, it ha
    * Dutch
    * Norwegian
    * Polish
-   * Portuguese (Brazil) 
+   * Portuguese (Brazil)
+   * Romanian
    * Russian
    * Swedish
-   * Chinese 
+   * Chinese
 
 Translations are a work in progress, if you want to contribute, please read the "How to contribute to :ref:`contribute/translations`" page
 

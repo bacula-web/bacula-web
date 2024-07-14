@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+
+msgid "Apply"
+msgstr "应用"
+
+msgid "Apply filter and options"
+msgstr "应用过滤器和选项"
+
+msgid "Back"
+msgstr "回退"
+
+msgid "Back to Dashboard"
+msgstr "回到仪表盘"
+
+msgid "Backup job name"
+msgstr "备份任务名称"
+
+msgid "Bug tracker"
+msgstr "Bug跟踪"
+
+msgid "Bytes"
+msgstr "字节"
+
+msgid "Canceled job(s)"
+msgstr "取消任务（所选任务）"
+
+msgid "Client"
+msgstr "客户端"
+
+msgid "Client arch"
+msgstr "客户端地址"
+
+msgid "Client informations"
+msgstr "客户端信息"
+
+msgid "Client name"
+msgstr "客户端名称"
+
+msgid "Client os"
+msgstr "客户端操作系统"
+
+msgid "Client report"
+msgstr "客户端报告"
+
+msgid "Client version"
+msgstr "客户端版本"
+
+msgid "Completed job(s)"
+msgstr "已完成的备份任务"
+
+msgid "Compression"
+msgstr "压缩"
+
+msgid "Dashboard"
+msgstr "主仪表板"
+
+msgid "Database size"
+msgstr "数据库大小"
+
+msgid "Elapsed time"
+msgstr "耗时"
+
+msgid "End time"
+msgstr "完成时间"
+
+msgid "Event"
+msgstr "事件"
+
+msgid "Expire"
+msgstr "过期"
+
+msgid "Failed job(s)"
+msgstr "失败的任务"
+
+msgid "Files"
+msgstr "文件"
+
+msgid "Filter"
+msgstr "过滤"
+
+msgid "Job ID"
+msgstr "任务ID"
+
+msgid "Job Id"
+msgstr "任务ID"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "备份任务类型（增量/差异/完全备份）"
+
+msgid "Job details"
+msgstr "任务详细信息"
+
+msgid "Job id"
+msgstr "任务ID"
+
+msgid "Job status"
+msgstr "任务状态"
+
+msgid "Jobs"
+msgstr "任务"
+
+msgid "Jobs report"
+msgstr "备份任务报告"
+
+msgid "Last period job status"
+msgstr "上阶段任务状态"
+
+msgid "Last used volumes"
+msgstr "最后使用的卷"
+
+msgid "Last written"
+msgstr "最后写入"
+
+msgid "Last written date for this volume"
+msgstr "本卷最后写入日期"
+
+msgid "Level"
+msgstr "备份类型"
+
+msgid "Log"
+msgstr "日志"
+
+msgid "Media Type"
+msgstr "介质类型"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "No job(s) to display"
+msgstr "无可显示的任务"
+
+msgid "No log(s) for this job"
+msgstr "无相关任务日志"
+
+msgid "Number of jobs"
+msgstr "备份任务数量"
+
+msgid "Official web site"
+msgstr "官方网站"
+
+msgid "Options"
+msgstr "选项"
+
+msgid "Order by"
+msgstr "排序"
+
+msgid "Period"
+msgstr "阶段"
+
+msgid "Pool"
+msgstr "介质池"
+
+msgid "Pool(s)"
+msgstr "介质池"
+
+msgid "Pools and volumes status"
+msgstr "介质池与备份卷状态"
+
+msgid "Reports"
+msgstr "报告"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "Running jobs"
+msgstr "运行中的任务"
+
+msgid "Show job logs"
+msgstr "显示任务日志"
+
+msgid "Slot"
+msgstr "安排"
+
+msgid "Speed"
+msgstr "速度"
+
+msgid "Start time"
+msgstr "开始时间"
+
+msgid "Statistics"
+msgstr "统计信息"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "写入字节（最后7天）"
+
+msgid "Stored Files (last 7 days)"
+msgstr "写入文件（最后7天）"
+
+msgid "Stored files over the last 7 days"
+msgstr "过往7天的存储文件"
+
+msgid "Submit"
+msgstr "提交"
+
+msgid "Test page"
+msgstr "测试页面"
+
+msgid "Time"
+msgstr "时间"
+
+msgid "Total bytes"
+msgstr "总字节数"
+
+msgid "Total files"
+msgstr "总文件数"
+
+msgid "Transfered Bytes"
+msgstr "传输字节数"
+
+msgid "Transfered Files"
+msgstr "传输文件数"
+
+msgid "Transferred Bytes / Files"
+msgstr "已完成传输字节/文件"
+
+msgid "Type"
+msgstr "类型"
+
+msgid "Update with selected period"
+msgstr "所选阶段更新"
+
+msgid "Version"
+msgstr "版本"
+
+msgid "View report"
+msgstr "卷报告"
+
+msgid "Volume name"
+msgstr "卷名称"
+
+msgid "Volume pool"
+msgstr "卷介质池"
+
+msgid "Volume status"
+msgstr "卷状态"
+
+msgid "Volume(s)"
+msgstr "卷"
+
+msgid "Volume(s) size"
+msgstr "卷大小"
+
+msgid "Waiting jobs(s)"
+msgstr "等待中的任务"

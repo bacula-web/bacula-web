@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+
+msgid "Apply"
+msgstr "anwenden"
+
+msgid "Apply filter and options"
+msgstr "Filter und Optionen anwenden"
+
+msgid "Back"
+msgstr "zurück"
+
+msgid "Back to Dashboard"
+msgstr "zum Dashboard"
+
+msgid "Backup job name"
+msgstr "Auftragsname"
+
+msgid "Bug tracker"
+msgstr "Bug tracker"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Canceled job(s)"
+msgstr "abgebrochene Aufträge"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Client arch"
+msgstr "Client CPU:"
+
+msgid "Client informations"
+msgstr "Clientinformationen"
+
+msgid "Client name"
+msgstr "Clientname"
+
+msgid "Client os"
+msgstr "Client OS"
+
+msgid "Client report"
+msgstr "Clientbericht"
+
+msgid "Client version"
+msgstr "Client Version"
+
+msgid "Completed job(s)"
+msgstr "fertiggestellte Aufträge"
+
+msgid "Compression"
+msgstr " Kompression"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Database size"
+msgstr "Datenbankgröße"
+
+msgid "Elapsed time"
+msgstr "Vergangene Zeit"
+
+msgid "End time"
+msgstr "Endzeit"
+
+msgid "Event"
+msgstr "Ereignis"
+
+msgid "Expire"
+msgstr "Verfall"
+
+msgid "Failed job(s)"
+msgstr "fehlerhafte Aufträge"
+
+msgid "Files"
+msgstr "Zeilen"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Job ID"
+msgstr "Auftrags-ID"
+
+msgid "Job Id"
+msgstr "Auftrags-ID"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Auftragsart (Incr/Diff/Voll)"
+
+msgid "Job details"
+msgstr "Auftragsdetails"
+
+msgid "Job id"
+msgstr "Auftrags-ID"
+
+msgid "Job status"
+msgstr "Auftragsstatus"
+
+msgid "Jobs"
+msgstr "Aufträge"
+
+msgid "Jobs report"
+msgstr "Auftragsreport"
+
+msgid "Last period job status"
+msgstr "Auftragsstatus der letzten Periode"
+
+msgid "Last used volumes"
+msgstr "zuletzt benutztes Volume"
+
+msgid "Last written"
+msgstr "zuletzt geschrieben"
+
+msgid "Last written date for this volume"
+msgstr "Datum des letzten Schreibvorgangs"
+
+msgid "Level"
+msgstr "Level"
+
+msgid "Log"
+msgstr "Log"
+
+msgid "Media Type"
+msgstr "Medientyp"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "No job(s) to display"
+msgstr "kein Auftrag zum Anzeigen"
+
+msgid "No log(s) for this job"
+msgstr "keine Logs für diesen Auftrag"
+
+msgid "Number of jobs"
+msgstr "Auftragsanzahl"
+
+msgid "Official web site"
+msgstr "offizielle Webseite"
+
+msgid "Options"
+msgstr "Optionen"
+
+msgid "Order by"
+msgstr "sortieren nach"
+
+msgid "Period"
+msgstr "Zeitspanne"
+
+msgid "Pool"
+msgstr "Pool"
+
+msgid "Pool(s)"
+msgstr "Pool(s)"
+
+msgid "Pools and volumes status"
+msgstr "Status der Pools und Volumes"
+
+msgid "Reports"
+msgstr "Berichte"
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Running jobs"
+msgstr "laufende Aufträge"
+
+msgid "Show job logs"
+msgstr "Auftragslogs anzeigen"
+
+msgid "Slot"
+msgstr "Schacht"
+
+msgid "Speed"
+msgstr "Geschwindigkeit"
+
+msgid "Start time"
+msgstr "Startzeit"
+
+msgid "Statistics"
+msgstr "Statistiken"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "gespeicherte Bytes (letzte 7 Tage)"
+
+msgid "Stored Files (last 7 days)"
+msgstr "gespeicherte Bytes (letzte 7 Tage)"
+
+msgid "Stored files over the last 7 days"
+msgstr "gespeicherte Bytes der letzten 7 Tage"
+
+msgid "Submit"
+msgstr "speichern"
+
+msgid "Test page"
+msgstr "Testseite"
+
+msgid "Time"
+msgstr "Zeit"
+
+msgid "Total bytes"
+msgstr "gespeicherte Bytes gesamt"
+
+msgid "Total files"
+msgstr "Dateien gesamt"
+
+msgid "Transfered Bytes"
+msgstr "Bytes übertragen"
+
+msgid "Transfered Files"
+msgstr "Dateien übertragen"
+
+msgid "Transferred Bytes / Files"
+msgstr "Bytes/Dateien übertragen"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Update with selected period"
+msgstr "Update mit ausgewähltem Zeitraum"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "View report"
+msgstr "Detailierter Bericht"
+
+msgid "Volume name"
+msgstr "Volumename"
+
+msgid "Volume pool"
+msgstr "Volumepool"
+
+msgid "Volume status"
+msgstr "Volumestatus"
+
+msgid "Volume(s)"
+msgstr "Volume(n)"
+
+msgid "Volume(s) size"
+msgstr "Volumegröße"
+
+msgid "Waiting jobs(s)"
+msgstr "wartende Aufträge"

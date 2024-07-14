@@ -1,0 +1,482 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: jp_JP\n"
+
+msgid "Select a period"
+msgstr "Select a period"
+
+msgid "Select a client"
+msgstr "Select a client"
+
+msgid "Any"
+msgstr "Any"
+
+msgid "Backup job report"
+msgstr "Backup job report"
+
+msgid "Report options"
+msgstr "Report options"
+
+msgid "Backup job name"
+msgstr "Backup job name"
+
+msgid "View report"
+msgstr "View report"
+
+msgid "Job informations"
+msgstr "Job informations"
+
+msgid "Job name"
+msgstr "Job name"
+
+msgid "Period"
+msgstr "Period"
+
+msgid "Transfered Bytes"
+msgstr "Transfered Bytes"
+
+msgid "Transfered Files"
+msgstr "Transfered Files"
+
+msgid "Last backup jobs"
+msgstr "Last backup jobs"
+
+msgid "Job Id"
+msgstr "Job Id"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Level"
+msgstr "Level"
+
+msgid "Files"
+msgstr "Files"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Start time"
+msgstr "Start time"
+
+msgid "End time"
+msgstr "End time"
+
+msgid "Elapsed time"
+msgstr "Elapsed time"
+
+msgid "Speed"
+msgstr "Speed"
+
+msgid "Compression"
+msgstr "Compression"
+
+msgid "No job(s) to display"
+msgstr "No job(s) to display"
+
+msgid "Choose the backup job name and the period interval, then click on the"
+msgstr "Choose the backup job name and the period interval, then click on the"
+
+msgid "Job logs"
+msgstr "Job logs"
+
+msgid "Job details"
+msgstr "Job details"
+
+msgid "Job id"
+msgstr "Job id"
+
+msgid "Job status"
+msgstr "Job status"
+
+msgid "Job bytes"
+msgstr "Job bytes"
+
+msgid "Scheduled time"
+msgstr "Scheduled time"
+
+msgid "Job start time"
+msgstr "Job start time"
+
+msgid "Job end time"
+msgstr "Job end time"
+
+msgid "Job level"
+msgstr "Job level"
+
+msgid "Pool"
+msgstr "Pool"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Event"
+msgstr "Event"
+
+msgid "No log(s) for this job"
+msgstr "No log(s) for this job"
+
+msgid "Client report"
+msgstr "Client report"
+
+msgid "Client informations"
+msgstr "Client informations"
+
+msgid "Client name"
+msgstr "Client name"
+
+msgid "Client version"
+msgstr "Client version"
+
+msgid "Client os"
+msgstr "Client os"
+
+msgid "Client arch"
+msgstr "Client arch"
+
+msgid "Last good backup job"
+msgstr "Last good backup job"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Statistics"
+msgstr "Statistics"
+
+msgid "Last"
+msgstr "Last"
+
+msgid "Directors"
+msgstr "Directors"
+
+msgid "Client(s)"
+msgstr "Client(s)"
+
+msgid "Jobs"
+msgstr "Jobs"
+
+msgid "Total bytes"
+msgstr "Total bytes"
+
+msgid "Total files"
+msgstr "Total files"
+
+msgid "Database size"
+msgstr "Database size"
+
+msgid "Volume(s)"
+msgstr "Volume(s)"
+
+msgid "Volume(s) size"
+msgstr "Volume(s) size"
+
+msgid "Pool(s)"
+msgstr "Pool(s)"
+
+msgid "FileSet(s)"
+msgstr "FileSet(s)"
+
+msgid "Job files"
+msgstr "Job files"
+
+msgid "Job Info"
+msgstr "Job Info"
+
+msgid "Job Name"
+msgstr "Job Name"
+
+msgid "Job Status"
+msgstr "Job Status"
+
+msgid "View backup job"
+msgstr "View backup job"
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "File Index"
+msgstr "File Index"
+
+msgid "Filename"
+msgstr "Filename"
+
+msgid "No file(s) to display"
+msgstr "No file(s) to display"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "Graph capabilities"
+msgstr "Graph capabilities"
+
+msgid "Pools report"
+msgstr "Pools report"
+
+msgid "Pool name"
+msgstr "Pool name"
+
+msgid "Volume count"
+msgstr "Volume count"
+
+msgid "Volumes"
+msgstr "Volumes"
+
+msgid "Show Volumes"
+msgstr "Show Volumes"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Volume details"
+msgstr "Volume details"
+
+msgid "Media id"
+msgstr "Media id"
+
+msgid "Volume name"
+msgstr "Volume name"
+
+msgid "Volume bytes"
+msgstr "Volume bytes"
+
+msgid "Volume files"
+msgstr "Volume files"
+
+msgid "Volume jobs"
+msgstr "Volume jobs"
+
+msgid "First written"
+msgstr "First written"
+
+msgid "Last written"
+msgstr "Last written"
+
+msgid "Mounts"
+msgstr "Mounts"
+
+msgid "Slot"
+msgstr "Slot"
+
+msgid "In changer"
+msgstr "In changer"
+
+msgid "Media Type"
+msgstr "Media Type"
+
+msgid "Job ID"
+msgstr "Job ID"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Show job"
+msgstr "Show job"
+
+msgid "No job(s) associated to this volume"
+msgstr "No job(s) associated to this volume"
+
+msgid "User settings"
+msgstr "User settings"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Jobs report"
+msgstr "Jobs report"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Order by"
+msgstr "Order by"
+
+msgid "Apply filter and options"
+msgstr "Apply filter and options"
+
+msgid "Apply"
+msgstr "Apply"
+
+msgid "Reset to default"
+msgstr "Reset to default"
+
+msgid "Scheduled Time"
+msgstr "Scheduled Time"
+
+msgid "Log"
+msgstr "Log"
+
+msgid "Show job files"
+msgstr "Show job files"
+
+msgid "Show job logs"
+msgstr "Show job logs"
+
+msgid "Volumes report"
+msgstr "Volumes report"
+
+msgid "Expire"
+msgstr "Expire"
+
+msgid "In Changer"
+msgstr "In Changer"
+
+msgid "Show volume"
+msgstr "Show volume"
+
+msgid "No volume(s) to display"
+msgstr "No volume(s) to display"
+
+msgid "Result"
+msgstr "Result"
+
+msgid "Volume(s) found"
+msgstr "Volume(s) found"
+
+msgid "Reports"
+msgstr "Reports"
+
+msgid "Pools"
+msgstr "Pools"
+
+msgid "Backup job"
+msgstr "Backup job"
+
+msgid "Director(s)"
+msgstr "Director(s)"
+
+msgid "Sign out"
+msgstr "Sign out"
+
+msgid "About"
+msgstr "About"
+
+msgid "Test page"
+msgstr "Test page"
+
+msgid "Help"
+msgstr "Help"
+
+msgid "Official web site"
+msgstr "Official web site"
+
+msgid "Bug tracker"
+msgstr "Bug tracker"
+
+msgid "Documentation"
+msgstr "Documentation"
+
+msgid "Project on GitHub"
+msgstr "Project on GitHub"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Pools and volumes status"
+msgstr "Pools and volumes status"
+
+msgid "Biggest backup jobs"
+msgstr "Biggest backup jobs"
+
+msgid "Displays the 10 biggest (Bytes) Bacula backup jobs"
+msgstr "Displays the 10 biggest (Bytes) Bacula backup jobs"
+
+msgid "Nothing to display"
+msgstr "Nothing to display"
+
+msgid "Stored files over the last 7 days"
+msgstr "Stored files over the last 7 days"
+
+msgid "Stored Files (last 7 days)"
+msgstr "Stored Files (last 7 days)"
+
+msgid "Stored Bytes over the last 7 days"
+msgstr "Stored Bytes over the last 7 days"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "Stored Bytes (last 7 days)"
+
+msgid "Last period job status"
+msgstr "Last period job status"
+
+msgid "Update with selected period"
+msgstr "Update with selected period"
+
+msgid "Submit"
+msgstr "Submit"
+
+msgid "Running jobs"
+msgstr "Running jobs"
+
+msgid "Completed job(s)"
+msgstr "Completed job(s)"
+
+msgid "Completed with errors job(s)"
+msgstr "Completed with errors job(s)"
+
+msgid "Waiting jobs(s)"
+msgstr "Waiting jobs(s)"
+
+msgid "Failed job(s)"
+msgstr "Failed job(s)"
+
+msgid "Canceled job(s)"
+msgstr "Canceled job(s)"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Job Level (Incr / Diff / Full)"
+
+msgid "Transferred Bytes / Files"
+msgstr "Transferred Bytes / Files"
+
+msgid "Weekly jobs statistics"
+msgstr "Weekly jobs statistics"
+
+msgid "Day of week"
+msgstr "Day of week"
+
+msgid "Clients jobs total"
+msgstr "Clients jobs total"
+
+msgid "Per job name backup and restore jobs statistics"
+msgstr "Per job name backup and restore jobs statistics"
+
+msgid "Backup"
+msgstr "Backup"
+
+msgid "Restore"
+msgstr "Restore"
+
+msgid "Last used volumes"
+msgstr "Last used volumes"
+
+msgid "Displays the last 10 volumes used during backups"
+msgstr "Displays the last 10 volumes used during backups"
+
+msgid "Volume status"
+msgstr "Volume status"
+
+msgid "Volume pool"
+msgstr "Volume pool"
+
+msgid "Last written date for this volume"
+msgstr "Last written date for this volume"
+
+msgid "Number of jobs"
+msgstr "Number of jobs"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Back to Dashboard"
+msgstr "Back to Dashboard"

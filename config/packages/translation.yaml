@@ -1,7 +1,11 @@
 framework:
-    default_locale: en
+    default_locale: en_US
     translator:
         default_path: '%kernel.project_dir%/application/locale'
         fallbacks:
-            - en
+            - en_US
         providers:
+            lokalise:
+                dsn: '%env(LOKALISE_DSN)%'
+                domains: ['messages']
+                locales: ['en_US', 'fr_FR', 'de_DE', 'pt_BR', 'be', 'ca', 'en_GB', 'es_ES', 'it_IT', 'ja_JP', 'nl_NL', 'no_NO', 'pl', 'ro', 'ru_RU', 'sv_SE', 'zh_CN']

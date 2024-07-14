@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
+
+msgid "Apply"
+msgstr "Tillämpa"
+
+msgid "Apply filter and options"
+msgstr "Tillämpa filter och alternativ"
+
+msgid "Back"
+msgstr "Tillbaka"
+
+msgid "Back to Dashboard"
+msgstr "Tillbaka till instrumentpanelen"
+
+msgid "Backup job name"
+msgstr "Backup jobb namn"
+
+msgid "Bug tracker"
+msgstr "Felsökare"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Canceled job(s)"
+msgstr "Avbrutna jobb"
+
+msgid "Client"
+msgstr "Klient"
+
+msgid "Client arch"
+msgstr "Klient arkitektur "
+
+msgid "Client informations"
+msgstr "Klient information"
+
+msgid "Client name"
+msgstr "Klient"
+
+msgid "Client os"
+msgstr "Klient OS"
+
+msgid "Client report"
+msgstr "Klient rapport"
+
+msgid "Client version"
+msgstr "Klient version"
+
+msgid "Completed job(s)"
+msgstr "Avslutade jobb"
+
+msgid "Compression"
+msgstr "Kompression"
+
+msgid "Dashboard"
+msgstr "Instrumentpanel"
+
+msgid "Database size"
+msgstr "Databas storlek"
+
+msgid "Elapsed time"
+msgstr "Förfluten tid"
+
+msgid "End time"
+msgstr "Sluttid"
+
+msgid "Event"
+msgstr "Händelse"
+
+msgid "Expire"
+msgstr "Upphör"
+
+msgid "Failed job(s)"
+msgstr "Misslyckade jobb"
+
+msgid "Files"
+msgstr "Filer"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Job ID"
+msgstr "Jobb ID"
+
+msgid "Job Id"
+msgstr "Jobb Id"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Jobb nivå (Inkrementell / Differentiell / Full)"
+
+msgid "Job details"
+msgstr "Jobb detaijer"
+
+msgid "Job id"
+msgstr "Jobb id"
+
+msgid "Job status"
+msgstr "Jobbstatus"
+
+msgid "Jobs"
+msgstr "Jobb"
+
+msgid "Jobs report"
+msgstr "Jobb rapport"
+
+msgid "Last period job status"
+msgstr "Jobb status förra perioden"
+
+msgid "Last used volumes"
+msgstr "Senaste använda volymer"
+
+msgid "Last written"
+msgstr "Senast skriven"
+
+msgid "Last written date for this volume"
+msgstr "Datum för senaste skrivning till denna volym"
+
+msgid "Level"
+msgstr "Nivå"
+
+msgid "Log"
+msgstr "Logg"
+
+msgid "Media Type"
+msgstr "Mediatyp"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "No job(s) to display"
+msgstr "Inga jobb att visa"
+
+msgid "No log(s) for this job"
+msgstr "Inga loggar för detta jobb"
+
+msgid "Number of jobs"
+msgstr "Antal jobb"
+
+msgid "Official web site"
+msgstr "Officiel webb sajt"
+
+msgid "Options"
+msgstr "Alternativ"
+
+msgid "Order by"
+msgstr "Sortera efter"
+
+msgid "Period"
+msgstr "Period"
+
+msgid "Pool"
+msgstr "Pool"
+
+msgid "Pool(s)"
+msgstr "Pool(er)"
+
+msgid "Pools and volumes status"
+msgstr "Pooler och volym status"
+
+msgid "Reports"
+msgstr "Rapporter"
+
+msgid "Reset"
+msgstr "Återställa"
+
+msgid "Running jobs"
+msgstr "Pågående jobb"
+
+msgid "Show job logs"
+msgstr "Visa jobb loggar"
+
+msgid "Slot"
+msgstr "Slot"
+
+msgid "Speed"
+msgstr "Hastighet"
+
+msgid "Start time"
+msgstr "Starttid"
+
+msgid "Statistics"
+msgstr "Statistik"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "Sparade Bytes (senate 7 dagarna)"
+
+msgid "Stored Files (last 7 days)"
+msgstr "Sparade Filer (senate 7 dagarna)"
+
+msgid "Stored files over the last 7 days"
+msgstr "Sparade filer de senaste 7 dagarna"
+
+msgid "Submit"
+msgstr "Spara"
+
+msgid "Test page"
+msgstr "Testsida"
+
+msgid "Time"
+msgstr "Tid"
+
+msgid "Total bytes"
+msgstr "Totalt antal byte lagrade"
+
+msgid "Total files"
+msgstr "Totalt antal filer"
+
+msgid "Transfered Bytes"
+msgstr "Överförda Bytes"
+
+msgid "Transfered Files"
+msgstr "Överförda Filer"
+
+msgid "Transferred Bytes / Files"
+msgstr "Överförda Bytes / Filer"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Update with selected period"
+msgstr "Uppdatera med vald period"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "View report"
+msgstr "Visa rapport"
+
+msgid "Volume name"
+msgstr "Volymnamn"
+
+msgid "Volume pool"
+msgstr "Volym pool"
+
+msgid "Volume status"
+msgstr "Volym status"
+
+msgid "Volume(s)"
+msgstr "Volym(er)"
+
+msgid "Volume(s) size"
+msgstr "Volym(er) storlek"
+
+msgid "Waiting jobs(s)"
+msgstr "Väntande jobb"

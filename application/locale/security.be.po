@@ -1,0 +1,62 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: be\n"
+
+msgid "An authentication exception occurred."
+msgstr "Памылка аўтэнтыфікацыі."
+
+msgid "Authentication credentials could not be found."
+msgstr "Дадзеныя аўтэнтыфікацыі не знойдзены."
+
+msgid "Authentication request could not be processed due to a system problem."
+msgstr "Запыт аўтэнтыфікацыі не можа быць апрацаваны ў сувязі з праблемай у сістэме."
+
+msgid "Invalid credentials."
+msgstr "Несапраўдныя дадзеныя аўтэнтыфікацыі."
+
+msgid "Cookie has already been used by someone else."
+msgstr "Нехта іншы ўжо выкарыстаў гэтыя кукі (cookie)."
+
+msgid "Not privileged to request the resource."
+msgstr "Адсутнічаюць правы на запыт гэтага рэсурсу."
+
+msgid "Invalid CSRF token."
+msgstr "Несапраўдны CSRF-токен."
+
+msgid "No authentication provider found to support the authentication token."
+msgstr "Не знойдзен правайдар аўтэнтыфікацыі, які можа падтрымліваць гэты токен аўтэнтыфікацыі."
+
+msgid "No session available, it either timed out or cookies are not enabled."
+msgstr "Сесія не даступна, яе час скончыўся, або кукі (cookies) выключаны."
+
+msgid "No token could be found."
+msgstr "Токен не знойдзен."
+
+msgid "Username could not be found."
+msgstr "Імя карыстальніка не знойдзена."
+
+msgid "Account has expired."
+msgstr "Скончыўся тэрмін дзеяння акаўнта."
+
+msgid "Credentials have expired."
+msgstr "Скончыўся тэрмін дзеяння дадзеных аўтэнтыфікацыі."
+
+msgid "Account is disabled."
+msgstr "Акаўнт адключан."
+
+msgid "Account is locked."
+msgstr "Акаўнт заблакіраван."
+
+msgid "Too many failed login attempts, please try again later."
+msgstr "Зашмат няўдалых спроб уваходу, калі ласка, паспрабуйце пазней."
+
+msgid "Invalid or expired login link."
+msgstr "Спасылка для ўваходу несапраўдная або пратэрмінаваная."
+
+msgid "Too many failed login attempts, please try again in %minutes% minute."
+msgstr "Занадта шмат няўдалых спроб уваходу ў сістэму, паспрабуйце спробу праз %minutes% хвіліну."
+
+msgid "Too many failed login attempts, please try again in %minutes% minutes."
+msgstr "Занадта шмат няўдалых спробаў уваходу, калі ласка, паспрабуйце зноў праз %minutes% хвіліну.|Занадта шмат няўдалых спробаў уваходу, калі ласка, паспрабуйце зноў праз %minutes% хвіліны.|Занадта шмат няўдалых спробаў уваходу, калі ласка, паспрабуйце зноў праз %minutes% хвілін."
