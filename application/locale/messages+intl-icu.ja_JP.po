@@ -1,0 +1,245 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
+
+msgid "Apply"
+msgstr "表示"
+
+msgid "Apply filter and options"
+msgstr "Apply filter and options"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Back to Dashboard"
+msgstr "ダッシュボードに戻る"
+
+msgid "Backup job name"
+msgstr "Backup job name"
+
+msgid "Bug tracker"
+msgstr "Bug tracker"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Canceled job(s)"
+msgstr "キャンセルジョブ"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Client arch"
+msgstr "Client arch"
+
+msgid "Client informations"
+msgstr "Client informations"
+
+msgid "Client name"
+msgstr "Client name"
+
+msgid "Client os"
+msgstr "Client os"
+
+msgid "Client report"
+msgstr "クライアントレポート"
+
+msgid "Client version"
+msgstr "Client version"
+
+msgid "Completed job(s)"
+msgstr "実行完了ジョブ"
+
+msgid "Compression"
+msgstr "圧縮率"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Database size"
+msgstr "データベースサイズ"
+
+msgid "Elapsed time"
+msgstr "経過時間"
+
+msgid "End time"
+msgstr "終了時間"
+
+msgid "Event"
+msgstr "Event"
+
+msgid "Expire"
+msgstr "Expire"
+
+msgid "Failed job(s)"
+msgstr "実行失敗ジョブ"
+
+msgid "Files"
+msgstr "ファイル数"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Job ID"
+msgstr "Job ID"
+
+msgid "Job Id"
+msgstr "Job Id"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "ジョブレベル (増分/差分/フル)"
+
+msgid "Job id"
+msgstr "Job id"
+
+msgid "Job status"
+msgstr "Job status"
+
+msgid "Jobs"
+msgstr "Jobs"
+
+msgid "Jobs report"
+msgstr "Jobs report"
+
+msgid "Last period job status"
+msgstr "ジョブステータス"
+
+msgid "Last used volumes"
+msgstr "volume最終使用履歴"
+
+msgid "Last written"
+msgstr "最終更新日"
+
+msgid "Last written date for this volume"
+msgstr "Last written date for this volume"
+
+msgid "Level"
+msgstr "Level"
+
+msgid "Log"
+msgstr "詳細"
+
+msgid "Media Type"
+msgstr "Media Type"
+
+msgid "Name"
+msgstr "ジョブ名"
+
+msgid "No job(s) to display"
+msgstr "No job(s) to display"
+
+msgid "No log(s) for this job"
+msgstr "No log(s) for this job"
+
+msgid "Number of jobs"
+msgstr "Number of jobs"
+
+msgid "Official web site"
+msgstr "公式ページ"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Order by"
+msgstr "ソート条件"
+
+msgid "Period"
+msgstr "Period"
+
+msgid "Pool"
+msgstr "Pool"
+
+msgid "Pool(s)"
+msgstr "Pool数"
+
+msgid "Pools and volumes status"
+msgstr "Pools and volumes status"
+
+msgid "Reports"
+msgstr "Reports"
+
+msgid "Reset"
+msgstr "リセット"
+
+msgid "Running jobs"
+msgstr "実行中ジョブ"
+
+msgid "Show job logs"
+msgstr "Show job logs"
+
+msgid "Speed"
+msgstr "書き込み速度"
+
+msgid "Start time"
+msgstr "開始時間"
+
+msgid "Statistics"
+msgstr "Statistics"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "バックアップ済み総容量 (1週間以内)"
+
+msgid "Stored Files (last 7 days)"
+msgstr "バックアップ済み総ファイル数 (1週間以内)"
+
+msgid "Stored files over the last 7 days"
+msgstr "Stored files over the last 7 days"
+
+msgid "Submit"
+msgstr "Submit"
+
+msgid "Test page"
+msgstr "テストページ"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Total bytes"
+msgstr "総容量"
+
+msgid "Total files"
+msgstr "総ファイル数"
+
+msgid "Transfered Bytes"
+msgstr "Transfered Bytes"
+
+msgid "Transfered Files"
+msgstr "Transfered Files"
+
+msgid "Transferred Bytes / Files"
+msgstr "転送容量 / ファイル数"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Update with selected period"
+msgstr "Update with selected period"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "View report"
+msgstr "View report"
+
+msgid "Volume name"
+msgstr "ボリューム名"
+
+msgid "Volume pool"
+msgstr "Volume pool"
+
+msgid "Volume status"
+msgstr "Volume status"
+
+msgid "Volume(s)"
+msgstr "Volume数"
+
+msgid "Volume(s) size"
+msgstr "Volume総容量"
+
+msgid "Waiting jobs(s)"
+msgstr "実行待ちジョブ"

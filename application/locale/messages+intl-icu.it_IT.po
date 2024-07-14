@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it_IT\n"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Client name"
+msgstr "Nome del cliente"
+
+msgid "Client os"
+msgstr "Systema del cliente"
+
+msgid "Client version"
+msgstr "Versione del cliente"
+
+msgid "Database size"
+msgstr "Dimensione Database"
+
+msgid "Elapsed time"
+msgstr "Tempo trascorso"
+
+msgid "End time"
+msgstr "Terminato"
+
+msgid "Files"
+msgstr "Linee"
+
+msgid "Job ID"
+msgstr "JobID"
+
+msgid "Job status"
+msgstr "Stato Job"
+
+msgid "Last written"
+msgstr "Ultima modifica"
+
+msgid "Level"
+msgstr "Livello"
+
+msgid "Media Type"
+msgstr "Tipo di supporto"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Period"
+msgstr "Periodo"
+
+msgid "Pool"
+msgstr "Pool"
+
+msgid "Reports"
+msgstr "Rapporti"
+
+msgid "Start time"
+msgstr "Avviato"
+
+msgid "Status"
+msgstr "Stato"
+
+msgid "Total bytes"
+msgstr "Totale dei bytes salvati"
+
+msgid "Total files"
+msgstr "Files totali"
+
+msgid "Transfered Bytes"
+msgstr "Bytes trasferiti"
+
+msgid "Transfered Files"
+msgstr "Bytes trasferiti"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "View report"
+msgstr "Report dettagliato"
+
+msgid "Volume name"
+msgstr "Nome volume"

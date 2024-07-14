@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+
+msgid "Apply"
+msgstr "Zastosować"
+
+msgid "Apply filter and options"
+msgstr "Zastosuj filtry i opcje"
+
+msgid "Back"
+msgstr "Wróć"
+
+msgid "Back to Dashboard"
+msgstr "Wróć do panelu"
+
+msgid "Backup job name"
+msgstr "Nazwa zadania backupu"
+
+msgid "Bug tracker"
+msgstr "Bug tracker"
+
+msgid "Bytes"
+msgstr "Bajtów"
+
+msgid "Canceled job(s)"
+msgstr "Anulowane zadanie(a)"
+
+msgid "Client"
+msgstr "Klient"
+
+msgid "Client arch"
+msgstr "Architektura klienta"
+
+msgid "Client informations"
+msgstr "Informacja o kliencie"
+
+msgid "Client name"
+msgstr "Nazwa klienta"
+
+msgid "Client os"
+msgstr "System operacyjny klienta"
+
+msgid "Client report"
+msgstr "Raport klienta"
+
+msgid "Client version"
+msgstr "Wersja klienta"
+
+msgid "Completed job(s)"
+msgstr "Zadanie(a) zrealizowane"
+
+msgid "Compression"
+msgstr "Kompresja"
+
+msgid "Dashboard"
+msgstr "Panel"
+
+msgid "Database size"
+msgstr "Rozmiar bazy danych"
+
+msgid "Elapsed time"
+msgstr "Czas jaki upłynął"
+
+msgid "End time"
+msgstr "Czas zakończenia"
+
+msgid "Event"
+msgstr "Zdarzenie"
+
+msgid "Expire"
+msgstr "Wygaśnie"
+
+msgid "Failed job(s)"
+msgstr "Nieudane zadanie(a)"
+
+msgid "Files"
+msgstr "Pliki"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Job ID"
+msgstr "ID zadania"
+
+msgid "Job Id"
+msgstr "Id zadania"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Poziom zadania (Przyrostowy / Różnicowy / Pełny)"
+
+msgid "Job details"
+msgstr "Szczegóły zadania"
+
+msgid "Job id"
+msgstr "Id zadania"
+
+msgid "Job status"
+msgstr "Status zadania"
+
+msgid "Jobs"
+msgstr "Zadania"
+
+msgid "Jobs report"
+msgstr "Raport zadań"
+
+msgid "Last period job status"
+msgstr "Status zadań ostatniego okresu"
+
+msgid "Last used volumes"
+msgstr "Ostatnio używane woluminy"
+
+msgid "Last written"
+msgstr "Ostatnio zapisany"
+
+msgid "Last written date for this volume"
+msgstr "Ostatnia data zapisywanie do tego wolumina"
+
+msgid "Level"
+msgstr "Poziom"
+
+msgid "Log"
+msgstr "Log"
+
+msgid "Media Type"
+msgstr "Typ nośnika"
+
+msgid "Name"
+msgstr "Nazwa"
+
+msgid "No job(s) to display"
+msgstr "Brak zadania(zadań) do wyświetlenie"
+
+msgid "No log(s) for this job"
+msgstr "Brak logu(ów) dla danego zadania"
+
+msgid "Number of jobs"
+msgstr "Liczba zadań"
+
+msgid "Official web site"
+msgstr "Oficjalna strona internetowa"
+
+msgid "Options"
+msgstr "Opcje"
+
+msgid "Order by"
+msgstr "Sortowanie po"
+
+msgid "Period"
+msgstr "Okres"
+
+msgid "Pool"
+msgstr "Pula"
+
+msgid "Pool(s)"
+msgstr "Pula(e)"
+
+msgid "Pools and volumes status"
+msgstr "Status pul i woluminów"
+
+msgid "Reports"
+msgstr "Raporty"
+
+msgid "Reset"
+msgstr "Resetować"
+
+msgid "Running jobs"
+msgstr "Uruchomione zadania"
+
+msgid "Show job logs"
+msgstr "Wyświetl logi zadania"
+
+msgid "Slot"
+msgstr "Slot"
+
+msgid "Speed"
+msgstr "Szybkość"
+
+msgid "Start time"
+msgstr "Czas rozpoczęcia"
+
+msgid "Statistics"
+msgstr "Statystyka"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "Zapisane bajty (ostatnie 7 dni)"
+
+msgid "Stored Files (last 7 days)"
+msgstr "Zapisane pliki (ostatnie 7 dni)"
+
+msgid "Stored files over the last 7 days"
+msgstr "Zapisane pliki w ciągu ostatnich 7 dni"
+
+msgid "Submit"
+msgstr "Zatwierdź"
+
+msgid "Test page"
+msgstr "Strona testowa"
+
+msgid "Time"
+msgstr "Czas"
+
+msgid "Total bytes"
+msgstr "Razem bajtów"
+
+msgid "Total files"
+msgstr "Razem plików"
+
+msgid "Transfered Bytes"
+msgstr "Przeniesione bajty"
+
+msgid "Transfered Files"
+msgstr "Przeniesione pliki"
+
+msgid "Transferred Bytes / Files"
+msgstr "Przeniesione bajty / pliki"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Update with selected period"
+msgstr "Aktualizacja z wybranym okresem"
+
+msgid "Version"
+msgstr "Wersja"
+
+msgid "View report"
+msgstr "Zobacz raport"
+
+msgid "Volume name"
+msgstr "Nazwa wolumina"
+
+msgid "Volume pool"
+msgstr "Pula wolumina"
+
+msgid "Volume status"
+msgstr "Stan wolumina"
+
+msgid "Volume(s)"
+msgstr "Wolumin(y)"
+
+msgid "Volume(s) size"
+msgstr "Wielkość woluminu(ów)"
+
+msgid "Waiting jobs(s)"
+msgstr "Zadanie(a) oczekujące"

@@ -1,0 +1,62 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+
+msgid "An authentication exception occurred."
+msgstr "身份验证发生异常。"
+
+msgid "Authentication credentials could not be found."
+msgstr "没有找到身份验证的凭证。"
+
+msgid "Authentication request could not be processed due to a system problem."
+msgstr "由于系统故障，身份验证的请求无法被处理。"
+
+msgid "Invalid credentials."
+msgstr "无效的凭证。"
+
+msgid "Cookie has already been used by someone else."
+msgstr "Cookie 已经被其他人使用。"
+
+msgid "Not privileged to request the resource."
+msgstr "没有权限请求此资源。"
+
+msgid "Invalid CSRF token."
+msgstr "无效的 CSRF token 。"
+
+msgid "No authentication provider found to support the authentication token."
+msgstr "没有找到支持此 token 的身份验证服务提供方。"
+
+msgid "No session available, it either timed out or cookies are not enabled."
+msgstr "Session 不可用。会话超时或没有启用 cookies 。"
+
+msgid "No token could be found."
+msgstr "找不到 token 。"
+
+msgid "Username could not be found."
+msgstr "找不到用户名。"
+
+msgid "Account has expired."
+msgstr "帐号已过期。"
+
+msgid "Credentials have expired."
+msgstr "凭证已过期。"
+
+msgid "Account is disabled."
+msgstr "帐号已被禁用。"
+
+msgid "Account is locked."
+msgstr "帐号已被锁定。"
+
+msgid "Too many failed login attempts, please try again later."
+msgstr "登入失败的次数过多，请稍后再试。"
+
+msgid "Invalid or expired login link."
+msgstr "失效或过期的登入链接。"
+
+msgid "Too many failed login attempts, please try again in %minutes% minute."
+msgstr "登入失败的次数过多，请在%minutes%分钟后再试。"
+
+msgid "Too many failed login attempts, please try again in %minutes% minutes."
+msgstr "登录尝试失败次数过多，请在 %minutes% 分钟后再试。|登录尝试失败次数过多，请在 %minutes% 分钟后再试。"

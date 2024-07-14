@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: no_NO\n"
+
+msgid "Apply"
+msgstr "Legg til"
+
+msgid "Apply filter and options"
+msgstr "Legg til filter alternativer"
+
+msgid "Back"
+msgstr "Tilbake"
+
+msgid "Back to Dashboard"
+msgstr "TIlbake til dashboard"
+
+msgid "Backup job name"
+msgstr "Backup Jobbnavn"
+
+msgid "Bug tracker"
+msgstr "Bug tracker"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Canceled job(s)"
+msgstr "Avbrutt(e) jobb(er)"
+
+msgid "Client"
+msgstr "Klient"
+
+msgid "Client arch"
+msgstr "Klient ark"
+
+msgid "Client informations"
+msgstr "Klientinformasjon"
+
+msgid "Client name"
+msgstr "Klientnavn"
+
+msgid "Client os"
+msgstr "Klient operativsystem"
+
+msgid "Client report"
+msgstr "Klientrapport"
+
+msgid "Client version"
+msgstr "Klientversjon"
+
+msgid "Completed job(s)"
+msgstr "Fullført jobb"
+
+msgid "Compression"
+msgstr "Komprimering"
+
+msgid "Dashboard"
+msgstr "Kontrollpanel"
+
+msgid "Database size"
+msgstr "Databasestørrelse"
+
+msgid "Elapsed time"
+msgstr "Medgått tid"
+
+msgid "End time"
+msgstr "Slutt tid"
+
+msgid "Event"
+msgstr "Hendelse"
+
+msgid "Expire"
+msgstr "Utgår"
+
+msgid "Failed job(s)"
+msgstr "Avbrutt(e) jobb(er)"
+
+msgid "Files"
+msgstr "Filer"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Job ID"
+msgstr "Jobb ID"
+
+msgid "Job Id"
+msgstr "Jobb id"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Jobb nivå (Inkr / Diff / Full)"
+
+msgid "Job details"
+msgstr "Jobbdetaljer"
+
+msgid "Job id"
+msgstr "Jobb id"
+
+msgid "Job status"
+msgstr "Jobb status"
+
+msgid "Jobs"
+msgstr "Jobber"
+
+msgid "Jobs report"
+msgstr "Jobbrapport"
+
+msgid "Last period job status"
+msgstr "Siste jobbperiode status"
+
+msgid "Last used volumes"
+msgstr "Sist brukte volumer"
+
+msgid "Last written"
+msgstr "Sist skrevet"
+
+msgid "Last written date for this volume"
+msgstr "Sist skrevet dato for dette volumet"
+
+msgid "Level"
+msgstr "Nivå"
+
+msgid "Log"
+msgstr "Logg"
+
+msgid "Media Type"
+msgstr "Mediatype"
+
+msgid "Name"
+msgstr "Navn"
+
+msgid "No job(s) to display"
+msgstr "Ingen jobber å vise"
+
+msgid "No log(s) for this job"
+msgstr "Ingen logg for denne jobben"
+
+msgid "Number of jobs"
+msgstr "Antall jobber"
+
+msgid "Official web site"
+msgstr "Offisiell webside"
+
+msgid "Options"
+msgstr "Alternativer"
+
+msgid "Order by"
+msgstr "Sorter etter"
+
+msgid "Period"
+msgstr "Periode"
+
+msgid "Pool"
+msgstr "Volumsamling"
+
+msgid "Pool(s)"
+msgstr "Volumsamling(er)"
+
+msgid "Pools and volumes status"
+msgstr "Status volumsamlinger og volum"
+
+msgid "Reports"
+msgstr "Rapporter"
+
+msgid "Reset"
+msgstr "Tilbakestill"
+
+msgid "Running jobs"
+msgstr "Kjørende jobber"
+
+msgid "Show job logs"
+msgstr "Vis jobblogg"
+
+msgid "Slot"
+msgstr "luke"
+
+msgid "Speed"
+msgstr "Hastighet"
+
+msgid "Start time"
+msgstr "Sluttid"
+
+msgid "Statistics"
+msgstr "Statistikker"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "Lagrede Bytes (siste 7 dager)"
+
+msgid "Stored Files (last 7 days)"
+msgstr "Lagrede Filer (siste 7 dager)"
+
+msgid "Stored files over the last 7 days"
+msgstr "Lagrede filer i løpet av de siste 7 dager"
+
+msgid "Submit"
+msgstr "Legg til"
+
+msgid "Test page"
+msgstr "Testside"
+
+msgid "Time"
+msgstr "Tid"
+
+msgid "Total bytes"
+msgstr "Tatalt antall bytes"
+
+msgid "Total files"
+msgstr "Totalt antall filer"
+
+msgid "Transfered Bytes"
+msgstr "Overførte Bytes"
+
+msgid "Transfered Files"
+msgstr "Overførte Filer"
+
+msgid "Transferred Bytes / Files"
+msgstr "Overførte Bytes / Filer"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Update with selected period"
+msgstr "Oppdater med valgte periode"
+
+msgid "Version"
+msgstr "Versjon"
+
+msgid "View report"
+msgstr "Vis rapport"
+
+msgid "Volume name"
+msgstr "Volumnavn"
+
+msgid "Volume pool"
+msgstr "Volumsamling"
+
+msgid "Volume status"
+msgstr "Volum status"
+
+msgid "Volume(s)"
+msgstr "Volum(er)"
+
+msgid "Volume(s) size"
+msgstr "Volum(ers) størrelse"
+
+msgid "Waiting jobs(s)"
+msgstr "Ventende job(er)"

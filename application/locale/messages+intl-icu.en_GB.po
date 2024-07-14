@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+
+msgid "Apply"
+msgstr "Apply"
+
+msgid "Apply filter and options"
+msgstr "Apply filter and options"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Back to Dashboard"
+msgstr "Back to Dashboard"
+
+msgid "Backup job name"
+msgstr "Backup job name"
+
+msgid "Bug tracker"
+msgstr "Bug tracker"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Canceled job(s)"
+msgstr "Cancelled job(s)"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Client arch"
+msgstr "Client arch"
+
+msgid "Client informations"
+msgstr "Client informations"
+
+msgid "Client name"
+msgstr "Client name"
+
+msgid "Client os"
+msgstr "Client OS"
+
+msgid "Client report"
+msgstr "Client report"
+
+msgid "Client version"
+msgstr "Client version"
+
+msgid "Completed job(s)"
+msgstr "Completed job(s)"
+
+msgid "Compression"
+msgstr "Compression"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Database size"
+msgstr "Database size"
+
+msgid "Elapsed time"
+msgstr "Elapsed time"
+
+msgid "End time"
+msgstr "End time"
+
+msgid "Event"
+msgstr "Event"
+
+msgid "Expire"
+msgstr "Expire"
+
+msgid "Failed job(s)"
+msgstr "Failed job(s)"
+
+msgid "Files"
+msgstr "Files"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Job ID"
+msgstr "Job ID"
+
+msgid "Job Id"
+msgstr "Job Id"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Job Level (Incr / Diff / Full)"
+
+msgid "Job details"
+msgstr "Job details"
+
+msgid "Job id"
+msgstr "Job id"
+
+msgid "Job status"
+msgstr "Job status"
+
+msgid "Jobs"
+msgstr "Jobs"
+
+msgid "Jobs report"
+msgstr "Jobs report"
+
+msgid "Last period job status"
+msgstr "Last period job status"
+
+msgid "Last used volumes"
+msgstr "Last used volumes"
+
+msgid "Last written"
+msgstr "Last written"
+
+msgid "Last written date for this volume"
+msgstr "Last written date for this volume"
+
+msgid "Level"
+msgstr "Level"
+
+msgid "Log"
+msgstr "Log"
+
+msgid "Media Type"
+msgstr "Media Type"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "No job(s) to display"
+msgstr "No job(s) to display"
+
+msgid "No log(s) for this job"
+msgstr "No log(s) for this job"
+
+msgid "Number of jobs"
+msgstr "Number of jobs"
+
+msgid "Official web site"
+msgstr "Official web site"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Order by"
+msgstr "Order by"
+
+msgid "Period"
+msgstr "Period"
+
+msgid "Pool"
+msgstr "Pool"
+
+msgid "Pool(s)"
+msgstr "Pool(s)"
+
+msgid "Pools and volumes status"
+msgstr "Pools and volumes status"
+
+msgid "Reports"
+msgstr "Reports"
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Running jobs"
+msgstr "Running jobs"
+
+msgid "Show job logs"
+msgstr "Show job logs"
+
+msgid "Slot"
+msgstr "Slot"
+
+msgid "Speed"
+msgstr "Speed"
+
+msgid "Start time"
+msgstr "Start time"
+
+msgid "Statistics"
+msgstr "Statistics"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "Stored Bytes (last 7 days)"
+
+msgid "Stored Files (last 7 days)"
+msgstr "Stored Files (last 7 days)"
+
+msgid "Stored files over the last 7 days"
+msgstr "Stored files over the last 7 days"
+
+msgid "Submit"
+msgstr "Submit"
+
+msgid "Test page"
+msgstr "Test page"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Total bytes"
+msgstr "Total bytes"
+
+msgid "Total files"
+msgstr "Total files"
+
+msgid "Transfered Bytes"
+msgstr "Transfered Bytes"
+
+msgid "Transfered Files"
+msgstr "Transfered Files"
+
+msgid "Transferred Bytes / Files"
+msgstr "Transferred Bytes / Files"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Update with selected period"
+msgstr "Update with selected period"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "View report"
+msgstr "View report"
+
+msgid "Volume name"
+msgstr "Volume name"
+
+msgid "Volume pool"
+msgstr "Volume pool"
+
+msgid "Volume status"
+msgstr "Volume status"
+
+msgid "Volume(s)"
+msgstr "Volume(s)"
+
+msgid "Volume(s) size"
+msgstr "Volume(s) size"
+
+msgid "Waiting jobs(s)"
+msgstr "Waiting jobs(s)"

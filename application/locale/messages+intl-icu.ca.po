@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Apply filter and options"
+msgstr "Aplicar filtre i opcions"
+
+msgid "Back"
+msgstr "Enrere"
+
+msgid "Back to Dashboard"
+msgstr "Enrere a Taulell"
+
+msgid "Backup job name"
+msgstr "Nom de tasca de còpia de seguretat"
+
+msgid "Bug tracker"
+msgstr "Seguiment de bugs"
+
+msgid "Bytes"
+msgstr "Octets"
+
+msgid "Canceled job(s)"
+msgstr "Tasca/es cancel·lada/es"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Client arch"
+msgstr "Arquitectura de Client"
+
+msgid "Client informations"
+msgstr "Informacions de Client"
+
+msgid "Client name"
+msgstr "Nom de client"
+
+msgid "Client os"
+msgstr "SO del client"
+
+msgid "Client report"
+msgstr "Informe del client"
+
+msgid "Client version"
+msgstr "Versió del client"
+
+msgid "Completed job(s)"
+msgstr "Tasca/es completada/es"
+
+msgid "Compression"
+msgstr "Compresió"
+
+msgid "Dashboard"
+msgstr "Taulell"
+
+msgid "Database size"
+msgstr "Tamany de la base de dades"
+
+msgid "Elapsed time"
+msgstr "Temps transcorregut"
+
+msgid "End time"
+msgstr "Hora de finalitzaci"
+
+msgid "Event"
+msgstr "Event"
+
+msgid "Expire"
+msgstr "Expira"
+
+msgid "Failed job(s)"
+msgstr "Tasca/es fallada/es"
+
+msgid "Files"
+msgstr "Arxius"
+
+msgid "Filter"
+msgstr "Filtre"
+
+msgid "Job ID"
+msgstr "ID de Tasca"
+
+msgid "Job Id"
+msgstr "Id de Tasca"
+
+msgid "Job Level (Incr / Diff / Full)"
+msgstr "Nivell de Tasca (Incr / Dif / Completa)"
+
+msgid "Job details"
+msgstr "Detalls de tasca"
+
+msgid "Job id"
+msgstr "Id de tasca"
+
+msgid "Job status"
+msgstr "Estat de tasca"
+
+msgid "Jobs"
+msgstr "Tasque"
+
+msgid "Jobs report"
+msgstr "Informe de Tasques"
+
+msgid "Last period job status"
+msgstr "Últim periode d'estat de tasca"
+
+msgid "Last used volumes"
+msgstr "Últims volums usats"
+
+msgid "Last written"
+msgstr "Última escriptura"
+
+msgid "Last written date for this volume"
+msgstr "Última escriptura per aquest volum"
+
+msgid "Level"
+msgstr "Nivell"
+
+msgid "Log"
+msgstr "Registre"
+
+msgid "Media Type"
+msgstr "Tipus de Mèdia"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "No job(s) to display"
+msgstr "No hi ha tasques a mostrar"
+
+msgid "No log(s) for this job"
+msgstr "No hi ha registre(s) per aquesta tasca"
+
+msgid "Number of jobs"
+msgstr "Nombre de tasque"
+
+msgid "Official web site"
+msgstr "Pàgina web oficial"
+
+msgid "Options"
+msgstr "Opcions"
+
+msgid "Order by"
+msgstr "Ordenar per"
+
+msgid "Period"
+msgstr "Període"
+
+msgid "Pool"
+msgstr "Fons"
+
+msgid "Pool(s)"
+msgstr "Fons"
+
+msgid "Pools and volumes status"
+msgstr "Fons i estat de volums"
+
+msgid "Reports"
+msgstr "Informe"
+
+msgid "Reset"
+msgstr "Reiniciar"
+
+msgid "Running jobs"
+msgstr "Tasques en curs"
+
+msgid "Show job logs"
+msgstr "Mostrar registre de tasca"
+
+msgid "Slot"
+msgstr "Ranura"
+
+msgid "Speed"
+msgstr "Velocitat"
+
+msgid "Start time"
+msgstr "Hora d'inici"
+
+msgid "Statistics"
+msgstr "Estadístique"
+
+msgid "Status"
+msgstr "Estat"
+
+msgid "Stored Bytes (last 7 days)"
+msgstr "Octets Emmagatzemats (últims 7 dies)"
+
+msgid "Stored Files (last 7 days)"
+msgstr "Arxius Emmagatzemats (últims 7 dies)"
+
+msgid "Stored files over the last 7 days"
+msgstr "Arxius emmagatzemats els últims 7 die"
+
+msgid "Submit"
+msgstr "Enviar"
+
+msgid "Test page"
+msgstr "Pàgina de prova"
+
+msgid "Time"
+msgstr "Hora"
+
+msgid "Total bytes"
+msgstr "Total d'octets"
+
+msgid "Total files"
+msgstr "Total d'arxius"
+
+msgid "Transfered Bytes"
+msgstr "Octets Transferits"
+
+msgid "Transfered Files"
+msgstr "Arxius Transferits"
+
+msgid "Transferred Bytes / Files"
+msgstr "Octets / Arxius Transferits"
+
+msgid "Type"
+msgstr "Tipus"
+
+msgid "Update with selected period"
+msgstr "Actualitzar amb el període seleccionat"
+
+msgid "Version"
+msgstr "Versió"
+
+msgid "View report"
+msgstr "Veure informe"
+
+msgid "Volume name"
+msgstr "Nom de volum"
+
+msgid "Volume pool"
+msgstr "Fons de volum"
+
+msgid "Volume status"
+msgstr "Estat de volum"
+
+msgid "Volume(s)"
+msgstr "Volum(s)"
+
+msgid "Volume(s) size"
+msgstr "Mida de volum(s)"
+
+msgid "Waiting jobs(s)"
+msgstr "Tasca/es en espera"

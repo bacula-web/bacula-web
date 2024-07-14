@@ -1,0 +1,170 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl_NL\n"
+
+msgid "Backup job name"
+msgstr "Backuptaak naam"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Canceled job(s)"
+msgstr "Geannuleerde taken"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Client arch"
+msgstr "Client architectuur"
+
+msgid "Client informations"
+msgstr "Client informatie"
+
+msgid "Client name"
+msgstr "Client naam"
+
+msgid "Client os"
+msgstr "Client besturingssyteem"
+
+msgid "Client report"
+msgstr "Client rapport"
+
+msgid "Client version"
+msgstr "Client versie"
+
+msgid "Completed job(s)"
+msgstr "Afgeronde taken"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Database size"
+msgstr "Database grootte"
+
+msgid "Elapsed time"
+msgstr "Duratie"
+
+msgid "End time"
+msgstr "Eindtijd"
+
+msgid "Event"
+msgstr "Gebeurtenis"
+
+msgid "Expire"
+msgstr "Verloopt"
+
+msgid "Failed job(s)"
+msgstr "Gefaalde taken"
+
+msgid "Files"
+msgstr "Bestanden"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Job ID"
+msgstr "Taak nr"
+
+msgid "Job Id"
+msgstr "Taak nr"
+
+msgid "Job id"
+msgstr "Taak nr"
+
+msgid "Job status"
+msgstr "Taak status"
+
+msgid "Jobs"
+msgstr "Taken"
+
+msgid "Jobs report"
+msgstr "Taak rapport"
+
+msgid "Last used volumes"
+msgstr "Laatst gebruikte volumes"
+
+msgid "Last written"
+msgstr "Laatst beschreven"
+
+msgid "Level"
+msgstr "Level"
+
+msgid "Log"
+msgstr "Logboek"
+
+msgid "Media Type"
+msgstr "Media Type"
+
+msgid "Name"
+msgstr "Naam"
+
+msgid "No job(s) to display"
+msgstr "Geen taken om weer te geven"
+
+msgid "Order by"
+msgstr "Sortering"
+
+msgid "Period"
+msgstr "Periode"
+
+msgid "Pool"
+msgstr "Poel"
+
+msgid "Pool(s)"
+msgstr "Poel(en)"
+
+msgid "Pools and volumes status"
+msgstr "Poelen en volume status"
+
+msgid "Reports"
+msgstr "Rapporten"
+
+msgid "Running jobs"
+msgstr "Lopende taken"
+
+msgid "Show job logs"
+msgstr "Taak logboek weergeven"
+
+msgid "Start time"
+msgstr "Starttijd"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Test page"
+msgstr "Test pagina"
+
+msgid "Time"
+msgstr "Tijd"
+
+msgid "Total bytes"
+msgstr "Totaal aantal Bytes"
+
+msgid "Total files"
+msgstr "Totaal aantal bestanden"
+
+msgid "Transfered Bytes"
+msgstr "Aantal verzonden Bytes"
+
+msgid "Transfered Files"
+msgstr "Aantal verzonden Bestanden"
+
+msgid "Transferred Bytes / Files"
+msgstr "Verzonden Bytes / Bestanden"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "View report"
+msgstr "Laat rapportage zien"
+
+msgid "Volume name"
+msgstr "Volume naam"
+
+msgid "Volume(s)"
+msgstr "Volume(s)"
+
+msgid "Volume(s) size"
+msgstr "Volume grootte"

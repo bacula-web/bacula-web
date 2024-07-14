@@ -6,7 +6,7 @@
 
 Bacula-Web is an open source reporting and monitoring tool for [Bacula](https://www.bacula.org).
 
-It provides a lot of reports and informations about [Bacula](https://www.bacula.org) backup infrastructure.
+It provides a lot of reports and information about [Bacula](https://www.bacula.org) backup infrastructure.
 
 All the metrics and information provided by Bacula-Web are taken from [Bacula](https://www.bacula.org) catalog database
 and only require read-only access to the Bacula director catalog database.
@@ -20,7 +20,7 @@ and only require read-only access to the Bacula director catalog database.
 - Bacula Directors report which gives you an overview of each Bacula director(s) statistics
 - Browse backup jobs files and folders
 - Users authentication
-- Translated in more than 15 languages with the help from community users :heart: [project on Transifex](https://explore.transifex.com/bacula-web/bacula-web/).
+- Translated in more than 15 languages with the help from community users :heart: [project on Lokalise](https://app.lokalise.com/public/95070757669f26e4c3f8e9.76656729/).
 
 Please see the full [features list](https://www.bacula-web.org/docs/about/features) from the documentation. 
 

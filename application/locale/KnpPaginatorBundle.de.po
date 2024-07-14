@@ -1,0 +1,14 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+
+msgid "label_previous"
+msgstr "Vorherige"
+
+msgid "label_next"
+msgstr "Nächste"
+
+msgid "filter_searchword"
+msgstr "Suchbegriff..."

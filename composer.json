@@ -78,7 +78,8 @@
     "symfony/form": "^5.4",
     "nesbot/carbon": "^2.72",
     "twig/intl-extra": "^3.9",
-    "knplabs/knp-paginator-bundle": "^5.9"
+    "knplabs/knp-paginator-bundle": "^5.9",
+    "symfony/lokalise-translation-provider": "^5.4"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",
