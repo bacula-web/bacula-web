@@ -46,3 +46,7 @@ If you have any question or feedback, feel free to contact me by using GitHub di
 Best,
 
 Davide
+
+{{% alert title="Update" color="primary" %}}
+Bacula-Web project is "almost" ready on Lokalise, so if you want to contribute to next major release translation using Bacula-Web project on Lokalise, please join [Bacula-Web project on Lokalise](https://app.lokalise.com/public/95070757669f26e4c3f8e9.76656729/)
+{{% /alert %}}
