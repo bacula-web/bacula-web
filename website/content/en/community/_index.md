@@ -41,15 +41,38 @@ Sponsors
 
 {{< blocks/section type="section" color="white">}}
 
-[![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
+## Sponsors
 
-[![Travis CI](https://www.travis-ci.com/wp-content/uploads/2022/05/TravisCI-Full-Color.png)](https://www.travis-ci.com)
+You can find below a list of companies who provide infrastructure and services for free to the open source Bacula-Web project.
 
-[![PackageCloud.io](https://assets-production.packagecloud.io/assets/packagecloud-logo-dark-236e49d2e69b2ce80860e97bc2cf28a6d36be61f496d6f1bd39ffe74b3a5d83f.png)](https://packagecloud.io)
+<div class="d-flex justify-content-center" id="sponsors">
+    <div class="align-self-center">
+        <!-- JetBrains -->
+        <a href="https://jb.gg/OpenSourceSupport" target="_blank" rel="noopener">
+            <img alt="JetBrains logo" src="/sponsors/jetbrains-logo.svg" >
+        </a>
+    </div>
+    <div class="align-self-center">
+        <!-- Travis CI -->
+        <a href="https://www.travis-ci.com" target="_blank" rel="noopener">
+            <img alt="Travis CI logo" src="/sponsors/travis-ci-logo.svg" >
+        </a>
+    </div>
+    <div class="align-self-center">
+        <!-- Package Cloud -->
+        <a href="https://packagecloud.io" target="_blank" rel="noopener">
+            <img alt="Package Cloud logo" src="/sponsors/package-cloud.png" >
+        </a>
+    </div>
+    <div class="align-self-center">
+        <!-- Lokalise -->
+        <a href="https://lokalise.com" target="_blank" rel="noopener">
+            <img alt="Lokalise logo" src="/sponsors/lokalise_logo_colour_black_text.png" >
+        </a>
+    </div>
+</div>
 
-[![Lokalise logo](/sponsors/lokalise_logo_colour_black_text.png)](https://lokalise.com/)
-
-> *A huge thanks to [JetBrains](https://www.jetbrains.com/), [Travis CI](https://www.travis-ci.com/) and [PackageCloud](https://packagecloud.io/) for their support on open source project*
+> Huge **thanks** to the sponsors listed above for their support on Open Source projects!
 
 {{< /blocks/section >}}
 
