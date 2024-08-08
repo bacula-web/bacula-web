@@ -42,8 +42,12 @@ Sponsors
 {{< blocks/section type="section" color="white">}}
 
 [![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
+
 [![Travis CI](https://www.travis-ci.com/wp-content/uploads/2022/05/TravisCI-Full-Color.png)](https://www.travis-ci.com)
+
 [![PackageCloud.io](https://assets-production.packagecloud.io/assets/packagecloud-logo-dark-236e49d2e69b2ce80860e97bc2cf28a6d36be61f496d6f1bd39ffe74b3a5d83f.png)](https://packagecloud.io)
+
+[![Lokalise logo](/sponsors/lokalise_logo_colour_black_text.png)](https://lokalise.com/)
 
 > *A huge thanks to [JetBrains](https://www.jetbrains.com/), [Travis CI](https://www.travis-ci.com/) and [PackageCloud](https://packagecloud.io/) for their support on open source project*
 
