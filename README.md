@@ -137,11 +137,12 @@ See [SECURITY.md](SECURITY.md) for further information.
 ## Sponsors
 
 <table>
-<tr>
-<td><a href="https://jb.gg/OpenSourceSupport"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo"></a></td>
-<td><a href="https://www.travis-ci.com"><img src="https://www.travis-ci.com/wp-content/uploads/2022/05/TravisCI-Full-Color.png" alt="Travis CI logo"></a></td>
-<td><a href="https://packagecloud.io/"><img alt="Private NPM repository and Maven, RPM, DEB, PyPi and RubyGems Repository · packagecloud" src="https://packagecloud.io/images/packagecloud-badge.png" /></a></td>
-</tr>
+  <tr>
+    <td><a href="https://jb.gg/OpenSourceSupport"><img width="180px" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo"></a></td>
+    <td><a href="https://www.travis-ci.com"><img width="180px" src="https://www.travis-ci.com/wp-content/uploads/2022/05/TravisCI-Full-Color.png" alt="Travis CI logo"></a></td>
+    <td><a href="https://packagecloud.io/"><img width="180px" alt="Private NPM repository and Maven, RPM, DEB, PyPi and RubyGems Repository · packagecloud" src="https://packagecloud.io/images/packagecloud-badge.png" /></a></td>
+    <td><a href="https://lokalise.com/"><img width="180px" alt="Lokalise logo" src="https://www.bacula-web.org/sponsors/lokalise_logo_colour_black_text.png" /></a></td>
+  </tr>
 </table>
 
 ## Support the project
