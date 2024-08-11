@@ -4,6 +4,10 @@
 
 ![Bacula-Web dashboard](https://www.bacula-web.org/bacula-web-dashboard.png)
 
+> [!IMPORTANT]
+> The master branch is used for development purpose only, don't use it to run Bacula-Web in a production environment.
+> You should use [latest stable release](https://github.com/bacula-web/bacula-web/releases/tag/v9.5.1) which is stable and bug free.
+
 Bacula-Web is an open source reporting and monitoring tool for [Bacula](https://www.bacula.org).
 
 It provides a lot of reports and information about [Bacula](https://www.bacula.org) backup infrastructure.
