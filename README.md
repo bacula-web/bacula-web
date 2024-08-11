@@ -1,6 +1,17 @@
 # Bacula-Web
 
+<<<<<<< HEAD
 [![Latest Stable Version](http://poser.pugx.org/bacula-web/bacula-web/v)](https://packagist.org/packages/bacula-web/bacula-web) [![Total Downloads](http://poser.pugx.org/bacula-web/bacula-web/downloads)](https://packagist.org/packages/bacula-web/bacula-web) [![Latest Unstable Version](http://poser.pugx.org/bacula-web/bacula-web/v/unstable)](https://packagist.org/packages/bacula-web/bacula-web) [![License](http://poser.pugx.org/bacula-web/bacula-web/license)](https://packagist.org/packages/bacula-web/bacula-web) [![PHP Version Require](http://poser.pugx.org/bacula-web/bacula-web/require/php)](https://packagist.org/packages/bacula-web/bacula-web) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)[![Build Status](https://app.travis-ci.com/bacula-web/bacula-web.svg?branch=master)](https://app.travis-ci.com/bacula-web/bacula-web)
+=======
+[![Packagist Version](https://img.shields.io/packagist/v/bacula-web/bacula-web)](https://packagist.org/packages/bacula-web/bacula-web)
+[!![Packagist Downloads](https://img.shields.io/packagist/dt/bacula-web/bacula-web)](https://packagist.org/packages/bacula-web/bacula-web)
+[![License](https://img.shields.io/packagist/l/bacula-web/bacula-web)](https://packagist.org/packages/bacula-web/bacula-web)
+![Required PHP version](https://img.shields.io/packagist/dependency-v/bacula-web/bacula-web/php)
+[![Documentation Status](https://readthedocs.org/projects/bacula-web/badge/?version=latest)](http://docs.bacula-web.org/en/master/?badge=latest)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
+[![Build Status](https://app.travis-ci.com/bacula-web/bacula-web.svg?branch=master)](https://app.travis-ci.com/bacula-web/bacula-web)
+>>>>>>> e71a2084 (chore(docs): fix badges)
 
 ![Bacula-Web dashboard](https://www.bacula-web.org/bacula-web-dashboard.png)
 
@@ -91,7 +102,6 @@ See [SECURITY.md](SECURITY.md) for further information.
 
 <table>
 <tr>
-    <td><a href="https://www.docker.com/"><img src="https://www.bacula-web.org/assets/images/docker-logo-0f1d943e8a1505d609e538df99c8eee0.png" alt="Docker Logo" height="48px"></a></td>
     <td><a href="https://jb.gg/OpenSourceSupport"><img width="180px" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo"></a></td>
     <td><a href="https://www.travis-ci.com"><img width="180px" src="https://www.travis-ci.com/wp-content/uploads/2022/05/TravisCI-Full-Color.png" alt="Travis CI logo"></a></td>
     <td><a href="https://packagecloud.io/"><img width="180px" alt="Private NPM repository and Maven, RPM, DEB, PyPi and RubyGems Repository · packagecloud" src="https://packagecloud.io/images/packagecloud-badge.png" /></a></td>
