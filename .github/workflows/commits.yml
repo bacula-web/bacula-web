@@ -1,6 +1,6 @@
 name: check conventional commits
 
-on: [ push ]
+on: [push, pull_request]
 
 jobs:
   cog_check_job:
