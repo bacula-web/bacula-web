@@ -10,31 +10,38 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container: shivammathur/node:latest-amd64
     strategy:
       matrix:
-        version: ["7.4", "8.0", "8.1", "8.2"]
+        version: ["7.4", "8.0", "8.1", "8.2", "8.3"]
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - uses: php-actions/composer@v6
+    - name: setup PHP
+      uses: shivammathur/setup-php@v2
       with:
-        php_version: "${{ matrix.version }}"
-        php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext openssl pdo sqlite3 posix
-        command: validate
-        #args: --strict
+        php-version: "${{ matrix.version }}"
+        tools: composer
+        extensions: pdo_mysql, pdo_sqlite, pdo_pgsql, gettext, openssl, pdo, sqlite3, posix, mbstring
+        coverage: none
 
-    - uses: php-actions/composer@v6
-      with:
-        php_version: "${{ matrix.version }}"
-        php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext
-        dev: no
-        command: install
+    - name: print PHP version
+      run: echo ${{ steps.setup-php.outputs.php-version }}
 
-    - uses: php-actions/composer@v6
-      with:
-        php_version: "${{ matrix.version }}"
-        php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext openssl pdo sqlite3 posix
-        command: check
+    - name: print PHP extensions
+      run: php -m
+
+    - name: print composer version
+      run: composer --version
+
+    - name: Composer install
+      run: composer install --no-dev
+
+    - name: Composer validate
+      run: composer validate
+
+    - name: Composer check
+      run: composer check
