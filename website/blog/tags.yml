@@ -1,0 +1,9 @@
+news:
+  label: News
+  permalink: /news
+  description: Latest project informmation
+
+release:
+  label: Release
+  permalink: /release
+  description: Releases
