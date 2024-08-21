@@ -4,9 +4,12 @@ date: 2021-10-07T05:11:21Z
 description: "Quick update for Bacula-Web website"
 slug: website-update-oct-2021
 tags: ["news"]
+authors: dfranco
 ---
 
-### Just a quick update about Bacula-Web project website
+Here is a quick update about Bacula-Web project website
+
+<!-- truncate -->
 
 Since July 2021, Bacula-Web website has been moved from [Jekyll](https://jekyll.rb) to [Hugo](https://gohugo.io/).
 

@@ -4,11 +4,14 @@ description: "Bacula-Web project translations are moving to Lokalise"
 date: 'Fri, 02 Aug 2024 08:20:49 +0200'
 slug: translations-moving-to-lokalise
 tags: ["news"]
+authors: dfranco
 ---
 
 ![Lokalise logo](Lokalise_logo_colour_black_text.png)
 
-## Translations will have a new "home" soon 
+Translations will have a new "home" soon
+
+<!-- truncate -->
 
 Dear community users, this is an **important change** in Bacula-Web project.
 
@@ -47,6 +50,6 @@ Best,
 
 Davide
 
-{{% alert title="Update" color="primary" %}}
-Bacula-Web project is "almost" ready on Lokalise, so if you want to contribute to next major release translation using Bacula-Web project on Lokalise, please join [Bacula-Web project on Lokalise](https://app.lokalise.com/public/95070757669f26e4c3f8e9.76656729/)
-{{% /alert %}}
+:::warning[Important]
+If you want to join Bacula-Web translators, please join the [Bacula-Web project on Lokalise](https://app.lokalise.com/public/95070757669f26e4c3f8e9.76656729/) to contribute.
+:::
