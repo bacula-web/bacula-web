@@ -75,6 +75,12 @@ const config = {
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
+            matomo: {
+                matomoUrl: 'https://baculaweb.matomo.cloud/',
+                siteId: '1',
+                phpLoader: 'matomo.php',
+                jsLoader: 'matomo.js',
+            },
             // Replace with your project's social card
             image: 'img/bacula-web-social-card.jpg',
             metadata: [
@@ -160,6 +166,7 @@ const config = {
         }),
     plugins: [
         require.resolve('docusaurus-lunr-search'),
+        'docusaurus-plugin-matomo'
     ],
 };
 
