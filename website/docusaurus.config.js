@@ -94,12 +94,14 @@ const config = {
                     src: 'img/bacula-web-logo.png',
                 },
                 items: [
+                    /*
                     {
                         type: 'docSidebar',
                         sidebarId: 'tutorialSidebar',
                         position: 'left',
                         label: 'Tutorial',
                     },
+                    */
                     {
                         to: '/blog',
                         label: 'Blog',
