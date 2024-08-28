@@ -19,8 +19,7 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
-            <img src={BaculaWebImageUrl}/>;
-
+            <img id="hero-img" src={BaculaWebImageUrl}/>
             <Heading as="h1" className="hero__title">
                 {siteConfig.title}
             </Heading>
