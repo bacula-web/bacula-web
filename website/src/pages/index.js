@@ -70,7 +70,7 @@ export default function Home() {
   return (
     <Layout
       title={`${siteConfig.title} | ${siteConfig.tagline} `}
-      description="Description will go into a meta tag in <head />">
+      description="Open Source monitoring and reporting tool for Bacula">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

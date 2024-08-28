@@ -9,7 +9,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: 'Bacula-Web',
-    tagline: 'Open Source monitoring and reporting tool for Bacula',
+    tagline: 'Bacula monitoring and reporting made easy',
     favicon: 'favicons/favicon.ico',
 
     // Set the production url of your site here
