@@ -64,6 +64,10 @@ const config = {
                     onInlineTags: 'warn',
                     onInlineAuthors: 'warn',
                     onUntruncatedBlogPosts: 'warn',
+                    blogTitle: 'Bacula-Web blog',
+                    blogDescription: 'Bacula-Web latest news, announcements and releases',
+                    postsPerPage: 'ALL',
+                    blogSidebarCount: 15
                 },
                 theme: {
                     customCss: './src/css/custom.css',
