@@ -7,7 +7,7 @@ tags: ["news"]
 authors: dfranco
 ---
 
-![Lokalise logo](Lokalise_logo_colour_black_text.png)
+![Lokalise logo](./Lokalise_logo_colour_black_text.png)
 
 Translations will have a new "home" soon
 
