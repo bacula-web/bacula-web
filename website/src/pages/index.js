@@ -49,10 +49,10 @@ function HomepageSponsors() {
 
                 <div className={'container'}>
                     <div className="row sponsors">
-                        <img className={'sponsorPng'} alt={'JetBrains logo'} src={JetBrainsImageUrl} />
-                        <img className={'sponsorPng'} alt={'PacageCloud logo'} src={PackageCloudImageUrl} />
-                        <img className={'sponsorPng'} alt={'Travis CI logo'} src={TravisImageUrl} />
-                        <img className={'sponsorPng'} alt={'Lokalise logo'} src={LokaliseImageUrl} />
+                        <img style={{ width: '280px'}} alt={'JetBrains logo'} src={JetBrainsImageUrl} />
+                        <img style={{ width: '480px'}} alt={'PacageCloud logo'} src={PackageCloudImageUrl} />
+                        <img style={{ width: '280px'}} alt={'Travis CI logo'} src={TravisImageUrl} />
+                        <img style={{ width: '280px'}} alt={'Lokalise logo'} src={LokaliseImageUrl} />
                     </div>
                 </div>
 

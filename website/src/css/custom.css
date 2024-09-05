@@ -29,11 +29,20 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-div.sponsors > img {
-  height: 120px;
-  width: auto;
-  padding: 20px;
+div.sponsors {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  align-self: flex-start;
+  justify-content: space-around;
 }
+
+div.sponsors > img {
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 
 img#hero-img {
   margin-top: 0;
