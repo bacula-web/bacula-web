@@ -37,64 +37,61 @@
             <tr>
                 <td><h5>{{ 'Running jobs'|trans }}</h5></td>
                 <td class="text-center">
-                    <form action="{{ path('jobs') }}" method="post">
-                        <input type="hidden" name="filter_jobstatus" value="1"/>
-                        <button class="btn btn-lg btn-link" type="submit">{{ running_jobs }}</button>
-                        <input type="hidden" name="csrf" value="{{ csrf_token('dashboard') }}">
-                    </form>
+                    <a class="btn btn-link btn-lg"
+                       href="{{ path('jobs', {filter_jobstatus: '1'}) }}"
+                       role="button">
+                        {{ running_jobs }}
+                    </a>
                 </td>
             </tr>
             <tr>
                 <td><h5>{{ 'Completed job(s)'|trans }}</h5></td>
                 <td class="text-center">
-                    <form action="{{ path('jobs') }}" method="post">
-                        <input type="hidden" name="filter_jobstatus" value="3"/>
-                        <button class="btn btn-lg btn-link" type="submit">{{ completed_jobs }}</button>
-                        <input type="hidden" name="csrf" value="{{ csrf_token('dashboard') }}">
-                    </form>
+                    <a class="btn btn-link btn-lg"
+                       href="{{ path('jobs', {filter_jobstatus: '3'}) }}"
+                       role="button">
+                        {{ completed_jobs }}
+                    </a>
                 </td>
             </tr>
             <tr>
                 <td><h5>{{ 'Completed with errors job(s)'|trans }}</h5></td>
                 <td class="text-center">
-                    <form action="{{ path('jobs') }}" method="post">
-                        <input type="hidden" name="filter_jobstatus" value="4"/>
-                        <button class="btn btn-lg btn-link" type="submit">{{ completed_with_errors_jobs }}</button>
-                        <input type="hidden" name="csrf" value="{{ csrf_token('dashboard') }}">
-                    </form>
+                    <a class="btn btn-link btn-lg"
+                       href="{{ path('jobs', {filter_jobstatus: '4'}) }}"
+                       role="button">
+                        {{ completed_with_errors_jobs }}
+                    </a>
                 </td>
             </tr>
             <tr>
                 <td><h5>{{ 'Waiting jobs(s)'|trans }}</h5></td>
                 <td class="text-center">
-                    <form action="{{ path('jobs') }}" method="post">
-                        <input type="hidden" name="filter_jobstatus" value="2"/>
-                        <button class="btn btn-lg btn-link" type="submit">{{ waiting_jobs }}</button>
-                        <input type="hidden" name="csrf" value="{{ csrf_token('dashboard') }}">
-                    </form>
+                    <a class="btn btn-link btn-lg"
+                       href="{{ path('jobs', {filter_jobstatus: '2'}) }}"
+                       role="button">
+                        {{ waiting_jobs }}
+                    </a>
                 </td>
             </tr>
             <tr>
                 <td><h5>{{ 'Failed job(s)'|trans }}</h5></td>
                 <td class="text-center">
-                    <form action="{{ path('jobs') }}" method="post">
-                        <input type="hidden" name="filter_jobstatus" value="5"/>
-                        <button class="btn btn-lg btn-link" type="submit">{{ failed_jobs }}</button>
-                        <input type="hidden" name="csrf" value="{{ csrf_token('dashboard') }}">
-                    </form>
+                    <a class="btn btn-link btn-lg"
+                       href="{{ path('jobs', {filter_jobstatus: '5'}) }}"
+                       role="button">
+                        {{ failed_jobs }}
+                    </a>
                 </td>
             </tr>
             <tr>
                 <td><h5>{{ 'Canceled job(s)'|trans }}</h5></td>
                 <td class="text-center">
-
-                    <a href="{{ path('jobs', {filter_jobstatus: '6'}) }}">Canceled jobs</a>
-
-                    <form action="{{ path('jobs') }}" method="post">
-                        <input type="hidden" name="filter_jobstatus" value="6"/>
-                        <button class="btn btn-lg btn-link" type="submit">{{ canceled_jobs }}</button>
-                        <input type="hidden" name="csrf" value="{{ csrf_token('dashboard') }}">
-                    </form>
+                    <a class="btn btn-link btn-lg"
+                       href="{{ path('jobs', {filter_jobstatus: '6'}) }}"
+                       role="button">
+                        {{ canceled_jobs }}
+                    </a>
                 </td>
             </tr>
             <tr>
