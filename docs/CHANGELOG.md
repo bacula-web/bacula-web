@@ -1,5 +1,36 @@
 # Changelog
 
+## [10.0.0](https://github.com/bacula-web/bacula-web/compare/v9.5.1...v10.0.0) (2024-09-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **i18n:** update and move translations
+* new command to create user
+
+### 🐛 Bug Fixes
+
+* bytes and files widgets in dashboard ([934ceeb](https://github.com/bacula-web/bacula-web/commit/934ceeba20a0cefe1fe26230adc6b7c007d36261))
+* **docs:** missing mariadb support ([#226](https://github.com/bacula-web/bacula-web/issues/226)) ([c1e9597](https://github.com/bacula-web/bacula-web/commit/c1e9597427bdcfd1e5897270293d719306046bf8))
+* fix composer package license ([c940523](https://github.com/bacula-web/bacula-web/commit/c9405234eea45ac9b786d54f66f1f82d8ca745a1))
+* pagination in job files report ([934ceeb](https://github.com/bacula-web/bacula-web/commit/934ceeba20a0cefe1fe26230adc6b7c007d36261)), closes [#109](https://github.com/bacula-web/bacula-web/issues/109)
+* remove php posix requirement ([934ceeb](https://github.com/bacula-web/bacula-web/commit/934ceeba20a0cefe1fe26230adc6b7c007d36261))
+* weekly backup job statistics widget ([934ceeb](https://github.com/bacula-web/bacula-web/commit/934ceeba20a0cefe1fe26230adc6b7c007d36261))
+
+
+### 🚀 Features
+
+* extend support for PHP 7.4 ([6c00ddc](https://github.com/bacula-web/bacula-web/commit/6c00ddca00e996d9ef34cdb53fc1880bfd4855d9))
+* **i18n:** add romanian language ([7787d73](https://github.com/bacula-web/bacula-web/commit/7787d73cad05de828c7c5c3cec572c5b798eddf6))
+* **i18n:** update and move translations ([7787d73](https://github.com/bacula-web/bacula-web/commit/7787d73cad05de828c7c5c3cec572c5b798eddf6))
+* new command to create user ([baf8480](https://github.com/bacula-web/bacula-web/commit/baf84803fe4a25d3e11c4abb8a818bb756eae481))
+
+
+### 📘 Documentation
+
+* update and fix documentation content ([5f8c871](https://github.com/bacula-web/bacula-web/commit/5f8c8712f28ade942fbaf6fc87d0d18043235a42))
+* update third-party dependencies ([8ba594f](https://github.com/bacula-web/bacula-web/commit/8ba594f4ef99720334073c19bd3cdd2e987b1b88))
+
 ## [9.5.1](https://github.com/bacula-web/bacula-web/compare/v9.5.0...v9.5.1) (2024-04-23)
 
 
