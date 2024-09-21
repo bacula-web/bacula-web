@@ -66,8 +66,8 @@ const config = {
                     onUntruncatedBlogPosts: 'warn',
                     blogTitle: 'News and Releases',
                     blogDescription: 'Bacula-Web latest news, announcements and releases',
-                    postsPerPage: 'ALL',
-                    blogSidebarCount: 15
+                    postsPerPage: 5,
+                    blogSidebarCount: 'ALL'
                 },
                 theme: {
                     customCss: './src/css/custom.css',
