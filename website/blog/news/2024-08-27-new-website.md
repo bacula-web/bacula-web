@@ -18,3 +18,9 @@ Latest stable release documentation is still available [here](https://docs.bacul
 Question or feedback are welcome using [GitHub discussions](https://github.com/bacula-web/bacula-web/discussions)
 
 Best,
+
+## Update
+
+Blog posts from previous website have been created
+
+More work required, thanks for your patience
