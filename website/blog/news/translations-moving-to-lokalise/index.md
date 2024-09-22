@@ -3,7 +3,8 @@ title: "Translations moving to Lokalise"
 description: "Bacula-Web project translations are moving to Lokalise"
 date: 'Fri, 02 Aug 2024 08:20:49 +0200'
 slug: translations-moving-to-lokalise
-tags: ["news"]
+tags:
+  - news
 authors: dfranco
 ---
 

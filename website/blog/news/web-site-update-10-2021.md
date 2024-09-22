@@ -3,7 +3,8 @@ title: "Web Site Update"
 date: 2021-10-07T05:11:21Z
 description: "Quick update for Bacula-Web website"
 slug: website-update-oct-2021
-tags: ["news"]
+tags:
+  - news
 authors: dfranco
 ---
 
