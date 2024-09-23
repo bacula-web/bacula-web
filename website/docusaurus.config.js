@@ -170,7 +170,15 @@ const config = {
             prism: {
                 theme: prismThemes.github,
                 darkTheme: prismThemes.dracula,
-            }
+            },
+            announcementBar: {
+                id: 'website_under_construction',
+                content:
+                    '<b>Bacula-Web website and its documentation are actively being updated.</b>',
+                backgroundColor: '#000000',
+                textColor: '#cacaca',
+                isCloseable: false,
+            },
         }),
     plugins: [
         require.resolve('docusaurus-lunr-search'),
