@@ -170,6 +170,8 @@ const config = {
             prism: {
                 theme: prismThemes.github,
                 darkTheme: prismThemes.dracula,
+                additionalLanguages: ['PHP', 'Bash'],
+
             },
             announcementBar: {
                 id: 'website_under_construction',
