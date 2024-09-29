@@ -98,6 +98,13 @@ $config['rows_per_page'] = 25;
 // $config[0]['db_type'] = 'pgsql';
 // $config[0]['db_port'] = '5432'; 
 
+// SQLite bacula catalog
+// $config[0]['label'] = 'Dev backup server';
+// $config[0]['db_type'] = 'sqlite';
+// $config[0]['db_name'] = '/path/to/database/db.sdb';
+// Copy the section below only if you have at least two Bacula catalog
+// Don't forget to modify options such as label, host, login, password, etc.
+
 // 2nd bacula catalog (MySQL)
 // $config[1]['label'] = 'Dev backup server';
 // $config[1]['host'] = 'mysql-server.domain.net';

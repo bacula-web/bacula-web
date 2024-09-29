@@ -32,7 +32,7 @@ General requirements
 |                 | - Session                                  |
 |                 | - PDO                                      |
 |                 | - MySQL, postgreSQL                        |
-|                 | - SQLite (required for user authentication)|
+|                 | - SQlite (required for user authentication)|
 |                 | - CLI                                      |
 |                 | - JSON                                     |
 |                 | - Posix                                    |

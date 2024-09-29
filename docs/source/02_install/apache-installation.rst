@@ -36,6 +36,21 @@ postgreSQL Bacula catalog
 
    $ sudo yum install php php-gettext php-pgsql php-pdo
 
+SQLite database support
+
+::
+
+   $ sudo yum install php php-gettext php-pdo
+
+Change SQLite database file permissions
+
+Assuming that the bacula database file is located under /var/spool/bacula
+
+::
+
+   # chmod -v 755 /var/spool/bacula
+   # chmod -v 704 /var/spool/bacula/bacula.db
+
 .. note:: RedHat / Centos 6 users might need to install php-posix or php-process packages
 
 Install requirements on Gentoo
@@ -52,6 +67,9 @@ Modify portage configuration
  
    # postgreSQL
    dev-lang/php postgres apache2 truetype cli pcre xml zlib
+ 
+   # SQLite
+   dev-lang/php sqlite apache2 truetype cli pcre xml zlib
 
 Install Apache and PHP
 
@@ -127,6 +145,11 @@ With PostgreSQL bacula catalog
 With MySQL bacula catalog
    * databases/php5-mysql
    * databases/php5-pdo_mysql
+
+With SQLite bacula catalog
+   * databases/php5-sqlite
+   * databases/php5-pdo_sqlite
+
 
 .. note:: A big thanks to Dean E. Weimer who provided me Bacula-Web installation instructions for \*BSD setup
 

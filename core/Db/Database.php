@@ -54,7 +54,7 @@ class Database
             $this->driver = FileConfig::get_Value('db_type', $catalogId);
             $dsn = FileConfig::get_DataSourceName($catalogId);
 
-            // Bacula catalog is not using SQLite
+            // Bacula catalog is not using sqlite
             if ($this->driver != 'sqlite') {
                 $username = FileConfig::get_Value('login', $catalogId);
                 $password = FileConfig::get_Value('password', $catalogId);
@@ -118,7 +118,7 @@ class Database
      */
     public function getServerTimestamp(): int
     {
-        // TODO: remove support for SQLite
+        // Different query for SQlite
         if ($this->getDriverName() == 'sqlite') {
             $statment = "SELECT datetime('now') as currentdatetime";
         } else {

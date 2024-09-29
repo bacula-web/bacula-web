@@ -70,6 +70,7 @@ class DirectorController
         $prev_catalog_id = $this->session->get('catalog_id') ?? 0;
 
         $directors = $this->config->getArrays();
+
         $directors_count = count($directors);
 
         $tplData['directors_count'] = $directors_count;
@@ -77,8 +78,8 @@ class DirectorController
         foreach ($directors as $id => $director) {
             $this->session->set('catalog_id', $id);
 
-            $host = $director['host'];
-            $db_user = $director['login'];
+            $host = $director['host'] ?? null;
+            $db_user = $director['login'] ?? null;
             $db_name = $director['db_name'];
             $db_type = $director['db_type'];
             $description = "Bacula catalog on host $host, database: $db_name ($db_type) with user $db_user";

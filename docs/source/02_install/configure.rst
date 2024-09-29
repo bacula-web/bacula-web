@@ -252,9 +252,10 @@ host              hostname of the db server hosting Bacula catalog     localhost
 db_name           name of the catalog database name                    usually bacula, unless you changed it
 login             database user                                        bacula, admin, etc.
 password          database password                                    mK3DQLolUV
-db_type           database type                                        mysql, pgsql
+db_type           database type                                        mysql, pgsql or sqlite
 db_port           database port number                                  - mysql, use 3306
                                                                         - pgsql, use 5432
+                                                                        - sqlite, leave blank
 ================= ==================================================== ====================================
 
 **Examples**
@@ -278,7 +279,7 @@ db_port           database port number                                  - mysql,
    // Database user's password
    $config[0]['password'] = 'verystrongpassword';
                              
-   // Database type (mysql | pgsql)
+   // Database type (mysql | pgsql | sqlite)
    $config[0]['db_type'] = 'mysql';
                              
    // Database port
@@ -341,6 +342,12 @@ db_port           database port number                                  - mysql,
    $config[1]['db_name'] = 'bacula';
    $config[1]['db_type'] = 'pgsql';
    $config[1]['db_port'] = '5432';
+
+   // SQLite bacula catalog
+   $config[2]['db_type'] = 'sqlite';
+   $config[2]['label'] = 'bacula';
+   $config[2]['db_name'] = '/path/to/database';
+   ?>
 
 .. warning:: If you define several Bacula catalog, make sure each catalog connection settings have a different id 
    example: $config[0], $config[1], etc.
