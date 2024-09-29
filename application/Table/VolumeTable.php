@@ -48,7 +48,8 @@ class VolumeTable extends Table
         $result = $this->run_query(CDBQuery::get_Select($statment));
 
         $result = $result->fetch();
-        return $result['bytes_size'];
+
+        return (string) $result['bytes_size'];
     }
 
     /**
