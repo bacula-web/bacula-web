@@ -1,5 +1,23 @@
 # Changelog
 
+## [9.6.0](https://github.com/bacula-web/bacula-web/compare/v9.5.1...v9.6.0) (2024-09-29)
+
+
+### 🐛 Bug Fixes
+
+* **docs:** missing mariadb support ([#226](https://github.com/bacula-web/bacula-web/issues/226)) ([a18aac5](https://github.com/bacula-web/bacula-web/commit/a18aac5f906ca3fe8c74950c15b43e421ea407e5))
+* wrong return type with sqlite catalog ([829aa7e](https://github.com/bacula-web/bacula-web/commit/829aa7e25d2b79a96f327985fc7b351ae317f9b4)), closes [#231](https://github.com/bacula-web/bacula-web/issues/231)
+
+
+### 🚀 Features
+
+* support SQLite Bacula catalog ([3a223dd](https://github.com/bacula-web/bacula-web/commit/3a223dda3d1035ee77151bc04fcfccd7c6935524)), closes [#234](https://github.com/bacula-web/bacula-web/issues/234)
+
+
+### 📘 Documentation
+
+* support for php 8.3 ([b427158](https://github.com/bacula-web/bacula-web/commit/b427158b1959e918f975c641f55561bd39f86a45))
+
 ## [9.5.1](https://github.com/bacula-web/bacula-web/compare/v9.5.0...v9.5.1) (2024-04-23)
 
 
