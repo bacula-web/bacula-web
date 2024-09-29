@@ -5,7 +5,7 @@ ARG PHP_TZ=UTC
 
 RUN apt-get update && \
 apt-get upgrade -y && \
-apt-get install -y unzip libpq-dev libzip-dev curl sqlite3 && \
+apt-get install -y curl libpq-dev libzip-dev sqlite3 unzip && \
 docker-php-ext-install pgsql pdo_pgsql pdo_mysql gettext zip
 
 COPY ./src/ /var/www/html/
