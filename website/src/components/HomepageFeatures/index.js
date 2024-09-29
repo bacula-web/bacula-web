@@ -92,6 +92,14 @@ const FeatureList = [
     }
 ];
 
+function Line({}) {
+    return (
+        <div className={clsx('col col-xs-12')}>
+            <hr />
+        </div>
+    );
+}
+
 function Feature({
 Svg, title, description}) {
     return (
@@ -111,11 +119,13 @@ export default function HomepageFeatures() {
     return (
         <section className={styles.features}>
             <div className="container">
+                <Line></Line>
                 <div className="row">
                     {FeatureList.map((props, idx) => (
                         <Feature key={idx} {...props} />
                     ))}
                 </div>
+                <Line></Line>
             </div>
         </section>
     );
