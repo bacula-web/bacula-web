@@ -1,0 +1,39 @@
+name: Lint Twig Templates
+
+on:
+  push:
+    paths:
+      - 'application/views/templates'
+  pull_request:
+    paths:
+      - 'application/views/templates'
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint Twig Templates
+    runs-on: Ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+          extensions: pdo_mysql, pdo_sqlite, pdo_pgsql, gettext, openssl, pdo, sqlite3, posix, mbstring
+          coverage: none
+
+      - name: Composer install
+        run: composer install
+
+      - name: Setup env
+        run: composer symfony:dump-env dev
+
+      - name: Lint
+        run: php bin/console lint:twig
+        env:
+          APP_ENV: dev
