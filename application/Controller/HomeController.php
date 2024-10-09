@@ -133,7 +133,8 @@ class HomeController
         }
 
         // Set period start - end for widget header
-        $tplData['literal_period'] = strftime("%a %e %b %Y", $custom_period[0]) . ' to ' . strftime("%a %e %b %Y", $custom_period[1]);
+        $dateFormat = 'l, F j o';
+        $tplData['literal_period'] = date($dateFormat, $custom_period[0]) . ' to ' . date($dateFormat, $custom_period[1]);
 
         // Running, completed, failed, waiting and canceled jobTable status over last 24 hours
         $tplData['running_jobs'] = $this->jobTable->count_Jobs($custom_period, 'running');
