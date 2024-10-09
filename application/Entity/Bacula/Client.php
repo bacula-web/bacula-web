@@ -63,6 +63,11 @@ class Client
      */
     private string $os;
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
     /**
      * @return int|null
      */

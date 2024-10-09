@@ -22,30 +22,26 @@ declare(strict_types=1);
 namespace App\Entity\Bacula\Repository;
 
 use App\Entity\Bacula\Job;
+use App\Entity\Bacula\JobSearch;
 use Carbon\Carbon;
 use App\Service\Chart;
 use DateTime;
-use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method Job|null find($id, $lockMode = null, $lockVersion = null)
  * @method Job|null findOneBy(array $criteria, array $orderBy = null)
- * @method Job[] findAll()
- * @method Job[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Job[]    findAll()
+ * @method Job[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class JobRepository extends ServiceEntityRepository
 {
     private VersionRepository $catalog;
 
-    /**
-     * @param ManagerRegistry $registry
-     * @param VersionRepository $catalog
-     */
     public function __construct(
         ManagerRegistry $registry,
         VersionRepository $catalog
@@ -55,9 +51,7 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return used Bacula job types
-     *
-     * @return array
+     * Return used Bacula job types.
      */
     public function getUsedJobTypes(): array
     {
@@ -70,7 +64,7 @@ class JobRepository extends ServiceEntityRepository
             'D' => 'Admin',
             'A' => 'Archive',
             'C' => 'Copy',
-            'g' => 'Migration'
+            'g' => 'Migration',
         ];
 
         $types = $this
@@ -88,9 +82,7 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return a distinct list of used Bacula job levels
-     *
-     * @return array
+     * Return a distinct list of used Bacula job levels.
      */
     public function getUsedLevels(): array
     {
@@ -104,7 +96,7 @@ class JobRepository extends ServiceEntityRepository
             'C' => 'Catalog',
             'O' => 'VolumeToCatalog',
             'd' => 'DiskToCatalog',
-            'A' => 'Data'
+            'A' => 'Data',
         ];
 
         $levels = $this
@@ -117,13 +109,12 @@ class JobRepository extends ServiceEntityRepository
         foreach ($levels as $level) {
             $levelList[$level] = $jobLevels[$level];
         }
+
         return $levelList;
     }
 
     /**
-     * Return distinct backup job name list
-     *
-     * @return array
+     * Return distinct backup job name list.
      */
     public function getBackupJobsList(): array
     {
@@ -139,17 +130,12 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return sum of jobs stored bytes within a specific period of time
+     * Return sum of jobs stored bytes within a specific period of time.
      *
-     * @param DateTime $from
-     * @param DateTime $to
-     * @param string|null $jobName
-     * @param int|null $clientId
-     * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getStoredBytesSum(DateTime $from, DateTime $to, string $jobName = null, int $clientId = null): int
+    public function getStoredBytesSum(\DateTime $from, \DateTime $to, ?string $jobName = null, ?int $clientId = null): int
     {
         $queryBuilder = $this->createQueryBuilder('j');
         $query = $queryBuilder
@@ -179,17 +165,12 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return sum of files stored bytes within a specific period of time
+     * Return sum of files stored bytes within a specific period of time.
      *
-     * @param DateTime $from
-     * @param DateTime $to
-     * @param string|null $jobName
-     * @param int|null $clientId
-     * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getStoredFilesSum(DateTime $from, DateTime $to, string $jobName = null, int $clientId = null): int
+    public function getStoredFilesSum(\DateTime $from, \DateTime $to, ?string $jobName = null, ?int $clientId = null): int
     {
         $queryBuilder = $this->createQueryBuilder('j');
         $query = $queryBuilder
@@ -219,26 +200,21 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return an array with sum of stored bytes for each day
+     * Return an array with sum of stored bytes for each day.
      *
-     * @param DateTimeInterface $from
-     * @param DateTimeInterface $to
-     * @param string|null $jobName
-     * @param int|null $clientId
-     * @return array
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function getJobStoredBytes(
-        DateTimeInterface $from,
-        DateTimeInterface $to,
-        string $jobName = null,
-        int $clientId = null
+        \DateTimeInterface $from,
+        \DateTimeInterface $to,
+        ?string $jobName = null,
+        ?int $clientId = null
     ): array {
         $storedBytes = [];
         $diff = $from->diff($to);
 
-        for ($day = $diff->days; $day >= 0; $day--) {
+        for ($day = $diff->days; $day >= 0; --$day) {
             $d = new Carbon(sprintf('-%d days', $day));
             $from = Carbon::createFromTimeString(sprintf('%s-%s-%s 0:0:0', $d->year, $d->month, $d->day));
             $to = Carbon::createFromTimeString(sprintf('%s-%s-%s 23:59:59', $d->year, $d->month, $d->day));
@@ -258,26 +234,21 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return an array with sum of stored bytes for each day
+     * Return an array with sum of stored bytes for each day.
      *
-     * @param DateTimeInterface $from
-     * @param DateTimeInterface $to
-     * @param string|null $jobName
-     * @param int|null $clientId
-     * @return array
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function getJobStoredFiles(
-        DateTimeInterface $from,
-        DateTimeInterface $to,
-        string $jobName = null,
-        int $clientId = null
+        \DateTimeInterface $from,
+        \DateTimeInterface $to,
+        ?string $jobName = null,
+        ?int $clientId = null
     ): array {
         $storedFiles = [];
         $diff = $from->diff($to);
 
-        for ($day = $diff->days; $day >= 0; $day--) {
+        for ($day = $diff->days; $day >= 0; --$day) {
             $d = new Carbon(sprintf('-%d days', $day));
             $from = Carbon::createFromTimeString(sprintf('%s-%s-%s 0:0:0', $d->year, $d->month, $d->day));
             $to = Carbon::createFromTimeString(sprintf('%s-%s-%s 23:59:59', $d->year, $d->month, $d->day));
@@ -297,14 +268,9 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return list of completed backup jobs within provided datetime range
-     *
-     * @param int $clientId
-     * @param DateTimeInterface $from
-     * @param DateTimeInterface $to
-     * @return array
+     * Return list of completed backup jobs within provided datetime range.
      */
-    public function getClientJobs(int $clientId, DateTimeInterface $from, DateTimeInterface $to): array
+    public function getClientJobs(int $clientId, \DateTimeInterface $from, \DateTimeInterface $to): array
     {
         $queryBuilder = $this->createQueryBuilder('j');
 
@@ -322,7 +288,7 @@ class JobRepository extends ServiceEntityRepository
             ->setParameter('end', $to)
             ->orderBy('j.endtime', 'DESC')
             ->getQuery()
-            ;
+        ;
 
         return $query->getResult();
     }
@@ -330,10 +296,6 @@ class JobRepository extends ServiceEntityRepository
     /**
      * Return amount of jobs filtered by status.
      *
-     * @param string $status
-     * @param Carbon|null $from
-     * @param Carbon|null $to
-     * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -363,7 +325,7 @@ class JobRepository extends ServiceEntityRepository
             case 'waiting':
                 $queryBuilder
                     ->andWhere('j.status IN(:status)')
-                    ->setParameter('status', ['F','S','M','m','s','j','c','d','t','p','C']);
+                    ->setParameter('status', ['F', 'S', 'M', 'm', 's', 'j', 'c', 'd', 't', 'p', 'C']);
                 break;
             case 'failed':
                 $queryBuilder
@@ -393,10 +355,6 @@ class JobRepository extends ServiceEntityRepository
      * Return amount of jobs of specific level (incremental, differential, full, etc.) within
      * a specific period of time.
      *
-     * @param string $level
-     * @param Carbon|null $from
-     * @param Carbon|null $to
-     * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -427,16 +385,14 @@ class JobRepository extends ServiceEntityRepository
 
     /**
      * Return an array for each jobs statuses within a specific period of time
-     * This method is used to build charts
+     * This method is used to build charts.
      *
-     * @param Carbon $from
-     * @param Carbon $to
      * @param string|null $linkedPage Route name of the linked page
-     * @return Chart
+     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getJobStatusChart(Carbon $from, Carbon $to, string $linkedPage = null): Chart
+    public function getJobStatusChart(Carbon $from, Carbon $to, ?string $linkedPage = null): Chart
     {
         $jobsStatuses = [
             'Running' => 'running',
@@ -444,7 +400,7 @@ class JobRepository extends ServiceEntityRepository
             'Completed with errors' => 'completed_with_errors',
             'Waiting' => 'waiting',
             'Failed' => 'failed',
-            'Canceled' => 'canceled'
+            'Canceled' => 'canceled',
         ];
 
         $chartData = [];
@@ -454,17 +410,15 @@ class JobRepository extends ServiceEntityRepository
         }
 
         return new Chart([
-                'type' => 'pie',
-                'name' => 'chart_lastjobs',
-                'data' => $chartData,
-                'linked_report' => $linkedPage
-            ]);
+            'type' => 'pie',
+            'name' => 'chart_lastjobs',
+            'data' => $chartData,
+            'linked_report' => $linkedPage,
+        ]);
     }
 
     /**
-     * Return a list of the top 10 biggest (job bytes) backup jobs
-     *
-     * @return array
+     * Return a list of the top 10 biggest (job bytes) backup jobs.
      */
     public function getBiggestJobs(): array
     {
@@ -485,9 +439,7 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return backup and restore job statistics
-     *
-     * @return array
+     * Return backup and restore job statistics.
      */
     public function getStatisticsPerType(): array
     {
@@ -497,14 +449,14 @@ class JobRepository extends ServiceEntityRepository
             ->select('COUNT(j.id) AS jobs_count, SUM(j.jobfiles) AS jobs_files, SUM(j.jobbytes) AS jobs_bytes')
             ->where('j.type IN(:types)')
             ->setParameter('types', ['B', 'R'])
-            //->groupBy('j.name')
+            // ->groupBy('j.name')
             ->groupBy('j.type')
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * Return an array which contains stored bytes and files of completed backup jobs of each day of the week
+     * Return an array which contains stored bytes and files of completed backup jobs of each day of the week.
      *
      * @return array<int,array<string,string>>|null
      */
@@ -517,7 +469,7 @@ class JobRepository extends ServiceEntityRepository
             'Wednesday' => ['job_bytes' => 0, 'job_files' => 0],
             'Thursday' => ['job_bytes' => 0, 'job_files' => 0],
             'Friday' => ['job_bytes' => 0, 'job_files' => 0],
-            'Saturday' => ['job_bytes' => 0, 'job_files' => 0]
+            'Saturday' => ['job_bytes' => 0, 'job_files' => 0],
         ];
 
         $qb = $this->createQueryBuilder('j');
@@ -540,7 +492,6 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Chart
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -563,15 +514,14 @@ class JobRepository extends ServiceEntityRepository
         } while ($current->lte($until));
 
         return new Chart([
-                'type' => 'bar',
-                'name' => 'chart_last_week_stored_bytes',
-                'data' => $chartData,
-                'uniformize_data' => true
-            ]);
+            'type' => 'bar',
+            'name' => 'chart_last_week_stored_bytes',
+            'data' => $chartData,
+            'uniformize_data' => true,
+        ]);
     }
 
     /**
-     * @return Chart
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -594,111 +544,101 @@ class JobRepository extends ServiceEntityRepository
         } while ($current->lte($until));
 
         return new Chart([
-                'type' => 'bar',
-                'name' => 'chart_last_week_stored_files',
-                'data' => $chartData,
-                'uniformize_data' => true
-            ]);
+            'type' => 'bar',
+            'name' => 'chart_last_week_stored_files',
+            'data' => $chartData,
+            'uniformize_data' => true,
+        ]);
     }
 
     /**
-     * @param Request $request
-     * @return array
+     * @param QueryBuilder $queryBuilder
+     * @param JobSearch $jobSearch
+     * @return QueryBuilder
      */
-    public function findWithFilters(Request $request): array
+    public function findWithFilters(QueryBuilder $queryBuilder, JobSearch $jobSearch): QueryBuilder
     {
-        $qb = $this->createQueryBuilder('j');
+        $queryBuilder->orderBy($jobSearch->getOrderBy(), $jobSearch->getOrderByDirection());
 
-        // Job status filter
-        $jobStatus = [
-            [''],
-            ['R'],
-            ['F','S','M','m','s','j','c','d','t','p','C'],
-            ['T'],
-            ['E'],
-            ['f'],
-            ['A']
-        ];
-
-        $qb
-            ->select('j', 's', 'p', 'c')
-            //->from(Job::class, 'j')
-            ->leftJoin('j.pool', 'p')
-            ->leftJoin('j.status', 's')
-            ->leftJoin('j.client', 'c')
-        ;
-
-        $filterJobStatus = $request->query->get('filter_jobstatus') ?? '0';
-        $filterJobLevel = $request->query->get('filter_joblevel') ?? '0';
-        $filterJobType = $request->query->get('filter_jobtype') ?? '0';
-        $filterClient = $request->query->get('filter_clientid') ?? '0';
-        $filterPool = $request->query->get('filter_pool') ?? '0';
-        $filterStartTime = $request->query->get('filter_starttime');
-        $filterEndTime = $request->query->get('filter_endtime');
-        $filterOrderBy = $request->query->get('filter_orderby') ?? 'j.id';
-        $filterOrderDirection = $request->query->get('filter_orderby_direction') ?? 'DESC';
-
-        if ($filterJobStatus !== '0') {
-            $qb
-                ->andWhere('s.status IN(:status)')
-                ->setParameter('status', array_values($jobStatus[$filterJobStatus]));
+        if ($jobSearch->getClient()) {
+            $queryBuilder
+                ->andWhere('j.client = :client')
+                ->setParameter('client', $jobSearch->getClient());
         }
 
-        if ($filterJobLevel !== '0') {
-            $qb
+        if ($jobSearch->getLevel()) {
+            $queryBuilder
                 ->andWhere('j.level = :level')
-                ->setParameter('level', $filterJobLevel);
+                ->setParameter('level', $jobSearch->getLevel());
         }
 
-        if ($filterJobType !== '0') {
-            $qb
+        if ($jobSearch->getStatus()) {
+            switch ($jobSearch->getStatus()) {
+                case 'Running':
+                    $queryBuilder
+                        ->andWhere('j.status = :status')
+                        ->setParameter('status', 'R');
+                    break;
+                case 'Waiting':
+                    $queryBuilder
+                        ->andWhere('j.status IN(:status)')
+                        ->setParameter('status', ['F', 'S', 'M', 'm', 's', 'j', 'c', 'd', 't', 'p', 'C']);
+                    break;
+                case 'Completed':
+                    $queryBuilder
+                        ->andWhere('j.status IN(:status)')
+                        ->setParameter('status', 'T');
+                    break;
+                case 'Completed with errors':
+                    $queryBuilder
+                        ->andWhere('j.status IN(:status)')
+                        ->setParameter('status', 'E');
+                    break;
+                case 'Failed':
+                    $queryBuilder
+                        ->andWhere('j.status IN(:status)')
+                        ->setParameter('status', 'f');
+                    break;
+                case 'Cancelled':
+                    $queryBuilder
+                        ->andWhere('j.status IN(:status)')
+                        ->setParameter('status', 'A');
+                    break;
+            }
+        }
+
+        if ($jobSearch->getType()) {
+            $queryBuilder
                 ->andWhere('j.type = :type')
-                ->setParameter('type', $filterJobType);
+                ->setParameter('type', $jobSearch->getType());
         }
 
-        if ($filterClient !== '0') {
-            $qb
-                ->andWhere('j.clientid = :clientid')
-                ->setParameter('clientid', (int) $filterClient);
+        if ($jobSearch->getPool()) {
+            $queryBuilder
+                ->andWhere('j.pool = :pool')
+                ->setParameter('pool', $jobSearch->getPool());
         }
 
-        if ($filterPool !== '0') {
-            $qb
-                ->andWhere('j.poolid = :poolid')
-                ->setParameter('poolid', (int) $filterPool);
-        }
-
-        if ($filterStartTime) {
-            $qb
+        if ($jobSearch->getStarttime()) {
+            $starttime = Carbon::createFromTimeString($jobSearch->getStarttime());
+            $queryBuilder
                 ->andWhere('j.starttime >= :starttime')
-                ->setParameter('starttime', $filterStartTime);
+                ->setParameter('starttime', $starttime);
         }
 
-        if ($filterEndTime) {
-            $qb
-                ->andWhere('j.starttime <= :endtime')
-                ->setParameter('endtime', $filterEndTime);
+        if ($jobSearch->getEndtime()) {
+            $endtime = Carbon::createFromTimeString($jobSearch->getEndtime());
+            $queryBuilder
+                ->andWhere('j.endtime <= :endtime')
+                ->setParameter('endtime', $endtime);
         }
 
-        return [
-            'filter_jobstatus' => $filterJobStatus,
-            'filter_joblevel' => $filterJobLevel,
-            'filter_jobtype' => $filterJobType,
-            'filter_clientid' => $filterClient,
-            'filter_pool' => $filterPool,
-            'filter_starttime' => $filterStartTime,
-            'filter_endtime' => $filterEndTime,
-            'filter_orderby' => $filterOrderBy,
-            'filter_orderby_direction' => $filterOrderDirection,
-            'jobs' => $qb
-                ->orderBy($filterOrderBy, $filterOrderDirection)
-            ];
+        return $queryBuilder;
     }
 
     /**
-     * Return the sum of bytes  of all Bacula backup jobs
+     * Return the sum of bytes  of all Bacula backup jobs.
      *
-     * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -715,9 +655,8 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return the sum of bytes of all Bacula backup jobs
+     * Return the sum of bytes of all Bacula backup jobs.
      *
-     * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
      */

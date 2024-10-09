@@ -10,111 +10,40 @@
         <div class="row">
             <div class="col-xs-12 col-sm-3 col-sm-push-9 col-lg-2 col-lg-push-10">
 
-                <form class="form" role="form" action="{{ path('jobs') }}" method="GET">
+                {{ form_start(form) }}
+                {{ form_row(form.status) }}
+                {{ form_row(form.level) }}
+                {{ form_row(form.type) }}
+                {{ form_row(form.client) }}
+                {{ form_row(form.pool) }}
 
-                    <span class="help-block">{{ 'Filter'|trans }}</span>
+                <label for="starttime" class="form-label">{{ form_label(form.starttime) }}</label>
+                <div class="input-group log-event" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                    {{ form_widget(form.starttime) }}
+                    <span class="input-group-text" data-td-target="#starttime" data-td-toggle="datetimepicker">
+                        <span class="fa-solid fa-calendar"></span>
+                    </span>
+                </div>
 
+                <label for="endtime" class="form-label">{{ form_label(form.endtime) }}</label>
+                <div class="input-group log-event" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                    {{ form_widget(form.endtime) }}
+                    <span class="input-group-text" data-td-target="#endtime" data-td-toggle="datetimepicker">
+                        <span class="fa-solid fa-calendar"></span>
+                    </span>
+                </div>
 
-                    <div class="form-group">
-                        <label>{{ 'Job status'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_jobstatus">
-                            <option value="0" {% if filter_jobstatus == '0' %} selected {% endif %}>All</option>
-                            {% for id, status in job_status %}
-                                <option value="{{ id }}" {% if id == filter_jobstatus %} selected {% endif %}>{{ status }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                {{ form_row(form.orderby) }}
+                {{ form_row(form.orderByDirection) }}
 
-                    <div class="form-group">
-                        <label>{{ 'Level'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_joblevel">
-                            <option value="0" {% if filter_joblevel == '0' %} selected {% endif %}>Any</option>
-                            {% for id, level in levels_list %}
-                                <option value="{{ id }}" {% if id == filter_joblevel %} selected {% endif %}>{{ level }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                <div class="d-flex gap-1">
+                    <button class="btn btn-primary btn-sm" type="submit">{{'Apply'|trans}}</button>
+                    <input class="btn btn-outline-dark" type="reset" title="{{ 'Reset'|trans }}" value="{{ 'Reset'|trans }}">
+                </div>
 
-                    <div class="form-group">
-                        <label>{{ 'Type'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_jobtype">
-                            <option value='0' {% if filter_jobtype == '0' %} selected {% endif %}>Any</option>
-                            {% for id, type in job_types_list %}
-                                <option value="{{ id }}" {% if id == filter_jobtype %} selected {% endif %}>{{ type }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                <a class="btn btn-link btn-sm mt-2" title="{{ 'Reset to default'|trans }}" href="{{ path('jobs') }}" role='button'>{{ 'Reset to default'|trans }}</a>
 
-                    <div class="form-group">
-                        <label>{{ 'Client'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_clientid">
-                            <option value="0" {% if filter_clientid == 0 %} selected {% endif %}>Any</option>
-                            {% for client in clients_list %}
-                                <option value="{{ client.id }}" {% if client.id == filter_clientid %} selected {% endif %}>{{ client.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>{{ 'Pool'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_pool">
-                            <option value="0" {% if filter_pool == '0' %} selected {% endif %}>Any</option>
-                            {% for pool in pools_list %}
-                                <option value="{{ pool.id }}" {% if pool.id == filter_pool %} selected {% endif %}>{{ pool.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="datetimepicker1Input1" class="form-label">{{ 'Start time'|trans }}</label>
-                        <div class="input-group log-event" id="datetimepicker1" data-td-target-input="nearest"
-                             data-td-target-toggle="nearest">
-                            <input id="datetimepicker1Input1" name="filter_starttime" type="text"
-                                   class="form-control form-control-sm" data-td-target="#datetimepicker1"
-                                   value="{{ filter_starttime }}"/>
-                            <span class="input-group-text" data-td-target="#datetimepicker1"
-                                  data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="datetimepicker1Input2" class="form-label">{{ 'End time'|trans }}</label>
-                        <div class="input-group log-event" id="datetimepicker2" data-td-target-input="nearest"
-                             data-td-target-toggle="nearest">
-                            <input id="datetimepicker1Input2" name="filter_endtime" type="text" class="form-control form-control-sm"
-                                   data-td-target="#datetimepicker2" value="{{ filter_endtime }}"/>
-                            <span class="input-group-text" data-td-target="#datetimepicker2"
-                                  data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
-                        </div>
-                    </div>
-
-                    <span class="help-block">{{ 'Options'|trans }}</span>
-
-                    <label>{{ 'Order by'|trans }}</label>
-                    <select class="form-control input-sm" name="filter_orderby">
-                        {% for id, order in job_order %}
-                            <option value="{{ id }}" {% if id == filter_orderby %} selected {% endif %}>{{ order }}</option>
-                        {% endfor %}
-                    </select>
-
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="filter_orderby_direction"
-                                   value="ASC" {% if filter_orderby_direction == 'ASC' %} checked {% endif %}> Asc
-                        </label>
-                    </div>
-
-                    <button type="reset" class="btn btn-default btn-sm" title="{{ 'Reset'|trans }}"></button>
-                    <button type="submit" class="btn btn-primary btn-sm pull-right"
-                            title="{{ 'Apply filter and options'|trans }}">{{ 'Apply'|trans }}</button>
-
-
-                    <a class="btn btn-link btn-sm" title="{{ 'Reset to default'|trans }}" href="{{ path('jobs') }}"
-                       role="button">{{ 'Reset to default'|trans }}</a>
-                    <input type="hidden" name="token" value="{{ csrf_token('jobs') }}">
-
-                </form>
-
+                {{ form_end(form) }}
             </div>
 
             <div class="col-xs-12 col-sm-9 col-sm-pull-3 col-lg-10 col-lg-pull-2">
@@ -198,24 +127,22 @@
                     </table>
                 </div>
             </div>
+            {{ include("partials/pagination.html.twig", {route: 'volumes' }) }}
         </div>
-
-        {{ include('partials/pagination.html.twig', {route: 'jobs' }) }}
-
     </div>
 
     {% block javascripts %}
         <script type="text/javascript">
-            const datetimepicker1 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+            const starttime = new tempusDominus.TempusDominus(document.getElementById('starttime'), {
                 localization: {
-                    locale: '{{ app_language }}',
+                    locale: '{{ app_language|replace({'_': '-'}) }}',
                     format: 'yyyy-MM-dd HH:mm:ss',
                 }
             })
 
-            const datetimepicker2 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'), {
+            const endtime = new tempusDominus.TempusDominus(document.getElementById('endtime'), {
                 localization: {
-                    locale: '{{ app_language }}',
+                    locale: '{{ app_language|replace({'_': '-'}) }}',
                     format: 'yyyy-MM-dd HH:mm:ss',
                 }
             })

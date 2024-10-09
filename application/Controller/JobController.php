@@ -22,12 +22,14 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Bacula\Job;
+use App\Entity\Bacula\JobSearch;
 use App\Entity\Bacula\Repository\ClientRepository;
 use App\Entity\Bacula\Repository\FilePriorV11Repository;
 use App\Entity\Bacula\Repository\FileRepository;
 use App\Entity\Bacula\Repository\JobRepository;
 use App\Entity\Bacula\Repository\PoolRepository;
 use App\Entity\Bacula\Repository\VersionRepository;
+use App\Form\JobSearchType;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Knp\Component\Pager\PaginatorInterface;
@@ -115,79 +117,42 @@ class JobController extends AbstractController
      * @param Request $request
      * @param PaginatorInterface $paginator
      * @param ParameterBagInterface $parameters
+     * @param JobRepository $jobRepository
      * @return Response
      */
     public function index(
         Request $request,
         PaginatorInterface $paginator,
-        ParameterBagInterface $parameters
+        ParameterBagInterface $parameters,
+        JobRepository $jobRepository
     ): Response {
-        // Order result by
-        $job_order = [
-            'j.scheduledTime' => 'Job Scheduled Time',
-            'j.starttime' => 'Job Start Date',
-            'j.endtime'   => 'Job End Date',
-            'j.id'     => 'Job Id',
-            'j.name'  => 'Job Name',
-            'j.jobbytes'  => 'Job Bytes',
-            'j.jobfiles'  => 'Job Files',
-            'p.name' => 'Pool Name'
-        ];
+        $jobSearch = new JobSearch($jobRepository);
+        $form = $this->createForm(JobSearchType::class, $jobSearch);
 
-        define('STATUS_ALL', 0);
-        define('STATUS_RUNNING', 1);
-        define('STATUS_WAITING', 2);
-        define('STATUS_COMPLETED', 3);
-        define('STATUS_COMPLETED_WITH_ERRORS', 4);
-        define('STATUS_FAILED', 5);
-        define('STATUS_CANCELED', 6);
+        $form->handleRequest($request);
 
-        $job_status = [
-            STATUS_RUNNING => 'Running',
-            STATUS_WAITING => 'Waiting',
-            STATUS_COMPLETED => 'Completed',
-            STATUS_COMPLETED_WITH_ERRORS => 'Completed with errors',
-            STATUS_FAILED => 'Failed',
-            STATUS_CANCELED => 'Canceled'
-        ];
+        $jobQueryBuilder = $jobRepository->createQueryBuilder('j');
+        $jobQueryBuilder
+            ->select('j', 's', 'p', 'c')
+            ->leftJoin('j.pool', 'p')
+            ->leftJoin('j.status', 's')
+            ->leftJoin('j.client', 'c')
+            ->orderBy($jobSearch->getOrderBy() ?? 'j.id', 'DESC');
 
-        $jobTypesList = $this->jobRepository->getUsedJobTypes();
-        $jobLevels = $this->jobRepository->getUsedLevels();
-
-        /**
-         * TODO: if hide_empty_pools is true, adapt code below
-         */
-        $poolsList = $this->poolRepository->findAll();
-        $clientList = $this->clientRepository->getClients();
-
-        $data = $this->jobRepository->findWithFilters($request);
-        $jobQueryBuilder = $data['jobs'];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $jobQueryBuilder = $this->jobRepository->findWithFilters($jobQueryBuilder, $jobSearch);
+        }
 
         $pagination = $paginator->paginate(
             $jobQueryBuilder,
             $request->query->getInt('page', 1)
         );
-
         $pagination->setItemNumberPerPage($parameters->get('app.rows_per_page'));
 
         return $this->render('pages/jobs.html.twig', [
-                'pagination' => $pagination,
-                'job_status' => $job_status,
-                'job_types_list' => $jobTypesList,
-                'levels_list' => $jobLevels,
-                'clients_list' => $clientList,
-                'pools_list' => $poolsList,
-                'job_order' => $job_order,
-                'filter_jobstatus' => $data['filter_jobstatus'],
-                'filter_joblevel' => $data['filter_joblevel'],
-                'filter_jobtype' => $data['filter_jobtype'],
-                'filter_clientid' => $data['filter_clientid'],
-                'filter_pool' => $data['filter_pool'],
-                'filter_starttime' => $data['filter_starttime'],
-                'filter_endtime' => $data['filter_endtime'],
-                'filter_orderby' => $data['filter_orderby'],
-                'filter_orderby_direction' => $data['filter_orderby_direction']
-            ]);
+            'form' => $form->createView(),
+            'pagination' => $pagination ]
+        );
     }
 
     /**
