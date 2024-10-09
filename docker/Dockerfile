@@ -8,21 +8,21 @@ apt-get upgrade -y && \
 apt-get install -y curl libpq-dev libzip-dev sqlite3 unzip && \
 docker-php-ext-install pgsql pdo_pgsql pdo_mysql gettext zip
 
-COPY ./src/ /var/www/html/
+COPY ../ /var/www/html/
 
 # Install Composer binary
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-RUN composer install --prefer-dist --no-dev
+RUN /usr/bin/composer install --no-dev
 
 RUN mv "$PHP_INI_DIR/php.ini-${ENV}" "$PHP_INI_DIR/php.ini"
 
 # Set PHP date.timezone to UTC
 RUN sed -ri -e "s!;date.timezone =!date.timezone = ${PHP_TZ}!g" "$PHP_INI_DIR/php.ini"
 
-COPY config/apache-vhost.config /etc/apache2/sites-enabled/000-default.conf
+COPY docker/config/apache-vhost.config /etc/apache2/sites-enabled/000-default.conf
 
 # locales
 RUN apt-get install -y gettext locales && \
