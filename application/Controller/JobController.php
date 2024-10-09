@@ -22,12 +22,14 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Bacula\Job;
+use App\Entity\Bacula\JobSearch;
 use App\Entity\Bacula\Repository\ClientRepository;
 use App\Entity\Bacula\Repository\FilePriorV11Repository;
 use App\Entity\Bacula\Repository\FileRepository;
 use App\Entity\Bacula\Repository\JobRepository;
 use App\Entity\Bacula\Repository\PoolRepository;
 use App\Entity\Bacula\Repository\VersionRepository;
+use App\Form\JobType;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Knp\Component\Pager\PaginatorInterface;
@@ -115,13 +117,32 @@ class JobController extends AbstractController
      * @param Request $request
      * @param PaginatorInterface $paginator
      * @param ParameterBagInterface $parameters
+     * @param JobRepository $jobRepository
      * @return Response
      */
     public function index(
         Request $request,
         PaginatorInterface $paginator,
-        ParameterBagInterface $parameters
+        ParameterBagInterface $parameters,
+        JobRepository $jobRepository
     ): Response {
+
+        $jobSearch = new JobSearch($jobRepository);
+        $form = $this->createForm(JobType::class, $jobSearch);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dd($form->getData());
+        }
+
+        return $this->render('pages/jobs.html.twig', [
+            'form' => $form->createView()
+            ]
+        );
+
+        //$queryBuilder = $jobRepository->createQueryBuilder('j');
+
         // Order result by
         $job_order = [
             'j.scheduledTime' => 'Job Scheduled Time',
