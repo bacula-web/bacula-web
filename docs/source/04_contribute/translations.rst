@@ -21,25 +21,34 @@ Bacula-Web web user interface is by default in english (en_US), but it is also a
 * Spanish
 * Swedish
 
-How to help translating Bacula-Web
-----------------------------------
+How to contribute to Bacula-Web translations
+--------------------------------------------
+
+.. important::
+    As of August 2024, Bacula-Web translations have been moved from `Transifex`_ to `lokalise`_, for further details see the `blog post`_
 
 To change the language of your own Bacula-Web installation, read the chapter Configuring Bacula-Web in the documentation.
 
-As of now, Bacula-Web translations are fully managed using the Transifex tool.
+Bacula-Web translations are fully managed using lokalise.
 
-Please have a look at `Bacula-Web project at Transifex`_
+If you want to start contributing to translations, please have a look at `Bacula-Web project at lokalise`_
 
 If you want to help the project by updating the translations or create new ones, here's the step you need to follow
 
-   * register or sign-in on `Transifex.com`_ website
-   * request to participate in the Bacula-Web project
-   * Once I've approved your request, you will be able to update languages translations
+   * Join the `Bacula-Web project on lokalise`_
+   * Select the language you want to contribute to
+   * Sign-in or sign-up
+   * Start contributing
 
-If you want me to create a new language for Bacula-Web, please send me message, I'll do it with pleasure.
+ Further information will be added to the documentation.
 
-Using this tool is pretty easy but if you need a bit of help, do not hesitate to get back to me using the project `GitHub issues`_.
+If you new a new language, need help or ask a question, feel free to get in touch with me on `GitHub discussions`_.
+
+Thanks for your contribution
 
 .. _Bacula-Web project at Transifex: https://www.transifex.com/bacula-web/bacula-web/
-.. _GitHub issues: https://github.com/bacula-web/bacula-web/issues
+.. _GitHub discussions: https://github.com/bacula-web/bacula-web/discussions
 .. _Transifex.com: https://www.transifex.com
+.. _Bacula-Web project on lokalise: https://app.lokalise.com/public/95070757669f26e4c3f8e9.76656729/
+.. _lokalise: https://app.lokalise.com/public/95070757669f26e4c3f8e9.76656729/
+.. _blog post: https://www.bacula-web.org/blog/translations-moving-to-lokalise
