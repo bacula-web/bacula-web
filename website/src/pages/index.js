@@ -9,7 +9,7 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import BaculaWebImageUrl from '@site/static/img/bacula-web-dashboard.png';
 import AboutImageUrl from '@site/static/img/undraw_Personal_goals_re_iow7.png';
 import TravisImageUrl from '@site/static/sponsors/travis-ci-logo.png';
-import LokaliseImageUrl from '@site/static/sponsors/lokalise_logo_colour_black_text.png';
+import LokaliseImageUrl from '@site/static/sponsors/lokalise-logo-colour-black-text.png';
 import PackageCloudImageUrl from '@site/static/sponsors/package-cloud.png';
 import JetBrainsImageUrl from '@site/static/sponsors/jetbrains-logo.png';
 
