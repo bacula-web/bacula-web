@@ -124,12 +124,16 @@ const config = {
                 style: 'dark',
                 links: [
                     {
-                        title: 'Docs',
+                        title: 'Learn',
                         items: [
                             {
                                 label: 'Documentation',
                                 to: 'https://docs.bacula-web.org',
                             },
+                            {
+                                label: 'Security',
+                                to: 'security/'
+                            }
                         ],
                     },
                     {

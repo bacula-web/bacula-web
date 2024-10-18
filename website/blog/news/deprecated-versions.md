@@ -2,7 +2,7 @@
 title: Deprecated versions
 description: "Important information about deprecated versions"
 date: '2018-06-01'
-tags: ["news"]
+tags: ["news", "security"]
 authors: dfranco
 ---
 
@@ -26,3 +26,7 @@ Bacula-Web prior version 8.0.0 suffer several SQL injection and XSS vulnerabilit
 Due to security issue mentioned above, I'd **strongly** recommend you to use at least Bacula-Web version 8.0.1.
 
 A big thanks to *Gustavo Sorondo* for his help to fix those security issues.
+
+:::tip
+You can find further information in the [Security page](/security/)
+:::
