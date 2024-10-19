@@ -3,6 +3,7 @@
 **/.git
 **/.gitignore
 **/.phpcs.xml
+**/.php-cs-fixer.*
 **/.readthedocs.yaml
 **/.travis.yml
 **/.tx
@@ -11,3 +12,5 @@
 **/.release-please-manifest.json
 **/sonar-project.properties
 **/tests
+**/docs
+**/phpstan.neon

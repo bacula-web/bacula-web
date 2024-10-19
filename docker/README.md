@@ -1,35 +1,40 @@
-® Using Docker
+# Use Bacula-Web with Docker
 
 ## Building the Docker image
 
-This section describe how to build Bacula-Web Docker image
+This section describe how to build Bacula-Web Docker image on your server or local machine
 
-Set version
-
-```shell
-# e.g: export ver=9.4.0
-export ver=x.y.z
-```
-
-Clone from git repo
-```shell
-rm -rf src
-git clone -b v$ver https://github.com/bacula-web/bacula-web.git src
-```
-
-Build using docker buildx
+Clone the [bacula-web git repository](https://github.com/bacula-web/bacula-web)
 
 ```shell
-docker buildx build --load \
---no-cache \
---platform linux/amd64 \
---tag baculaweb/bacula-web:latest \
--f Dockerfile .
+git clone https://github.com/bacula-web/bacula-web.git
 ```
+
+Checkout the latest git tag (latest tag can be found at https://github.com/bacula-web/bacula-web/tags)
+
+```shell
+export tag=X.Y-Z
+git checkout v$tag
+```
+
+Build the image
+
+```shell
+docker buildx build \
+  --load \
+  --no-cache \
+  --platform linux/amd64 \
+  --tag bacula-web \
+  -f docker/Dockerfile .
+```
+
+You can modify the platform If the target platform is different than `linux/amd64` 
+
+## Environment variable
 
 ### PHP timezone
 
-PHP timezone is set by default to UTC, to set another timezone run
+The default timezone is set by default to UTC, to set another timezone use the command below
 
 *Example with timezone America/Los_Angeles*
 
@@ -39,17 +44,12 @@ docker buildx build --load \
 --platform linux/amd64 \
 --tag baculaweb/bacula-web:latest \
 --build-arg PHP_TZ="America/Los_Angeles" \
--f Dockerfile .
+-f docker/Dockerfile .
 ```
 
-Clean-up temp source folder
-```shell
-rm -rf src
-```
+## Deployment
 
-## Using the Docker image
-
-See [Bacula-Web Docker image on DockerHub](https://hub.docker.com/r/baculaweb/bacula-web)
+Further instructions are provided on [DockerHub](https://hub.docker.com/r/baculaweb/bacula-web)
 
 ## Bug report and feature request
 
