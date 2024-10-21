@@ -23,12 +23,12 @@ namespace App\Controller;
 
 use App\Libs\Config;
 use App\Validator\VolumesRequestValidator;
+use Carbon\Carbon;
 use Core\Db\CDBQuery;
 use Core\Db\DBPagination;
 use Core\Utils\CUtils;
 use App\Table\VolumeTable;
 use App\Table\PoolTable;
-use Date_HumanDiff;
 use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
@@ -178,21 +178,25 @@ class VolumesController
             'where' => $where ]);
 
         foreach ($pagination->paginate($this->volumeTable, $sqlQuery, $countquery, $params) as $volume) {
-            // Calculate volume expiration
-            // If volume have already been used
+            /**
+             * Calculate volume expiration only if volume has already been written
+             */
             if ($volume['lastwritten'] != "0000-00-00 00:00:00" && !is_null($volume['lastwritten'])) {
-                // Calculate expiration date only if volume status is Full or Used
+                /**
+                 * Calculate expiration date only if volume status is Full or Used
+                 */
                 if ($volume['volstatus'] == 'Full' || $volume['volstatus'] == 'Used') {
-                    $dh = new Date_HumanDiff();
-                    $dateTimeFormatShort = explode(' ', $this->config->get('datetime_format', 'Y-m-d H:i:s'));
-                    $volume['expire'] = date(
-                        $dateTimeFormatShort[0],
-                        strtotime($volume['lastwritten']) + $volume['volretention']
-                    );
-                    $volume['expire'] = $dh->get(
-                        strtotime($volume['lastwritten']) + $volume['volretention'],
-                        time()
-                    ) . ' (' . $volume['expire'] . ')';
+                    if ($this->config->has('datetime_format_short')) {
+                        $dateTimeFormatShort = $this->config->get('datetime_format_short');
+                    } else {
+                        $dateTimeFormatShort = explode(' ', $this->config->get('datetime_format', 'Y-m-d H:i:s'));
+                        $dateTimeFormatShort = $dateTimeFormatShort[0];
+                    }
+
+                    $volumeExpiration = Carbon::parse($volume['lastwritten'])->addSeconds($volume['volretention']);
+                    $volume['expire'] =
+                        $volumeExpiration->format($dateTimeFormatShort) .
+                        ' (in ' . (int) Carbon::now()->diffInDays($volumeExpiration) . ' day(s) )';
                 } else {
                     $volume['expire'] = 'n/a';
                 }
