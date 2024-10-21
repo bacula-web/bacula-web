@@ -59,7 +59,7 @@
     "symfony/console": "6.0.19",
     "slim/csrf": "^1.3",
     "symfony/twig-bridge": "^5.4",
-    "nesbot/carbon": "^3.8"
+    "nesbot/carbon": "^2"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",
