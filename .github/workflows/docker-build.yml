@@ -34,4 +34,4 @@ jobs:
           no-cache: true
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: baculaweb/bacula-web:nightly-${{ github.job}}
+          tags: baculaweb/bacula-web:nightly-${{ github.ref_name }}
