@@ -69,7 +69,6 @@ Component                    License
 `jQuery`_                    MIT
 `tempus-dominus`_            MIT
 `Valitron`_                  BSD-3-Clause
-`Date_HumanDiff`_            LGPL
 `phpdotenv`_                 BSD-3-Clause
 `PHP-DI`_                    MIT
 `Slim-PHP`_                  MIT
@@ -78,6 +77,7 @@ Component                    License
 `cocur/human-date`_          MIT
 `odan/session`_              MIT
 `Symfony Console`_           MIT
+`nesbot/carbon`_             MIT
 ===========================  ================
 
 Supported browser
@@ -177,7 +177,6 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _list of GUI: https://www.bacula.org/manuals/en/console/console/GUI_Programs.html
 .. _tempus-dominus: https://github.com/Eonasdan/tempus-dominus
 .. _Valitron: https://github.com/vlucas/valitron
-.. _Date_HumanDiff: https://github.com/pear/Date_HumanDiff
 .. _phpdotenv: https://github.com/vlucas/phpdotenv
 .. _PHP-DI: https://github.com/PHP-DI/PHP-DI
 .. _Slim-PHP: https://github.com/slimphp/Slim
@@ -186,3 +185,4 @@ You can find a complete `list of GUI`_ on the Bacula's web site
 .. _odan/session: https://github.com/odan/session
 .. _Twig: https://github.com/twigphp/Twig
 .. _Symfony Console: https://github.com/symfony/console
+.. _nesbot/carbon: https://github.com/briannesbitt/Carbon
