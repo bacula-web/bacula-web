@@ -1,5 +1,20 @@
 # Changelog
 
+## [9.6.1](https://github.com/bacula-web/bacula-web/compare/v9.6.0...v9.6.1) (2024-10-22)
+
+
+### 🐛 Bug Fixes
+
+* deprecation notice in volumes report ([51f9bf9](https://github.com/bacula-web/bacula-web/commit/51f9bf92e744e50db211cc06aab801f1a55976a0)), closes [#237](https://github.com/bacula-web/bacula-web/issues/237)
+* **docker:** dockerfile and manual ([e110875](https://github.com/bacula-web/bacula-web/commit/e11087590aea161440c6bd7266b0609315906b12))
+* strftime deprecation error ([339b455](https://github.com/bacula-web/bacula-web/commit/339b455c9aa684829c24fec9245469ed6551e013)), closes [#236](https://github.com/bacula-web/bacula-web/issues/236)
+
+
+### 📘 Documentation
+
+* fix and update translations contributor page ([0a9206d](https://github.com/bacula-web/bacula-web/commit/0a9206df8f75871624ee381636a34a72712e8fcf))
+* move security page to website ([c51ef60](https://github.com/bacula-web/bacula-web/commit/c51ef60adf85ba6b02b674d539246b477020a6ec))
+
 ## [9.6.0](https://github.com/bacula-web/bacula-web/compare/v9.5.1...v9.6.0) (2024-09-29)
 
 
