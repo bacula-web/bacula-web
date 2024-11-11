@@ -19,6 +19,7 @@
     "@mdx-js/react": "^3.0.1",
     "clsx": "^2.1.1",
     "docusaurus-lunr-search": "^3.5.0",
+    "docusaurus-plugin-image-zoom": "^2.0.0",
     "docusaurus-plugin-matomo": "^0.0.8",
     "prism-react-renderer": "^2.4.0",
     "react": "^18.3.1",

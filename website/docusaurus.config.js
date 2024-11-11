@@ -40,13 +40,9 @@ const config = {
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
+                    path: 'docs',
                     sidebarPath: './sidebars.js',
-
-                    // Please change this to your repo.
-                    // Remove this to remove the "edit this page" links.
-                    // Disabled for the moment
-                    // editUrl:
-                    //  'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+                    breadcrumbs: false
                 },
                 blog: {
                     showReadingTime: true,
@@ -87,6 +83,16 @@ const config = {
                 phpLoader: 'matomo.php',
                 jsLoader: 'matomo.js',
             },
+            zoom: {
+                selector: '.markdown :not(em) > img',
+                config: {
+                    // options you can specify via https://github.com/francoischalifour/medium-zoom#usage
+                    background: {
+                        light: 'rgb(255, 255, 255)',
+                        dark: 'rgb(50, 50, 50)'
+                    }
+                }
+            },
             // Replace with your project's social card
             image: 'img/bacula-web-social-card.jpg',
             metadata: [
@@ -100,14 +106,13 @@ const config = {
                     src: 'img/bacula-web-logo.png',
                 },
                 items: [
-                    /*
+
                     {
                         type: 'docSidebar',
-                        sidebarId: 'tutorialSidebar',
+                        sidebarId: 'customSidebar',
                         position: 'left',
-                        label: 'Tutorial',
+                        label: 'Docs',
                     },
-                    */
                     {
                         to: '/blog',
                         label: 'Blog',
@@ -128,7 +133,7 @@ const config = {
                         items: [
                             {
                                 label: 'Documentation',
-                                to: 'https://docs.bacula-web.org',
+                                to: 'https://www.bacula-web.org/docs',
                             },
                             {
                                 label: 'Security',
@@ -188,6 +193,7 @@ const config = {
         }),
     plugins: [
         require.resolve('docusaurus-lunr-search'),
+        require.resolve("docusaurus-plugin-image-zoom"),
         'docusaurus-plugin-matomo'
     ],
 };

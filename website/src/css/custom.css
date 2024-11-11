@@ -43,8 +43,12 @@ div.sponsors > img {
   margin-bottom: 20px;
 }
 
-
 img#hero-img {
   margin-top: 0;
   margin-bottom: 20px;
+}
+
+img.medium-zoom-image {
+  width: 80%;
+  margin-left: 30px;
 }

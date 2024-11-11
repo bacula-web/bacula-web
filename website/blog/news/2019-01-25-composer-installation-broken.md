@@ -6,7 +6,7 @@ tags:
 authors: dfranco
 ---
 
-Please note that the installation of [Bacula-Web using Composer](http://docs.bacula-web.org/en/latest/02_install/installcomposer.html) is currently broken due to missing Composer dependency.
+Please note that the installation of [Bacula-Web using Composer](https://www.bacula-web.org/docs/install/composer-install) is currently broken due to missing Composer dependency.
 
 <!-- truncate -->
 

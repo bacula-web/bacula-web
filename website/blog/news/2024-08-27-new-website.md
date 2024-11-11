@@ -13,7 +13,7 @@ Dear community users, please note that I'm actually working on updating Bacula-W
 
 Website content, blog posts and more will come soon.
 
-Latest stable release documentation is still available [here](https://docs.bacula-web.org).
+Latest stable release documentation is still available [here](https://www.bacula-web.org/docs).
 
 Question or feedback are welcome using [GitHub discussions](https://github.com/bacula-web/bacula-web/discussions)
 

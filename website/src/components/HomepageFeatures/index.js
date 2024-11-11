@@ -60,7 +60,7 @@ const FeatureList = [
             <>
                 Bugs and feature requests can be created on the <a target={'_blank'} href={'https://github.com/bacula-web/bacula-web/issues'}>GitHub project</a>.
 
-                Please have a look at the <a target={'_blank'} href={'https://docs.bacula-web.org/en/latest/03_get-help/support.html#bug-report-guideline'}>bugs and features request guideline</a> first.
+                Please have a look at the <a target={'_blank'} href={'https://www.bacula-web.org/docs/gethelp/support'}>bugs and features request guideline</a> first.
             </>
         )
     },
@@ -84,7 +84,7 @@ const FeatureList = [
         description: (
             <>
                 <p>
-                We accept any contributions from the community, for further details, please check the <a href={'https://docs.bacula-web.org/en/latest/04_contribute/index.html'}
+                We accept any contributions from the community, for further details, please check the <a href={'https://www.bacula-web.org/docs/contribute/'}
                                                                                                          target={'_blank'}>contributor guide</a>
                 </p>
             </>

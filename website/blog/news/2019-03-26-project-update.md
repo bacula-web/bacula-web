@@ -24,7 +24,7 @@ Here's below what will happen ...
 
 * Current Mantis bug tracker will be switched to **read only** and will still be available to [https://bugs-archive.bacula-web.org](https://bugs-archive.bacula-web.org)
 * GitHub issues will be enabled on [Bacula-Web project](https://github.com/bacula-web/bacula-web) on GitHub.
-* Bacula-Web [documentation](http://docs.bacula-web.org) and website will be updated accordingly.
+* Bacula-Web [documentation](https://www.bacula-web.org/docs) and website will be updated accordingly.
 * The project roadmap which was available [here](https://bugs.bacula-web.org/roadmap_page.php) will be available at [Bacula-Web project on GitHub](https://github.com/bacula-web/bacula-web/projects)
 * Incomplete feature(s) or unfixed bugs will be recreated on [GitHub project](https://github.com/bacula-web/bacula-web/issues)
 
