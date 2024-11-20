@@ -84,8 +84,8 @@ class HomeController
 
         $routeContext = RouteContext::fromRequest($request);
         $routeParser = $routeContext->getRouteParser();
-        $jobsPageUrl = $routeParser->fullUrlFor($request->getUri(), 'jobs');
-        $poolsPageUrl = $routeParser->fullUrlFor($request->getUri(), 'pools');
+        $jobsPageUrl = '/jobs';
+        $poolsPageUrl = '/pools';
 
         $selectedPeriod = 'last_day';
         $postData = $request->getParsedBody();
