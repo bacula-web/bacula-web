@@ -53,4 +53,4 @@ Further instructions are provided on [DockerHub](https://hub.docker.com/r/bacula
 
 ## Bug report and feature request
 
-See [bug report and feature request](https://docs.bacula-web.org/en/latest/03_get-help/support.html) in documentation
+See [bug report and feature request](https://www.bacula-web.org/docs/gethelp/support) in documentation

@@ -57,7 +57,7 @@ class File
         } else {
             $message = 'Config file (<b>application/config/config.php</b>) not found or not readable. <br /> <br />
                         See how to configure Bacula-Web in 
-                        <a href="https://docs.bacula-web.org/en/latest/02_install/configure.html" 
+                        <a href="https://www.bacula-web.org/docs/install/configure" 
                         target="_blank" rel="noopener noreferrer" ">
                         documentation</a>';
 

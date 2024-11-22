@@ -1,6 +1,6 @@
 # Bacula-Web
 
-[![Latest Stable Version](http://poser.pugx.org/bacula-web/bacula-web/v)](https://packagist.org/packages/bacula-web/bacula-web) [![Total Downloads](http://poser.pugx.org/bacula-web/bacula-web/downloads)](https://packagist.org/packages/bacula-web/bacula-web) [![Latest Unstable Version](http://poser.pugx.org/bacula-web/bacula-web/v/unstable)](https://packagist.org/packages/bacula-web/bacula-web) [![License](http://poser.pugx.org/bacula-web/bacula-web/license)](https://packagist.org/packages/bacula-web/bacula-web) [![PHP Version Require](http://poser.pugx.org/bacula-web/bacula-web/require/php)](https://packagist.org/packages/bacula-web/bacula-web) [![Documentation Status](https://readthedocs.org/projects/bacula-web/badge/?version=latest)](http://docs.bacula-web.org/en/master/?badge=latest) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)[![Build Status](https://app.travis-ci.com/bacula-web/bacula-web.svg?branch=master)](https://app.travis-ci.com/bacula-web/bacula-web)
+[![Latest Stable Version](http://poser.pugx.org/bacula-web/bacula-web/v)](https://packagist.org/packages/bacula-web/bacula-web) [![Total Downloads](http://poser.pugx.org/bacula-web/bacula-web/downloads)](https://packagist.org/packages/bacula-web/bacula-web) [![Latest Unstable Version](http://poser.pugx.org/bacula-web/bacula-web/v/unstable)](https://packagist.org/packages/bacula-web/bacula-web) [![License](http://poser.pugx.org/bacula-web/bacula-web/license)](https://packagist.org/packages/bacula-web/bacula-web) [![PHP Version Require](http://poser.pugx.org/bacula-web/bacula-web/require/php)](https://packagist.org/packages/bacula-web/bacula-web) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)[![Build Status](https://app.travis-ci.com/bacula-web/bacula-web.svg?branch=master)](https://app.travis-ci.com/bacula-web/bacula-web)
 
 ![Bacula-Web dashboard](https://www.bacula-web.org/bacula-web-dashboard.png)
 
@@ -22,55 +22,35 @@ and only require read-only access to the Bacula director catalog database.
 - Users authentication
 - Translated in more than 15 languages with the help from community users :heart: [project on Transifex](https://explore.transifex.com/bacula-web/bacula-web/).
 
-Please see the full [the documentation](https://docs.bacula-web.org/en/latest/01_about/features.html) for the full list of features. 
+Please see the full [features list](https://www.bacula-web.org/docs/about/features) from the documentation. 
 
 ## Documentation
 
-You can find the complete documentation of Bacula-Web at [https://docs.bacula-web.org](https://docs.bacula-web.org)
+Please read the documentation of Bacula-Web at [https://www.bacula-web.org/docs](https://www.bacula-web.org/docs)
 
-> Huge thanks to [Read The Docs](https://readthedocs.org/) for supporting open source projects documentation :heart:
+> Previous documentation is still available at [https://docs.bacula-web.org](https://docs.bacula-web.org)
+>
+> Huge thanks to [Read The Docs](https://readthedocs.org/) for hosting open source projects documentation over the past few years :heart:
 
 ## Getting started
 
-Bacula-Web can be installed using Composer, [Docker](docker/README.md) or from source (require advanced skills)
+Bacula-Web can be installed using [Composer](https://getcomposer.org/), [Docker](https://www.docker.com/), or from source (require advanced skills)
 
-### Using Composer
+Please read the [Getting started](https://www.bacula-web.org/docs/install/getting-started) page for further installation instructions.
 
-- Required [PHP](https://www.php.net/) version is >= 8.0 
-- Make sure PHP CLI installed and extensions [SQlite3](https://www.php.net/manual/en/book.sqlite3.php), [Gettext](https://www.php.net/manual/en/book.gettext.php), [Session](https://www.php.net/manual/en/refs.basic.session.php), [PDO](https://www.php.net/manual/en/book.pdo.php), [MariaDB and MySQL](https://www.php.net/manual/en/set.mysqlinfo.php), [postgreSQL](https://www.php.net/manual/en/book.pgsql.php), [Json](https://www.php.net/manual/en/book.json.php) and [Posix](https://www.php.net/manual/en/book.posix.php) are installed and enabled.
-- Install [Composer](https://getcomposer.org/doc/00-intro.md)
-- Install Bacula-Web from [Packagist](https://packagist.org/packages/bacula-web/bacula-web)
-  ``` shell
-  composer create-project --no-dev bacula-web/bacula-web bacula-web
-  ```
-- Copy configuration file and adapt it to your setup
-  ```shell
-  cd bacula-web
-  cp -pv application/config/config.php.sample application/config/config.php 
-  ```
-- Make sure `application/views/cache` and `application/assets/protected` are writable by the web server process user (see section in [documentation](https://docs.bacula-web.org/en/latest/02_install/installcomposer.html#fix-files-folders-ownership-and-permissions))
-- Setup either Apache, Nginx or Lighttpd (see [Web server setup and configuration](https://docs.bacula-web.org/en/latest/02_install/webserver-setup.html#web-server-setup-and-configuration))
-- Create your first user
-  ```shell
-  $ sudo -u www-data php bwc setupauth
-  ``` 
-- Test your setup
-  ```shell
-  $ sudo -u www-data php bwc check
-  ```
-  or use the test page https://bacula-web-url/test
-
-> **Note related to installation using Composer archive**
+> **Note about the pre-installed archive**
 >
-> The main purpose of this pre-installed archive was to provide an easy way for users who weren't able to install
-> Composer on their servers
-> Composer archive installation option will not be supported anymore from next major version (v9.0.0)
+> The main purpose of this pre-installed archive was to provide an easy way for users who weren't able to install Composer on their servers
+> 
+> The Composer archive installation option support was stopped since version (v9.0.0)
+> 
+> Pre-installed (or pre-built) Bacula-Web package might be available again soon ...
 
 ## Getting help
 
 To report an issue or request a new feature, use [GitHub project issues](https://github.com/bacula-web/bacula-web/issues).
 
-> Please see the [bugs and feature request guide](https://docs.bacula-web.org/en/latest/03_get-help/support.html) before.
+> Please see the [bugs and feature request guide](https://www.bacula-web.org/docs/gethelp/support) before.
 
 For questions or feedbacks, please use [GitHub discussions](https://github.com/bacula-web/bacula-web/discussions) or 
 contact me at [hello@bacula-web.org](mailto:hello@bacula-web.org).
