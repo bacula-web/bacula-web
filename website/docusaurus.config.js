@@ -137,7 +137,7 @@ const config = {
                             },
                             {
                                 label: 'Security',
-                                to: 'security/'
+                                to: '/docs/about/security/'
                             }
                         ],
                     },

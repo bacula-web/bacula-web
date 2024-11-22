@@ -1,6 +1,6 @@
 ---
-title: Deprecated versions
-description: Security notices and deprecated versions
+title: Security
+description: Know vulnerabilities and deprecated versions
 keywords: ['security','cve']
 hide_table_of_contents: true
 ---

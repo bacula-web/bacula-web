@@ -78,6 +78,7 @@ export default {
                 'about/index',
                 'about/features',
                 'about/license',
+                'about/security',
                 'about/releases'
             ]
         },

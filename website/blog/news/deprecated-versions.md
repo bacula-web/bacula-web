@@ -28,5 +28,5 @@ Due to security issue mentioned above, I'd **strongly** recommend you to use at 
 A big thanks to *Gustavo Sorondo* for his help to fix those security issues.
 
 :::tip
-You can find further information in the [Security page](/security/)
+You can find further information in the [Security page](/docs/about/security#known-vulnerabilities)
 :::
