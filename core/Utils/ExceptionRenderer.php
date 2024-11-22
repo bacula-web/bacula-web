@@ -96,7 +96,7 @@ class ExceptionRenderer implements ErrorRendererInterface
                         '</li>' .
                         '<li class="list-group-item">' .
                             '<h4>Official documentation</h4>' .
-                                '<a href="https://docs.bacula-web.org" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-default btn-sm active" role="button">Bacula-Web documentation</a>' .
+                                '<a href="https://www.bacula-web.org/docs" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-default btn-sm active" role="button">Bacula-Web documentation</a>' .
 
                         '</li>' .
                         '<li class="list-group-item">' .

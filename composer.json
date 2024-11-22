@@ -95,14 +95,10 @@
   },
   "archive": {
     "exclude": [
-      "/docs/source",
-      "/docs/requirements.txt",
-      "/docs/Makefile",
       ".gitignore",
       ".phpcs.xml",
       "sonar-project.properties",
       ".github",
-      ".readthedocs.yaml",
       ".tx",
       ".travis.yml",
       "phpunit.xml",
