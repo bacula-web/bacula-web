@@ -6,7 +6,7 @@
 
 This repository contains the code of Bacula-Web website content.
 
-Bacula-web website is powered by [Hugo](https://gohugo.io/) using [Docsy theme](https://github.com/google/docsy).
+Bacula-web website is powered by [Docusaurus](https://docusaurus.io/).
 
 ---
 
