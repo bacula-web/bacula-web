@@ -52,7 +52,7 @@ You can manage users from the **Settings** menu in the dropdown menu.
 
 ![Bacula-Web - Settings Menu](../assets/bacula-web-settings-menu.jpg)
 
-To add more users, simply use the **Add user** form at the bottom of the page (password must be at least 6 characters long).
+To add more users, simply use the **Add user** form at the bottom of the page (password must be at least 8 characters long).
 
 ![Bacula-Web - Users](../assets/bacula-web-users.jpg)
 
