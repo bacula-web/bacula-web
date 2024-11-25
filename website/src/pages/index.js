@@ -12,6 +12,7 @@ import TravisImageUrl from '@site/static/sponsors/travis-ci-logo.png';
 import LokaliseImageUrl from '@site/static/sponsors/lokalise-logo-colour-black-text.png';
 import PackageCloudImageUrl from '@site/static/sponsors/package-cloud.png';
 import JetBrainsImageUrl from '@site/static/sponsors/jetbrains-logo.png';
+import DockerImageUrl from '@site/static/sponsors/docker-logo.png';
 
 function HomepageHeader() {
     const {siteConfig} = useDocusaurusContext();
@@ -142,6 +143,7 @@ function HomepageSponsors() {
 
                 <div className={'container'}>
                     <div className="row sponsors">
+                        <img style={{height: '48px'}} alt={'Docker logo'} src={DockerImageUrl}/>
                         <img style={{width: '280px'}} alt={'JetBrains logo'} src={JetBrainsImageUrl}/>
                         <img style={{width: '480px'}} alt={'PacageCloud logo'} src={PackageCloudImageUrl}/>
                         <img style={{width: '280px'}} alt={'Travis CI logo'} src={TravisImageUrl}/>
