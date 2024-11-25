@@ -1,5 +1,18 @@
 # Changelog
 
+## [9.7.0](https://github.com/bacula-web/bacula-web/compare/v9.6.1...v9.7.0) (2024-11-25)
+
+
+### 🐛 Bug Fixes
+
+* 404 using links from jobs and pools charts ([5613ee9](https://github.com/bacula-web/bacula-web/commit/5613ee91338e8202efdc0fb7810a61473e91d465)), closes [#239](https://github.com/bacula-web/bacula-web/issues/239)
+* **docs:** required password length ([3493c06](https://github.com/bacula-web/bacula-web/commit/3493c06d13e374a4551e9a030b05fad75dbecdf3))
+
+
+### 🚀 Features
+
+* **docs:** migrate documentation ([06206c1](https://github.com/bacula-web/bacula-web/commit/06206c10b9a1afbbc7cc1333e8745fd522e1c6f5))
+
 ## [9.6.1](https://github.com/bacula-web/bacula-web/compare/v9.6.0...v9.6.1) (2024-10-22)
 
 
