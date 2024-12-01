@@ -30,4 +30,3 @@ jobs:
                            ]'
           extra-files: |
             config/services.yaml
-            docs/source/conf.py
