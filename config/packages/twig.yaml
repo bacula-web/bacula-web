@@ -3,6 +3,9 @@ twig:
     globals:
         app_name: '%app.name%'
         app_version: '%app.version%'
+        app_language: '%app.language%'
+        app_datetime_format: '%app.datetime_format%'
+        app_datetime_format_short: '%app.datetime_format_short%'
     form_themes: ['bootstrap_5_layout.html.twig']
 
 when@test:
