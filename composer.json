@@ -55,7 +55,7 @@
     "novus/nvd3": "@stable",
     "pear/date_humandiff": "^0.5.0",
     "symfony/translation": "^5.4",
-    "nesbot/carbon": "^2"
+    "nesbot/carbon": "^2",
     "symfony/twig-bridge": "^5.4",
     "symfony/console": "^5.4",
     "symfony/framework-bundle": "^5.4",
@@ -76,7 +76,6 @@
     "doctrine/orm": "^2.19",
     "symfony/validator": "^5.4",
     "symfony/form": "^5.4",
-    "nesbot/carbon": "^2.72",
     "twig/intl-extra": "^3.9",
     "knplabs/knp-paginator-bundle": "^5.9",
     "symfony/lokalise-translation-provider": "^5.4"
