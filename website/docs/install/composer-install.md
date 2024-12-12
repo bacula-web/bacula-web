@@ -70,21 +70,13 @@ php           8.0.28     success
 
 ## Fix files/folders ownership and permissions
 
+Move the folder in the web server folder
+
 ```shell
 $ sudo mv -v bacula-web /var/www/
-$ sudo chown -Rv www-data: /var/www/bacula-web
-$ sudo chmod -Rv 755 /var/www/bacula-web
-$ sudo chmod -v 775 /var/www/bacula-web/application/views/cache
-$ sudo chmod -v 775 /var/www/bacula-web/application/assets/protected
 ```
 
-:::tip
-Above instructions are based on Debian/Ubuntu distro.
-
-On rpm based distro, change the user from www-data to `apache`, in case of doubts, please refer to the OS documentation.
-
-If you've installed Bacula-Web somewhere else than `/var/www/bacula-web`, then you'll need to adapt to your setup.
-:::
+Follow instructions to to [set permissions and ownership](../guides/permissions-and-ownership.mdx) in your Bacula-Web folder.
 
 Once you're done, please proceed to the [configuration](configure.md) of Bacula-Web.
  

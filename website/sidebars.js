@@ -56,6 +56,17 @@ export default {
         },
         {
             type: 'category',
+            label: 'Guides',
+            link: {
+                type: 'generated-index'
+            },
+            collapsed: true,
+            items: [
+                'guides/permissions-and-ownership'
+            ]
+        },
+        {
+            type: 'category',
             label: 'Get help',
             link: {
                 type: 'generated-index',
