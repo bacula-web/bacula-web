@@ -26,6 +26,12 @@ $ git checkout v9.7.0
 Above example use [9.7.0 release tag](https://github.com/bacula-web/bacula-web/releases/tag/v9.7.0)
 :::
 
+Install dependencies using Composer
+
+```shell
+$ composer install --no-dev
+```
+
 ## Fix files/folders ownership and permissions
 
 Move the folder in the web server folder
