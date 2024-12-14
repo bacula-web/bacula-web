@@ -167,7 +167,6 @@ class JobController extends AbstractController
         $qb = $this->jobRepository->createQueryBuilder('j');
         $qb
             ->select('j', 'l', 's', 'p')
-            ->from(Job::class, 'j')
             ->leftJoin('j.logs', 'l')
             ->leftJoin('j.status', 's')
             ->leftJoin('j.pool', 'p')
