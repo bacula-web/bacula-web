@@ -91,6 +91,14 @@ Instructions above are outdated, for more accurate instructions, please look at 
 
 ## Apache configuration
 
+Ensure that the Apache mod_rewrite module is installed and enabled. 
+
+In order to enable mod_rewrite you can type the following command
+
+```shell
+$ sudo a2enmod rewrite
+```
+
 ### Apache virtualhost
 
 In order to secure the application folder and avoid exposing sensitive information contained in Bacula-Web configuration.
@@ -144,12 +152,12 @@ Then restart Apache to apply the configuration change
 <Tabs>
   <TabItem value="rpm" label="For Red Hat / Centos / Fedora" default>
 ```shell
-$ sudo /etc/init.d/httpd restart
+$ sudo systemctl restart httpd
 ```
   </TabItem>
   <TabItem value="deb" label="For Debian / Ubuntu">
 ```shell
-$ sudo /etc/init.d/apache2 restart
+$ sudo systemctl restart apache2
 ```
   </TabItem>
 </Tabs>
