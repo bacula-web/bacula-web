@@ -262,6 +262,10 @@ Each Bacula catalog (database) needs to be defined using the settings below
 |          |                                                   | Default port for postgreSQL is 5432   |
 |          |                                                   | Leave blank for SQLite                |
 
+:::tip
+Please read the Bacula [database user/role](../guides/bacula-database-user) page for further instructions for MySQL/MariaDB and postgreSQL.
+:::
+
 **Examples**
 
 ### Single MySQL Bacula catalog

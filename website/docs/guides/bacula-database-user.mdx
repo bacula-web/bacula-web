@@ -1,0 +1,84 @@
+# Database user for Bacula catalog
+
+This page provide instructions to setup a dedicated database user to connect to [MySQL](https://www.mysql.com/)/[MariaDB](https://mariadb.org/) or [postgreSQL](https://www.postgresql.org/) Bacula database catalog.
+
+## MySQL/MariaDB
+
+### Create the user and grant privileges
+
+Create the user on MySQL/MariaDB server and grand "read-only" to all Bacula database tables
+
+```sql
+> CREATE USER 'username'@'host_or_wildcard' IDENTIFIED BY 'password';
+> GRANT SELECT ON *.* TO 'username'@'host_or_wildcard';
+```
+
+*Example*
+
+```sql
+> CREATE USER 'bacula-web'@'bacula-web-host.lan' IDENTIFIED BY 'secret';
+> GRANT SELECT ON bacula.* TO 'bacula-web'@'bacula-web-host.lan';
+> FLUSH PRIVILEGES;
+```
+
+### Test connection
+
+You can then test it from the host running Bacula-Web application
+
+```shell
+$ mysql -u bacula-web -p -h db-host-or-ip-address bacula
+```
+
+:::tip
+In above example, you can replace
+
+* `bacula-web` user by the one you want
+* `bacula-web-host.lan` is the host running Bacula-Web application
+* `db-host-or-ip-address` is the host or ip address of MySQL/MariaDB server
+:::
+
+## postgreSQL
+
+Create the role on postgreSQL server and grant privileges
+
+### Create the role and grant privileges
+
+```postgresql
+> \c bacula
+> CREATE USER bacula_web WITH PASSWORD 'secret';
+> GRANT CONNECT ON DATABASE bacula TO bacula_web;
+> GRANT USAGE ON SCHEMA public TO bacula_web;
+> GRANT SELECT ON ALL TABLES IN SCHEMA public TO bacula_web;
+```
+
+### Update pg_hba.conf
+
+Update postgreSQL client authentication as below
+
+```
+cat <<EOF > pg_hba.conf
+...
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+host	bacula		bacula_web		192.168.1.0/24		md5
+...
+EOF
+```
+
+:::tip
+Above example use `md5` auth method, for further options, see  see [postgreSQL documentation](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html)
+:::
+
+Reload postgreSQL service
+
+```shell
+$ sudo systemctl reload postgresql
+```
+
+### Test connection
+
+You can then test it from the host running Bacula-Web application
+
+```shell
+$ psql -U bacula-web -W -h db-host-or-ip-address bacula
+```

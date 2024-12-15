@@ -62,7 +62,8 @@ export default {
             },
             collapsed: true,
             items: [
-                'guides/permissions-and-ownership'
+                'guides/permissions-and-ownership',
+                'guides/bacula-database-user'
             ]
         },
         {
