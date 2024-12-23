@@ -24,21 +24,31 @@ namespace App\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class ShowVersionCommand extends Command
 {
+    private ParameterBagInterface $parameters;
+
+    public function __construct(ParameterBagInterface $parameters)
+    {
+        parent::__construct();
+
+        $this->parameters = $parameters;
+    }
+
     protected function configure(): void
     {
         $this->setDescription('Show Bacula-Web version')
             ->setHelp('This command print current Bacula-Web version')
-            ->setName('version');
+            ->setName('app:version');
 
         parent::configure();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln($_ENV['APP_NAME'] . ' version ' . $_ENV['APP_VERSION']);
+        $output->writeln($this->parameters->get('app.name') . ' version ' . $this->parameters->get('app.version'));
         return Command::SUCCESS;
     }
 }

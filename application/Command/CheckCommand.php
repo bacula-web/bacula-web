@@ -62,7 +62,7 @@ class CheckCommand extends Command
     {
         $this->setDescription('Check requirements')
             ->setHelp('Check requirements such as PHP version, installed PHP extensions, etc.')
-            ->setName('check');
+            ->setName('app:check');
 
         parent::configure();
     }
