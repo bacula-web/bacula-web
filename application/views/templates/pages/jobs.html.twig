@@ -130,23 +130,4 @@
             {{ include("partials/pagination.html.twig", {route: 'volumes' }) }}
         </div>
     </div>
-
-    {% block javascripts %}
-        <script type="text/javascript">
-            const starttime = new tempusDominus.TempusDominus(document.getElementById('starttime'), {
-                localization: {
-                    locale: '{{ app_language|replace({'_': '-'}) }}',
-                    format: 'yyyy-MM-dd HH:mm:ss',
-                }
-            })
-
-            const endtime = new tempusDominus.TempusDominus(document.getElementById('endtime'), {
-                localization: {
-                    locale: '{{ app_language|replace({'_': '-'}) }}',
-                    format: 'yyyy-MM-dd HH:mm:ss',
-                }
-            })
-        </script>
-    {% endblock %}
-
 {% endblock %}

@@ -7,3 +7,5 @@ import '@fortawesome/fontawesome-free/js/brands';
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+import './js/tempus-dominus';
