@@ -56,14 +56,16 @@ export default {
         },
         {
             type: 'category',
-            label: 'Guides',
+            label: 'Admin guides',
             link: {
-                type: 'generated-index'
+                type: 'generated-index',
+                title: 'Admin guides',
+                description: 'This section contains various administration guides',
             },
             collapsed: true,
             items: [
-                'guides/permissions-and-ownership',
-                'guides/bacula-database-user'
+                'admin-guides/permissions-and-ownership',
+                'admin-guides/bacula-database-user'
             ]
         },
         {

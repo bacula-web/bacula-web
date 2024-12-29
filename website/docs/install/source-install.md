@@ -40,7 +40,7 @@ Move the folder in the web server folder
 $ sudo mv -v bacula-web /var/www/
 ```
 
-Follow instructions to [set permissions and ownership](../guides/permissions-and-ownership.mdx) in your Bacula-Web folder.
+Follow instructions to [set permissions and ownership](../admin-guides/permissions-and-ownership.mdx) in your Bacula-Web folder.
 
 ## Next step
 

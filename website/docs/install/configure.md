@@ -263,7 +263,7 @@ Each Bacula catalog (database) needs to be defined using the settings below
 |          |                                                   | Leave blank for SQLite                |
 
 :::tip
-Please read the Bacula [database user/role](../guides/bacula-database-user) page for further instructions for MySQL/MariaDB and postgreSQL.
+Please read the Bacula [database user/role](../admin-guides/bacula-database-user) page for further instructions for MySQL/MariaDB and postgreSQL.
 :::
 
 **Examples**
