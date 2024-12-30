@@ -16,7 +16,7 @@ PHP requirements
 
 | Component | Supported version     |
 |-----------|-----------------------|
-| PHP       | >= 8.0 (up to >= 8.3) |
+| PHP       | >= 7.4 (up to >= 8.3) |
 
 | PHP extensions                            |
 |-------------------------------------------|
@@ -27,10 +27,10 @@ PHP requirements
 | SQlite (required for user authentication) |
 | CLI                                       |
 | JSON                                      |
-| Posix                                     | 
 
 ::::info
-* PHP SQLite and PHP Posix extensions are required since version [8.0.0](https://github.com/bacula-web/bacula-web/releases/tag/v8.0.0)
+* PHP SQLite is required since version [8.0.0](https://github.com/bacula-web/bacula-web/releases/tag/v8.0.0)
+* PHP Posix used to be required since version 8.0.0, but this requirements has been remove since version 10.0
 ::::
 
 ## SELinux support

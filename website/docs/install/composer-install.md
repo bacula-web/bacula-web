@@ -50,22 +50,23 @@ Once done, you can check Bacula-Web installation by running the command below
 $ cd bacula-web && composer check
 
 Checking platform requirements for packages in the vendor dir
-ext-dom       20031129   success
-ext-gettext   8.0.28     success
-ext-json      8.0.28     success
-ext-libxml    8.0.28     success
-ext-mbstring  *          success provided by symfony/polyfill-mbstring
-ext-openssl   8.0.28     success
-ext-pcre      8.0.28     success
-ext-pdo       8.0.28     success
-ext-phar      8.0.28     success
-ext-posix     8.0.28     success
-ext-simplexml 8.0.28     success
-ext-sqlite3   8.0.28     success
-ext-tokenizer 8.0.28     success
-ext-xml       8.0.28     success
-ext-xmlwriter 8.0.28     success
-php           8.0.28     success
+composer-plugin-api  2.6.0      success                                       
+composer-runtime-api 2.2.2      success                                       
+ext-ctype            *          success provided by symfony/polyfill-ctype    
+ext-dom              20031129   success                                       
+ext-gettext          7.4.33     success                                       
+ext-json             7.4.33     success                                       
+ext-libxml           7.4.33     success                                       
+ext-mbstring         *          success provided by symfony/polyfill-mbstring 
+ext-openssl          7.4.33     success                                       
+ext-pdo              7.4.33     success                                       
+ext-phar             7.4.33     success                                       
+ext-simplexml        7.4.33     success                                       
+ext-sqlite3          7.4.33     success                                       
+ext-tokenizer        7.4.33     success                                       
+ext-xml              7.4.33     success                                       
+ext-xmlwriter        7.4.33     success                                       
+php                  7.4.33     success
 ```
 
 ## Fix files/folders ownership and permissions

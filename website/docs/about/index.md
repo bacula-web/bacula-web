@@ -60,20 +60,13 @@ Bacula-Web use the following tools and libraries
 | Component                                                    | License           |
 |--------------------------------------------------------------|-------------------|
 | [PHP](http://www.php.net)                                    | PHP License v3.01 |
+| [Symfony](https://github.com/symfony)                        | MIT               |
+| [Twig](https://github.com/twigphp/Twig)                      | BSD-3-Clause      |
 | [NVD3](http://nvd3.org/)                                     | Apache v2         |
 | [Bootstrap](http://getbootstrap.com/)                        | MIT               |
 | [Font Awesome](http://fontawesome.io/)                       | CC BY 4.0         |
-| [jQuery](http://jquery.com)                                  | MIT               |
 | [tempus-dominus](https://github.com/Eonasdan/tempus-dominus) | MIT               |
-| [Valitron](https://github.com/vlucas/valitron)               | BSD-3-Clause      |
-| [phpdotenv](https://github.com/vlucas/phpdotenv)             | BSD-3-Clause      |
-| [PHP-DI](https://github.com/PHP-DI/PHP-DI)                   | MIT               |
-| [Slim-PHP](https://github.com/slimphp/Slim)                  | MIT               |
-| [GuzzleHttp/psr7](https://github.com/guzzle/psr7)            | MIT               |
-| [Twig](https://github.com/twigphp/Twig)                      | BSD-3-Clause      |
 | [cocur/human-date](https://github.com/cocur/human-date)      | MIT               |
-| [odan/session](https://github.com/odan/session)              | MIT               |
-| [Symfony Console](https://github.com/symfony/console)        | MIT               |
 | [nesbot/carbon](https://github.com/briannesbitt/Carbon)      | MIT               |
 
 ## Supported browser
@@ -86,9 +79,7 @@ Bacula-Web was successfully tested with
 * Microsoft Edge 95.0.1020.44
 
 ::::tip
-
 Bacula-Web needs Javascript and Cookies to run well in your web browser, do not disable one of those.
-
 ::::
 
 ## Translations

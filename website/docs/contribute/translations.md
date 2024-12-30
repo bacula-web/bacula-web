@@ -14,6 +14,7 @@ Bacula-Web web user interface is by default in english (en_US), but it is also a
 * Norwegian
 * Polish
 * Portuguese Brazil
+* Romanian
 * Russian
 * Spanish
 * Swedish

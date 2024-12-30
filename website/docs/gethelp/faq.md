@@ -114,7 +114,7 @@ A full [list of requirements](../install/requirements.md) is documented in the d
 
 ### Which version of PHP is supported ?
 
-As of Bacula-Web version 9.0.0, the required PHP version is 8.0 or later
+As of Bacula-Web version 9.0.0, the minimal required PHP version is 7.4 or later
 
 ::::warning
 PHP versions prior to 8.0 are EOL, theses versions no longer have security support and are exposed to non patched security vulnerabilities.

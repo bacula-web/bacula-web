@@ -30,6 +30,7 @@ Bacula-Web come by default in english but, with the help of the community, it ha
 * Norwegian
 * Polish
 * Portuguese (Brazil)
+* Romanian
 * Russian
 * Swedish
 * Chinese
@@ -313,7 +314,7 @@ The test page do the following check for you
 * Bacula catalog database connection (must be improved)
 * Twig cache folder permissions (required for page rendering purpose)
 * Protected assets folder permissions
-* PHP version (version 8.0 at least is supported)
+* PHP version (version 7.4 at least is supported)
 
 ![Bacula-Web - Test page](../assets/bacula-web-test-page.jpg)
 

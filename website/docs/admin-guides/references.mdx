@@ -5,7 +5,7 @@
 Bacula-Web console allows to perform some actions from a shell session
 
 ```shell
-Bacula-Web console 9.7.0
+Bacula-Web console 10.0.0
 
 Usage:
   command [options] [arguments]
@@ -18,13 +18,14 @@ Options:
   -n, --no-interaction  Do not ask any interactive question
   -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
+
 Available commands:
-  check       Check requirements
-  completion  Dump the shell completion script
-  help        Display help for a command
-  list        List commands
-  setupauth   Setup Bacula-Web users authentication database
-  version     Show Bacula-Web version
+...
+app
+  app:check                                  Check requirements
+  app:user-create                            Add a short description for your command
+  app:version                                Show Bacula-Web version
+...
 ```
 
 ### Display version
@@ -32,7 +33,7 @@ Available commands:
 To display Bacula-Web version, run
 
 ```shell
-$ sudo -u www-data php bwc version
+$ sudo -u www-data php bwc app:version
 ```
 
 ### Check system requirements
@@ -40,36 +41,66 @@ $ sudo -u www-data php bwc version
 To check if your server meet the requirements, run
 
 ```shell
-$ sudo -u www-data php bwc check
+$ sudo -u www-data php bwc app:check
 ```
 
 ### Setup users authentication
 
-Below command creates the SQLite database file used for users authentication `application/assets/protected/application.db`
+Below command creates the SQLite database file used for users authentication `var/application.db`
 
 ```shell
-$ sudo -u www-data php bwc setupauth
-It's now time to setup the application back-end database
-[Important!] Please note that all information stored in the user database will be destroyed
-Can we proceed ?
-  [0] yes
-  [1] no
- > 0
-You have selected: yes
-Deleting users authentication database
-Database file removed
-Creating database schema
-Database created
-User creation
-Username: admin
-Email: admin@domain.com
-Password:
-1 user created successfuly
-You can now connect to your Bacula-Web instance using provided credentials
+$ sudo -u www-data php bwc doctrine:database:create
+$ sudo -u www-data php bwc doctrine:migrations:migrate
 ```
 
 Above command should be run only once you setup Bacula-Web for the first time.
 
-:::danger
-Above command will delete all users stored in the SQLite database (used for users authentication).
+### Create a user
+
+Create an admin user
+
+```shell
+$ php bwc app:user-create --role=admin admin
+
+   Email address: admin@example.com
+   Password:
+
+   [OK] User admin successfully created
+```
+
+Create a standard user
+
+```shell
+
+   $ sudo -u www-data php bwc app:user-create johndoe
+
+   Email address: jdoe@example.com
+   Password:
+
+    [OK] User johndoe successfully created
+```
+
+:::info
+You can use ``--role`` to specify the user role (default user role is regular user)
+
+For more options, use -h
+`$ php bwc app:user-create -h`
 :::
+
+### Delete a user
+
+From a command prompt on the server running Bacula-Web, run
+
+```shell
+$ sudo -u www-data php bwc app:user-delete johndoe
+```
+
+### Change a user role
+
+From a command prompt on the server running Bacula-Web, run
+
+```shell
+$ sudo -u www-data php bwc app:user-set-role admin johndoe
+```
+
+Above command set the *johndoe* user the *admin* role

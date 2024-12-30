@@ -122,17 +122,29 @@ with the content below
 
 ```
 <VirtualHost *:80>
-DocumentRoot "/var/www/html/bacula-web/public"
-ServerName bacula-web.domain.com
+  ServerName bacula-web.domain.com
 
-     <Directory /var/www/html/bacula-web/public>
-       Options Indexes FollowSymLinks
-       AllowOverride All
+  # Uncomment the following line to force Apache to pass the Authorization
+  # header to PHP: required for "basic_auth" under PHP-FPM and FastCGI
+  #
+  # SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
+
+   DocumentRoot /var/www/bacula-web/public
+   <Directory /var/www/bacula-web/public
+       AllowOverride None
        Require all granted
-     </Directory>
+       FallbackResource /index.php
+   </Directory>
 
-     # More directives here ...
-   </VirtualHost>
+   # uncomment the following lines if you install assets as symlinks
+   # or run into problems when compiling LESS/Sass/CoffeeScript assets
+   # <Directory /var/www/bacula-web>
+   #     Options FollowSymlinks
+   # </Directory>
+
+   ErrorLog /var/log/apache2/bacula_web_error.log
+   CustomLog /var/log/apache2/bacula_web_access.log combined
+</VirtualHost>
 ```
 
 You might need to adapt Bacula-Web installation path in the above configuration according to your setup
