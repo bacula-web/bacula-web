@@ -67,6 +67,7 @@ export default {
                 'admin-guides/permissions-and-ownership',
                 'admin-guides/bacula-database-user',
                 'admin-guides/users-management',
+                'admin-guides/user-settings',
                 'admin-guides/references'
             ]
         },
