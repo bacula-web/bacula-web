@@ -42,7 +42,14 @@ const config = {
                 docs: {
                     path: 'docs',
                     sidebarPath: './sidebars.js',
-                    breadcrumbs: false
+                    breadcrumbs: false,
+                    versions: {
+                        current: {
+                            label: '10.x',
+                            path: '10.x',
+                            banner: 'unreleased',
+                        }
+                    },
                 },
                 blog: {
                     showReadingTime: true,
@@ -117,6 +124,10 @@ const config = {
                         to: '/blog',
                         label: 'Blog',
                         position: 'left'
+                    },
+                    {
+                        type: 'docsVersionDropdown',
+                        position: 'right',
                     },
                     {
                         href: 'https://github.com/bacula-web/bacula-web',

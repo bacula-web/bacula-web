@@ -1,0 +1,75 @@
+# References
+
+## bwc console
+
+Bacula-Web console allows to perform some actions from a shell session
+
+```shell
+Bacula-Web console 9.7.0
+
+Usage:
+  command [options] [arguments]
+
+Options:
+  -h, --help            Display help for the given command. When no command is given display help for the list command
+  -q, --quiet           Do not output any message
+  -V, --version         Display this application version
+      --ansi|--no-ansi  Force (or disable --no-ansi) ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Available commands:
+  check       Check requirements
+  completion  Dump the shell completion script
+  help        Display help for a command
+  list        List commands
+  setupauth   Setup Bacula-Web users authentication database
+  version     Show Bacula-Web version
+```
+
+### Display version
+
+To display Bacula-Web version, run
+
+```shell
+$ sudo -u www-data php bwc version
+```
+
+### Check system requirements
+
+To check if your server meet the requirements, run
+
+```shell
+$ sudo -u www-data php bwc check
+```
+
+### Setup users authentication
+
+Below command creates the SQLite database file used for users authentication `application/assets/protected/application.db`
+
+```shell
+$ sudo -u www-data php bwc setupauth
+It's now time to setup the application back-end database
+[Important!] Please note that all information stored in the user database will be destroyed
+Can we proceed ?
+  [0] yes
+  [1] no
+ > 0
+You have selected: yes
+Deleting users authentication database
+Database file removed
+Creating database schema
+Database created
+User creation
+Username: admin
+Email: admin@domain.com
+Password:
+1 user created successfuly
+You can now connect to your Bacula-Web instance using provided credentials
+```
+
+Above command should be run only once you setup Bacula-Web for the first time.
+
+:::danger
+Above command will delete all users stored in the SQLite database (used for users authentication).
+:::
