@@ -26,7 +26,7 @@ jobs:
       with:
         php-version: "${{ matrix.version }}"
         tools: composer
-        extensions: pdo_mysql, pdo_sqlite, pdo_pgsql, gettext, openssl, pdo, sqlite3, posix, mbstring
+        extensions: pdo_mysql, pdo_sqlite, pdo_pgsql, gettext, openssl, pdo, sqlite3, mbstring
         coverage: none
 
     - name: print PHP version

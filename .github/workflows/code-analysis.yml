@@ -22,7 +22,7 @@ jobs:
 
       - uses: php-actions/composer@v6
         with:
-          php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext openssl pdo sqlite3 posix
+          php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext openssl pdo sqlite3
 
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@v3

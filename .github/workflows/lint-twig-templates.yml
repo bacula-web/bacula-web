@@ -24,7 +24,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "7.4"
-          extensions: pdo_mysql, pdo_sqlite, pdo_pgsql, gettext, openssl, pdo, sqlite3, posix, mbstring
+          extensions: pdo_mysql, pdo_sqlite, pdo_pgsql, gettext, openssl, pdo, sqlite3, mbstring
           coverage: none
 
       - name: Composer install
