@@ -23,7 +23,6 @@ namespace App\Controller;
 
 use App\Entity\Bacula\Job;
 use App\Entity\Bacula\JobMedia;
-use App\Entity\Bacula\Pool;
 use App\Entity\Bacula\Repository\PoolRepository;
 use App\Entity\Bacula\Repository\VolumeRepository;
 use App\Entity\Bacula\Volume;
@@ -74,49 +73,8 @@ class VolumesController extends AbstractController
         $form = $this->createForm(VolumeSearchType::class, $volumeSearch);
         $form->handleRequest($request);
 
-        $queryBuilder = $volumeRepository->createQueryBuilder('v');
-
-        // $pool = $poolRepository->findOneBy(['id' => 3]);
-
-        // $orderDirection = 'ASC';
-
-        $queryBuilder
-            ->select('v', 'p')
-            ->join('v.pool', 'p')
-            ->orderBy('v.name', 'ASC');
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var VolumeSearch $volumeSearch
-             */
-            $volumeSearch = $form->getData();
-
-            /**
-             * @var Pool $pool
-             */
-            $pool = $volumeSearch->getPool();
-
-            if (!is_null($pool)) {
-                $queryBuilder
-                    ->andWhere('v.pool = :pool')
-                    ->setParameter('pool', $pool);
-            }
-
-            $orderBy = 'v.'.$volumeSearch->getOrderBy();
-
-            $orderDirection = $volumeSearch->getOrderDirection();
-
-            $queryBuilder
-                ->orderBy($orderBy, $orderDirection);
-
-            if ($volumeSearch->isInChanger()) {
-                $queryBuilder
-                    ->andWhere('v.inchanger = 1');
-            }
-        }
-
         $volumes = $paginator->paginate(
-            $queryBuilder,
+            $volumeRepository->findPaginated($volumeSearch),
             $request->query->getInt('page', 1),
             $parameters->get('app.rows_per_page')
         );

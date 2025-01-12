@@ -21,7 +21,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Bacula\Job;
 use App\Entity\Bacula\JobSearch;
 use App\Entity\Bacula\Repository\ClientRepository;
 use App\Entity\Bacula\Repository\FilePriorV11Repository;
@@ -127,27 +126,15 @@ class JobController extends AbstractController
         JobRepository $jobRepository
     ): Response {
         $jobSearch = new JobSearch($jobRepository);
-        $form = $this->createForm(JobSearchType::class, $jobSearch);
 
+        $form = $this->createForm(JobSearchType::class, $jobSearch);
         $form->handleRequest($request);
 
-        $jobQueryBuilder = $jobRepository->createQueryBuilder('j');
-        $jobQueryBuilder
-            ->select('j', 's', 'p', 'c')
-            ->leftJoin('j.pool', 'p')
-            ->leftJoin('j.status', 's')
-            ->leftJoin('j.client', 'c')
-            ->orderBy($jobSearch->getOrderBy() ?? 'j.id', 'DESC');
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $jobQueryBuilder = $this->jobRepository->findWithFilters($jobQueryBuilder, $jobSearch);
-        }
-
         $pagination = $paginator->paginate(
-            $jobQueryBuilder,
-            $request->query->getInt('page', 1)
+            $this->jobRepository->findWithFilters($jobSearch),
+            $request->query->getInt('page', 1),
+            $parameters->get('app.rows_per_page')
         );
-        $pagination->setItemNumberPerPage($parameters->get('app.rows_per_page'));
 
         return $this->render('pages/jobs.html.twig', [
             'form' => $form->createView(),

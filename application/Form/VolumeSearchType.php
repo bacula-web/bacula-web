@@ -92,8 +92,8 @@ class VolumeSearchType extends AbstractType
                     'class' => 'form-select-sm'
                 ],
                 'choices' => [
+                    'Descending' => 'DESC',
                     'Ascending' => 'ASC',
-                    'Descending' => 'DESC'
                 ],
                 'expanded' => false,
                 'multiple' => false,

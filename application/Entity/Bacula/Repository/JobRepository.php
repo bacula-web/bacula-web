@@ -556,9 +556,17 @@ class JobRepository extends ServiceEntityRepository
      * @param JobSearch $jobSearch
      * @return QueryBuilder
      */
-    public function findWithFilters(QueryBuilder $queryBuilder, JobSearch $jobSearch): QueryBuilder
+    public function findWithFilters(JobSearch $jobSearch): QueryBuilder
     {
-        $queryBuilder->orderBy($jobSearch->getOrderBy(), $jobSearch->getOrderByDirection());
+        $queryBuilder = $this->createQueryBuilder('j');
+
+        $queryBuilder
+            ->select('j', 's', 'p', 'c')
+            ->leftJoin('j.pool', 'p')
+            ->leftJoin('j.status', 's')
+            ->leftJoin('j.client', 'c');
+
+        $queryBuilder->orderBy($jobSearch->getOrderBy() ?? 'j.id', $jobSearch->getOrderByDirection() ?? 'DESC');
 
         if ($jobSearch->getClient()) {
             $queryBuilder

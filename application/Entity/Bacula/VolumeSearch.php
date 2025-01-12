@@ -57,7 +57,7 @@ class VolumeSearch
     private $orderDirection;
 
     /**
-     * @var bool
+     * @var bool|null
      */
     private $inChanger;
 
@@ -121,9 +121,9 @@ class VolumeSearch
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isInChanger(): bool
+    public function isInChanger(): ?bool
     {
         return $this->inChanger;
     }

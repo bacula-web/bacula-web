@@ -22,9 +22,11 @@ declare(strict_types=1);
 namespace App\Entity\Bacula\Repository;
 
 use App\Entity\Bacula\Volume;
+use App\Entity\Bacula\VolumeSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -56,5 +58,33 @@ class VolumeRepository extends ServiceEntityRepository
             ->select('SUM(v.volbytes)')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function findPaginated(VolumeSearch $search): QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder('v');
+
+        $orderBy = 'v.name';
+        if (!is_null($search->getOrderBy())){
+            $orderBy = 'v.' . $search->getOrderBy();
+        }
+
+        $queryBuilder
+            ->select('v', 'p')
+            ->join('v.pool', 'p')
+            ->orderBy( $orderBy, $search->getOrderDirection() ?? 'DESC');
+
+        if (!is_null($search->getPool())) {
+            $queryBuilder
+                ->andWhere('v.pool = :pool')
+                ->setParameter('pool', $search->getPool());
+        }
+
+        if ($search->isInChanger()) {
+            $queryBuilder
+                ->andWhere('v.inchanger = 1');
+        }
+
+        return $queryBuilder;
     }
 }
