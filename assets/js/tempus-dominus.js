@@ -6,15 +6,22 @@ const userLocale =
         ? navigator.languages[0]
         : navigator.language;
 
-new TempusDominus(document.getElementById('starttime'), {
-    localization: {
-        format: 'yyyy-MM-dd HH:mm:ss',
-        locale: userLocale
-    }
-});
-new TempusDominus(document.getElementById('endtime'), {
-    localization: {
-        format: 'yyyy-MM-dd HH:mm:ss',
-        locale: userLocale
-    }
-});
+var starttime = document.getElementById("starttime");
+if(starttime) {
+    new TempusDominus(document.getElementById('starttime'), {
+        localization: {
+            format: 'yyyy-MM-dd HH:mm:ss',
+            locale: userLocale
+        }
+    });
+}
+
+var endtime = document.getElementById("endtime");
+if(endtime) {
+    new TempusDominus(document.getElementById('endtime'), {
+        localization: {
+            format: 'yyyy-MM-dd HH:mm:ss',
+            locale: userLocale
+        }
+    });
+}
