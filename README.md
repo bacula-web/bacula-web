@@ -90,7 +90,7 @@ If you discover a security issue, see [SECURITY.md](SECURITY.md)
 
 <table>
 <tr>
-<td><a href="https://www.docker.com/"><img src="https://www.bacula-web.org/assets/images/docker-logo-0f1d943e8a1505d609e538df99c8eee0.png" alt="Docker Logo" height="48px"></a></td>
+<td><a href="https://www.docker.com/"><img src="https://www.bacula-web.org/assets/images/docker-logo-0f1d943e8a1505d609e538df99c8eee0.png" alt="Docker Logo" width="140px"></a></td>
 <td><a href="https://jb.gg/OpenSourceSupport"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo"></a></td>
 <td><a href="https://www.travis-ci.com"><img src="https://www.travis-ci.com/wp-content/uploads/2024/07/cropped-travis-ci-mascot-1-480x480-1.png" width="140px" alt="Travis CI logo"></a></td>
 <td><a href="https://packagecloud.io/"><img alt="Private NPM repository and Maven, RPM, DEB, PyPi and RubyGems Repository · packagecloud" src="https://packagecloud.io/images/packagecloud-badge.png" /></a></td>
