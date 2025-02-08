@@ -1,0 +1,56 @@
+name: Build release archive
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: create archive
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.0"
+          php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext
+          args: "--format=tar --file=bacula-web --profile -v"
+          command: archive
+
+      - name: create temp dir
+        run: |
+          mkdir bacula-web
+
+      - name: extract archive
+        run: |
+          tar xf bacula-web.tar -C bacula-web/
+
+      - name: composer install
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.0"
+          php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext
+          dev: no
+          working_dir: "bacula-web"
+
+      - name: create archive
+        run: |
+          tar -cvzf bacula-web-${{ github.ref_name }}.tgz bacula-web/
+
+      - name: generate sha signatures
+        run: |
+          sha256sum bacula-web-${{ github.ref_name }}.tgz > bacula-web-sha256.txt
+          sha512sum bacula-web-${{ github.ref_name }}.tgz > bacula-web-sha512.txt
+
+      - name: save artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-archive
+          path: |
+            bacula-web-${{ github.ref_name }}.tgz
+            bacula-web-sha256.txt
+            bacula-web-sha512.txt

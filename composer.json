@@ -105,7 +105,10 @@
       "/tests",
       ".release-please-manifest.json",
       "release-please-config.json",
-      "cog.toml"
+      "cog.toml",
+      "output.log",
+      "DOCKER_ENV",
+      "docker_tag"
     ]
   }
 }

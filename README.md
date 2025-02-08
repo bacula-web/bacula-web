@@ -41,17 +41,17 @@ Please read the documentation of Bacula-Web at [https://www.bacula-web.org/docs]
 
 ## Getting started
 
-Bacula-Web can be installed using [Composer](https://getcomposer.org/), [Docker](https://www.docker.com/), or from source (require advanced skills)
+Bacula-Web can be installed using
+
+- the pre-built archive (available in [releases](https://github.com/bacula-web/bacula-web/releases) on GitHub)
+- [Docker](docker/README.md)
+- [git source](https://github.com/bacula-web/bacula-web) using [Composer](https://getcomposer.org/) (require advanced skills)
 
 Please read the [Getting started](https://www.bacula-web.org/docs/install/getting-started) page for further installation instructions.
 
-> **Note about the pre-installed archive**
+> **Note about the pre-built archive**
 >
-> The main purpose of this pre-installed archive was to provide an easy way for users who weren't able to install Composer on their servers
-> 
-> The Composer archive installation option support was stopped since version (v9.0.0)
-> 
-> Pre-installed (or pre-built) Bacula-Web package might be available again soon ...
+> The pre-built archive contains pre-installed dependencies (no need to use Composer anymore) and is available since version 9.8.0
 
 ## Getting help
 
