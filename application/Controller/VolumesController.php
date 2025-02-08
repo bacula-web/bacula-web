@@ -121,7 +121,7 @@ class VolumesController
                 $message = 'Invalid parameter(s) provided' ;
                 throw new HttpBadRequestException($request, $message);
             } else {
-                $poolId = $postData['filter_pool_id'] ?? 0;
+                $poolId = $postData['filter_pool_id'] ?? '0';
                 if ($poolId !== '0') {
                     $where[] = 'Media.PoolId = :pool_id';
                     $params['pool_id'] = (int) $poolId;
