@@ -9,7 +9,7 @@
     "bacula"
   ],
   "homepage": "https://www.bacula-web.org",
-  "license": "GPL-2.0-only",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Davide Franco",
