@@ -1,5 +1,32 @@
 # Changelog
 
+## [9.6.0](https://github.com/bacula-web/bacula-web/compare/v9.5.1...v9.6.0) (2025-02-22)
+
+
+### 🐛 Bug Fixes
+
+* 404 using links from jobs and pools charts ([910d098](https://github.com/bacula-web/bacula-web/commit/910d098f3e23d4747bc2eb9b2527b1ead49a6e70)), closes [#239](https://github.com/bacula-web/bacula-web/issues/239)
+* deprecation notice in volumes report ([9c067a6](https://github.com/bacula-web/bacula-web/commit/9c067a603ad83e68cc1f6dc7913f2d3cdfd90426)), closes [#237](https://github.com/bacula-web/bacula-web/issues/237)
+* **docker:** dockerfile and manual ([90b0e0e](https://github.com/bacula-web/bacula-web/commit/90b0e0e1b3d89dad8d9f05703fca68427c87799f))
+* **docs:** missing mariadb support ([#226](https://github.com/bacula-web/bacula-web/issues/226)) ([a18aac5](https://github.com/bacula-web/bacula-web/commit/a18aac5f906ca3fe8c74950c15b43e421ea407e5))
+* **docs:** required password length ([69728cf](https://github.com/bacula-web/bacula-web/commit/69728cf1dec97c4a3259c3061782e9c4bb76519e))
+* **docs:** required password length ([3dbcb26](https://github.com/bacula-web/bacula-web/commit/3dbcb2642bf0ebaac4409e9a0aaec959cc4e0d90))
+* strftime deprecation error ([20e0032](https://github.com/bacula-web/bacula-web/commit/20e00322b5a54831feb81567b400c468454479d0)), closes [#236](https://github.com/bacula-web/bacula-web/issues/236)
+* wrong return type with sqlite catalog ([829aa7e](https://github.com/bacula-web/bacula-web/commit/829aa7e25d2b79a96f327985fc7b351ae317f9b4)), closes [#231](https://github.com/bacula-web/bacula-web/issues/231)
+
+
+### 🚀 Features
+
+* **docs:** migrate documentation ([24f51df](https://github.com/bacula-web/bacula-web/commit/24f51dfd1aa4cf0668952459e22fa27aac676d99))
+* support SQLite Bacula catalog ([3a223dd](https://github.com/bacula-web/bacula-web/commit/3a223dda3d1035ee77151bc04fcfccd7c6935524)), closes [#234](https://github.com/bacula-web/bacula-web/issues/234)
+
+
+### 📘 Documentation
+
+* fix and update translations contributor page ([381c618](https://github.com/bacula-web/bacula-web/commit/381c6182e0f48160889fcadd425dfc7c434ea652))
+* move security page to website ([be3a84f](https://github.com/bacula-web/bacula-web/commit/be3a84f265482e50038ffa14d7534b014dcf56af))
+* support for php 8.3 ([b427158](https://github.com/bacula-web/bacula-web/commit/b427158b1959e918f975c641f55561bd39f86a45))
+
 ## [9.7.0](https://github.com/bacula-web/bacula-web/compare/v9.6.1...v9.7.0) (2024-11-25)
 
 
