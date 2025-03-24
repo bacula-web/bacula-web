@@ -1,5 +1,14 @@
 # Changelog
 
+## [9.7.1](https://github.com/bacula-web/bacula-web/compare/v9.7.0...v9.7.1) (2025-03-24)
+
+
+### 🐛 Bug Fixes
+
+* docker image build workflow for releases ([d86d1cf](https://github.com/bacula-web/bacula-web/commit/d86d1cff5a216848072471d2587367a96bddf648))
+* potential sql injection in job files report ([ad5d948](https://github.com/bacula-web/bacula-web/commit/ad5d94809f17994a61496ecfec9cd3a16ac14a5f))
+* volumes pagination ([33b3fae](https://github.com/bacula-web/bacula-web/commit/33b3fae182fad553c52a6deb0adf3dc7dcfe1a0c))
+
 ## [9.7.0](https://github.com/bacula-web/bacula-web/compare/v9.6.1...v9.7.0) (2024-11-25)
 
 
