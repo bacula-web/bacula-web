@@ -61,7 +61,8 @@ class JobFileTable extends Table
             $fields = array('Job.Name', 'Job.JobStatus', 'File.FileIndex', 'Path.Path', 'Filename.Name AS Filename');
             $where = array("File.JobId = $jobId");
             if (! empty($filename)) {
-                $where[] = "(Filename.Name LIKE '%$filename%' OR Path.Path LIKE '%$filename%' OR concat(Path.Path, '', Filename.Name) = '$filename')";
+                $this->addParameter('filename', '%'.$filename.'%');
+                $where[] = "(Filename.Name LIKE :filename OR Path.Path LIKE :filename OR concat(Path.Path, '', Filename.Name) = :filename)";
             }
 
             $orderby = 'File.FileIndex ASC';
@@ -84,7 +85,8 @@ class JobFileTable extends Table
             $where = ["File.JobId = $jobId"];
 
             if (!empty($filename)) {
-                $where[] = "(File.Filename LIKE '%$filename%' OR Path.Path LIKE '%$filename%' OR concat(Path.Path, '', File.Filename) = '$filename')";
+                $this->addParameter('filename', '%'.$filename.'%');
+                $where[] = "(File.Filename LIKE :filename OR Path.Path LIKE :filename OR concat(Path.Path, '', File.Filename) = :filename)";
             }
 
             $orderby = 'File.FileIndex ASC';
