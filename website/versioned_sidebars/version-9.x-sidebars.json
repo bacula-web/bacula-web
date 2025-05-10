@@ -38,6 +38,7 @@
                 "title": "Installation options"
               },
               "items": [
+                "install/archive-install",
                 "install/composer-install",
                 "install/docker-install",
                 "install/source-install"

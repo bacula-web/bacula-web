@@ -23,6 +23,7 @@ Bacula-Web can be installed in different way, but the recommended way is by usin
 
 You will find more details by following the links below
 
+* Install [using archive](archive-install.md)
 * Install [using Composer](composer-install.md)
 * Install [using Docker](docker-install.md)
 * Install [from source](source-install.md)
