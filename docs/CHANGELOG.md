@@ -1,5 +1,13 @@
 # Changelog
 
+## [9.8.0](https://github.com/bacula-web/bacula-web/compare/v9.7.1...v9.8.0) (2025-05-10)
+
+
+### 🚀 Features
+
+* provide pre-built archive ([0d74c97](https://github.com/bacula-web/bacula-web/commit/0d74c97e3b6a1742c6942ee6dc0c683b9f56187c))
+* support for php 8.4 ([09198c8](https://github.com/bacula-web/bacula-web/commit/09198c849119dade45e9a6acf8e13ac7fba6fb78))
+
 ## [9.7.1](https://github.com/bacula-web/bacula-web/compare/v9.7.0...v9.7.1) (2025-03-24)
 
 
