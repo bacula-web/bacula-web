@@ -16,7 +16,7 @@ PHP requirements
 
 | Component | Supported version     |
 |-----------|-----------------------|
-| PHP       | >= 8.0 (up to >= 8.3) |
+| PHP       | >= 8.0 (up to >= 8.4) |
 
 | PHP extensions                            |
 |-------------------------------------------|
