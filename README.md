@@ -1,9 +1,9 @@
 # Bacula-Web
 
 [![Packagist Version](https://img.shields.io/packagist/v/bacula-web/bacula-web)](https://packagist.org/packages/bacula-web/bacula-web)
-[!![Packagist Downloads](https://img.shields.io/packagist/dt/bacula-web/bacula-web)](https://packagist.org/packages/bacula-web/bacula-web)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/bacula-web/bacula-web)](https://packagist.org/packages/bacula-web/bacula-web)
 [![License](https://img.shields.io/packagist/l/bacula-web/bacula-web)](https://packagist.org/packages/bacula-web/bacula-web)
-![Required PHP version](https://img.shields.io/packagist/dependency-v/bacula-web/bacula-web/php)
+[![Required PHP version](https://img.shields.io/packagist/dependency-v/bacula-web/bacula-web/php)
 [![Documentation Status](https://readthedocs.org/projects/bacula-web/badge/?version=latest)](http://docs.bacula-web.org/en/master/?badge=latest)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
@@ -11,13 +11,9 @@
 
 ![Bacula-Web dashboard](https://www.bacula-web.org/bacula-web-dashboard.png)
 
-> [!IMPORTANT]
-> The master branch is used for development purpose only, don't use it to run Bacula-Web in a production environment.
-> You should use [latest stable release](https://github.com/bacula-web/bacula-web/releases/tag/v9.5.1) which is stable and bug free.
-
 Bacula-Web is an open source reporting and monitoring tool for [Bacula](https://www.bacula.org).
 
-It provides a lot of reports and information about [Bacula](https://www.bacula.org) backup infrastructure.
+It provides a lot of reports and informations about [Bacula](https://www.bacula.org) backup infrastructure.
 
 All the metrics and information provided by Bacula-Web are taken from [Bacula](https://www.bacula.org) catalog database
 and only require read-only access to the Bacula director catalog database.
@@ -31,7 +27,7 @@ and only require read-only access to the Bacula director catalog database.
 - Bacula Directors report which gives you an overview of each Bacula director(s) statistics
 - Browse backup jobs files and folders
 - Users authentication
-- Translated in more than 15 languages with the help from community users :heart: [project on Lokalise](https://app.lokalise.com/public/95070757669f26e4c3f8e9.76656729/).
+- Translated in more than 15 languages with the help from community users :heart: [project on Transifex](https://explore.transifex.com/bacula-web/bacula-web/).
 
 Please see the full [features list](https://www.bacula-web.org/docs/about/features) from the documentation. 
 
@@ -43,21 +39,21 @@ Please read the documentation of Bacula-Web at [https://www.bacula-web.org/docs]
 >
 > Huge thanks to [Read The Docs](https://readthedocs.org/) for hosting open source projects documentation over the past few years :heart:
 
-## How to install
+## Getting started
 
-Bacula-Web can be installed using [Composer](https://getcomposer.org/), [Docker](https://www.docker.com/), or from source (require advanced skills)
+Bacula-Web can be installed using
+
+- the pre-built archive (available in [releases](https://github.com/bacula-web/bacula-web/releases) on GitHub)
+- [Docker](docker/README.md)
+- [git source](https://github.com/bacula-web/bacula-web) using [Composer](https://getcomposer.org/) (require advanced skills)
 
 Please read the [Getting started](https://www.bacula-web.org/docs/install/getting-started) page for further installation instructions.
 
-> **Note about the pre-installed archive**
+> **Note about the pre-built archive**
 >
-> The main purpose of this pre-installed archive was to provide an easy way for users who weren't able to install Composer on their servers
-> 
-> The Composer archive installation option support was stopped since version (v9.0.0)
-> 
-> Pre-installed (or pre-built) Bacula-Web package might be available again soon ...
+> The pre-built archive contains pre-installed dependencies (no need to use Composer anymore) and is available since version 9.8.0
 
-## How to get help
+## Getting help
 
 To report an issue or request a new feature, use [GitHub project issues](https://github.com/bacula-web/bacula-web/issues).
 
@@ -66,27 +62,23 @@ To report an issue or request a new feature, use [GitHub project issues](https:/
 For questions or feedbacks, please use [GitHub discussions](https://github.com/bacula-web/bacula-web/discussions) or 
 contact me at [hello@bacula-web.org](mailto:hello@bacula-web.org).
 
-## How to contribute
+## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
 
 ### Contributors
 
 <a href="https://github.com/bacula-web/bacula-web/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=bacula-web/bacula-web" alt="Bacula-Web dashboard" />
+  <img src="https://contrib.rocks/image?repo=bacula-web/bacula-web" />
 </a>
 
 ## License
 
-GPLv2 or later
-
-See the [license file](LICENSE) for further details.
+The GPLv2. Please see [license file](LICENSE) for more information.
 
 ## Security
 
-You've found a security issue ? Good catch!
-
-See [SECURITY.md](SECURITY.md) for further information.
+If you discover a security issue, see [SECURITY.md](SECURITY.md)
 
 ## Credits
 
@@ -98,11 +90,12 @@ See [SECURITY.md](SECURITY.md) for further information.
 
 <table>
 <tr>
-    <td><a href="https://jb.gg/OpenSourceSupport"><img width="180px" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo"></a></td>
-    <td><a href="https://www.travis-ci.com"><img width="180px" src="https://www.travis-ci.com/wp-content/uploads/2022/05/TravisCI-Full-Color.png" alt="Travis CI logo"></a></td>
-    <td><a href="https://packagecloud.io/"><img width="180px" alt="Private NPM repository and Maven, RPM, DEB, PyPi and RubyGems Repository · packagecloud" src="https://packagecloud.io/images/packagecloud-badge.png" /></a></td>
-    <td><a href="https://lokalise.com/"><img width="180px" alt="Lokalise logo" src="https://www.bacula-web.org/sponsors/lokalise_logo_colour_black_text.png" /></a></td>
-  </tr>
+<td><a href="https://www.docker.com/"><img src="https://www.bacula-web.org/assets/images/docker-logo-0f1d943e8a1505d609e538df99c8eee0.png" alt="Docker Logo" width="140px"></a></td>
+<td><a href="https://jb.gg/OpenSourceSupport"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo"></a></td>
+<td><a href="https://www.travis-ci.com"><img src="https://www.travis-ci.com/wp-content/uploads/2024/07/cropped-travis-ci-mascot-1-480x480-1.png" width="140px" alt="Travis CI logo"></a></td>
+<td><a href="https://packagecloud.io/"><img alt="Private NPM repository and Maven, RPM, DEB, PyPi and RubyGems Repository · packagecloud" src="https://packagecloud.io/images/packagecloud-badge.png" /></a></td>
+<td><a href="https://lokalise.com/"><img alt="Lokalise logo" src="https://lokalise.com/img/lokalise_logo_black.png" width="240px" /></a></td>
+</tr>
 </table>
 
 ## Support the project
