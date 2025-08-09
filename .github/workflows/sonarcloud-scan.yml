@@ -3,12 +3,12 @@ name: sonarcloud-ci
 on:
   push:
     branches:
-      - 'master'
       - 'fix/**'
       - 'feat/**'
       - 'chore/**'
       - 'refactor/**'
       - 'dev-**'
+      - '**.x'
   pull_request:
     types:
     - opened

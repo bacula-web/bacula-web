@@ -3,11 +3,11 @@ name: Code analysis
 on:
   push:
     branches:
-      - 'master'
       - 'feat/**'
       - 'fix/**'
       - 'chore/**'
       - 'dev-**'
+      - '**.x'
 
 jobs:
   analyse:
