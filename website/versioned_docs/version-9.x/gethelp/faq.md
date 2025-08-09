@@ -17,7 +17,7 @@ Nope, I'm glad to say that Bacula-Web, as an open source project, can be downloa
 
 **What about the license ?**
 
-Unless it's clearly written, Bacula-Web project source code, documentations, logo, website, etc. are released under the terms of GPLv2 (for more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/master/LICENSE)
+Unless it's clearly written, Bacula-Web project source code, documentations, logo, website, etc. are released under the terms of GPLv2 (for more details, see [LICENSE](https://github.com/bacula-web/bacula-web/blob/9.x/LICENSE)
 
 ### Does Bacula-Web supports any web browser ?
 

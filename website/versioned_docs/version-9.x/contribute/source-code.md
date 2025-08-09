@@ -10,9 +10,9 @@ This section describe how you can contribute to Bacula-Web project development.
 
 * Open a bug on [GitHub](https://github.com/bacula-web/bacula-web/issues) (mandatory)
 * Create a new fork of the project into your GitHub account
-* Clone the forked master branch from your account
+* Clone the forked 9.x branch from your account
   `git clone git@github.com:<account-name>/bacula-web.git`
-* create a branch from the **master** branch and give it a name that follow conventional commit guideline
+* create a branch from the **9.x** branch and give it a name that follow conventional commit guideline
     * fix/fix-the-output
     * feat/new-feature
       `git checkout -b fix/fix-the-output`
