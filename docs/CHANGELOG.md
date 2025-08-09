@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.8.1](https://github.com/bacula-web/bacula-web/compare/v9.8.0...v9.8.1) (2025-08-09)
+
+
+### 🐛 Bug Fixes
+
+* required php version ([f29aa36](https://github.com/bacula-web/bacula-web/commit/f29aa3676db72067cff1b20aa1455e296e1f0a8d))
+
 ## [9.8.0](https://github.com/bacula-web/bacula-web/compare/v9.7.1...v9.8.0) (2025-05-10)
 
 
