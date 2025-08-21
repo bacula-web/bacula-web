@@ -3,7 +3,7 @@
 [![Packagist Version](https://img.shields.io/packagist/v/bacula-web/bacula-web)](https://packagist.org/packages/bacula-web/bacula-web)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/bacula-web/bacula-web)](https://packagist.org/packages/bacula-web/bacula-web)
 [![License](https://img.shields.io/packagist/l/bacula-web/bacula-web)](https://packagist.org/packages/bacula-web/bacula-web)
-[![Required PHP version](https://img.shields.io/packagist/dependency-v/bacula-web/bacula-web/php)
+![Required PHP Version](https://img.shields.io/packagist/dependency-v/bacula-web/bacula-web/php)
 [![Documentation Status](https://readthedocs.org/projects/bacula-web/badge/?version=latest)](http://docs.bacula-web.org/en/master/?badge=latest)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
