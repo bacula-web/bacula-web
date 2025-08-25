@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,11 +17,13 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Libs\Config;
-use App\Validator\LoginValidator;
 use Core\App\UserAuth;
+use Core\Exception\ValidationException;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
@@ -31,6 +31,7 @@ use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Valitron\Validator;
 
 class LoginController
 {
@@ -41,11 +42,11 @@ class LoginController
     private Config $config;
 
     public function __construct(
-        UserAuth         $userAuth,
+        UserAuth $userAuth,
         SessionInterface $session,
-        Twig             $twig,
-        Config           $config)
-    {
+        Twig $twig,
+        Config $config
+    ) {
         $this->userAuth = $userAuth;
         $this->session = $session;
         $this->twig = $twig;
@@ -80,49 +81,52 @@ class LoginController
         if ($request->getMethod() === 'POST') {
             $postData = $request->getParsedBody();
 
-            $loginValidator = new LoginValidator($postData);
+            $loginValidator = new Validator($postData, ['username', 'password']);
+            $loginValidator->rules([
+                'required' => [
+                    'username', 'password'
+                ],
+                'alphaNum' => ['username'],
+                'lengthMin' => [
+                    ['password', 8]
+                ]
+            ]);
 
             if (!$loginValidator->validate()) {
-                $validationErrors = $loginValidator->getErrors();
+                $validationErrors = $loginValidator->errors();
 
                 /**
-                 * Set username in flash ONLY if it passed the validation
+                 * Populate username form field if it passed validation
                  */
                 if (!isset($validationErrors['username'])) {
                     $this->session->getFlash()->add('username', $postData['username']);
                 }
 
-                $this->session->getFlash()->set('errors', $validationErrors);
+                throw new ValidationException(['last_auth_error' => 'Wrong username or password']);
+            }
+
+            // TODO: this should be the responsibility of the auth class
+            $this->session->set('user_authenticated', $this->userAuth->authUser($postData['username'], $postData['password']));
+
+            if ($this->userAuth->authenticated()) {
+                // TODO: this is not the responsibility of the login controller
+                $this->session->set('username', $postData['username']);
+
+                return $response
+                    ->withHeader('Location', $this->basePath . '/')
+                    ->withStatus(302);
+            } else {
+                // TODO: last auth error should come from the Auth class
+                $this->session->getFlash()->add('last_auth_error', 'Wrong username or password');
+                $this->session->getFlash()->add('username', $postData['username']);
 
                 return $response
                     ->withHeader('Location', $this->basePath . '/login')
                     ->withStatus(302);
-
-            } else {
-                // TODO: this should be the responsibility of the auth class
-                $this->session->set('user_authenticated', $this->userAuth->authUser($postData['username'], $postData['password']));
-
-                if ($this->userAuth->authenticated()) {
-                    // TODO: this is not the responsibility of the login controller
-                    $this->session->set('username', $postData['username']);
-
-                    return $response
-                        ->withHeader('Location', $this->basePath . '/')
-                        ->withStatus(302);
-                } else {
-                    // TODO: last auth error should come from the Auth class
-                    $this->session->getFlash()->add('last_auth_error', 'Wrong username or password');
-                    $this->session->getFlash()->add('username', $postData['username'] );
-
-                    return $response
-                        ->withHeader('Location', $this->basePath . '/login')
-                        ->withStatus(302);
-                }
             }
         }
 
         return $this->twig->render($response, 'pages/login.html.twig', [
-            'errors' => $this->session->getFlash()->get('errors'),
             'username' => $this->session->getFlash()->get('username'),
             'last_auth_error' => $this->session->getFlash()->get('last_auth_error'),
             'auth_info' => $this->session->getFlash()->get('auth_info')

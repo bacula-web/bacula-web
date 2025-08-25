@@ -25,6 +25,7 @@ use App\Table\JobTable;
 use App\Table\PoolTable;
 use App\Table\VolumeTable;
 use Core\Db\DatabaseFactory;
+use Core\Exception\ValidationException;
 use Exception;
 use Odan\Session\SessionInterface;
 use Slim\Routing\RouteContext;
@@ -40,6 +41,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Valitron\Validator;
 
 class HomeController
 {
@@ -52,14 +54,13 @@ class HomeController
 
 
     public function __construct(
-        JobTable         $jobTable,
-        PoolTable        $poolTable,
-        VolumeTable      $volumeTable,
+        JobTable $jobTable,
+        PoolTable $poolTable,
+        VolumeTable $volumeTable,
         SessionInterface $session,
-        Config           $config,
-        Twig             $view
-    )
-    {
+        Config $config,
+        Twig $view
+    ) {
         $this->jobTable = $jobTable;
         $this->poolTable = $poolTable;
         $this->volumeTable = $volumeTable;
@@ -101,6 +102,18 @@ class HomeController
             ['id' => 'last_month', 'label' => 'Last month'],
             ['id' => 'since_bot', 'label' => 'Since BOT']
         ];
+
+        if ($request->getMethod() === 'POST') {
+            $validator = new Validator($postData, ['period_selector']);
+
+            $validator
+                ->rule('in', 'period_selector', ['last_day', 'last_week', 'last_month', 'since_bot'])
+                ->message('Invalid period');
+
+            if (!$validator->validate()) {
+                throw new ValidationException($validator->errors());
+            }
+        }
 
         // Custom period for dashboard
         $currentDateTime = DatabaseFactory::getDatabase($this->session->get('catalog_id'))->getServerTimestamp();
@@ -173,8 +186,7 @@ class HomeController
                 'name' => 'chart_lastjobs',
                 'data' => $jobs_status_data,
                 'linked_report' => $jobsPageUrl
-            ]
-        );
+            ]);
         $tplData['last_jobs_chart_id'] = $last_jobs_chart->name;
 
         $tplData['last_jobs_chart'] = $last_jobs_chart->render();
@@ -218,8 +230,7 @@ class HomeController
                 'name' => 'chart_pools_usage',
                 'data' => $vols_by_pool,
                 'linked_report' => $poolsPageUrl
-            ]
-        );
+            ]);
 
         $tplData['pools_usage_chart_id'] = $pools_usage_chart->name;
         $tplData['pools_usage_chart'] = $pools_usage_chart->render();
@@ -295,7 +306,6 @@ class HomeController
 
         foreach ($result as $volume) {
             if ($volume['lastwritten'] != '0000-00-00 00:00:00' && !is_null($volume['lastwritten'])) {
-
                 $volume['lastwritten'] = date(
                     $this->config->get('datetime_format', 'Y-m-d H:i:s'),
                     strtotime($volume['lastwritten'])

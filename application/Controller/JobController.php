@@ -27,6 +27,7 @@ use App\Table\LogTable;
 use Core\Db\DBPagination;
 use Core\Db\CDBQuery;
 use Core\Exception\ConfigFileException;
+use Core\Exception\ValidationException;
 use Core\Helpers\Sanitizer;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
@@ -40,8 +41,8 @@ use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use TypeError;
 use Valitron\Validator;
+
 use function Core\Helpers\getRequestParams;
 
 class JobController
@@ -65,8 +66,7 @@ class JobController
         Twig $view,
         SessionInterface $session,
         Config $config
-    )
-    {
+    ) {
         $this->logTable = $logTable;
         $this->jobTable = $jobTable;
         $this->clientTable = $clientTable;
@@ -114,6 +114,7 @@ class JobController
 
         // Global variables
         $job_levels = [
+            '0' => 'Any',
             'D' => 'Differential',
             'I' => 'Incremental',
             'F' => 'Full',
@@ -148,7 +149,9 @@ class JobController
         $tplData['job_status'] = $job_status;
 
         // Job types
-        $job_types = array( 'B' => 'Backup',
+        $job_types = [
+            '0' => 'Any',
+            'B' => 'Backup',
             'M' => 'Migrated',
             'V' => 'Verify',
             'R' => 'Restore',
@@ -156,7 +159,7 @@ class JobController
             'A' => 'Archive',
             'C' => 'Copy',
             'g' => 'Migration'
-        );
+        ];
 
         // Jobs type filter
         $job_types_list = $this->jobTable->getUsedJobTypes($job_types);
@@ -179,16 +182,8 @@ class JobController
         $tplData['filter_jobstatus'] = $filter_jobstatus;
 
         // Job type filter
-        $filter_jobtype = '0';
-        if (isset($postRequestData['filter_jobtype'])) {
-            $filter_jobtype = $postRequestData['filter_jobtype'];
-        }
+        $filter_jobtype = $postRequestData['filter_jobtype'] ?? '0';
         $tplData['filter_jobtype'] = $filter_jobtype;
-
-        // Validate filter job type
-        if (array_key_exists($filter_jobtype, $job_types)) {
-            // TODO: Validate request parameter
-        }
 
         // Levels list filter
         $levels_list = $this->jobTable->getLevels($job_levels);
@@ -218,18 +213,13 @@ class JobController
 
         // Job orderby filter
         $job_orderby_filter = 'jobid';
-        if(isset($postRequestData['filter_job_orderby'])) {
+        if (isset($postRequestData['filter_job_orderby'])) {
             $job_orderby_filter = $postRequestData['filter_job_orderby'];
-        }
-
-        // Validate job order by
-        if (array_key_exists($job_orderby_filter, $result_order)) {
-            // TODO: Validate job order
         }
 
         // Job orderby asc filter
         $job_orderby_asc_filter = 'DESC';
-        if( isset($postRequestData['filter_job_orderby_asc'])) {
+        if (isset($postRequestData['filter_job_orderby_asc'])) {
             $job_orderby_asc_filter = 'ASC';
         }
 
@@ -249,6 +239,38 @@ class JobController
 
         $pools_list[0] = 'Any';
         $tplData['pools_list'] = $pools_list;
+
+        if (!empty($postRequestData)) {
+            // Validate user input
+            $validator = new Validator($postRequestData, [
+                'filter_jobstatus',
+                'filter_joblevel',
+                'filter_jobtype',
+                'filter_clientid',
+                'filter_poolid',
+                'filter_job_starttime',
+                'filter_job_endtime',
+                'filter_job_orderby',
+                'filter_job_orderby_asc',
+                'page'
+            ]);
+
+            $validator
+                ->rule('in', 'filter_jobtype', array_keys($job_types))->message('Invalid job type')
+                ->rule('in', 'filter_joblevel', array_keys($levels_list))->message('Invalid job level')
+                ->rule('in', 'filter_jobstatus', array_keys($job_status))->message('Invalid job status')
+                ->rule('in', 'filter_clientid', array_keys($clients_list))->message('Invalid client')
+                ->rule('in', 'filter_poolid', array_keys($pools_list))->message('Invalid pool')
+                ->rule('date', 'filter_job_starttime')->message('Invalid job start time')
+                ->rule('date', 'filter_job_endtime')->message('Invalid job end time')
+                ->rule('in', 'filter_job_orderby', $result_order)->message('Invalid job order by')
+                ->rule('in', 'filter_job_orderby_asc', ['ASC', 'DESC'])->message('Invalid job order by')
+                ->rule('integer', 'page')->message('Invalid page number');
+
+            if (!$validator->validate()) {
+                throw new ValidationException($validator->errors());
+            }
+        }
 
         $filter_poolid = '0';
         if (isset($postRequestData['filter_poolid'])) {
@@ -305,7 +327,6 @@ class JobController
             $where[] = "Job.ClientId = :client_id";
             $params['client_id'] = $filter_clientid;
         }
-
         // Selected job start time filter
         if (!is_null($filter_job_starttime) && !empty($filter_job_starttime)) {
             if (DateTimeUtil::checkDate($filter_job_starttime)) {
@@ -349,7 +370,7 @@ class JobController
             'join' => array(
                 array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
                 array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
-            ) ),$this->jobTable->get_driver_name());
+            ) ), $this->jobTable->get_driver_name());
 
         $countQuery = CDBQuery::get_Select(
             [
@@ -399,7 +420,8 @@ class JobController
                 $job['starttime'] = 'n/a';
             } else {
                 $job['starttime'] = date(
-                    $this->config->get('datetime_format', 'Y-m-d H:i:s'), strtotime($job['starttime'])
+                    $this->config->get('datetime_format', 'Y-m-d H:i:s'),
+                    strtotime($job['starttime'])
                 );
             }
 
@@ -407,7 +429,8 @@ class JobController
                 $job['endtime'] = 'n/a';
             } else {
                 $job['endtime'] = date(
-                    $this->config->get('datetime_format', 'Y-m-d H:i:s'), strtotime($job['endtime'])
+                    $this->config->get('datetime_format', 'Y-m-d H:i:s'),
+                    strtotime($job['endtime'])
                 );
             }
 
@@ -419,7 +442,8 @@ class JobController
             }
 
             $job['schedtime'] = date(
-                $this->config->get('datetime_format', 'Y-m-d H:i:s'), strtotime($job['schedtime'])
+                $this->config->get('datetime_format', 'Y-m-d H:i:s'),
+                strtotime($job['schedtime'])
             );
 
             // Job Level
@@ -517,9 +541,9 @@ class JobController
 
         $jobLogs = $this->logTable->findAll($sql, ['jobid' => $jobId], 'App\Entity\Log');
 
-        $tplData['joblogs'] = array_filter($jobLogs, function($element) {
+        $tplData['joblogs'] = array_filter($jobLogs, function ($element) {
             $element->setTime(
-                date($this->config->get('datetime_format', 'Y-m-d H:i:s'),strtotime($element->getTime()))
+                date($this->config->get('datetime_format', 'Y-m-d H:i:s'), strtotime($element->getTime()))
             );
             return $element;
         });
@@ -543,7 +567,16 @@ class JobController
 
         $filename = '';
 
-        $postData = $request->getParsedBody();
+        if ($request->getMethod() === 'POST') {
+            $postData = $request->getParsedBody();
+
+            $validator = (new Validator($postData))
+                ->rule('alphanum', 'filename')->message('Filename/path must be alphanumeric only');
+
+            if (! $validator->validate()) {
+                throw new ValidationException($validator->errors());
+            }
+        }
 
         $jobId = isset($args['jobid']) ? (int) $args['jobid'] : null;
 
@@ -572,7 +605,7 @@ class JobController
             $pagination_active = true;
         }
 
-        $currentPage = $args['page'] ?? 0;
+        $currentPage = isset($args['page']) ? (int) $args['page'] : 0;
 
         $tplData['pagination_active'] = $pagination_active;
         $tplData['pagination_current_page'] = $currentPage;

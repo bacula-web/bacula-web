@@ -16,21 +16,27 @@
                     <div class="form-group">
                         <label for="backupjobname">{{ 'Backup job name'|trans }}</label>
 
-                        <select class="form-control input-sm" name="backupjob_name">
+                        <select class="form-control input-sm {{ validation_errors.backupjob_name ? 'is-invalid' : ' ' }}" name="backupjob_name">
                             {% for job in jobs_list %}
                                 <option value="{{ job }}"
                                         {% if job == selected_jobname %}selected{% endif %}>
                                     {{ job }}</option>
                             {% endfor %}
                         </select>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.backupjob_name|first }}
+                        </div>
                     </div>
                     <!-- Period -->
-                    <select class="form-control input-sm" name="period">
-                        {% for period in periods_list %}
-                            <option value="{{ period.days }}"
-                                    {% if period.days == selected_period %}selected{% endif %}>{{ period.label }}</option>
+                    <select class="form-control input-sm {{ validation_errors.period ? 'is-invalid' : ' ' }}" name="period">
+                        {% for period,label in periods_list %}
+                            <option value="{{ period }}"
+                                    {% if period == selected_period %}selected{% endif %}>{{ label }}</option>
                         {% endfor %}
                     </select>
+                    <div class="invalid-feedback">
+                        {{ validation_errors.period|first }}
+                    </div>
 
                     <!-- Submit button -->
                     <div class="form-group pull-right">

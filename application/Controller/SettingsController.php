@@ -23,6 +23,7 @@ namespace App\Controller;
 
 use App\Libs\Config;
 use App\Table\UserTable;
+use Core\Exception\ValidationException;
 use Slim\Views\Twig;
 use Core\Exception\AppException;
 use Core\Helpers\Sanitizer;
@@ -167,19 +168,15 @@ class SettingsController
             'email' => Sanitizer::sanitize($postData['email'])
         ];
 
-        $v = new Validator($form_data);
-
-        $v->rule('required', ['username', 'password', 'confirmPassword', 'email']);
-        $v->rule('alphaNum', 'username');
-        $v->rule('lengthMin', 'password', 8);
-        $v->rule('email', 'email');
-        $v->rule('equals','password', 'confirmPassword')->message('Both passwords must match');
+        $v = (new Validator($form_data))
+            ->rule('required', ['username', 'password', 'confirmPassword', 'email'])
+            ->rule('alphaNum', 'username')
+            ->rule('lengthMin', 'password', 8)
+            ->rule('email', 'email')->message('Invalid email')
+            ->rule('equals','password', 'confirmPassword')->message('Both passwords must match');
 
         if (!$v->validate()) {
-            $validationErrors = $v->errors();
-            foreach($validationErrors as $error) {
-                $this->session->getFlash()->add('error', $error[0]);
-            }
+            throw new ValidationException($v->errors());
         } else {
             $result = $this->userTable->addUser(
                 $form_data['username'],

@@ -136,27 +136,37 @@
                         <form action="{{ url_for('adduser') }}" method="post" data-toggle="validator">
                             <div class="mb-3">
                                 <label class="form-label" for="inputUsername">Username</label>
-                                <input class="form-control" name="username" type="text" id="inputUsername"
+                                <input class="form-control {{ validation_errors.username ? 'is-invalid' : ' ' }}" name="username" type="text" id="inputUsername"
                                        placeholder="username" aria-describedby="username_helpblock" required>
+                                <div class="invalid-feedback">
+                                    {{ validation_errors.username|first }}
+                                </div>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label" for="inputEmail">Email</label>
-                                <input class="form-control" name="email" value="" type="email" id="inputEmail"
+                                <input class="form-control {{ validation_errors.email ? 'is-invalid' : ' ' }}" name="email" value="" type="email" id="inputEmail"
                                        placeholder="email address" data-error="Invalid email address" required>
-                                <div class="help-block with-errors"></div>
+                                <div class="invalid-feedback">
+                                    {{ validation_errors.email|first }}
+                                </div>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label" for="password">Password</label>
-                                <input class="form-control" name="password" type="password" id="password"
+                                <input class="form-control {{ validation_errors.password ? 'is-invalid' : ' ' }}" name="password" type="password" id="password"
                                        placeholder="password" data-minlength="8" required>
+                                <div class="invalid-feedback">
+                                    {{ validation_errors.password|first }}
+                                </div>
                             </div>
 
                             <div class="mb-3">
-                                <input class="form-control" name="confirmPassword" type="password" id="confirmPassword"
+                                <input class="form-control {{ validation_errors.confirmPassword ? 'is-invalid' : ' ' }}" name="confirmPassword" type="password" id="confirmPassword"
                                        placeholder="Confirm password" data-minlength="8" required>
-                                <div class="form-text">Password must be at least 8 characters</div>
+                                <div class="invalid-feedback">
+                                    {{ validation_errors.confirmPassword|first }}
+                                </div>
                             </div>
 
                             <button class="btn btn-sm btn-primary pull-right" type="submit">Create</button>

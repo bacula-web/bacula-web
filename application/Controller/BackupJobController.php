@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,6 +17,8 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Libs\Config;
@@ -27,6 +27,7 @@ use Core\Db\CDBQuery;
 use Core\Db\DatabaseFactory;
 use Core\Exception\AppException;
 use Core\Exception\ConfigFileException;
+use Core\Exception\ValidationException;
 use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
@@ -39,6 +40,7 @@ use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Valitron\Validator;
 
 class BackupJobController
 {
@@ -68,11 +70,9 @@ class BackupJobController
      * @param Response $response
      * @return Response
      * @throws AppException
-     * @throws ConfigFileException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws Exception
      */
     public function index(Request $request, Response $response): Response
     {
@@ -84,9 +84,9 @@ class BackupJobController
         $daysstoredfiles = [];
 
         $tplData['periods_list'] = [
-            ['days' => '7', 'label' => 'Last week'],
-            ['days' => '14', 'label' => 'Last 2 weeks'],
-            ['days' => '30', 'label' => 'Last month']
+            '7' => 'Last week',
+            '14' => 'Last 2 weeks',
+            '30' => 'Last month'
         ];
 
         // Get backup job(s) list
@@ -100,11 +100,23 @@ class BackupJobController
         // Check backup job name from $_POST request
         $backupjob_name = null;
 
+        /**
+         * TODO: check if request is only POST
+         */
         if ($request->getMethod() === 'POST') {
             $backupjob_name = $postData['backupjob_name'];
         } elseif ($request->getMethod() === 'GET') {
             if (isset($requestData['backupjob_name'])) {
                 $backupjob_name = $requestData['backupjob_name'];
+            }
+        }
+
+        if ($request->getMethod() === 'POST') {
+            $validator = (new Validator($request->getParsedBody(), ['backupjob_name', 'period']))
+                ->rule('in', 'backupjob_name', $jobslist)->message('Invalid job name')
+                ->rule('in', 'period', array_keys($tplData['periods_list']))->message('Invalid period');
+            if (!$validator->validate()) {
+                throw new ValidationException($validator->errors());
             }
         }
 
@@ -120,16 +132,6 @@ class BackupJobController
             $tplData['selected_period'] = 7;
         } else {
             $tplData['no_report_options'] = 'false';
-
-            // Make sure provided backupjob_name does exists
-            if (!in_array($backupjob_name, $jobslist)) {
-                $this->session->getFlash()->set('error', ['Invalid Backup Job name']);
-                $this->session->save();
-
-                return $response
-                    ->withHeader('Location', $this->basePath . '/backupjob')
-                    ->withStatus(302);
-            }
 
             $tplData['selected_jobname'] = $backupjob_name;
 
@@ -193,13 +195,12 @@ class BackupJobController
                 ];
             }
 
-            $storedfileschart = new Chart( [
+            $storedfileschart = new Chart([
                 'type' => 'bar',
                 'name' => 'chart_storedfiles',
                 'data' => $daysstoredfiles,
                 'ylabel' => 'Files'
-                ]
-            );
+                ]);
 
             $tplData['stored_files_chart_id'] = $storedfileschart->name;
             $tplData['stored_files_chart'] = $storedfileschart->render();
@@ -251,7 +252,8 @@ class BackupJobController
                             'table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus'
                         ]
                     ]
-                ], $this->jobTable->get_driver_name()
+                ],
+                $this->jobTable->get_driver_name()
             );
 
             $joblist = [];

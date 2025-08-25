@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,10 +17,13 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Table\UserTable;
 use Core\App\UserAuth;
+use Core\Exception\ValidationException;
 use Slim\Views\Twig;
 use Core\Helpers\Sanitizer;
 use Odan\Session\SessionInterface;
@@ -31,6 +32,7 @@ use GuzzleHttp\Psr7\Response;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Valitron\Validator;
 
 class UserController
 {
@@ -76,25 +78,35 @@ class UserController
         $tplData['username'] = $this->username;
         $tplData['email'] = $user->getEmail();
 
+        // TODO: refactor below code to a proper Controller::action
         // Check if password reset have been requested
         if (isset($postData['action'])) {
             switch (Sanitizer::sanitize($postData['action'])) {
                 case 'passwordreset':
-                    // Check if provided current password is correct
-                    if ($this->userAuth->authUser($user->getUsername(), $postData['oldpassword']) == 'yes') {
-                        // Reset password
-                        $result = $this->userTable->setPassword(
-                            $user->getUsername(),
-                            $postData['newpassword']
-                        );
+                    $validator = new Validator($postData, ['username', 'oldpassword', 'newpassword', 'confnewpassword']);
+                    $validator
+                        ->rule(function ($field, $value, $params, $fields) use ($user) {
+                            if (($this->userAuth->authUser($user->getUsername(), $fields['oldpassword']) == 'yes')) {
+                                return true;
+                            }
+                            return false;
+                        }, "oldpassword")->message("Your current password is not valid")
+                        ->rule('equals', 'newpassword', 'confnewpassword')->message('Both passwords must match')
+                        ->rule('lengthMin', 'newpassword', 8)->message('Password must be at least 8 characters long');
+                    if (! $validator->validate()) {
+                        throw new ValidationException($validator->errors());
+                    }
 
-                        if ($result !== false) {
-                            $this->session->getFlash()->set('info', ['Password successfully updated']);
-                        } else {
-                            $this->session->getFlash()->set('error', ['Password not updated']);
-                        }
+                    // Reset password
+                    $result = $this->userTable->setPassword(
+                        $user->getUsername(),
+                        $postData['newpassword']
+                    );
+
+                    if ($result !== false) {
+                        $this->session->getFlash()->set('info', ['Password successfully updated']);
                     } else {
-                        $this->session->getFlash()->set('error', ['Current password is not valid']);
+                        $this->session->getFlash()->set('error', ['Password not updated']);
                     }
                     break;
             }

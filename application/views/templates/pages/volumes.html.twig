@@ -67,39 +67,51 @@
                     <!-- Pools -->
                     <div class="mb-3">
                         <label class="form-label" for="filter_pool_id">{{ 'Pool'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_pool_id">
+                        <select class="form-control input-sm {{ validation_errors.filter_pool_id ? 'is-invalid' : ' ' }}" name="filter_pool_id">
                             <option value="0" {% if pool_id == 0 %}selected{% endif %}>Any</option>
                             {% for poolid, pool in pools_list %}
                                 <option value="{{ poolid }}" {% if poolid == pool_id %}selected{% endif %}>{{ pool }}</option>
                             {% endfor %}
                         </select>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.filter_pool_id|first }}
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="inputOrderBy">{{ 'Order by'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_orderby">
+                        <select class="form-control input-sm {{ validation_errors.filter_orderby ? 'is-invalid' : ' ' }}" name="filter_orderby">
                             {% for key, order in orderby %}
                                 <option value="{{ key }}" {% if orderby_selected == key %}selected{% endif %}>{{ order }}</option>
                             {% endfor %}
                         </select>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.filter_orderby|first }}
+                        </div>
                     </div>
 
                     <div class="col-12">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="filter_orderby_asc"
+                            <input class="form-check-input {{ validation_errors.filter_orderby_asc ? 'is-invalid' : ' ' }}" type="checkbox" name="filter_orderby_asc"
                                    id="filter_orderby_asc" value="ASC" {{ orderby_asc_checked }}>
                             <label class="form-check-label" for="filter_orderby_asc">
                                 {{ 'Asc'|trans }}
                             </label>
+                            <div class="invalid-feedback">
+                                {{ validation_errors.filter_orderby_asc|first }}
+                            </div>
                         </div>
 
                         <div class="col-12">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="filter_inchanger"
+                                <input class="form-check-input {{ validation_errors.filter_inchanger ? 'is-invalid' : ' ' }}" type="checkbox" id="filter_inchanger"
                                        name="filter_inchanger" {{ inchanger_checked }}>
                                 <label class="form-check-label" for="filter_inchanger">
                                     {{ 'In changer'|trans }}
                                 </label>
+                                <div class="invalid-feedback">
+                                    {{ validation_errors.filter_inchanger|first }}
+                                </div>
                             </div>
                         </div>
 

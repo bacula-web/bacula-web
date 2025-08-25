@@ -19,13 +19,16 @@
                         <form class="form-inline pull-right" method="post" role="form" action="{{ url_for('home') }}">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text">{{ 'Period'|trans }} </span>
-                                <select class="form-control input-sm" name="period_selector">
+                                <select class="form-control input-sm {{ validation_errors['period_selector'] ? 'is-invalid' : ' ' }}" name="period_selector">
                                     {% for period in custom_period_list %}
                                         <option value="{{ period.id }}"
                                                 {% if period.id == custom_period_list_selected %}selected{% endif %}>
                                             {{ period.label }}</option>
                                     {% endfor %}
                                 </select>
+                                <div class="invalid-feedback">
+                                    {{ validation_errors['period_selector']|first }}
+                                </div>
 
                                 <button title="{{ 'Update with selected period'|trans }}" class="btn btn-primary btn-sm"
                                         type="submit">{{ 'Submit'|trans }}</button>

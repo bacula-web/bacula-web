@@ -43,21 +43,31 @@
                 <form action="{{ url_for('user') }}" method="post" data-toggle="validator">
                     <div class="form-group">
                         <label for="currentpass">Current password</label>
-                        <input name="oldpassword" type="password" id="oldpassword" class="form-control"
+                        <input name="oldpassword" type="password" id="oldpassword"
+                               class="form-control {{ validation_errors.oldpassword ? 'is-invalid' : '' }}"
                                placeholder="Current password" aria-describedby="currentpass" required>
                         <span id="currentpass" class="form-text">Your current password (required)</span>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.oldpassword|first }}
+                        </div>
 
                         <br/>
                         <label for="newpass">New password</label>
-                        <input name="newpassword" type="password" id="inputpassword" class="form-control"
+                        <input name="newpassword" type="password" id="inputpassword"
+                               class="form-control {{ validation_errors.newpassword ? 'is-invalid' : '' }}"
                                placeholder="New password" data-minlength="6" required>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.newpassword|first }}
+                        </div>
                         <div class="form-text">Password must be at least 8 characters</div>
                         <label for="inputUsername">Confirm</label>
                         <input name="confnewpassword" value="" type="password" data-minlength="6"
                                data-match="#inputpassword" data-match-error="Passwords don't match"
-                               id="inputconfpassword" class="form-control" placeholder="Confirm new password" required>
-
+                               id="inputconfpassword" class="form-control {{ validation_errors.confnewpassword ? 'is-invalid' : '' }}" placeholder="Confirm new password" required>
                         <input type="hidden" name="action" value="passwordreset">
+                        <div class="invalid-feedback">
+                            {{ validation_errors.confnewpassword|first }}
+                        </div>
 
                         <br/>
                         <button class="btn btn-sm btn-primary pull-right" type="submit">Reset password</button>

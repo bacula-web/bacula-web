@@ -16,47 +16,62 @@
 
                     <div class="form-group">
                         <label>{{ 'Job status'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_jobstatus">
+                        <select class="form-control input-sm {{ validation_errors.filter_jobstatus ? 'is-invalid' : ' ' }}" name="filter_jobstatus">
                             {% for id, status in job_status %}
                                 <option value="{{ id }}" {% if id == filter_jobstatus %} selected {% endif %}>{{ status }}</option>
                             {% endfor %}
                         </select>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.filter_jobstatus|first }}
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label>{{ 'Level'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_joblevel">
+                        <select class="form-control input-sm {{ validation_errors.filter_joblevel ? 'is-invalid' : ' ' }}" name="filter_joblevel">
                             {% for id, level in levels_list %}
                                 <option value="{{ id }}" {% if id == filter_joblevel %} selected {% endif %}>{{ level }}</option>
                             {% endfor %}
                         </select>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.filter_joblevel|first }}
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label>{{ 'Type'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_jobtype">
+                        <select class="form-control input-sm {{ validation_errors.filter_jobtype ? 'is-invalid' : ' ' }}" name="filter_jobtype">
                             {% for id, job_type in job_types_list %}
                                 <option value="{{ id }}" {% if id == filter_jobtype %} selected {% endif %}>{{ job_type }}</option>
                             {% endfor %}
                         </select>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.filter_jobtype|first }}
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label>{{ 'Client'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_clientid">
+                        <select class="form-control input-sm {{ validation_errors.filter_clientid ? 'is-invalid' : ' ' }}" name="filter_clientid">
                             {% for id, client in clients_list %}
                                 <option value="{{ id }}" {% if id == filter_clientid %} selected {% endif %}>{{ client }}</option>
                             {% endfor %}
                         </select>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.filter_clientid|first }}
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label>{{ 'Pool'|trans }}</label>
-                        <select class="form-control input-sm" name="filter_poolid">
+                        <select class="form-control input-sm {{ validation_errors.filter_poolid ? 'is-invalid' : ' ' }}" name="filter_poolid">
                             {% for id, pool in pools_list %}
                                 <option value="{{ id }}" {% if id == filter_poolid %} selected {% endif %}>{{ pool }}</option>
                             {% endfor %}
                         </select>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.filter_poolid|first }}
+                        </div>
 
                     </div>
 
@@ -65,10 +80,13 @@
                         <div class="input-group log-event" id="datetimepicker1" data-td-target-input="nearest"
                              data-td-target-toggle="nearest">
                             <input id="datetimepicker1Input" name="filter_job_starttime" type="text"
-                                   class="form-control" data-td-target="#datetimepicker1"
+                                   class="form-control {{ validation_errors.filter_job_starttime ? 'is-invalid' : ' ' }}" data-td-target="#datetimepicker1"
                                    value="{{ filter_job_starttime }}"/>
                             <span class="input-group-text" data-td-target="#datetimepicker1"
                                   data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
+                            <div class="invalid-feedback">
+                                {{ validation_errors.filter_job_starttime|first }}
+                            </div>
                         </div>
                     </div>
 
@@ -76,38 +94,51 @@
                         <label for="datetimepicker1Input" class="form-label">{{ 'End time'|trans }}</label>
                         <div class="input-group log-event" id="datetimepicker2" data-td-target-input="nearest"
                              data-td-target-toggle="nearest">
-                            <input id="datetimepicker1Input" name="filter_job_endtime" type="text" class="form-control"
+                            <input id="datetimepicker1Input" name="filter_job_endtime" type="text"
+                                   class="form-control {{ validation_errors.filter_job_endtime ? 'is-invalid' : ' ' }}"
                                    data-td-target="#datetimepicker2" value="{{ filter_job_endtime }}"/>
                             <span class="input-group-text" data-td-target="#datetimepicker2"
                                   data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
+                            <div class="invalid-feedback">
+                                {{ validation_errors.filter_job_endtime|first }}
+                            </div>
                         </div>
                     </div>
 
                     <span class="help-block">{{ 'Options'|trans }}</span>
 
                     <label>{{ 'Order by'|trans }}</label>
-                    <select class="form-control input-sm" name="filter_job_orderby">
+                    <select class="form-control input-sm {{ validation_errors.filter_job_orderby ? 'is-invalid' : ' ' }}" name="filter_job_orderby">
                         {% for id, order in result_order %}
                             <option value="{{ id }}" {% if id == result_order_field %} selected {% endif %}>{{ order }}</option>
                         {% endfor %}
                     </select>
+                    <div class="invalid-feedback">
+                        {{ validation_errors.filter_job_orderby|first }}
+                    </div>
 
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="filter_job_orderby_asc"
-                                   value="ASC" {{ result_order_asc_checked }}> Asc
+                    <div class="form-check">
+                        <input name="filter_job_orderby_asc" class="form-check-input {{ validation_errors.filter_job_orderby_asc ? 'is-invalid' : '' }}"
+                               type="checkbox" value="ASC" id="filter_job_orderby_asc">
+                        <label class="form-check-label" for="filter_job_orderby_asc">
+                            Asc
                         </label>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.filter_job_orderby_asc|first }}
+                        </div>
                     </div>
 
                     <button type="reset" class="btn btn-default btn-sm" title="{{ 'Reset'|trans }}"></button>
                     <button type="submit" class="btn btn-primary btn-sm pull-right"
                             title="{{ 'Apply filter and options'|trans }}">{{ 'Apply'|trans }}</button>
 
-                    <a class="btn btn-link btn-sm" title="{{ 'Reset to default'|trans }}" href="{{ base_path() }}/jobs"
-                       role="button">{{ 'Reset to default'|trans }}</a>
-                    {{ csrf|raw }}
-                </form>
+                    <a class="btn btn-link btn-sm" title="{{ 'Reset to default'|trans }}"
+                       href="{{ base_path() }}/jobs" role="button">{{ 'Reset to default'|trans }}
+                    </a>
 
+                    {{ csrf|raw }}
+
+                </form>
             </div>
 
             <div class="col-xs-12 col-sm-9 col-sm-pull-3 col-lg-10 col-lg-pull-2">

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2024-present Davide Franco
+ * Copyright (C) 2010-present Davide Franco
  *
  * This file is part of Bacula-Web.
  *
@@ -19,27 +19,14 @@
 
 declare(strict_types=1);
 
-namespace App\Validator;
+namespace Core\Exception;
 
-class LoginValidator extends AbstractValidator
+class ValidationException extends \RuntimeException
 {
-    public function __construct(array $parameters)
+    public array $errors = [];
+    public function __construct(array $errors, string $message = 'Validation exception(s)', int $code = 422, ?\Throwable $previous = null)
     {
-        parent::__construct($parameters, ['username', 'password']);
-
-        $this->setRules();
-    }
-
-    public function setRules(): void
-    {
-        $this->validator->rules([
-            'required' => [
-                'username', 'password'
-            ],
-            'alphaNum' => ['username'],
-            'lengthMin' => [
-                ['password', 8]
-            ]
-        ]);
+        $this->errors = $errors;
+        parent::__construct($message, $code, $previous);
     }
 }

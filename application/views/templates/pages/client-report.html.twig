@@ -14,22 +14,29 @@
                     <!-- Backup job name -->
                     <div class="mb-3">
                         <label class="form-label" for="clientname">{{ 'Client'|trans }}</label>
-                        <select class="form-control input-sm" name="client_id">
+                        <select class="form-control input-sm {{ validation_errors.client_id ? 'is-invalid' : ' ' }}" name="client_id">
                             {% for client_id, client_name in clients_list %}
                                 <option value="{{ client_id }}"
                                         {% if client_id == selected_client %}selected{% endif %}>{{ client_name }}</option>
                             {% endfor %}
                         </select>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.client_id|first }}
+                        </div>
+
                     </div>
                     <!-- Period -->
                     <div class="mb-3">
                         <label class="form-label" for="period">{{ 'Period'|trans }}</label>
-                        <select class="form-control input-sm" name="period">
+                        <select class="form-control input-sm {{ validation_errors.period ? 'is-invalid' : ' ' }}" name="period">
                             {% for key, period in periods_list %}
                                 <option value="{{ key }}"
                                         {% if key == selected_period %}selected {% endif %}>{{ period }}</option>
                             {% endfor %}
                         </select>
+                        <div class="invalid-feedback">
+                            {{ validation_errors.period|first }}
+                        </div>
                     </div>
 
                     <!-- Submit button -->

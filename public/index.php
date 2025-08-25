@@ -39,6 +39,8 @@ use App\Middleware\GuestMiddleware;
 use App\Middleware\HttpHeadersMiddleware;
 use App\Middleware\RefererMiddleware;
 use App\Middleware\TrailingSlashMiddleware;
+use App\Middleware\ValidationErrorMiddleware;
+use App\Middleware\ValidationExceptionMiddleware;
 use Core\Exception\ConfigFileException;
 use Core\Utils\ExceptionRenderer;
 use DI\ContainerBuilder;
@@ -116,6 +118,8 @@ $app
     ->add(TrailingSlashMiddleware::class)
     ->add('csrf')
     ->add(FlashMiddleware::class)
+    ->add(ValidationErrorMiddleware::class)
+    ->add(ValidationExceptionMiddleware::class)
     ->add(TwigMiddleware::create($app, $container->get(Twig::class)))
     ->add(SessionStartMiddleware::class);
 

@@ -22,21 +22,21 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Libs\Config;
-use App\Validator\VolumesRequestValidator;
 use Carbon\Carbon;
 use Core\Db\CDBQuery;
 use Core\Db\DBPagination;
+use Core\Exception\ValidationException;
 use Core\Utils\CUtils;
 use App\Table\VolumeTable;
 use App\Table\PoolTable;
 use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
-use Slim\Exception\HttpBadRequestException;
 use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Valitron\Validator;
 
 use function Core\Helpers\getRequestParams;
 
@@ -114,12 +114,28 @@ class VolumesController
 
         $postData = getRequestParams($request);
 
-        $volumesRequestValidator = new VolumesRequestValidator($postData);
+        //$volumesRequestValidator = new VolumesRequestValidator($postData);
+        $volumesRequestValidator = new Validator($postData, [
+            'page',
+            'filter_pool_id',
+            'filter_orderby',
+            'filter_orderby_asc',
+            'filter_inchanger'
+        ]);
+
+        $volumesRequestValidator->rule('integer', ['page']);
+        $volumesRequestValidator->rule('integer', ['filter_pool_id']);
+        $volumesRequestValidator->rule('in', 'filter_orderby', [
+            'Name' => 'Name',
+            'MediaId' => 'Id',
+            'VolBytes' => 'Bytes',
+            'VolJobs' => 'Jobs'
+        ])->message('Provided value is invalid');
+        $volumesRequestValidator->rule('in', 'filter_orderby_asc', ['ASC', 'DESC']);
 
         if (!empty($postData)) {
             if (!$volumesRequestValidator->validate()) {
-                $message = 'Invalid parameter(s) provided' ;
-                throw new HttpBadRequestException($request, $message);
+                throw new ValidationException($volumesRequestValidator->errors());
             } else {
                 $poolId = $postData['filter_pool_id'] ?? '0';
                 if ($poolId !== '0') {

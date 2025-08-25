@@ -12,7 +12,7 @@
                             <div class="card-body">
                                 <h1>Login</h1>
                                 <p class="text-medium-emphasis">Please sign in</p>
-                                <form method="POST" {% if errors is not empty %} class="was-validated" {% endif %}>
+                                <form method="POST">
 
                                     <label for="inputUsername" class="form-label">{{ 'Username'|trans }}</label>
                                     <div class="input-group has-validation mb-4">
@@ -20,11 +20,6 @@
                                         <input class="form-control" type="text" name="username" id="inputUsername"
                                                placeholder="" value="{{ username|first|default('') }}"
                                                autofocus required>
-                                        <div class="invalid-feedback">
-                                            {% if errors.username is not empty %}
-                                                {{ errors.username|first }}
-                                            {% endif %}
-                                        </div>
                                     </div>
 
                                     <label for="inputPassword" class="form-label">{{ 'Password'|trans }}</label>
@@ -32,11 +27,6 @@
                                         <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                         <input class="form-control" type="password" name="password" id="inputPassword"
                                                placeholder="" required>
-                                            <div class="invalid-feedback">
-                                                {% if errors.password is not empty %}
-                                                    {{ errors.password|first }}
-                                                {% endif %}
-                                            </div>
                                     </div>
 
                                     <div class="row">
@@ -46,6 +36,12 @@
                                     </div>
                                     {{ csrf|raw }}
                                 </form>
+
+                                {% if validation_errors.last_auth_error %}
+                                    <p class="text-bg-danger p-2 mt-4">
+                                        <i class="fa-solid fa-triangle-exclamation"></i> {{ validation_errors.last_auth_error }}
+                                    </p>
+                                {% endif %}
 
                                 {% if last_auth_error is not empty %}
                                     <p class="text-bg-danger p-2 mt-4">
