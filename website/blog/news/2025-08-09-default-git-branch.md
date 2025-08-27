@@ -13,11 +13,11 @@ The default git branch of [Bacula-Web git repository](https://github.com/bacula-
 
 ## Project update
 
-Please note that as of today, the default git branch of [Bacula-Web main git repository](https://github.com/bacula-web/bacula-web) 
+Please note that as of today, the default git branch of [Bacula-Web main git repository](https://github.com/bacula-web/bacula-web)
 as been updated from master to 9.x.
 
-This has been done for preparation to next 10.x major release.
+This has been done for preparation for the next 10.x major release.
 
-Shall you have any question or feedback, you can reach me [here](https://github.com/bacula-web/bacula-web/discussions)
+Should you have any questions or feedback, you can reach me [here](https://github.com/bacula-web/bacula-web/discussions)
 
 Best regards
