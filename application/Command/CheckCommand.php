@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -18,6 +16,8 @@ declare(strict_types=1);
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+declare(strict_types=1);
 
 namespace App\Command;
 
@@ -39,6 +39,7 @@ class CheckCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $hasErrors = false;
         $formatter = $this->getHelper('formatter');
 
         $output->writeln(
@@ -46,7 +47,8 @@ class CheckCommand extends Command
                 'Checking Bacula-Web requirements',
                 '================================',
                 ''
-            ]);
+            ]
+        );
 
         // Check PHP version
         $phpversion = phpversion();
@@ -56,12 +58,14 @@ class CheckCommand extends Command
                 'PHP version',
                 '===========',
                 ''
-            ]);
+            ]
+        );
 
         if (version_compare(PHP_VERSION, '8.0', '>=')) {
             $errorMessages = ['PHP version -> ok'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         } else {
+            $hasErrors = true;
             $errorMessages = ['Wrong PHP version', 'You have to upgrade PHP to at least version 8.0'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
         }
@@ -74,13 +78,15 @@ class CheckCommand extends Command
                 'PHP timezone',
                 '============',
                 ''
-            ]);
+            ]
+        );
         $timezone = ini_get('date.timezone');
 
         if (!empty($timezone)) {
             $errorMessages = ['PHP timezone -> ok'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         } else {
+            $hasErrors = true;
             $timezone = '<not set>';
             $errorMessages = ['PHP timezone not set', 'PHP timezone is not configured in php.ini'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
@@ -94,11 +100,13 @@ class CheckCommand extends Command
                 'Protected assets folder is writable',
                 '===================================',
                 ''
-            ]);
+            ]
+        );
         if (is_writable('application/assets/protected')) {
             $errorMessages = ['Protected assets folder iw writable -> ok'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         } else {
+            $hasErrors = true;
             $errorMessages = ['Protected assets folder iw writable -> error'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
         }
@@ -111,11 +119,13 @@ class CheckCommand extends Command
                 'Twig cache folder is writable',
                 '=============================',
                 ''
-            ]);
+            ]
+        );
         if (is_writable(BW_ROOT . '/application/views/cache')) {
             $errorMessages = ['Twig cache folder write permission -> ok'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         } else {
+            $hasErrors = true;
             $errorMessages = ['Twig cache folder write permission -> error'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         }
@@ -128,7 +138,8 @@ class CheckCommand extends Command
                 'Checking installed PHP database extensions',
                 '==========================================',
                 ''
-            ]);
+            ]
+        );
 
         foreach ($pdo_drivers = PDO::getAvailableDrivers() as $driver) {
             $output->writeln(["PDO $driver installed <info>Ok</info>", '']);
@@ -140,11 +151,13 @@ class CheckCommand extends Command
                 'PHP extensions',
                 '==============',
                 ''
-            ]);
+            ]
+        );
 
         if (in_array('sqlite', PDO::getAvailableDrivers())) {
             $output->writeln('PHP PDO Sqlite extension -> <info>Ok</info>');
         } else {
+            $hasErrors = true;
             $output->writeln('PHP PDO Sqlite extension -> <error>Error</error>');
         }
         $output->writeln(['[Info] PHP PDO Sqlite extension must be installed', '']);
@@ -153,6 +166,7 @@ class CheckCommand extends Command
         if (function_exists('gettext')) {
             $output->writeln('Gettext support -> <info>Ok</info>');
         } else {
+            $hasErrors = true;
             $output->writeln('Gettext support -> <error>Error</error>');
         }
         $output->writeln(['[Info] PHP Gettext extension must be installed', '']);
@@ -161,6 +175,7 @@ class CheckCommand extends Command
         if (function_exists('session_start')) {
             $output->writeln('PHP Session support -> <info>Ok</info>');
         } else {
+            $hasErrors = true;
             $output->writeln('PHP Session support -> <error>Error</error>');
         }
         $output->writeln(['[Info] PHP Session extension must be installed', '']);
@@ -169,6 +184,7 @@ class CheckCommand extends Command
         if (class_exists('PDO')) {
             $output->writeln('PHP PDO support -> <info>Ok</info>');
         } else {
+            $hasErrors = true;
             $output->writeln('PHP PDO support -> <error>Error</error>');
         }
         $output->writeln(['[Info] PHP PDO extension must be installed', '']);
@@ -177,9 +193,15 @@ class CheckCommand extends Command
         if (function_exists('posix_getpwuid')) {
             $output->writeln('PHP Posix support -> <info>Ok</info>');
         } else {
+            $hasErrors = true;
             $output->writeln('PHP Posix support -> <error>Error</error>');
         }
         $output->writeln(['[Info] PHP Posix extension must be installed', '']);
+
+        if ($hasErrors) {
+            $output->writeln(['<error>[Error]</error> Some checks did not pass, please correct it and try again.']);
+            return Command::FAILURE;
+        }
 
         return Command::SUCCESS;
     }
