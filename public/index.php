@@ -121,7 +121,8 @@ $app
     ->add(ValidationErrorMiddleware::class)
     ->add(ValidationExceptionMiddleware::class)
     ->add(TwigMiddleware::create($app, $container->get(Twig::class)))
-    ->add(SessionStartMiddleware::class);
+    ->add(SessionStartMiddleware::class)
+    ->addRoutingMiddleware();
 
 // Add Error Middleware
 $isDebug = $container->get(Config::class)->get('debug', false);
