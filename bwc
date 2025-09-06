@@ -27,7 +27,12 @@ use App\Command\CheckCommand;
 use App\Command\PublishAssetsCommand;
 use App\Command\SetupAuthCommand;
 use App\Command\ShowVersionCommand;
+use DI\ContainerBuilder;
 use Symfony\Component\Console\Application;
+
+$containerBuilder = new ContainerBuilder();
+$containerBuilder->addDefinitions(CONFIG_DIR . 'container-bindings.php');
+$container = $containerBuilder->build();
 
 $application = new Application();
 $application->setName($_ENV['APP_NAME'] . ' console');
@@ -36,7 +41,7 @@ $application->setVersion($_ENV['APP_VERSION']);
 $application->addCommands(
     [
         new ShowVersionCommand(),
-        new SetupAuthCommand(),
+        $container->get(SetupAuthCommand::class),
         new PublishAssetsCommand(),
         new CheckCommand()
     ]

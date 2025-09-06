@@ -19,8 +19,10 @@
 
 declare(strict_types=1);
 
+use App\Command\SetupAuthCommand;
 use App\CsrfErrorHandler;
 use App\Libs\Config;
+use App\Libs\FileConfig;
 use App\Libs\PhpFileConfig;
 use App\Table\CatalogTable;
 use App\Table\ClientTable;
@@ -31,6 +33,13 @@ use App\Table\PoolTable;
 use App\Table\UserTable;
 use App\Table\VolumeTable;
 use Core\Db\DatabaseFactory;
+use Core\Db\ManagerRegistry;
+use Core\Twig\Extension\TransformBytes;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Tools\DsnParser;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMSetup;
 use Odan\Session\PhpSession;
 use Odan\Session\SessionInterface;
 use Odan\Session\SessionManagerInterface;
@@ -44,8 +53,18 @@ use Twig\Extension\DebugExtension;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\MoFileLoader;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use function DI\factory;
 
 return ['settings' => [
+    'doctrine' => [
+        'config' => [
+            'isDevMode' => true,
+            'paths' =>
+                    BW_ROOT . '/application/Entity'
+
+        ],
+        'connection.core' => 'pdo-sqlite:///' . BW_ROOT . '/application/assets/protected/application.db',
+        ],
     'session' => [
         'name' => $_ENV['APP_NAME'],
         'lifetime' => 7200,
@@ -54,7 +73,8 @@ return ['settings' => [
         'secure' => true,
         'httponly' => true,
         'cache_limiter' => 'nocache',
-        'cookie_samesite' => 'Lax'],
+        'cookie_samesite' => 'Lax'
+    ],
     'config_file' => CONFIG_FILE],
 
     App::class => function (ContainerInterface $container) {
@@ -90,14 +110,24 @@ return ['settings' => [
         return new PhpSession($options);
     }, Twig::class => function (
         ContainerInterface $container,
-        SessionInterface   $session,
-        Config             $config) {
-        $twig = Twig::create(TPL_DIR, ['cache' => false]);
+        SessionInterface $session,
+        Config $config
+) {
+        /**
+         * TODO: cache must be set to path for prod env, or false for dev env, strict_variables and debug must be set to true only in dev env
+         */
+        $twig = Twig::create(TPL_DIR, [
+            'cache' => false,
+            'strict_variables' => false,
+            'debug' => true]);
 
         $twig->addExtension(new DebugExtension());
+        $twig->addExtension(new TransformBytes());
 
         $twig->getEnvironment()->addGlobal('app_name', $_ENV['APP_NAME']);
         $twig->getEnvironment()->addGlobal('app_version', $_ENV['APP_VERSION']);
+        $twig->getEnvironment()->addGlobal('app_datetime_format', $config->get('datetime_format', 'Y-m-d H:i:s'));
+        $twig->getEnvironment()->addGlobal('app_datetime_format_short', $config->get('datetime_format_short', 'Y-m-d'));
 
         $getLabels = function ($array) {
             $list = [];
@@ -145,4 +175,61 @@ return ['settings' => [
     }, Config::class => function (ContainerInterface $container) {
         $configFile = $container->get('settings')['config_file'];
         return new Config(PhpFileConfig::load($configFile));
-    }];
+    }, Connection::class => function (ContainerInterface $container) {
+        $doctrineConfig = $container->get('settings')['doctrine'];
+        $dsnParser = new DsnParser();
+        $connectionParams = $dsnParser
+            ->parse($doctrineConfig['connection.core']);
+        $config = ORMSetup::createAttributeMetadataConfiguration($doctrineConfig['config']);
+        return DriverManager::getConnection($connectionParams, $config);
+    }, 'doctrine.em.default' => function (ContainerInterface $container) {
+        $config = ORMSetup::createAttributeMetadataConfiguration([BW_ROOT . '/application/Entity/'], true);
+        return new EntityManager($container->get(Connection::class), $config);
+    }, 'doctrine.em.bacula' => function (ContainerInterface $container, SessionInterface $session) {
+        FileConfig::open(CONFIG_FILE);
+        $catalogId = $session->get('catalog_id', 0);
+
+        if (FileConfig::get_Value('db_type', $catalogId) == 'sqlite') {
+            $dsnParser = new DsnParser();
+            $connectionParams = $dsnParser
+                ->parse('pdo-sqlite:///' . FileConfig::get_Value('db_name', $catalogId));
+            $connection = DriverManager::getConnection($connectionParams);
+        } else {
+            $connection = DriverManager::getConnection([
+                'driver' => 'pdo_' . FileConfig::get_Value('db_type', $catalogId),
+                'dbname' => FileConfig::get_Value('db_name', $catalogId),
+                'user' => FileConfig::get_Value('login', $catalogId),
+                'password' => FileConfig::get_Value('password', $catalogId),
+                'host' => FileConfig::get_Value('host', $catalogId)
+            ]);
+        }
+
+        return new EntityManager(
+            $connection,
+            ORMSetup::createAttributeMetadataConfiguration(
+                [BW_ROOT . '/application/Entity/Bacula'],
+                true
+            )
+        );
+    },
+    EntityManager::class => function (ContainerInterface $container) {
+        return new EntityManager(
+            $container->get(Connection::class),
+            ORMSetup::createAttributeMetadataConfiguration([BW_ROOT . '/application/Entity/Core'], true
+        ));
+    },
+    ManagerRegistry::class => factory(function(ContainerInterface $container){
+       $connections = [
+           'default' => 'doctrine.connection.default',
+           'bacula' => 'doctrine.connection.bacula'
+       ];
+       $managers = [
+           'default' => 'doctrine.em.default',
+           'bacula' => 'doctrine.em.bacula'
+       ];
+        return new ManagerRegistry('ORM', $connections, $managers, 'default', 'default', '', $container);
+    }),
+    SetupAuthCommand::class => factory(function (ContainerInterface $container){
+        return new SetupAuthCommand(null, $container->get(ManagerRegistry::class));
+    }),
+    ];

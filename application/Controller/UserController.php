@@ -21,42 +21,51 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Table\UserTable;
+use App\Entity\Core\User;
+use App\Libs\Config;
 use Core\App\UserAuth;
+use Core\Controller\AbstractController;
+use Core\Db\ManagerRegistry;
 use Core\Exception\ValidationException;
-use Slim\Views\Twig;
 use Core\Helpers\Sanitizer;
+use GuzzleHttp\Psr7\Response;
 use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Psr7\Response;
+use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
-class UserController
+class UserController extends AbstractController
 {
     /**
      * @var string
      */
     protected string $username = '';
-    private Twig $view;
-    private UserTable $userTable;
-    private UserAuth $userAuth;
-    private SessionInterface $session;
 
     /**
-     * @param Twig $view
-     * @param UserTable $userTable
-     * @param UserAuth $userAuth
-     * @param SessionInterface $session
+     * @var UserAuth
      */
-    public function __construct(Twig $view, UserTable $userTable, UserAuth $userAuth, SessionInterface $session)
-    {
-        $this->view = $view;
-        $this->userTable = $userTable;
+    private UserAuth $userAuth;
+
+    /**
+     * @param ManagerRegistry $managerRegistry
+     * @param Twig $view
+     * @param Config $config
+     * @param SessionInterface $session
+     * @param UserAuth $userAuth
+     */
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        Twig $view,
+        Config $config,
+        SessionInterface $session,
+        UserAuth $userAuth
+    ) {
+        parent::__construct($managerRegistry, $view, $config, $session);
+
         $this->userAuth = $userAuth;
-        $this->session = $session;
     }
 
     /**
@@ -69,13 +78,18 @@ class UserController
      */
     public function prepare(Request $request, Response $response): Response
     {
+        $em = $this->managerRegistry->getManager();
+        $repository = $em->getRepository(User::class);
+
         $tplData = [];
         $postData = $request->getParsedBody();
 
-        $this->username = $this->session->get('username');
-        $user = $this->userTable->findByName($this->username);
+        /**
+         * @var User $user
+         */
+        $user = $repository->findOneBy(['username' => $this->session->get('username')]);
 
-        $tplData['username'] = $this->username;
+        $tplData['username'] = $user->getUsername();
         $tplData['email'] = $user->getEmail();
 
         // TODO: refactor below code to a proper Controller::action
@@ -83,7 +97,11 @@ class UserController
         if (isset($postData['action'])) {
             switch (Sanitizer::sanitize($postData['action'])) {
                 case 'passwordreset':
-                    $validator = new Validator($postData, ['username', 'oldpassword', 'newpassword', 'confnewpassword']);
+                    $validator = new Validator($postData, [
+                        'username',
+                        'oldpassword',
+                        'newpassword',
+                        'confnewpassword']);
                     $validator
                         ->rule(function ($field, $value, $params, $fields) use ($user) {
                             if (($this->userAuth->authUser($user->getUsername(), $fields['oldpassword']) == 'yes')) {
@@ -98,16 +116,11 @@ class UserController
                     }
 
                     // Reset password
-                    $result = $this->userTable->setPassword(
-                        $user->getUsername(),
-                        $postData['newpassword']
-                    );
+                    $user->setPassword($postData['newpassword']);
+                    $em->persist($user);
+                    $em->flush();
 
-                    if ($result !== false) {
-                        $this->session->getFlash()->set('info', ['Password successfully updated']);
-                    } else {
-                        $this->session->getFlash()->set('error', ['Password not updated']);
-                    }
+                    $this->session->getFlash()->set('info', ['Password successfully updated']);
                     break;
             }
         }

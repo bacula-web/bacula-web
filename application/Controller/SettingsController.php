@@ -21,48 +21,21 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Libs\Config;
-use App\Table\UserTable;
-use Core\Exception\ValidationException;
-use Slim\Views\Twig;
+use App\Entity\Core\User;
+use Core\Controller\AbstractController;
 use Core\Exception\AppException;
+use Core\Exception\ValidationException;
 use Core\Helpers\Sanitizer;
-use Odan\Session\SessionInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Doctrine\ORM\Exception\ORMException;
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
-class SettingsController
+class SettingsController extends AbstractController
 {
-    private Twig $view;
-    private UserTable $userTable;
-    private SessionInterface $session;
-
-    /**
-     * @var string|null
-     */
-    private ?string $basePath;
-    private Config $config;
-
-    /**
-     * @param Twig $view
-     * @param UserTable $userTable
-     * @param SessionInterface $session
-     * @param Config $config
-     */
-    public function __construct(Twig $view, UserTable $userTable, SessionInterface $session, Config $config)
-    {
-        $this->view = $view;
-        $this->userTable = $userTable;
-        $this->session = $session;
-        $this->config = $config;
-
-        $this->basePath = $this->config->get('basepath', null);
-    }
-
     /**
      * @param Request $request
      * @param Response $response
@@ -77,11 +50,13 @@ class SettingsController
 
         $tplData['config_datetime_format'] = $this->config->get('datetime_format', 'Y-m-d H:i:s (default value)');
 
-        if ($this->config->has('datetime_format_short') ) {
+        if ($this->config->has('datetime_format_short')) {
             $tplData['config_datetime_format_short'] = $this->config->get('datetime_format_short');
         } else {
-            $datetimeFormatShort = explode(' ',
-                $this->config->get('datetime_format', 'Y-m-d H:i:s'));
+            $datetimeFormatShort = explode(
+                ' ',
+                $this->config->get('datetime_format', 'Y-m-d H:i:s')
+            );
             $tplData['config_datetime_format_short'] = $datetimeFormatShort[0] . ' (default value)';
         }
 
@@ -116,10 +91,11 @@ class SettingsController
         /**
          * TODO: split users in a different controller/page
          */
-
         if ($config_enable_users_auth === true) {
-            // Get users list
-            $tplData['users'] = $this->userTable->getAll();
+            $tplData['users'] = $this->managerRegistry
+                ->getManager()
+                ->getRepository(User::class)
+                ->findAll();
 
             $tplData['config_enable_users_auth'] = 'checked';
         } else {
@@ -155,11 +131,11 @@ class SettingsController
      * @param Response $response
      * @return Response
      * @throws AppException
+     * @throws ORMException
      */
     public function addUser(Request $request, Response $response): Response
     {
         $postData = $request->getParsedBody();
-        $result = false;
 
         $form_data = [
             'username' => Sanitizer::sanitize($postData['username']),
@@ -173,22 +149,22 @@ class SettingsController
             ->rule('alphaNum', 'username')
             ->rule('lengthMin', 'password', 8)
             ->rule('email', 'email')->message('Invalid email')
-            ->rule('equals','password', 'confirmPassword')->message('Both passwords must match');
+            ->rule('equals', 'password', 'confirmPassword')->message('Both passwords must match');
 
         if (!$v->validate()) {
             throw new ValidationException($v->errors());
         } else {
-            $result = $this->userTable->addUser(
-                $form_data['username'],
-                $form_data['email'],
-                $form_data['password']
-            );
+            $em = $this->managerRegistry->getManager();
+
+            $user = new User();
+            $user->setUsername($form_data['username']);
+            $user->setPassword($form_data['password']);
+            $user->setEmail($form_data['email']);
+            $em->persist($user);
+            $em->flush();
         }
 
-        if ($result !== false) {
-            $this->session->getFlash()->set('info', ['User successfully created']);
-        }
-
+        $this->session->getFlash()->set('info', ['User successfully created']);
         $this->session->save();
 
         return $response

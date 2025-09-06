@@ -82,7 +82,8 @@ $app->group('', function (RouteCollectorProxy $group) {
 
     $group->map(['GET', 'POST'], '/jobs', [JobController::class, 'index'])->setName('jobs');
     $group->get('/joblog/{jobid}', [JobController::class, 'showLogs'])->setName('joblog');
-    $group->map(['GET', 'POST'], '/jobfiles[/{jobid}[/{page}[/{filename}]]]', [JobController::class, 'showFiles'])->setName('jobfiles');
+    //$group->map(['GET', 'POST'], '/jobfiles[/{jobid}[/{page}[/{filename}]]]', [JobController::class, 'showFiles'])->setName('jobfiles');
+    $group->map(['GET', 'POST'], '/job/{id}/files', [JobController::class, 'showFiles'])->setName('jobfiles');
 
     $group->get('/pools', [PoolController::class, 'prepare'])->setName('pools');
 

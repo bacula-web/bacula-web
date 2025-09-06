@@ -20,7 +20,6 @@ declare(strict_types=1);
  */
 
 namespace App\Controller;
-
 namespace App\Controller;
 
 use App\Libs\Config;
@@ -105,7 +104,7 @@ class DirectorController
                     'filesets' => $filesets->count(),
                     'description' => $description
                 ];
-            } catch(PDOException $exception) {
+            } catch (PDOException $exception) {
                 $directors[$id]['error'] = $exception->getMessage();
                 $this->session->set('catalog_id', $prev_catalog_id);
                 continue;

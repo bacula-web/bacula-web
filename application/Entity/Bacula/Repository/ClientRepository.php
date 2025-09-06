@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,23 +17,29 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-// Configuration
-const CONFIG_DIR = BW_ROOT . '/application/config/';
-const CONFIG_FILE = CONFIG_DIR . 'config.php';
+declare(strict_types=1);
 
-const TPL_DIR = BW_ROOT . '/application/views/templates';
-const TPL_CACHE = BW_ROOT . '/application/views/cache';
+namespace App\Entity\Bacula\Repository;
 
-// Locales
-const LOCALE_DIR = BW_ROOT . '/application/locale';
+use Doctrine\ORM\EntityRepository;
 
-// Time intervals in secondes
-define('FIRST_DAY', mktime(0, 0, 0, 1, 1, 1970));
-define('DAY', 86400);
-define('WEEK', 7 * DAY);
-define('MONTH', 4 * WEEK);
+class ClientRepository extends EntityRepository
+{
+    public function getClients(bool $showInactiveClient = false): array
+    {
+        $queryBuilder = $this
+            ->createQueryBuilder('c')
+            ->select('c')
+            ->orderBy('c.name', 'ASC');
 
-// Job levels
-define('J_FULL', 'F');
-define('J_DIFF', 'D');
-define('J_INCR', 'I');
+        if (!$showInactiveClient) {
+            $queryBuilder
+                ->andWhere('c.fileRetention > 0')
+                ->andWhere('c.jobRetention > 0');
+        }
+
+        return $queryBuilder
+            ->getQuery()
+            ->getArrayResult();
+    }
+}

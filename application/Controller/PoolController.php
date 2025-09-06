@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,63 +17,61 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Libs\Config;
+use App\Entity\Bacula\Pool;
+use Core\Controller\AbstractController;
 use Core\Utils\CUtils;
-use App\Table\PoolTable;
-use Exception;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
-use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
-class PoolController
+class PoolController extends AbstractController
 {
-    /**
-     * @var PoolTable
-     */
-
-    private PoolTable $poolTable;
-    private Config $config;
-    private Twig $view;
-
-    /**
-     * @param PoolTable $poolTable
-     * @param Config $config
-     * @param Twig $view
-     */
-    public function __construct(PoolTable $poolTable, Config $config, Twig $view)
-    {
-        $this->poolTable = $poolTable;
-        $this->config = $config;
-        $this->view = $view;
-    }
-
     /**
      * @param Request $request
      * @param Response $response
      * @return Response
-     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function prepare(Request $request, Response $response): Response
     {
-        $tplData = [];
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->managerRegistry->getManager('bacula');
+        $queryBuilder = $em->createQueryBuilder();
 
-        $pools_list = [];
+        $pools = $queryBuilder
+            ->select('p', 'v')
+            ->from(Pool::class, 'p')
+            ->leftJoin('p.volumes', 'v')
+            ->orderBy('p.name')
+            ->getQuery()
+            ->getArrayResult();
 
-        // Add more details to each pool
-        foreach ($this->poolTable->getPools($this->config->get('hide_empty_pools')) as $pool) {
-            // Total bytes for each pool
-            $sql = "SELECT SUM(Media.volbytes) as sumbytes FROM Media WHERE Media.PoolId = '" . $pool['poolid'] . "'";
-            $result = $this->poolTable->run_query($sql);
-            $result = $result->fetchAll();
-            $pool['totalbytes'] = CUtils::Get_Human_Size($result[0]['sumbytes']);
+        $dql = 'SELECT SUM(m.volbytes) as sumbytes FROM App\Entity\Bacula\Volume m WHERE m.poolId = :poolid';
 
-            $pools_list[] = $pool;
+        foreach ($pools as $id => $pool) {
+            $query = $em->createQuery($dql);
+            $query->setParameter('poolid', $pool['id']);
+            $totalBytes = $query->getSingleScalarResult();
+            $pools[$id]['total_bytes'] = CUtils::Get_Human_Size($totalBytes);
         }
 
-        $tplData['pools'] = $pools_list;
-
-        return $this->view->render($response, 'pages/pools.html.twig', $tplData);
+        return $this->view->render($response, 'pages/pools.html.twig', [
+            'pools' => $pools
+        ]);
     }
 }

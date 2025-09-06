@@ -17,6 +17,7 @@
                     <div class="form-group">
                         <label>{{ 'Job status'|trans }}</label>
                         <select class="form-control input-sm {{ validation_errors.filter_jobstatus ? 'is-invalid' : ' ' }}" name="filter_jobstatus">
+                            <option value="">Any</option>
                             {% for id, status in job_status %}
                                 <option value="{{ id }}" {% if id == filter_jobstatus %} selected {% endif %}>{{ status }}</option>
                             {% endfor %}
@@ -29,6 +30,7 @@
                     <div class="form-group">
                         <label>{{ 'Level'|trans }}</label>
                         <select class="form-control input-sm {{ validation_errors.filter_joblevel ? 'is-invalid' : ' ' }}" name="filter_joblevel">
+                            <option value="">Any</option>
                             {% for id, level in levels_list %}
                                 <option value="{{ id }}" {% if id == filter_joblevel %} selected {% endif %}>{{ level }}</option>
                             {% endfor %}
@@ -41,8 +43,9 @@
                     <div class="form-group">
                         <label>{{ 'Type'|trans }}</label>
                         <select class="form-control input-sm {{ validation_errors.filter_jobtype ? 'is-invalid' : ' ' }}" name="filter_jobtype">
+                            <option value="">Any</option>
                             {% for id, job_type in job_types_list %}
-                                <option value="{{ id }}" {% if id == filter_jobtype %} selected {% endif %}>{{ job_type }}</option>
+                                <option value="{{ id }}" {% if id == filter_job_type %} selected {% endif %}>{{ job_type }}</option>
                             {% endfor %}
                         </select>
                         <div class="invalid-feedback">
@@ -53,8 +56,9 @@
                     <div class="form-group">
                         <label>{{ 'Client'|trans }}</label>
                         <select class="form-control input-sm {{ validation_errors.filter_clientid ? 'is-invalid' : ' ' }}" name="filter_clientid">
+                            <option value="">Any</option>
                             {% for id, client in clients_list %}
-                                <option value="{{ id }}" {% if id == filter_clientid %} selected {% endif %}>{{ client }}</option>
+                                <option value="{{ client.id }}" {% if client.id == filter_clientid %} selected {% endif %}>{{ client.name }}</option>
                             {% endfor %}
                         </select>
                         <div class="invalid-feedback">
@@ -65,8 +69,9 @@
                     <div class="form-group">
                         <label>{{ 'Pool'|trans }}</label>
                         <select class="form-control input-sm {{ validation_errors.filter_poolid ? 'is-invalid' : ' ' }}" name="filter_poolid">
-                            {% for id, pool in pools_list %}
-                                <option value="{{ id }}" {% if id == filter_poolid %} selected {% endif %}>{{ pool }}</option>
+                            <option value="">Any</option>
+                            {% for pool in pools_list %}
+                                <option value="{{ pool.id }}" {% if pool.id == filter_pool_id %} selected {% endif %}>{{ pool.name }}</option>
                             {% endfor %}
                         </select>
                         <div class="invalid-feedback">
@@ -119,10 +124,8 @@
 
                     <div class="form-check">
                         <input name="filter_job_orderby_asc" class="form-check-input {{ validation_errors.filter_job_orderby_asc ? 'is-invalid' : '' }}"
-                               type="checkbox" value="ASC" id="filter_job_orderby_asc">
-                        <label class="form-check-label" for="filter_job_orderby_asc">
-                            Asc
-                        </label>
+                               type="checkbox" value="ASC" id="filter_job_orderby_asc" {{ result_order_asc_checked }}>
+                        <label class="form-check-label" for="filter_job_orderby_asc">Asc</label>
                         <div class="invalid-feedback">
                             {{ validation_errors.filter_job_orderby_asc|first }}
                         </div>
@@ -158,7 +161,7 @@
                             <th class="text-center">{{ 'Level'|trans }}</th>
                             <th class="text-center">{{ 'Bytes'|trans }}</th>
                             <th class="text-center">{{ 'Files'|trans }}</th>
-                            <th class="text-center">{{ 'Speed'|trans }}</th>
+                            <th class="text-center">{{ 'Bit rate'|trans }}</th>
                             <th class="text-center">{{ 'Compression'|trans }}</th>
                             <th class="text-center">{{ 'Pool'|trans }}</th>
                             <th class="text-center">{{ 'Log'|trans }}</th>
@@ -167,18 +170,19 @@
 
                         <!-- <div class="listbox"> -->
                         {% for job in last_jobs %}
+
                             <tr>
                                 <td>
-                                    <i title="{{ job.jobstatuslong }}" class="{{ job.Job_icon }}"></i>
+                                    <i title="{{ job.status.statuslong }}" class="{{ job.statusIcon }}"></i>
                                 </td>
-                                <td>{{ job.jobid }}</td>
+                                <td>{{ job.id }}</td>
                                 <td class="text-left">
                                     {% if job.type == 'B' %}
                                         <form action="{{ url_for('backupjob') }}" method="post">
-                                            <input type="hidden" name="backupjob_name" value="{{ job.job_name }}"/>
+                                            <input type="hidden" name="backupjob_name" value="{{ job.name }}"/>
                                             <input type="hidden" name="backupjob_period" value="7"/>
                                             <button type="submit"
-                                                    class="btn btn-sm btn-link">{{ job.job_name }}</button>
+                                                    class="btn btn-sm btn-link">{{ job.name }}</button>
                                             {{ csrf|raw }}
                                         </form>
                                     {% else %}
@@ -186,27 +190,33 @@
                                     {% endif %}
                                 </td>
                                 <td>{{ job.type }}</td>
-                                <td>{{ job.schedtime }}</td>
-                                <td>{{ job.starttime }}</td>
-                                <td>{{ job.endtime }}</td>
-                                <td>{{ job.elapsed_time }}</td>
+                                <td>{{ job.scheduledTime|date(app_datetime_format) }}</td>
+                                {#
+                                    THIS IS HOW YOU MUST HANDLE null DateTime
+                                    Look at https://twig.symfony.com/doc/3.x/filters/date.html
+                                #}
+                                <td>{{ job.starttime is empty ? 'n/a' : job.starttime|date(app_datetime_format) }}</td>
+                                {# <td>{{ job.starttime|date(app_datetime_format)|default('n/a') }}</td> #}
+                                <td>{{ job.endtime is empty ? 'n/a' : job.endtime|date(app_datetime_format) }}</td>
+                                {# <td>{{ job.endtime|date(app_datetime_format)|default('n/a') }}</td> #}
+                                <td>{{ job.elapsedTime|default('n/a') }}</td>
                                 <td>{{ job.level }}</td>
-                                <td class="text-right">{{ job.jobbytes }}</td>
+                                <td class="text-right">{{ transform_bytes(job.jobbytes) }}</td>
                                 <td class="text-right">
                                     {% if job.jobfiles != 0 and job.type == 'B' %}
-                                        <a href="{{ base_path() }}/jobfiles/{{ job.jobid }}"
+                                        <a href="{{ base_path() }}/job/{{ job.id }}/files"
                                            title="{{ 'Show job files'|trans }}">
-                                            {{ job.jobfiles }} <i class="fa-solid fa-folder"></i>
+                                            {{ job.jobfiles|number_format }} <i class="fa-solid fa-folder"></i>
                                         </a>
                                     {% else %}
                                         {{ job.jobfiles }}
                                     {% endif %}
                                 </td>
-                                <td>{{ job.speed }}</td>
-                                <td>{{ job.compression }}</td>
-                                <td>{{ job.pool_name }}</td>
+                                <td>{{ transform_bytes(job.bitrate) }}/s </td>
+                                <td>{{ job.compression|number_format(2) }}</td>
+                                <td>{{ job.pool.name|default('n/a') }}</td>
                                 <td>
-                                    <a href="{{ base_path() }}/joblog/{{ job.jobid }}"
+                                    <a href="{{ base_path() }}/joblog/{{ job.id }}"
                                        title="{{ 'Show job logs'|trans }}"> <i
                                                 class="fa-solid fa-magnifying-glass"></i> </a>
                                 </td>

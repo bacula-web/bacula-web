@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,42 +17,12 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Entity;
+declare(strict_types=1);
 
-use Core\Utils\CUtils;
+namespace App\Entity\Bacula\Repository;
 
-class Volume
+use Doctrine\ORM\EntityRepository;
+
+class StatusRepository extends EntityRepository
 {
-    /**
-     * @var int
-     */
-    private int $volbytes;
-
-    private int $inchanger;
-
-    private int $slot;
-
-    /**
-     * @return string
-     */
-    public function getVolbytes(): string
-    {
-        return CUtils::Get_Human_Size($this->volbytes);
-    }
-
-    public function getInchanger(): string
-    {
-        if ($this->inchanger === 0) {
-            return '-';
-        }
-        return '<i class="fa fa-check" aria-hidden="true"></i>';
-    }
-
-    public function getSlot(): string|int
-    {
-        if ($this->inchanger === 0) {
-            return 'n/a';
-        }
-        return $this->slot;
-    }
 }

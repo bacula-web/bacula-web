@@ -21,13 +21,19 @@ declare(strict_types=1);
 
 namespace Core\App;
 
+use App\Entity\Core\User;
 use App\Table\UserTable;
+use Core\Db\ManagerRegistry;
 use Core\Exception\AppException;
 use Core\Exception\DatabaseException;
-use Exception;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NonUniqueResultException;
+use Odan\Session;
 use Odan\Session\SessionInterface;
 use PDO;
-use Odan\Session;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class UserAuth
 {
@@ -48,12 +54,22 @@ class UserAuth
     private SessionInterface $session;
 
     /**
-     * @throws Exception
+     * @var EntityManager
      */
-    public function __construct(UserTable $userTable, SessionInterface $session)
+    private EntityManager $em;
+
+    /**
+     * @param UserTable $userTable
+     * @param SessionInterface $session
+     * @param ContainerInterface $container
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function __construct(UserTable $userTable, SessionInterface $session, ManagerRegistry $managerRegistry)
     {
         $this->userTable = $userTable;
         $this->session = $session;
+        $this->em = $managerRegistry->getManager();
     }
 
     /**
@@ -111,21 +127,29 @@ class UserAuth
      * @param string $username
      * @param string $password
      * @return string
+     * @throws NonUniqueResultException
      */
     public function authUser(string $username, string $password): string
     {
-        $username = trim($username, ' ');
-        $user = $this->userTable->findByName($username);
+        $queryBuilder = $this->em->createQueryBuilder();
+
+        $user = $queryBuilder
+            ->select('u')
+            ->from(User::class, 'u')
+            ->where('u.username = :username')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getOneOrNullResult();
 
         if ($user) {
-            if (password_verify($password, $user->getPasswordHash())) {
+            if (password_verify($password, $user->getPassword())) {
                 return 'yes';
             } else {
                 return 'no';
             }
-        } else {
-            return 'no';
         }
+
+        return 'no';
     }
 
     /**

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,11 +17,16 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Command;
 
+use App\Entity\Core\User;
 use App\Table\UserTable;
 use Core\Db\DatabaseFactory;
-use PDOException;
+use Core\Db\ManagerRegistry;
+use Doctrine\ORM\EntityManager;
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,6 +35,18 @@ use Symfony\Component\Console\Question\Question;
 
 class SetupAuthCommand extends Command
 {
+    /**
+     * @var EntityManager
+     */
+    private EntityManager $em;
+
+    public function __construct(string $name = null, ManagerRegistry $managerRegistry)
+    {
+        parent::__construct($name);
+
+        $this->em = $managerRegistry->getManager();
+    }
+
     protected function configure(): void
     {
         $this->setDescription('Setup Bacula-Web users authentication database')
@@ -58,7 +73,7 @@ class SetupAuthCommand extends Command
         $question->setErrorMessage('Answer %s is not valid.');
 
         $answer = $helper->ask($input, $output, $question);
-        $output->writeln('You have selected: ' . $answer );
+        $output->writeln('You have selected: ' . $answer);
 
         if ($answer !== 'yes') {
             $errorMessages = ['Aborted', 'Auth database creation canceled by user, exiting.'];
@@ -112,14 +127,22 @@ class SetupAuthCommand extends Command
                 return Command::FAILURE;
             }
 
-            $result = $userTable->addUser($username, $email, $password);
-            if ($result) {
-                $output->writeln('<info>' . $result->rowCount() . ' user created successfuly</info>');
-            }
+            $user = new  User();
+            $user->setUsername($username);
+            $user->setPassword($password);
+            $user->setEmail($email);
+
+            $this->em->persist($user);
+            $this->em->flush();
+
+            $output->writeln('<info> User created successfully</info>');
 
             $output->writeln('You can now connect to your Bacula-Web instance using provided credentials');
-        } catch (PDOException $e) {
-            die('Database error ' . $e->getMessage() . ' code(' . $e->getCode() . ')');
+        } catch (Exception $e) {
+            $output->writeln(
+                '<error>Error</error> Unable to create user with error ' . $e->getMessage() .
+                ' error code(' . $e->getCode() . ')'
+            );
             return Command::FAILURE;
         }
 

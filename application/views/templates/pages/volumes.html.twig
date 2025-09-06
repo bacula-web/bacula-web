@@ -31,21 +31,27 @@
                         {% for volume in volumes %}
                             <tr>
                                 <td>
-                                    <a href="{{ url_for('volume_detail', {'id': volume.mediaid }) }}"
-                                       title="{{ 'Show volume'|trans }}">{{ volume.volumename }}</a>
+                                    <a href="{{ url_for('volume_detail', {'id': volume.id }) }}"
+                                       title="{{ 'Show volume'|trans }}">{{ volume.name }}</a>
                                 </td>
-                                <td class="text-right">{{ volume.volbytes }}</td>
-                                <td class="text-right">{{ volume.volfiles }}</td>
-                                <td class="text-right">{{ volume.voljobs }}</td>
+                                <td class="text-right">{{ transform_bytes(volume.volbytes) }}</td>
+                                <td class="text-right">{{ volume.volfiles|format }}</td>
+                                <td class="text-right">{{ volume.voljobs|format }}</td>
                                 <td>{{ volume.mediatype }}</td>
-                                <td>{{ volume.pool_name }}</td>
-                                <td>{{ volume.expire }}</td>
-                                <td>{{ volume.lastwritten }}</td>
-                                <td title="{{ volume.volstatus }}">
-                                    <i class="fa {{ volume.status_icon }}"></i>
+                                <td>{{ volume.pool.name }}</td>
+                                <td>
+                                    {% if volume.expire != 0 %}
+                                        {{ volume.expirationDate }} day(s) ({{ (volume.expire|date(app_datetime_format_short)) }})
+                                    {% else %}
+                                        n/a
+                                    {% endif %}
                                 </td>
-                                <td>{{ volume.slot }}</td>
-                                <td>{{ volume.inchanger|raw }}</td>
+                                <td>{{ (volume.lastwritten != '0000-00-00 00:00:00') ? volume.lastwritten|date(app_datetime_format) : 'n/a' }}</td>
+                                <td title="{{ volume.status }}">
+                                    <i class="fa {{ volume.statusicon }}"></i>
+                                </td>
+                                <td>{{ (volume.inchanger) ? volume.slot : 'n/a' }}</td>
+                                <td>{{ volume.inchangerstatus|raw }}</td>
                             </tr>
                         {% else %}
                             <tr>
@@ -61,26 +67,26 @@
                     {{ include("partials/pagination.html.twig", {route: 'volumes' }) }}
                 {% endif %}
             </div>
+
             <div class="col-2">
                 <!-- Options -->
                 <form class="" action="{{ url_for('volumes') }}" method="post">
                     <!-- Pools -->
                     <div class="mb-3">
                         <label class="form-label" for="filter_pool_id">{{ 'Pool'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_pool_id ? 'is-invalid' : ' ' }}" name="filter_pool_id">
+                        <select class="form-control input-sm {{ validation_errors.filter_pool_id ? 'is-invalid' : ' ' }}" name="filter_pool_id" id="filter_pool_id">
                             <option value="0" {% if pool_id == 0 %}selected{% endif %}>Any</option>
-                            {% for poolid, pool in pools_list %}
-                                <option value="{{ poolid }}" {% if poolid == pool_id %}selected{% endif %}>{{ pool }}</option>
+                            {% for pool in pools_list %}
+                                <option value="{{ pool.id }}" {% if pool.id == pool_id %}selected{% endif %}>{{ pool.name }}</option>
                             {% endfor %}
                         </select>
                         <div class="invalid-feedback">
                             {{ validation_errors.filter_pool_id|first }}
                         </div>
                     </div>
-
                     <div class="mb-3">
-                        <label class="form-label" for="inputOrderBy">{{ 'Order by'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_orderby ? 'is-invalid' : ' ' }}" name="filter_orderby">
+                        <label class="form-label" for="filter_orderby">{{ 'Order by'|trans }}</label>
+                        <select class="form-control input-sm {{ validation_errors.filter_orderby ? 'is-invalid' : ' ' }}" name="filter_orderby" id="filter_orderby">
                             {% for key, order in orderby %}
                                 <option value="{{ key }}" {% if orderby_selected == key %}selected{% endif %}>{{ order }}</option>
                             {% endfor %}
@@ -134,7 +140,7 @@
                     {{ 'Volume(s) found'|trans }} <span class="badge text-bg-dark">{{ volumes_count }}</span>
                 </li>
                 <li class="list-group-item">
-                    {{ 'Total bytes'|trans }} <span class="badge text-bg-dark">{{ volumes_total_bytes }}</span>
+                    {{ 'Total bytes'|trans }} <span class="badge text-bg-dark">{{ transform_bytes(volumes_total_bytes) }}</span>
                 </li>
             </ul>
         </div>

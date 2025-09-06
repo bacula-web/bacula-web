@@ -21,26 +21,38 @@
 namespace App\Controller;
 
 use App\Table\CatalogTable;
+use Core\Controller\AbstractController;
 use Core\Exception\AppException;
+use Doctrine\DBAL\Exception;
+use Doctrine\ORM\EntityManager;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use PDO;
 use Core\Graph\Chart;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class TestController
+class TestController extends AbstractController
 {
     private CatalogTable $catalogTable;
-    private Twig $view;
 
-    public function __construct(CatalogTable $catalogTable, Twig $view)
+    /**
+     * @param CatalogTable $catalogTable
+     * @param ContainerInterface $container
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function __construct(CatalogTable $catalogTable, ContainerInterface $container)
     {
+        parent::__construct($container);
+
         $this->catalogTable = $catalogTable;
-        $this->view = $view;
+        $this->container = $container;
     }
 
     /**
@@ -48,13 +60,21 @@ class TestController
      * @param Response $response
      * @return Response
      * @throws AppException
+     * @throws ContainerExceptionInterface
      * @throws LoaderError
+     * @throws NotFoundExceptionInterface
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws Exception
      */
     public function index(Request $request, Response $response): Response
     {
         $tplData = [];
+
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->container->get('doctrine.em.bacula');
 
         // Installed PDO drivers
         $pdo_drivers = PDO::getAvailableDrivers();
@@ -89,7 +109,7 @@ class TestController
                 'check_descr' => 'PHP Posix support is required, please compile PHP with this option'),
             array('check_cmd' => 'db-connection',
                 'check_label' => 'Database connection status (MySQL and postgreSQL only)',
-                'check_descr' => 'Current status: ' . $this->catalogTable->getConnectionStatus()),
+                //'check_descr' => 'Current status: ' . $this->catalogTable->getConnectionStatus()),
             array('check_cmd' => 'twig-cache',
                 'check_label' => 'Twig cache folder write permission',
                 'check_descr' => TPL_CACHE . ' must be writable by Apache'),
@@ -102,65 +122,70 @@ class TestController
             array('check_cmd' => 'php-timezone',
                 'check_label' => 'PHP timezone',
                 'check_descr' => 'Timezone must be configured in php.ini (current timezone = ' . ini_get('date.timezone') . ')')
-        );
+            );
 
         // Doing all checks
-        foreach ($check_list as &$check) {
-            switch ($check['check_cmd']) {
-                case 'php-session':
-                    $check['check_result'] = $icon_result[function_exists('session_start')];
-                    break;
-                case 'php-gettext':
-                    $check['check_result'] = $icon_result[function_exists('gettext')];
-                    break;
-                case 'php-mysql':
-                    $check['check_result'] = $icon_result[in_array('mysql', $pdo_drivers)];
-                    break;
-                case 'php-postgres':
-                    $check['check_result'] = $icon_result[in_array('pgsql', $pdo_drivers)];
-                    break;
-                case 'php-sqlite':
-                    $check['check_result'] = $icon_result[in_array('sqlite', $pdo_drivers)];
-                    break;
-                case 'php-pdo':
-                    $check['check_result'] = $icon_result[class_exists('PDO')];
-                    break;
-                case 'php-posix':
-                    $check['check_result'] = $icon_result[function_exists('posix_getpwuid')];
-                    break;
-                case 'twig-cache':
-                    $check['check_result'] = $icon_result[is_writable(TPL_CACHE)];
-                    break;
-                case 'users-db':
-                    $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/assets/protected')];
-                    break;
-                case 'php-version':
-                    $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '8.0', '>=')];
-                    break;
-                case 'db-connection':
-                    $check['check_result'] = $icon_result[$this->catalogTable->isConnected()];
-                    break;
-                case 'php-timezone':
-                    $timezone = ini_get('date.timezone');
-                    if (!empty($timezone)) {
-                        $check['check_result'] = $icon_result[true];
-                    } else {
-                        $check['check_result'] = $icon_result[false];
-                    }
-                    break;
+            foreach ($check_list as &$check) {
+                switch ($check['check_cmd']) {
+                    case 'php-session':
+                        $check['check_result'] = $icon_result[function_exists('session_start')];
+                        break;
+                    case 'php-gettext':
+                        $check['check_result'] = $icon_result[function_exists('gettext')];
+                        break;
+                    case 'php-mysql':
+                        $check['check_result'] = $icon_result[in_array('mysql', $pdo_drivers)];
+                        break;
+                    case 'php-postgres':
+                        $check['check_result'] = $icon_result[in_array('pgsql', $pdo_drivers)];
+                        break;
+                    case 'php-sqlite':
+                        $check['check_result'] = $icon_result[in_array('sqlite', $pdo_drivers)];
+                        break;
+                    case 'php-pdo':
+                        $check['check_result'] = $icon_result[class_exists('PDO')];
+                        break;
+                    case 'php-posix':
+                        $check['check_result'] = $icon_result[function_exists('posix_getpwuid')];
+                        break;
+                    case 'twig-cache':
+                        $check['check_result'] = $icon_result[is_writable(TPL_CACHE)];
+                        break;
+                    case 'users-db':
+                        $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/assets/protected')];
+                        break;
+                    case 'php-version':
+                        $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '8.0', '>=')];
+                        break;
+                    case 'db-connection':
+                        $connection = $em->getConnection();
+                        $connection->connect();
+                        $check['check_result'] = $icon_result[$connection->isConnected()];
+                        $driver = $connection->getDriver();
+                        $database = $connection->getDatabase();
+                        $check['check_descr'] = "Successful connection to database $database with driver $driver";
+                        break;
+                    case 'php-timezone':
+                        $timezone = ini_get('date.timezone');
+                        if (!empty($timezone)) {
+                            $check['check_result'] = $icon_result[true];
+                        } else {
+                            $check['check_result'] = $icon_result[false];
+                        }
+                        break;
+                }
             }
-        }
 
         // Testing graph capabilities
-        $data = array(array('test', 100),
+            $data = array(array('test', 100),
             array('test1', 150),
             array('test2', 180),
             array('test3', 270),
             array('test4', 456)
-        );
+            );
 
         // Dummy Pie chart
-        $pie_chart = new Chart(array('type' => 'pie',
+            $pie_chart = new Chart(array('type' => 'pie',
             'name' => 'chart_pie_test',
             'data' => $data));
 

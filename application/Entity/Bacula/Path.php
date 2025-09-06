@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -19,23 +17,38 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-// Configuration
-const CONFIG_DIR = BW_ROOT . '/application/config/';
-const CONFIG_FILE = CONFIG_DIR . 'config.php';
+declare(strict_types=1);
 
-const TPL_DIR = BW_ROOT . '/application/views/templates';
-const TPL_CACHE = BW_ROOT . '/application/views/cache';
+namespace App\Entity\Bacula;
 
-// Locales
-const LOCALE_DIR = BW_ROOT . '/application/locale';
+use App\Entity\Bacula\Repository\PathRepository;
+use Doctrine\ORM\Mapping as ORM;
 
-// Time intervals in secondes
-define('FIRST_DAY', mktime(0, 0, 0, 1, 1, 1970));
-define('DAY', 86400);
-define('WEEK', 7 * DAY);
-define('MONTH', 4 * WEEK);
+#[ORM\Entity(repositoryClass: PathRepository::class)]
+#[ORM\Table(name: "Path")]
+class Path
+{
+    #[ORM\Column(name: "PathId", type: "integer")]
+    #[ORM\GeneratedValue()]
+    #[ORM\Id]
+    private int $id;
 
-// Job levels
-define('J_FULL', 'F');
-define('J_DIFF', 'D');
-define('J_INCR', 'I');
+    #[ORM\Column(name: "Path", type: "string")]
+    private string $path;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+}

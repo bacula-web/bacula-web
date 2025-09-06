@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
- * This file is part of Bacula-Web.
+ * This file is part of the Bacula-Web project.
  *
  * Bacula-Web is free software: you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation, either version 2 of the License, or
@@ -19,46 +17,38 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Entity;
+declare(strict_types=1);
 
-use Core\Utils\CUtils;
+namespace App\Entity\Bacula;
 
-class Job
+use App\Entity\Bacula\Repository\FilenameRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: FilenameRepository::class)]
+#[ORM\Table(name: "Filename")]
+class Filename
 {
-    /**
-     * @var string
-     */
-    private string $level;
+    #[ORM\Column(name: 'FilenameId', type: "integer")]
+    #[ORM\GeneratedValue]
+    #[ORM\Id]
+    private int $id;
+
+    #[ORM\Column(name: "Name", type: "string")]
+    private string $name;
 
     /**
-     * @var int
+     * @return int
      */
-    private int $jobbytes;
-
-    /**
-     * @return string
-     */
-    public function getLevel(): string
+    public function getId(): int
     {
-        $joblevels = [
-            'D' => 'Differential',
-            'I' => 'Incremental',
-            'F' => 'Full',
-            'V' => 'InitCatalog',
-            'C' => 'Catalog',
-            'O' => 'VolumeToCatalog',
-            'd' => 'DiskToCatalog',
-            'A' => 'Data'
-        ];
-
-        return $joblevels[$this->level];
+        return $this->id;
     }
 
     /**
      * @return string
      */
-    public function getJobBytes(): string
+    public function getName(): string
     {
-        return CUtils::Get_Human_Size($this->jobbytes);
+        return $this->name;
     }
 }

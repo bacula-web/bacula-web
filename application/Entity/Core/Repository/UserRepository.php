@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,39 +17,12 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Entity;
+declare(strict_types=1);
 
-class Log
+namespace App\Entity\Core\Repository;
+
+use Doctrine\ORM\EntityRepository;
+
+class UserRepository extends EntityRepository
 {
-    private $logtext;
-
-    /**
-     * @var string $time
-     */
-    private $time;
-
-    /**
-     * @return string
-     */
-    public function getLogText(): string
-    {
-        return $this->logtext;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTime(): string
-    {
-        return $this->time;
-    }
-
-    /**
-     * @param $time
-     * @return void
-     */
-    public function setTime($time): void
-    {
-        $this->time = $time;
-    }
 }

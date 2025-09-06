@@ -18,7 +18,7 @@
  */
 
 /**
- * CDBPagination helps creating pagination from database queries results
+ * DBPagination helps create pagination from database queries results
  *
  * @author  Davide Franco <bacula-dev@dflc.ch>
  *
@@ -27,8 +27,8 @@
 namespace Core\Db;
 
 use App\Libs\Config;
-use Core\Exception\ConfigFileException;
-use Exception;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Psr\Http\Message\ServerRequestInterface;
 use function Core\Helpers\getRequestParams;
 
@@ -61,7 +61,7 @@ class DBPagination
     private int $paginationMax;
 
     /**
-     * @var int
+     * @var int Current page number
      */
     private int $paginationCurrent;
 
@@ -78,7 +78,8 @@ class DBPagination
 
         $this->limit = $config->get('rows_per_page', 25);
 
-        $this->paginationCurrent = $parameters['page'] ?? 1;
+        // TODO: make sure page is higher or equal to 1, also ensure it's not bigger than maximum pages
+        $this->paginationCurrent = (int) isset($parameters['page']) ? $parameters['page'] : 1;
 
         if ($this->paginationCurrent === 1) {
             $this->offset = 0;
@@ -142,21 +143,24 @@ class DBPagination
     }
 
     /**
-     * @param Table $table
-     * @param string $query
-     * @param string $queryCount
-     * @param null $params
-     * @return array|false
-     * @throws Exception
+     * @param QueryBuilder $queryBuilder
+     * @param int $totalRow total of non-filtered rows
+     * @return Paginator
      */
-    public function paginate(Table $table, string $query, string $queryCount, $params = null)
+    public function paginate(QueryBuilder $queryBuilder, int $totalRow): Paginator
     {
-        $this->totalRow = $table->count();
+        $this->totalRow = $totalRow;
 
-        $this->filteredRow = $table->select($queryCount, $params)[0]['row_count'];
+        $queryBuilder
+            ->setFirstResult($this->offset)
+            ->setMaxResults($this->limit);
+
+        $paginated = new Paginator($queryBuilder, fetchJoinCollection: true);
+
+        $this->filteredRow = count($paginated);
         $this->paginationMax = ceil($this->filteredRow / $this->limit);
 
-        return $table->select($query, $params);
+        return $paginated;
     }
 
     /**
@@ -184,12 +188,11 @@ class DBPagination
      */
     public function getPreviousPage(): int
     {
-        if ($this->paginationCurrent == 1)
-        {
+        if ($this->paginationCurrent == 1) {
             return 1;
         }
 
-        return $this->paginationCurrent -1;
+        return $this->paginationCurrent - 1;
     }
 
     /**
@@ -197,8 +200,7 @@ class DBPagination
      */
     public function getNextPage(): int
     {
-        if ($this->paginationCurrent !== $this->getMaxPage())
-        {
+        if ($this->paginationCurrent !== $this->getMaxPage()) {
             return $this->paginationCurrent + 1;
         }
 
@@ -222,8 +224,8 @@ class DBPagination
             return 1;
         }
 
-        if ($this->paginationCurrent >= ($this->getMaxPage()-5)) {
-            return ($this->getMaxPage() -5);
+        if ($this->paginationCurrent >= ($this->getMaxPage() - 5)) {
+            return ($this->getMaxPage() - 5);
         }
         return $this->paginationCurrent;
     }
@@ -233,7 +235,7 @@ class DBPagination
      */
     public function getPaginationEnd(): int
     {
-        if ($this->paginationCurrent >= ($this->getMaxPage()-5)) {
+        if ($this->paginationCurrent >= ($this->getMaxPage() - 5)) {
             return $this->getMaxPage();
         }
 

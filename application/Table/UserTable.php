@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Table;
 
-use App\Entity\User;
+use App\Entity\Core\User;
 use Core\Db\Table;
 use PDOStatement;
 
@@ -40,7 +40,7 @@ class UserTable extends Table
         return $this->select(
             $sqlQuery,
             ['username' => $username],
-            '\App\Entity\User',
+            '\App\Entity\Core\User',
             true
         );
     }
@@ -52,7 +52,7 @@ class UserTable extends Table
     {
         $getUsersQuery = "SELECT username,email FROM Users";
 
-        return $this->select($getUsersQuery, null, '\App\Entity\User');
+        return $this->select($getUsersQuery, null, '\App\Entity\Core\User');
     }
 
     /**

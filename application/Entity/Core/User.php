@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,33 +17,29 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Entity;
+declare(strict_types=1);
 
+namespace App\Entity\Core;
+
+use App\Entity\Core\Repository\UserRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: 'Users')]
 class User
 {
-    /**
-     * @var int
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'user_id', type: 'integer')]
+    #[ORM\GeneratedValue()]
+    private int $id;
 
-    /**
-     * @var string
-     */
+    #[ORM\Column(type: 'string', unique: true)]
     private string $username;
 
-    /**
-     * @var string
-     */
-    private string $password;
-
-    /**
-     * @var string
-     */
+    #[ORM\Column(type: 'string')]
     private string $passwordhash;
 
-    /**
-     * @var string
-     */
+    #[ORM\Column(type: 'string')]
     private string $email;
 
     /**
@@ -85,7 +79,7 @@ class User
      * @param string $email
      * @return void
      */
-    public function setEmail(string $email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -95,23 +89,15 @@ class User
      */
     public function getPassword(): string
     {
-        return $this->password;
+        return $this->passwordhash;
     }
 
     /**
      * @param string $password
      * @return void
      */
-    public function setPassword(string $password)
+    public function setPassword(string $password): void
     {
         $this->passwordhash = password_hash($password, CRYPT_BLOWFISH);
-    }
-
-    /**
-     * @return string
-     */
-    public function getPasswordHash(): string
-    {
-        return $this->passwordhash;
     }
 }
