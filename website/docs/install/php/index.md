@@ -34,7 +34,7 @@ with this value (for example)
 For Centos, RHEL, Fedora, RockyLinux, OracleLinux users, install PHP and PHP extensions for the database you've installed for Bacula
 
 <Tabs>
-  <TabItem value="mysql" label="MySQL Bacula catalog" default>
+  <TabItem value="mysql" label="MySQL/MariaDB Bacula catalog" default>
 ```shell
 $ sudo yum install php php-gettext php-pdo  php-mysql
 ```
@@ -64,7 +64,7 @@ For Debian, Ubuntu, Linux Mint users
 Install PHP and PHP extensions
 
 <Tabs>
-  <TabItem value="mysql" label="MySQL Bacula catalog" default>
+  <TabItem value="mysql" label="MySQL/MariaDB Bacula catalog" default>
 ```shell
 $ sudo apt-get install php php-gettext php-mysql
 ```
@@ -88,7 +88,7 @@ Modify portage configuration
 File: `/etc/portage/package.use`
 
 ```
-# MySQL
+# MySQL/MariaDB
 dev-lang/php mysql apache2 truetype cli pcre xml zlib
 
 # postgreSQL

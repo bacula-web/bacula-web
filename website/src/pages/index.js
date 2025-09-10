@@ -110,7 +110,7 @@ function HomepageBody() {
                             </li>
                             <li>
                                 <p className="text--uppercase"><b>Support any Bacula catalog Database</b></p>
-                                <p>Bacula-Web retrieves data from Bacula’s director database, compatible with MySQL,
+                                <p>Bacula-Web retrieves data from Bacula’s director database, compatible with MySQL/MariaDB,
                                     PostgreSQL, and SQLite, and provides comprehensive reports based on it.</p>
                             </li>
                             <li>

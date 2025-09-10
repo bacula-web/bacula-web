@@ -75,7 +75,7 @@ With PostgreSQL bacula catalog
 * `databases/php5-pdo_pgsql`
 * `databases/php5-pgsql`
 
-With MySQL bacula catalog
+With MySQL/MariaDB bacula catalog
 
 * `databases/php5-mysql`
 * `databases/php5-pdo_mysql`

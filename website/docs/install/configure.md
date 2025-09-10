@@ -250,17 +250,17 @@ This setting is available since version 9.1.0
 
 Each Bacula catalog (database) needs to be defined using the settings below
 
-| Setting  | Description                                       | Example                               |
-|----------|---------------------------------------------------|---------------------------------------|
-| label    | label displayed in the catalog drop-down selector | Backup server                         |
-| host     | hostname of the db server hosting Bacula catalog  | localhost, fqdn host or ip address    |
-| db_name  | name of the catalog database name                 | usually bacula, unless you changed it |
-| login    | database user                                     | bacula, admin, etc.                   |
-| password | database password                                 | mK3DQLolUV                            |
-| db_type  | database type                                     | mysql, pgsql or sqlite                |
-| db_port  | database port number                              | Default port for MySQL is 3306        |
-|          |                                                   | Default port for postgreSQL is 5432   |
-|          |                                                   | Leave blank for SQLite                |
+| Setting  | Description                                       | Example                                |
+|----------|---------------------------------------------------|----------------------------------------|
+| label    | label displayed in the catalog drop-down selector | Backup server                          |
+| host     | hostname of the db server hosting Bacula catalog  | localhost, fqdn host or ip address     |
+| db_name  | name of the catalog database name                 | usually bacula, unless you changed it  |
+| login    | database user                                     | bacula, admin, etc.                    |
+| password | database password                                 | mK3DQLolUV                             |
+| db_type  | database type                                     | mysql, pgsql or sqlite                 |
+| db_port  | database port number                              | Default port for MySQL/MariaDB is 3306 |
+|          |                                                   | Default port for postgreSQL is 5432    |
+|          |                                                   | Leave blank for SQLite                 |
 
 :::tip
 Please read the Bacula [database user/role](../admin-guides/bacula-database-user) page for further instructions for MySQL/MariaDB and postgreSQL.
@@ -268,7 +268,7 @@ Please read the Bacula [database user/role](../admin-guides/bacula-database-user
 
 **Examples**
 
-### Single MySQL Bacula catalog
+### Single MySQL/MariaDB Bacula catalog
 
 Truncated `config.php` file
 

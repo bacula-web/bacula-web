@@ -19,7 +19,7 @@ Before submitting a bug report, please make sure that ...
 * you checked Apache error log file for some warnings or errors
 * you're able to connect to the database with the client
 
-    * `mysql` for MySQL
+    * `mysql` for MySQL/MariaDB
     * `psql` for postgreSQL
     * `sqlite3` for SQLite
 
