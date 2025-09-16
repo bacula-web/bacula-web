@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -18,6 +16,8 @@ declare(strict_types=1);
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+declare(strict_types=1);
 
 namespace Core\App;
 
@@ -135,6 +135,7 @@ class UserAuth
     public function destroySession(Session\SessionInterface $session): void
     {
         $session->destroy();
+        // TODO: starting the session is not required as this task is already handled by the SessionStart middleware
         $session->start();
         $session->regenerateId();
     }

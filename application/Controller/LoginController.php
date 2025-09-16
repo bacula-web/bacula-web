@@ -110,6 +110,7 @@ class LoginController
 
             if ($this->userAuth->authenticated()) {
                 // TODO: this is not the responsibility of the login controller
+                $this->session->regenerateId();
                 $this->session->set('username', $postData['username']);
 
                 return $response
