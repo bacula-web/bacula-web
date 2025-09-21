@@ -22,6 +22,6 @@ Browsing old documentation will automatically redirect to https://www.bacula-web
 
 :::
 
-Should you have any concerns or questions, feel free to open a discussion on GitHub discussion.
+Should you have any concerns or questions, feel free to open a discussion on [GitHub discussion](https://github.com/bacula-web/bacula-web/discussions).
 
 Best regards
