@@ -99,11 +99,11 @@ If you discover a security issue, see [SECURITY.md](SECURITY.md)
 
 Bacula-Web is an open source project and will always be free of charge.
 
-It is maintained on my spare time, with the great help from the community users.
+It is maintained in my spare time, with the great help from the community users.
 
-If you enjoy using Bacula-Web and would like to encourage the project efforts, please consider supporting the project by making a small donation
-using the button below.
+If you enjoy using Bacula-Web and would like to support the project efforts, please consider making a small donation using one of the two options listed below.
 
-<a href="https://www.buymeacoffee.com/baculaweb"><img src="https://img.buymeacoffee.com/button-api/?text=Support the project&emoji=☕&slug=baculaweb&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
+- [Bacula-Web on BuyMeACoffee](https://www.buymeacoffee.com/baculaweb)
+- [Support me on GitHub sponsor](https://github.com/sponsors/dfranco)
 
-Thanks for using and supporting Bacula-Web project :heart:
+Thanks for using and supporting the Bacula-Web project :heart:
