@@ -6,7 +6,6 @@
 ![Required PHP Version](https://img.shields.io/packagist/dependency-v/bacula-web/bacula-web/php)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bacula-web_bacula-web&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bacula-web_bacula-web)
-[![Build Status](https://app.travis-ci.com/bacula-web/bacula-web.svg?branch=master)](https://app.travis-ci.com/bacula-web/bacula-web)
 
 ![Bacula-Web dashboard](https://www.bacula-web.org/bacula-web-dashboard.png)
 
@@ -91,7 +90,6 @@ If you discover a security issue, see [SECURITY.md](SECURITY.md)
 <tr>
 <td><a href="https://www.docker.com/"><img src="https://www.bacula-web.org/assets/images/docker-logo-0f1d943e8a1505d609e538df99c8eee0.png" alt="Docker Logo" width="140px"></a></td>
 <td><a href="https://jb.gg/OpenSourceSupport"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo"></a></td>
-<td><a href="https://www.travis-ci.com"><img src="https://www.travis-ci.com/wp-content/uploads/2024/07/cropped-travis-ci-mascot-1-480x480-1.png" width="140px" alt="Travis CI logo"></a></td>
 <td><a href="https://packagecloud.io/"><img alt="Private NPM repository and Maven, RPM, DEB, PyPi and RubyGems Repository · packagecloud" src="https://packagecloud.io/images/packagecloud-badge.png" /></a></td>
 <td><a href="https://lokalise.com/"><img alt="Lokalise logo" src="https://lokalise.com/img/lokalise_logo_black.png" width="240px" /></a></td>
 </tr>

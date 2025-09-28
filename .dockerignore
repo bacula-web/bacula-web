@@ -5,7 +5,6 @@
 **/.phpcs.xml
 **/.php-cs-fixer.*
 **/.readthedocs.yaml
-**/.travis.yml
 **/.tx
 **/phpunit.xml
 **/release-please-config.json

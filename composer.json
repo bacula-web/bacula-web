@@ -103,7 +103,6 @@
       "sonar-project.properties",
       ".github",
       ".tx",
-      ".travis.yml",
       "phpunit.xml",
       "/tests",
       ".release-please-manifest.json",
