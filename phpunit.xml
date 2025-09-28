@@ -13,6 +13,8 @@
         <include>
             <directory suffix=".php">application</directory>
             <directory suffix=".php">core</directory>
+            <directory suffix=".php">public</directory>
+            <directory>bwc</directory>
         </include>
     </coverage>
 
