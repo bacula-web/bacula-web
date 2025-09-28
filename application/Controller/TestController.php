@@ -39,16 +39,24 @@ use Twig\Error\SyntaxError;
 
 class TestController extends AbstractController
 {
+    /**
+     * @var CatalogTable
+     */
     private CatalogTable $catalogTable;
+
+    /**
+     * @var ContainerInterface
+     */
+    private ContainerInterface $container;
+
 
     /**
      * @param CatalogTable $catalogTable
      * @param ContainerInterface $container
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     public function __construct(CatalogTable $catalogTable, ContainerInterface $container)
     {
+        // TODO: fix constructor method
         parent::__construct($container);
 
         $this->catalogTable = $catalogTable;
@@ -109,7 +117,7 @@ class TestController extends AbstractController
                 'check_descr' => 'PHP Posix support is required, please compile PHP with this option'),
             array('check_cmd' => 'db-connection',
                 'check_label' => 'Database connection status (MySQL and postgreSQL only)',
-                //'check_descr' => 'Current status: ' . $this->catalogTable->getConnectionStatus()),
+                'check_descr' => 'Current status: ' . $this->catalogTable->getConnectionStatus()),
             array('check_cmd' => 'twig-cache',
                 'check_label' => 'Twig cache folder write permission',
                 'check_descr' => TPL_CACHE . ' must be writable by Apache'),
