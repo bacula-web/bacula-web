@@ -43,7 +43,6 @@ use App\Middleware\ValidationErrorMiddleware;
 use App\Middleware\ValidationExceptionMiddleware;
 use Core\Exception\ConfigFileException;
 use Core\Utils\ExceptionRenderer;
-use DI\ContainerBuilder;
 use Odan\Session\Middleware\SessionStartMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
@@ -55,15 +54,13 @@ require_once __DIR__ . '/../vendor/autoload.php';
 // Bootstrap application
 require_once __DIR__ . '/../core/bootstrap.php';
 
-$containerBuilder = new ContainerBuilder();
-$containerBuilder->addDefinitions(CONFIG_DIR . 'container-bindings.php');
-$container = $containerBuilder->build();
+$container = require dirname(__DIR__) . '/config/container/container.php';
 
 $app = $container->get(App::class);
 
 /**
  * Catch ConfigFileException before Slim's exception handler
- * This avoid having a "Uncaught exception" ugly error if
+ * This avoids having an "Uncaught exception" ugly error if
  * config.php is missing.
  */
 try {

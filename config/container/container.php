@@ -1,7 +1,4 @@
-#!/usr/bin/env php
 <?php
-
-declare(strict_types=1);
 
 /**
  * Copyright (C) 2010-present Davide Franco
@@ -20,28 +17,11 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/core/bootstrap.php';
+declare(strict_types=1);
 
-use App\Command\CheckCommand;
-use App\Command\PublishAssetsCommand;
-use App\Command\SetupAuthCommand;
-use App\Command\ShowVersionCommand;
-use Symfony\Component\Console\Application;
+use DI\ContainerBuilder;
 
-$container = require __DIR__ . '/config/container/container.php';
+$containerBuilder = new ContainerBuilder();
+$containerBuilder->addDefinitions(__DIR__ . '/container-bindings.php');
 
-$application = new Application();
-$application->setName($_ENV['APP_NAME'] . ' console');
-$application->setVersion($_ENV['APP_VERSION']);
-
-$application->addCommands(
-    [
-        new ShowVersionCommand(),
-        $container->get(SetupAuthCommand::class),
-        new PublishAssetsCommand(),
-        new CheckCommand()
-    ]
-);
-
-$application->run();
+return $containerBuilder->build();
