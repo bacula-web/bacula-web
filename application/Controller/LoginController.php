@@ -21,48 +21,27 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Libs\Config;
 use Core\App\UserAuth;
+use Core\Controller\AbstractController;
 use Core\Exception\ValidationException;
-use Odan\Session\SessionInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
-use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
-class LoginController
+class LoginController extends AbstractController
 {
-    private UserAuth $userAuth;
-    private SessionInterface $session;
-    private Twig $twig;
-    private ?string $basePath;
-    private Config $config;
-
-    public function __construct(
-        UserAuth $userAuth,
-        SessionInterface $session,
-        Twig $twig,
-        Config $config
-    ) {
-        $this->userAuth = $userAuth;
-        $this->session = $session;
-        $this->twig = $twig;
-        $this->config = $config;
-
-        $this->basePath = $this->config->get('basepath', null);
-    }
-
     /**
-     * @param Request $request
      * @param Response $response
+     * @param UserAuth $userAuth
      * @return mixed
      */
-    public function signOut(Request $request, Response $response): Response
+    public function signOut(Response $response, UserAuth $userAuth): Response
     {
-        $this->userAuth->destroySession($this->session);
+        $userAuth->destroySession($this->session);
         $this->session->getFlash()->add('auth_info', 'Successfully logged out');
         $this->session->save();
 
@@ -72,11 +51,16 @@ class LoginController
     }
 
     /**
-     * @throws SyntaxError
-     * @throws RuntimeError
+     * @param Request $request
+     * @param Response $response
+     * @param UserAuth $userAuth
+     * @return Response
      * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws NonUniqueResultException
      */
-    public function index(Request $request, Response $response): Response
+    public function index(Request $request, Response $response, UserAuth $userAuth): Response
     {
         if ($request->getMethod() === 'POST') {
             $postData = $request->getParsedBody();
@@ -106,9 +90,9 @@ class LoginController
             }
 
             // TODO: this should be the responsibility of the auth class
-            $this->session->set('user_authenticated', $this->userAuth->authUser($postData['username'], $postData['password']));
+            $this->session->set('user_authenticated', $userAuth->authUser($postData['username'], $postData['password']));
 
-            if ($this->userAuth->authenticated()) {
+            if ($userAuth->authenticated()) {
                 // TODO: this is not the responsibility of the login controller
                 $this->session->regenerateId();
                 $this->session->set('username', $postData['username']);
@@ -127,7 +111,7 @@ class LoginController
             }
         }
 
-        return $this->twig->render($response, 'pages/login.html.twig', [
+        return $this->view->render($response, 'pages/login.html.twig', [
             'username' => $this->session->getFlash()->get('username'),
             'last_auth_error' => $this->session->getFlash()->get('last_auth_error'),
             'auth_info' => $this->session->getFlash()->get('auth_info')

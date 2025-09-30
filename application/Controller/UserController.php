@@ -22,16 +22,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Core\User;
-use App\Libs\Config;
 use Core\App\UserAuth;
 use Core\Controller\AbstractController;
-use Core\Db\ManagerRegistry;
 use Core\Exception\ValidationException;
 use Core\Helpers\Sanitizer;
 use GuzzleHttp\Psr7\Response;
-use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -45,38 +41,15 @@ class UserController extends AbstractController
     protected string $username = '';
 
     /**
-     * @var UserAuth
-     */
-    private UserAuth $userAuth;
-
-    /**
-     * @param ManagerRegistry $managerRegistry
-     * @param Twig $view
-     * @param Config $config
-     * @param SessionInterface $session
-     * @param UserAuth $userAuth
-     */
-    public function __construct(
-        ManagerRegistry $managerRegistry,
-        Twig $view,
-        Config $config,
-        SessionInterface $session,
-        UserAuth $userAuth
-    ) {
-        parent::__construct($managerRegistry, $view, $config, $session);
-
-        $this->userAuth = $userAuth;
-    }
-
-    /**
      * @param Request $request
      * @param Response $response
+     * @param UserAuth $userAuth
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function prepare(Request $request, Response $response): Response
+    public function prepare(Request $request, Response $response, UserAuth $userAuth): Response
     {
         $em = $this->managerRegistry->getManager();
         $repository = $em->getRepository(User::class);
@@ -84,9 +57,6 @@ class UserController extends AbstractController
         $tplData = [];
         $postData = $request->getParsedBody();
 
-        /**
-         * @var User $user
-         */
         $user = $repository->findOneBy(['username' => $this->session->get('username')]);
 
         $tplData['username'] = $user->getUsername();
@@ -103,8 +73,8 @@ class UserController extends AbstractController
                         'newpassword',
                         'confnewpassword']);
                     $validator
-                        ->rule(function ($field, $value, $params, $fields) use ($user) {
-                            if (($this->userAuth->authUser($user->getUsername(), $fields['oldpassword']) == 'yes')) {
+                        ->rule(function ($field, $value, $params, $fields) use ($userAuth, $user) {
+                            if (($userAuth->authUser($user->getUsername(), $fields['oldpassword']) == 'yes')) {
                                 return true;
                             }
                             return false;

@@ -45,9 +45,8 @@ use Odan\Session\SessionInterface;
 use Odan\Session\SessionManagerInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Slim\App;
 use Slim\Csrf\Guard;
-use Slim\Factory\AppFactory;
+use Slim\Factory\Psr17\GuzzlePsr17Factory;
 use Slim\Views\Twig;
 use Twig\Extension\DebugExtension;
 use Symfony\Component\Translation\Translator;
@@ -77,14 +76,13 @@ return ['settings' => [
     ],
     'config_file' => CONFIG_FILE],
 
-    App::class => function (ContainerInterface $container) {
-        AppFactory::setContainer($container);
-        return AppFactory::create();
-    }, ResponseFactoryInterface::class => function (App $app) {
-        return $app->getResponseFactory();
-    }, 'csrf' => function (ResponseFactoryInterface $responseFactory, CsrfErrorHandler $csrf) {
+    ResponseFactoryInterface::class => GuzzlePsr17Factory::getResponseFactory(),
+
+    'csrf' => function (ResponseFactoryInterface $responseFactory, CsrfErrorHandler $csrf) {
         return new Guard($responseFactory, failureHandler: $csrf->handle($responseFactory), persistentTokenMode: true);
-    }, JobTable::class => function (SessionInterface $session) {
+    },
+
+    JobTable::class => function (SessionInterface $session) {
         return new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     }, PoolTable::class => function (SessionInterface $session) {
         return new PoolTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));

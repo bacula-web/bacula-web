@@ -21,60 +21,39 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Libs\Config;
 use App\Table\JobTable;
+use Core\Controller\AbstractController;
 use Core\Db\CDBQuery;
 use Core\Db\DatabaseFactory;
 use Core\Exception\AppException;
-use Core\Exception\ConfigFileException;
 use Core\Exception\ValidationException;
 use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
+use DateTimeImmutable;
 use Exception;
-use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
-use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
-class BackupJobController
+class BackupJobController extends AbstractController
 {
-    private Twig $view;
-    private JobTable $jobTable;
-    private SessionInterface $session;
-
-    /**
-     * @var string|null
-     */
-    private ?string $basePath;
-
-    private Config $config;
-
-    public function __construct(Twig $view, JobTable $jobTable, SessionInterface $session, Config $config)
-    {
-        $this->view = $view;
-        $this->jobTable = $jobTable;
-        $this->session = $session;
-        $this->config = $config;
-
-        $this->basePath = $this->config->get('basepath', null);
-    }
-
     /**
      * @param Request $request
      * @param Response $response
+     * @param JobTable $jobTable
      * @return Response
      * @throws AppException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws Exception
      */
-    public function index(Request $request, Response $response): Response
+    public function index(Request $request, Response $response, JobTable $jobTable): Response
     {
         $tplData = [];
         $currentDateTime = DatabaseFactory::getDatabase($this->session->get('catalog_id'))->getServerTimestamp();
@@ -90,7 +69,7 @@ class BackupJobController
         ];
 
         // Get backup job(s) list
-        $jobslist = $this->jobTable->get_Jobs_List(null, 'B');
+        $jobslist = $jobTable->get_Jobs_List(null, 'B');
 
         $tplData['jobs_list'] = $jobslist;
 
@@ -153,18 +132,18 @@ class BackupJobController
 
             switch ($backupjob_period) {
                 case '7':
-                    $start = new \DateTimeImmutable('@' . $currentDateTime - WEEK);
-                    $end = new \DateTimeImmutable('@' . $currentDateTime);
+                    $start = new DateTimeImmutable('@' . $currentDateTime - WEEK);
+                    $end = new DateTimeImmutable('@' . $currentDateTime);
                     $interval[0] = $currentDateTime - WEEK;
                     break;
                 case '14':
-                    $start = new \DateTimeImmutable('@' . $currentDateTime - (2 * WEEK));
-                    $end = new \DateTimeImmutable('@' . $currentDateTime);
+                    $start = new DateTimeImmutable('@' . $currentDateTime - (2 * WEEK));
+                    $end = new DateTimeImmutable('@' . $currentDateTime);
                     $interval[0] = $currentDateTime - (2 * WEEK);
                     break;
                 case '30':
-                    $start = new \DateTimeImmutable('@' . $currentDateTime - MONTH);
-                    $end = new \DateTimeImmutable('@' . $currentDateTime);
+                    $start = new DateTimeImmutable('@' . $currentDateTime - MONTH);
+                    $end = new DateTimeImmutable('@' . $currentDateTime);
                     $interval[0] = $currentDateTime - MONTH;
                     break;
                 default:
@@ -174,13 +153,13 @@ class BackupJobController
             $perioddesc .= $start->format($datetimeFormatShort) . " to " . $end->format($datetimeFormatShort);
 
             // Get start and end datetime for backup jobs report and charts
-            $periods = CDBQuery::get_Timestamp_Interval($this->jobTable->get_driver_name(), $interval);
+            $periods = CDBQuery::get_Timestamp_Interval($jobTable->get_driver_name(), $interval);
 
-            $backupjobbytes = $this->jobTable->getStoredBytes($interval, $backupjob_name);
+            $backupjobbytes = $jobTable->getStoredBytes($interval, $backupjob_name);
             $backupjobbytes = CUtils::Get_Human_Size($backupjobbytes);
 
             // Stored files on the defined period
-            $backupjobfiles = $this->jobTable->getStoredFiles($interval, $backupjob_name);
+            $backupjobfiles = $jobTable->getStoredFiles($interval, $backupjob_name);
             $backupjobfiles = CUtils::format_Number($backupjobfiles);
 
             // Get the last 7 days interval (start and end)
@@ -188,8 +167,8 @@ class BackupJobController
 
             // Last 7 days stored files chart
             foreach ($days as $day) {
-                $storedfiles = $this->jobTable->getStoredFiles([$day['start'], $day['end']], $backupjob_name);
-                $dayStartTime = new \DateTimeImmutable('@' . $day['start']);
+                $storedfiles = $jobTable->getStoredFiles([$day['start'], $day['end']], $backupjob_name);
+                $dayStartTime = new DateTimeImmutable('@' . $day['start']);
                 $daysstoredfiles[] = [
                     $dayStartTime->format('m-d'), $storedfiles
                 ];
@@ -208,8 +187,8 @@ class BackupJobController
 
             // Last 7 days stored bytes chart
             foreach ($days as $day) {
-                $storedbytes = $this->jobTable->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
-                $dayStartTime = new \DateTimeImmutable('@' . $day['start']);
+                $storedbytes = $jobTable->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
+                $dayStartTime = new DateTimeImmutable('@' . $day['start']);
                 $daysstoredbytes[] = [
                     $dayStartTime->format('m-d'), $storedbytes
                 ];
@@ -230,11 +209,11 @@ class BackupJobController
             unset($storedbyteschart);
 
             // Backup job name
-            $this->jobTable->addParameter('jobname', $backupjob_name);
+            $jobTable->addParameter('jobname', $backupjob_name);
             $where[] = 'Name = :jobname';
 
             // Backup job type
-            $this->jobTable->addParameter('jobtype', 'B');
+            $jobTable->addParameter('jobtype', 'B');
             $where[] = "Type = :jobtype";
 
             // Backup job starttime and endtime
@@ -242,9 +221,20 @@ class BackupJobController
 
             $query = CDBQuery::get_Select(
                 [
-                    'table' => $this->jobTable->getTableName(),
+                    'table' => $jobTable->getTableName(),
                     'fields' =>
-                        ['JobId', 'Level', 'JobFiles', 'JobBytes', 'ReadBytes', 'Job.JobStatus', 'StartTime', 'EndTime', 'Name', 'Status.JobStatusLong'],
+                        [
+                            'JobId',
+                            'Level',
+                            'JobFiles',
+                            'JobBytes',
+                            'ReadBytes',
+                            'Job.JobStatus',
+                            'StartTime',
+                            'EndTime',
+                            'Name',
+                            'Status.JobStatusLong'
+                        ],
                     'where' => $where,
                     'orderby' => 'EndTime DESC',
                     'join' => [
@@ -253,12 +243,12 @@ class BackupJobController
                         ]
                     ]
                 ],
-                $this->jobTable->get_driver_name()
+                $jobTable->get_driver_name()
             );
 
             $joblist = [];
             $joblevel = ['I' => 'Incr', 'D' => 'Diff', 'F' => 'Full'];
-            $result = $this->jobTable->run_query($query);
+            $result = $jobTable->run_query($query);
 
             foreach ($result->fetchAll() as $job) {
                 // Job level description
@@ -292,12 +282,12 @@ class BackupJobController
                 $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
 
                 // Format date/time
-                $jobStartTime = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $job['starttime']);
+                $jobStartTime = DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $job['starttime']);
                 $job['starttime'] = $jobStartTime->format(
                     $this->config->get('datetime_format', 'Y-m-d H:i:s')
                 );
 
-                $jobEndTime = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $job['endtime']);
+                $jobEndTime = DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $job['endtime']);
                 $job['endtime'] = $jobEndTime->format(
                     $this->config->get('datetime_format', 'Y-m-d H:i:s')
                 );

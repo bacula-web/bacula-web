@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2011-present Davide Franco
  *
@@ -19,10 +17,11 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
-namespace App\Controller;
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Libs\Config;
+use Core\Controller\AbstractController;
 use Core\Db\DatabaseFactory;
 use App\Table\ClientTable;
 use App\Table\JobTable;
@@ -31,37 +30,24 @@ use App\Table\VolumeTable;
 use App\Table\PoolTable;
 use App\Table\FileSetTable;
 use Core\Utils\CUtils;
-use Odan\Session\SessionInterface;
+use Exception;
 use PDOException;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
 use GuzzleHttp\Psr7\Response;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class DirectorController
+class DirectorController extends AbstractController
 {
-    private Twig $view;
-    private SessionInterface $session;
-    private Config $config;
-
-    public function __construct(Twig $view, SessionInterface $session, Config $config)
-    {
-        $this->view = $view;
-        $this->session = $session;
-        $this->config = $config;
-    }
-
     /**
-     * @param Request $request
      * @param Response $response
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws Exception
      */
-    public function index(Request $request, Response $response): Response
+    public function index(Response $response): Response
     {
         $tplData = [];
 

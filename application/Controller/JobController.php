@@ -312,7 +312,7 @@ class JobController extends AbstractController
      * @throws SyntaxError
      * @throws NotSupported
      */
-    public function showLogs(Request $request, Response $response, $args): Response
+    public function showLogs(Response $response, $args): Response
     {
         $repository = $this
             ->managerRegistry->getManager('bacula')
@@ -390,13 +390,11 @@ class JobController extends AbstractController
 
         if ($version < 1016) {
             $repository = $em->getRepository(FileBeforeV11::class);
-            $filesQueryBuilder = $repository->getFilesFromJobId($job->getId(), $filename);
-            $totalFiles = $repository->countFilesPerJob($jobId);
         } else {
             $repository = $em->getRepository(File::class);
-            $filesQueryBuilder = $repository->getFilesFromJobId($job->getId(), $filename);
-            $totalFiles = $repository->count(['jobid' => $jobId]);
         }
+        $filesQueryBuilder = $repository->getFilesFromJobId($job->getId(), $filename);
+        $totalFiles = $repository->count(['jobid' => $jobId]);
 
         $paginator = new DBPagination($request, $this->config);
 

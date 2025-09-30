@@ -43,8 +43,8 @@ use App\Middleware\ValidationErrorMiddleware;
 use App\Middleware\ValidationExceptionMiddleware;
 use Core\Exception\ConfigFileException;
 use Core\Utils\ExceptionRenderer;
+use DI\Bridge\Slim\Bridge;
 use Odan\Session\Middleware\SessionStartMiddleware;
-use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
@@ -55,8 +55,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../core/bootstrap.php';
 
 $container = require dirname(__DIR__) . '/config/container/container.php';
-
-$app = $container->get(App::class);
+$app = Bridge::create($container);
 
 /**
  * Catch ConfigFileException before Slim's exception handler

@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Libs\Config;
+use Core\Controller\AbstractController;
 use Core\Db\DatabaseFactory;
 use Core\Exception\AppException;
 use Core\Exception\ValidationException;
@@ -33,49 +33,20 @@ use Core\Helpers\Sanitizer;
 use App\Table\JobTable;
 use App\Table\ClientTable;
 use Exception;
-use Odan\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
-use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
-class ClientController
+class ClientController extends AbstractController
 {
-    private JobTable $jobTable;
-    private ClientTable $clientTable;
-    private Twig $view;
-    private Config $config;
-    private SessionInterface $session;
-
-    /**
-     * @param Twig $view
-     * @param JobTable $jobTable
-     * @param ClientTable $clientTable
-     * @param Config $config
-     * @param SessionInterface $session
-     */
-    public function __construct(
-        Twig $view,
-        JobTable $jobTable,
-        ClientTable $clientTable,
-        Config $config,
-        SessionInterface $session
-    ) {
-        $this->view = $view;
-        $this->jobTable = $jobTable;
-        $this->clientTable = $clientTable;
-        $this->config = $config;
-        $this->session = $session;
-
-        $this->basePath = $this->config->get('basepath', null);
-    }
-
     /**
      * @param Request $request
      * @param Response $response
+     * @param JobTable $jobTable
+     * @param ClientTable $clientTable
      * @return Response
      * @throws AppException
      * @throws LoaderError
@@ -83,8 +54,12 @@ class ClientController
      * @throws SyntaxError
      * @throws Exception
      */
-    public function index(Request $request, Response $response): Response
-    {
+    public function index(
+        Request $request,
+        Response $response,
+        JobTable $jobTable,
+        ClientTable $clientTable
+    ): Response {
         $tplData = [];
 
         $period = 7;
@@ -93,7 +68,7 @@ class ClientController
         $days_stored_files = array();
 
         // Clients list
-        $tplData['clients_list'] = $this->clientTable->getClients($this->config->get('show_inactive_clients'));
+        $tplData['clients_list'] = $clientTable->getClients($this->config->get('show_inactive_clients'));
 
         // Period list
         $periods_list = [
@@ -149,15 +124,15 @@ class ClientController
                 /**
                  * Filter jobTable per $this->requested period
                  */
-                $this->jobTable->addParameter('job_starttime', $startTime);
+                $jobTable->addParameter('job_starttime', $startTime);
                 $where[] = 'Job.endtime >= :job_starttime';
-                $this->jobTable->addParameter('job_endtime', $endTime);
+                $jobTable->addParameter('job_endtime', $endTime);
                 $where[] = 'Job.endtime <= :job_endtime';
 
                 $tplData['no_report_options'] = 'false';
 
                 // Client information
-                $client_info = $this->clientTable->getClientInfos($clientId);
+                $client_info = $clientTable->getClientInfos($clientId);
 
                 $tplData['client_name'] = $client_info['name'];
                 $tplData['client_os'] = $client_info['os'];
@@ -165,18 +140,18 @@ class ClientController
                 $tplData['client_version'] = $client_info['version'];
 
                 // Filter by Job status = Completed
-                $this->jobTable->addParameter('jobstatus', 'T');
+                $jobTable->addParameter('jobstatus', 'T');
                 $where[] = 'Job.JobStatus = :jobstatus';
 
                 // // Filter by Job Type
-                $this->jobTable->addParameter('jobtype', 'B');
+                $jobTable->addParameter('jobtype', 'B');
                 $where[] = 'Job.Type = :jobtype';
 
                 // Filter by Client id
-                $this->jobTable->addParameter('clientid', $clientId);
+                $jobTable->addParameter('clientid', $clientId);
                 $where[] = 'clientid = :clientid';
 
-                $query = CDBQuery::get_Select(['table' => $this->jobTable->getTableName(),
+                $query = CDBQuery::get_Select(['table' => $jobTable->getTableName(),
                     'fields' => [
                         'Job.Name',
                         'Job.Jobid',
@@ -191,9 +166,9 @@ class ClientController
                     ],
                     'orderby' => 'Job.EndTime DESC',
                     'where' => $where
-                ], $this->jobTable->get_driver_name());
+                ], $jobTable->get_driver_name());
 
-                $jobs_result = $this->jobTable->run_query($query);
+                $jobs_result = $jobTable->run_query($query);
 
                 $totalBytes = 0;
                 $totalFiles = 0;
@@ -215,7 +190,7 @@ class ClientController
 
                 // Last n days stored Bytes graph
                 foreach ($days as $day) {
-                    $stored_bytes = $this->jobTable->getStoredBytes([$day['start'], $day['end']], 'ALL', $clientId);
+                    $stored_bytes = $jobTable->getStoredBytes([$day['start'], $day['end']], 'ALL', $clientId);
                     $days_stored_bytes[] = [date("m-d", $day['start']), $stored_bytes];
                 }
 
@@ -232,7 +207,7 @@ class ClientController
 
                 // Last n days stored files graph
                 foreach ($days as $day) {
-                    $stored_files = $this->jobTable->getStoredFiles([$day['start'], $day['end']], 'ALL', $clientId);
+                    $stored_files = $jobTable->getStoredFiles([$day['start'], $day['end']], 'ALL', $clientId);
                     $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
                 }
 

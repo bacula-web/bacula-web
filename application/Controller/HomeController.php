@@ -20,16 +20,14 @@
 
 namespace App\Controller;
 
-use App\Libs\Config;
 use App\Table\JobTable;
 use App\Table\PoolTable;
 use App\Table\VolumeTable;
+use Core\Controller\AbstractController;
 use Core\Db\DatabaseFactory;
 use Core\Exception\ValidationException;
 use Exception;
-use Odan\Session\SessionInterface;
 use Slim\Routing\RouteContext;
-use Slim\Views\Twig;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
 use Core\Graph\Chart;
@@ -43,35 +41,14 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
-class HomeController
+class HomeController extends AbstractController
 {
-    private JobTable $jobTable;
-    private PoolTable $poolTable;
-    private VolumeTable $volumeTable;
-    private SessionInterface $session;
-    private Config $config;
-    private Twig $view;
-
-
-    public function __construct(
-        JobTable $jobTable,
-        PoolTable $poolTable,
-        VolumeTable $volumeTable,
-        SessionInterface $session,
-        Config $config,
-        Twig $view
-    ) {
-        $this->jobTable = $jobTable;
-        $this->poolTable = $poolTable;
-        $this->volumeTable = $volumeTable;
-        $this->session = $session;
-        $this->config = $config;
-        $this->view = $view;
-    }
-
     /**
      * @param Request $request
      * @param Response $response
+     * @param JobTable $jobTable
+     * @param PoolTable $poolTable
+     * @param VolumeTable $volumeTable
      * @return Response
      * @throws AppException
      * @throws LoaderError
@@ -79,8 +56,13 @@ class HomeController
      * @throws SyntaxError
      * @throws Exception
      */
-    public function prepare(Request $request, Response $response): Response
-    {
+    public function prepare(
+        Request $request,
+        Response $response,
+        JobTable $jobTable,
+        PoolTable $poolTable,
+        VolumeTable $volumeTable
+    ): Response {
         $tplData = [];
 
         $routeContext = RouteContext::fromRequest($request);
@@ -150,24 +132,24 @@ class HomeController
         $tplData['literal_period'] = date($dateFormat, $custom_period[0]) . ' to ' . date($dateFormat, $custom_period[1]);
 
         // Running, completed, failed, waiting and canceled jobTable status over last 24 hours
-        $tplData['running_jobs'] = $this->jobTable->count_Jobs($custom_period, 'running');
-        $tplData['completed_jobs'] = $this->jobTable->count_Jobs($custom_period, 'completed');
-        $tplData['completed_with_errors_jobs'] = $this->jobTable->count_Jobs($custom_period, 'completed with errors');
-        $tplData['failed_jobs'] = $this->jobTable->count_Jobs($custom_period, 'failed');
-        $tplData['waiting_jobs'] = $this->jobTable->count_Jobs($custom_period, 'waiting');
-        $tplData['canceled_jobs'] = $this->jobTable->count_Jobs($custom_period, 'canceled');
+        $tplData['running_jobs'] = $jobTable->count_Jobs($custom_period, 'running');
+        $tplData['completed_jobs'] = $jobTable->count_Jobs($custom_period, 'completed');
+        $tplData['completed_with_errors_jobs'] = $jobTable->count_Jobs($custom_period, 'completed with errors');
+        $tplData['failed_jobs'] = $jobTable->count_Jobs($custom_period, 'failed');
+        $tplData['waiting_jobs'] = $jobTable->count_Jobs($custom_period, 'waiting');
+        $tplData['canceled_jobs'] = $jobTable->count_Jobs($custom_period, 'canceled');
 
         // Stored files number
-        $tplData['stored_files'] = CUtils::format_Number($this->jobTable->getStoredFiles($no_period));
+        $tplData['stored_files'] = CUtils::format_Number($jobTable->getStoredFiles($no_period));
 
         // Total bytes and files stored over the last 24 hours
-        $tplData['bytes_last'] = CUtils::Get_Human_Size($this->jobTable->getStoredBytes($custom_period));
-        $tplData['files_last'] = CUtils::format_Number($this->jobTable->getStoredFiles($custom_period));
+        $tplData['bytes_last'] = CUtils::Get_Human_Size($jobTable->getStoredBytes($custom_period));
+        $tplData['files_last'] = CUtils::format_Number($jobTable->getStoredFiles($custom_period));
 
         // Incremental, Differential and Full jobTable over the last 24 hours
-        $tplData['incr_jobs'] = $this->jobTable->count_Jobs($custom_period, null, J_INCR);
-        $tplData['diff_jobs'] = $this->jobTable->count_Jobs($custom_period, null, J_DIFF);
-        $tplData['full_jobs'] = $this->jobTable->count_Jobs($custom_period, null, J_FULL);
+        $tplData['incr_jobs'] = $jobTable->count_Jobs($custom_period, null, J_INCR);
+        $tplData['diff_jobs'] = $jobTable->count_Jobs($custom_period, null, J_DIFF);
+        $tplData['full_jobs'] = $jobTable->count_Jobs($custom_period, null, J_FULL);
 
         // ==============================================================
         // Last period <Job status graph>
@@ -177,7 +159,7 @@ class HomeController
         $jobs_status_data = array();
 
         foreach ($jobs_status as $status) {
-            $jobs_count = $this->jobTable->count_Jobs($custom_period, strtolower($status));
+            $jobs_count = $jobTable->count_Jobs($custom_period, strtolower($status));
             $jobs_status_data[] = array($status, $jobs_count);
         }
 
@@ -202,7 +184,7 @@ class HomeController
         $sum_vols = '';
 
         // Count defined poolTable in catalog
-        $pools_count = $this->poolTable->count();
+        $pools_count = $poolTable->count();
 
         // Display 9 biggest poolTable and rest of volumeTable in 10th one display as Other
         if ($pools_count > $max_pools) {
@@ -210,12 +192,12 @@ class HomeController
                 'fields' => array('SUM(numvols) AS sum_vols'),
                 'limit' => array('offset' => ($pools_count - $max_pools), 'count' => $pools_count),
                 'groupby' => 'name');
-            $result = $this->poolTable->run_query(CDBQuery::get_Select($query, $this->poolTable->get_driver_name()));
+            $result = $poolTable->run_query(CDBQuery::get_Select($query, $poolTable->get_driver_name()));
             $sum_vols = $result->fetch();
         }
 
-        $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools, $this->poolTable->get_driver_name());
-        $result = $this->poolTable->run_query(CDBQuery::get_Select($query));
+        $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools, $poolTable->get_driver_name());
+        $result = $poolTable->run_query(CDBQuery::get_Select($query));
 
         foreach ($result as $pool) {
             $vols_by_pool[] = array($pool['name'], $pool['numvols']);
@@ -244,7 +226,7 @@ class HomeController
         $days = DateTimeUtil::getLastDaysIntervals($currentDateTime, 7);
 
         foreach ($days as $day) {
-            $days_stored_bytes[] = array(date("m-d", $day['start']), $this->jobTable->getStoredBytes(array($day['start'], $day['end'])));
+            $days_stored_bytes[] = array(date("m-d", $day['start']), $jobTable->getStoredBytes(array($day['start'], $day['end'])));
         }
 
         $storedbytes_chart = new Chart(array('type' => 'bar', 'name' => 'chart_storedbytes', 'data' => $days_stored_bytes, 'ylabel' => 'Stored Bytes', 'uniformize_data' => true));
@@ -261,7 +243,7 @@ class HomeController
         $days = DateTimeUtil::getLastDaysIntervals($currentDateTime, 7);
 
         foreach ($days as $day) {
-            $days_stored_files[] = array(date("m-d", $day['start']), $this->jobTable->getStoredFiles(array($day['start'], $day['end'])));
+            $days_stored_files[] = array(date("m-d", $day['start']), $jobTable->getStoredFiles(array($day['start'], $day['end'])));
         }
 
         $storedfiles_chart = new Chart(array('type' => 'bar', 'name' => 'chart_storedfiles', 'data' => $days_stored_files, 'ylabel' => 'Stored files'));
@@ -281,7 +263,7 @@ class HomeController
         $where = array();
         $tmp = "(Media.Volstatus != 'Disabled') ";
 
-        switch ($this->volumeTable->get_driver_name()) {
+        switch ($volumeTable->get_driver_name()) {
             case 'pgsql':
                 $tmp .= "AND (Media.LastWritten IS NOT NULL)";
                 break;
@@ -302,7 +284,7 @@ class HomeController
             'limit' => '10');
 
         // Run the query
-        $result = $this->volumeTable->run_query(CDBQuery::get_Select($statment, $this->volumeTable->get_driver_name()));
+        $result = $volumeTable->run_query(CDBQuery::get_Select($statment, $volumeTable->get_driver_name()));
 
         foreach ($result as $volume) {
             if ($volume['lastwritten'] != '0000-00-00 00:00:00' && !is_null($volume['lastwritten'])) {
@@ -322,7 +304,7 @@ class HomeController
         $job_types = array('R' => 'Restore', 'B' => 'Backup');      // TO IMPROVE
 
         $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes, Name AS JobName FROM Job WHERE Type in ('B','R') GROUP BY Name,Type";
-        $result = $this->jobTable->run_query($query);
+        $result = $jobTable->run_query($query);
         $jobs_result = array();
 
         foreach ($result->fetchAll() as $job) {
@@ -336,7 +318,7 @@ class HomeController
 
         // Per job type backup and restore statistics
         $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes FROM Job WHERE Type in ('B','R') GROUP BY Type";
-        $result = $this->jobTable->run_query($query);
+        $result = $jobTable->run_query($query);
         $jobs_result = null;
 
         foreach ($result->fetchAll() as $job) {
@@ -349,10 +331,10 @@ class HomeController
         $tplData['jobtypes_jobs_stats'] = $jobs_result;
 
         // Weekly jobTable statistics
-        $tplData['weeklyjobsstats'] = $this->jobTable->getWeeklyJobsStats();
+        $tplData['weeklyjobsstats'] = $jobTable->getWeeklyJobsStats();
 
         // 10 biggest completed backup jobTable
-        $tplData['biggestjobs'] = $this->jobTable->getBiggestJobsStats();
+        $tplData['biggestjobs'] = $jobTable->getBiggestJobsStats();
 
         return $this->view->render($response, 'pages/dashboard.html.twig', $tplData);
     }

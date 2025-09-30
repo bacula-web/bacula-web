@@ -20,19 +20,12 @@
 
 namespace App\Controller;
 
-use App\Table\CatalogTable;
 use Core\Controller\AbstractController;
+use Core\Db\ManagerRegistry;
 use Core\Exception\AppException;
-use Doctrine\DBAL\Exception;
-use Doctrine\ORM\EntityManager;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use PDO;
 use Core\Graph\Chart;
-use Psr\Http\Message\ServerRequestInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -40,49 +33,19 @@ use Twig\Error\SyntaxError;
 class TestController extends AbstractController
 {
     /**
-     * @var CatalogTable
-     */
-    private CatalogTable $catalogTable;
-
-    /**
-     * @var ContainerInterface
-     */
-    private ContainerInterface $container;
-
-
-    /**
-     * @param CatalogTable $catalogTable
-     * @param ContainerInterface $container
-     */
-    public function __construct(CatalogTable $catalogTable, ContainerInterface $container)
-    {
-        // TODO: fix constructor method
-        parent::__construct($container);
-
-        $this->catalogTable = $catalogTable;
-        $this->container = $container;
-    }
-
-    /**
-     * @param ServerRequestInterface $request
      * @param Response $response
+     * @param ManagerRegistry $managerRegistry
      * @return Response
      * @throws AppException
-     * @throws ContainerExceptionInterface
      * @throws LoaderError
-     * @throws NotFoundExceptionInterface
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws Exception
      */
-    public function index(Request $request, Response $response): Response
+    public function index(Response $response, ManagerRegistry $managerRegistry): Response
     {
         $tplData = [];
 
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->container->get('doctrine.em.bacula');
+        $em = $managerRegistry->getManager('bacula');
 
         // Installed PDO drivers
         $pdo_drivers = PDO::getAvailableDrivers();
@@ -116,8 +79,7 @@ class TestController extends AbstractController
                 'check_label' => 'PHP - Posix support',
                 'check_descr' => 'PHP Posix support is required, please compile PHP with this option'),
             array('check_cmd' => 'db-connection',
-                'check_label' => 'Database connection status (MySQL and postgreSQL only)',
-                'check_descr' => 'Current status: ' . $this->catalogTable->getConnectionStatus()),
+                'check_label' => 'Database connection status (MySQL and postgreSQL only)'),
             array('check_cmd' => 'twig-cache',
                 'check_label' => 'Twig cache folder write permission',
                 'check_descr' => TPL_CACHE . ' must be writable by Apache'),
@@ -133,56 +95,56 @@ class TestController extends AbstractController
             );
 
         // Doing all checks
-            foreach ($check_list as &$check) {
-                switch ($check['check_cmd']) {
-                    case 'php-session':
-                        $check['check_result'] = $icon_result[function_exists('session_start')];
-                        break;
-                    case 'php-gettext':
-                        $check['check_result'] = $icon_result[function_exists('gettext')];
-                        break;
-                    case 'php-mysql':
-                        $check['check_result'] = $icon_result[in_array('mysql', $pdo_drivers)];
-                        break;
-                    case 'php-postgres':
-                        $check['check_result'] = $icon_result[in_array('pgsql', $pdo_drivers)];
-                        break;
-                    case 'php-sqlite':
-                        $check['check_result'] = $icon_result[in_array('sqlite', $pdo_drivers)];
-                        break;
-                    case 'php-pdo':
-                        $check['check_result'] = $icon_result[class_exists('PDO')];
-                        break;
-                    case 'php-posix':
-                        $check['check_result'] = $icon_result[function_exists('posix_getpwuid')];
-                        break;
-                    case 'twig-cache':
-                        $check['check_result'] = $icon_result[is_writable(TPL_CACHE)];
-                        break;
-                    case 'users-db':
-                        $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/assets/protected')];
-                        break;
-                    case 'php-version':
-                        $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '8.0', '>=')];
-                        break;
-                    case 'db-connection':
-                        $connection = $em->getConnection();
-                        $connection->connect();
-                        $check['check_result'] = $icon_result[$connection->isConnected()];
-                        $driver = $connection->getDriver();
-                        $database = $connection->getDatabase();
-                        $check['check_descr'] = "Successful connection to database $database with driver $driver";
-                        break;
-                    case 'php-timezone':
-                        $timezone = ini_get('date.timezone');
-                        if (!empty($timezone)) {
-                            $check['check_result'] = $icon_result[true];
-                        } else {
-                            $check['check_result'] = $icon_result[false];
-                        }
-                        break;
-                }
+        foreach ($check_list as &$check) {
+            switch ($check['check_cmd']) {
+                case 'php-session':
+                    $check['check_result'] = $icon_result[function_exists('session_start')];
+                    break;
+                case 'php-gettext':
+                    $check['check_result'] = $icon_result[function_exists('gettext')];
+                    break;
+                case 'php-mysql':
+                    $check['check_result'] = $icon_result[in_array('mysql', $pdo_drivers)];
+                    break;
+                case 'php-postgres':
+                    $check['check_result'] = $icon_result[in_array('pgsql', $pdo_drivers)];
+                    break;
+                case 'php-sqlite':
+                    $check['check_result'] = $icon_result[in_array('sqlite', $pdo_drivers)];
+                    break;
+                case 'php-pdo':
+                    $check['check_result'] = $icon_result[class_exists('PDO')];
+                    break;
+                case 'php-posix':
+                    $check['check_result'] = $icon_result[function_exists('posix_getpwuid')];
+                    break;
+                case 'twig-cache':
+                    $check['check_result'] = $icon_result[is_writable(TPL_CACHE)];
+                    break;
+                case 'users-db':
+                    $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/assets/protected')];
+                    break;
+                case 'php-version':
+                    $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '8.0', '>=')];
+                    break;
+                case 'db-connection':
+                    $connection = $em->getConnection();
+                    $connection->connect();
+                    $driver = str_replace('pdo_', '', $connection->getParams()['driver']);
+                    $check['check_result'] = $icon_result[$connection->isConnected()];
+                    $database = $connection->getDatabase();
+                    $check['check_descr'] = "Successful connection to database $database with driver $driver";
+                    break;
+                case 'php-timezone':
+                    $timezone = ini_get('date.timezone');
+                    if (!empty($timezone)) {
+                        $check['check_result'] = $icon_result[true];
+                    } else {
+                        $check['check_result'] = $icon_result[false];
+                    }
+                    break;
             }
+        }
 
         // Testing graph capabilities
             $data = array(array('test', 100),
