@@ -32,23 +32,14 @@ class FileRepository extends EntityRepository
 
         $queryBuilder
             ->select('f')
+            ->join('f.path', 'p')
             ->join('f.job', 'j')
-            ->join('f.path', 'p')
             ->where('f.jobid = :jobId')
             ->setParameter('jobId', $jobId);
-
-        /*$queryBuilder
-            ->select('f', 'p', 'fn')
-            ->from(File::class, 'f')
-            ->join('f.path', 'p')
-            ->join('f.filename', 'fn') // <- update annotations on Filename table
-            ->where('f.jobid = :jobId')
-            ->setParameter('jobId', $jobId);
-        */
 
         if (!empty($filename)) {
             $queryBuilder
-                ->andWhere('fn.name LIKE :filename')
+                ->andWhere('f.filename LIKE :filename')
                 ->setParameter('filename', '%' . $filename . '%');
         }
 
