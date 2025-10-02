@@ -22,7 +22,23 @@ declare(strict_types=1);
 namespace App\Entity\Bacula\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 class VolumeRepository extends EntityRepository
 {
+    /**
+     * Return the total of all volumes bytes
+     *
+     * @return int
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function getTotalBytes(): int
+    {
+        return (int)$this->createQueryBuilder('v')
+            ->select('SUM(v.volbytes)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

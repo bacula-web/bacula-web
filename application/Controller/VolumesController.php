@@ -55,8 +55,6 @@ class VolumesController extends AbstractController
     {
         $em = $this->managerRegistry->getManager('bacula');
 
-        $volumeslist = [];
-        $volumes_total_bytes = 0;
         $volumeOrderBy = 'v.name';
         $volumeOrderByDirection = 'DESC';
         $orderDirectionChecked = '';
@@ -69,20 +67,6 @@ class VolumesController extends AbstractController
             'v.id' => 'Id',
             'v.volbytes' => 'Bytes',
             'v.voljobs' => 'Jobs'
-        ];
-
-        // Volumes status icon
-        $volumestatus = [
-            'Full' => 'fa-battery-full',
-            'Archive' => 'fa-file-archive-o',
-            'Append' => 'fa-battery-quarter',
-            'Recycle' => 'fa-recycle',
-            'Read-Only' => 'fa-lock',
-            'Disabled' => 'fa-ban',
-            'Error' => 'fa-times-circle',
-            'Busy' => 'fa-clock-o',
-            'Used' => 'fa-battery-quarter',
-            'Purged' => 'fa-battery-empty'
         ];
 
         $poolList = $em->getRepository(Pool::class)->getPools(false);
@@ -135,16 +119,12 @@ class VolumesController extends AbstractController
             ->leftJoin('v.pool', 'p')
             ->orderBy($volumeOrderBy, $volumeOrderByDirection);
 
-        $totalVolumesCount = $em->getRepository(Volume::class)->count([]);
-
         $pagination = new DBPagination($request, $this->config);
-
-        // TODO: $volumes_total_bytes += $volume['volbytes'];
 
         return $this->view->render($response, 'pages/volumes.html.twig', [
             'pools_list' => $poolList,
-            'volumes' => $pagination->paginate($queryBuilder, $totalVolumesCount),
-            'volumes_total_bytes' => $volumes_total_bytes,
+            'volumes' => $pagination->paginate($queryBuilder, $totalVolumesCount = $em->getRepository(Volume::class)->count([])),
+            'volumes_total_bytes' => $em->getRepository(Volume::class)->getTotalBytes(),
             'volumes_count' => $totalVolumesCount,
             'pagination' => $pagination,
             'pool_id' => $poolId,
