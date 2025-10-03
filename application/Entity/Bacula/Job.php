@@ -22,6 +22,7 @@ declare(strict_types=1);
 namespace App\Entity\Bacula;
 
 use App\Entity\Bacula\Repository\JobRepository;
+use Carbon\Carbon;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -320,20 +321,20 @@ class Job
      */
     public function getBitrate(): int
     {
-        $elapsedSeconds = 0;
-
         if ($this->endtime) {
-            $elapsedSeconds = $this->endtime->diff($this->starttime)->s;
+            $start = new Carbon($this->getStarttime());
+            $end = new Carbon($this->getEndtime());
+
+            $elapsedSeconds = $start->diffInSeconds($end);
         } else {
-            $this->bitrate = 0;
+            $elapsedSeconds = 0;
         }
 
         if ($elapsedSeconds > 0) {
-            $this->bitrate = (int) floor($this->jobbytes / $elapsedSeconds);
-        } else {
-            $this->bitrate = 0;
+            return (int) floor($this->jobbytes / $elapsedSeconds);
         }
-        return $this->bitrate;
+
+        return 0;
     }
 
     /**
