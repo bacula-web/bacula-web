@@ -31,6 +31,7 @@ use Core\Exception\ValidationException;
 use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Query\Expr\Join;
 use Exception;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use Twig\Error\LoaderError;
@@ -45,13 +46,13 @@ class VolumesController extends AbstractController
     /**
      * @param Request $request
      * @param Response $response
-     * @return Response
+     * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws Exception
      */
-    public function index(Request $request, Response $response): Response
+    public function index(Request $request, Response $response): ResponseInterface
     {
         $em = $this->managerRegistry->getManager('bacula');
 
@@ -138,13 +139,13 @@ class VolumesController extends AbstractController
     /**
      * @param Request $request
      * @param Response $response
-     * @return Response
+     * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws NotSupported
      */
-    public function show(Request $request, Response $response): Response
+    public function show(Request $request, Response $response): ResponseInterface
     {
         $requestData = $request->getAttributes();
         $volumeId = (int) $requestData['id'];

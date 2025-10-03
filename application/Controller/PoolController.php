@@ -27,6 +27,7 @@ use Core\Utils\CUtils;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use Twig\Error\LoaderError;
@@ -38,14 +39,14 @@ class PoolController extends AbstractController
     /**
      * @param Request $request
      * @param Response $response
-     * @return Response
+     * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function prepare(Request $request, Response $response): Response
+    public function prepare(Request $request, Response $response): ResponseInterface
     {
         /**
          * @var EntityManager $em

@@ -33,6 +33,7 @@ use Core\Helpers\Sanitizer;
 use App\Table\JobTable;
 use App\Table\ClientTable;
 use Exception;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use Twig\Error\LoaderError;
@@ -47,7 +48,7 @@ class ClientController extends AbstractController
      * @param Response $response
      * @param JobTable $jobTable
      * @param ClientTable $clientTable
-     * @return Response
+     * @return ResponseInterface
      * @throws AppException
      * @throws LoaderError
      * @throws RuntimeError
@@ -59,7 +60,7 @@ class ClientController extends AbstractController
         Response $response,
         JobTable $jobTable,
         ClientTable $clientTable
-    ): Response {
+    ): ResponseInterface {
         $tplData = [];
 
         $period = 7;

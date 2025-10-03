@@ -38,9 +38,9 @@ class LoginController extends AbstractController
     /**
      * @param Response $response
      * @param UserAuth $userAuth
-     * @return mixed
+     * @return ResponseInterface
      */
-    public function signOut(Response $response, UserAuth $userAuth): Response
+    public function signOut(Response $response, UserAuth $userAuth): ResponseInterface
     {
         $userAuth->destroySession($this->session);
         $this->session->getFlash()->add('auth_info', 'Successfully logged out');
@@ -54,7 +54,7 @@ class LoginController extends AbstractController
     /**
      * @param Request $request
      * @param Response $response
-     * @return Response
+     * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

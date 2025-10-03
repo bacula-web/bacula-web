@@ -27,6 +27,7 @@ use Core\Controller\AbstractController;
 use Core\Exception\ValidationException;
 use Core\Helpers\Sanitizer;
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -44,12 +45,12 @@ class UserController extends AbstractController
      * @param Request $request
      * @param Response $response
      * @param UserAuth $userAuth
-     * @return Response
+     * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function prepare(Request $request, Response $response, UserAuth $userAuth): Response
+    public function prepare(Request $request, Response $response, UserAuth $userAuth): ResponseInterface
     {
         $em = $this->managerRegistry->getManager();
         $repository = $em->getRepository(User::class);

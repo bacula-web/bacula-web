@@ -30,7 +30,6 @@ use App\Entity\Bacula\Repository\ClientRepository;
 use App\Entity\Bacula\Repository\JobRepository;
 use App\Entity\Bacula\Repository\PoolRepository;
 use App\Entity\Bacula\Version;
-use Carbon\Carbon;
 use Core\Controller\AbstractController;
 use Core\Db\DBPagination;
 use Core\Exception\ConfigFileException;
@@ -39,6 +38,7 @@ use Core\Helpers\Sanitizer;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -52,14 +52,14 @@ class JobController extends AbstractController
     /**
      * @param Request $request
      * @param Response $response
-     * @return Response
+     * @return ResponseInterface
      * @throws ConfigFileException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws Exception
      */
-    public function index(Request $request, Response $response): Response
+    public function index(Request $request, Response $response): ResponseInterface
     {
         $em = $this->managerRegistry->getManager('bacula');
 
@@ -301,12 +301,12 @@ class JobController extends AbstractController
     /**
      * @param Response $response
      * @param int $id Job Id
-     * @return Response
+     * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function showLogs(Response $response, int $id): Response
+    public function showLogs(Response $response, int $id): ResponseInterface
     {
         $repository = $this
             ->managerRegistry->getManager('bacula')
@@ -336,12 +336,12 @@ class JobController extends AbstractController
      * @param Request $request
      * @param Response $response
      * @param int $id Job id
-     * @return Response
+     * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function showFiles(Request $request, Response $response, int $id): Response
+    public function showFiles(Request $request, Response $response, int $id): ResponseInterface
     {
         $filename = '';
 

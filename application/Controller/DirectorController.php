@@ -33,6 +33,7 @@ use Core\Utils\CUtils;
 use Exception;
 use PDOException;
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -41,13 +42,13 @@ class DirectorController extends AbstractController
 {
     /**
      * @param Response $response
-     * @return Response
+     * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws Exception
      */
-    public function index(Response $response): Response
+    public function index(Response $response): ResponseInterface
     {
         $tplData = [];
 

@@ -33,6 +33,7 @@ use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
 use DateTimeImmutable;
 use Exception;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
 use Twig\Error\LoaderError;
@@ -46,14 +47,14 @@ class BackupJobController extends AbstractController
      * @param Request $request
      * @param Response $response
      * @param JobTable $jobTable
-     * @return Response
+     * @return ResponseInterface
      * @throws AppException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws Exception
      */
-    public function index(Request $request, Response $response, JobTable $jobTable): Response
+    public function index(Request $request, Response $response, JobTable $jobTable): ResponseInterface
     {
         $tplData = [];
         $currentDateTime = DatabaseFactory::getDatabase($this->session->get('catalog_id'))->getServerTimestamp();

@@ -26,6 +26,7 @@ use Core\Exception\AppException;
 use GuzzleHttp\Psr7\Response;
 use PDO;
 use Core\Graph\Chart;
+use Psr\Http\Message\ResponseInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -35,13 +36,13 @@ class TestController extends AbstractController
     /**
      * @param Response $response
      * @param ManagerRegistry $managerRegistry
-     * @return Response
+     * @return ResponseInterface
      * @throws AppException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function index(Response $response, ManagerRegistry $managerRegistry): Response
+    public function index(Response $response, ManagerRegistry $managerRegistry): ResponseInterface
     {
         $tplData = [];
 

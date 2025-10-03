@@ -28,6 +28,7 @@ use Core\Exception\ValidationException;
 use Core\Helpers\Sanitizer;
 use Doctrine\ORM\Exception\ORMException;
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -39,12 +40,12 @@ class SettingsController extends AbstractController
     /**
      * @param Request $request
      * @param Response $response
-     * @return Response
+     * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function index(Request $request, Response $response): Response
+    public function index(Request $request, Response $response): ResponseInterface
     {
         $tplData = [];
 
@@ -129,11 +130,11 @@ class SettingsController extends AbstractController
     /**
      * @param Request $request
      * @param Response $response
-     * @return Response
+     * @return ResponseInterface
      * @throws AppException
      * @throws ORMException
      */
-    public function addUser(Request $request, Response $response): Response
+    public function addUser(Request $request, Response $response): ResponseInterface
     {
         $postData = $request->getParsedBody();
 

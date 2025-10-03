@@ -27,6 +27,7 @@ use Core\Controller\AbstractController;
 use Core\Db\DatabaseFactory;
 use Core\Exception\ValidationException;
 use Exception;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Routing\RouteContext;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
@@ -49,7 +50,7 @@ class HomeController extends AbstractController
      * @param JobTable $jobTable
      * @param PoolTable $poolTable
      * @param VolumeTable $volumeTable
-     * @return Response
+     * @return ResponseInterface
      * @throws AppException
      * @throws LoaderError
      * @throws RuntimeError
@@ -62,7 +63,7 @@ class HomeController extends AbstractController
         JobTable $jobTable,
         PoolTable $poolTable,
         VolumeTable $volumeTable
-    ): Response {
+    ): ResponseInterface {
         $tplData = [];
 
         $routeContext = RouteContext::fromRequest($request);
