@@ -30,17 +30,15 @@ use App\Entity\Bacula\Repository\ClientRepository;
 use App\Entity\Bacula\Repository\JobRepository;
 use App\Entity\Bacula\Repository\PoolRepository;
 use App\Entity\Bacula\Version;
+use Carbon\Carbon;
 use Core\Controller\AbstractController;
 use Core\Db\DBPagination;
 use Core\Exception\ConfigFileException;
 use Core\Exception\ValidationException;
 use Core\Helpers\Sanitizer;
-use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
 use GuzzleHttp\Psr7\Response;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -301,24 +299,20 @@ class JobController extends AbstractController
     }
 
     /**
-     * @param Request $request
      * @param Response $response
-     * @param $args
+     * @param int $id Job Id
      * @return Response
-     * @throws ContainerExceptionInterface
      * @throws LoaderError
-     * @throws NotFoundExceptionInterface
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws NotSupported
      */
-    public function showLogs(Response $response, $args): Response
+    public function showLogs(Response $response, int $id): Response
     {
         $repository = $this
             ->managerRegistry->getManager('bacula')
             ->getRepository(Job::class);
 
-        $v = new Validator($args);
+        $v = new Validator([$id]);
         $v->rules(['integer' => 'jobid']);
 
         if (!$v->validate()) {
@@ -328,9 +322,7 @@ class JobController extends AbstractController
                 ->withStatus(302);
         }
 
-        $jobId = (int) $args['jobid'];
-
-        $job = $repository->getJobWithLogs($jobId);
+        $job = $repository->getJobWithLogs($id);
 
         /**
          * TODO: return 404 if $job is null
@@ -343,13 +335,13 @@ class JobController extends AbstractController
     /**
      * @param Request $request
      * @param Response $response
-     * @param $args
+     * @param int $id Job id
      * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function showFiles(Request $request, Response $response, $args): Response
+    public function showFiles(Request $request, Response $response, int $id): Response
     {
         $filename = '';
 
@@ -366,10 +358,9 @@ class JobController extends AbstractController
 
         /**
          * TODO: throw 404 if jobid does not exist
-         * TODO: below code is not necessary as $args['jobid] is always provided
+         * TODO: below code is not necessary as $id is always provided
          * TODO: make sure jobid is a valid positive integer
          */
-        $jobId = isset($args['id']) ? (int) $args['id'] : null;
 
         if (isset($postData['filename'])) {
             $filename = Sanitizer::sanitize($postData['filename']);
@@ -382,7 +373,7 @@ class JobController extends AbstractController
             ->from(Job::class, 'j')
             ->join('j.status', 's')
             ->where('j.id = :jobId')
-            ->setParameter('jobId', $jobId)
+            ->setParameter('jobId', $id)
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -394,7 +385,7 @@ class JobController extends AbstractController
             $repository = $em->getRepository(File::class);
         }
         $filesQueryBuilder = $repository->getFilesFromJobId($job->getId(), $filename);
-        $totalFiles = $repository->count(['jobid' => $jobId]);
+        $totalFiles = $repository->count(['jobid' => $id]);
 
         $paginator = new DBPagination($request, $this->config);
 
