@@ -64,9 +64,9 @@ class BackupJobController extends AbstractController
         $daysstoredfiles = [];
 
         $tplData['periods_list'] = [
-            '7' => 'Last week',
-            '14' => 'Last 2 weeks',
-            '30' => 'Last month'
+            '7' => 'Last 7 days',
+            '14' => 'Last 14 days',
+            '30' => 'Last 30 days'
         ];
 
         // Get backup job(s) list
