@@ -81,8 +81,8 @@ class HomeController extends AbstractController
 
         $tplData['custom_period_list'] = [
             ['id' => 'last_day', 'label' => 'Last 24 hours'],
-            ['id' => 'last_week', 'label' => 'Last week'],
-            ['id' => 'last_month', 'label' => 'Last month'],
+            ['id' => 'last_week', 'label' => 'Last 7 days'],
+            ['id' => 'last_month', 'label' => 'Last 4 weeks (28 days)'],
             ['id' => 'since_bot', 'label' => 'Since BOT']
         ];
 
