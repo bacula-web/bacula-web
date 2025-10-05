@@ -34,6 +34,7 @@ use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use GuzzleHttp\Psr7\Response;
+use Slim\Exception\HttpNotFoundException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -153,6 +154,12 @@ class VolumesController extends AbstractController
         $em = $this->managerRegistry->getManager('bacula');
         $queryBuilder = $em->createQueryBuilder();
 
+        $volume = $em->getRepository(Volume::class)->findOneBy(['id' => $volumeId]);
+
+        if (null === $volume) {
+            throw new HttpNotFoundException($request, 'Volume with provided id not found');
+        }
+
         $query = $queryBuilder
             ->select('v', 'j.id', 'j.name', 'j.type')
             ->distinct()
@@ -165,11 +172,6 @@ class VolumesController extends AbstractController
         ;
         $jobs = $query->getArrayResult();
 
-        $volume = $em->getRepository(Volume::class)->find($volumeId);
-
-        /**
-         * TODO: if $volume is null, return 404 instead of returning the view
-         */
 
         return $this->view->render($response, 'pages/volume.html.twig', [
             'volume' => $volume,

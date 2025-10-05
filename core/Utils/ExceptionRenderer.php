@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -18,6 +16,8 @@ declare(strict_types=1);
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+declare(strict_types=1);
 
 namespace Core\Utils;
 
@@ -68,7 +68,7 @@ class ExceptionRenderer implements ErrorRendererInterface
 
             $line = $trace['line'] ?? 'n/a';
             $formattedtrace .= "on line <b>$line</b> ";
-            
+
             $class = $trace['class'] ?? '';
             $type = $trace['type'] ?? '';
             $formattedtrace .= 'in function <b>' . $class . $type . $trace['function'] . '</b>';
@@ -92,7 +92,7 @@ class ExceptionRenderer implements ErrorRendererInterface
                         '<li class="list-group-item">' .
                             '<h4>Health check</h4>' .
                                 '<p>Use the <b>test page</b> to make sure your setup health is fine</p>' .
-                                '<a class="btn btn-default btn-sm btn-info" href="' . HtmlHelper::getBasePath() .'/test" target="_blank" rel="noopener noreferrer" role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a>' .
+                                '<a class="btn btn-default btn-sm btn-info" href="' . HtmlHelper::getBasePath() . '/test" target="_blank" rel="noopener noreferrer" role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Test page</a>' .
                         '</li>' .
                         '<li class="list-group-item">' .
                             '<h4>Official documentation</h4>' .
@@ -124,14 +124,12 @@ class ExceptionRenderer implements ErrorRendererInterface
         $content = $exception->getMessage();
         $title = self::$header[get_class($exception)] ?? 'Core error';
 
-        if ($exception instanceof HttpNotFoundException)
-        {
-            $title = 'Page not found';
-            $content = 'This page does not exist';
+        if ($exception instanceof HttpNotFoundException) {
+            $title = '404 - Not found';
+            $content = $exception->getMessage();
         }
 
-        if ($exception instanceof \InvalidArgumentException)
-        {
+        if ($exception instanceof \InvalidArgumentException) {
             $title = 'Invalid user input';
         }
 
@@ -142,11 +140,11 @@ class ExceptionRenderer implements ErrorRendererInterface
         return HtmlHelper::getHtmlHeader() .
             HtmlHelper::getNavBar() .
             '<div class="container">' .
-            '<div class=\'row\'> '.
+            '<div class=\'row\'> ' .
             "<div class=\"col-8\">" .
             self::getPageHeader() .
-            '<hr />'.
-            '<h3>'. $title .'</h3>' .
+            '<hr />' .
+            '<h3>' . $title . '</h3>' .
             $content .
             '</div>' .
             '<div class=\'col-4\'> ' . self::getHelpColumn() . '</div>' .

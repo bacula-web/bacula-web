@@ -35,11 +35,13 @@ use Core\Db\DBPagination;
 use Core\Exception\ConfigFileException;
 use Core\Exception\ValidationException;
 use Core\Helpers\Sanitizer;
+use DI\NotFoundException;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpNotFoundException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -300,13 +302,14 @@ class JobController extends AbstractController
 
     /**
      * @param Response $response
+     * @param Request $request
      * @param int $id Job Id
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function showLogs(Response $response, int $id): ResponseInterface
+    public function showLogs(Response $response, Request $request, int $id): ResponseInterface
     {
         $repository = $this
             ->managerRegistry->getManager('bacula')
@@ -324,9 +327,10 @@ class JobController extends AbstractController
 
         $job = $repository->getJobWithLogs($id);
 
-        /**
-         * TODO: return 404 if $job is null
-         */
+        if (null === $job) {
+            throw new HttpNotFoundException($request, 'Job with provided id not found');
+        }
+
         return $this->view->render($response, 'pages/joblogs.html.twig', [
             'job' => $job
         ]);
@@ -340,6 +344,7 @@ class JobController extends AbstractController
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws NotFoundException
      */
     public function showFiles(Request $request, Response $response, int $id): ResponseInterface
     {
@@ -357,7 +362,6 @@ class JobController extends AbstractController
         }
 
         /**
-         * TODO: throw 404 if jobid does not exist
          * TODO: below code is not necessary as $id is always provided
          * TODO: make sure jobid is a valid positive integer
          */
@@ -376,6 +380,10 @@ class JobController extends AbstractController
             ->setParameter('jobId', $id)
             ->getQuery()
             ->getOneOrNullResult();
+
+        if (null === $job) {
+            throw new HttpNotFoundException($request, 'Job with provided id not found');
+        }
 
         $version = $em->getRepository(Version::class)->getCatalogVersion();
 
