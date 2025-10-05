@@ -5,5 +5,14 @@ parameters:
 		- application
 		- public/index.php
 		- bwc
+	scanFiles:
+	    - core/bootstrap.php
+	dynamicConstantNames:
+	    - BW_ROOT
+	reportUnmatchedIgnoredErrors: false
+	ignoreErrors:
+		- identifier: property.onlyRead
+		- identifier: missingType.generics
+		- identifier: constant.notFound
 	phpVersion: 80000
 	errorFormat: github

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -18,6 +16,8 @@ declare(strict_types=1);
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+declare(strict_types=1);
 
 namespace App\Table;
 
@@ -50,23 +50,5 @@ class VolumeTable extends Table
         $result = $result->fetch();
 
         return (string) $result['bytes_size'];
-    }
-
-    /**
-     * @param int $volumeId
-     * @return void
-     */
-    public function getJobs(int $volumeId): array
-    {
-        $sqlquery = "SELECT DISTINCT Job.JobId as JobId,Job.Name as Name,Job.StartTime as StartTime,
-            Job.Type as Type,Job.Level as Level,Job.JobFiles as Files,
-            Job.JobBytes as Bytes,Job.JobStatus as Status
-            FROM Media,JobMedia,Job
-            WHERE Media.MediaId = $volumeId
-            AND Media.MediaId=JobMedia.MediaId
-            AND JobMedia.JobId=Job.JobId
-            ORDER by Job.StartTime";
-
-        return $this->select($sqlquery);
     }
 }

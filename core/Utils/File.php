@@ -26,12 +26,12 @@ use Core\Exception\ConfigFileException;
 class File
 {
     /**
-     * string @var
+     * @var string|null $config_file
      */
     protected static $config_file;
 
     /**
-     * mixed @var
+     * @var mixed $config
      */
     protected static $config;
 

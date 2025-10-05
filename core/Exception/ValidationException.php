@@ -21,9 +21,21 @@ declare(strict_types=1);
 
 namespace Core\Exception;
 
-class ValidationException extends \RuntimeException
+use RuntimeException;
+
+class ValidationException extends RuntimeException
 {
+    /**
+     * @var array<string,array<int,string>> $errors
+     */
     public array $errors = [];
+
+    /**
+     * @param array<string,array<int,string>> $errors
+     * @param string $message
+     * @param int $code
+     * @param \Throwable|null $previous
+     */
     public function __construct(array $errors, string $message = 'Validation exception(s)', int $code = 422, ?\Throwable $previous = null)
     {
         $this->errors = $errors;

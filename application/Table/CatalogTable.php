@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,12 +17,12 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Table;
 
 use Core\Db\Table;
 use Core\Db\CDBQuery;
-use Core\Exception\ConfigFileException;
-use Core\Exception\DatabaseException;
 use Core\Utils\CUtils;
 use Exception;
 
@@ -42,10 +40,9 @@ class CatalogTable extends Table
 
     /**
      * @param string $dbName
-     * @param int $catalogId
      * @return string Database size in human format
      */
-    public function get_Size(string $dbName, int $catalogId): string
+    public function get_Size(string $dbName): string
     {
         switch ($this->db->getDriverName()) {
             case 'mysql':
@@ -63,26 +60,25 @@ class CatalogTable extends Table
                     ];
 
                     $result  = $this->run_query(CDBQuery::get_Select($statement, $this->db->getDriverName()));
-                    $dbSize = $result->fetch();
-                    $dbSize = $dbSize['dbsize'] * 1024 * 1024;
-                    return CUtils::Get_Human_Size($dbSize);
+                    $dbSize = $result->fetchColumn(1);
+                    $dbSize = $dbSize * 1024 * 1024;
+                    $dbSize = CUtils::GetHumanSize($dbSize);
                 } else {
-                    return 'Not supported (' . $this->db->getServerVersion() . ')';
+                    $dbSize = 'Not supported (' . $this->db->getServerVersion() . ')';
                 }
                 break;
             case 'pgsql':
                 $statement = "SELECT pg_database_size('$dbName') AS dbsize";
                 $result = $this->run_query($statement);
-                $dbSize = $result->fetch();
-                return CUtils::Get_Human_Size($dbSize['dbsize']);
+                $dbSize = CUtils::GetHumanSize($result->fetchColumn());
+                break;
             case 'sqlite':
-                $dbSize = filesize(BW_ROOT . '/application/assets/protected/application.db');
-                return CUtils::Get_Human_Size($dbSize);
+                $dbSize = CUtils::GetHumanSize((string) filesize(BW_ROOT . '/application/assets/protected/application.db'));
+                break;
             default:
-                throw new DatabaseException(
-                    'Catalog db size error: Unsupported PDO driver' . $this->db->getDriverName()
-                );
+                $dbSize = 'Catalog database size not supported with driver ' . $this->db->getDriverName();
         }
+        return $dbSize;
     }
 
     /**

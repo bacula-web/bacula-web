@@ -141,11 +141,11 @@ class HomeController extends AbstractController
         $tplData['canceled_jobs'] = $jobTable->count_Jobs($custom_period, 'canceled');
 
         // Stored files number
-        $tplData['stored_files'] = CUtils::format_Number($jobTable->getStoredFiles($no_period));
+        $tplData['stored_files'] = number_format($jobTable->getStoredFiles($no_period));
 
         // Total bytes and files stored over the last 24 hours
-        $tplData['bytes_last'] = CUtils::Get_Human_Size($jobTable->getStoredBytes($custom_period));
-        $tplData['files_last'] = CUtils::format_Number($jobTable->getStoredFiles($custom_period));
+        $tplData['bytes_last'] = CUtils::GetHumanSize($jobTable->getStoredBytes($custom_period));
+        $tplData['files_last'] = number_format($jobTable->getStoredFiles($custom_period));
 
         // Incremental, Differential and Full jobTable over the last 24 hours
         $tplData['incr_jobs'] = $jobTable->count_Jobs($custom_period, null, J_INCR);
@@ -306,11 +306,11 @@ class HomeController extends AbstractController
 
         $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes, Name AS JobName FROM Job WHERE Type in ('B','R') GROUP BY Name,Type";
         $result = $jobTable->run_query($query);
-        $jobs_result = array();
+        $jobs_result = [];
 
         foreach ($result->fetchAll() as $job) {
-            $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
-            $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
+            $job['jobfiles'] = number_format($job['jobfiles']);
+            $job['jobbytes'] = CUtils::GetHumanSize($job['jobbytes']);
             $job['type'] = $job_types[$job['type']];
             $jobs_result[] = $job;
         }
@@ -323,8 +323,8 @@ class HomeController extends AbstractController
         $jobs_result = null;
 
         foreach ($result->fetchAll() as $job) {
-            $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
-            $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
+            $job['jobfiles'] = number_format($job['jobfiles']);
+            $job['jobbytes'] = CUtils::GetHumanSize($job['jobbytes']);
             $job['type'] = $job_types[$job['type']];
             $jobs_result[] = $job;
         }

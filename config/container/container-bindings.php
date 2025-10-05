@@ -59,11 +59,11 @@ return ['settings' => [
         'config' => [
             'isDevMode' => true,
             'paths' =>
-                    BW_ROOT . '/application/Entity'
+                BW_ROOT . '/application/Entity'
 
         ],
         'connection.core' => 'pdo-sqlite:///' . BW_ROOT . '/application/assets/protected/application.db',
-        ],
+    ],
     'session' => [
         'name' => $_ENV['APP_NAME'],
         'lifetime' => 7200,
@@ -80,9 +80,7 @@ return ['settings' => [
 
     'csrf' => function (ResponseFactoryInterface $responseFactory, CsrfErrorHandler $csrf) {
         return new Guard($responseFactory, failureHandler: $csrf->handle($responseFactory), persistentTokenMode: true);
-    },
-
-    JobTable::class => function (SessionInterface $session) {
+    }, JobTable::class => function (SessionInterface $session) {
         return new JobTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     }, PoolTable::class => function (SessionInterface $session) {
         return new PoolTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
@@ -90,11 +88,6 @@ return ['settings' => [
         return new ClientTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     }, VolumeTable::class => function (SessionInterface $session) {
         return new VolumeTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
-    }, JobFileTable::class => function (SessionInterface $session, ContainerInterface $container) {
-        return new JobFileTable(
-            DatabaseFactory::getDatabase($session->get('catalog_id', 0)),
-            $container->get(CatalogTable::class)
-        );
     }, CatalogTable::class => function (SessionInterface $session) {
         return new CatalogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     }, UserTable::class => function () {
@@ -108,9 +101,9 @@ return ['settings' => [
         return new PhpSession($options);
     }, Twig::class => function (
         ContainerInterface $container,
-        SessionInterface $session,
-        Config $config
-) {
+        SessionInterface   $session,
+        Config             $config
+    ) {
         /**
          * TODO: cache must be set to path for prod env, or false for dev env, strict_variables and debug must be set to true only in dev env
          */
@@ -135,16 +128,16 @@ return ['settings' => [
             return $list;
         };
 
+        FileConfig::open(CONFIG_FILE);
+        $catalogsList = FileConfig::getCatalogs();
+
         $catalogsList = $config->getArrays();
         $twig->getEnvironment()->addGlobal(
             'catalogs',
             $getLabels($catalogsList)
         );
 
-        $twig->getEnvironment()->addGlobal(
-            'catalog_label',
-            $catalogsList[$session->get('catalog_current_id', 0)]['label']
-        );
+        $twig->getEnvironment()->addGlobal('catalog_label', $catalogsList[$session->get('catalog_current_id', 0)]['label']);
 
         $twig->getEnvironment()->addGlobal('enable_users_auth', $config->get('enable_users_auth', true));
 
@@ -214,20 +207,20 @@ return ['settings' => [
         return new EntityManager(
             $container->get(Connection::class),
             ORMSetup::createAttributeMetadataConfiguration([BW_ROOT . '/application/Entity/Core'], true
-        ));
+            ));
     },
-    ManagerRegistry::class => factory(function(ContainerInterface $container){
-       $connections = [
-           'default' => 'doctrine.connection.default',
-           'bacula' => 'doctrine.connection.bacula'
-       ];
-       $managers = [
-           'default' => 'doctrine.em.default',
-           'bacula' => 'doctrine.em.bacula'
-       ];
+    ManagerRegistry::class => factory(function (ContainerInterface $container) {
+        $connections = [
+            'default' => 'doctrine.connection.default',
+            'bacula' => 'doctrine.connection.bacula'
+        ];
+        $managers = [
+            'default' => 'doctrine.em.default',
+            'bacula' => 'doctrine.em.bacula'
+        ];
         return new ManagerRegistry('ORM', $connections, $managers, 'default', 'default', '', $container);
     }),
-    SetupAuthCommand::class => factory(function (ContainerInterface $container){
+    SetupAuthCommand::class => factory(function (ContainerInterface $container) {
         return new SetupAuthCommand(null, $container->get(ManagerRegistry::class));
     }),
-    ];
+];

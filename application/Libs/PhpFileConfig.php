@@ -27,7 +27,7 @@ class PhpFileConfig
 {
     /**
      * @param string $phpConfigFile
-     * @return array
+     * @return array<mixed>
      * @throws ConfigFileException
      */
     public static function load(string $phpConfigFile): array
@@ -35,15 +35,13 @@ class PhpFileConfig
         global $config;
 
         try {
-            if (is_readable($phpConfigFile))
-            {
+            if (is_readable($phpConfigFile)) {
                 require_once $phpConfigFile;
                 return $config;
             } else {
                 throw new ConfigFileException();
             }
-        } catch (ConfigFileException $e)
-        {
+        } catch (ConfigFileException $e) {
             throw new ConfigFileException("PHP config file {$phpConfigFile} does not exists or is not readable");
         }
     }

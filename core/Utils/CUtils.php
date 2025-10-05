@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,18 +17,20 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace Core\Utils;
 
 class CUtils
 {
     /**
-     * @param $size
+     * @param int $size
      * @param int $decimal
      * @param string $unit
      * @param bool $display_unit
      * @return string
      */
-    public static function Get_Human_Size($size, int $decimal = 2, string $unit = 'auto', bool $display_unit = true)
+    public static function GetHumanSize($size, int $decimal = 2, string $unit = 'auto', bool $display_unit = true): string
     {
         $unit_id = 0;
         $lisible = false;
@@ -64,23 +64,5 @@ class CUtils
         }
 
         return $hsize;
-    }
-
-    /**
-     * Return a formated number based on the current locale
-     *
-     * @param $number
-     * @param int $decimal
-     * @return string
-     */
-    public static function format_Number($number, int $decimal = 0): string
-    {
-        $locale = localeconv();
-
-        if (empty($locale['thousands_sep'])) {
-            $locale['thousands_sep'] = '.';
-        }
-
-        return number_format((float)$number, $decimal, $locale['decimal_point'], $locale['thousands_sep']);
     }
 }

@@ -177,16 +177,16 @@ class ClientController extends AbstractController
                     $totalBytes += (int)$job['jobbytes'];
                     $totalFiles += (int)$job['jobfiles'];
                     $job['level'] = $job_levels[$job['level']];
-                    $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
-                    $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
+                    $job['jobfiles'] = number_format((float)$job['jobfiles']);
+                    $job['jobbytes'] = CUtils::GetHumanSize($job['jobbytes']);
                     $job['endtime'] = date(
                         $this->config->get('datetime_format', 'Y-m-d H:i:s'),
                         strtotime($job['endtime'])
                     );
                     $backup_jobs[] = $job;
                 }
-                $tplData['total_bytes'] = CUtils::Get_Human_Size($totalBytes);
-                $tplData['total_files'] = CUtils::format_Number($totalFiles);
+                $tplData['total_bytes'] = CUtils::GetHumanSize($totalBytes);
+                $tplData['total_files'] = number_format($totalFiles);
                 $tplData['backup_jobs'] = $backup_jobs;
 
                 // Last n days stored Bytes graph

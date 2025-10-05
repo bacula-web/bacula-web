@@ -111,7 +111,9 @@ class CheckCommand extends Command
             $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
         }
         $output->writeln($formattedBlock);
-        $output->writeln(['[Info] Folder <options=bold>application/assets/protected</> must be writable by web server user', '']);
+        $output->writeln([
+            '[Info] Folder <options=bold>application/assets/protected</> must be writable by web server user', ''
+        ]);
 
         // Check Twig cache folder permissions
         $output->writeln(

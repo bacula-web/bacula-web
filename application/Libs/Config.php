@@ -24,12 +24,12 @@ namespace App\Libs;
 class Config
 {
     /**
-     * @var array
+     * @var array<mixed>
      */
     private array $configData;
 
     /**
-     * @param array $configData
+     * @param array<mixed> $configData
      */
     public function __construct(array $configData)
     {
@@ -59,7 +59,7 @@ class Config
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function all(): array
     {
@@ -93,7 +93,7 @@ class Config
     public function countArrays(): int
     {
         $arraysCount = 0;
-        foreach ($this->all() as $value ) {
+        foreach ($this->all() as $value) {
             if (is_array($value)) {
                 $arraysCount += 1;
             }
@@ -104,7 +104,7 @@ class Config
     /**
      * Return label key if key is an array (used for Bacula database catalog)
      *
-     * @return array
+     * @return array<array<string,mixed>>
      */
     public function getArrays(): array
     {

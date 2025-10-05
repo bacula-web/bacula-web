@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,6 +17,8 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace Core\Db;
 
 use Core\Exception\DatabaseException;
@@ -30,7 +30,7 @@ use PDOStatement;
 class Table
 {
     /**
-     * @var PDO
+     * @var PDO $pdo
      */
     protected PDO $pdo;
 
@@ -45,12 +45,12 @@ class Table
     protected string $driver;
 
     /**
-     * @var
+     * @var array<string, mixed> $parameters
      */
-    protected $parameters;
+    protected array $parameters;
 
     /**
-     * @var null
+     * @var string|null
      */
     protected ?string $tablename = null;
 
@@ -80,11 +80,10 @@ class Table
     /**
      * Return table row count or 0
      *
-     * @param $filter
+     * @param string|null $filter
      * @return int
-     * @throws Exception
      */
-    public function count($filter = null): int
+    public function count(string $filter = null): int
     {
         $fields = array( 'COUNT(*) as row_count' );
 
@@ -106,7 +105,7 @@ class Table
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function get_driver_name(): string
     {
@@ -115,12 +114,12 @@ class Table
 
     /**
      * @param string $query
-     * @param array|null $params
+     * @param array<string,mixed>|null $params
      * @param string|null $fetchClass
-     * @param boolean $single
+     * @param bool $single
      * @return mixed
      */
-    public function select(string $query, array $params = null, string $fetchClass = null, $single = null)
+    public function select(string $query, array $params = null, string $fetchClass = null, bool $single = true): mixed
     {
         if ($params !== null) {
             $statement = $this->pdo->prepare($query);
@@ -133,7 +132,7 @@ class Table
             $statement->setFetchMode(PDO::FETCH_CLASS, $fetchClass);
         }
 
-        if ($single !== null) {
+        if ($single) {
             return $statement->fetch();    // set fetch mode
         }
 
@@ -143,7 +142,7 @@ class Table
     /**
      * Prepare a query using PDO::prepare() and return false on failure, or a PDOStatement
      * @param string $query SQL query
-     * @param array|null $params
+     * @param array<string,mixed>|null $params
      * @return PDOStatement|bool
      */
     protected function execute(string $query, array $params = null)
@@ -158,10 +157,10 @@ class Table
     }
 
     /**
-     * @param $query
+     * @param string $query
      * @return PDOStatement
      */
-    public function run_query($query): PDOStatement
+    public function run_query(string $query): PDOStatement
     {
         // Prepare PDO statement
         $statment = $this->pdo->prepare($query);
@@ -172,22 +171,16 @@ class Table
 
         // Bind PHP variables with named placeholders
         if (isset($this->parameters)) {
-            try {
-                foreach ($this->parameters as $name => $value) {
-                    if (is_string($value)) {
-                        $statment->bindValue(":$name", $value, PDO::PARAM_STR);
-                    } elseif (is_int($value)) {
-                        $statment->bindValue(":$name", $value, PDO::PARAM_INT);
-                    } elseif (is_bool($value)) {
-                        $statment->bindValue(":$name", $value, PDO::PARAM_BOOL);
-                    }
+            foreach ($this->parameters as $name => $value) {
+                if (is_string($value)) {
+                    $statment->bindValue(":$name", $value, PDO::PARAM_STR);
+                } elseif (is_int($value)) {
+                    $statment->bindValue(":$name", $value, PDO::PARAM_INT);
+                } elseif (is_bool($value)) {
+                    $statment->bindValue(":$name", $value, PDO::PARAM_BOOL);
                 }
-            } catch (PDOException $pdoException) {
-                $pdoException->getMessage();
             }
         }
-
-        $result = $statment->execute();
 
         /**
         * Reset $this->parameters to an empty array
@@ -195,6 +188,8 @@ class Table
         * is not called and Table::parameters is not empty
         */
         $this->parameters = [];
+
+        $result = $statment->execute();
 
         if ($result === false) {
             throw new PDOException("Failed to execute PDOStatment <br />$query");
@@ -213,72 +208,5 @@ class Table
     public function addParameter(string $name, $value)
     {
         $this->parameters[$name] = $value;
-    }
-
-    /**
-     * Return PDO connection status or null
-     *
-     * @return string|null
-     */
-    public function getConnectionStatus(): ?string
-    {
-        // If MySQL of postGreSQL
-        if ($this->get_driver_name() != 'sqlite') {
-            return $this->pdo->getAttribute(PDO::ATTR_CONNECTION_STATUS);
-        } else {
-            return 'N/A';
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    public function isConnected(): bool
-    {
-        // If MySQL of postGreSQL
-        switch ($this->get_driver_name()) {
-            case 'mysql':
-            case 'pgsql':
-                $pdo_connection = $this->getConnectionStatus();
-                break;
-            default:
-               // We assume that the user running Apache has access to the SQLite database file (must be improved)
-                $pdo_connection = true;
-        }
-
-        // Test connection status
-        if ($pdo_connection !== false) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @param $criteria
-     * @param $parameters
-     * @return array|bool
-     */
-    public function find($criteria, $parameters = null)
-    {
-        $sql = 'SELECT * FROM ' . $this->getTableName() . ' WHERE ';
-        $sql .= implode(' AND ', $criteria);
-
-        $statement = $this->execute($sql, $parameters);
-
-        return $statement->fetch();
-    }
-
-    /**
-     * @param $sql
-     * @param $parameters
-     * @param $fetchClass
-     * @return array|false
-     */
-    public function findAll($sql, $parameters, $fetchClass)
-    {
-        $statement = $this->execute($sql, $parameters);
-
-        return $statement->fetchAll(PDO::FETCH_CLASS, $fetchClass);
     }
 }

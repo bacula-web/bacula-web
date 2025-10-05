@@ -47,11 +47,6 @@ class ExceptionRenderer implements ErrorRendererInterface
     ];
 
     /**
-     * @var Throwable
-     */
-    private static Throwable $throwable;
-
-    /**
      * @param Exception|Error $exception
      * @return string
      */

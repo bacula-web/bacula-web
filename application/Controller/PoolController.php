@@ -68,7 +68,7 @@ class PoolController extends AbstractController
             $query = $em->createQuery($dql);
             $query->setParameter('poolid', $pool['id']);
             $totalBytes = $query->getSingleScalarResult();
-            $pools[$id]['total_bytes'] = CUtils::Get_Human_Size($totalBytes);
+            $pools[$id]['total_bytes'] = CUtils::GetHumanSize($totalBytes);
         }
 
         return $this->view->render($response, 'pages/pools.html.twig', [

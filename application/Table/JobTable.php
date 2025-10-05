@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,9 +17,10 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Table;
 
-use App\Entity\Job;
 use Core\Db\CDBQuery;
 use Core\Db\Table;
 use Core\Exception\AppException;
@@ -34,21 +33,16 @@ class JobTable extends Table
     protected ?string $tablename = 'Job';
 
     /**
-     * @param $period_timestamps
-     * @param $job_status
-     * @param $job_level
-     * @return mixed
+     * @param array<int,int> $period_timestamps
+     * @param string $job_status
+     * @param string $job_level
+     * @return int
      * @throws Exception
      */
-    public function count_Jobs($period_timestamps, $job_status = null, $job_level = null)
+    public function count_Jobs(array $period_timestamps, string $job_status = null, string $job_level = null): int
     {
         $where = null;
         $fields = ['COUNT(*) as job_count'];
-
-        // Check PDO object
-        if (!is_a($this->pdo, 'PDO') && is_null($this->pdo)) {
-            throw new DatabaseException('Unvalid PDO object provided in count_Jobs() function');
-        }
 
         // Getting timestamp interval
         $intervals = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
@@ -109,30 +103,25 @@ class JobTable extends Table
         // Execute SQL statment
         $result = $this->run_query($statment);
         $result = $result->fetch();
-        return $result['job_count'];
+        return (int) $result['job_count'];
     }
 
     /**
-     * @param array $period_timestamps Array containing start and end date (unix timestamp format)
+     * @param array<int,int> $period_timestamps Array containing start and end date (unix timestamp format)
      * @param string $job_name
      * @param string $client_id
      * @return int|mixed
      * @throws Exception
      */
-    public function getStoredFiles($period_timestamps = [], string $job_name = 'ALL', string $client_id = 'ALL')
+    public function getStoredFiles(array $period_timestamps = [], string $job_name = 'ALL', string $client_id = 'ALL'): float
     {
         $where      = [];
         $fields     = ['SUM(JobFiles) AS stored_files'];
 
-        // Check PDO object
-        if (!is_a($this->pdo, 'PDO') || is_null($this->pdo)) {
-            throw new DatabaseException('Unvalid PDO object provided in count_Jobs() function');
-        }
-
         // Defined period
         if (!empty($period_timestamps)) {
             $intervals     = CDBQuery::get_Timestamp_Interval($this->db->getDriverName(), $period_timestamps);
-            $where[]     = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
+            $where[] = '(endtime BETWEEN ' . $intervals['starttime'] . ' AND ' . $intervals['endtime'] . ') ';
         }
 
         if ($job_name != 'ALL') {
@@ -161,17 +150,18 @@ class JobTable extends Table
         if (is_null($result['stored_files'])) {
             return 0;
         } else {
-            return $result['stored_files'];
+            return (float)$result['stored_files'];
         }
     }
 
     /**
-     * @param $period_timestamps
-     * @param $job_name
-     * @param $client_id
+     * @param array<int,int> $period_timestamps
+     * @param string $job_name
+     * @param string $client_id
      * @return int|mixed
+     * @throws Exception
      */
-    public function getStoredBytes($period_timestamps = [], $job_name = 'ALL', $client_id = 'ALL')
+    public function getStoredBytes(array $period_timestamps = [], string $job_name = 'ALL', string $client_id = 'ALL')
     {
         $where = [];
         $fields  = ['SUM(JobBytes) AS stored_bytes'];
@@ -234,20 +224,14 @@ class JobTable extends Table
 
     /**
      * @param $client_id
-     * @param $job_type
-     * @return array
+     * @param string $job_type
+     * @return array<int,string>
      */
-    public function get_Jobs_List($client_id = null, $job_type = null): array
+    public function get_Jobs_List(string $job_type = null): array
     {
         $jobs   = [];
         $fields = ['Name'];
         $where  = null;
-
-        // Prepare and execute query
-        if (!is_null($client_id)) {
-            $this->addParameter('clientid', $client_id);
-            $where[] = 'clientid = :clientid';
-        }
 
         // Job type filter
         if (!is_null($job_type)) {
@@ -273,54 +257,9 @@ class JobTable extends Table
     }
 
     /**
-     * @param array $levels_name
-     * @return array
-     */
-    public function getLevels(array $levels_name = []): array
-    {
-        $levels = [];
-        $statment = [
-            'table' => $this->tablename,
-            'fields' => ['Level'],
-            'groupby' => 'Level'
-        ];
-
-        $result = $this->run_query(CDBQuery::get_Select($statment));
-
-        foreach ($result->fetchAll() as $level) {
-            if (array_key_exists($level['level'], $levels_name)) {
-                $levels[$level['level']] = $levels_name[$level['level']];
-            } else {
-                $levels[$level['level']] = $level['level'];
-            }
-        }
-
-        return $levels;
-    }
-
-    /**
-     * @param array $job_types
-     * @return array
-     */
-    public function getUsedJobTypes(array $job_types): array
-    {
-        $used_types = [];
-        $sql_query = 'SELECT DISTINCT Type FROM ' . $this->tablename;
-        $result = $this->run_query($sql_query);
-
-        foreach ($result->fetchAll() as $job_type) {
-            if (array_key_exists($job_type['type'], $job_types)) {
-                $used_types[ $job_type['type'] ] = $job_types[ $job_type['type']];
-            }
-        }
-
-        return $used_types;
-    }
-
-    /**
      * Return an array which contains stored bytes and files of completed backup jobs of each day of the week
      *
-     * @return array|null
+     * @return array<array<string,string>>|null
      * @throws AppException
      */
     public function getWeeklyJobsStats()
@@ -360,8 +299,8 @@ class JobTable extends Table
         $week = [0 => 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
         foreach ($result->fetchAll() as $day) {
-            $day['jobbytes'] = CUtils::Get_Human_Size($day['jobbytes']);
-            $day['jobfiles'] = CUtils::format_Number($day['jobfiles']);
+            $day['jobbytes'] = CUtils::GetHumanSize($day['jobbytes']);
+            $day['jobfiles'] = number_format((float)$day['jobfiles']);
 
             // Simply fix day name for postgreSQL
             // It could be improved but I lack some SQL (postgreSQL skills)
@@ -378,7 +317,7 @@ class JobTable extends Table
     /**
      * Return an array of the top 10 backup jobs (used stored bytes)
      *
-     * @return array
+     * @return array<array<string,string>>
      */
     public function getBiggestJobsStats(): array
     {
@@ -399,33 +338,11 @@ class JobTable extends Table
         $result = $this->run_query($query);
 
         foreach ($result->fetchAll() as $job) {
-            $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
-            $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
+            $job['jobbytes'] = CUtils::GetHumanSize($job['jobbytes']);
+            $job['jobfiles'] = number_format((float)$job['jobfiles']);
             $res[] = $job;
         }
 
         return $res;
-    }
-
-    /**
-     * @param int $jobid
-     * @return mixed
-     */
-    public function findById(int $jobid)
-    {
-        $fields = ['Job.JobId', 'Job.Name AS Job_name', 'Job.Type',
-            'Job.SchedTime', 'Job.StartTime', 'Job.EndTime', 'Job.Level',
-            'Job.ReadBytes', 'Job.JobBytes', 'Job.JobFiles',
-            'Pool.Name', 'Job.JobStatus', 'Pool.Name AS Pool_name', 'Status.JobStatusLong'];
-
-        $sql_query = CDBQuery::get_Select(array('table' => 'Job',
-            'fields' => $fields,
-            'where' => ['jobid = :jobid'],
-            'join' => array(
-                array('table' => 'Pool', 'condition' => 'Job.PoolId = Pool.PoolId'),
-                array('table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus')
-            )), $this->get_driver_name());
-
-        return $this->select($sql_query, ['jobid' => $jobid], Job::class, true);
     }
 }

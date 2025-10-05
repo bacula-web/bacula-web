@@ -23,7 +23,26 @@ use Dotenv\Dotenv;
 
 define('BW_ROOT', dirname(__DIR__));
 
-require_once BW_ROOT . '/core/const.inc.php';
+// Configuration
+const CONFIG_DIR = BW_ROOT . '/application/config/';
+const CONFIG_FILE = CONFIG_DIR . 'config.php';
+
+const TPL_DIR = BW_ROOT . '/application/views/templates';
+const TPL_CACHE = BW_ROOT . '/application/views/cache';
+
+// Locales
+const LOCALE_DIR = BW_ROOT . '/application/locale';
+
+// Time intervals in secondes
+define('FIRST_DAY', mktime(0, 0, 0, 1, 1, 1970));
+define('DAY', 86400);
+define('WEEK', 7 * DAY);
+define('MONTH', 4 * WEEK);
+
+// Job levels
+define('J_FULL', 'F');
+define('J_DIFF', 'D');
+define('J_INCR', 'I');
 
 $dotenv = Dotenv::createImmutable(CONFIG_DIR, 'app');
 $dotenv->load();

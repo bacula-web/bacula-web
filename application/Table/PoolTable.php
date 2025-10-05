@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,6 +17,8 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace App\Table;
 
 use Core\Db\Table;
@@ -28,28 +28,4 @@ use Exception;
 class PoolTable extends Table
 {
     protected ?string $tablename = 'Pool';
-
-    /**
-     * @var bool $hideEmptyPools
-     * @return mixed
-     * @throws Exception
-     */
-    public function getPools(bool $hideEmptyPools = true)
-    {
-        $where    = null;
-        $orderby  = 'Name';
-
-        if ($hideEmptyPools) {
-            $where[] = "$this->tablename.NumVols > 0";
-        }
-
-        $fields = [ 'poolid', 'name', 'numvols' ];
-
-        $query = CDBQuery::get_Select(array( 'table' => $this->tablename,
-            'fields' => $fields,
-            'where' => $where,
-            'orderby' => $orderby ));
-
-        return $this->select($query);
-    }
 }

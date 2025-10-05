@@ -26,6 +26,7 @@ use App\Table\UserTable;
 use Core\Db\DatabaseFactory;
 use Core\Db\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -36,9 +37,9 @@ use Symfony\Component\Console\Question\Question;
 class SetupAuthCommand extends Command
 {
     /**
-     * @var EntityManager
+     * @var ObjectManager
      */
-    private EntityManager $em;
+    private ObjectManager $em;
 
     public function __construct(string $name = null, ManagerRegistry $managerRegistry)
     {

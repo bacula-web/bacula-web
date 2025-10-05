@@ -44,14 +44,13 @@ class FileConfig extends File
         return $catalog_count;
     }
 
-    // ==================================================================================
-    // Function:    get_Value()
-    // Parameters:  configuration parameter or false (if not defined)
-    //              $catalog_id (optional)
-    // Return:      parameter value or NULL if does not exist
-    // ==================================================================================
-
-    public static function get_Value($parameter, $catalog_id = null)
+    /**
+     * @param string $parameter
+     * @param int|null $catalog_id
+     * @return mixed|null
+     * @throws ConfigFileException
+     */
+    public static function get_Value(string $parameter, int $catalog_id = null)
     {
         // Check if the $global_config have been already set first
         if (!isset(self::$config_file)) {
@@ -108,9 +107,9 @@ class FileConfig extends File
     /**
      * Return an array containing all catalogs labels define in the configuration
      *
-     * @return array
+     * @return array<int,string>
      */
-    public static function get_Catalogs(): array
+    public static function getCatalogs(): array
     {
         $catalogs = array();
 

@@ -70,7 +70,7 @@ class BackupJobController extends AbstractController
         ];
 
         // Get backup job(s) list
-        $jobslist = $jobTable->get_Jobs_List(null, 'B');
+        $jobslist = $jobTable->get_Jobs_List('B');
 
         $tplData['jobs_list'] = $jobslist;
 
@@ -99,9 +99,7 @@ class BackupJobController extends AbstractController
                 throw new ValidationException($validator->errors());
             }
         }
-
-        $backupjob_name = Sanitizer::sanitize($backupjob_name);
-
+        
         $where = [];
 
         if ($backupjob_name == null) {
@@ -157,11 +155,11 @@ class BackupJobController extends AbstractController
             $periods = CDBQuery::get_Timestamp_Interval($jobTable->get_driver_name(), $interval);
 
             $backupjobbytes = $jobTable->getStoredBytes($interval, $backupjob_name);
-            $backupjobbytes = CUtils::Get_Human_Size($backupjobbytes);
+            $backupjobbytes = CUtils::GetHumanSize($backupjobbytes);
 
             // Stored files on the defined period
             $backupjobfiles = $jobTable->getStoredFiles($interval, $backupjob_name);
-            $backupjobfiles = CUtils::format_Number($backupjobfiles);
+            $backupjobfiles = number_format($backupjobfiles);
 
             // Get the last 7 days interval (start and end)
             $days = DateTimeUtil::getLastDaysIntervals($interval[1], (int) $backupjob_period);
@@ -273,14 +271,14 @@ class BackupJobController extends AbstractController
 
                 if ($seconds !== false && $seconds > 0) {
                     $speed = $job['jobbytes'] / $seconds;
-                    $job['speed'] = CUtils::Get_Human_Size($speed, 2) . '/s';
+                    $job['speed'] = CUtils::GetHumanSize($speed, 2) . '/s';
                 } else {
                     $job['speed'] = 'N/A';
                 }
 
                 // Job bytes more easy to read
-                $job['jobbytes'] = CUtils::Get_Human_Size($job['jobbytes']);
-                $job['jobfiles'] = CUtils::format_Number($job['jobfiles']);
+                $job['jobbytes'] = CUtils::GetHumanSize($job['jobbytes']);
+                $job['jobfiles'] = number_format((float)$job['jobfiles']);
 
                 // Format date/time
                 $jobStartTime = DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $job['starttime']);

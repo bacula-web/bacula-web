@@ -158,7 +158,7 @@ class DBPagination
         $paginated = new Paginator($queryBuilder, fetchJoinCollection: true);
 
         $this->filteredRow = count($paginated);
-        $this->paginationMax = ceil($this->filteredRow / $this->limit);
+        $this->paginationMax = (int) ceil($this->filteredRow / $this->limit);
 
         return $paginated;
     }

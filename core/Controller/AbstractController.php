@@ -29,7 +29,7 @@ use Slim\Views\Twig;
 abstract class AbstractController
 {
     /**
-     * @var Twig|mixed
+     * @var Twig
      */
     protected Twig $view;
 

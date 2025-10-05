@@ -34,7 +34,8 @@
     "allow-plugins": {
       "composer/installers": true,
       "robloach/component-installer": true,
-      "oomphinc/composer-installers-extender": true
+      "oomphinc/composer-installers-extender": true,
+      "phpstan/extension-installer": true
     }
   },
   "require": {
@@ -69,8 +70,10 @@
     "phpmd/phpmd": "@stable",
     "squizlabs/php_codesniffer": "@stable",
     "phpunit/phpunit": "9.5.26",
-    "phpstan/phpstan": "^1.10",
-    "symfony/var-dumper": "^5.4"
+    "phpstan/phpstan": "^2.0",
+    "symfony/var-dumper": "^5.4",
+    "phpstan/extension-installer": "^1.4",
+    "phpstan/phpstan-doctrine": "^2.0"
   },
   "autoload": {
     "psr-4": {

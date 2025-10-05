@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -18,6 +16,8 @@ declare(strict_types=1);
  * You should have received a copy of the GNU General Public License along with Bacula-Web. If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+declare(strict_types=1);
 
 namespace App\Command;
 
@@ -53,11 +53,13 @@ class PublishAssetsCommand extends Command
         } elseif (!file_exists($file)) {
             $output->writeln("<error>Error: Source file $file does not exist or is not writable</error>");
             return Command::FAILURE;
-        } elseif (!is_writable($destinationPath) || !file_exists($destinationPath)) {
-            $output->writeln(
-                "<error>Error: Destination $destinationPath folder does not exist or is not writable</error>"
-            );
-            return Command::FAILURE;
+        } else {
+            if (!file_exists($destinationPath)) {
+                $output->writeln(
+                    "<error>Error: Destination $destinationPath folder does not exist or is not writable</error>"
+                );
+                return Command::FAILURE;
+            }
         }
         return Command::SUCCESS;
     }

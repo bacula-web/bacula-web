@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,21 +17,23 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace Core\Db;
 
-use Exception;
+use Core\Exception\ConfigFileException;
 
 class DatabaseFactory
 {
     /**
-     * @param null $catalogid
+     * @param int|null $catalogId
      * @return Database
-     * @throws Exception
+     * @throws ConfigFileException
      */
-    public static function getDatabase($catalogid = null): Database
+    public static function getDatabase(int $catalogId = null): Database
     {
-        if ($catalogid !== null) {
-            return new Database($catalogid);
+        if ($catalogId !== null) {
+            return new Database($catalogId);
         }
         return new Database();
     }

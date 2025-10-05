@@ -32,14 +32,27 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class GuestMiddleware implements MiddlewareInterface
 {
-    private UserAuth $userAuth;
+    /**
+     * @var SessionInterface
+     */
     private SessionInterface $session;
+
+    /**
+     * @var string|null
+     */
     private ?string $basePath;
+
+    /**
+     * @var Config
+     */
     private Config $config;
 
-    public function __construct(UserAuth $userAuth, SessionInterface $session, Config $config)
+    /**
+     * @param SessionInterface $session
+     * @param Config $config
+     */
+    public function __construct(SessionInterface $session, Config $config)
     {
-        $this->userAuth = $userAuth;
         $this->session = $session;
         $this->config = $config;
         $this->basePath = $config->get('basepath', null);

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -19,23 +17,56 @@ declare(strict_types=1);
  * <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
 namespace Core\Graph;
 
 use Core\Exception\AppException;
 use Core\Utils\CUtils;
 use TypeError;
 
+/**
+ *  The Chart class generate Charts using NVD3
+ */
 class Chart
 {
-    public $name;
-    protected $type;
-    protected $data = array();
-    protected $margin = 30;
-    protected $ylabel = null;
-    protected $uniformize_data = false;
-    protected $linkedReport;
+    /**
+     * @var string $name Chart name
+     */
+    public string $name;
 
     /**
+     * @var string $type
+     */
+    protected string $type;
+
+    /**
+     * @var array<mixed>
+     */
+    protected array $data;
+
+    /**
+     * @var int $margin
+     */
+    protected int $margin = 30;
+
+    /**
+     * @var string $ylabel Label for Y axis
+     */
+    protected string $ylabel;
+
+    /**
+     * @var bool $uniformize_data
+     */
+    protected bool $uniformize_data = false;
+
+    /**
+     * @var string
+     */
+    protected string $linkedReport;
+
+    /**
+     *
      * $chart_data is an array which the structure below
      *
      * data => array( key => value )
@@ -45,9 +76,9 @@ class Chart
      * uniformize_data => do we normalize data ? (boolean)
      * linked_report => linked report page
      *
-     * @param [] $chart_data
+     * @param array<mixed> $chart_data
      */
-    public function __construct($chart_data)
+    public function __construct(array $chart_data)
     {
         if (!is_array($chart_data)) {
             throw new TypeError('Bad parameters provided to Chart constructor');
@@ -81,13 +112,6 @@ class Chart
     {
         $array_sum = 0;
 
-        // Uniformize data array element based on best unit
-        foreach ($this->data as $key => $data) {
-            if (is_null($data[1])) {
-                $this->data[$key][1] = 0;
-            }
-        }
-
         // Calculate sum of all values
         foreach ($this->data as $value) {
             $array_sum += $value[1];
@@ -95,10 +119,10 @@ class Chart
 
         // Calculate average value and best unit
         $avg = $array_sum  / count($this->data);
-        list($value, $best_unit) = explode(' ', CUtils::Get_Human_Size($avg, 1));
+        list($value, $best_unit) = explode(' ', CUtils::GetHumanSize($avg, 1));
 
         foreach ($this->data as $key => $value) {
-            $this->data[$key][1] = CUtils::Get_Human_Size($value[1], 1, $best_unit, false);
+            $this->data[$key][1] = CUtils::GetHumanSize($value[1], 1, $best_unit, false);
         }
 
         $this->ylabel = $best_unit;
@@ -154,7 +178,7 @@ class Chart
         $blob .= '.x(function(d) {return d.label})' . "\n";
         $blob .= '.y(function(d) {return d.value})' . "\n";
 
-        if  ($this->type === 'pie') {
+        if ($this->type === 'pie') {
             $blob .= '.legendPosition("right")';
         }
 
@@ -194,7 +218,7 @@ class Chart
 
         $blob .= "\n";
 
-        if ($this->type == 'bar' && !is_null($this->ylabel)) {
+        if ($this->type == 'bar' && !empty($this->ylabel)) {
                 $blob .= "\n" . 'chart.yAxis' . "\n";
                 $blob .= ".axisLabelDistance(25)\n";
                 $blob .= ".axisLabel('" . $this->ylabel . "');\n";

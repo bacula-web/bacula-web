@@ -31,9 +31,6 @@ use Doctrine\ORM\NonUniqueResultException;
 use Odan\Session;
 use Odan\Session\SessionInterface;
 use PDO;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 class UserAuth
 {
@@ -61,9 +58,7 @@ class UserAuth
     /**
      * @param UserTable $userTable
      * @param SessionInterface $session
-     * @param ContainerInterface $container
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @param ManagerRegistry $managerRegistry
      */
     public function __construct(UserTable $userTable, SessionInterface $session, ManagerRegistry $managerRegistry)
     {
@@ -74,8 +69,9 @@ class UserAuth
 
     /**
      * @throws AppException
+     * @return void
      */
-    public function check()
+    public function check(): void
     {
         // Throw an exception if PHP SQLite is not installed
         $pdo_drivers = PDO::getAvailableDrivers();
