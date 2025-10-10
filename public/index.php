@@ -98,7 +98,10 @@ $app->group('', function (RouteCollectorProxy $group) {
 
     $group->map(['GET', 'POST'], '/client', [ClientController::class, 'index'])->setName('app_client_report');
 
-    $group->map(['GET', 'POST'], '/user', [UserController::class, 'prepare'])->setName('user');
+    $group->get( '/user', [UserController::class, 'index'])->setName('user.profile');
+
+    $group->get('/user/reset-password', [UserController::class, 'passwordReset'])->setName('user.password-reset');
+    $group->post('/user/reset-password', [UserController::class, 'attemptPasswordReset'])->setName('user.attempt-password-reset');
 })->add(DbAuthMiddleware::class);
 
 $app->group('', function (RouteCollectorProxy $group) {

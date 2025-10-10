@@ -25,10 +25,10 @@ use App\Entity\Core\User;
 use Core\App\UserAuth;
 use Core\Controller\AbstractController;
 use Core\Exception\ValidationException;
-use Core\Helpers\Sanitizer;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Routing\RouteContext;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -37,9 +37,37 @@ use Valitron\Validator;
 class UserController extends AbstractController
 {
     /**
-     * @var string
+     * @param Response $response
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    protected string $username = '';
+    public function index(Response $response): ResponseInterface
+    {
+        $user = $this->managerRegistry
+            ->getManager()
+            ->getRepository(User::class)
+            ->findOneBy(['username' => $this->session->get('username')]);
+
+        return $this->view->render(
+            $response,
+            'pages/usersettings.html.twig',
+            compact('user')
+        );
+    }
+
+    /**
+     * @param Response $response
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function passwordReset(Response $response): ResponseInterface
+    {
+        return $this->view->render($response, 'pages/user-passsword-reset.html.twig');
+    }
 
     /**
      * @param Request $request
@@ -50,52 +78,46 @@ class UserController extends AbstractController
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function prepare(Request $request, Response $response, UserAuth $userAuth): ResponseInterface
+    public function attemptPasswordReset(Request $request, Response $response, UserAuth $userAuth): ResponseInterface
     {
         $em = $this->managerRegistry->getManager();
         $repository = $em->getRepository(User::class);
 
-        $tplData = [];
         $postData = $request->getParsedBody();
 
         $user = $repository->findOneBy(['username' => $this->session->get('username')]);
 
-        $tplData['username'] = $user->getUsername();
-        $tplData['email'] = $user->getEmail();
-
-        // TODO: refactor below code to a proper Controller::action
-        // Check if password reset have been requested
-        if (isset($postData['action'])) {
-            switch (Sanitizer::sanitize($postData['action'])) {
-                case 'passwordreset':
-                    $validator = new Validator($postData, [
-                        'username',
-                        'oldpassword',
-                        'newpassword',
-                        'confnewpassword']);
-                    $validator
-                        ->rule(function ($field, $value, $params, $fields) use ($userAuth, $user) {
-                            if (($userAuth->authUser($user->getUsername(), $fields['oldpassword']) == 'yes')) {
-                                return true;
-                            }
-                            return false;
-                        }, "oldpassword")->message("Your current password is not valid")
-                        ->rule('equals', 'newpassword', 'confnewpassword')->message('Both passwords must match')
-                        ->rule('lengthMin', 'newpassword', 8)->message('Password must be at least 8 characters long');
-                    if (! $validator->validate()) {
-                        throw new ValidationException($validator->errors());
-                    }
-
-                    // Reset password
-                    $user->setPassword($postData['newpassword']);
-                    $em->persist($user);
-                    $em->flush();
-
-                    $this->session->getFlash()->set('info', ['Password successfully updated']);
-                    break;
-            }
+        $validator = new Validator($postData, [
+            'username',
+            'oldpassword',
+            'newpassword',
+            'confnewpassword']);
+        $validator
+            ->rule(function ($field, $value, $params, $fields) use ($userAuth, $user) {
+                if (($userAuth->authUser($user->getUsername(), $fields['oldpassword']) == 'yes')) {
+                    return true;
+                }
+                return false;
+            }, "oldpassword")->message("Your current password is not valid")
+            ->rule('equals', 'newpassword', 'confnewpassword')->message('Both passwords must match')
+            ->rule('lengthMin', 'newpassword', 8)->message('Password must be at least 8 characters long');
+        if (! $validator->validate()) {
+            throw new ValidationException($validator->errors());
         }
 
-        return $this->view->render($response, 'pages/usersettings.html.twig', $tplData);
+        // Reset password
+        $user->setPassword($postData['newpassword']);
+        $em->persist($user);
+        $em->flush();
+
+        $this->session->getFlash()->set('info', ['Password successfully updated']);
+
+        // TODO: refactor this into AbstractController
+        $routeParser = RouteContext::fromRequest($request)->getRouteParser();
+        $relativeUrl = $routeParser->relativeUrlFor('user.attempt-password-reset');
+
+        return $response
+            ->withHeader('Location', $relativeUrl)
+            ->withStatus(302);
     }
 }

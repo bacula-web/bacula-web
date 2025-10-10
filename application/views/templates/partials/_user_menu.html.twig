@@ -1,0 +1,14 @@
+<div class="col col-12 col-md-3 mb-3">
+    <div class="list-group list-group-flush">
+        <a href="{{ url_for('user.profile') }}"
+           class="list-group-item list-group-item-action list-group-item-secondary {% if is_current_url('user.profile') %} active {% endif %}"
+           aria-current="true">
+            <i class="fa fa-user"></i> Profile
+        </a>
+        <a href="{{ url_for('user.password-reset') }}"
+           class="list-group-item list-group-item-action list-group-item-secondary {% if is_current_url('user.password-reset') %} active {% endif %}"
+           aria-current="true">
+            <i class="fa fa-lock"></i> Reset Password
+        </a>
+    </div>
+</div>
