@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpunit
-    bootstrap="./tests/bootstrap.php"
+    bootstrap="vendor/autoload.php"
     colors="true"
     verbose="true"
     columns="max"
@@ -13,8 +13,6 @@
         <include>
             <directory suffix=".php">application</directory>
             <directory suffix=".php">core</directory>
-            <directory suffix=".php">public</directory>
-            <directory>bwc</directory>
         </include>
     </coverage>
 
