@@ -57,11 +57,11 @@ class ExceptionRenderer implements ErrorRendererInterface
      */
     private static function getTrace($exception): string
     {
-        $formattedtrace = '<table class="table">';
+        $formattedtrace = '<div class="table-responsive"><table class="table">';
 
         foreach ($exception->getTrace() as $trace) {
             $formattedtrace .= '<tr>';
-            $formattedtrace .= '<td>';
+            $formattedtrace .= '<td class="text-wrap">';
 
             $file = $trace['file'] ?? 'n/a';
             $formattedtrace .= "File: <b>$file</b> ";
@@ -76,7 +76,7 @@ class ExceptionRenderer implements ErrorRendererInterface
             $formattedtrace .= '</tr>';
         }
 
-        $formattedtrace .= '</table>';
+        $formattedtrace .= '</table></div>';
 
         return $formattedtrace;
     }
@@ -142,11 +142,7 @@ class ExceptionRenderer implements ErrorRendererInterface
             '<div class="container">' .
             '<div class=\'row\'> ' .
             "<div class=\"col-8\">" .
-            self::getPageHeader() .
-            '<hr />' .
-            '<h3>' . $title . '</h3>' .
-            $content .
-            '</div>' .
+            self::getPageHeader() . "<hr /> <h3>$title '</h3>$content</div>" .
             '<div class=\'col-4\'> ' . self::getHelpColumn() . '</div>' .
             '</div>' .
             HtmlHelper::getHtmlFooter();
