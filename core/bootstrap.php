@@ -17,9 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-/**
- * Setup app paths
- */
+declare(strict_types=1);
 
 use Dotenv\Dotenv;
 
@@ -27,8 +25,5 @@ define('BW_ROOT', dirname(__DIR__));
 
 require_once BW_ROOT . '/core/const.inc.php';
 
-/**
- * Load app name and version from application/config/app using phpdotenv
- */
 $dotenv = Dotenv::createImmutable(CONFIG_DIR, 'app');
 $dotenv->load();
