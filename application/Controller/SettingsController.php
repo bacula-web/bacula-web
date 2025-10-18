@@ -35,6 +35,8 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
+use function PHPUnit\Framework\isInstanceOf;
+
 class SettingsController extends AbstractController
 {
     /**
@@ -136,6 +138,7 @@ class SettingsController extends AbstractController
      */
     public function addUser(Request $request, Response $response): ResponseInterface
     {
+        $userRepository = $this->managerRegistry->getManager()->getRepository(User::class);
         $postData = $request->getParsedBody();
 
         $form_data = [
@@ -150,7 +153,13 @@ class SettingsController extends AbstractController
             ->rule('alphaNum', 'username')
             ->rule('lengthMin', 'password', 8)
             ->rule('email', 'email')->message('Invalid email')
-            ->rule('equals', 'password', 'confirmPassword')->message('Both passwords must match');
+            ->rule('equals', 'password', 'confirmPassword')->message('Both passwords must match')
+            ->rule(function ($field, $value, $params, $fields) use ($userRepository) {
+                if ($userRepository->findOneBy([$field => $value]) !== null) {
+                    return false;
+                }
+                return true;
+            }, 'username')->message('A user with the same username already exists');
 
         if (!$v->validate()) {
             throw new ValidationException($v->errors());
