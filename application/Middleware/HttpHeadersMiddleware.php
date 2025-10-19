@@ -37,9 +37,12 @@ class HttpHeadersMiddleware implements MiddlewareInterface
     {
         $response = $handler->handle($request);
 
+        if ($request->getUri()->getScheme() === 'https') {
+            $response = $response->withHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains;');
+        }
+
         return $response
             ->withHeader('X-Frame-Options', 'DENY')
-            ->withHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload')
             ->withHeader('X-Content-Type-Options', 'nosniff')
             ;
     }
