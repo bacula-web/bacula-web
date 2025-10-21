@@ -26,9 +26,7 @@ use App\Libs\FileConfig;
 use App\Libs\PhpFileConfig;
 use App\Table\CatalogTable;
 use App\Table\ClientTable;
-use App\Table\JobFileTable;
 use App\Table\JobTable;
-use App\Table\LogTable;
 use App\Table\PoolTable;
 use App\Table\UserTable;
 use App\Table\VolumeTable;
@@ -92,8 +90,6 @@ return ['settings' => [
         return new CatalogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     }, UserTable::class => function () {
         return new UserTable(DatabaseFactory::getDatabase());
-    }, LogTable::class => function (SessionInterface $session) {
-        return new LogTable(DatabaseFactory::getDatabase($session->get('catalog_id', 0)));
     }, SessionManagerInterface::class => function (ContainerInterface $container) {
         return $container->get(SessionInterface::class);
     }, SessionInterface::class => function (ContainerInterface $container) {
