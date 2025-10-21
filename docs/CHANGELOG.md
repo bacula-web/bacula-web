@@ -1,5 +1,34 @@
 # Changelog
 
+## [9.9.0](https://github.com/bacula-web/bacula-web/compare/v9.8.0...v9.9.0) (2025-10-21)
+
+
+### 🐛 Bug Fixes
+
+* app name is almost not visible ([63ad78f](https://github.com/bacula-web/bacula-web/commit/63ad78f6f22d0a665dbc4153176768cdae78bf2c))
+* check command return code with failed checks ([e992d50](https://github.com/bacula-web/bacula-web/commit/e992d5063a8c44ad96364b4e19613207ac14dc38))
+* cookie secure flag and new session id on login ([9a69930](https://github.com/bacula-web/bacula-web/commit/9a69930265ff77682ffd76658d4be8326a1fbb74))
+* **docs:** link to buymeacoffee ([cca4cb5](https://github.com/bacula-web/bacula-web/commit/cca4cb5a3dd0fcca2fa613d7cc7bc9b2ab1bc94d))
+* **docs:** remove readthedocs build badge ([a5b9424](https://github.com/bacula-web/bacula-web/commit/a5b94249323d5cf63ee623d2026aa3e5191f7b28))
+* exception stack trace partially hidden ([8266261](https://github.com/bacula-web/bacula-web/commit/8266261ddb1b59f0ea7bf0772c5a65bb52c22865))
+* http status code on non-existant resource ([1b16c35](https://github.com/bacula-web/bacula-web/commit/1b16c35368004ba792dd1acabb10d48eff3143de)), closes [#252](https://github.com/bacula-web/bacula-web/issues/252)
+* missing form validation ([89dd4cb](https://github.com/bacula-web/bacula-web/commit/89dd4cb8b5ee3c32c8f5213f762d9cc8217259fd))
+* missing user-input from forms validation ([89dd4cb](https://github.com/bacula-web/bacula-web/commit/89dd4cb8b5ee3c32c8f5213f762d9cc8217259fd))
+* missing validation of pool and orderby ([65df38c](https://github.com/bacula-web/bacula-web/commit/65df38c9502010b0318fd95d2c4cb236f0904650))
+* misspelled periods ([28d4ae5](https://github.com/bacula-web/bacula-web/commit/28d4ae5c7821ad306defe79a8a1dba8b514bdb5b)), closes [#250](https://github.com/bacula-web/bacula-web/issues/250)
+* misspelled periods in dashboard ([8e60f4e](https://github.com/bacula-web/bacula-web/commit/8e60f4ed8f06612b46f182c1574048fa8058d21b)), closes [#251](https://github.com/bacula-web/bacula-web/issues/251)
+* rename speed to bit rate in job report ([65df38c](https://github.com/bacula-web/bacula-web/commit/65df38c9502010b0318fd95d2c4cb236f0904650))
+* required php version ([f29aa36](https://github.com/bacula-web/bacula-web/commit/f29aa3676db72067cff1b20aa1455e296e1f0a8d))
+* sts header only in https response ([e0f5ba6](https://github.com/bacula-web/bacula-web/commit/e0f5ba6c7480306f5a0bedec840f2dd013bf393e))
+* uniq username ([62cfe23](https://github.com/bacula-web/bacula-web/commit/62cfe2344765f2af94afd36451a18382d5518d92))
+* volumes not in changer are not listed ([65df38c](https://github.com/bacula-web/bacula-web/commit/65df38c9502010b0318fd95d2c4cb236f0904650)), closes [#249](https://github.com/bacula-web/bacula-web/issues/249)
+* wrong volumes total bytes ([fecd327](https://github.com/bacula-web/bacula-web/commit/fecd3279b1b070d7c48e73901bbeb7f6226898cb)), closes [#248](https://github.com/bacula-web/bacula-web/issues/248)
+
+
+### 🚀 Features
+
+* split user profile and password reset ([5316975](https://github.com/bacula-web/bacula-web/commit/5316975914b73f1844c2cfd49b718b509c111b5e))
+
 ## [9.8.0](https://github.com/bacula-web/bacula-web/compare/v9.7.1...v9.8.0) (2025-05-10)
 
 
