@@ -110,7 +110,7 @@ return ['settings' => [
         $twig = Twig::create(TPL_DIR, [
             'cache' => false,
             'strict_variables' => false,
-            'debug' => true]);
+            'debug' => false]);
 
         $twig->addExtension(new DebugExtension());
         $twig->addExtension(new TransformBytes());
