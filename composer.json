@@ -43,6 +43,9 @@
     "optimize-autoloader": true,
     "preferred-install": {
       "*": "dist"
+    },
+    "platform": {
+      "php": "7.4"
     }
   },
   "require": {
@@ -90,7 +93,10 @@
     "symfony/maker-bundle": "^1.43",
     "symfony/debug-bundle": "^5.4",
     "symfony/stopwatch": "^5.4",
-    "symfony/web-profiler-bundle": "^5.4"
+    "symfony/web-profiler-bundle": "^5.4",
+    "symfony/browser-kit": "^5.4",
+    "symfony/css-selector": "^5.4",
+    "symfony/phpunit-bridge": "^7.3"
   },
   "autoload": {
     "psr-4": {
@@ -128,6 +134,7 @@
     },
     "copy-env": "if [ ! -e .env ]; then cp -v .env.sample .env; fi",
     "post-install-cmd": [
+      "@copy-env",
       "@auto-scripts"
     ],
     "post-update-cmd": [

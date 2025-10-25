@@ -2,6 +2,11 @@
     "devDependencies": {
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
+<<<<<<< ours
+=======
+        "@hotwired/stimulus": "^3.0.0",
+        "@symfony/stimulus-bridge": "^4.0.0",
+>>>>>>> theirs
         "@symfony/webpack-encore": "^4.0.0",
         "autoprefixer": "^10.4.19",
         "file-loader": "^6.2.0",

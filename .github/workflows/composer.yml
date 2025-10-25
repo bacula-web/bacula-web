@@ -3,46 +3,41 @@ name: Composer test
 on:
   push:
     branches:
-      - 'master'
       - 'feat/**'
       - 'fix/**'
       - 'chore/**'
       - 'dev-**'
+      - 'refactor/**'
+      - '**.x'
 
 jobs:
   build:
     runs-on: ubuntu-22.04
-    container: shivammathur/node:latest-amd64
     strategy:
       matrix:
         version: ["7.4", "8.0", "8.1", "8.2", "8.3", "8.4"]
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
 
-    - name: setup PHP
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      id: setup-php
       uses: shivammathur/setup-php@v2
       with:
         php-version: "${{ matrix.version }}"
-        tools: composer
         extensions: pdo_mysql, pdo_sqlite, pdo_pgsql, gettext, openssl, pdo, sqlite3, mbstring
-        coverage: none
+        tools: composer:v2
 
-    - name: print PHP version
+    - name: Print PHP version
       run: echo ${{ steps.setup-php.outputs.php-version }}
 
-    - name: print PHP extensions
-      run: php -m
-
-    - name: print composer version
-      run: composer --version
-
     - name: Composer install
-      run: composer install --no-dev
+      run: composer install
 
-    - name: Composer validate
-      run: composer validate
+    - name: Check for security vulnerability advisories
+      run: composer audit --abandoned=report
 
-    - name: Composer check
-      run: composer check
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict

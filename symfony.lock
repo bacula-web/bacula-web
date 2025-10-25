@@ -11,13 +11,22 @@
             "config/routes/annotations.yaml"
         ]
     },
+    "doctrine/deprecations": {
+        "version": "1.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "87424683adc81d7dc305eefec1fced883084aab9"
+        }
+    },
     "doctrine/doctrine-bundle": {
-        "version": "2.12",
+        "version": "2.13",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "2.4",
-            "ref": "cc62b7e9470998c640ee99d284a013a676f1fc5e"
+            "ref": "eaa0b7647c0ec3dbdcf24ade4625f381aa23c027"
         },
         "files": [
             "config/packages/doctrine.yaml",
@@ -59,7 +68,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "9.3",
-            "ref": "fc344d3f99d9a518245ef3c88176d0c3467ae1a6"
+            "ref": "4eb12de6eef0f6f1bc7af2c51f6316e2f686e09b"
         },
         "files": [
             ".env.test",
@@ -85,7 +94,7 @@
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "main",
             "version": "1.0",
-            "ref": "0f18b4decdf5695d692c1d0dfd65516a07a6adf1"
+            "ref": "5d454ec6cc4c700ed3d963f3803e1d427d9669fb"
         },
         "files": [
             "public/.htaccess"
@@ -162,6 +171,15 @@
             "branch": "main",
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+        }
+    },
+    "symfony/phpunit-bridge": {
+        "version": "7.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "7.3",
+            "ref": "dc13fec96bd527bd399c3c01f0aab915c67fd544"
         }
     },
     "symfony/routing": {
@@ -246,7 +264,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "1.10",
-            "ref": "eff2e505d4557c967b6710fe06bd947ba555cae5"
+            "ref": "6642c5eeebbd06268826e7f9fbee721cba1d7d77"
         },
         "files": [
             "assets/app.js",
