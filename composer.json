@@ -55,7 +55,7 @@
     "ext-openssl": "*",
     "ext-pdo": "*",
     "ext-sqlite3": "*",
-    "novus/nvd3": "@stable",
+    "novus/nvd3": "~1.8",
     "pear/date_humandiff": "^0.5.0",
     "symfony/translation": "^5.4",
     "nesbot/carbon": "^2",
