@@ -20,7 +20,7 @@ const FeatureList = [
                 <ul>
                     <li>Open source</li>
                     <li>User friendly</li>
-                    <li>Translated in more than 10 languages</li>
+                    <li>Translated in more than 15 languages</li>
                     <li>Easy to setup and maintain</li>
                     <li>100% web based</li>
                     <li>Safe and secure</li>
