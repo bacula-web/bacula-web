@@ -41,6 +41,7 @@ div.sponsors > img {
   height: auto;
   margin-top: 10px;
   margin-bottom: 20px;
+  padding: 1em;
 }
 
 img#hero-img {

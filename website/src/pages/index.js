@@ -8,7 +8,6 @@ import styles from './index.module.css';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import BaculaWebImageUrl from '@site/static/img/bacula-web-dashboard.png';
 import AboutImageUrl from '@site/static/img/undraw_Personal_goals_re_iow7.png';
-import TravisImageUrl from '@site/static/sponsors/travis-ci-logo.png';
 import LokaliseImageUrl from '@site/static/sponsors/lokalise-logo-colour-black-text.png';
 import PackageCloudImageUrl from '@site/static/sponsors/package-cloud.png';
 import JetBrainsImageUrl from '@site/static/sponsors/jetbrains-logo.png';
@@ -143,16 +142,15 @@ function HomepageSponsors() {
 
                 <div className={'container'}>
                     <div className="row sponsors">
-                        <img style={{height: '48px'}} alt={'Docker logo'} src={DockerImageUrl}/>
+                        <img style={{height: '98px'}} alt={'Docker logo'} src={DockerImageUrl}/>
                         <img style={{width: '280px'}} alt={'JetBrains logo'} src={JetBrainsImageUrl}/>
                         <img style={{width: '480px'}} alt={'PacageCloud logo'} src={PackageCloudImageUrl}/>
-                        <img style={{width: '280px'}} alt={'Travis CI logo'} src={TravisImageUrl}/>
                         <img style={{width: '280px'}} alt={'Lokalise logo'} src={LokaliseImageUrl}/>
                     </div>
                 </div>
 
                 <p>
-                    Again, a big THANKS to the sponsors listed above for their support on Open Source projects! :heart:
+                    Again, a big THANKS to the sponsors listed above for their support on Open Source projects! ❤️
                 </p>
             </div>
         </section>
