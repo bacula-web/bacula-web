@@ -3,9 +3,7 @@
         <strong>{{ 'Stored Bytes (last 7 days)'|trans }}</strong>
     </div>
     <div class="card-body">
-        <div id="{{ stored_bytes_chart_id }}">
-            <svg></svg>
-        </div>
-        {{ stored_bytes_chart|raw }}
+
+        {{ render_chart(chart) }}
     </div>
 </div>

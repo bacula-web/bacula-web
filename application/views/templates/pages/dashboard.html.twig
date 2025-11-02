@@ -9,25 +9,18 @@
             <div class="row">
                 <!-- Last period job status -->
                 <div class="col-6">
-                    {{ render(
-                        controller('App\\Controller\\Widget\\LastPeriodJobStatusController::index', {period: period})
-                    )
-                    }}
+                    {{ render(controller('App\\Controller\\Widget\\LastPeriodJobStatusController::index', {period: period})) }}
                 </div>
 
             <div class="col-6">
                 <div class="row">
 
                     <div class="col-12">
-                        {{ render(
-                            controller('App\\Controller\\Widget\\LastWeekStoredBytesController::index')
-                        ) }}
+                        {{ render(controller('App\\Controller\\Widget\\LastWeekStoredBytesController::index')) }}
                     </div>
 
                     <div class="col-12">
-                        {{ render(
-                            controller('App\\Controller\\Widget\\LastWeekStoredFilesController::index')
-                        ) }}
+                        {{ render(controller('App\\Controller\\Widget\\LastWeekStoredFilesController::index')) }}
                     </div>
                 </div>
             </div>
@@ -35,37 +28,27 @@
 
         <div class="row">
             <div class="col-xs-12 col-md-6">
-                {{ render(
-                        controller('App\\Controller\\Widget\\PoolsVolumesStatusController::index')
-                ) }}
+                {{ render(controller('App\\Controller\\Widget\\PoolsVolumesStatusController::index')) }}
             </div>
 
             <div class="col-xs-12 col-md-6">
-                {{ render(
-                        controller('App\\Controller\\Widget\\LastUsedVolumesController::index')
-                ) }}
+                {{ render(controller('App\\Controller\\Widget\\LastUsedVolumesController::index')) }}
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12 col-md-6">
-                {{ render(
-                        controller('App\\Controller\\Widget\\ClientJobsTotalController::index')
-                ) }}
+                {{ render(controller('App\\Controller\\Widget\\ClientJobsTotalController::index')) }}
             </div>
 
             <!-- Weekly jobs statistics -->
             <div class="col col-xs-12 col-md-6">
-                {{ render(
-                        controller('App\\Controller\\Widget\\WeeklyJobStatsController::index')
-                ) }}
+                {{ render(controller('App\\Controller\\Widget\\WeeklyJobStatsController::index')) }}
             </div>
 
             <div class="row">
                 <div class="col col-xs-12 col-md-6">
-                    {{ render(
-                            controller('App\\Controller\\Widget\\BiggestBackupJobsController::index')
-                    ) }}
+                    {{ render(controller('App\\Controller\\Widget\\BiggestBackupJobsController::index')) }}
                 </div>
             </div>
     </div>

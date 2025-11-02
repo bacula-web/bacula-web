@@ -119,10 +119,7 @@
                     <div class="card">
                         <div class="card-header"><b>{{ 'Transfered Bytes'|trans }}</b></div>
                         <div class="card-body">
-                            <div id="{{ stored_bytes_chart_id }}">
-                                <svg></svg>
-                            </div>
-                            {{ stored_bytes_chart|raw }}
+                            {{ render_chart(stored_bytes_chart) }}
                         </div>
                     </div>
                 </div>
@@ -131,12 +128,11 @@
             <div class="row">
                 <div class="col col-xs-12 {% if backupjob_period < 14 %} col-sm-6 {% endif %}">
                     <div class="card">
-                        <div class="card-header"><b>{{ 'Transfered Bytes'|trans }}</b></div>
+                        <div class="card-header"><b>{{ 'Transfered Files'|trans }}</b></div>
                         <div class="card-body">
-                            <div id="{{ stored_files_chart_id }}">
-                                <svg></svg>
+                            <div class="card-body">
+                                {{ render_chart(stored_files_chart) }}
                             </div>
-                            {{ stored_files_chart|raw }}
                         </div>
                     </div>
                 </div>

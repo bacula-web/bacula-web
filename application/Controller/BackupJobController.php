@@ -24,7 +24,8 @@ namespace App\Controller;
 use App\Entity\Bacula\Repository\JobRepository;
 use App\Entity\Bacula\Repository\VersionRepository;
 use Core\Exception\AppException;
-use App\Service\Chart;
+use App\Service\Chart\StoredFilesChart;
+use App\Service\Chart\StoredBytesChart;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,12 +40,22 @@ class BackupJobController extends AbstractController
      */
     private VersionRepository $catalog;
 
+    private StoredFilesChart $storedFilesChart;
+    private StoredBytesChart $storedBytesChart;
+
     /**
      * @param VersionRepository $catalog
+     * @param StoredFilesChart $storedFilesChart
+     * @param StoredBytesChart $storedBytesChart
      */
-    public function __construct(VersionRepository $catalog)
-    {
+    public function __construct(
+        VersionRepository $catalog,
+        StoredFilesChart $storedFilesChart,
+        StoredBytesChart $storedBytesChart
+    ) {
         $this->catalog = $catalog;
+        $this->storedFilesChart = $storedFilesChart;
+        $this->storedBytesChart = $storedBytesChart;
     }
 
     /**
@@ -74,14 +85,14 @@ class BackupJobController extends AbstractController
             ]
         ];
 
-        $backupJobName = $request->query->get('backupjob_name');
+        $jobName = $request->query->get('backupjob_name');
         $period = $request->query->get('backupjob_period', 7);
 
         /**
          * TODO: validate user input using validation
          */
         if ($request->getMethod() === 'POST') {
-            $backupJobName = $request->request->get('backupjob_name');
+            $jobName = $request->request->get('backupjob_name');
             $period = $request->request->get('backupjob_period');
         }
 
@@ -89,26 +100,6 @@ class BackupJobController extends AbstractController
 
         $to = $this->catalog->getCurrentDateTime();
         $from = $this->catalog->getCurrentDateTime()->subDays($period);
-
-        $storedBytesChart = new Chart(
-            [
-                'type' => 'bar',
-                'name' => 'chart_stored_bytes',
-                'uniformize_data' => true,
-                'data' => $jobRepository->getJobStoredBytes($from, $to, $backupJobName),
-                'ylabel' => 'Bytes'
-            ]
-        );
-
-        $storedFilesChart = new Chart(
-            [
-                'type' => 'bar',
-                'name' => 'chart_stored_files',
-                'uniformize_data' => true,
-                'data' => $jobRepository->getJobStoredFiles($from, $to, $backupJobName),
-                'ylabel' => 'Files'
-            ]
-        );
 
         $datetimeFormatShort = $this->getParameter('app.datetime_format_short');
         $periodDescription = 'From ' . $from->format($datetimeFormatShort) . ' to ' . $to->format($datetimeFormatShort);
@@ -121,7 +112,7 @@ class BackupJobController extends AbstractController
             ->setParameters([
                     'from' => $from,
                     'to' => $to,
-                    'jobname' => $backupJobName
+                    'jobname' => $jobName
                 ])
             ->leftJoin('j.status', 's')
             ->orderBy('j.endtime', 'DESC')
@@ -130,19 +121,20 @@ class BackupJobController extends AbstractController
 
         $jobs = $query->getResult();
 
+        $from = $this->catalog->getCurrentDateTime()->subDays($period);
+        $to = $this->catalog->getCurrentDateTime();
+
         return $this->render('pages/backupjob-report.html.twig', [
             'jobs_list' => $backupJobsList,
-            'backupjob_name' => $backupJobName,
+            'backupjob_name' => $jobName,
             'periods_list' => $periodsList,
             'backupjob_period' => $period,
             'jobs' => $jobs,
             'period_description' => $periodDescription,
-            'backupjobbytes' => $jobRepository->getStoredBytesSum($from, $to, $backupJobName),
-            'backupjobfiles' => $jobRepository->getStoredFilesSum($from, $to, $backupJobName),
-            'stored_bytes_chart_id' => $storedBytesChart->getName(),
-            'stored_bytes_chart' => $storedBytesChart->render(),
-            'stored_files_chart_id' => $storedFilesChart->getName(),
-            'stored_files_chart' => $storedFilesChart->render()
+            'backupjobbytes' => $jobRepository->getStoredBytesSum($from, $to, $jobName),
+            'backupjobfiles' => $jobRepository->getStoredFilesSum($from, $to, $jobName),
+            'stored_bytes_chart' => $this->storedBytesChart->getChart($from, $to, null, $jobName),
+            'stored_files_chart' => $this->storedFilesChart->getChart($from, $to, null, $jobName)
         ]);
     }
 }

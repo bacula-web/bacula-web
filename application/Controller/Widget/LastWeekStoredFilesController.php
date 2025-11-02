@@ -22,6 +22,7 @@ declare(strict_types=1);
 namespace App\Controller\Widget;
 
 use App\Entity\Bacula\Repository\JobRepository;
+use App\Service\Chart\LastWeekStoredFilesChart;
 use Core\Exception\AppException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -33,6 +34,13 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class LastWeekStoredFilesController extends AbstractController
 {
+    private LastWeekStoredFilesChart $chart;
+
+    public function __construct(LastWeekStoredFilesChart $chart)
+    {
+        $this->chart = $chart;
+    }
+
     /**
      * @param JobRepository $jobRepository
      * @return Response
@@ -42,14 +50,8 @@ class LastWeekStoredFilesController extends AbstractController
      */
     public function index(JobRepository $jobRepository): Response
     {
-        /**
-         * give chart_last_week_stored_files nane to chart to avoid issues
-         */
-        $storedFilesChart = $jobRepository->getLastWeekStoredFilesChart();
-
         return $this->render('partials/widget/last_week_stored_files.html.twig', [
-            'stored_files_chart' => $storedFilesChart->render(),
-            'stored_files_chart_id' => $storedFilesChart->getName()
+            'chart' => $this->chart->getChart()
         ]);
     }
 }

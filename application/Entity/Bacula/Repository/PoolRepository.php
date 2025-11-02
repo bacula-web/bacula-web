@@ -22,7 +22,6 @@ declare(strict_types=1);
 namespace App\Entity\Bacula\Repository;
 
 use App\Entity\Bacula\Pool;
-use App\Service\Chart;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -56,9 +55,9 @@ class PoolRepository extends ServiceEntityRepository
      * Empty pools are not displayed in the pie chart.
      *
      * @param string $pageRoute
-     * @return Chart
+     * @return array<mixed,mixed>
      */
-    public function getPoolsStatistics(string $pageRoute): Chart
+    public function getPoolsStatistics(string $pageRoute): array
     {
         $chartData = [];
 
@@ -81,12 +80,6 @@ class PoolRepository extends ServiceEntityRepository
         foreach ($pools as $pool) {
             $chartData[$pool['name']] = $pool['numvols'] ?? 0;
         }
-
-        return new Chart([
-            'type' => 'pie',
-            'data' => $chartData,
-            'name' => 'chart_pools_volume_usage',
-            'linked_report' => $pageRoute
-        ]);
+        return $chartData;
     }
 }

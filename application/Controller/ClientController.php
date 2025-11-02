@@ -25,8 +25,9 @@ use App\Entity\Bacula\Repository\ClientRepository;
 use App\Entity\Bacula\Repository\JobRepository;
 use App\Entity\Bacula\Repository\VersionRepository;
 use App\Form\ClientType;
+use App\Service\Chart\StoredBytesChart;
+use App\Service\Chart\StoredFilesChart;
 use Core\Exception\AppException;
-use App\Service\Chart;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -58,23 +59,31 @@ class ClientController extends AbstractController
      * @var VersionRepository
      */
     private VersionRepository $catalog;
+    private StoredBytesChart $storedBytesChart;
+    private StoredFilesChart $storedFilesChart;
 
     /**
      * @param VersionRepository $catalog
      * @param ClientRepository $clientRepository
      * @param JobRepository $jobRepository
      * @param ParameterBagInterface $parameter
+     * @param StoredBytesChart $storedBytesChart
+     * @param StoredFilesChart $storedFilesChart
      */
     public function __construct(
         VersionRepository $catalog,
         ClientRepository $clientRepository,
         JobRepository $jobRepository,
-        ParameterBagInterface $parameter
+        ParameterBagInterface $parameter,
+        StoredBytesChart $storedBytesChart,
+        StoredFilesChart $storedFilesChart
     ) {
         $this->clientRepository = $clientRepository;
         $this->jobRepository = $jobRepository;
         $this->parameter = $parameter;
         $this->catalog = $catalog;
+        $this->storedBytesChart = $storedBytesChart;
+        $this->storedFilesChart = $storedFilesChart;
     }
 
     /**
@@ -105,26 +114,6 @@ class ClientController extends AbstractController
             $to = $this->catalog->getCurrentDateTime();
             $from = $this->catalog->getCurrentDateTime()->subDays($formData['period']);
 
-            $storedBytesChart = new Chart(
-                [
-                    'type' => 'bar',
-                    'name' => 'chart_storedbytes',
-                    'uniformize_data' => true,
-                    'data' => $this->jobRepository->getJobStoredBytes($from, $to, null, $clientId),
-                    'ylabel' => 'Bytes'
-                ]
-            );
-
-            $storedFilesChart = new Chart(
-                [
-                    'type' => 'bar',
-                    'name' => 'chart_storedfiles',
-                    'uniformize_data' => true,
-                    'data' => $this->jobRepository->getJobStoredFiles($from, $to, null, $clientId),
-                    'ylabel' => 'Files'
-                ]
-            );
-
             $backupJobs = $this->jobRepository->getClientJobs($client->getId(), $from, $to);
 
             return $this->render('pages/client-report.html.twig', [
@@ -132,10 +121,9 @@ class ClientController extends AbstractController
                 'client' => $client,
                 'period' => $form->get('period')->getData(),
                 'backup_jobs' => $backupJobs,
-                'stored_bytes_chart_id' => $storedBytesChart->getName(),
-                'stored_bytes_chart' => $storedBytesChart->render(),
-                'stored_files_chart_id' => $storedFilesChart->getName(),
-                'stored_files_chart' => $storedFilesChart->render()
+                'stored_bytes_chart' => $this->storedBytesChart->getChart($from, $to, $client->getId()),
+                'stored_files_chart' => $this->storedFilesChart->getChart($from, $to, $client->getId())
+
             ]);
         }
 

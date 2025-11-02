@@ -23,8 +23,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Service\AppCheck;
-use Core\Exception\AppException;
-use App\Service\Chart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,7 +34,6 @@ class TestController extends AbstractController
      *
      * @param AppCheck $appChecks
      * @return Response
-     * @throws AppException
      */
     public function index(AppCheck $appChecks): Response
     {
@@ -50,33 +47,6 @@ class TestController extends AbstractController
         $checksResults[] = $appChecks->checkPhpVersion();
         $checksResults[] = $appChecks->checkTimezone();
 
-        $data = [
-            'test' => 100,
-            'test1' => 150,
-            'test2' => 180,
-            'test3' => 270,
-            'test4' => 456
-        ];
-
-        $pieChart = new Chart([
-            'type' => 'pie',
-            'name' => 'chart_pie_test',
-            'data' => $data
-        ]);
-
-        $barChart = new Chart([
-            'type' => 'bar',
-            'name' => 'chart_bar_test',
-            'data' => $data,
-            'ylabel' => 'Coffee cups'
-        ]);
-
-        return $this->render('pages/test.html.twig', [
-            'app_checks' => $checksResults,
-            'pie_chart_id' => $pieChart->getName(),
-            'pie_chart' => $pieChart->render(),
-            'bar_chart_id' => $barChart->getName(),
-            'bar_chart' => $barChart->render(),
-        ]);
+        return $this->render('pages/test.html.twig', ['app_checks' => $checksResults]);
     }
 }

@@ -64,7 +64,6 @@
     "ext-openssl": "*",
     "ext-pdo": "*",
     "ext-sqlite3": "*",
-    "novus/nvd3": "~1.8",
     "pear/date_humandiff": "^0.5.0",
     "symfony/translation": "^5.4",
     "nesbot/carbon": "^2",
@@ -90,7 +89,8 @@
     "symfony/form": "^5.4",
     "twig/intl-extra": "^3.9",
     "knplabs/knp-paginator-bundle": "^5.9",
-    "symfony/lokalise-translation-provider": "^5.4"
+    "symfony/lokalise-translation-provider": "^5.4",
+    "symfony/ux-chartjs": "^2.8"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",

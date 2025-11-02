@@ -23,6 +23,7 @@ namespace App\Controller\Widget;
 
 use App\Entity\Bacula\Repository\JobRepository;
 use App\Entity\Bacula\Repository\VersionRepository;
+use App\Service\Chart\LastPeriodJobStatusChart;
 use Carbon\Carbon;
 use Core\Exception\AppException;
 use Doctrine\ORM\NonUniqueResultException;
@@ -45,15 +46,20 @@ class LastPeriodJobStatusController extends AbstractController
      * @var VersionRepository
      */
     private VersionRepository $catalog;
+    private LastPeriodJobStatusChart $lastPeriodJobStatusChart;
 
     /**
      * @param JobRepository $jobRepository
      * @param VersionRepository $catalog
      */
-    public function __construct(JobRepository $jobRepository, VersionRepository $catalog)
-    {
+    public function __construct(
+        JobRepository $jobRepository,
+        VersionRepository $catalog,
+        LastPeriodJobStatusChart $lastPeriodJobStatusChart
+    ) {
         $this->jobRepository = $jobRepository;
         $this->catalog = $catalog;
+        $this->lastPeriodJobStatusChart = $lastPeriodJobStatusChart;
     }
 
     /**
@@ -90,13 +96,10 @@ class LastPeriodJobStatusController extends AbstractController
                 break;
         }
 
-        $jobStatusesChart = $this->jobRepository->getJobStatusChart($from, $to, $this->generateUrl('jobs'));
-
         return $this->render('partials/widget/last_period_job_status.html.twig', [
             'literal_period' => $from->toFormattedDayDateString() . ' to ' . $to->toFormattedDayDateString(),
             'period_list' => $periodsList,
-            'last_jobs_chart_id' => $jobStatusesChart->getName(),
-            'last_jobs_chart' => $jobStatusesChart->render(),
+            'chart' => $this->lastPeriodJobStatusChart->getChart($from, $to),
             'running_jobs' => $this->jobRepository->countJobsByStatus('running', $from, $to),
             'completed_jobs' => $this->jobRepository->countJobsByStatus('completed', $from, $to),
             'completed_with_errors_jobs' => $this->jobRepository

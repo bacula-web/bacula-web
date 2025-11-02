@@ -18,14 +18,10 @@
                 <input type="hidden" name="csrf" value="{{ csrf_token('dashboard') }}">
             </div>
         </form>
-    </div>
 
-    <!-- Last period job status graph -->
-    <div class="card-body">
-        <div id="{{ last_jobs_chart_id }}">
-            <svg></svg>
-        </div>
-        {{ last_jobs_chart|raw }}
+
+        <!-- Last period job status graph -->
+        {{ render_chart(chart) }}
 
         <table class="table table-condensed">
             <caption>Jobs status overview</caption>

@@ -24,13 +24,12 @@ namespace App\Entity\Bacula\Repository;
 use App\Entity\Bacula\Job;
 use App\Entity\Bacula\JobSearch;
 use Carbon\Carbon;
-use App\Service\Chart;
-use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\UX\Chartjs\Model\Chart;
 
 /**
  * @method Job|null find($id, $lockMode = null, $lockVersion = null)
@@ -384,40 +383,6 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return an array for each jobs statuses within a specific period of time
-     * This method is used to build charts.
-     *
-     * @param string|null $linkedPage Route name of the linked page
-     *
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function getJobStatusChart(Carbon $from, Carbon $to, ?string $linkedPage = null): Chart
-    {
-        $jobsStatuses = [
-            'Running' => 'running',
-            'Completed' => 'completed',
-            'Completed with errors' => 'completed_with_errors',
-            'Waiting' => 'waiting',
-            'Failed' => 'failed',
-            'Canceled' => 'canceled',
-        ];
-
-        $chartData = [];
-
-        foreach ($jobsStatuses as $label => $status) {
-            $chartData[$label] = $this->countJobsByStatus($status, $from, $to);
-        }
-
-        return new Chart([
-            'type' => 'pie',
-            'name' => 'chart_lastjobs',
-            'data' => $chartData,
-            'linked_report' => $linkedPage,
-        ]);
-    }
-
-    /**
      * Return a list of the top 10 biggest (job bytes) backup jobs.
      */
     public function getBiggestJobs(): array
@@ -489,36 +454,6 @@ class JobRepository extends ServiceEntityRepository
         }
 
         return $weeklyJobStats;
-    }
-
-    /**
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function getLastWeekStoredBytesChart(): Chart
-    {
-        $chartData = [];
-
-        $current = $this->catalog->getCurrentDateTime()->subDays(7);
-        $until = $this->catalog->getCurrentDateTime();
-
-        do {
-            $start = Carbon::createFromTimeString(
-                sprintf('%s-%s-%s 0:0:0', $current->year, $current->month, $current->day)
-            );
-            $end = Carbon::createFromTimeString(
-                sprintf('%s-%s-%s 23:59:59', $current->year, $current->month, $current->day)
-            );
-            $chartData[$current->format('Y-m-d')] = $this->getStoredBytesSum($start, $end);
-            $current->addDay();
-        } while ($current->lte($until));
-
-        return new Chart([
-            'type' => 'bar',
-            'name' => 'chart_last_week_stored_bytes',
-            'data' => $chartData,
-            'uniformize_data' => true,
-        ]);
     }
 
     /**

@@ -3,7 +3,7 @@
 
 <head>
     {{ include("partials/html-head.html.twig") }}
-    <title>{{ app_name }} - {%  block title %}{% endblock %}</title>
+    <title>{{ app_name }} - {% block title %}{% endblock %}</title>
 </head>
 
 <body>
@@ -17,8 +17,6 @@
 </div>
 
 {% block body %}{% endblock %}
-
 </body>
 </html>
-{{ include("partials/html-footer.html.twig") }}
 

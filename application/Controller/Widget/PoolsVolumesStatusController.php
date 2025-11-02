@@ -22,7 +22,10 @@ declare(strict_types=1);
 namespace App\Controller\Widget;
 
 use App\Entity\Bacula\Repository\PoolRepository;
+use App\Service\Chart\PoolsStatisticsChart;
 use Core\Exception\AppException;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,13 +38,15 @@ class PoolsVolumesStatusController extends AbstractController
      * @var PoolRepository
      */
     private PoolRepository $poolRepository;
+    private PoolsStatisticsChart $chart;
 
     /**
      * @param PoolRepository $poolRepository
      */
-    public function __construct(PoolRepository $poolRepository)
+    public function __construct(PoolRepository $poolRepository, PoolsStatisticsChart $chart)
     {
         $this->poolRepository = $poolRepository;
+        $this->chart = $chart;
     }
 
     /**
@@ -53,8 +58,7 @@ class PoolsVolumesStatusController extends AbstractController
         $poolsChart = $this->poolRepository->getPoolsStatistics($this->generateUrl('pools'));
 
         return $this->render('partials/widget/pools_volumes_status.html.twig', [
-            'pools_usage_chart_id' => $poolsChart->getName(),
-            'pools_usage_chart' => $poolsChart->render()
+            'chart' => $this->chart->getChart(),
         ]);
     }
 }

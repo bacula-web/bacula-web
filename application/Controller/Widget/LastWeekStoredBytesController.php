@@ -22,6 +22,7 @@ declare(strict_types=1);
 namespace App\Controller\Widget;
 
 use App\Entity\Bacula\Repository\JobRepository;
+use App\Service\Chart\LastWeekStoredBytesChart;
 use Core\Exception\AppException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -33,20 +34,23 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class LastWeekStoredBytesController extends AbstractController
 {
+    private LastWeekStoredBytesChart $lastWeekStoredBytesChart;
+
+    public function __construct(LastWeekStoredBytesChart $lastWeekStoredBytesChart)
+    {
+        $this->lastWeekStoredBytesChart = $lastWeekStoredBytesChart;
+    }
+
     /**
-     * @param JobRepository $jobRepository
      * @return Response
      * @throws AppException
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function index(JobRepository $jobRepository): Response
+    public function index(): Response
     {
-        $storedBytesChart = $jobRepository->getLastWeekStoredBytesChart();
-
         return $this->render('partials/widget/last_week_stored_bytes.html.twig', [
-            'stored_bytes_chart' => $storedBytesChart->render(),
-            'stored_bytes_chart_id' => $storedBytesChart->getName()
+            'chart' => $this->lastWeekStoredBytesChart->getChart()
         ]);
     }
 }
