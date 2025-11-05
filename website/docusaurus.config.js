@@ -188,7 +188,7 @@ const config = {
                 copyright: `Copyright © ${new Date().getFullYear()} Davide Franco`,
             },
             prism: {
-                theme: prismThemes.github,
+                theme: prismThemes.dracula,
                 darkTheme: prismThemes.dracula,
                 additionalLanguages: ['PHP', 'Bash'],
 
