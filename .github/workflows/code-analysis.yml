@@ -8,6 +8,8 @@ on:
       - 'chore/**'
       - 'dev-**'
       - '**.x'
+    paths-ignore:
+      - 'website/**'
 
 jobs:
   analyse:

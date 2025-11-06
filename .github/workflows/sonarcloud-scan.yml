@@ -9,6 +9,9 @@ on:
       - 'refactor/**'
       - 'dev-**'
       - '**.x'
+    paths-ignore:
+      - 'website/**'
+
   pull_request:
     types:
     - opened

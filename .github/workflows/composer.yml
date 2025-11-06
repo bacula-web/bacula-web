@@ -9,6 +9,8 @@ on:
       - 'dev-**'
       - 'refactor/**'
       - '**.x'
+    paths-ignore:
+      - 'website/**'
 
 jobs:
   build:

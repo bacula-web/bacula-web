@@ -114,7 +114,8 @@
       "cog.toml",
       "output.log",
       "DOCKER_ENV",
-      "docker_tag"
+      "docker_tag",
+      "website"
     ]
   }
 }
