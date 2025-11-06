@@ -1,0 +1,13 @@
+news:
+  label: News
+  permalink: /news
+  description: Latest project information
+
+security:
+  label: Security
+  description: Security related
+
+release:
+  label: Release
+  permalink: /release
+  description: Releases

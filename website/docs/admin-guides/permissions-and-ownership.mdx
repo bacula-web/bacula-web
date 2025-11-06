@@ -1,0 +1,34 @@
+# Files/folders permissions and ownership
+
+Please follow the following instructions to ensure Bacula-Web will run safely and properly.
+
+## Summary
+
+Here is a summary of the required permissions and ownership
+
+| File/folder                     | Ownership  | Permissions        |
+|---------------------------------|------------|--------------------|
+| `/`                             | `www-data` | `drwxr-xr-x (755)` |
+| `/application/views/cache`      | `www-data` | `drwxr-xr-x (775)` |
+| `/application/assets/protected` | `www-data` | `drwxrwxr-x (775)` |
+
+:::danger
+For security reasons, never use `777` mode on any folder(s) or file(s).
+:::
+
+## Instructions
+
+```shell
+$ sudo chown -Rv www-data: /var/www/bacula-web
+$ sudo chmod -Rv 755 /var/www/bacula-web
+$ sudo chmod -v 775 /var/www/bacula-web/application/views/cache
+$ sudo chmod -v 775 /var/www/bacula-web/application/assets/protected
+```
+
+:::tip
+The above example uses the `www-data` user (typical on the Debian or Ubuntu platform); you may have to change it to `apache` or a different user.
+
+Run `ps aux | grep httpd` or `ps aux | grep apache` to determine which user runs Nginx, Lighttpd or Apache web server.
+
+If you've installed Bacula-Web somewhere other than `/var/www/bacula-web`, you'll need to adapt your setup.
+:::

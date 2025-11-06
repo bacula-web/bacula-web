@@ -1,0 +1,106 @@
+# References
+
+## bwc console
+
+Bacula-Web console allows to perform some actions from a shell session
+
+```shell
+Bacula-Web console 10.0.0
+
+Usage:
+  command [options] [arguments]
+
+Options:
+  -h, --help            Display help for the given command. When no command is given display help for the list command
+  -q, --quiet           Do not output any message
+  -V, --version         Display this application version
+      --ansi|--no-ansi  Force (or disable --no-ansi) ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+
+Available commands:
+...
+app
+  app:check                                  Check requirements
+  app:user-create                            Add a short description for your command
+  app:version                                Show Bacula-Web version
+...
+```
+
+### Display version
+
+To display Bacula-Web version, run
+
+```shell
+$ sudo -u www-data php bwc app:version
+```
+
+### Check system requirements
+
+To check if your server meet the requirements, run
+
+```shell
+$ sudo -u www-data php bwc app:check
+```
+
+### Setup users authentication
+
+Below command creates the SQLite database file used for users authentication `var/application.db`
+
+```shell
+$ sudo -u www-data php bwc doctrine:database:create
+$ sudo -u www-data php bwc doctrine:migrations:migrate
+```
+
+Above command should be run only once you setup Bacula-Web for the first time.
+
+### Create a user
+
+Create an admin user
+
+```shell
+$ php bwc app:user-create --role=admin admin
+
+   Email address: admin@example.com
+   Password:
+
+   [OK] User admin successfully created
+```
+
+Create a standard user
+
+```shell
+
+   $ sudo -u www-data php bwc app:user-create johndoe
+
+   Email address: jdoe@example.com
+   Password:
+
+    [OK] User johndoe successfully created
+```
+
+:::info
+You can use ``--role`` to specify the user role (default user role is regular user)
+
+For more options, use -h
+`$ php bwc app:user-create -h`
+:::
+
+### Delete a user
+
+From a command prompt on the server running Bacula-Web, run
+
+```shell
+$ sudo -u www-data php bwc app:user-delete johndoe
+```
+
+### Change a user role
+
+From a command prompt on the server running Bacula-Web, run
+
+```shell
+$ sudo -u www-data php bwc app:user-set-role admin johndoe
+```
+
+Above command set the *johndoe* user the *admin* role
