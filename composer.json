@@ -14,16 +14,25 @@
   "license": "GPL-2.0-or-later",
   "authors": [
     {
+      "name": "Juan Luis Francés Jimenez",
+      "role": "Developer"
+    },
+    {
       "name": "Davide Franco",
-      "email": "bacula-dev@dflc.ch",
+      "email": "hello@bacula-web.org",
       "homepage": "https://www.bacula-web.org",
       "role": "Developer"
+    },
+    {
+      "name": "Bacula-Web contributors",
+      "homepage": "https://github.com/bacula-web/bacula-web/graphs/contributors"
     }
   ],
   "support": {
     "email": "hello@bacula-web.org",
     "issues": "https://github.com/bacula-web/bacula-web/issues",
-    "forum": "https://github.com/bacula-web/bacula-web/discussions"
+    "forum": "https://github.com/bacula-web/bacula-web/discussions",
+    "docs": "https://www.bacula-web.org/docs"
   },
   "funding": [
     {
