@@ -95,6 +95,10 @@ If you discover a security issue, see [SECURITY.md](SECURITY.md)
 </tr>
 </table>
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=bacula-web/bacula-web&type=date&legend=top-left)](https://www.star-history.com/#bacula-web/bacula-web&type=date&legend=top-left)
+
 ## Support the project
 
 Bacula-Web is an open source project and will always be free of charge.
