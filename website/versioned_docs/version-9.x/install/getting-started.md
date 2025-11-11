@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Before starting the installation of Bacula-Web, please you meet the requirements listed below
+Before installing Bacula-Web, please ensure you meet the requirements listed below.
 
 * you have access to the server using ssh or console access
 * you have root access or sudo privileges
