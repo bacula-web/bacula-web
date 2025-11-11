@@ -1,7 +1,12 @@
 # Contributing
 
-Contributions to this project are welcome and will be fully **credited**
+Bacula-Web is an open source project, and we strongly encourage anyone to contribute to it.
 
-We accept contributions via Pull Requests on [GitHub](https://github.com/bacula-web/bacula-web).
+Any contribution to this project is welcome and will be greatly appreciated ❤️
 
-Please see [contributor guide](https://www.bacula-web.org/docs/contribute/) for more details.
+For example, you can contribute to
+- source code by fixing bugs and adding new features
+- updating translations
+- updating or fixing current documentation
+
+Please refer to the [contributor guide](https://www.bacula-web.org/docs/contribute/) for further details.
