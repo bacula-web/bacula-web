@@ -1,6 +1,9 @@
 name: check conventional commits
 
-on: [ push ]
+on:
+  push:
+    paths-ignore:
+      - 'website/**'
 
 jobs:
   cog_check_job:
