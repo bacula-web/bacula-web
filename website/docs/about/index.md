@@ -1,5 +1,6 @@
 ---
-description: some informations about the Bacula-Web project
+slug: /about
+description: some information about the Bacula-Web project
 ---
 
 # About the project
@@ -8,7 +9,7 @@ Bacula-Web is a php web based tool that provide you a summarized view of jobs, p
 
 This tool provide you information on the last day jobs status, medias and pool usage, catalog size usage, and even more ...
 
-All features are described in the [features](./features) page.
+All features are described in the [features](/docs/about/features) page.
 
 The main advantages of Bacula-Web are
 
@@ -108,7 +109,7 @@ You're all doing a fantastic job !!!
 
 ::::tip
 
-If you want to contribute in maintaining translations for a language or add a new one, have a look at the [contribution page](../contribute/translations).
+If you want to contribute in maintaining translations for a language or add a new one, have a look at the [contribution page](/docs/contribute/translations).
 
 ::::
 

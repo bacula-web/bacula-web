@@ -12,7 +12,7 @@ If you want to submit a bug report, feel free to submit a bug report on [GitHub 
 
 Before submitting a bug report, please make sure that ...
 
-* check the [FAQ page](faq.md), there might be some useful information which can help you
+* check the [FAQ page](./faq), there might be some useful information which can help you
 * you're using the latest version of Bacula-Web
 * the config file have been adapted to your configuration (check the documentation)
 * all items are ok in the test page (except for the database engine you don't use)

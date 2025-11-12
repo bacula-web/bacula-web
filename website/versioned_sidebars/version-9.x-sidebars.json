@@ -70,26 +70,24 @@
         "admin-guides/references"
       ]
     },
+    "gethelp/index",
     {
       "type": "category",
-      "label": "Get help",
-      "link": {
-        "type": "generated-index"
-      },
+      "label": "Contributing",
       "collapsed": true,
       "items": [
-        "gethelp/index",
-        "gethelp/faq",
-        "gethelp/support"
+        "contribute/index",
+        "contribute/reporting-issue-guideline",
+        "contribute/source-code",
+        "contribute/translations"
       ]
     },
+    "faq",
     {
       "type": "category",
       "label": "About",
-      "link": {
-        "type": "generated-index"
-      },
       "collapsed": true,
+      "collapsible": true,
       "items": [
         "about/index",
         "about/features",
@@ -99,14 +97,9 @@
       ]
     },
     {
-      "type": "category",
-      "label": "Contributing",
-      "collapsed": true,
-      "items": [
-        "contribute/index",
-        "contribute/source-code",
-        "contribute/translations"
-      ]
+      "type": "link",
+      "label": "Changelog",
+      "href": "https://github.com/bacula-web/bacula-web/blob/9.x/docs/CHANGELOG.md"
     },
     {
       "type": "link",

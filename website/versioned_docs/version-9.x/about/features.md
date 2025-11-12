@@ -1,3 +1,6 @@
+---
+slug: /about/features
+---
 # Features
 
 ## Features overview

@@ -1,36 +1,59 @@
-# Contribute to source code
+# Contribute to the source code
 
-Bacula-Web source git repository is publicly available and kindly hosted by GitHub [here](https://github.com/bacula-web/bacula-web)
+This page gives further information on how to contribute to the development of the Bacula-Web source code.
 
-## Guidance for developers
+## Project source code
 
-This section describe how you can contribute to Bacula-Web project development.
+Bacula-Web source git repository is publicly available on GitHub [here](https://github.com/bacula-web/bacula-web)
 
-**Usual workflow**
+## How to fix a bug, or add a new feature
 
-* Open a bug on [GitHub](https://github.com/bacula-web/bacula-web/issues) (mandatory)
-* Create a new fork of the project into your GitHub account
-* Clone the forked 9.x branch from your account
-  `git clone git@github.com:<account-name>/bacula-web.git`
-* create a branch from the **9.x** branch and give it a name that follow conventional commit guideline
-    * fix/fix-the-output
-    * feat/new-feature
-      `git checkout -b fix/fix-the-output`
+The usual steps are
+
+* Open an issue on [GitHub](https://github.com/bacula-web/bacula-web/issues) (mandatory)
+* Fork the project into your GitHub account
+* Clone the forked dev-9.x branch from your account
+  
+  ```shell
+  git clone git@github.com:<account-name>/bacula-web.git -b dev-9.x
+  ```
+* Checkout the dev-9.x branch (from your own repo) and name it `feat/xyz` or `fix/xyz`
+  ```shell
+  git checkout -b feat/awesome-feature
+  git checkout -b fix/some-bug
+  ```
 * Once you're happy with your changes, make sure your code follow PSR-12 standard
-    * To check coding standard `vendor/bin/phpcs <path-to-changed-files>`
-    * To fix code if needed, run `vendor/bin/phpcbf <path-to-changed-files>`
-* do not create "huge" pull request, I do prefer as small as possible pull request
-* do not change the code indentation in your commit
-* I try to apply [PSR-12 coding style standard](https://www.php-fig.org/psr/psr-12/), please sure your commit(s) uses the same standard
-* I take care of code indentation before each release and it's easier for me to see the changes you've done
-* put useful comment in the code that explain what you're trying to do
-* choose good name for variables
+    * To check coding standard
+      ```shell
+      vendor/bin/phpcs <path-to-changed-files>
+      ```
+    * To fix code if needed, run
+      ```shell
+      vendor/bin/phpcbf <path-to-changed-files>
+      ```
 
-:::tip
-As I don't want to waste your time, before changing any tool or library, make sure it's compatible with Bacula-Web license (GPL v2).
-I've seen several people requesting a pull request but the tool license was not compatible with GPL, or even worst, not open source at all.
-:::
+## Some rules
 
-Thanks for your help.
+- Use [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) for commit message (mandatory)
+- Do not create a "huge" pull request (split changes into several pull requests if possible)
+- Fix code indentation ONLY for the code you've changed or added
+- Use [PSR-12 coding style standard](https://www.php-fig.org/psr/psr-12/), please make sure you've run `phpcs` and `phpcbf` mentioned above
+- Create a useful commit message
+  - Bad commit message 
+    ```shell
+    fix: fix line 128 in index.php
+    
+    Fix the line 128, as there was something broken here.
+    ```
+  - Good commit message
+    ```shell
+    fix: job list return type
+    
+    Fix return type in SomeClass::getjobs().
+    ```
+- Use [camel Case](https://en.wikipedia.org/wiki/Camel_case) for variable, method or function names.
+- Make sure you don't use dependencies with a license not compatible with the actual project license (GPL-v2)
 
-Shall you have any questions, feel free to create a new discussion on the [GitHub project](https://github.com/bacula-web/bacula-web/discussions)
+Thanks for your help and contribution ❤️
+
+Should you have any questions, feel free to create a new discussion on the [GitHub project](https://github.com/bacula-web/bacula-web/discussions)

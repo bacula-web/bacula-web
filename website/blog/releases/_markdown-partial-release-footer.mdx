@@ -1,55 +1,67 @@
 ***
 
-:::info[Change on Web server public folder]
-Kind reminder, since [release v8.6.0](https://github.com/bacula-web/bacula-web/releases/tag/v8.6.0), Apache, Nginx or Lighttpd document root folder muse be set as below
+## More infos
 
-`WEB_SERVER_ROOT/bacula-web/public`
+::::warning[Web server root has changed since [v8.6.0](https://github.com/bacula-web/bacula-web/releases/tag/v8.6.0)]
 
-> In the example above, you can replace WEB_SERVER_ROOT by /var/www/html (adapt to your environment
-:::
+As of [release v8.6.0](https://github.com/bacula-web/bacula-web/releases/tag/v8.6.0),
+your web server root directory must point to the `public` directory (available at the root)
 
-***
+**For example**
 
-## How to install / upgrade ?
+`/var/www/hmlt/bacula-web/public`
 
-The installation or upgrade instructions are available in the [official documentation](https://www.bacula-web.org/docs).
+> If you are using a different location than /var/www/html/bacula-web, please adjust based on your web server configuration.
 
-## Docker images
+::::
 
-Latest Bacula-Web Docker images (`linux/amd64` and `linux/arm64`) are available at [Docker Hub](https://hub.docker.com/r/baculaweb/bacula-web)
+::::danger[security vulnerabilities]
 
-:::tip
-Docker images are available only since [release v8.7.0](https://github.com/bacula-web/bacula-web/releases/tag/v8.7.0).
-:::
+Older versions of Bacula-Web have known security vulnerabilities. For the safest and most reliable experience,
+use the [latest stable version](https://github.com/bacula-web/bacula-web/releases/latest) with all recent fixes and improvements.
 
-## How to get help ?
+::::
 
-They are several options to get help
+### Docker images
 
-* use [GitHub discussions](https://github.com/bacula-web/bacula-web/discussions) to ask a question or give a feedback
-* read the [FAQ](/docs/gethelp/faq)
+Latest Bacula-Web Docker images (for platform `linux/amd64` and `linux/arm64`) are available at [Docker Hub](https://hub.docker.com/r/baculaweb/bacula-web)
 
-## Found a bug, or need a new feature ?
+> Bacula-Web official Docker images are available since [release v8.7.0](https://github.com/bacula-web/bacula-web/releases/tag/v8.7.0).
 
-You can submit a new bug report or feature request on the [GitHub project](https://github.com/bacula-web/bacula-web/issues) (please read the [bug report guideline](/docs/gethelp/support))
+### How to ?
 
-## How to contribute ?
+<details>
+  <summary>**Install / upgrade**</summary>
 
-Bacula-Web is an open source project, mostly maintained on my spare time with the great help from community users.
+Installation or upgrade instructions are available in the [official documentation](/docs).
+
+</details>
+
+<details>
+  <summary>**Get help**</summary>
+
+Follow [this link](/docs/gethelp) for further information.
+
+</details>
+
+<details>
+  <summary>**Report a bug or ask for a new feature**</summary>
+
+You can submit a new bug report or feature request on the [GitHub project](https://github.com/bacula-web/bacula-web/issues)
+</details>
+
+<details>
+  <summary>**Contribute to the project ?**</summary>
+
+Bacula-Web is an open source project, mostly maintained in my spare time with the great help of community users.
 
 If you're willing to contribute to the project, have a look at the [contribution guide](https://www.bacula-web.org/docs/contribute/)
 
-## Security notice
+</details>
 
-:::warning
-Some versions of Bacula-Web have CVEs due to identified security vulnerabilities, detailed in the [security page](/docs/about/security).
+### Thanks to the community
 
-I **strongly encourage** anyone using Bacula-Web to continue using the latest stable releases, which include bug fixes and security patches.
-:::
-
-## Thanks to the community
-
-I thank all contributors for your feedback, help, and precious contributions.
+I thank all contributors for your feedback, help, and contributions.
 Without you, this release wouldn't be possible.
 
 Thanks for using and supporting the Bacula-Web project :heart:

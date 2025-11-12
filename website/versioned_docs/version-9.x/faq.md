@@ -1,3 +1,7 @@
+---
+slug: /faq
+---
+
 # FAQ
 
 This page contain the answer to the most frequent questions from community users organised by topics.
@@ -68,7 +72,7 @@ In case you need further help, don't hesitate to get back to me by mail (bacula-
 
 ### What's the current status of Bacula-Web ?
 
-As described in the [About](../about/index.md) page, I revived the Bacula-Web project since end of 2010 after few years without bug fixes and improvements,
+As described in the [About](/docs/about) page, I revived the Bacula-Web project since end of 2010 after few years without bug fixes and improvements,
 and a lot of effort has been made a provide more stable, secure and useful tool, with the precious help from the [community](https://github.com/bacula-web/bacula-web/graphs/contributors).
 
 **So what is the current status ?**
@@ -110,7 +114,7 @@ I do use Bacula-Web for personal usage several time per week, and the idea was s
 
 ### What are the requirements to use Bacula-Web on my server ?
 
-A full [list of requirements](../install/requirements.md) is documented in the documentation section.
+A full [list of requirements](/docs/install/requirements) is documented in the documentation section.
 
 ### Which version of PHP is supported ?
 
@@ -139,7 +143,7 @@ But, I may think again about this for a future major version.
 Bugs and feature requests are tracked using `GitHub issues <https://github.com/bacula-web/bacula-web/issues>`_.
 
 ::::tip
-You can find more information on how to submit a bug report [here](support.md)
+You can find more information on how to submit a bug report [here](/docs/contribute/reporting-issue-guideline)
 ::::
 
 ## Troubleshooting
