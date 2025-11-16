@@ -1,0 +1,36 @@
+name: Build website
+
+on:
+  push:
+    branches:
+      - chore/**
+      - feat/**
+      - fix/**
+      - refactor/**
+      - dev-**
+    paths:
+      - 'website/**'
+
+defaults:
+  run:
+    working-directory: website
+
+jobs:
+  build-website:
+    name: Build website and documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build using npm
+        run: npm run build
