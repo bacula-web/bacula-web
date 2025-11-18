@@ -1,0 +1,161 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Install using Docker
+
+::::note[Available since v8.7.0]
+::::
+
+## Requirements
+
+- `docker` installed and properly configured, and `docker compose` addon installed
+- your user is a member of the `docker` group (or you're allowed to run the `sudo` command)
+
+::::tip[Links to Docker documentation]
+- [Getting started with Docker](https://docs.docker.com/get-started/)
+- [Docker Compose documentation](https://docs.docker.com/compose/)
+::::
+
+## Supported platform
+
+- linux/amd64
+- linux/arm64
+
+## Getting started
+
+### Prepare the configuration
+
+Create a `bacula-web` folder and move into it
+
+```shell
+mkdir ~/bacula-web && cd bacula-web
+```
+
+Download the `config.php.same` PHP config file.
+
+```shell
+curl -L https://raw.githubusercontent.com/bacula-web/bacula-web/master/application/config/config.php.sample > config.php
+```
+::::tip
+You can also use the `application/config/config.php` if you've previously installed Bacula-Web on another server and
+want to keep the same configuration.
+::::
+
+### Authentication
+
+In order to authenticate users, you need to
+
+- create an SQLite database file (stored in `application/assets/protected/application.db`) to store users' credentials and details
+- create your first user
+
+::::tip
+Additional users can be created using the web UI after setup is complete.
+::::
+
+ Create a directory named `protected` in the current working directory.
+
+```shell
+mkdir protected
+```
+
+Create the users database and first user
+
+```shell
+docker run --rm -it -u www-data \
+  -v $PWD/protected:/var/www/html/application/assets/protected \
+  baculaweb/bacula-web:latest php bwc setupauth
+```
+
+```shell title="Output example"
+It's now time to set up the application back-end database
+[Important!] Please note that all information stored in the user database will be destroyed
+Can we proceed ?
+  [0] yes
+  [1] no
+ > 0
+You have selected: yes
+Deleting the users' authentication database
+Creating database schema
+Database created
+User creation
+Username: admin
+Email: admin@acme.net
+Password:
+ User created successfully
+You can now connect to your Bacula-Web instance using the provided credentials.
+```
+
+After providing all the necessary information, the SQLite database and the new user should be created.
+
+## Start the container
+
+### Using Docker Compose
+
+The easiest way to use the Bacula-Web Docker image is by using [Docker Compose](https://docs.docker.com/compose/)
+
+Create a `docker-compose.yml` file in the current directory.
+
+```yaml title="docker-compose.yml"
+services:
+  bacula-web:
+    image: baculaweb/bacula-web:latest
+    container_name: "bacula-web"
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ${PWD}/config.php:/var/www/html/application/config/config.php
+      - ${PWD}/protected:/var/www/html/application/assets/protected
+```
+
+To start the Docker container, run
+
+```shell
+docker-compose up -d
+```
+
+### Using docker run
+
+You can also simply use the `docker run` command.
+
+```shell
+docker run --rm --name bacula-web \
+  -d -p 8000:80 \
+  -v $PWD/config.php:/var/www/html/application/config/config.php \
+  -v $PWD/protected:/var/www/html/application/assets/protected \
+  baculaweb/bacula-web:latest
+```
+
+If you've followed the above instructions, Bacula-Web should be available using your web browser at [http://localhost:8080](http://localhost:8080)
+
+## Troubleshoot
+
+A few troubleshooting tips
+
+### Check container status
+
+<Tabs>
+  <TabItem value="docker-run" label="Using docker run" default>
+```shell
+docker ps
+```
+  </TabItem>
+  <TabItem value="docker-compose" label="Using docker compose">
+```shell
+docker-compose ps
+```
+  </TabItem>
+</Tabs>
+
+
+### Docker container logs
+
+If you have used the `docker-compose.yml` with `docker compose`, you can check the container logs.
+
+```shell
+docker-compose logs -f --tail 50
+```
+
+## Docker registry
+
+[Bacula-Web on DockerHub](https://hub.docker.com/r/baculaweb/bacula-web)

@@ -25,7 +25,7 @@ You will find more details by following the links below
 
 * Install [using archive](archive-install.md)
 * Install [using Composer](composer-install.md)
-* Install [using Docker](docker-install.md)
+* Install [using Docker](docker-install)
 * Install [from source](source-install.md)
 
 :::info
