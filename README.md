@@ -86,7 +86,6 @@ If you discover a security issue, see [SECURITY.md](SECURITY.md)
 
 ## Sponsors
 
-|  |
 <table>
 <tr>
 <td><a href="https://www.docker.com/"><img src="https://www.bacula-web.org/sponsors/docker-logo.png" alt="Docker Logo" width="140px"></a></td>
