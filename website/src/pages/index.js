@@ -8,7 +8,7 @@ import styles from './index.module.css';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import BaculaWebImageUrl from '@site/static/img/bacula-web-dashboard.png';
 import AboutImageUrl from '@site/static/img/undraw_Personal_goals_re_iow7.png';
-import LokaliseImageUrl from '@site/static/sponsors/lokalise-logo-colour-black-text.png';
+import LokaliseImageUrl from '@site/static/sponsors/lokalise-logo.png';
 import PackageCloudImageUrl from '@site/static/sponsors/package-cloud.png';
 import JetBrainsImageUrl from '@site/static/sponsors/jetbrains-logo.png';
 import DockerImageUrl from '@site/static/sponsors/docker-logo.png';
