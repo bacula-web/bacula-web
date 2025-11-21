@@ -166,9 +166,18 @@ docker-compose ps
 
 If you have used the `docker-compose.yml` file with Docker Compose, you can check the container logs as shown below.
 
-```shell
-docker-compose logs -f --tail 50
-```
+<Tabs>
+    <TabItem value="docker-run" label="Using docker run" default>
+        ```shell
+        docker logs bacula-web -f --tail 50
+        ```
+    </TabItem>
+    <TabItem value="docker-compose" label="Using docker compose">
+        ```shell
+        docker-compose logs -f --tail 50
+        ```
+    </TabItem>
+</Tabs>
 
 ## Docker registry
 
