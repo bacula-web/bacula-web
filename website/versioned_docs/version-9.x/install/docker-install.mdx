@@ -16,7 +16,15 @@ import TabItem from '@theme/TabItem';
 - [Docker Compose documentation](https://docs.docker.com/compose/)
 ::::
 
-## Supported platform
+## Available tags
+
+| tag           | description                        |
+|---------------|------------------------------------|
+| `latest`      | Latest release                     |
+| `nightly-9.x` | Nightly build from branch dev-9.x  |
+| `v<version>`  | Released version (example: v9.9.0) |
+
+## Supported architectures
 
 - linux/amd64
 - linux/arm64
@@ -107,6 +115,12 @@ services:
       - ${PWD}/config.php:/var/www/html/application/config/config.php
       - ${PWD}/protected:/var/www/html/application/assets/protected
 ```
+
+::::tip[Docker image tag]
+In the above example, we use the `:latest` Docker image tag, which refers to the latest released version.
+
+But you can, of course, set it to any [available release tag (e.g: v9.8.0)](https://hub.docker.com/repository/docker/baculaweb/bacula-web/tags)
+::::
 
 To start the Docker container, run
 
