@@ -38,6 +38,7 @@ use App\Middleware\FlashMiddleware;
 use App\Middleware\GuestMiddleware;
 use App\Middleware\HttpHeadersMiddleware;
 use App\Middleware\RefererMiddleware;
+use App\Middleware\SecureSessionMiddleware;
 use App\Middleware\TrailingSlashMiddleware;
 use App\Middleware\ValidationErrorMiddleware;
 use App\Middleware\ValidationExceptionMiddleware;
@@ -121,6 +122,7 @@ $app
     ->add(ValidationExceptionMiddleware::class)
     ->add(TwigMiddleware::create($app, $container->get(Twig::class)))
     ->add(SessionStartMiddleware::class)
+    ->add(SecureSessionMiddleware::class)
     ->addRoutingMiddleware();
 
 // Add Error Middleware

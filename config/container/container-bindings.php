@@ -67,7 +67,6 @@ return ['settings' => [
         'lifetime' => 7200,
         'path' => null,
         'domain' => null,
-        'secure' => true,
         'httponly' => true,
         'cache_limiter' => 'nocache',
         'cookie_samesite' => 'Lax'
