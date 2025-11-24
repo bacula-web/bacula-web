@@ -1,5 +1,31 @@
 # Changelog
 
+## [9.9.1](https://github.com/bacula-web/bacula-web/compare/v9.9.0...v9.9.1) (2025-11-24)
+
+
+### 🐛 Bug Fixes
+
+* session cookie secure attribute using http ([652b734](https://github.com/bacula-web/bacula-web/commit/652b734af889bb5f8469c27010e3611935cb193f)), closes [#256](https://github.com/bacula-web/bacula-web/issues/256)
+
+
+### 📘 Documentation
+
+* add github star history to readme ([3af8631](https://github.com/bacula-web/bacula-web/commit/3af86318d672722e2e1dec7bfbe43762f3a6cccf))
+* add informations about docker image tags ([d05d98a](https://github.com/bacula-web/bacula-web/commit/d05d98a7911a15554964cebc1f3f7e2fb9b67e14))
+* add instruction for sqlite catalog with docker ([77d85fe](https://github.com/bacula-web/bacula-web/commit/77d85fea06c7a72f8d476ace19d8d4ca99981359)), closes [#253](https://github.com/bacula-web/bacula-web/issues/253)
+* add missing configuration instructions using docker ([7ab8ba3](https://github.com/bacula-web/bacula-web/commit/7ab8ba3e4c4740fbac53ae0b749804e97236b266)), closes [#253](https://github.com/bacula-web/bacula-web/issues/253)
+* change syntax highlighting theme ([443e435](https://github.com/bacula-web/bacula-web/commit/443e4354d2e0c994431337ee6f93fc9fb831d56b))
+* fix lokalise sponsor logo in readme ([aaefd4a](https://github.com/bacula-web/bacula-web/commit/aaefd4a330f045331e29a61a2b644f2a8a22c156))
+* fix sidebar navigation for get help page ([05bb3f1](https://github.com/bacula-web/bacula-web/commit/05bb3f16ce9897db0031097e5d3424c4bc648468))
+* fix wording and grammar in contributing.md ([da434ed](https://github.com/bacula-web/bacula-web/commit/da434ed45e115c54143bf45af067f469dec90218))
+* fix wording and grammar of getting started page ([07666fb](https://github.com/bacula-web/bacula-web/commit/07666fb4738e8f2a1cdff92ee6891c80c0ab20f9))
+* move website and documentation ([c97441e](https://github.com/bacula-web/bacula-web/commit/c97441e26979d1f9eef88deb251c32d79e2cf676))
+* update docker instructions ([0482810](https://github.com/bacula-web/bacula-web/commit/04828100baa9e1021059848187c229dc08470cc3))
+* update documentation ([05bb3f1](https://github.com/bacula-web/bacula-web/commit/05bb3f16ce9897db0031097e5d3424c4bc648468))
+* update instruction for nginx web server ([1dfe98f](https://github.com/bacula-web/bacula-web/commit/1dfe98fc5391de579ba457a02d06d33423db5a3c))
+* update release posts footer ([05bb3f1](https://github.com/bacula-web/bacula-web/commit/05bb3f16ce9897db0031097e5d3424c4bc648468))
+* use latest release in install page ([afb3ea6](https://github.com/bacula-web/bacula-web/commit/afb3ea6f83ae5f00f7405187a5030acf692ff8d2))
+
 ## [9.9.0](https://github.com/bacula-web/bacula-web/compare/v9.8.0...v9.9.0) (2025-10-21)
 
 
