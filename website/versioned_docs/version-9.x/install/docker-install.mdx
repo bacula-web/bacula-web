@@ -152,6 +152,58 @@ docker run --rm --name bacula-web \
 
 If you've followed the above instructions, Bacula-Web should be available using your web browser at [http://localhost:8080](http://localhost:8080)
 
+### Bacula with SQLite catalog database
+
+If you are using Bacula with SQLite catalog database, you must run the Docker container on the same server running the Bacula director.
+
+You can use the instructions below to bind the Bacula SQLite database into the Docker container.
+
+<Tabs>
+    <TabItem value="docker-run" label="Using docker run" default>
+        ```shell
+        docker run --rm --name bacula-web -d -p 8000:80 \
+        -v $PWD/config.php:/var/www/html/application/config/config.php \
+        -v $PWD/protected:/var/www/html/application/assets/protected \
+        -v /var/lib/bacula/bacula.db:/var/lib/bacula/bacula.db \
+        baculaweb/bacula-web:latest
+        ```
+    </TabItem>
+    <TabItem value="docker-compose" label="Using docker compose">
+        ```yaml title="docker-compose.yml"
+        services:
+          web:
+            image: baculaweb/bacula-web:latest
+            container_name: "bacula-web"
+            restart: unless-stopped
+            ports:
+              - "8080:80"
+            volumes:
+              - ${PWD}/config.php:/var/www/html/application/config/config.php
+              - ${PWD}/protected:/var/www/html/application/assets/protected
+              - /var/lib/bacula/bacula.db:/var/www/html/application/assets/protected:ro
+        ```
+        Start the Docker container
+        ```shell
+        docker-compose up -d
+        ```
+    </TabItem>
+</Tabs>
+
+::::tip
+If you get the error below
+
+**SQLSTATE[HY000] [14] unable to open database file**
+
+Make sure your user have read permission the
+`/var/lib/bacula/bacula.db` file.
+
+A simple way to fix this is to add current user to the `bacula` group.
+
+```shell
+sudo usermod -a -G bacula <your-username>
+```
+::::
+
 ## Troubleshoot
 
 A few troubleshooting tips
