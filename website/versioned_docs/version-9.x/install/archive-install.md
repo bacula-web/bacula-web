@@ -61,8 +61,12 @@ bacula-web-v9.9.0.tgz: OK
 ## Decompress the archive
 
 ```shell
-$ tar -xvf bacula-web-v9.8.0.tgz
+$ tar -xvf bacula-web-v9.9.0.tgz
 ```
+
+::::tip[Using different version ?]
+The above instructions use version **9.9.0** as an example; you must replace it with the version you are using.
+::::
 
 ## Fix files/folders ownership and permissions
 
