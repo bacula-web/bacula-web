@@ -45,9 +45,9 @@ $ sudo /etc/init.d/apache2 restart
 
 ### On FreeBSD
 
-:::info
-A big thanks to Dean E. Weimer who provided me Bacula-Web installation instructions for \*BSD setup
-:::
+::::info
+A big thanks to Dean E. Weimer who provided me Bacula-Web installation instructions for *BSD setup
+::::
 
 You can start with a fresh FreeBSD 9.0 installation, with ports from original CD media, not updated to keep as simple as possible.
 
@@ -85,9 +85,9 @@ With SQLite bacula catalog
 * `databases/php5-sqlite`
 * `databases/php5-pdo_sqlite`
 
-:::warning
+::::warning
 Instructions above are outdated, for more accurate instructions, please look at the [Bacula-Web port on FreshPorts.org](https://www.freshports.org/www/bacula-web/)
-:::
+::::
 
 ## Apache configuration
 
@@ -107,20 +107,20 @@ Edit the Apache configuration file as described below
 
 <Tabs>
   <TabItem value="rpm" label="For Red Hat / Centos / Fedora" default>
-```shell
-$ sudo vim /etc/httpd/conf.d/bacula-web.conf
-```
+    ```shell
+    $ sudo vim /etc/httpd/conf.d/bacula-web.conf
+    ```
   </TabItem>
   <TabItem value="deb" label="For Debian / Ubuntu">
-```shell
-$ sudo vim /etc/apache2/sites-available/bacula-web.conf
-```
+    ```shell
+    $ sudo vim /etc/apache2/sites-available/bacula-web.conf
+    ```
   </TabItem>
 </Tabs>
 
 with the content below
 
-```
+```apacheconf
 <VirtualHost *:80>
 DocumentRoot "/var/www/html/bacula-web/public"
 ServerName bacula-web.domain.com
@@ -132,13 +132,21 @@ ServerName bacula-web.domain.com
      </Directory>
 
      # More directives here ...
-   </VirtualHost>
+</VirtualHost>
 ```
 
 You might need to adapt Bacula-Web installation path in the above configuration according to your setup
 
 :::warning
-As of version 8.6.0, the DocumentRoot must be set to the `public` sub-folder.
+Since v8.6.0, the `DocumentRoot` path must be set to the `public` subdirectory.
+
+```apacheconf title="prior v8.6.0"
+DocumentRoot /var/www/bacula-web;
+```
+
+```apacheconf title="using v8.6.0 and above"
+DocumentRoot /var/www/bacula-web/public;
+```
 :::
 
 Enable the configuration
@@ -151,15 +159,18 @@ Then restart Apache to apply the configuration change
 
 <Tabs>
   <TabItem value="rpm" label="For Red Hat / Centos / Fedora" default>
-```shell
-$ sudo systemctl restart httpd
-```
+    ```shell
+    $ sudo systemctl restart httpd
+    ```
   </TabItem>
   <TabItem value="deb" label="For Debian / Ubuntu">
-```shell
-$ sudo systemctl restart apache2
-```
+    ```shell
+    $ sudo systemctl restart apache2
+    ```
   </TabItem>
 </Tabs>
 
-You can now proceed with the installation [using Composer](../composer-install.md)
+You can now proceed with any of the installation method below
+
+- [Using the archive](../archive-install.md)
+- [Using Composer](../composer-install.md)

@@ -43,13 +43,15 @@ $ sudo systemctl php8.3-fpm restart
 
 Define a new virtual server configuration like below.
 
-```
+```nginx
 server {
     listen 80;
     server_name bacula-web.domain.com;
     index index.php;
+
     error_log /var/log/nginx/bacula-web.error.log;
     access_log /var/log/nginx/bacula-web.access.log;
+
     root /var/www/bacula-web/public;
 
     location / {
@@ -69,19 +71,27 @@ server {
 ```
 
 :::warning
-Please note that as of version 8.6.0, the DocumentRoot must be set to the `public` sub-directory.
+Since v8.6.0, the **root** path must be set to the `public` subdirectory.
+
+```nginx title="prior v8.6.0"
+root /var/www/bacula-web;
+```
+
+```nginx title="using v8.6.0 and above"
+root /var/www/bacula-web/public;
+```
 :::
 
 Test your configuration
 
 ```shell
-sudo nginx -t && echo "Nginx is ok"
+$ sudo nginx -t && echo "Nginx is ok"
 ```
 
 Restart Nginx to apply configuration changes
 
 ```shell
-sudo systemctl restart nginx
+$ sudo systemctl restart nginx
 ```
 
 You can now proceed with any of the installation method below
