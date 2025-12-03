@@ -63,7 +63,7 @@ Bacula-Web use the following tools and libraries
 | [PHP](http://www.php.net)                                    | PHP License v3.01 |
 | [Symfony](https://github.com/symfony)                        | MIT               |
 | [Twig](https://github.com/twigphp/Twig)                      | BSD-3-Clause      |
-| [NVD3](http://nvd3.org/)                                     | Apache v2         |
+| [Chart.js](https://www.chartjs.org/)                         | MIT               |
 | [Bootstrap](http://getbootstrap.com/)                        | MIT               |
 | [Font Awesome](http://fontawesome.io/)                       | CC BY 4.0         |
 | [tempus-dominus](https://github.com/Eonasdan/tempus-dominus) | MIT               |
