@@ -50,9 +50,11 @@ use Twig\Extension\DebugExtension;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\MoFileLoader;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
+
 use function DI\factory;
 
 return ['settings' => [
+    'twig_cache_path' => dirname(__DIR__) . '/../application/views/cache',
     'doctrine' => [
         'config' => [
             'isDevMode' => true,
@@ -96,14 +98,15 @@ return ['settings' => [
         return new PhpSession($options);
     }, Twig::class => function (
         ContainerInterface $container,
-        SessionInterface   $session,
-        Config             $config
+        SessionInterface $session,
+        Config $config
     ) {
         /**
-         * TODO: cache must be set to path for prod env, or false for dev env, strict_variables and debug must be set to true only in dev env
+         * TODO: Fix Twig environment settings
+         * the strict_variables and debug settings must be set to true only in the DEV environment.
          */
         $twig = Twig::create(TPL_DIR, [
-            'cache' => false,
+            'cache' => $container->get('settings')['twig_cache_path'],
             'strict_variables' => false,
             'debug' => false]);
 
@@ -201,8 +204,8 @@ return ['settings' => [
     EntityManager::class => function (ContainerInterface $container) {
         return new EntityManager(
             $container->get(Connection::class),
-            ORMSetup::createAttributeMetadataConfiguration([BW_ROOT . '/application/Entity/Core'], true
-            ));
+            ORMSetup::createAttributeMetadataConfiguration([BW_ROOT . '/application/Entity/Core'], true)
+        );
     },
     ManagerRegistry::class => factory(function (ContainerInterface $container) {
         $connections = [
