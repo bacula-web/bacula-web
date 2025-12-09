@@ -5,6 +5,8 @@ description: some information about the Bacula-Web project
 
 # About the project
 
+## What is Bacula-Web?
+
 Bacula-Web is a PHP web-based tool that provides you with a summarized view of jobs, pools, and volumes. It obtains its information from your Bacula catalog database.
 
 This tool provides you with information on the last day's jobs status, media and pool usage, catalog size usage, and even more ...
@@ -17,16 +19,15 @@ The main advantages of Bacula-Web are
 * it's easy to install (you just need a LAMP server and a valid connection to your Bacula catalog)
 * it contains a lot of information into a single page (have a look on your last jobs for example)
 
-And what's not ?
+## What's not?
 
 If you're looking for a tool able to manage Bacula like bat, Bacula-Web might not the right tool (yet).
 
-I'd advise having a look on Bweb, baculum, BAT or Bacula Webmin plugin instead.
+I'd advise having a look on Bweb, baculum, Bacularis, BAT or Bacula Webmin plugin instead.
 
 ## The project history
 
-Bacula-Web was originally created and developed by Juan-Luis Frances Jimenez.
-He did a very nice job.
+Bacula-Web was originally created and developed by Juan-Luis Frances Jimenez, who did a fantastic job.
 
 Since the end of 2010, I was officially designated the official maintainer by Kern S. and Eric B. for this project.
 
@@ -53,6 +54,8 @@ My first look was on webacula and bweb, which are very good tools to use and fea
 Then, I've found Bacula-Web, which at this time, wasn't maintained for a few years.
 
 After I've submitted some patches to Bacula developers, I proposed to become the official maintainer of this project. So the project revival started in July 2010.
+
+I do use Bacula-Web for personal usage every single day, and the idea was simply to share those improvements with the Bacula community
 
 ## Third-party tools and libraries
 
@@ -81,10 +84,10 @@ Bacula-Web uses the following tools and libraries.
 
 Bacula-Web was successfully tested with
 
-* Mozilla Firefox 94.0.1
-* Google Chrome 95.0.4638.69
-* Brave version 1.31.88
-* Microsoft Edge 95.0.1020.44
+* Mozilla Firefox
+* Google Chrome
+* Brave version
+* Microsoft Edge
 
 ::::tip
 Bacula-Web needs JavaScript and Cookies to run well in your web browser (do not disable one of those).
@@ -146,9 +149,12 @@ There are a lot of tools which can help you administer, monitor and configure Ba
 
 * Bacula module in [Webmin](http://www.webmin.com/index.html)
 * [Bacula Status](https://github.com/evaldoprestes/baculastatus)
-* [Reportula](https://www.reportula.org)
-* [baculum](https://www.bacula.org/7.4.x-manuals/en/console/Baculum_Web_GUI_Tool.html)
 * [breport](https://breport.sourceforge.net) - The Bacula Reporter
-* bat
+* bat (Bacula Admin Tool GUI)
 * [Webacula](https://webacula.sourceforge.net/)
+* [Reportula](https://github.com/oliveiraped/Reportula)
+* [Baculum](https://www.bacula.org/15.0.x-manuals/en/console/Baculum_API_Web_GUI_Tools.html)
+* [Bacularis](https://bacularis.app/)
 * and many others ...
+
+You can also find a complete list of GUIs on Bacula's website.
