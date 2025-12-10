@@ -5,6 +5,10 @@ on:
     branches:
       - '9.x'
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   release-pr:
     runs-on: ubuntu-latest
