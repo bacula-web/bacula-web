@@ -227,7 +227,7 @@ class DBPagination
         }
 
         if ($this->paginationCurrent >= ($this->getMaxPage() - 5)) {
-            return ($this->getMaxPage() - 5);
+            return $this->getMaxPage() - 5;
         }
         return $this->paginationCurrent;
     }
