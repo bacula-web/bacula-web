@@ -81,7 +81,7 @@ class DBPagination
         $this->limit = $config->get('rows_per_page', 25);
 
         // TODO: make sure page is higher or equal to 1, also ensure it's not bigger than maximum pages
-        $this->paginationCurrent = (int) isset($parameters['page']) ? $parameters['page'] : 1;
+        $this->paginationCurrent = isset($parameters['page']) ? (int) $parameters['page'] : 1;
 
         if ($this->paginationCurrent === 1) {
             $this->offset = 0;
