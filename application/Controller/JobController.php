@@ -258,7 +258,7 @@ class JobController extends AbstractController
 
         if ($filterJobEndTime) {
             $jobsQueryBuilder
-                ->andWhere('j.endtime >= :end_time')
+                ->andWhere('j.endtime <= :end_time')
                 ->setParameter('end_time', $filterJobEndTime);
         }
 
