@@ -100,7 +100,10 @@ class UserController extends AbstractController
                 return false;
             }, "oldpassword")->message("Your current password is not valid")
             ->rule('equals', 'newpassword', 'confnewpassword')->message('Both passwords must match')
-            ->rule('lengthMin', 'newpassword', 8)->message('Password must be at least 8 characters long');
+            ->rule('lengthMin', 'newpassword', 8)->message('Password must be at least 8 characters long')
+            ->rule('different', 'newpassword', 'oldpassword')->message('New password must be different the current one')
+        ;
+
         if (! $validator->validate()) {
             throw new ValidationException($validator->errors());
         }
