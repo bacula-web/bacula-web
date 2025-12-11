@@ -31,11 +31,7 @@ Please see the full [features list](https://www.bacula-web.org/docs/about/featur
 
 ## Documentation
 
-Please read the documentation of Bacula-Web at [https://www.bacula-web.org/docs](https://www.bacula-web.org/docs)
-
-> Previous documentation is still available at [https://docs.bacula-web.org](https://docs.bacula-web.org)
->
-> Huge thanks to [Read The Docs](https://readthedocs.org/) for hosting open source projects documentation over the past few years :heart:
+Please refer to the documentation at [https://www.bacula-web.org/docs](https://www.bacula-web.org/docs)
 
 ## Getting started
 
