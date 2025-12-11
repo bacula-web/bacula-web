@@ -1,5 +1,20 @@
 # Changelog
 
+## [9.9.2](https://github.com/bacula-web/bacula-web/compare/v9.9.1...v9.9.2) (2025-12-11)
+
+
+### 🐛 Bug Fixes
+
+* cache compiled twig templates ([677d02c](https://github.com/bacula-web/bacula-web/commit/677d02c4f520c473d3a144527b659a7ad21eec3f))
+* enddate period in job report ([58457db](https://github.com/bacula-web/bacula-web/commit/58457db9f45e8e79d6f1bd8109fcee0ad3a91256))
+* new password must be different than the current one ([df5789e](https://github.com/bacula-web/bacula-web/commit/df5789e06204dddd85c1a80c2ea8b672d1eef208))
+
+
+### 📘 Documentation
+
+* fix and update web servers instructions ([fd3c407](https://github.com/bacula-web/bacula-web/commit/fd3c407a7c9b7a27666e6f736ba79575699781b4))
+* update faq ([e952d85](https://github.com/bacula-web/bacula-web/commit/e952d8500348eee5771e651fb9cf8746d7a67fa5))
+
 ## [9.9.1](https://github.com/bacula-web/bacula-web/compare/v9.9.0...v9.9.1) (2025-11-24)
 
 
