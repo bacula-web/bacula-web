@@ -85,7 +85,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             matomo: {
-                matomoUrl: 'https://baculaweb.matomo.cloud/',
+                matomoUrl: 'https://web-stats.bacula-web.org/',
                 siteId: '1',
                 phpLoader: 'matomo.php',
                 jsLoader: 'matomo.js',
