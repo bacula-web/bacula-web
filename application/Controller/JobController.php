@@ -151,13 +151,24 @@ class JobController extends AbstractController
                 ->rule('in', 'filter_jobtype', array_keys($jobTypesList))->message('Invalid job type')
                 ->rule('in', 'filter_joblevel', array_keys($levels_list))->message('Invalid job level')
                 ->rule('in', 'filter_jobstatus', array_keys($job_status))->message('Invalid job status')
-                ->rule('in', 'filter_clientid', array_keys($clientsList))->message('Invalid client')
-                ->rule('in', 'filter_poolid', array_keys($poolsList))->message('Invalid pool')
+                ->rule(function ($field, $value, $params, $fields) use ($clientRepository) {
+                    if ($clientRepository->findOneBy(['id' => $value]) !== null) {
+                        return true;
+                    }
+                    return false;
+                }, 'filter_clientid')->message('Invalid client')
+                ->rule(function ($field, $value, $params, $fields) use ($poolRepository) {
+                    if ($poolRepository->findOneBy(['id' => $value]) !== null) {
+                        return true;
+                    }
+                    return false;
+                }, 'filter_poolid')->message('Invalid pool')
                 ->rule('date', 'filter_job_starttime')->message('Invalid job start time')
                 ->rule('date', 'filter_job_endtime')->message('Invalid job end time')
                 ->rule('in', 'filter_job_orderby', $result_order)->message('Invalid job order by')
                 ->rule('in', 'filter_job_orderby_asc', ['ASC', 'DESC'])->message('Invalid job order by')
-                ->rule('integer', 'page')->message('Invalid page number');
+                ->rule('integer', 'page')->message('Invalid page number')
+            ;
 
             if (!$validator->validate()) {
                 throw new ValidationException($validator->errors());

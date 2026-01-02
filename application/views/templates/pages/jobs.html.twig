@@ -57,7 +57,7 @@
                         <label>{{ 'Client'|trans }}</label>
                         <select class="form-control input-sm {{ validation_errors.filter_clientid ? 'is-invalid' : ' ' }}" name="filter_clientid">
                             <option value="">Any</option>
-                            {% for id, client in clients_list %}
+                            {% for client in clients_list %}
                                 <option value="{{ client.id }}" {% if client.id == filter_clientid %} selected {% endif %}>{{ client.name }}</option>
                             {% endfor %}
                         </select>

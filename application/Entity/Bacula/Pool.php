@@ -33,4 +33,9 @@ class Pool
     {
         return $this->name;
     }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }
