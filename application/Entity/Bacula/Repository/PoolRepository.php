@@ -24,6 +24,9 @@ namespace App\Entity\Bacula\Repository;
 use App\Entity\Bacula\Pool;
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * This is the Doctrine Repository class for the Pool entity.
+ */
 class PoolRepository extends EntityRepository
 {
     /**
@@ -51,9 +54,13 @@ class PoolRepository extends EntityRepository
      */
     public function getPoolsList(bool $hideEmpty = true): array
     {
-        $queryBuilder = $this->createQueryBuilder('p')
-            ->select('p.id, p.name');
+        $queryBuilder = $this->createQueryBuilder('p');
+        $queryBuilder->select('p');
 
-        return $queryBuilder->getQuery()->getArrayResult();
+        if($hideEmpty)
+        {
+            $queryBuilder->andWhere('p.numvols > 0');
+        }
+        return $queryBuilder->getQuery()->getResult();
     }
 }
