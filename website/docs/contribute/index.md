@@ -28,7 +28,7 @@ Here’s how community users can contribute.
 
 If you enjoy using Bacula-Web and would like to encourage the project efforts, please consider making a small donation using one of the option below.
 
-   * [https://buymeacoffee.com/baculaweb](https://buymeacoffee.com/baculaweb)
+   * [https://buymeacoffee.com/dfranco](https://buymeacoffee.com/dfranco)
    * [GitHub sponsor](https://github.com/sponsors/dfranco)
 
 ## Getting Started

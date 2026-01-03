@@ -103,7 +103,7 @@ It is maintained in my spare time, with the great help from the community users.
 
 If you enjoy using Bacula-Web and would like to support the project efforts, please consider making a small donation using one of the two options listed below.
 
-- [Bacula-Web on BuyMeACoffee](https://www.buymeacoffee.com/baculaweb)
+- [My account on BuyMeACoffee](https://buymeacoffee.com/dfranco)
 - [Support me on GitHub sponsor](https://github.com/sponsors/dfranco)
 
 Thanks for using and supporting the Bacula-Web project :heart:

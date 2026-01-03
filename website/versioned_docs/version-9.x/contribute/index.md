@@ -34,5 +34,5 @@ See [how to contribute to translations](./translations)
 
 If you enjoy using Bacula-Web and would like to encourage the project's efforts, please consider making a small donation using one of the options below.
 
-   * [https://buymeacoffee.com/baculaweb](https://buymeacoffee.com/baculaweb)
+   * [https://buymeacoffee.com/dfranco](https://buymeacoffee.com/dfranco)
    * [GitHub sponsor](https://github.com/sponsors/dfranco)
