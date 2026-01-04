@@ -106,9 +106,12 @@ return ['settings' => [
          * the strict_variables and debug settings must be set to true only in the DEV environment.
          */
         $twig = Twig::create(TPL_DIR, [
-            'cache' => $container->get('settings')['twig_cache_path'],
-            'strict_variables' => false,
-            'debug' => false]);
+                'cache' => $container->get('settings')['twig_cache_path'],
+                'strict_variables' => false,
+                'debug' => false,
+                'auto_reload' => true
+            ]
+        );
 
         $twig->addExtension(new DebugExtension());
         $twig->addExtension(new TransformBytes());
