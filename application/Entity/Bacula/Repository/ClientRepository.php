@@ -23,8 +23,17 @@ namespace App\Entity\Bacula\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * This is the Doctrine Repository class for the Client entity.
+ */
 class ClientRepository extends EntityRepository
 {
+    /**
+     * Return an array of clients (optionally only active clients)
+     *
+     * @param bool $showInactiveClient
+     * @return array
+     */
     public function getClients(bool $showInactiveClient = false): array
     {
         $queryBuilder = $this
