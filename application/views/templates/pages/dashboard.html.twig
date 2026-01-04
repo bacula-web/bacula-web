@@ -16,7 +16,7 @@
                     <div class="card-header"><b>{{ 'Last period job status'|trans }}</b> {{ literal_period }}</div>
                     <!-- Period selector -->
                     <div class="card-body">
-                        <form class="form-inline pull-right" method="post" role="form" action="{{ url_for('home') }}">
+                        <form class="form-inline pull-right" method="post" action="{{ url_for('home') }}">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text">{{ 'Period'|trans }} </span>
                                 <select class="form-control input-sm {{ validation_errors['period_selector'] ? 'is-invalid' : ' ' }}" name="period_selector">
