@@ -15,8 +15,8 @@
                     <span class="help-block">{{ 'Filter'|trans }}</span>
 
                     <div class="form-group">
-                        <label>{{ 'Job status'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_jobstatus ? 'is-invalid' : ' ' }}" name="filter_jobstatus">
+                        <label for="filter_jobstatus">{{ 'Job status'|trans }}</label>
+                        <select class="form-control input-sm {{ validation_errors.filter_jobstatus ? 'is-invalid' : ' ' }}" name="filter_jobstatus" id="filter_jobstatus">
                             <option value="">Any</option>
                             {% for id, status in job_status %}
                                 <option value="{{ id }}" {% if id == filter_jobstatus %} selected {% endif %}>{{ status }}</option>
@@ -28,8 +28,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>{{ 'Level'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_joblevel ? 'is-invalid' : ' ' }}" name="filter_joblevel">
+                        <label for="filter_joblevel">{{ 'Level'|trans }}</label>
+                        <select class="form-control input-sm {{ validation_errors.filter_joblevel ? 'is-invalid' : ' ' }}" name="filter_joblevel" id="filter_joblevel">
                             <option value="">Any</option>
                             {% for id, level in levels_list %}
                                 <option value="{{ id }}" {% if id == filter_joblevel %} selected {% endif %}>{{ level }}</option>
@@ -41,8 +41,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>{{ 'Type'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_jobtype ? 'is-invalid' : ' ' }}" name="filter_jobtype">
+                        <label for="filter_jobtype">{{ 'Type'|trans }}</label>
+                        <select class="form-control input-sm {{ validation_errors.filter_jobtype ? 'is-invalid' : ' ' }}" name="filter_jobtype" id="filter_jobtype">
                             <option value="">Any</option>
                             {% for id, job_type in job_types_list %}
                                 <option value="{{ id }}" {% if id == filter_job_type %} selected {% endif %}>{{ job_type }}</option>
@@ -54,8 +54,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>{{ 'Client'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_clientid ? 'is-invalid' : ' ' }}" name="filter_clientid">
+                        <label for="filter_clientid">{{ 'Client'|trans }}</label>
+                        <select class="form-control input-sm {{ validation_errors.filter_clientid ? 'is-invalid' : ' ' }}" name="filter_clientid" id="filter_clientid">
                             <option value="">Any</option>
                             {% for client in clients_list %}
                                 <option value="{{ client.id }}" {% if client.id == filter_clientid %} selected {% endif %}>{{ client.name }}</option>
@@ -67,8 +67,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>{{ 'Pool'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_poolid ? 'is-invalid' : ' ' }}" name="filter_poolid">
+                        <label for="filter_poolid">{{ 'Pool'|trans }}</label>
+                        <select class="form-control input-sm {{ validation_errors.filter_poolid ? 'is-invalid' : ' ' }}" name="filter_poolid" id="filter_poolid">
                             <option value="">Any</option>
                             {% for pool in pools_list %}
                                 <option value="{{ pool.id }}" {% if pool.id == filter_pool_id %} selected {% endif %}>{{ pool.name }}</option>
@@ -112,8 +112,8 @@
 
                     <span class="help-block">{{ 'Options'|trans }}</span>
 
-                    <label>{{ 'Order by'|trans }}</label>
-                    <select class="form-control input-sm {{ validation_errors.filter_job_orderby ? 'is-invalid' : ' ' }}" name="filter_job_orderby">
+                    <label for="filter_job_orderby">{{ 'Order by'|trans }}</label>
+                    <select class="form-control input-sm {{ validation_errors.filter_job_orderby ? 'is-invalid' : ' ' }}" name="filter_job_orderby" id="filter_job_orderby">
                         {% for id, order in result_order %}
                             <option value="{{ id }}" {% if id == result_order_field %} selected {% endif %}>{{ order }}</option>
                         {% endfor %}
@@ -123,8 +123,8 @@
                     </div>
 
                     <div class="form-check">
-                        <input name="filter_job_orderby_asc" class="form-check-input {{ validation_errors.filter_job_orderby_asc ? 'is-invalid' : '' }}"
-                               type="checkbox" value="ASC" id="filter_job_orderby_asc" {{ result_order_asc_checked }}>
+                        <input class="form-check-input {{ validation_errors.filter_job_orderby_asc ? 'is-invalid' : '' }}"
+                               type="checkbox" value="ASC" name="filter_job_orderby_asc" id="filter_job_orderby_asc" {{ result_order_asc_checked }}>
                         <label class="form-check-label" for="filter_job_orderby_asc">Asc</label>
                         <div class="invalid-feedback">
                             {{ validation_errors.filter_job_orderby_asc|first }}
