@@ -49,7 +49,7 @@ class JobRepository extends EntityRepository
     }
 
     /**
-     * @return array
+     * @return array<string,string>
      */
     public function getUsedLevels(): array
     {

@@ -29,6 +29,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\FormatterHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
@@ -61,13 +63,16 @@ class SetupAuthCommand extends Command
     {
         $output->writeln('It\'s now time to setup the application back-end database');
 
+        /** @var FormatterHelper $formatter */
         $formatter = $this->getHelper('formatter');
+
         $importantInfo = $formatter->formatSection(
             'Important!',
             'Please note that all information stored in the user database will be destroyed'
         );
         $output->writeln($importantInfo);
 
+        /** @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
         $question = new ChoiceQuestion('Can we proceed ?', ['yes', 'no'], 1);

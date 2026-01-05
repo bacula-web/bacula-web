@@ -23,6 +23,7 @@ namespace App\Command;
 
 use PDO;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -39,8 +40,10 @@ class CheckCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $hasErrors = false;
+        /** @var FormatterHelper $formatter */
         $formatter = $this->getHelper('formatter');
+
+        $hasErrors = false;
 
         $output->writeln(
             [
@@ -61,7 +64,7 @@ class CheckCommand extends Command
             ]
         );
 
-        if (version_compare(PHP_VERSION, '8.0', '>=')) {
+        if (version_compare(PHP_VERSION, '8.0') >= 0) {
             $errorMessages = ['PHP version -> ok'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         } else {
