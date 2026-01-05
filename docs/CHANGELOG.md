@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.9.3](https://github.com/bacula-web/bacula-web/compare/v9.9.2...v9.9.3) (2026-01-04)
+
+
+### 🐛 Bug Fixes
+
+* automatically recompile twig templates ([e135e1f](https://github.com/bacula-web/bacula-web/commit/e135e1f1ef4fd17892b02535ecdb1c163aa84115))
+* client and pool filters validation in jobs report ([c4b3e4a](https://github.com/bacula-web/bacula-web/commit/c4b3e4a0ff807cd2e7f5e480822d1862a9f7d404))
+* form label not associated to control ([fdce564](https://github.com/bacula-web/bacula-web/commit/fdce56419849a1f1ba0609e689a85bb892571d00))
+* hide empty pools setting not used in jobs report ([c01b864](https://github.com/bacula-web/bacula-web/commit/c01b8642bf06c358a1f47d806e43134dc7181c89)), closes [#266](https://github.com/bacula-web/bacula-web/issues/266)
+* job start and end time input field size ([0883709](https://github.com/bacula-web/bacula-web/commit/088370946b6c3eea823ec4e817cf62f07e2984ed))
+* redundant html role attribute ([7df4a61](https://github.com/bacula-web/bacula-web/commit/7df4a61544ff6c65b02e1b29a58224c301133ada))
+
 ## [9.9.2](https://github.com/bacula-web/bacula-web/compare/v9.9.1...v9.9.2) (2025-12-11)
 
 
