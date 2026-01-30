@@ -27,7 +27,8 @@
                 "install/php/index",
                 "install/web-server/apache",
                 "install/web-server/nginx",
-                "install/web-server/lighttpd"
+                "install/web-server/lighttpd",
+                "install/web-server/shared-web-server"
               ]
             },
             {

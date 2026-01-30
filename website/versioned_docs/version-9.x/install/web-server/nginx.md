@@ -98,3 +98,7 @@ You can now proceed with any of the installation method below
 
 - [Using the archive](../archive-install.md)
 - [Using Composer](../composer-install.md)
+
+:::tip[Running in a subdirectory]
+If you would like to setup Bacula-Web on a shared web server, please follow the instructions from the [shared web server](shared-web-server.md) page.
+:::
