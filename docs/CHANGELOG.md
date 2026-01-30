@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.9.4](https://github.com/bacula-web/bacula-web/compare/v9.9.3...v9.9.4) (2026-01-30)
+
+
+### 🐛 Bug Fixes
+
+* upgrade phpunit version ([a4d9f41](https://github.com/bacula-web/bacula-web/commit/a4d9f4132356eb4fe7ea6789fbc32a175d3b763b))
+
 ## [9.9.3](https://github.com/bacula-web/bacula-web/compare/v9.9.2...v9.9.3) (2026-01-04)
 
 
