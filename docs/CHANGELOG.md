@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.9.4](https://github.com/bacula-web/bacula-web/compare/v9.9.3...v9.9.4) (2026-01-30)
+
+
+### chore
+
+* release 9.9.4 ([490ee7b](https://github.com/bacula-web/bacula-web/commit/490ee7b9b3e843e0c3f1f6c431542b23886c344a))
+
 ## [9.9.3](https://github.com/bacula-web/bacula-web/compare/v9.9.2...v9.9.3) (2026-01-04)
 
 
