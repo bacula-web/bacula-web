@@ -120,6 +120,11 @@ const config = {
                         label: 'Docs',
                     },
                     {
+                        to: '/community',
+                        label: 'Community',
+                        position: 'left'
+                    },
+                    {
                         to: '/blog',
                         label: 'Blog',
                         position: 'left'
