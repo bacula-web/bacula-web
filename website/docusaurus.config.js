@@ -160,6 +160,10 @@ const config = {
                         title: 'Community',
                         items: [
                             {
+                                label: 'Community page',
+                                href: '/community',
+                            },
+                            {
                                 label: 'GitHub discussions',
                                 href: 'https://github.com/bacula-web/bacula-web/discussions',
                             },
