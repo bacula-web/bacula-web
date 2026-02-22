@@ -168,6 +168,10 @@ const config = {
                                 href: 'https://github.com/bacula-web/bacula-web/discussions',
                             },
                             {
+                                label: 'Youtube',
+                                'href': 'https://www.youtube.com/@Bacula-Web'
+                            },
+                            {
                                 label: 'X (Twitter)',
                                 href: 'https://twitter.com/BaculaWeb',
                             }
