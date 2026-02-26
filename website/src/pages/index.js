@@ -18,18 +18,24 @@ function HomepageHeader() {
     return (
         <header className={clsx('hero hero--primary', styles.heroBanner)}>
             <div className="container">
-                <img alt="bacula-web dashboard" id="hero-img" src={BaculaWebImageUrl}/>
-                <Heading as="h1" className="hero__title">
-                    {siteConfig.title}
-                </Heading>
-                <p className="hero__subtitle text--center">{siteConfig.tagline}</p>
-                <div className={styles.buttons}>
-                    <Link
-                        className="button button--secondary button--lg"
-                        to="https://www.bacula-web.org/docs">
-                        Learn more
-                    </Link>
+
+                <div className="hero hero--primary">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col col--5">
+                                <Heading as="h1" className="hero__title text--break">
+                                    {siteConfig.title} - {siteConfig.tagline}
+                                </Heading>
+                            </div>
+                            <div className="col col--7">
+                                <img src={BaculaWebImageUrl} id="hero-img" alt="Bacula-Web dashboard"/>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
+
             </div>
         </header>
     );
@@ -62,6 +68,15 @@ function HomepageBody() {
                                 driven, Bacula-Web offers a more accessible way to visualize Bacula activities and
                                 system health.
                             </p>
+
+                            <div className={styles.buttons} text--center>
+                                <Link
+                                    className="button button--primary button--lg"
+                                    to="/docs">
+                                    Learn more
+                                </Link>
+                            </div>
+
                         </div>
                     </div>
                 </div>
