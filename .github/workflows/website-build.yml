@@ -10,6 +10,13 @@ on:
       - dev-**
     paths:
       - 'website/**'
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      - 'website/**'
 
 defaults:
   run:
