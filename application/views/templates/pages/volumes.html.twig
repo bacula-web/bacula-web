@@ -46,7 +46,9 @@
                                         n/a
                                     {% endif %}
                                 </td>
-                                <td>{{ (volume.lastwritten != '0000-00-00 00:00:00') ? volume.lastwritten|date(app_datetime_format) : 'n/a' }}</td>
+                                <td>
+                                    {{ (volume.lastwritten != '0000-00-00 00:00:00' and volume.lastwritten is not null) ? volume.lastwritten|date(app_datetime_format) : 'n/a' }}
+                                </td>
                                 <td title="{{ volume.status }}">
                                     <i class="fa {{ volume.statusicon }}"></i>
                                 </td>
@@ -69,6 +71,7 @@
             </div>
 
             <div class="col-2">
+
                 <!-- Options -->
                 <form class="" action="{{ url_for('volumes') }}" method="post">
                     <!-- Pools -->

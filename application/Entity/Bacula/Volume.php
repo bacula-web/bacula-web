@@ -67,11 +67,17 @@ class Volume
     #[ORM\Column(name: "PoolId", type: "integer")]
     private int $poolId;
 
+    /**
+     * @var string|null
+     */
     #[ORM\Column(name: "FirstWritten", type: "string")]
-    private string $firstwritten;
+    private ?string $firstwritten;
 
+    /**
+     * @var string|null
+     */
     #[ORM\Column(name: "LastWritten", type: "string")]
-    private string $lastwritten;
+    private ?string $lastwritten;
 
     #[ORM\Column(name: 'VolMounts', type: 'integer')]
     private int $volmounts;
@@ -214,11 +220,11 @@ class Volume
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLastwritten(): string
+    public function getLastwritten(): ?string
     {
-        return $this->lastwritten;
+        return $this->lastwritten ?? null;
     }
 
     /**
@@ -239,6 +245,15 @@ class Volume
 
     public function getExpire(): int
     {
+        if (is_null($this->firstwritten || is_null($this->lastwritten))) {
+            return 0;
+        }
+
+        if ($this->lastwritten === '0000-00-00 00:00:00')
+        {
+            return 0;
+        }
+
         if ($this->status === 'Full' || $this->status === 'Used') {
             $this->expire = strtotime($this->lastwritten) + $this->volretention;
         }
