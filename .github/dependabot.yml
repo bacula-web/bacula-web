@@ -1,0 +1,23 @@
+# Enable version update for Composer
+version: 2
+updates:
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/"
+    schedule:
+      interval: "daily"
+
+# Enable version update for npm
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/website/"
+    schedule:
+      interval: "daily"
+
+# Enable version update for Docker
+version: 2
+updates:
+  - package-ecosystem: "docker" # See documentation for possible values
+    directory: "/docker/"
+    schedule:
+      interval: "daily"
