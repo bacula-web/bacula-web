@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.9.5](https://github.com/bacula-web/bacula-web/compare/v9.9.4...v9.9.5) (2026-03-04)
+
+
+### 🐛 Bug Fixes
+
+* php error when volume lastwritten is null ([#278](https://github.com/bacula-web/bacula-web/issues/278)) ([e127773](https://github.com/bacula-web/bacula-web/commit/e12777387593157c5687e5e9e84284c9b7a39209)), closes [#277](https://github.com/bacula-web/bacula-web/issues/277)
+
+
+### 📘 Documentation
+
+* add instructions for shared web server ([e2be119](https://github.com/bacula-web/bacula-web/commit/e2be1190735051677aa798b33dc7c2250c67cd05)), closes [#272](https://github.com/bacula-web/bacula-web/issues/272)
+
 ## [9.9.4](https://github.com/bacula-web/bacula-web/compare/v9.9.3...v9.9.4) (2026-01-30)
 
 
