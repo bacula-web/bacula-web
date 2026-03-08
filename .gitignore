@@ -18,6 +18,7 @@ public/icons/*
 
 # IDE & tools
 .idea
+.ddev
 .php-cs-fixer.cache
 .phpunit.result.cache
 
