@@ -1,7 +1,9 @@
 ---
 title: "Project status update"
 date: Wed, 08 Apr 2026 07:45:46 +0200
-last_update: Wed, 08 Apr 2026 08:43:16 +0200
+last_update:
+  date: Wed, 08 Apr 2026 08:43:16 +0200
+  author: dfranco
 description: "Bacula-Web project - status update"
 tags:
   - news
