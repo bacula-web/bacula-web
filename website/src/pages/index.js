@@ -53,20 +53,20 @@ function HomepageBody() {
                         <div className="text--center">
                             <Heading as="h2" className="margin-top--xl">What is Bacula-Web ?</Heading>
                             <p>
-                                Bacula-Web is an open-source, web-based tool designed to provide a user-friendly
-                                graphical
-                                interface for managing and monitoring <a href="https://www.bacula.org/"
-                                                                         target="_blank">Bacula</a> backups.
-                                <br/><br/>
-                                <a href="https://www.bacula.org/" target="_blank">Bacula</a> is a powerful, open-source
-                                backup solution for
-                                networks that allows the backup,
-                                recovery, and verification of data across a range of computers and devices.
-                                <br/><br/>
-                                While <a href="https://www.bacula.org/" target="_blank">Bacula</a> itself is
-                                command-line
-                                driven, Bacula-Web offers a more accessible way to visualize Bacula activities and
-                                system health.
+                                Bacula-Web is an open-source web interface built to help you monitor and understand your
+                                Bacula backups more easily.
+
+                                Bacula itself is a powerful backup solution. It can handle complex infrastructures,
+                                multiple devices, and large volumes of data. But it’s primarily command-line driven,
+                                which means monitoring often requires digging through logs and running manual checks.
+
+                                Bacula-Web gives you a clearer view.
+
+                                It turns raw backup data into structured dashboards, reports, and visual insights so you
+                                can quickly see what’s running, what failed, and what needs attention.
+
+
+                                <b>No change to your Bacula setup. Just better visibility into what’s already there !</b>
                             </p>
 
                             <div className={styles.buttons} text--center>
@@ -86,56 +86,147 @@ function HomepageBody() {
                 <div className="row">
                     <div className={clsx('col col--8 col--offset-2')}>
                         <Heading as="h2">
+                            Why backup visibility matters ?
+                        </Heading>
+
+                        <p>
+                            Backups are critical infrastructure. But a backup system is only reliable if you can trust
+                            it and that trust comes from visibility.
+                        </p>
+                        <p>
+                            In many environments, these problems often go unnoticed until the moment a restore is
+                            needed.
+                        </p>
+                        <p>
+                            And that’s when it’s too late. Monitoring isn’t just about checking if a job ran
+                            successfuly.
+                        </p>
+                        <p>
+                            It’s about understanding patterns, spotting anomalies, and identifying weak points before
+                            they turn into incidents.
+                        </p>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div className="row">
+                    <div className={clsx('col col--8 col--offset-2')}>
+                        <Heading as="h2">
+                            Bacula-Web gives you that visibility.
+                        </Heading>
+                        <p>
+                            It helps you:
+                        </p>
+
+                        <ul>
+                            <li>Detect failed or incomplete jobs early</li>
+                            <li>Monitor storage usage trends</li>
+                            <li>Track execution times and performance</li>
+                            <li>Stay informed without constant manual checks</li>
+                        </ul>
+
+                        <p>Because when recovery day comes, you shouldn’t be guessing.</p>
+
+                        <p><b>You should already know your Bacula backups are solid !</b></p>
+
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div className="row">
+                    <div className={clsx('col col--8 col--offset-2')}>
+                        <Heading as="h2">
                             Key Bacula-Web features
                         </Heading>
 
                         <ul>
                             <li>
                                 <p className="text--uppercase"><b>Dashboard Overview</b></p>
-                                <p>Displays real-time information on the status of backup jobs, job history, volume
-                                    usage, and system health metrics, giving administrators a comprehensive view of
-                                    the backup environment at a glance.</p>
+                                <p>Get a clear, real-time overview of your backup environment.
+                                    See the status of your jobs, recent history, volume usage, and system
+                                    health <b>at a glance</b>.
+                                    No need to jump between logs or run multiple commands.
+                                </p>
                             </li>
                             <li>
                                 <p className="text--uppercase"><b>Backup Job Monitoring</b></p>
-                                <p>Allows users to track the progress and results of both active and completed backup
-                                    jobs, including detailed logs, errors, and backup statistics.</p>
+                                <p>
+                                    Track active and completed jobs with full visibility and details.
+                                    Quickly identify failed jobs, review detailed logs, and check execution
+                                    statistics.
+                                    When something goes wrong, <b>you know exactly where to look</b>.
+                                </p>
                             </li>
                             <li>
                                 <p className="text--uppercase"><b>Job and Volume Reports</b></p>
-                                <p>Offers a wide range of reports, such as job status (successful, failed, etc.),
-                                    backup job execution time, and detailed volume information (e.g., available
-                                    capacity, usage).
+                                <p>
+                                    <b>Access structured reports on job status</b>, execution time, and storage
+                                    usage.
+                                    Understand which jobs succeed, which fail, how long they run, and how your
+                                    volumes are being used including available capacity and usage trends.
                                 </p>
                             </li>
                             <li>
                                 <p className="text--uppercase"><b>User-friendly Interface</b></p>
-                                <p>Makes it easier for administrators to navigate and manage Bacula’s features without
-                                    requiring deep knowledge of command-line operations.</p>
+                                <p>
+                                    Bacula is powerful, but it was built for the terminal.
+
+                                    Bacula-Web provides a clean, browser-based interface that <b>makes
+                                    monitoring easier</b> without changing how Bacula works underneath.
+                                </p>
                             </li>
                             <li>
                                 <p className="text--uppercase"><b>Multi-language Support</b></p>
-                                <p>Bacula-Web supports 15 languages, making it accessible to a global user base.</p>
+                                <p>Available in more than 15 languages, Bacula-Web is accessible to teams around
+                                    the world.</p>
                             </li>
                             <li>
                                 <p className="text--uppercase"><b>Customizable Views</b></p>
-                                <p>Users can customize the interface to show relevant information and statistics based
-                                    on their needs.</p>
+                                <p>
+                                    <b>Focus on what matters to you.</b> Customize dashboards and reports to
+                                    display the information relevant to your infrastructure and workflow.
+                                </p>
                             </li>
                             <li>
                                 <p className="text--uppercase"><b>Support any Bacula catalog Database</b></p>
-                                <p>Bacula-Web retrieves data from Bacula’s director database, compatible with MySQL/MariaDB,
+                                <p>Bacula-Web retrieves data from Bacula’s director database, compatible with
+                                    MySQL/MariaDB,
                                     PostgreSQL, and SQLite, and provides comprehensive reports based on it.</p>
                             </li>
                             <li>
                                 <p className="text--uppercase"><b>Native authentication</b></p>
-                                <p>Bacula-Web includes a simple user authentication system that requires users to log
-                                    in before accessing the interface. This feature provides an additional layer of
-                                    security to ensure that only authorized users can view or manage Bacula backup
-                                    data.</p>
-                            </li>
+                                <p>
+                                    Bacula-Web connects directly to the Bacula Director database.
 
+                                    It supports MySQL / MariaDB, PostgreSQL and SQLite and generates detailed
+                                    reports based on your existing catalog data.
+
+                                    No data duplication. <b>No complex integration</b>.
+                                </p>
+                            </li>
+                            <li>
+                                <p className="text--uppercase"><b>Native authentication</b></p>
+                                <p>
+                                    Access is protected through built-in user authentication.
+
+                                    Only authorized users can log in and view backup data, adding <b>an extra
+                                    layer of security</b> to your monitoring setup and mostly to your backed-up
+                                    data !
+                                </p>
+                            </li>
                         </ul>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div className="row">
+                    <div className={clsx('col col--8 col--offset-2')}>
+                        <Heading as="h2">
+                            Built for the community & Designed to run anywhere
+                        </Heading>
                     </div>
                 </div>
             </div>
@@ -165,7 +256,20 @@ function HomepageSponsors() {
                 </div>
 
                 <p>
-                    Again, a big THANKS to the sponsors listed above for their support on Open Source projects! ❤️
+                    Bacula-Web is supported by companies that generously provide infrastructure and services to help
+                    sustain the project. <br/><br/>
+
+                    Their support allows the project to remain fully open source and freely accessible to the
+                    community. <br/><br/>
+
+                    We’re grateful for their contribution ❤️
+                    <div className={styles.buttons} text--center>
+                        <Link
+                            className="button button--primary button--lg"
+                            to="/docs/contribute/#donate-or-sponsor">
+                            Learn how to sponsor
+                        </Link>
+                    </div>
                 </p>
             </div>
         </section>
@@ -182,7 +286,18 @@ export default function Home() {
             <HomepageBody/>
             <main>
                 <HomepageFeatures/>
+
+                <div className={styles.buttons} item shadow--tl text--center>
+                    <Link
+                        className="button button--success button--outline button--lg"
+                        to="/docs/install/getting-started/">
+                        Get it running quickly and start monitoring right away
+                    </Link>
+                </div>
             </main>
+
+            <hr/>
+
             <HomepageSponsors/>
         </Layout>
     );

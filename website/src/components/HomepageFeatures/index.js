@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
+import Link from "@docusaurus/Link";
 
 const FeatureList = [
     {
@@ -8,24 +9,28 @@ const FeatureList = [
         Svg: require('@site/static/img/undraw_open_source.svg').default,
         description: (
             <>
-                Bacula-Web is free software released under the term of GPL license
+                Bacula-Web is fully open source and released under the GPL version 2 license. <br/><br/>
+                You can use it, modify it, and contribute to it freely. <br/><br/>
+                No hidden layers. No proprietary lock-in. And it will remain like this FOREVER (no Premium plan in the future, I promise).
             </>
         ),
     },
     {
-        title: 'Advantages',
+        title: 'Why teams choose Bacula-Web',
         Svg: require('@site/static/img/undraw_feeling_proud_qne1.svg').default,
         description: (
             <>
                 <ul>
-                    <li>Open source</li>
-                    <li>User friendly</li>
-                    <li>Translated in more than 15 languages</li>
-                    <li>Easy to setup and maintain</li>
-                    <li>100% web based</li>
-                    <li>Safe and secure</li>
-                    <li>Do not alter your Bacula catalog</li>
+                    <li>Clean, responsive and user-friendly interface</li>
+                    <li>Available in more than 15+ languages</li>
+                    <li>Easy to install and maintain</li>
+                    <li>100% web-based</li>
+                    <li>Secure access with user authentication</li>
+                    <li>Does not modify your Bacula catalog</li>
+                    <li>Monitor several Bacula directory from one place</li>
                 </ul>
+
+                <p>Bacula-Web works alongside your existing setup. It adds visibility, not complexity.</p>
             </>
         ),
     },
@@ -34,22 +39,18 @@ const FeatureList = [
         Svg: require('@site/static/img/undraw_applications_vaxx.svg').default,
         description: (
             <>
-                Bacula-Web can be installed on any rpm or deb based OS such as
+                <p>Bacula-Web is lightweight and flexible. You can install it on:</p>
+
                 <ul>
-                    <li>any rpm or deb based Linux distribution</li>
-                    <li>Any *BSD like FreeBSD</li>
-                    <li>Gentoo</li>
+                    <li><b>Any</b> Linux distribution or *BSD like FreeBSD</li>
+                    <li>macOs</li>
                 </ul>
 
-                Using Nginx, Apache or Lighttpd web server.
+                It can be run using the following web server : Nginx, Apache and Lighttpd.<br/><br/>
 
-                You can also run it in a &nbsp;
-                <a
-                    href={'https://hub.docker.com/r/baculaweb/bacula-web'}
-                    target={'_blank'} rel="noopener noreferrer"
-                >
-                    Docker container
-                </a>
+                Or you can deploy it inside a <a href="https://hub.docker.com/r/baculaweb/bacula-web" target="_blank">Docker container</a>. <br/><br/>
+
+                No exotic requirements. No heavy dependencies.
             </>
         ),
     },
@@ -58,23 +59,34 @@ const FeatureList = [
         Svg: require('@site/static/img/undraw_different_love_a-3-rg.svg').default,
         description: (
             <>
-                Bugs and feature requests can be created on the <a target={'_blank'} href={'https://github.com/bacula-web/bacula-web/issues'}>GitHub project</a>.
+                Found a bug? Have a feature request? <br/>
 
-                Please have a look at the <a target={'_blank'} href={'https://www.bacula-web.org/docs/gethelp/support'}>bugs and features request guideline</a> first.
+                You can open an issue directly on the <a href={'https://github.com/bacula-web/bacula-web/issues'} target={"_blank"}>GitHub project</a>.<br/><br/>
+
+                <i>Before submitting, please review the <a href={'/docs/contribute/reporting-issue-guideline'} target={'_blank'}>contribution and reporting guidelines</a> to help us keep things organized and efficient.</i>
             </>
         )
     },
     {
-        title: 'Community',
+        title: 'Join the Community',
         Svg: require('@site/static/img/undraw_love_it_heart_dxlp.svg').default,
         description: (
             <>
-                <p>Don't be shy, start a discussion or ask a question on <a href={'https://github.com/bacula-web/bacula-web/discussions'}>Bacula-Web GitHub project</a></p>
+                Bacula-Web is driven by its users. Start a discussion, ask a question, or <a href={"https://github.com/bacula-web/bacula-web/discussions"}>share feedback on GitHub.</a> <br/><br/>
 
-                <p>
-                    You can follow Bacula-Web project on <a href={'https://github.com/bacula-web/bacula-web'}>GitHub</a>, or <a
-                    href={'https://twitter.com/BaculaWeb'}>X (Twitter)</a>
-                </p>
+                You can also follow the project on :
+
+                <ul>
+                    <li>
+                        <a href={'https://github.com/bacula-web/bacula-web'}>GitHub</a>
+                    </li>
+                    <li>
+                        <a href={'https://www.youtube.com/@Bacula-Web'}>Youtube</a>
+                    </li>
+                    <li>
+                        <a href={'https://x.com/BaculaWeb'}>X (formerly Twitter)</a>
+                    </li>
+                </ul>
             </>
         )
     },
@@ -83,10 +95,10 @@ const FeatureList = [
         Svg: require('@site/static/img/undraw_collaborators_re_hont.svg').default,
         description: (
             <>
-                <p>
-                We accept any contributions from the community, for further details, please check the <a href={'https://www.bacula-web.org/docs/contribute/'}
-                                                                                                         target={'_blank'}>contributor guide</a>
-                </p>
+                We welcome contributions from the community. Whether it’s code, documentation improvements, translations, or ideas, every contribution helps move the project forward.<br/><br/>
+
+                If you’d like to contribute, please check the <a href={'/docs/contribute/'}>contributor guide</a> to get started.<br/><br/>
+
             </>
         )
     }
@@ -125,7 +137,6 @@ export default function HomepageFeatures() {
                         <Feature key={idx} {...props} />
                     ))}
                 </div>
-                <Line></Line>
             </div>
         </section>
     );
