@@ -13,6 +13,8 @@ authors: dfranco
 After a long period of inactivity on this project, I would like to share what the current status of the project is (see [#232](https://github.com/bacula-web/bacula-web/issues/232#issuecomment-4047442040)),
 why the project activity was a bit low over the last couple of months, and what's coming in the next couple of weeks or months.
 
+<!-- truncate -->
+
 ## Current status
 
 As of today, the latest release ([9.9.5](https://github.com/bacula-web/bacula-web/releases/tag/v9.9.5)) was published in March 2026 and included only a fix for the issue ([#278](https://github.com/bacula-web/bacula-web/issues/278)),
