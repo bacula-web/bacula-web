@@ -1,4 +1,4 @@
-FROM php:8.5.4-apache
+FROM php:8.5.5-apache
 
 ARG ENV=production
 ARG PHP_TZ=UTC
