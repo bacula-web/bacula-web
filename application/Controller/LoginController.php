@@ -22,26 +22,29 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Core\App\UserAuth;
-use Core\Controller\AbstractController;
 use Core\Exception\ValidationException;
 use Doctrine\ORM\NonUniqueResultException;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Psr7\Response;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request as Request;
+use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+
 class LoginController extends AbstractController
 {
     /**
-     * @param Response $response
-     * @param UserAuth $userAuth
      * @return ResponseInterface
      */
-    public function signOut(Response $response, UserAuth $userAuth): ResponseInterface
+    #[Route("/signout", name: "signout")]
+    public function signOut(/* Response $response, UserAuth $userAuth */): Response
     {
+        return new Response('signout');
+
         $userAuth->destroySession($this->session);
         $this->session->getFlash()->add('auth_info', 'Successfully logged out');
         $this->session->save();
@@ -52,16 +55,17 @@ class LoginController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws NonUniqueResultException
      */
-    public function index(Request $request, Response $response): ResponseInterface
+    #[Route("/login")]
+    public function index(/* Request $request, Response $response */): Response
     {
+        return new Response('login');
+
         return $this->view->render($response, 'pages/login.html.twig', [
             'username' => $this->session->getFlash()->get('username'),
             'last_auth_error' => $this->session->getFlash()->get('last_auth_error'),
@@ -70,14 +74,14 @@ class LoginController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param UserAuth $userAuth
      * @return ResponseInterface
      * @throws NonUniqueResultException
      */
-    public function login(Request $request, Response $response, UserAuth $userAuth): ResponseInterface
+    #[Route("/login", methods: ["POST"])]
+    public function login(/* Request $request, Response $response, UserAuth $userAuth */): Response
     {
+        return new Response('POST login');
+
         $postData = $request->getParsedBody();
 
         $loginValidator = new Validator($postData, ['username', 'password']);

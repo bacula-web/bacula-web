@@ -30,7 +30,7 @@ use App\Entity\Bacula\Repository\ClientRepository;
 use App\Entity\Bacula\Repository\JobRepository;
 use App\Entity\Bacula\Repository\PoolRepository;
 use App\Entity\Bacula\Version;
-use Core\Controller\AbstractController;
+//use Core\Controller\AbstractController;
 use Core\Db\DBPagination;
 use Core\Exception\ConfigFileException;
 use Core\Exception\ValidationException;
@@ -38,31 +38,34 @@ use Core\Helpers\Sanitizer;
 use DI\NotFoundException;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request as Request;
+use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use function Core\Helpers\getRequestParams;
 
 class JobController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param Response $response
-     * @return ResponseInterface
      * @throws ConfigFileException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws Exception
      */
-    public function index(Request $request, Response $response): ResponseInterface
+
+    #[Route('/jobs', name: 'jobs')]
+    public function index(): Response
     {
+        return new Response('jobs');
+
         $em = $this->managerRegistry->getManager('bacula');
 
         /**
@@ -320,8 +323,12 @@ class JobController extends AbstractController
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function showLogs(Response $response, Request $request, int $id): ResponseInterface
+
+    #[Route("/joblog", name: "joblog")]
+    public function showLogs(/*Response $response, Request $request, int $id*/): Response
     {
+        return new Response('joblog');
+
         $repository = $this
             ->managerRegistry->getManager('bacula')
             ->getRepository(Job::class);
@@ -348,17 +355,17 @@ class JobController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
      * @param int $id Job id
-     * @return ResponseInterface
+     * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws NotFoundException
      */
-    public function showFiles(Request $request, Response $response, int $id): ResponseInterface
+    #[Route("/job/{id}/files", name: "jobfiles")]
+    public function showFiles(/*Request $request, Response $response, int $id*/): Response
     {
+        return new Response('show files');
+
         $filename = '';
 
         if ($request->getMethod() === 'POST') {

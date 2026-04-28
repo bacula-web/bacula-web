@@ -1,5 +1,13 @@
 <?php
 
+use App\Kernel;
+
+require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+
+return static function (array $context) {
+    return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+};
+
 /**
  * Copyright (C) 2010-present Davide Franco
  *
@@ -17,6 +25,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+/*
 declare(strict_types=1);
 
 use App\Controller\BackupJobController;
@@ -58,11 +67,14 @@ require_once __DIR__ . '/../core/bootstrap.php';
 $container = require dirname(__DIR__) . '/config/container/container.php';
 $app = Bridge::create($container);
 
+*/
+
 /**
  * Catch ConfigFileException before Slim's exception handler
  * This avoids having an "Uncaught exception" ugly error if
  * config.php is missing.
  */
+/*
 try {
     $basePath = $container->get(Config::class)->get('basepath', null);
     if (!is_null($basePath)) {
@@ -133,3 +145,4 @@ $errorHandler = $errorMiddleware->getDefaultErrorHandler();
 $errorHandler->registerErrorRenderer('text/html', ExceptionRenderer::class);
 
 $app->run();
+*/

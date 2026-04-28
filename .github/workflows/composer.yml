@@ -26,15 +26,15 @@ jobs:
     - uses: php-actions/composer@v6
       with:
         php_version: "${{ matrix.version }}"
-        php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext openssl pdo sqlite3 posix
+        php_extensions: pdo_mysql pdo_sqlite pdo_pgsql pdo sqlite3
         command: validate
         #args: --strict
 
     - uses: php-actions/composer@v6
       with:
         php_version: "${{ matrix.version }}"
-        php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext
-        dev: no
+        php_extensions: pdo_mysql pdo_sqlite pdo_pgsql pdo sqlite3
+        dev: yes
         command: install
 
     - uses: php-actions/composer@v6
