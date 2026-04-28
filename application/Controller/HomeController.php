@@ -23,47 +23,39 @@ namespace App\Controller;
 use App\Table\JobTable;
 use App\Table\PoolTable;
 use App\Table\VolumeTable;
-use Core\Controller\AbstractController;
 use Core\Db\DatabaseFactory;
+use Core\Exception\ConfigFileException;
 use Core\Exception\ValidationException;
 use Exception;
-use Psr\Http\Message\ResponseInterface;
-use Slim\Routing\RouteContext;
 use Core\Db\CDBQuery;
 use Core\Exception\AppException;
 use Core\Graph\Chart;
 use Core\Utils\CUtils;
 use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 use Valitron\Validator;
+
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request as Request;
+use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param JobTable $jobTable
-     * @param PoolTable $poolTable
-     * @param VolumeTable $volumeTable
-     * @return ResponseInterface
      * @throws AppException
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws Exception
+     * @throws ConfigFileException
      */
-    public function prepare(
+    #[Route('/', name: 'home')]
+    public function index(
         Request $request,
-        Response $response,
-        JobTable $jobTable,
+/*        JobTable $jobTable,
         PoolTable $poolTable,
-        VolumeTable $volumeTable
-    ): ResponseInterface {
+        VolumeTable $volumeTable */
+    ): Response {
+
+        return new Response('homepage');
+
         $tplData = [];
 
         $routeContext = RouteContext::fromRequest($request);

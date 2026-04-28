@@ -22,33 +22,29 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Core\User;
-use Core\Controller\AbstractController;
 use Core\Exception\AppException;
 use Core\Exception\ValidationException;
 use Core\Helpers\Sanitizer;
 use Doctrine\ORM\Exception\ORMException;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
-use function PHPUnit\Framework\isInstanceOf;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request as Request;
+use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SettingsController extends AbstractController
 {
     /**
      * @param Request $request
      * @param Response $response
-     * @return ResponseInterface
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @return Response
      */
-    public function index(Request $request, Response $response): ResponseInterface
+    #[Route("/settings", name: "settings", methods: ["POST"])]
+    public function index(/*Request $request, Response $response*/): Response
     {
+        return new Response('Settings');
+
         $tplData = [];
 
         $tplData['config_datetime_format'] = $this->config->get('datetime_format', 'Y-m-d H:i:s (default value)');
@@ -136,8 +132,11 @@ class SettingsController extends AbstractController
      * @throws AppException
      * @throws ORMException
      */
-    public function addUser(Request $request, Response $response): ResponseInterface
+    #[Route("/settings", name: "adduser", methods: ["POST"])]
+    public function addUser(/*Request $request, Response $response*/): Response
     {
+        return new Response("Create user");
+
         $userRepository = $this->managerRegistry->getManager()->getRepository(User::class);
         $postData = $request->getParsedBody();
 

@@ -22,23 +22,22 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Bacula\Pool;
-use Core\Controller\AbstractController;
 use Core\Utils\CUtils;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Psr7\Response;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request as Request;
+use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 class PoolController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param Response $response
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
@@ -46,8 +45,10 @@ class PoolController extends AbstractController
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function prepare(Request $request, Response $response): ResponseInterface
+    #[Route("/pools", name: "pools")]
+    public function index(/*Request $request, Response $response*/): Response
     {
+        return new Response('Pools');
         /**
          * @var EntityManager $em
          */

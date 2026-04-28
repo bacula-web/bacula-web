@@ -25,15 +25,11 @@ use App\Entity\Bacula\Job;
 use App\Entity\Bacula\JobMedia;
 use App\Entity\Bacula\Pool;
 use App\Entity\Bacula\Volume;
-use Core\Controller\AbstractController;
 use Core\Db\DBPagination;
 use Core\Exception\ValidationException;
 use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Query\Expr\Join;
 use Exception;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Psr7\Response;
 use Slim\Exception\HttpNotFoundException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -42,19 +38,25 @@ use Valitron\Validator;
 
 use function Core\Helpers\getRequestParams;
 
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request as Request;
+use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 class VolumesController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param Response $response
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws Exception
      */
-    public function index(Request $request, Response $response): ResponseInterface
+    #[Route("/volumes", name: "volumes")]
+    public function index(/*Request $request, Response $response*/): Response
     {
+        return new Response('Volumes');
+
         $em = $this->managerRegistry->getManager('bacula');
 
         $volumeOrderBy = 'v.name';
@@ -146,8 +148,11 @@ class VolumesController extends AbstractController
      * @throws SyntaxError
      * @throws NotSupported
      */
-    public function show(Request $request, Response $response): ResponseInterface
+    #[Route("/volume/{id}", name: "volume_detail")]
+    public function show(/* Request $request, Response $response */): Response
     {
+        return new Response('Volume detail');
+
         $requestData = $request->getAttributes();
         $volumeId = (int) $requestData['id'];
 

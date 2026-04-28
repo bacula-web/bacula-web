@@ -23,28 +23,31 @@ namespace App\Controller;
 
 use App\Entity\Core\User;
 use Core\App\UserAuth;
-use Core\Controller\AbstractController;
 use Core\Exception\ValidationException;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Routing\RouteContext;
+
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request as Request;
+use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 class UserController extends AbstractController
 {
     /**
-     * @param Response $response
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function index(Response $response): ResponseInterface
+    #[Route("/user", name: "user.profile")]
+    public function index(/* Response $response */): Response
     {
+        return new Response('user.profile');
+
         $user = $this->managerRegistry
             ->getManager()
             ->getRepository(User::class)
@@ -58,27 +61,27 @@ class UserController extends AbstractController
     }
 
     /**
-     * @param Response $response
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function passwordReset(Response $response): ResponseInterface
+    #[Route("/user/reset-password", name: "user.password-reset")]
+    public function passwordReset(): Response
     {
+        return new Response('User password reset');
+
         return $this->view->render($response, 'pages/user-passsword-reset.html.twig');
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param UserAuth $userAuth
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function attemptPasswordReset(Request $request, Response $response, UserAuth $userAuth): ResponseInterface
+    #[Route("/user/reset-password", name: "user.attempt-password-reset", methods: ["POST"])]
+    public function attemptPasswordReset(/* Request $request, Response $response, UserAuth $userAuth */): Response
     {
         $em = $this->managerRegistry->getManager();
         $repository = $em->getRepository(User::class);

@@ -21,7 +21,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Core\Controller\AbstractController;
 use Core\Db\DatabaseFactory;
 use App\Table\ClientTable;
 use App\Table\JobTable;
@@ -32,24 +31,30 @@ use App\Table\FileSetTable;
 use Core\Utils\CUtils;
 use Exception;
 use PDOException;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
+
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request as Request;
+use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 class DirectorController extends AbstractController
 {
     /**
-     * @param Response $response
      * @return ResponseInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws Exception
      */
-    public function index(Response $response): ResponseInterface
+    #[Route("/directors", name: "directors")]
+    public function index(): Response
     {
+        return new Response('Bacula Directors');
+
         $tplData = [];
 
         // Save catalog_id from user session

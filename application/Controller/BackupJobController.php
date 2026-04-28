@@ -22,7 +22,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Table\JobTable;
-use Core\Controller\AbstractController;
 use Core\Db\CDBQuery;
 use Core\Db\DatabaseFactory;
 use Core\Exception\AppException;
@@ -33,20 +32,20 @@ use Core\Utils\DateTimeUtil;
 use Core\Helpers\Sanitizer;
 use DateTimeImmutable;
 use Exception;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use GuzzleHttp\Psr7\Response;
+
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request as Request;
+use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 class BackupJobController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param Response $response
-     * @param JobTable $jobTable
      * @return ResponseInterface
      * @throws AppException
      * @throws LoaderError
@@ -54,8 +53,11 @@ class BackupJobController extends AbstractController
      * @throws SyntaxError
      * @throws Exception
      */
-    public function index(Request $request, Response $response, JobTable $jobTable): ResponseInterface
+    #[Route("/backupjob", name: "backupjob")]
+    public function index(/* Request $request, Response $response, JobTable $jobTable */): Response
     {
+        return new Response('backup job');
+
         $tplData = [];
         $currentDateTime = DatabaseFactory::getDatabase($this->session->get('catalog_id'))->getServerTimestamp();
         $interval[1] = $currentDateTime;

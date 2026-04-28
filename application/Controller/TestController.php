@@ -20,30 +20,33 @@
 
 namespace App\Controller;
 
-use Core\Controller\AbstractController;
 use Core\Db\ManagerRegistry;
 use Core\Exception\AppException;
-use GuzzleHttp\Psr7\Response;
 use PDO;
 use Core\Graph\Chart;
-use Psr\Http\Message\ResponseInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request as Request;
+use Symfony\Component\HttpFoundation\Response as Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 class TestController extends AbstractController
 {
     /**
-     * @param Response $response
-     * @param ManagerRegistry $managerRegistry
      * @return ResponseInterface
      * @throws AppException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function index(Response $response, ManagerRegistry $managerRegistry): ResponseInterface
+    #[Route("/test", name: "test")]
+    public function index(/*Response $response, ManagerRegistry $managerRegistry*/): Response
     {
+        return new Response('Test page');
+
         $tplData = [];
 
         $em = $managerRegistry->getManager('bacula');
