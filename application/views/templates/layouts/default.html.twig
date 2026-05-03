@@ -3,7 +3,7 @@
 
 <head>
     {{ include("partials/html-head.html.twig") }}
-    <title>{{ app_name }} - {%  block title %}{% endblock %}</title>
+    <title>{# app_name #} - {%  block title %}{% endblock %}</title>
 </head>
 
 <body>
@@ -11,7 +11,7 @@
 {{ include("partials/navbar.html.twig") }}
 
 <div class="container-fluid">
-    {{ include('partials/flash.html.twig') }}
+    {# include('partials/flash.html.twig') #}
 </div>
 
 {% block body %}{% endblock %}

@@ -26,6 +26,10 @@ use Core\Utils\CUtils;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -37,24 +41,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PoolController extends AbstractController
 {
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->entityManager = $doctrine->getManager('bacula');
+    }
+
     /**
-     * @return ResponseInterface
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @return Response
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
     #[Route("/pools", name: "pools")]
     public function index(/*Request $request, Response $response*/): Response
     {
-        return new Response('Pools');
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->managerRegistry->getManager('bacula');
-        $queryBuilder = $em->createQueryBuilder();
-
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+        
         $pools = $queryBuilder
             ->select('p', 'v')
             ->from(Pool::class, 'p')
@@ -66,13 +69,13 @@ class PoolController extends AbstractController
         $dql = 'SELECT SUM(m.volbytes) as sumbytes FROM App\Entity\Bacula\Volume m WHERE m.poolId = :poolid';
 
         foreach ($pools as $id => $pool) {
-            $query = $em->createQuery($dql);
+            $query = $this->entityManager->createQuery($dql);
             $query->setParameter('poolid', $pool['id']);
             $totalBytes = $query->getSingleScalarResult();
             $pools[$id]['total_bytes'] = CUtils::GetHumanSize($totalBytes);
         }
 
-        return $this->view->render($response, 'pages/pools.html.twig', [
+        return $this->render('pages/pools.html.twig', [
             'pools' => $pools
         ]);
     }

@@ -26,6 +26,8 @@
                                 <td class="text-center">{{ pool.numvols }}</td>
                                 <td class="text-right">{{ pool.total_bytes }}</td>
                                 <td class="text-center">
+                                    <a href="{{ path('volumes') }}">Les volumes</a>
+{#
                                     <form method="post" action="{{ url_for('volumes') }}">
                                         <input type="hidden" name="filter_pool_id" value="{{ pool.id }}" />
                                         <button class="btn btn-sm btn-primary" type="submit"
@@ -33,6 +35,7 @@
                                         >{{ 'Show Volumes'|trans }}</button>
                                         {{ csrf|raw }}
                                     </form>
+#}
                                 </td>
                             </tr>
                         {% endfor %}
