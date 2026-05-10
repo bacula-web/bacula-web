@@ -11,40 +11,36 @@
         <div class="card border-dark mb-3">
             <div class="card-header">{{ 'Report options'|trans }}</div>
             <div class="card-body">
-                <form method="post" action="{{ url_for('backupjob') }}" class="form-inline">
+
+                {{ form(form) }}
+
+                <form method="post" action="{{ path('backupjob') }}" class="form-inline">
                     <!-- Backup job name -->
                     <div class="form-group">
-                        <label for="backupjobname">{{ 'Backup job name'|trans }}</label>
+                        <!--label for="backupjobname">{{ 'Backup job name'|trans }}</label-->
 
-                        <select class="form-control input-sm {{ validation_errors.backupjob_name ? 'is-invalid' : ' ' }}" name="backupjob_name">
+                        <!--select class="form-control input-sm {# validation_errors.backupjob_name ? 'is-invalid' : ' ' #}" name="backupjob_name"-->
                             {% for job in jobs_list %}
-                                <option value="{{ job }}"
-                                        {% if job == selected_jobname %}selected{% endif %}>
-                                    {{ job }}</option>
+                                <!--option value="{{ job.name }}">{{ job.name }}</option-->
+                                {#
+                                {% for job in jobs_list %}
+                                    <option value="{{ job.id }}"
+                                {# if job == selected_jobname selected{% endif #}>
+                                {#
+                                      {{ job.id }}</option>
+                                {% endfor %}
+                                }
+                                #}
                             {% endfor %}
-                        </select>
+                        <!--/select-->
                         <div class="invalid-feedback">
-                            {{ validation_errors.backupjob_name|first }}
+{#                            {{ validation_errors.backupjob_name|first }}#}
                         </div>
                     </div>
-                    <!-- Period -->
-                    <select class="form-control input-sm {{ validation_errors.period ? 'is-invalid' : ' ' }}" name="period">
-                        {% for period,label in periods_list %}
-                            <option value="{{ period }}"
-                                    {% if period == selected_period %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                    <div class="invalid-feedback">
-                        {{ validation_errors.period|first }}
-                    </div>
 
-                    <!-- Submit button -->
-                    <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-primary">{{ 'View report'|trans }}</button>
-                    </div>
 
-                    {{ csrf|raw }}
                 </form>
+
             </div>
         </div>
 
@@ -57,9 +53,9 @@
                 <h6 class="card-title">{{ 'Period'|trans }}</h6>
                 <p class="card-text">{{ perioddesc }}</p>
                 <h6 class="card-title">{{ 'Transfered Bytes'|trans }}</h6>
-                <p class="card-text">{{ backupjobbytes }}</p>
+                <p class="card-text">{{ readable_size(backupjobbytes) }}</p>
                 <h6 class="card-title">{{ 'Transfered Files'|trans }}</h6>
-                <p class="card-text">{{ backupjobfiles }}</p>
+                <p class="card-text">{{ backupjobfiles|format_number }}</p>
             </div>
         </div>
 
@@ -83,24 +79,25 @@
                     <th class="text-center">{{ 'Compression'|trans }}</th>
                 </tr>
                 </thead>
+
                 {% for job in jobs %}
                     <tr>
-                        <td>{{ job.jobid }}</td>
-                        <td>{{ job.jobstatuslong }}</td>
-                        <td>{{ job.joblevel }}</td>
+                        <td>{{ job.id }}</td>
+                        <td>{{ job.status.statuslong }}</td>
+                        <td>{{ job.level }}</td>
                         <td class="text-right">
                             {% if job.jobfiles > 0 %}
-                                <a href="{{ base_path() }}/jobfiles/{{ job.jobid }}">{{ job.jobfiles }}</a>
+                                <a href="{{ path('jobfiles', {id: job.id}) }}">{{ job.jobfiles|number_format }}</a>
                             {% else %}
                                 {{ job.jobfiles }}
                             {% endif %}
                         </td>
-                        <td class="text-right">{{ job.jobbytes }}</td>
-                        <td>{{ job.starttime }}</td>
-                        <td>{{ job.endtime }}</td>
+                        <td class="text-right">{{ readable_size(job.jobbytes) }}</td>
+                        <td>{{ job.starttime|date(app_datetime_format) }}</td>
+                        <td>{{ job.endtime|date(app_datetime_format) }}</td>
                         <td>{{ job.elapsedtime }}</td>
-                        <td class="text-right">{{ job.speed }}</td>
-                        <td>{{ job.compression }}</td>
+                        <td class="text-right">{{ readable_size(job.speed) }}/s</td>
+                        <td>{{ job.compression|number_format(2) }}</td>
                     </tr>
                 {% else %}
                     <tr>
@@ -173,5 +170,5 @@
             {% endif %}
         </div>
     </div>
-
+</div>
     {% endblock %}

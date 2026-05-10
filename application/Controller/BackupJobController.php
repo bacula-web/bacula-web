@@ -21,23 +21,20 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Table\JobTable;
-use Core\Db\CDBQuery;
-use Core\Db\DatabaseFactory;
+use App\Entity\Bacula\Repository\JobRepository;
+use App\Form\BackupJobType;
 use Core\Exception\AppException;
-use Core\Exception\ValidationException;
 use Core\Graph\Chart;
-use Core\Utils\CUtils;
-use Core\Utils\DateTimeUtil;
-use Core\Helpers\Sanitizer;
+use DateInterval;
+use DateInvalidOperationException;
+use DateMalformedPeriodStringException;
+use DatePeriod;
+use DateTime;
 use DateTimeImmutable;
-use Exception;
-
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
-use Valitron\Validator;
-
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request as Request;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -45,265 +42,135 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BackupJobController extends AbstractController
 {
+    private EntityManagerInterface $entityManager;
+    private JobRepository $jobRepository;
+
+    public function __construct(ManagerRegistry $doctrine, JobRepository $jobRepository)
+    {
+        $this->entityManager = $doctrine->getManager('bacula');
+        $this->jobRepository = $jobRepository;
+    }
+
     /**
-     * @return ResponseInterface
+     * @param Request $request
+     * @return Response
      * @throws AppException
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws Exception
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     * @throws DateInvalidOperationException
+     * @throws DateMalformedPeriodStringException
      */
     #[Route("/backupjob", name: "backupjob")]
-    public function index(/* Request $request, Response $response, JobTable $jobTable */): Response
+    public function index(Request $request): Response
     {
-        return new Response('backup job');
+        $form = $this->createForm(BackupJobType::class);
 
-        $tplData = [];
-        $currentDateTime = DatabaseFactory::getDatabase($this->session->get('catalog_id'))->getServerTimestamp();
-        $interval[1] = $currentDateTime;
+        $form->handleRequest($request);
 
-        $daysstoredbytes = [];
-        $daysstoredfiles = [];
+        $noReportOptions = 'true';
+        $backupJobName = '';
+        $daysInterval = 7;
 
-        $tplData['periods_list'] = [
-            '7' => 'Last 7 days',
-            '14' => 'Last 14 days',
-            '30' => 'Last 30 days'
-        ];
+        $jobs = [];
+        $jobsList = [];
 
-        // Get backup job(s) list
-        $jobslist = $jobTable->get_Jobs_List('B');
+        $start = new DateTime('now');
+        $end = new DateTime('now');
 
-        $tplData['jobs_list'] = $jobslist;
+        $storedBytesChart = null;
+        $storedFilesChart = null;
 
-        $postData = $request->getParsedBody();
-        $requestData = $request->getQueryParams();
-
-        // Check backup job name from $_POST request
-        $backupjob_name = null;
-
-        /**
-         * TODO: check if request is only POST
-         */
-        if ($request->getMethod() === 'POST') {
-            $backupjob_name = $postData['backupjob_name'];
-        } elseif ($request->getMethod() === 'GET') {
-            if (isset($requestData['backupjob_name'])) {
-                $backupjob_name = $requestData['backupjob_name'];
-            }
-        }
-
-        if ($request->getMethod() === 'POST') {
-            $validator = (new Validator($request->getParsedBody(), ['backupjob_name', 'period']))
-                ->rule('in', 'backupjob_name', $jobslist)->message('Invalid job name')
-                ->rule('in', 'period', array_keys($tplData['periods_list']))->message('Invalid period');
-            if (!$validator->validate()) {
-                throw new ValidationException($validator->errors());
-            }
-        }
-        
-        $where = [];
-
-        if ($backupjob_name == null) {
-            $tplData['selected_jobname'] = '';
-            $tplData['no_report_options'] = 'true';
-
-            // Set selected period
-            $tplData['selected_period'] = 7;
-        } else {
-            $tplData['no_report_options'] = 'false';
-
-            $tplData['selected_jobname'] = $backupjob_name;
-
+        if($form->isSubmitted() && $form->isValid()) {
             /**
-             * Get selected period from POST request, or set it to default value (7)
+             * TODO: use current datetime from database server
              */
-            $backupjob_period = '7';
+            $daysInterval = $form->get('period')->getNormData();
+            $end = new DateTimeImmutable('now');
+            $interval = new DateInterval("P{$daysInterval}D");
+            $start = $end->sub($interval);
 
-            if (isset($postData['period'])) {
-                $backupjob_period = $postData['period'];
-            }
+            $noReportOptions = 'false';
+            $backupJobName = $form->get('backupjob_name')->getNormData();
+            $backupJobName = $backupJobName->getName();
 
-            // Set selected period
-            $tplData['selected_period'] = $backupjob_period;
-
-            $perioddesc = 'From ';
-
-            $datetimeFormatShort = $this->config->get('datetime_format_short', 'Y-m-d');
-
-            switch ($backupjob_period) {
-                case '7':
-                    $start = new DateTimeImmutable('@' . $currentDateTime - WEEK);
-                    $end = new DateTimeImmutable('@' . $currentDateTime);
-                    $interval[0] = $currentDateTime - WEEK;
-                    break;
-                case '14':
-                    $start = new DateTimeImmutable('@' . $currentDateTime - (2 * WEEK));
-                    $end = new DateTimeImmutable('@' . $currentDateTime);
-                    $interval[0] = $currentDateTime - (2 * WEEK);
-                    break;
-                case '30':
-                    $start = new DateTimeImmutable('@' . $currentDateTime - MONTH);
-                    $end = new DateTimeImmutable('@' . $currentDateTime);
-                    $interval[0] = $currentDateTime - MONTH;
-                    break;
-                default:
-                    throw new AppException('Provided backup job period not supported');
-            }
-
-            $perioddesc .= $start->format($datetimeFormatShort) . " to " . $end->format($datetimeFormatShort);
-
-            // Get start and end datetime for backup jobs report and charts
-            $periods = CDBQuery::get_Timestamp_Interval($jobTable->get_driver_name(), $interval);
-
-            $backupjobbytes = $jobTable->getStoredBytes($interval, $backupjob_name);
-            $backupjobbytes = CUtils::GetHumanSize($backupjobbytes);
-
-            // Stored files on the defined period
-            $backupjobfiles = $jobTable->getStoredFiles($interval, $backupjob_name);
-            $backupjobfiles = number_format($backupjobfiles);
+            $jobQueryBuilder = $this->jobRepository->createQueryBuilder('j');
+            $query = $jobQueryBuilder->select('j', 's')
+                ->where("j.type = 'B'")
+                ->andWhere('j.name = :jobname')
+                ->andWhere('j.endtime BETWEEN :from AND :to')
+                ->setParameters([
+                    'from' => $start,
+                    'to' => $end,
+                    'jobname' => $backupJobName
+                ])
+                ->leftJoin('j.status', 's')
+                ->orderBy('j.endtime', 'DESC')
+                ->getQuery()
+            ;
+            $jobs = $query->getResult();
 
             // Get the last 7 days interval (start and end)
-            $days = DateTimeUtil::getLastDaysIntervals($interval[1], (int) $backupjob_period);
+            $interval = new DateInterval('P1D');
+            $period = new DatePeriod($start, $interval, $end);
 
             // Last 7 days stored files chart
-            foreach ($days as $day) {
-                $storedfiles = $jobTable->getStoredFiles([$day['start'], $day['end']], $backupjob_name);
-                $dayStartTime = new DateTimeImmutable('@' . $day['start']);
-                $daysstoredfiles[] = [
-                    $dayStartTime->format('m-d'), $storedfiles
+            $daysStoredFiles = [];
+            $daysStoredBytes = [];
+
+            foreach($period as $day) {
+                $daysStoredFiles[] = [
+                    $day->format('m-d'),
+                    $this->jobRepository->getTotalStoredFiles(
+                        $day->setTime(0, 0, 0),
+                        $day->setTime(23, 59, 59),
+                        $backupJobName
+                    ),
                 ];
             }
 
-            $storedfileschart = new Chart([
+            $storedFilesChart = new Chart([
                 'type' => 'bar',
                 'name' => 'chart_storedfiles',
-                'data' => $daysstoredfiles,
+                'data' => $daysStoredFiles,
                 'ylabel' => 'Files'
-                ]);
-
-            $tplData['stored_files_chart_id'] = $storedfileschart->name;
-            $tplData['stored_files_chart'] = $storedfileschart->render();
-            unset($storedfileschart);
+            ]);
 
             // Last 7 days stored bytes chart
-            foreach ($days as $day) {
-                $storedbytes = $jobTable->getStoredBytes(array($day['start'], $day['end']), $backupjob_name);
-                $dayStartTime = new DateTimeImmutable('@' . $day['start']);
-                $daysstoredbytes[] = [
-                    $dayStartTime->format('m-d'), $storedbytes
+            foreach($period as $day) {
+                $daysStoredBytes[] = [
+                    $day->format('m-d'),
+                    $this->jobRepository->getTotalStoredBytes(
+                        $day->setTime(0, 0, 0),
+                        $day->setTime(23, 59, 59),
+                        $backupJobName
+                    ),
                 ];
             }
 
-            $storedbyteschart = new Chart(
-                [
-                    'type' => 'bar',
-                    'name' => 'chart_storedbytes',
-                    'uniformize_data' => true,
-                    'data' => $daysstoredbytes,
-                    'ylabel' => 'Bytes'
-                ]
-            );
-
-            $tplData['stored_bytes_chart_id'] = $storedbyteschart->name;
-            $tplData['stored_bytes_chart'] = $storedbyteschart->render();
-            unset($storedbyteschart);
-
-            // Backup job name
-            $jobTable->addParameter('jobname', $backupjob_name);
-            $where[] = 'Name = :jobname';
-
-            // Backup job type
-            $jobTable->addParameter('jobtype', 'B');
-            $where[] = "Type = :jobtype";
-
-            // Backup job starttime and endtime
-            $where[] = '(EndTime BETWEEN ' . $periods['starttime'] . ' AND ' . $periods['endtime'] . ')';
-
-            $query = CDBQuery::get_Select(
-                [
-                    'table' => $jobTable->getTableName(),
-                    'fields' =>
-                        [
-                            'JobId',
-                            'Level',
-                            'JobFiles',
-                            'JobBytes',
-                            'ReadBytes',
-                            'Job.JobStatus',
-                            'StartTime',
-                            'EndTime',
-                            'Name',
-                            'Status.JobStatusLong'
-                        ],
-                    'where' => $where,
-                    'orderby' => 'EndTime DESC',
-                    'join' => [
-                        [
-                            'table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus'
-                        ]
-                    ]
-                ],
-                $jobTable->get_driver_name()
-            );
-
-            $joblist = [];
-            $joblevel = ['I' => 'Incr', 'D' => 'Diff', 'F' => 'Full'];
-            $result = $jobTable->run_query($query);
-
-            foreach ($result->fetchAll() as $job) {
-                // Job level description
-                $job['joblevel'] = $joblevel[$job['level']];
-
-                // Job execution execution time
-                $job['elapsedtime'] = DateTimeUtil::Get_Elapsed_Time($job['starttime'], $job['endtime']);
-
-                // Compression
-                if (($job['jobbytes'] > 0) && ($job['readbytes'] > 0)) {
-                    $compression = (1 - ($job['jobbytes'] / $job['readbytes']));
-                    $job['compression'] = number_format($compression, 2);
-                } else {
-                    $job['compression'] = 'N/A';
-                }
-
-                // Job speed
-                $start = $job['starttime'];
-                $end = $job['endtime'];
-                $seconds = DateTimeUtil::get_ElaspedSeconds($end, $start);
-
-                if ($seconds !== false && $seconds > 0) {
-                    $speed = $job['jobbytes'] / $seconds;
-                    $job['speed'] = CUtils::GetHumanSize($speed, 2) . '/s';
-                } else {
-                    $job['speed'] = 'N/A';
-                }
-
-                // Job bytes more easy to read
-                $job['jobbytes'] = CUtils::GetHumanSize($job['jobbytes']);
-                $job['jobfiles'] = number_format((float)$job['jobfiles']);
-
-                // Format date/time
-                $jobStartTime = DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $job['starttime']);
-                $job['starttime'] = $jobStartTime->format(
-                    $this->config->get('datetime_format', 'Y-m-d H:i:s')
-                );
-
-                $jobEndTime = DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $job['endtime']);
-                $job['endtime'] = $jobEndTime->format(
-                    $this->config->get('datetime_format', 'Y-m-d H:i:s')
-                );
-
-                $joblist[] = $job;
-            } // end while
-
-            // Assign vars to template
-            $tplData['jobs'] = $joblist;
-            $tplData['backupjob_name'] = $backupjob_name;
-            $tplData['perioddesc'] = $perioddesc;
-            $tplData['backupjobbytes'] = $backupjobbytes;
-            $tplData['backupjobfiles'] = $backupjobfiles;
+            $storedBytesChart = new Chart([
+                'type' => 'bar',
+                'name' => 'chart_storedbytes',
+                'data' => $daysStoredBytes,
+                'uniformize_data' => true,
+                'ylabel' => 'Bytes'
+            ]);
         }
 
-        return $this->view->render($response, 'pages/backupjob-report.html.twig', $tplData);
+        return $this->render('pages/backupjob-report.html.twig', [
+            'form' => $form,
+            'jobs_list' => $jobsList,
+            'jobs' => $jobs,
+            'periods_list' => [],
+            'selected_period' => $daysInterval,
+            'stored_bytes_chart' => $storedBytesChart ? $storedBytesChart->render() : '',
+            'stored_bytes_chart_id' => $storedBytesChart ? $storedBytesChart->name : '',
+            'stored_files_chart' => $storedFilesChart ? $storedFilesChart->render() : '',
+            'stored_files_chart_id' => $storedFilesChart ? $storedFilesChart->name : '',
+            'no_report_options' => $noReportOptions,
+            'backupjob_name' => $backupJobName,
+            'perioddesc' => 'From ' . $start->format($this->getParameter('app.datetime_format_short')) . ' to ' . $end->format($this->getParameter('app.datetime_format_short')),
+            'backupjobbytes' => $this->jobRepository->getTotalStoredBytes($start, $end, $backupJobName),
+            'backupjobfiles' => $this->jobRepository->getTotalStoredFiles($start, $end, $backupJobName)
+        ]);
     }
 }
