@@ -136,6 +136,11 @@ class Job
     private string $type;
 
     /**
+     * @var int
+     */
+    private int $speed;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -357,5 +362,23 @@ class Job
     public function getPoolid(): int
     {
         return $this->poolid;
+    }
+
+    public function getSpeed(): int
+    {
+        $elapsedSeconds = 0;
+
+        if ($this->endtime) {
+            $elapsedSeconds = $this->endtime->diff($this->starttime)->s;
+        } else {
+            $this->speed = 0;
+        }
+
+        if ($elapsedSeconds > 0) {
+            $this->speed = (int) floor($this->jobbytes / $elapsedSeconds);
+        } else {
+            $this->speed = 0;
+        }
+        return $this->speed;
     }
 }

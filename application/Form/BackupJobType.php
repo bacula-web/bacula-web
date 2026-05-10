@@ -46,9 +46,10 @@ class BackupJobType extends AbstractType
                     'Last 7 days' => 7,
                     'Last 14 days' => 14,
                     'Last 30 days' => 30
-                ]
+                ],
+                'invalid_message' => 'Invalid period'
             ])
-            ->add('backupjbo_name', EntityType::class, [
+            ->add('backupjob_name', EntityType::class, [
                 'class' => Job::class,
                 'label' => 'Job name',
                 'choice_label' => 'name',
@@ -57,7 +58,8 @@ class BackupJobType extends AbstractType
                         ->createQueryBuilder('j')
                         ->groupBy('j.name')
                         ->orderBy('j.name', 'ASC');
-                }
+                },
+                'invalid_message' => 'Invalid job name'
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'View report'

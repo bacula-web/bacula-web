@@ -22,11 +22,20 @@ declare(strict_types=1);
 namespace App\Entity\Bacula\Repository;
 
 use App\Entity\Bacula\Job;
-use Doctrine\ORM\EntityRepository;
+use DateTime;
+use DateTimeInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 
-class JobRepository extends EntityRepository
+class JobRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Job::class);
+    }
+
     /**
      * @param int $jobId
      * @return Job|null
@@ -34,7 +43,6 @@ class JobRepository extends EntityRepository
      */
     public function getJobWithLogs(int $jobId): ?Job
     {
-
         $queryBuilder = $this->createQueryBuilder('j');
 
         return $queryBuilder
@@ -109,5 +117,72 @@ class JobRepository extends EntityRepository
         }
 
         return $usedTypes;
+    }
+
+    /**
+     * @param DateTime $from
+     * @param DateTime $to
+     * @param string|null $jobName
+     * @param int|null $clientId
+     * @return int
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getTotalStoredBytes(DateTimeInterface $from, DateTimeInterface $to, ?string $jobName = null, ?int $clientId = null): int
+    {
+        $queryBuilder = $this->createQueryBuilder('j');
+        $query = $queryBuilder
+            ->select('SUM(j.jobbytes)')
+            ->where('j.endtime BETWEEN :start AND :end')
+            ->setParameter('start', $from)
+            ->setParameter('end', $to)
+            ->andWhere('j.type = :type')
+            ->setParameter('type', 'B')
+        ;
+
+        if ($jobName) {
+            $query
+                ->andWhere('j.name = :jobname')
+                ->setParameter('jobname', $jobName);
+        }
+
+        if ($clientId) {
+            $query
+                ->andWhere('j.clientid = :client')
+                ->setParameter('client', $clientId);
+        }
+
+        return (int) $query
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getTotalStoredFiles(DateTimeInterface $from, DateTimeInterface $to, ?string $jobName = null, ?int $clientId = null): int
+    {
+        $queryBuilder = $this->createQueryBuilder('j');
+        $query = $queryBuilder
+            ->select('SUM(j.jobfiles)')
+            ->where('j.endtime BETWEEN :start AND :end')
+            ->setParameter('start', $from)
+            ->setParameter('end', $to)
+            ->andWhere('j.type = :type')
+            ->setParameter('type', 'B')
+        ;
+
+        if ($jobName) {
+            $query
+                ->andWhere('j.name = :jobname')
+                ->setParameter('jobname', $jobName);
+        }
+
+        if ($clientId) {
+            $query
+                ->andWhere('j.clientid = :client')
+                ->setParameter('client', $clientId);
+        }
+
+        return (int) $query
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

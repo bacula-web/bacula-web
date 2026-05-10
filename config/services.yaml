@@ -19,7 +19,6 @@ services:
         resource: '../application/'
         exclude:
             - '../application/DependencyInjection/'
-            - '../application/Entity/'
             - '../application/Kernel.php'
             - '../application/Command/'
             - '../application/config/'
