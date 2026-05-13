@@ -30,20 +30,19 @@ use App\Entity\Bacula\Repository\ClientRepository;
 use App\Entity\Bacula\Repository\JobRepository;
 use App\Entity\Bacula\Repository\PoolRepository;
 use App\Entity\Bacula\Version;
-//use Core\Controller\AbstractController;
+use App\Form\JobFileSearchType;
 use Core\Db\DBPagination;
 use Core\Exception\ConfigFileException;
 use Core\Exception\ValidationException;
 use Core\Helpers\Sanitizer;
-use DI\NotFoundException;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use Exception;
-use Slim\Exception\HttpNotFoundException;
+use Knp\Component\Pager\PaginatorInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use Valitron\Validator;
-
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request as Request;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -53,6 +52,16 @@ use function Core\Helpers\getRequestParams;
 
 class JobController extends AbstractController
 {
+    /**
+     * @var ObjectManager
+     */
+    private ObjectManager $entityManager;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->entityManager = $doctrine->getManager('bacula');
+    }
+
     /**
      * @throws ConfigFileException
      * @throws LoaderError
@@ -355,42 +364,25 @@ class JobController extends AbstractController
     }
 
     /**
+     * @param Request $request
      * @param int $id Job id
+     * @param PaginatorInterface $paginator
      * @return Response
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      */
     #[Route("/job/{id}/files", name: "jobfiles")]
-    public function showFiles(/*Request $request, Response $response, int $id*/): Response
+    public function showFiles(Request $request, int $id, PaginatorInterface $paginator): Response
     {
-        return new Response('show files');
-
         $filename = '';
 
-        if ($request->getMethod() === 'POST') {
-            $postData = $request->getParsedBody();
+        $form = $this->createForm(JobFileSearchType::class);
+        $form->handleRequest($request);
 
-            $validator = (new Validator($postData))
-                ->rule('alphanum', 'filename')->message('Filename/path must be alphanumeric only');
-
-            if (! $validator->validate()) {
-                throw new ValidationException($validator->errors());
-            }
+        if( $form->isSubmitted() && $form->isValid()) {
+            $filename = $form->get('filename')->getData();
         }
 
-        /**
-         * TODO: below code is not necessary as $id is always provided
-         * TODO: make sure jobid is a valid positive integer
-         */
-
-        if (isset($postData['filename'])) {
-            $filename = Sanitizer::sanitize($postData['filename']);
-        }
-
-        $em = $this->managerRegistry->getManager('bacula');
-
-        $job = $em->createQueryBuilder()
+        // Get job details
+        $job = $this->entityManager->createQueryBuilder()
             ->select('j, s')
             ->from(Job::class, 'j')
             ->join('j.status', 's')
@@ -399,29 +391,35 @@ class JobController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (null === $job) {
-            throw new HttpNotFoundException($request, 'Job with provided id not found');
+        if (!$job) {
+            $this->createNotFoundException('Job with provided id not found');
         }
 
-        $version = $em->getRepository(Version::class)->getCatalogVersion();
+        $version = $this->entityManager->getRepository(Version::class)->getCatalogVersion();
 
         if ($version < 1016) {
-            $repository = $em->getRepository(FileBeforeV11::class);
+            $repository = $this->entityManager->getRepository(FileBeforeV11::class);
         } else {
-            $repository = $em->getRepository(File::class);
+            $repository = $this->entityManager->getRepository(File::class);
         }
+
+        /**
+         * @var QueryBuilder $filesQueryBuilder
+         */
         $filesQueryBuilder = $repository->getFilesFromJobId($job->getId(), $filename);
-        $totalFiles = $repository->count(['jobid' => $id]);
 
-        $paginator = new DBPagination($request, $this->config);
+        $pagination = $paginator->paginate(
+            $filesQueryBuilder->getQuery(),
+            $request->query->getInt('page', 1),
+            $this->getParameter('app.rows_per_page')
+        );
 
-        return $this->view->render($response, 'pages/jobfiles.html.twig', [
+        dump($pagination->getItems());
+
+        return $this->render('pages/jobfiles.html.twig', [
             'job' => $job,
-            'job_files_count' => 'to fix',
-            'job_files' => $paginator->paginate($filesQueryBuilder, $totalFiles),
-            'pagination' => $paginator,
-            'total_files' => $totalFiles,
-            'filename' => $filename
+            'pagination' => $pagination,
+            'form' => $form,
         ]);
     }
 }

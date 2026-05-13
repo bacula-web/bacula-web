@@ -81,7 +81,8 @@
     "symfony/form": "^6.4",
     "symfony/validator": "^6.4",
     "twig/intl-extra": "^3.24",
-    "symfony/property-info": "^6.4"
+    "symfony/property-info": "^6.4",
+    "knplabs/knp-paginator-bundle": "^6.10"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",
