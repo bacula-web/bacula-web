@@ -1,6 +1,6 @@
 twig:
     file_name_pattern: '*.twig'
-    default_path: '%kernel.project_dir%/application/views/templates'
+    default_path: '%kernel.project_dir%/templates'
     form_themes: ['bootstrap_5_layout.html.twig']
     globals:
         app_datetime_format: '%app.datetime_format%'
