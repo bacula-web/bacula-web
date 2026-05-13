@@ -44,5 +44,7 @@
     }
 </style>
 
-{# rel links for pagination #}
-{{ knp_pagination_rel_links(pagination) }}
+{% if pagination is defined %}
+    {# rel links for pagination #}
+    {{ knp_pagination_rel_links(pagination) }}
+{% endif %}
