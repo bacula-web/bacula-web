@@ -37,7 +37,7 @@ class FileRepository extends EntityRepository
             ->where('f.jobid = :jobId')
             ->setParameter('jobId', $jobId);
 
-        if (!empty($filename)) {
+        if ($filename !== null) {
             $queryBuilder
                 ->andWhere('f.filename LIKE :filename')
                 ->setParameter('filename', '%' . $filename . '%');
