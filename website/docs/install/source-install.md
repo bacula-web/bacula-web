@@ -32,6 +32,12 @@ Install dependencies using Composer
 $ composer install --no-dev
 ```
 
+## Install Nodejs dependencies
+
+```shell
+$ npm install
+```
+
 ## Fix files/folders ownership and permissions
 
 Move the folder in the web server folder

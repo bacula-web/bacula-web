@@ -54,9 +54,6 @@
     "ext-openssl": "*",
     "ext-pdo": "*",
     "ext-sqlite3": "*",
-    "novus/nvd3": "~1.8",
-    "components/font-awesome": "6.*",
-    "twbs/bootstrap": "~5.2.3",
     "symfony/translation": "^6.4",
     "symfony/console": "^6.4",
     "nesbot/carbon": "^2",
@@ -80,7 +77,8 @@
     "symfony/validator": "^6.4",
     "twig/intl-extra": "^3.24",
     "symfony/property-info": "^6.4",
-    "knplabs/knp-paginator-bundle": "^6.10"
+    "knplabs/knp-paginator-bundle": "^6.10",
+    "symfony/webpack-encore-bundle": "^2.4"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",
