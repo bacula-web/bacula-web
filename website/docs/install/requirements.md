@@ -12,6 +12,16 @@
 | Nginx                 | >= 1.24                           |
 | Lighttpd              | >= 1.4.*                          |
 
+Nodejs & npm
+
+| Supported version |                                                   |
+|-------------------|---------------------------------------------------|
+| Nodejs >= 24      | Only if you install from source or using Composer |
+
+::::warning
+Nodejs and npm are required since version 10.x to build css, javascript, etc. assets.
+::::
+
 PHP requirements
 
 | Component | Supported version     |

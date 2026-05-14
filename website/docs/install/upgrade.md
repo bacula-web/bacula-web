@@ -62,6 +62,12 @@ $ sudo cp -pv bacula-web-beforeupgrade/application/config/config.php bacula-web/
 $ sudo cp -pv bacula-web-beforeupgrade/application/assets/protected/* bacula-web/application/assets/protected/
 ```
 
+## Install Nodejs dependencies
+
+```shell
+$ npm install
+```
+
 ## Fix files ownership and permissions
 
 Move the folder in the web server folder

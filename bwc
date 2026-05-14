@@ -39,7 +39,6 @@ $application->addCommands(
     [
         new ShowVersionCommand(),
         $container->get(SetupAuthCommand::class),
-        new PublishAssetsCommand(),
         new CheckCommand()
     ]
 );

@@ -73,6 +73,12 @@ ext-xmlwriter        8.1.34     success
 php                  8.1.34     success
 ```
 
+## Install Nodejs dependencies
+
+```shell
+$ npm install
+```
+
 ## Fix files/folders ownership and permissions
 
 Move the folder in the web server folder
