@@ -31,9 +31,11 @@ use DateMalformedPeriodStringException;
 use DatePeriod;
 use DateTime;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request as Request;
@@ -98,11 +100,11 @@ class BackupJobController extends AbstractController
                 ->where("j.type = 'B'")
                 ->andWhere('j.name = :jobname')
                 ->andWhere('j.endtime BETWEEN :from AND :to')
-                ->setParameters([
-                    'from' => $start,
-                    'to' => $end,
-                    'jobname' => $backupJobName
-                ])
+                ->setParameters(new ArrayCollection(array(
+                    new Parameter('from', $start),
+                    new Parameter('to', $end),
+                    new Parameter('jobname', $backupJobName)
+                )))
                 ->leftJoin('j.status', 's')
                 ->orderBy('j.endtime', 'DESC')
                 ->getQuery()
