@@ -31,10 +31,10 @@
                         {% for volume in volumes %}
                             <tr>
                                 <td>
-                                    <a href="{{ url_for('volume_detail', {'id': volume.id }) }}"
+                                    <a href="{{ path('volume_detail', {'id': volume.id }) }}"
                                        title="{{ 'Show volume'|trans }}">{{ volume.name }}</a>
                                 </td>
-                                <td class="text-right">{{ transform_bytes(volume.volbytes) }}</td>
+                                <td class="text-right">{{ readable_size(volume.volbytes) }}</td>
                                 <td class="text-right">{{ volume.volfiles|format }}</td>
                                 <td class="text-right">{{ volume.voljobs|format }}</td>
                                 <td>{{ volume.mediatype }}</td>
@@ -65,71 +65,30 @@
                     </table>
                 </div>
 
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+
                 {% if volumes|length > 0 %}
-                    {{ include("partials/pagination.html.twig", {route: 'volumes' }) }}
+                    {# include("partials/pagination.html.twig", {route: 'volumes' }) #}
                 {% endif %}
             </div>
 
             <div class="col-2">
 
-                <!-- Options -->
-                <form class="" action="{{ url_for('volumes') }}" method="post">
-                    <!-- Pools -->
-                    <div class="mb-3">
-                        <label class="form-label" for="filter_pool_id">{{ 'Pool'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_pool_id ? 'is-invalid' : ' ' }}" name="filter_pool_id" id="filter_pool_id">
-                            <option value="0" {% if pool_id == 0 %}selected{% endif %}>Any</option>
-                            {% for pool in pools_list %}
-                                <option value="{{ pool.id }}" {% if pool.id == pool_id %}selected{% endif %}>{{ pool.name }}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">
-                            {{ validation_errors.filter_pool_id|first }}
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="filter_orderby">{{ 'Order by'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_orderby ? 'is-invalid' : ' ' }}" name="filter_orderby" id="filter_orderby">
-                            {% for key, order in orderby %}
-                                <option value="{{ key }}" {% if orderby_selected == key %}selected{% endif %}>{{ order }}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">
-                            {{ validation_errors.filter_orderby|first }}
-                        </div>
+                {{ form_start(form) }}
+
+                    {{ form_row(form.pool) }}
+                    {{ form_row(form.orderby) }}
+                    {{ form_row(form.order_direction) }}
+                    {{ form_row(form.in_changer) }}
+
+                    <div class="mt-3 mb-3">
+                        <button class="btn btn-primary" type="submit">Search</button>
                     </div>
 
-                    <div class="col-12">
-                        <div class="form-check">
-                            <input class="form-check-input {{ validation_errors.filter_orderby_asc ? 'is-invalid' : ' ' }}" type="checkbox" name="filter_orderby_asc"
-                                   id="filter_orderby_asc" value="ASC" {{ orderby_asc_checked }}>
-                            <label class="form-check-label" for="filter_orderby_asc">
-                                {{ 'Asc'|trans }}
-                            </label>
-                            <div class="invalid-feedback">
-                                {{ validation_errors.filter_orderby_asc|first }}
-                            </div>
-                        </div>
+                {{ form_end(form) }}
 
-                        <div class="col-12">
-                            <div class="form-check">
-                                <input class="form-check-input {{ validation_errors.filter_inchanger ? 'is-invalid' : ' ' }}" type="checkbox" id="filter_inchanger"
-                                       name="filter_inchanger" {{ inchanger_checked }}>
-                                <label class="form-check-label" for="filter_inchanger">
-                                    {{ 'In changer'|trans }}
-                                </label>
-                                <div class="invalid-feedback">
-                                    {{ validation_errors.filter_inchanger|first }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 mt-3">
-                            <button type="submit" class="btn btn-primary btn-sm"
-                                    title="{{ 'Apply filter and options'|trans }}">{{ 'Apply'|trans }}</button>
-                        </div>
-                        {{ csrf|raw }}
-                </form>
             </div>
         </div>
     </div>
@@ -140,10 +99,10 @@
         <div class="card-body">
             <ul class="list-group">
                 <li class="list-group-item">
-                    {{ 'Volume(s) found'|trans }} <span class="badge text-bg-dark">{{ volumes_count }}</span>
+                    {{ 'Volume(s) found'|trans }} <span class="badge text-bg-dark">{{ volumes_total_count }}</span>
                 </li>
                 <li class="list-group-item">
-                    {{ 'Total bytes'|trans }} <span class="badge text-bg-dark">{{ transform_bytes(volumes_total_bytes) }}</span>
+                    {{ 'Total bytes'|trans }} <span class="badge text-bg-dark">{{ readable_size(volumes_total_bytes) }}</span>
                 </li>
             </ul>
         </div>

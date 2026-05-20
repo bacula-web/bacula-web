@@ -25,17 +25,22 @@ use App\Entity\Bacula\Job;
 use App\Entity\Bacula\JobMedia;
 use App\Entity\Bacula\Pool;
 use App\Entity\Bacula\Volume;
+use App\Form\VolumeSearchType;
 use Core\Db\DBPagination;
 use Core\Exception\ValidationException;
 use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use Exception;
+use Knp\Component\Pager\PaginatorInterface;
 use Slim\Exception\HttpNotFoundException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Valitron\Validator;
 
+use VolumeSearch;
 use function Core\Helpers\getRequestParams;
 
 use Symfony\Component\Routing\Attribute\Route;
@@ -45,97 +50,61 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VolumesController extends AbstractController
 {
+    private ObjectManager $entityManager;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->entityManager = $doctrine->getManager('bacula');
+    }
+
     /**
-     * @return ResponseInterface
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws Exception
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
      */
     #[Route("/volumes", name: "volumes")]
-    public function index(/*Request $request, Response $response*/): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
-        return new Response('Volumes');
+        $volumeSearch = new VolumeSearch();
+        $form = $this->createForm(VolumeSearchType::class, $volumeSearch);
+        $form->handleRequest($request);
 
-        $em = $this->managerRegistry->getManager('bacula');
+        $volumeQueryBuilder = $this->entityManager->createQueryBuilder();
+        $volumeQueryBuilder->select('v')->from(Volume::class, 'v')->orderBy('v.name', 'DESC');
 
-        $volumeOrderBy = 'v.name';
-        $volumeOrderByDirection = 'DESC';
-        $orderDirectionChecked = '';
-        $inChangerChecked = '';
-        $poolId = 0;
-
-        // Order by
-        $orderby = [
-            'v.name' => 'Name',
-            'v.id' => 'Id',
-            'v.volbytes' => 'Bytes',
-            'v.voljobs' => 'Jobs'
-        ];
-
-        $poolList = $em->getRepository(Pool::class)->getPools(false);
-
-        $postData = getRequestParams($request);
-
-        $queryBuilder = $em->createQueryBuilder();
-
-        $volumesRequestValidator = new Validator($postData, [
-            'page',
-            'filter_pool_id',
-            'filter_orderby',
-            'filter_orderby_asc',
-            'filter_inchanger'
-        ]);
-
-        $volumesRequestValidator->rule('integer', ['page']);
-        $volumesRequestValidator->rule('integer', ['filter_pool_id']);
-        $volumesRequestValidator->rule('in', 'filter_pool_id', array_keys($poolList))->message('Invalid pool');
-        $volumesRequestValidator->rule('in', 'filter_orderby', $orderby)->message('Invalid order by');
-        $volumesRequestValidator->rule('in', 'filter_orderby_asc', ['ASC', 'DESC'])->message('Invalid order direction');
-
-        if (!empty($postData)) {
-            if (!$volumesRequestValidator->validate()) {
-                throw new ValidationException($volumesRequestValidator->errors());
-            }
-
-            $poolId = $postData['filter_pool_id'] ?? '0';
-            if ($poolId !== '0') {
-                $queryBuilder
-                    ->andWhere('p.id = :pool_id')
-                    ->setParameter('pool_id', $poolId);
-            }
-
-            $volumeOrderBy = $postData['filter_orderby'] ?? 'v.name';
-
-            $volumeOrderByDirection = $postData['filter_orderby_asc'] ?? 'DESC';
-            $orderDirectionChecked = $volumeOrderByDirection === 'ASC' ? 'checked' : '';
-
-            if (isset($postData['filter_inchanger'])) {
-                $queryBuilder
-                    ->andWhere('v.inchanger = 1');
-            }
-            $inChangerChecked = isset($postData['filter_inchanger']) ? 'checked' : '';
+        if($volumeSearch->getPool()) {
+            $volumeQueryBuilder
+                ->andWhere('v.pool = :pool')
+                ->setParameter('pool', $volumeSearch->getPool());
         }
 
-        $queryBuilder
-            ->select('v,p')
-            ->from(Volume::class, 'v')
-            ->leftJoin('v.pool', 'p')
-            ->orderBy($volumeOrderBy, $volumeOrderByDirection);
+        $orderBy = $volumeSearch->getOrderby() ? 'v.' . $volumeSearch->getOrderby() : 'v.name';
+        $volumeQueryBuilder->orderBy($orderBy, $volumeSearch->getOrderDirection() ? 'ASC' : 'DESC');
 
-        $pagination = new DBPagination($request, $this->config);
+        if ($volumeSearch->getInChanger()) {
+            $volumeQueryBuilder
+                ->andWhere('v.inchanger = 1');
+        }
 
-        return $this->view->render($response, 'pages/volumes.html.twig', [
-            'pools_list' => $poolList,
-            'volumes' => $pagination->paginate($queryBuilder, $totalVolumesCount = $em->getRepository(Volume::class)->count([])),
-            'volumes_total_bytes' => $em->getRepository(Volume::class)->getTotalBytes(),
-            'volumes_count' => $totalVolumesCount,
+        $pagination = $paginator->paginate(
+            $volumeQueryBuilder,
+            $request->query->getInt('page', 1),
+            $this->getParameter('app.rows_per_page')
+        );
+
+        return $this->render('pages/volumes.html.twig', [
+            'volumes' => $pagination->getItems(),
             'pagination' => $pagination,
-            'pool_id' => $poolId,
-            'orderby' => $orderby,
-            'orderby_selected' => $volumeOrderBy,
-            'orderby_asc_checked' => $orderDirectionChecked,
-            'inchanger_checked' => $inChangerChecked
+            'form' => $form,
+            'volumes_total_count' => $this->entityManager
+                ->getRepository(Volume::class)
+                ->count([]),
+            'volumes_total_bytes' => $this->entityManager
+                ->createQueryBuilder()
+                ->select('SUM(v.volbytes)')
+                ->from(Volume::class, 'v')
+                ->getQuery()
+                ->getSingleScalarResult(),
         ]);
     }
 
