@@ -109,45 +109,33 @@ class VolumesController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @return ResponseInterface
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws NotSupported
+     * @param int $id
+     * @return Response
      */
     #[Route("/volume/{id}", name: "volume_detail")]
-    public function show(/* Request $request, Response $response */): Response
+    public function show(int $id): Response
     {
-        return new Response('Volume detail');
+        $volume = $this->entityManager->getRepository(Volume::class)->find($id);
 
-        $requestData = $request->getAttributes();
-        $volumeId = (int) $requestData['id'];
-
-        $em = $this->managerRegistry->getManager('bacula');
-        $queryBuilder = $em->createQueryBuilder();
-
-        $volume = $em->getRepository(Volume::class)->findOneBy(['id' => $volumeId]);
-
-        if (null === $volume) {
-            throw new HttpNotFoundException($request, 'Volume with provided id not found');
+        if( !$volume) {
+            throw $this->createNotFoundException('Volume with provided id not found');
         }
 
-        $query = $queryBuilder
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        $jobs = $queryBuilder
             ->select('v', 'j.id', 'j.name', 'j.type')
             ->distinct()
             ->from(Volume::class, 'v')
             ->innerJoin(JobMedia::class, 'jm', Join::WITH, 'v.id = jm.mediaid')
             ->innerJoin(Job::class, 'j', Join::WITH, 'jm.jobid = j.id')
             ->where('v.id = :id')
-            ->setParameter('id', $volumeId)
+            ->setParameter('id', $id)
             ->getQuery()
+            ->getArrayResult();
         ;
-        $jobs = $query->getArrayResult();
 
-
-        return $this->view->render($response, 'pages/volume.html.twig', [
+        return $this->render('pages/volume.html.twig', [
             'volume' => $volume,
             'jobs' => $jobs
         ]);

@@ -24,7 +24,7 @@
                                 <b>{{ 'Volume name'|trans }}:</b> {{ volume.name }}
                             </li>
                             <li class="list-group-item">
-                                <b>{{ 'Volume bytes'|trans }}:</b> {{ transform_bytes(volume.volbytes) }}
+                                <b>{{ 'Volume bytes'|trans }}:</b> {{ readable_size(volume.volbytes) }}
                             </li>
                             <li class="list-group-item">
                                 <b>{{ 'Volume files'|trans }}:</b> {{ volume.volfiles }}
@@ -75,7 +75,7 @@
                                 {% for job in jobs %}
                                     <tr>
                                         <td>
-                                            <a href="{{ url_for('joblog', {'id': job.id}) }}"
+                                            <a href="{{ path('joblog', {'id': job.id}) }}"
                                                title="{{ 'Show job'|trans }}">{{ job.id }}</a>
                                         </td>
                                         <td>{{ job.name }}</td>
