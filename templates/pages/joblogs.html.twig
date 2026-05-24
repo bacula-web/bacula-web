@@ -21,7 +21,7 @@
                         <p class="card-text">{{ job.status.statuslong }}</p>
 
                         <h5 class="card-title">{{ 'Job bytes'|trans }}</h5>
-                        <p class="card-text">{{ transform_bytes(job.jobbytes) }}</p>
+                        <p class="card-text">{{ readable_size(job.jobbytes) }}</p>
 
                         <h5 class="card-title">{{ 'Scheduled time'|trans }}</h5>
                         <p class="card-text">{{ job.scheduledtime|date(app_datetime_format)|default('n/a') }}</p>
