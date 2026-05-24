@@ -23,26 +23,13 @@ namespace App\Controller;
 
 use App\Entity\Bacula\Job;
 use App\Entity\Bacula\JobMedia;
-use App\Entity\Bacula\Pool;
 use App\Entity\Bacula\Volume;
 use App\Form\VolumeSearchType;
-use Core\Db\DBPagination;
-use Core\Exception\ValidationException;
-use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
-use Slim\Exception\HttpNotFoundException;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
-use Valitron\Validator;
-
 use VolumeSearch;
-use function Core\Helpers\getRequestParams;
-
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request as Request;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -98,7 +85,7 @@ class VolumesController extends AbstractController
             'form' => $form,
             'volumes_total_count' => $this->entityManager
                 ->getRepository(Volume::class)
-                ->count([]),
+                ->count(),
             'volumes_total_bytes' => $this->entityManager
                 ->createQueryBuilder()
                 ->select('SUM(v.volbytes)')
@@ -109,20 +96,17 @@ class VolumesController extends AbstractController
     }
 
     /**
-     * @param int $id
+     * @param Volume|null $volume
      * @return Response
      */
     #[Route("/volume/{id}", name: "volume_detail")]
-    public function show(int $id): Response
+    public function show(?Volume $volume): Response
     {
-        $volume = $this->entityManager->getRepository(Volume::class)->find($id);
-
         if( !$volume) {
             throw $this->createNotFoundException('Volume with provided id not found');
         }
 
         $queryBuilder = $this->entityManager->createQueryBuilder();
-
         $jobs = $queryBuilder
             ->select('v', 'j.id', 'j.name', 'j.type')
             ->distinct()
@@ -130,10 +114,9 @@ class VolumesController extends AbstractController
             ->innerJoin(JobMedia::class, 'jm', Join::WITH, 'v.id = jm.mediaid')
             ->innerJoin(Job::class, 'j', Join::WITH, 'jm.jobid = j.id')
             ->where('v.id = :id')
-            ->setParameter('id', $id)
+            ->setParameter('id', $volume->getId())
             ->getQuery()
             ->getArrayResult();
-        ;
 
         return $this->render('pages/volume.html.twig', [
             'volume' => $volume,
