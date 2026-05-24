@@ -34,7 +34,6 @@ use App\Form\JobFileSearchType;
 use Core\Db\DBPagination;
 use Core\Exception\ConfigFileException;
 use Core\Exception\ValidationException;
-use Core\Helpers\Sanitizer;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -324,41 +323,20 @@ class JobController extends AbstractController
     }
 
     /**
-     * @param Response $response
-     * @param Request $request
-     * @param int $id Job Id
-     * @return ResponseInterface
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @param Job|null $job
+     * @return Response
      */
-
-    #[Route("/joblog", name: "joblog")]
-    public function showLogs(/*Response $response, Request $request, int $id*/): Response
+    #[Route("/joblog/{id}", name: "joblog")]
+    public function showLogs(?Job $job): Response
     {
-        return new Response('joblog');
-
-        $repository = $this
-            ->managerRegistry->getManager('bacula')
-            ->getRepository(Job::class);
-
-        $v = new Validator([$id]);
-        $v->rules(['integer' => 'jobid']);
-
-        if (!$v->validate()) {
-            $this->session->getFlash()->set('error', ['Invalid job id provided in Job logs report']);
-            return $response
-                ->withHeader('Location', $this->basePath . '/jobs')
-                ->withStatus(302);
+        if(null === $job) {
+            $this->addFlash('error', 'Invalid job id provided in Job logs report');
+            return $this->redirectToRoute('jobs');
         }
 
-        $job = $repository->getJobWithLogs($id);
+        $job = $this->entityManager->getRepository(Job::class)->getJobWithLogs($job->getId());
 
-        if (null === $job) {
-            throw new HttpNotFoundException($request, 'Job with provided id not found');
-        }
-
-        return $this->view->render($response, 'pages/joblogs.html.twig', [
+        return $this->render('pages/joblogs.html.twig', [
             'job' => $job
         ]);
     }
