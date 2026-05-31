@@ -10,138 +10,43 @@
         <div class="row">
             <div class="col-xs-12 col-sm-3 col-sm-push-9 col-lg-2 col-lg-push-10">
 
-                <form class="form" action="{{ url_for('jobs') }}" method="post">
+                {{ form_start(form) }}
+                    {{ form_row(form.status) }}
+                    {{ form_row(form.level) }}
+                    {{ form_row(form.type) }}
+                    {{ form_row(form.client) }}
+                    {{ form_row(form.pool) }}
 
-                    <span class="help-block">{{ 'Filter'|trans }}</span>
-
-                    <div class="form-group">
-                        <label for="filter_jobstatus">{{ 'Job status'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_jobstatus ? 'is-invalid' : ' ' }}" name="filter_jobstatus" id="filter_jobstatus">
-                            <option value="">Any</option>
-                            {% for id, status in job_status %}
-                                <option value="{{ id }}" {% if id == filter_jobstatus %} selected {% endif %}>{{ status }}</option>
-                            {% endfor %}
-                        </select>
+                <label for="starttime" class="form-label">{{ form_label(form.starttime) }}</label>
+                    <div class="input-group log-event" id="starttime" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ form_widget(form.starttime) }}
+                        <span class="input-group-text" data-td-target="#starttime" data-td-toggle="datetimepicker">
+                            <span class="fa-solid fa-calendar"></span>
+                        </span>
                         <div class="invalid-feedback">
-                            {{ validation_errors.filter_jobstatus|first }}
+                            {{ form_errors(form.starttime) }}
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="filter_joblevel">{{ 'Level'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_joblevel ? 'is-invalid' : ' ' }}" name="filter_joblevel" id="filter_joblevel">
-                            <option value="">Any</option>
-                            {% for id, level in levels_list %}
-                                <option value="{{ id }}" {% if id == filter_joblevel %} selected {% endif %}>{{ level }}</option>
-                            {% endfor %}
-                        </select>
+                    <label for="endtime" class="form-label">{{ form_label(form.endtime) }}</label>
+                    <div class="input-group log-event" id="endtime" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                        {{ form_widget(form.endtime) }}
+                        <span class="input-group-text" data-td-target="#endtime" data-td-toggle="datetimepicker">
+                            <span class="fa-solid fa-calendar"></span>
+                        </span>
                         <div class="invalid-feedback">
-                            {{ validation_errors.filter_joblevel|first }}
+                            {{ form_errors(form.endtime) }}
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="filter_jobtype">{{ 'Type'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_jobtype ? 'is-invalid' : ' ' }}" name="filter_jobtype" id="filter_jobtype">
-                            <option value="">Any</option>
-                            {% for id, job_type in job_types_list %}
-                                <option value="{{ id }}" {% if id == filter_job_type %} selected {% endif %}>{{ job_type }}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">
-                            {{ validation_errors.filter_jobtype|first }}
-                        </div>
+                    {{ form_row(form.orderby) }}
+                    {{ form_row(form.order_direction) }}
+
+                    <div class="d-flex me-3 mt-3 gap-4">
+                        {{ form_widget(form.apply) }}
+                        {{ form_widget(form.reset) }}
                     </div>
-
-                    <div class="form-group">
-                        <label for="filter_clientid">{{ 'Client'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_clientid ? 'is-invalid' : ' ' }}" name="filter_clientid" id="filter_clientid">
-                            <option value="">Any</option>
-                            {% for client in clients_list %}
-                                <option value="{{ client.id }}" {% if client.id == filter_clientid %} selected {% endif %}>{{ client.name }}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">
-                            {{ validation_errors.filter_clientid|first }}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="filter_poolid">{{ 'Pool'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.filter_poolid ? 'is-invalid' : ' ' }}" name="filter_poolid" id="filter_poolid">
-                            <option value="">Any</option>
-                            {% for pool in pools_list %}
-                                <option value="{{ pool.id }}" {% if pool.id == filter_pool_id %} selected {% endif %}>{{ pool.name }}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">
-                            {{ validation_errors.filter_poolid|first }}
-                        </div>
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="datetimepicker1Input" class="form-label">{{ 'Start time'|trans }}</label>
-                        <div class="input-group log-event" id="datetimepicker1" data-td-target-input="nearest"
-                             data-td-target-toggle="nearest">
-                            <input id="datetimepicker1Input" name="filter_job_starttime" type="text"
-                                   class="form-control form-control-sm {{ validation_errors.filter_job_starttime ? 'is-invalid' : ' ' }}" data-td-target="#datetimepicker1"
-                                   value="{{ filter_job_starttime }}"/>
-                            <span class="input-group-text" data-td-target="#datetimepicker1"
-                                  data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
-                            <div class="invalid-feedback">
-                                {{ validation_errors.filter_job_starttime|first }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="datetimepicker1Input" class="form-label">{{ 'End time'|trans }}</label>
-                        <div class="input-group log-event" id="datetimepicker2" data-td-target-input="nearest"
-                             data-td-target-toggle="nearest">
-                            <input id="datetimepicker1Input" name="filter_job_endtime" type="text"
-                                   class="form-control form-control-sm {{ validation_errors.filter_job_endtime ? 'is-invalid' : ' ' }}"
-                                   data-td-target="#datetimepicker2" value="{{ filter_job_endtime }}"/>
-                            <span class="input-group-text" data-td-target="#datetimepicker2"
-                                  data-td-toggle="datetimepicker"> <i class="fas fa-calendar"></i> </span>
-                            <div class="invalid-feedback">
-                                {{ validation_errors.filter_job_endtime|first }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <span class="help-block">{{ 'Options'|trans }}</span>
-
-                    <label for="filter_job_orderby">{{ 'Order by'|trans }}</label>
-                    <select class="form-control input-sm {{ validation_errors.filter_job_orderby ? 'is-invalid' : ' ' }}" name="filter_job_orderby" id="filter_job_orderby">
-                        {% for id, order in result_order %}
-                            <option value="{{ id }}" {% if id == result_order_field %} selected {% endif %}>{{ order }}</option>
-                        {% endfor %}
-                    </select>
-                    <div class="invalid-feedback">
-                        {{ validation_errors.filter_job_orderby|first }}
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input {{ validation_errors.filter_job_orderby_asc ? 'is-invalid' : '' }}"
-                               type="checkbox" value="ASC" name="filter_job_orderby_asc" id="filter_job_orderby_asc" {{ result_order_asc_checked }}>
-                        <label class="form-check-label" for="filter_job_orderby_asc">Asc</label>
-                        <div class="invalid-feedback">
-                            {{ validation_errors.filter_job_orderby_asc|first }}
-                        </div>
-                    </div>
-
-                    <button type="reset" class="btn btn-default btn-sm" title="{{ 'Reset'|trans }}"></button>
-                    <button type="submit" class="btn btn-primary btn-sm pull-right"
-                            title="{{ 'Apply filter and options'|trans }}">{{ 'Apply'|trans }}</button>
-
-                    <a class="btn btn-link btn-sm" title="{{ 'Reset to default'|trans }}"
-                       href="{{ base_path() }}/jobs" role="button">{{ 'Reset to default'|trans }}
-                    </a>
-
-                    {{ csrf|raw }}
-
-                </form>
+                {{ form_end(form) }}
             </div>
 
             <div class="col-xs-12 col-sm-9 col-sm-pull-3 col-lg-10 col-lg-pull-2">
@@ -168,9 +73,7 @@
                         </tr>
                         </thead>
 
-                        <!-- <div class="listbox"> -->
-                        {% for job in last_jobs %}
-
+                        {% for job in pagination %}
                             <tr>
                                 <td>
                                     <i title="{{ job.status.statuslong }}" class="{{ job.statusIcon }}"></i>
@@ -178,15 +81,14 @@
                                 <td>{{ job.id }}</td>
                                 <td class="text-left">
                                     {% if job.type == 'B' %}
-                                        <form action="{{ url_for('backupjob') }}" method="post">
+                                        <form action="{{ path('backupjob') }}" method="post">
                                             <input type="hidden" name="backupjob_name" value="{{ job.name }}"/>
                                             <input type="hidden" name="backupjob_period" value="7"/>
                                             <button type="submit"
                                                     class="btn btn-sm btn-link">{{ job.name }}</button>
-                                            {{ csrf|raw }}
                                         </form>
                                     {% else %}
-                                        {{ job.job_name }}
+                                        {{ job.name }}
                                     {% endif %}
                                 </td>
                                 <td>{{ job.type }}</td>
@@ -196,15 +98,15 @@
                                     Look at https://twig.symfony.com/doc/3.x/filters/date.html
                                 #}
                                 <td>{{ job.starttime is empty ? 'n/a' : job.starttime|date(app_datetime_format) }}</td>
-                                {# <td>{{ job.starttime|date(app_datetime_format)|default('n/a') }}</td> #}
+                                <td>{{ job.starttime|date(app_datetime_format)|default('n/a') }}</td>
                                 <td>{{ job.endtime is empty ? 'n/a' : job.endtime|date(app_datetime_format) }}</td>
-                                {# <td>{{ job.endtime|date(app_datetime_format)|default('n/a') }}</td> #}
+                                <td>{{ job.endtime|date(app_datetime_format)|default('n/a') }}</td>
                                 <td>{{ job.elapsedTime|default('n/a') }}</td>
                                 <td>{{ job.level }}</td>
-                                <td class="text-right">{{ transform_bytes(job.jobbytes) }}</td>
+                                <td class="text-right">{{ readable_size(job.jobbytes) }}</td>
                                 <td class="text-right">
                                     {% if job.jobfiles != 0 and job.type == 'B' %}
-                                        <a href="{{ base_path() }}/job/{{ job.id }}/files"
+                                        <a href="{{ path('jobfiles', {id: job.id }) }}"
                                            title="{{ 'Show job files'|trans }}">
                                             {{ job.jobfiles|number_format }} <i class="fa-solid fa-folder"></i>
                                         </a>
@@ -212,11 +114,11 @@
                                         {{ job.jobfiles }}
                                     {% endif %}
                                 </td>
-                                <td>{{ transform_bytes(job.bitrate) }}/s </td>
+                                <td>{{ readable_size(job.bitrate) }}/s </td>
                                 <td>{{ job.compression|number_format(2) }}</td>
                                 <td>{{ job.pool.name|default('n/a') }}</td>
                                 <td>
-                                    <a href="{{ base_path() }}/joblog/{{ job.id }}"
+                                    <a href="{{ path('joblog', {id: job.id}) }}"
                                        title="{{ 'Show job logs'|trans }}"> <i
                                                 class="fa-solid fa-magnifying-glass"></i> </a>
                                 </td>
@@ -229,28 +131,11 @@
                     </table>
                 </div>
 
-                {% if last_jobs|length > 0 %}
-                    {{ include('partials/pagination.html.twig', {route: 'jobs' }) }}
-                {% endif %}
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
 
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        const datetimepicker1 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
-            localization: {
-                locale: '{{ language }}',
-                format: 'yyyy-MM-dd HH:mm:ss',
-            }
-        });
-
-        const datetimepicker2 = new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'), {
-            localization: {
-                locale: '{{ language }}',
-                format: 'yyyy-MM-dd HH:mm:ss',
-            }
-        });
-    </script>
-
 {% endblock %}
