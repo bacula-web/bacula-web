@@ -31,6 +31,8 @@ use App\Entity\Bacula\Repository\JobRepository;
 use App\Entity\Bacula\Repository\PoolRepository;
 use App\Entity\Bacula\Version;
 use App\Form\JobFileSearchType;
+use App\Form\JobSearchType;
+use Carbon\Carbon;
 use Core\Db\DBPagination;
 use Core\Exception\ConfigFileException;
 use Core\Exception\ValidationException;
@@ -38,6 +40,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
+use JobSearch;
 use Knp\Component\Pager\PaginatorInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -62,263 +65,112 @@ class JobController extends AbstractController
     }
 
     /**
-     * @throws ConfigFileException
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws Exception
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
      */
 
     #[Route('/jobs', name: 'jobs')]
-    public function index(): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
-        return new Response('jobs');
+        $jobSearch = new JobSearch();
 
-        $em = $this->managerRegistry->getManager('bacula');
+        $form = $this->createForm(JobSearchType::class, $jobSearch);
+        $form->handleRequest($request);
 
-        /**
-         * @var QueryBuilder $jobsQueryBuilder
-         */
-        $jobsQueryBuilder = $em->createQueryBuilder();
+        $jobsQueryBuilder = $this->entityManager->getRepository(Job::class)->createQueryBuilder('j');
 
         $jobsQueryBuilder
-            ->select('j, p, s')
-            ->from(Job::class, 'j')
+            ->select('j', 's', 'p', 'c')
             ->leftJoin('j.pool', 'p')
-            ->leftJoin('j.status', 's');
+            ->leftJoin('j.status', 's')
+            ->leftJoin('j.client', 'c')
+        ;
 
-        $postRequestData = getRequestParams($request);
+        if ($jobSearch->getLevel()) {
+            $jobsQueryBuilder
+                ->andWhere('j.level = :level')
+                ->setParameter('level', $jobSearch->getLevel());
+        }
 
-        // Job status
+        if ($jobSearch->getType()) {
+            $jobsQueryBuilder
+                ->andWhere('j.type = :type')
+                ->setParameter('type', $jobSearch->getType());
+        }
 
-        define('STATUS_RUNNING', 1);
-        define('STATUS_WAITING', 2);
-        define('STATUS_COMPLETED', 3);
-        define('STATUS_COMPLETED_WITH_ERRORS', 4);
-        define('STATUS_FAILED', 5);
-        define('STATUS_CANCELED', 6);
+        if ($jobSearch->getClient()) {
+            $jobsQueryBuilder
+                ->andWhere('j.client = :client')
+                ->setParameter('client', $jobSearch->getClient());
+        }
 
-        $job_status = [
-            STATUS_RUNNING => 'Running',
-            STATUS_WAITING => 'Waiting',
-            STATUS_COMPLETED => 'Completed',
-            STATUS_COMPLETED_WITH_ERRORS => 'Completed with errors',
-            STATUS_FAILED => 'Failed',
-            STATUS_CANCELED => 'Canceled'
-        ];
+        if ($jobSearch->getPool()) {
+            $jobsQueryBuilder
+                ->andWhere('j.pool = :pool')
+                ->setParameter('pool', $jobSearch->getPool());
+        }
 
-        // Job level
-        /**
-         * @var JobRepository $jobRepository
-         */
-        $jobRepository = $em->getRepository(Job::class);
-        $levels_list = $jobRepository->getUsedLevels();
+        if ($jobSearch->getStarttime()) {
+            $jobsQueryBuilder
+                ->andWhere('j.starttime >= :starttime')
+                ->setParameter('starttime', $jobSearch->getStarttime());
+        }
 
-        // Job Type
-        $jobTypesList = $jobRepository->getUsedJobTypes();
+        if ($jobSearch->getEndtime()) {
+            $jobsQueryBuilder
+                ->andWhere('j.endtime <= :endtime')
+                ->setParameter('endtime', $jobSearch->getEndtime());
+        }
 
-        // Job Client
-        /**
-         * @var ClientRepository $clientRepository
-         */
-        $clientRepository = $em->getRepository(Client::class);
-        $clientsList = $clientRepository->getClients($this->config->get('show_inactive_clients'));
-
-        // Job pool
-        /**
-         * @var PoolRepository $poolRepository
-         */
-        $poolRepository = $em->getRepository(Pool::class);
-        $poolsList = $poolRepository->getPoolsList($this->config->get('hide_empty_pools'));
-
-        // Order by
-        $result_order = [
-            'j.scheduledTime' => 'Job Scheduled Time',
-            'j.starttime' => 'Job Start Date',
-            'j.endtime'   => 'Job End Date',
-            'j.id'     => 'Job Id',
-            'j.name'  => 'Job Name',
-            'j.jobbytes'  => 'Job Bytes',
-            'j.jobfiles'  => 'Job Files',
-            'j.pool.Name' => 'Pool Name'
-        ];
-
-        if (!empty($postRequestData)) {
-            // Validate user input
-            $validator = new Validator($postRequestData, [
-                'filter_jobstatus',
-                'filter_joblevel',
-                'filter_jobtype',
-                'filter_clientid',
-                'filter_poolid',
-                'filter_job_starttime',
-                'filter_job_endtime',
-                'filter_job_orderby',
-                'filter_job_orderby_asc',
-                'page'
-            ]);
-
-            $validator
-                ->rule('in', 'filter_jobtype', array_keys($jobTypesList))->message('Invalid job type')
-                ->rule('in', 'filter_joblevel', array_keys($levels_list))->message('Invalid job level')
-                ->rule('in', 'filter_jobstatus', array_keys($job_status))->message('Invalid job status')
-                ->rule(function ($field, $value, $params, $fields) use ($clientRepository) {
-                    if ($clientRepository->findOneBy(['id' => $value]) !== null) {
-                        return true;
-                    }
-                    return false;
-                }, 'filter_clientid')->message('Invalid client')
-                ->rule(function ($field, $value, $params, $fields) use ($poolRepository) {
-                    if ($poolRepository->findOneBy(['id' => $value]) !== null) {
-                        return true;
-                    }
-                    return false;
-                }, 'filter_poolid')->message('Invalid pool')
-                ->rule('date', 'filter_job_starttime')->message('Invalid job start time')
-                ->rule('date', 'filter_job_endtime')->message('Invalid job end time')
-                ->rule('in', 'filter_job_orderby', $result_order)->message('Invalid job order by')
-                ->rule('in', 'filter_job_orderby_asc', ['ASC', 'DESC'])->message('Invalid job order by')
-                ->rule('integer', 'page')->message('Invalid page number')
-            ;
-
-            if (!$validator->validate()) {
-                throw new ValidationException($validator->errors());
+        if ($jobSearch->getStatus()) {
+            switch ($jobSearch->getStatus()) {
+                case 'running':
+                    $jobsQueryBuilder
+                        ->andWhere('j.status = :status')
+                        ->setParameter('status', 'R');
+                    break;
+                case 'waiting':
+                    $jobsQueryBuilder
+                        ->andWhere('j.status IN(:status)')
+                        ->setParameter('status', ['F', 'S', 'M', 'm', 's', 'j', 'c', 'd', 't', 'p', 'C']);
+                    break;
+                case 'completed':
+                    $jobsQueryBuilder
+                        ->andWhere('j.status IN(:status)')
+                        ->setParameter('status', 'T');
+                    break;
+                case 'completed-with-errors':
+                    $jobsQueryBuilder
+                        ->andWhere('j.status IN(:status)')
+                        ->setParameter('status', 'E');
+                    break;
+                case 'failed':
+                    $jobsQueryBuilder
+                        ->andWhere('j.status IN(:status)')
+                        ->setParameter('status', 'f');
+                    break;
+                case 'cancelled':
+                    $jobsQueryBuilder
+                        ->andWhere('j.status IN(:status)')
+                        ->setParameter('status', 'A');
+                    break;
             }
         }
 
-        /**
-         * POST VALIDATION
-         */
+        $jobsQueryBuilder->orderBy(
+            $jobSearch->getOrderby() ?? 'j.id',
+            $jobSearch->getOrderDirection() ? 'ASC' : 'DESC'
+        );
 
-        // Job status
-
-        $filter_jobstatus = (isset($postRequestData['filter_jobstatus'])) ? (int) $postRequestData['filter_jobstatus'] : null;
-
-        switch ($filter_jobstatus) {
-            case STATUS_RUNNING:
-                $jobsQueryBuilder
-                    ->andWhere('j.status = :status')
-                    ->setParameter('status', 'R');
-                break;
-            case STATUS_WAITING:
-                $jobsQueryBuilder
-                    ->andWhere('j.status IN (:status)')
-                    ->setParameter('status', ['F','S','M','m','s','j','c','d','t','p','C']);
-                break;
-            case STATUS_COMPLETED:
-                $jobsQueryBuilder
-                    ->andWhere('j.status = :status')
-                    ->setParameter('status', 'T');
-                break;
-            case STATUS_COMPLETED_WITH_ERRORS:
-                $jobsQueryBuilder
-                    ->andWhere('j.status = :status')
-                    ->setParameter('status', 'E');
-                break;
-            case STATUS_FAILED:
-                $jobsQueryBuilder
-                    ->andWhere('j.status = :status')
-                    ->setParameter('status', 'f');
-                break;
-            case STATUS_CANCELED:
-                $jobsQueryBuilder
-                    ->andWhere('j.status = :status')
-                    ->setParameter('status', 'A');
-                break;
-        }
-
-        // Job level filter
-
-        $filterJobLevel = (isset($postRequestData['filter_joblevel'])) ? $postRequestData['filter_joblevel'] : null;
-
-        if ($filterJobLevel) {
-            $jobsQueryBuilder
-                ->andWhere('j.level = :job_level')
-                ->setParameter('job_level', $filterJobLevel);
-        }
-
-        // Job Type
-
-        $filterJobType = $postRequestData['filter_jobtype'] ?? null;
-
-        if ($filterJobType) {
-            $jobsQueryBuilder
-                ->andWhere('j.type = :job_type')
-                ->setParameter('job_type', $filterJobType);
-        }
-
-        // Job Client
-        $filterClientId = $postRequestData['filter_clientid'] ?? null;
-        if ($filterClientId) {
-            $jobsQueryBuilder
-                ->andWhere('j.clientid = :clientid')
-                ->setParameter('clientid', $filterClientId);
-        }
-
-        // Job Pool
-        $filterPoolId = (isset($postRequestData['filter_poolid'])) ? $postRequestData['filter_poolid'] : null;
-
-        if ($filterPoolId) {
-            $jobsQueryBuilder
-                ->andWhere('j.poolid = :pool_id')
-                ->setParameter('pool_id', $filterPoolId);
-        }
-
-        // Job start time
-
-        $filterJobStartTime = (isset($postRequestData['filter_job_starttime'])) ? $postRequestData['filter_job_starttime'] : null;
-
-        if ($filterJobStartTime) {
-            $jobsQueryBuilder
-                ->andWhere('j.starttime >= :start_time')
-                ->setParameter('start_time', $filterJobStartTime);
-        }
-
-        // Job end time
-
-        $filterJobEndTime = (isset($postRequestData['filter_job_endtime'])) ? $postRequestData['filter_job_endtime'] : null;
-
-        if ($filterJobEndTime) {
-            $jobsQueryBuilder
-                ->andWhere('j.endtime <= :end_time')
-                ->setParameter('end_time', $filterJobEndTime);
-        }
-
-        // Order by
-        $jobOrderByFilter = 'j.id';
-        if (isset($postRequestData['filter_job_orderby'])) {
-            $jobOrderByFilter = $postRequestData['filter_job_orderby'];
-        }
-
-        // Order direction
-
-        $job_orderby_asc_filter = (isset($postRequestData['filter_job_orderby_asc'])) ? 'ASC' : 'DESC';
-        $jobOrderDirectionChecked = ($job_orderby_asc_filter == 'ASC') ? 'checked' : '';
-
-        $jobsQueryBuilder->orderBy($jobOrderByFilter, $job_orderby_asc_filter);
-
-        $pagination = new DBPagination($request, $this->config);
-
-        $last_jobs = $pagination->paginate($jobsQueryBuilder, $jobRepository->count([]));
-
-        return $this->view->render($response, 'pages/jobs.html.twig', [
-            'pagination' => $pagination,
-            'last_jobs' => $last_jobs,
-            'job_status' => $job_status,
-            'levels_list' => $levels_list,
-            'job_types_list' => $jobTypesList,
-            'clients_list' => $clientsList,
-            'pools_list' => $poolsList,
-            'filter_clientid' => $filterClientId,
-            'filter_joblevel' => $filterJobLevel,
-            'filter_jobstatus' => $filter_jobstatus,
-            'filter_job_type' => $filterJobType,
-            'filter_pool_id' => $filterPoolId,
-            'filter_job_starttime' => $filterJobStartTime,
-            'filter_job_endtime' => $filterJobEndTime,
-            'result_order' => $result_order,
-            'result_order_field' => $jobOrderByFilter,
-            'result_order_asc_checked' => $jobOrderDirectionChecked,
+        return $this->render('pages/jobs.html.twig', [
+            'form' => $form,
+            'pagination' => $paginator
+                ->paginate(
+                    $jobsQueryBuilder->getQuery(),
+                    $request->query->getInt('page', 1),
+                    $this->getParameter('app.rows_per_page')
+                )
         ]);
     }
 
@@ -329,7 +181,7 @@ class JobController extends AbstractController
     #[Route("/joblog/{id}", name: "joblog")]
     public function showLogs(?Job $job): Response
     {
-        if(null === $job) {
+        if (null === $job) {
             $this->addFlash('error', 'Invalid job id provided in Job logs report');
             return $this->redirectToRoute('jobs');
         }
@@ -355,7 +207,7 @@ class JobController extends AbstractController
         $form = $this->createForm(JobFileSearchType::class);
         $form->handleRequest($request);
 
-        if( $form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $filename = $form->get('filename')->getData();
         }
 
