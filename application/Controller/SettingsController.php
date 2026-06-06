@@ -26,8 +26,7 @@ use Core\Exception\AppException;
 use Core\Exception\ValidationException;
 use Core\Helpers\Sanitizer;
 use Doctrine\ORM\Exception\ORMException;
-use Valitron\Validator;
-
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request as Request;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -36,93 +35,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class SettingsController extends AbstractController
 {
     /**
-     * @param Request $request
-     * @param Response $response
+     * @param ParameterBagInterface $parameterBag
      * @return Response
      */
-    #[Route("/settings", name: "settings", methods: ["POST"])]
-    public function index(/*Request $request, Response $response*/): Response
+    #[Route("/settings", name: "settings", methods: ["GET"])]
+    public function index(ParameterBagInterface $parameterBag): Response
     {
-        return new Response('Settings');
-
-        $tplData = [];
-
-        $tplData['config_datetime_format'] = $this->config->get('datetime_format', 'Y-m-d H:i:s (default value)');
-
-        if ($this->config->has('datetime_format_short')) {
-            $tplData['config_datetime_format_short'] = $this->config->get('datetime_format_short');
-        } else {
-            $datetimeFormatShort = explode(
-                ' ',
-                $this->config->get('datetime_format', 'Y-m-d H:i:s')
-            );
-            $tplData['config_datetime_format_short'] = $datetimeFormatShort[0] . ' (default value)';
-        }
-
-        // Check if language is set
-        $tplData['config_language'] = $this->config->get('language', 'en_US (default value)');
-
-        if ($this->config->has('show_inactive_clients')) {
-            $config_show_inactive_clients = $this->config->get('show_inactive_clients');
-
-            if ($config_show_inactive_clients === true) {
-                $tplData['config_show_inactive_clients'] = 'checked';
-            }
-        }
-
-        if ($this->config->has('hide_empty_pools')) {
-            $config_hide_empty_pools = $this->config->get('hide_empty_pools');
-
-            if ($config_hide_empty_pools === true) {
-                $tplData['config_hide_empty_pools'] = 'checked';
-            }
-        } else {
-            $tplData['config_hide_empty_pools'] = '';
-        }
-
-        // Parameter <enable_users_auth> is enabled by default (in case is not specified in config file)
-        $config_enable_users_auth = true;
-
-        if ($this->config->has('enable_users_auth') && is_bool($this->config->get('enable_users_auth'))) {
-            $config_enable_users_auth = $this->config->get('enable_users_auth');
-        }
-
-        /**
-         * TODO: split users in a different controller/page
-         */
-        if ($config_enable_users_auth === true) {
-            $tplData['users'] = $this->managerRegistry
-                ->getManager()
-                ->getRepository(User::class)
-                ->findAll();
-
-            $tplData['config_enable_users_auth'] = 'checked';
-        } else {
-            $tplData['config_enable_users_auth'] = '';
-        }
-
-        // Parameter <debug> is disabled by default (in case is not specified in config file)
-        $config_debug = false;
-
-        if ($this->config->has('debug') && is_bool($this->config->get('debug'))) {
-            $config_debug = $this->config->get('debug');
-        }
-
-        if ($config_debug === true) {
-            $tplData['config_debug'] = 'checked';
-        } else {
-            $tplData['config_debug'] = '';
-        }
-
-        $configBasePath = $this->config->get('basepath', null);
-
-        if ($configBasePath == null) {
-            $tplData['config_basepath'] = 'not set';
-        } else {
-            $tplData['config_basepath'] = $configBasePath;
-        }
-
-        return $this->view->render($response, 'pages/settings.html.twig', $tplData);
+        return $this->render('pages/settings.html.twig', [
+            'config_datetime_format' => $parameterBag->get("app.datetime_format"),
+            'config_datetime_format_short' => $parameterBag->get("app.datetime_format_short"),
+            'config_language' => $parameterBag->get("app.language"),
+            'config_show_inactive_clients' => $parameterBag->get("app.show_inactive_clients"),
+            'config_hide_empty_pools' => $parameterBag->get("app.hide_empty_pools"),
+            'config_debug' => $parameterBag->get("app.debug"),
+        ]);
     }
 
     /**
