@@ -8,11 +8,14 @@ parameters:
     app.datetime_format: '%env(string:APP_DATETIME_FORMAT)%'
     app.rows_per_page: '%env(int:APP_ROWS_PER_PAGE)%'
     app.show_inactive_clients: '%env(bool:APP_SHOW_INACTIVE_CLIENTS)%'
+    app.hide_empty_pools: '%env(bool:APP_HIDE_EMPTY_POOLS)%'
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $hideEmptyPools: '%app.hide_empty_pools%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
