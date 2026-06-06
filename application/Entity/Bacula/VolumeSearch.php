@@ -19,7 +19,7 @@
 
 declare(strict_types=1);
 
-use App\Entity\Bacula\Pool;
+namespace App\Entity\Bacula;
 
 class VolumeSearch
 {
