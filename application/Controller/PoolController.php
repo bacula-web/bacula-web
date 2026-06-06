@@ -54,15 +54,21 @@ class PoolController extends AbstractController
      * @throws NonUniqueResultException
      */
     #[Route("/pools", name: "pools")]
-    public function index(/*Request $request, Response $response*/): Response
+    public function index(bool $hideEmptyPools): Response
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
         
-        $pools = $queryBuilder
+        $queryBuilder
             ->select('p', 'v')
             ->from(Pool::class, 'p')
             ->leftJoin('p.volumes', 'v')
-            ->orderBy('p.name')
+            ->orderBy('p.name');
+
+        if($hideEmptyPools) {
+            $queryBuilder->andWhere('p.numvols > 0');
+        }
+
+        $pools = $queryBuilder
             ->getQuery()
             ->getArrayResult();
 
