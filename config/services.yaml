@@ -7,6 +7,7 @@ parameters:
     app.datetime_format_short: '%env(string:APP_DATETIME_FORMAT_SHORT)%'
     app.datetime_format: '%env(string:APP_DATETIME_FORMAT)%'
     app.rows_per_page: '%env(int:APP_ROWS_PER_PAGE)%'
+    app.show_inactive_clients: '%env(bool:APP_SHOW_INACTIVE_CLIENTS)%'
 services:
     # default configuration for services in *this* file
     _defaults:

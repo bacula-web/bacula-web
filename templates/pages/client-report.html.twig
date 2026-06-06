@@ -10,57 +10,23 @@
         <div class="card border-dark mb-3">
             <div class="card-header">{{ 'Report options'|trans }}</div>
             <div class="card-body">
-                <form action="{{ url_for('app_client_report') }}" method="post" class="form-inline">
-                    <!-- Backup job name -->
-                    <div class="mb-3">
-                        <label class="form-label" for="clientname">{{ 'Client'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.client_id ? 'is-invalid' : ' ' }}" name="client_id">
-                            {% for client_id, client_name in clients_list %}
-                                <option value="{{ client_id }}"
-                                        {% if client_id == selected_client %}selected{% endif %}>{{ client_name }}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">
-                            {{ validation_errors.client_id|first }}
-                        </div>
-
-                    </div>
-                    <!-- Period -->
-                    <div class="mb-3">
-                        <label class="form-label" for="period">{{ 'Period'|trans }}</label>
-                        <select class="form-control input-sm {{ validation_errors.period ? 'is-invalid' : ' ' }}" name="period">
-                            {% for key, period in periods_list %}
-                                <option value="{{ key }}"
-                                        {% if key == selected_period %}selected {% endif %}>{{ period }}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">
-                            {{ validation_errors.period|first }}
-                        </div>
-                    </div>
-
-                    <!-- Submit button -->
-                    <div class="mb-3 pull-right">
-                        <button type="submit" class="btn btn-primary">{{ 'View report'|trans }}</button>
-                    </div>
-                    {{ csrf|raw }}
-                </form>
+                {{ form(form) }}
             </div>
         </div>
 
-        {% if no_report_options == 'false' %}
+        {% if client is defined %}
             <div class="card border-dark mb-3">
                 <div class="card-header">{{ 'Client informations'|trans }}</div>
                 <div class="card-body">
                     <dl class="dl-horizontal">
                         <dt>{{ 'Client name'|trans }}</dt>
-                        <dd>{{ client_name }}</dd>
+                        <dd>{{ client.name }}</dd>
                         <dt>{{ 'Client version'|trans }}</dt>
-                        <dd>{{ client_version }}</dd>
+                        <dd>{{ client.version }}</dd>
                         <dt>{{ 'Client os'|trans }}</dt>
-                        <dd>{{ client_os }}</dd>
+                        <dd>{{ client.os }}</dd>
                         <dt>{{ 'Client arch'|trans }}
-                        <dd>{{ client_arch }}</dd>
+                        <dd>{{ client.arch }}</dd>
                     </dl>
                 </div>
             </div>
@@ -79,24 +45,24 @@
                         <th class="text-center">{{ 'Status'|trans }}</th>
                     </tr>
                     </thead>
-                    {% for job in backup_jobs %}
+                    {% for job in jobs %}
                         <tr>
                             <td>{{ job.name }}</td>
-                            <td>{{ job.jobid }}</td>
+                            <td>{{ job.id }}</td>
                             <td>{{ job.level }}</td>
-                            <td>{{ job.endtime }}</td>
+                            <td>{{ job.endtime|date(app_datetime_format) }}</td>
                             <td>{{ job.jobbytes }}</td>
                             <td>{{ job.jobfiles }}</td>
-                            <td>{{ job.jobstatuslong }}</td>
+                            <td>{{ job.status.statuslong }}</td>
                         </tr>
                     {% endfor %}
                     <tr>
                         <td colspan="4" class="text-end">Total</td>
                         <td class="text-center">
-                            <b>{{ total_bytes }}</b>
+                            <b>{{ readable_size(total_bytes) }}</b>
                         </td>
                         <td class="text-center">
-                            <b>{{ total_files }}</b>
+                            <b>{{ total_files|number_format }}</b>
                         </td>
                         <td></td>
 
