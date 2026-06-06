@@ -46,6 +46,21 @@ class Client
     private int $jobRetention;
 
     /**
+     * @var string|null
+     */
+    private ?string $version;
+
+    /**
+     * @var string|null
+     */
+    private ?string $os;
+
+    /**
+     * @var string|null
+     */
+    private ?string $arch;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -83,5 +98,63 @@ class Client
     public function getJobRetention(): int
     {
         return $this->jobRetention;
+    }
+
+    public function getVersion(): string
+    {
+        if ($this->uname) {
+            $uname = explode(' ', $this->uname);
+
+            if (!empty($uname[0])) {
+                $this->version = $uname[0];
+            } else {
+                $this->version = 'n/a';
+            }
+        } else {
+            $this->version = 'n/a';
+        }
+
+        return $this->version;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArch(): string
+    {
+        if ($this->uname) {
+            $uname = explode(' ', $this->uname);
+
+            $temp = $uname[2];
+            $arch = explode('-', $temp);
+            $this->arch = $arch[0];
+        } else {
+            $this->arch = 'n/a';
+        }
+
+        return $this->arch;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOs(): string
+    {
+        if ($this->uname) {
+            $uname = explode(',', $this->uname);
+            if (end($uname) == 'Win32' || end($uname) == 'Win64') {
+                $uname = explode(' ', $uname[0]);
+                $uname = array_slice($uname, 2);
+                $this->os = implode(' ', $uname);
+            } else {
+                $uname = explode(' ', $this->uname);
+                $uname = explode(',', $uname[2]);
+                $this->os = ucfirst($uname[1] . ' ' . $uname[2]);
+            }
+        } else {
+            $this->os = 'n/a';
+        }
+
+        return $this->os;
     }
 }

@@ -185,4 +185,33 @@ class JobRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * @param int $clientId
+     * @param DateTimeInterface $from
+     * @param DateTimeInterface $to
+     * @return mixed
+     */
+    public function getClientJobs(int $clientId, DateTimeInterface $from, DateTimeInterface $to)
+    {
+        $queryBuilder = $this->createQueryBuilder('j');
+
+        $query = $queryBuilder
+            ->select('j', 's')
+            ->join('j.status', 's')
+            ->andWhere('j.clientid = :client')
+            ->setParameter('client', $clientId)
+            ->andWhere('j.type = :type')
+            ->setParameter('type', 'B')
+            ->andWhere('j.status = :status')
+            ->setParameter('status', 'T')
+            ->andWhere('j.endtime BETWEEN :start AND :end')
+            ->setParameter('start', $from)
+            ->setParameter('end', $to)
+            ->orderBy('j.endtime', 'DESC')
+            ->getQuery()
+        ;
+
+        return $query->getResult();
+    }
 }

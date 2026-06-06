@@ -21,13 +21,20 @@ declare(strict_types=1);
 
 namespace App\Entity\Bacula\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use App\Entity\Bacula\Client;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * This is the Doctrine Repository class for the Client entity.
  */
-class ClientRepository extends EntityRepository
+class ClientRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Client::class);
+    }
+
     /**
      * Return an array of clients (optionally only active clients)
      *

@@ -21,8 +21,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Bacula\Repository\ClientRepository;
+use App\Entity\Bacula\Repository\JobRepository;
+use App\Form\ClientType;
 use Core\Db\DatabaseFactory;
 use Core\Exception\AppException;
+use Core\Exception\ConfigFileException;
 use Core\Exception\ValidationException;
 use Core\Graph\Chart;
 use Core\Db\CDBQuery;
@@ -31,6 +35,9 @@ use Core\Utils\CUtils;
 use Core\Helpers\Sanitizer;
 use App\Table\JobTable;
 use App\Table\ClientTable;
+use DateInterval;
+use DatePeriod;
+use DateTimeImmutable;
 use Exception;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -45,186 +52,97 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ClientController extends AbstractController
 {
     /**
-     * @return ResponseInterface
+     * @param Request $request
+     * @param JobRepository $jobRepository
+     * @return Response
      * @throws AppException
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws Exception
+     * @throws \DateInvalidOperationException
+     * @throws \DateMalformedPeriodStringException
      */
     #[Route("/client", name: "app_client_report")]
     public function index(
-        /* Request $request,
-        Response $response,
-        JobTable $jobTable,
-        ClientTable $clientTable */
+        Request $request,
+        JobRepository $jobRepository
     ): Response {
-        return new Response('Client report');
 
-        $tplData = [];
+        $form = $this->createForm(ClientType::class);
+        $form->handleRequest($request);
 
-        $period = 7;
-        $backup_jobs = array();
-        $days_stored_bytes = array();
-        $days_stored_files = array();
+        if($form->isSubmitted() && $form->isValid()) {
+            /**
+             * TODO: get $start an $end from Bacula director database side
+             */
+            $daysInterval = $form->get('period')->getNormData();
+            $end = new DateTimeImmutable('now');
+            $interval = new DateInterval("P{$daysInterval}D");
+            $start = $end->sub($interval);
 
-        // Clients list
-        $tplData['clients_list'] = $clientTable->getClients($this->config->get('show_inactive_clients'));
+            $client = $form->get('client')->getData();
+            $jobs = $jobRepository->getClientJobs($client->getId(), $start, $end);
 
-        // Period list
-        $periods_list = [
-            '7' => "Last 7 days",
-            '14' => "Last 14 days",
-            '30' => "Last 30 days"
-        ];
+            $period = $form->get('period')->getData();
 
-        $tplData['periods_list'] = $periods_list;
+            // Get the last 7 days interval (start and end)
+            $interval = new DateInterval('P1D');
+            $datePeriod = new DatePeriod($start, $interval, $end);
 
-        $job_levels = array(
-            'D' => 'Differential',
-            'I' => 'Incremental',
-            'F' => 'Full',
-            'V' => 'InitCatalog',
-            'C' => 'Catalog',
-            'O' => 'VolumeToCatalog',
-            'd' => 'DiskToCatalog',
-            'A' => 'Data'
-        );
+            $daysStoredFiles = [];
+            $daysStoredBytes = [];
 
-        // Check client_id and period received by POST $this->request
-        $clientId = null;
-        if ($request->getMethod() === 'POST') {
-            $postData = $request->getParsedBody();
-
-            $validator = (new Validator($postData, ['client_id', 'period']))
-                ->rule('in', 'client_id', array_keys($tplData['clients_list']))->message('Invalid client provided')
-                ->rule('in', 'period', array_keys($tplData['periods_list']))->message('Invalid period provided')
-                ->rule('required', [ 'client_id', 'period'])
-                ->rule('integer', 'period')
-                ->rule('integer', 'client_id');
-
-            if (!$validator->validate()) {
-                throw new ValidationException($validator->errors());
-            } else {
-                $clientId = Sanitizer::sanitize($postData['client_id']);
-                $period = (int)Sanitizer::sanitize($postData['period']);
-
-                $tplData['selected_period'] = $period;
-                $tplData['selected_client'] = $clientId;
-
-                // Get the last n days interval (start and end timestamps)
-                $currentDateTime = DatabaseFactory::getDatabase(
-                    $this->session->get('catalog_id')
-                )->getServerTimestamp();
-
-                $days = DateTimeUtil::getLastDaysIntervals($currentDateTime, $period);
-
-                $startTime = date('Y-m-d H:i:s', $days[0]['start']);
-                $endTime = date('Y-m-d H:i:s', $days[array_key_last($days)]['end']);
-
-                /**
-                 * Filter jobTable per $this->requested period
-                 */
-                $jobTable->addParameter('job_starttime', $startTime);
-                $where[] = 'Job.endtime >= :job_starttime';
-                $jobTable->addParameter('job_endtime', $endTime);
-                $where[] = 'Job.endtime <= :job_endtime';
-
-                $tplData['no_report_options'] = 'false';
-
-                // Client information
-                $client_info = $clientTable->getClientInfos($clientId);
-
-                $tplData['client_name'] = $client_info['name'];
-                $tplData['client_os'] = $client_info['os'];
-                $tplData['client_arch'] = $client_info['arch'];
-                $tplData['client_version'] = $client_info['version'];
-
-                // Filter by Job status = Completed
-                $jobTable->addParameter('jobstatus', 'T');
-                $where[] = 'Job.JobStatus = :jobstatus';
-
-                // // Filter by Job Type
-                $jobTable->addParameter('jobtype', 'B');
-                $where[] = 'Job.Type = :jobtype';
-
-                // Filter by Client id
-                $jobTable->addParameter('clientid', $clientId);
-                $where[] = 'clientid = :clientid';
-
-                $query = CDBQuery::get_Select(['table' => $jobTable->getTableName(),
-                    'fields' => [
-                        'Job.Name',
-                        'Job.Jobid',
-                        'Job.Level',
-                        'Job.Endtime',
-                        'Job.Jobbytes',
-                        'Job.Jobfiles',
-                        'Status.JobStatusLong'
-                    ],
-                    'join' => [
-                        ['table' => 'Status', 'condition' => 'Job.JobStatus = Status.JobStatus']
-                    ],
-                    'orderby' => 'Job.EndTime DESC',
-                    'where' => $where
-                ], $jobTable->get_driver_name());
-
-                $jobs_result = $jobTable->run_query($query);
-
-                $totalBytes = 0;
-                $totalFiles = 0;
-                foreach ($jobs_result->fetchAll() as $job) {
-                    $totalBytes += (int)$job['jobbytes'];
-                    $totalFiles += (int)$job['jobfiles'];
-                    $job['level'] = $job_levels[$job['level']];
-                    $job['jobfiles'] = number_format((float)$job['jobfiles']);
-                    $job['jobbytes'] = CUtils::GetHumanSize($job['jobbytes']);
-                    $job['endtime'] = date(
-                        $this->config->get('datetime_format', 'Y-m-d H:i:s'),
-                        strtotime($job['endtime'])
-                    );
-                    $backup_jobs[] = $job;
-                }
-                $tplData['total_bytes'] = CUtils::GetHumanSize($totalBytes);
-                $tplData['total_files'] = number_format($totalFiles);
-                $tplData['backup_jobs'] = $backup_jobs;
-
-                // Last n days stored Bytes graph
-                foreach ($days as $day) {
-                    $stored_bytes = $jobTable->getStoredBytes([$day['start'], $day['end']], 'ALL', $clientId);
-                    $days_stored_bytes[] = [date("m-d", $day['start']), $stored_bytes];
-                }
-
-                $stored_bytes_chart = new Chart(array('type' => 'bar',
-                    'name' => 'chart_storedbytes',
-                    'data' => $days_stored_bytes,
-                    'ylabel' => 'Bytes',
-                    'uniformize_data' => true));
-
-                $tplData['stored_bytes_chart_id'] = $stored_bytes_chart->name;
-                $tplData['stored_bytes_chart'] = $stored_bytes_chart->render();
-
-                unset($stored_bytes_chart);
-
-                // Last n days stored files graph
-                foreach ($days as $day) {
-                    $stored_files = $jobTable->getStoredFiles([$day['start'], $day['end']], 'ALL', $clientId);
-                    $days_stored_files[] = array(date("m-d", $day['start']), $stored_files);
-                }
-
-                $stored_files_chart = new Chart(array('type' => 'bar',
-                    'name' => 'chart_storedfiles',
-                    'data' => $days_stored_files,
-                    'ylabel' => 'Files'));
-
-                $tplData['stored_files_chart_id'] = $stored_files_chart->name;
-                $tplData['stored_files_chart'] = $stored_files_chart->render();
-
-                unset($stored_files_chart);
+            foreach($datePeriod as $day) {
+                $daysStoredFiles[] = [
+                    $day->format('m-d'),
+                    $jobRepository->getTotalStoredFiles(
+                        $day->setTime(0, 0, 0),
+                        $day->setTime(23, 59, 59),
+                        null,
+                        $client->getId()
+                    ),
+                ];
             }
 
-            $tplData['period'] = $period;
+            $storedFilesChart = new Chart([
+                'type' => 'bar',
+                'name' => 'chart_storedfiles',
+                'data' => $daysStoredFiles,
+                'ylabel' => 'Files'
+            ]);
+
+            foreach($datePeriod as $day) {
+                $daysStoredBytes[] = [
+                    $day->format('m-d'),
+                    $jobRepository->getTotalStoredBytes(
+                        $day->setTime(0, 0, 0),
+                        $day->setTime(23, 59, 59),
+                        null,
+                        $client->getId()
+                    ),
+                ];
+            }
+
+            $storedBytesChart = new Chart([
+                'type' => 'bar',
+                'name' => 'chart_storedbytes',
+                'data' => $daysStoredBytes,
+                'ylabel' => 'Bytes'
+            ]);
+
+            return $this->render('pages/client-report.html.twig', [
+                'form' => $form,
+                'client' => $client,
+                'jobs' => $jobs,
+                'total_bytes' => $jobRepository->getTotalStoredBytes($start, $end, null, $client->getId()),
+                'total_files' => $jobRepository->getTotalStoredFiles($start, $end, null, $client->getId()),
+                'period' => $period,
+                'stored_bytes_chart_id' => $storedBytesChart->name,
+                'stored_bytes_chart' => $storedBytesChart->render(),
+                'stored_files_chart_id' => $storedFilesChart->name,
+                'stored_files_chart' => $storedFilesChart->render(),
+            ]);
         }
-        return $this->view->render($response, 'pages/client-report.html.twig', $tplData);
+
+        return $this->render('pages/client-report.html.twig', [
+            'form' => $form,
+        ]);
     }
 }
