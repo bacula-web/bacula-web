@@ -20,36 +20,42 @@
 
 namespace App\Controller;
 
-use Core\Db\ManagerRegistry;
 use Core\Exception\AppException;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use PDO;
 use Core\Graph\Chart;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
-
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\Request as Request;
 use Symfony\Component\HttpFoundation\Response as Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TestController extends AbstractController
 {
     /**
-     * @return ResponseInterface
+     * @var ObjectManager
+     */
+    private ObjectManager $entityManager;
+
+    /**
+     * @param ManagerRegistry $doctrine
+     */
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->entityManager = $doctrine->getManager('bacula');
+    }
+
+    /**
+     * @return Response
      * @throws AppException
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @throws Exception
      */
     #[Route("/test", name: "test")]
-    public function index(/*Response $response, ManagerRegistry $managerRegistry*/): Response
+    public function index(): Response
     {
-        return new Response('Test page');
-
+        $twigCacheDir = $this->getParameter('kernel.cache_dir') . '/twig';
         $tplData = [];
-
-        $em = $managerRegistry->getManager('bacula');
 
         // Installed PDO drivers
         $pdo_drivers = PDO::getAvailableDrivers();
@@ -59,6 +65,9 @@ class TestController extends AbstractController
             false => 'fa-solid fa-xmark'
         ];
 
+        /**
+         * TODO: update requirement checks
+         */
         // Checks list
         $check_list = array(
             array('check_cmd' => 'php-gettext',
@@ -86,7 +95,7 @@ class TestController extends AbstractController
                 'check_label' => 'Database connection status (MySQL and postgreSQL only)'),
             array('check_cmd' => 'twig-cache',
                 'check_label' => 'Twig cache folder write permission',
-                'check_descr' => TPL_CACHE . ' must be writable by Apache'),
+                'check_descr' => $twigCacheDir . ' must be writable by Apache'),
             array('check_cmd' => 'users-db',
                 'check_label' => 'Protected assets folder write permission',
                 'check_descr' => 'application/assets/protected folder must be writable by Apache'),
@@ -96,7 +105,7 @@ class TestController extends AbstractController
             array('check_cmd' => 'php-timezone',
                 'check_label' => 'PHP timezone',
                 'check_descr' => 'Timezone must be configured in php.ini (current timezone = ' . ini_get('date.timezone') . ')')
-            );
+        );
 
         // Doing all checks
         foreach ($check_list as &$check) {
@@ -123,18 +132,24 @@ class TestController extends AbstractController
                     $check['check_result'] = $icon_result[function_exists('posix_getpwuid')];
                     break;
                 case 'twig-cache':
-                    $check['check_result'] = $icon_result[is_writable(TPL_CACHE)];
+                    $check['check_result'] = $icon_result[is_writable($twigCacheDir)];
                     break;
                 case 'users-db':
-                    $check['check_result'] = $icon_result[is_writable(BW_ROOT . '/application/assets/protected')];
+                    $check['check_result'] = $icon_result[is_writable($this->getParameter('kernel.project_dir') . '/application/assets/protected')];
                     break;
                 case 'php-version':
-                    $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '8.1', '>=')];
+                    $check['check_result'] = $icon_result[version_compare(PHP_VERSION, '8.1.0', '>=')];
                     break;
                 case 'db-connection':
-                    $connection = $em->getConnection();
-                    $connection->connect();
-                    $driver = str_replace('pdo_', '', $connection->getParams()['driver']);
+                    /**
+                     * @var Connection $connection
+                     */
+                    $connection = $this->entityManager->getConnection();
+                    /**
+                     * @var PDO $pdo
+                     */
+                    $pdo = $connection->getNativeConnection();
+                    $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
                     $check['check_result'] = $icon_result[$connection->isConnected()];
                     $database = $connection->getDatabase();
                     $check['check_descr'] = "Successful connection to database $database with driver $driver";
@@ -151,17 +166,19 @@ class TestController extends AbstractController
         }
 
         // Testing graph capabilities
-            $data = array(array('test', 100),
-            array('test1', 150),
-            array('test2', 180),
-            array('test3', 270),
-            array('test4', 456)
-            );
+        $data = [['test', 100],
+            ['test1', 150],
+            ['test2', 180],
+            ['test3', 270],
+            ['test4', 456]
+        ];
 
         // Dummy Pie chart
-            $pie_chart = new Chart(array('type' => 'pie',
+        $pie_chart = new Chart([
+            'type' => 'pie',
             'name' => 'chart_pie_test',
-            'data' => $data));
+            'data' => $data
+        ]);
 
         $tplData['pie_graph_id'] = $pie_chart->name;
         $tplData['pie_graph'] = $pie_chart->render();
@@ -169,10 +186,12 @@ class TestController extends AbstractController
         unset($pie_chart);
 
         // Dummy bar graph
-        $bar_chart = new Chart(array('type' => 'bar',
+        $bar_chart = new Chart([
+            'type' => 'bar',
             'name' => 'chart_bar_test',
             'data' => $data,
-            'ylabel' => 'Coffee cups'));
+            'ylabel' => 'Coffee cups'
+        ]);
 
         $tplData['bar_chart_id'] = $bar_chart->name;
         $tplData['bar_chart'] = $bar_chart->render();
@@ -181,6 +200,6 @@ class TestController extends AbstractController
 
         $tplData['checks'] = $check_list;
 
-        return $this->view->render($response, 'pages/test.html.twig', $tplData);
+        return $this->render('pages/test.html.twig', $tplData);
     }
 }
