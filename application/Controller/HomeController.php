@@ -20,21 +20,17 @@
 
 namespace App\Controller;
 
-use App\Table\JobTable;
-use App\Table\PoolTable;
-use App\Table\VolumeTable;
-use Core\Db\DatabaseFactory;
+use App\Entity\Bacula\Job;
+use App\Entity\Bacula\Volume;
+use App\Service\Chart\StatsChart;
 use Core\Exception\ConfigFileException;
-use Core\Exception\ValidationException;
-use Exception;
-use Core\Db\CDBQuery;
 use Core\Exception\AppException;
-use Core\Graph\Chart;
-use Core\Utils\CUtils;
-use Core\Utils\DateTimeUtil;
-use Core\Helpers\Sanitizer;
-use Valitron\Validator;
-
+use DateTime;
+use DateTimeImmutable;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request as Request;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -43,40 +39,44 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     /**
+     * @var ObjectManager
+     */
+    private ObjectManager $entityManager;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->entityManager = $doctrine->getManager('bacula');
+    }
+
+    /**
      * @throws AppException
      * @throws ConfigFileException
      */
     #[Route('/', name: 'home')]
-    public function index(
-        Request $request,
-/*        JobTable $jobTable,
-        PoolTable $poolTable,
-        VolumeTable $volumeTable */
-    ): Response {
-
-        return new Response('homepage');
-
+    public function index(Request $request): Response {
         $tplData = [];
 
-        $routeContext = RouteContext::fromRequest($request);
-        $routeParser = $routeContext->getRouteParser();
+        //$routeContext = RouteContext::fromRequest($request);
+        //$routeParser = $routeContext->getRouteParser();
         $jobsPageUrl = '/jobs';
         $poolsPageUrl = '/pools';
 
-        $selectedPeriod = 'last_day';
-        $postData = $request->getParsedBody();
-        if (isset($postData['period_selector'])) {
-            $selectedPeriod = Sanitizer::sanitize($postData['period_selector']);
-        }
+        //$selectedPeriod = 'last_day';
+        //$postData = $request->getParsedBody();
+        //if (isset($postData['period_selector'])) {
+        //    $selectedPeriod = Sanitizer::sanitize($postData['period_selector']);
+        //}
 
-        $tplData['custom_period_list_selected'] = $selectedPeriod;
+        //$tplData['custom_period_list_selected'] = $selectedPeriod;
 
+        /*
         $tplData['custom_period_list'] = [
             ['id' => 'last_day', 'label' => 'Last 24 hours'],
             ['id' => 'last_week', 'label' => 'Last 7 days'],
             ['id' => 'last_month', 'label' => 'Last 4 weeks (28 days)'],
             ['id' => 'since_bot', 'label' => 'Since BOT']
         ];
+
 
         if ($request->getMethod() === 'POST') {
             $validator = new Validator($postData, ['period_selector']);
@@ -89,246 +89,85 @@ class HomeController extends AbstractController
                 throw new ValidationException($validator->errors());
             }
         }
+        */
+        $jobRepository = $this->entityManager->getRepository(Job::class);
+        $volumeRepository = $this->entityManager->getRepository(Volume::class);
 
-        // Custom period for dashboard
-        $currentDateTime = DatabaseFactory::getDatabase($this->session->get('catalog_id'))->getServerTimestamp();
+        /**
+         * @var $customPeriod array<DateTime,DateTime>
+         */
+        $customPeriod[0] = new DateTime('24 hours ago');
+        // TODO: get timestamp from DB server
+        $customPeriod[1] = new DateTimeImmutable('now');
 
-        $no_period = [
-            FIRST_DAY, $currentDateTime
-        ];
-        $last_day = [
-            $currentDateTime - DAY, $currentDateTime
-        ];
+        $form = $this->createFormBuilder()
+            ->add('period', ChoiceType::class, [
+                'choices' => [
+                    'Last 24 hours' => 1,
+                    'Last 7 days' => 7,
+                    'Last 4 weeks (28 days)' => 28,
+                    'Since BOT' => 0
+                ],
+                'attr' => [
+                    'class' => 'form-control input-sm'
+                ],
+                'label_attr' => [
+                    'class' => 'input-sm'
+                ]
+            ])
+            ->add('submit', SubmitType::class)
+            ->setMethod('GET')
+        ->getForm();
 
-        // Default period (last day)
-        $custom_period = $last_day;
+        $form->handleRequest($request);
 
-        switch ($selectedPeriod) {
-            case 'last_day':
-                $custom_period = [
-                    $currentDateTime - DAY, $currentDateTime
-                ];
-                break;
-            case 'last_week':
-                $custom_period = [$currentDateTime - WEEK, $currentDateTime];
-                break;
-            case 'last_month':
-                $custom_period = [$currentDateTime - MONTH, $currentDateTime];
-                break;
-            case 'since_bot':
-                $custom_period = $no_period;
-                break;
-        }
+        if($form->isSubmitted() && $form->isValid()) {
+            $daysInterval = $form->get('period')->getData();
 
-        // Set period start - end for widget header
-        $dateFormat = 'l, F j o';
-        $tplData['literal_period'] = date($dateFormat, $custom_period[0]) . ' to ' . date($dateFormat, $custom_period[1]);
-
-        // Running, completed, failed, waiting and canceled jobTable status over last 24 hours
-        $tplData['running_jobs'] = $jobTable->count_Jobs($custom_period, 'running');
-        $tplData['completed_jobs'] = $jobTable->count_Jobs($custom_period, 'completed');
-        $tplData['completed_with_errors_jobs'] = $jobTable->count_Jobs($custom_period, 'completed with errors');
-        $tplData['failed_jobs'] = $jobTable->count_Jobs($custom_period, 'failed');
-        $tplData['waiting_jobs'] = $jobTable->count_Jobs($custom_period, 'waiting');
-        $tplData['canceled_jobs'] = $jobTable->count_Jobs($custom_period, 'canceled');
-
-        // Stored files number
-        $tplData['stored_files'] = number_format($jobTable->getStoredFiles($no_period));
-
-        // Total bytes and files stored over the last 24 hours
-        $tplData['bytes_last'] = CUtils::GetHumanSize($jobTable->getStoredBytes($custom_period));
-        $tplData['files_last'] = number_format($jobTable->getStoredFiles($custom_period));
-
-        // Incremental, Differential and Full jobTable over the last 24 hours
-        $tplData['incr_jobs'] = $jobTable->count_Jobs($custom_period, null, J_INCR);
-        $tplData['diff_jobs'] = $jobTable->count_Jobs($custom_period, null, J_DIFF);
-        $tplData['full_jobs'] = $jobTable->count_Jobs($custom_period, null, J_FULL);
-
-        // ==============================================================
-        // Last period <Job status graph>
-        // ==============================================================
-
-        $jobs_status = array('Running', 'Completed', 'Completed with errors', 'Waiting', 'Failed', 'Canceled');
-        $jobs_status_data = array();
-
-        foreach ($jobs_status as $status) {
-            $jobs_count = $jobTable->count_Jobs($custom_period, strtolower($status));
-            $jobs_status_data[] = array($status, $jobs_count);
-        }
-
-        $last_jobs_chart = new Chart([
-                'type' => 'pie',
-                'name' => 'chart_lastjobs',
-                'data' => $jobs_status_data,
-                'linked_report' => $jobsPageUrl
-            ]);
-        $tplData['last_jobs_chart_id'] = $last_jobs_chart->name;
-
-        $tplData['last_jobs_chart'] = $last_jobs_chart->render();
-        unset($last_jobs_chart);
-
-        // ==============================================================
-        // Volumes per pool widget
-        // ==============================================================
-
-        $vols_by_pool = array();
-        $max_pools = '9';
-        $table_pool = 'Pool';
-        $sum_vols = '';
-
-        // Count defined poolTable in catalog
-        $pools_count = $poolTable->count();
-
-        // Display 9 biggest poolTable and rest of volumeTable in 10th one display as Other
-        if ($pools_count > $max_pools) {
-            $query = array('table' => $table_pool,
-                'fields' => array('SUM(numvols) AS sum_vols'),
-                'limit' => array('offset' => ($pools_count - $max_pools), 'count' => $pools_count),
-                'groupby' => 'name');
-            $result = $poolTable->run_query(CDBQuery::get_Select($query, $poolTable->get_driver_name()));
-            $sum_vols = $result->fetch();
-        }
-
-        $query = array('table' => $table_pool, 'fields' => array('poolid,name,numvols'), 'orderby' => 'numvols DESC', 'limit' => $max_pools, $poolTable->get_driver_name());
-        $result = $poolTable->run_query(CDBQuery::get_Select($query));
-
-        foreach ($result as $pool) {
-            $vols_by_pool[] = array($pool['name'], $pool['numvols']);
-        }
-
-        if ($pools_count > $max_pools) {
-            $vols_by_pool[] = array('Others', $sum_vols['sum_vols']);
-        }
-
-        $pools_usage_chart = new Chart([
-                'type' => 'pie',
-                'name' => 'chart_pools_usage',
-                'data' => $vols_by_pool,
-                'linked_report' => $poolsPageUrl
-            ]);
-
-        $tplData['pools_usage_chart_id'] = $pools_usage_chart->name;
-        $tplData['pools_usage_chart'] = $pools_usage_chart->render();
-
-        unset($pools_usage_chart);
-
-        // ==============================================================
-        // Last 7 days stored Bytes widget
-        // ==============================================================
-        $days_stored_bytes = array();
-        $days = DateTimeUtil::getLastDaysIntervals($currentDateTime, 7);
-
-        foreach ($days as $day) {
-            $days_stored_bytes[] = array(date("m-d", $day['start']), $jobTable->getStoredBytes(array($day['start'], $day['end'])));
-        }
-
-        $storedbytes_chart = new Chart(array('type' => 'bar', 'name' => 'chart_storedbytes', 'data' => $days_stored_bytes, 'ylabel' => 'Stored Bytes', 'uniformize_data' => true));
-
-        $tplData['storedbytes_chart_id'] = $storedbytes_chart->name;
-        $tplData['storedbytes_chart'] = $storedbytes_chart->render();
-
-        unset($storedbytes_chart);
-
-        // ==============================================================
-        // Last 7 days Stored Files widget
-        // ==============================================================
-        $days_stored_files = array();
-        $days = DateTimeUtil::getLastDaysIntervals($currentDateTime, 7);
-
-        foreach ($days as $day) {
-            $days_stored_files[] = array(date("m-d", $day['start']), $jobTable->getStoredFiles(array($day['start'], $day['end'])));
-        }
-
-        $storedfiles_chart = new Chart(array('type' => 'bar', 'name' => 'chart_storedfiles', 'data' => $days_stored_files, 'ylabel' => 'Stored files'));
-
-        $tplData['storedfiles_chart_id'] = $storedfiles_chart->name;
-        $tplData['storedfiles_chart'] = $storedfiles_chart->render();
-
-        unset($storedfiles_chart);
-
-        // ==============================================================
-        // Last used volumeTable widget
-        // ==============================================================
-
-        $last_volumes = array();
-
-        // Building SQL statment
-        $where = array();
-        $tmp = "(Media.Volstatus != 'Disabled') ";
-
-        switch ($volumeTable->get_driver_name()) {
-            case 'pgsql':
-                $tmp .= "AND (Media.LastWritten IS NOT NULL)";
-                break;
-            case 'mysql':
-            case 'sqlite':
-                $tmp .= "AND (Media.Lastwritten != 0)";
-        }
-
-        $where[] = $tmp;
-
-        $statment = array('table' => 'Media',
-            'fields' => array('Media.MediaId', 'Media.Volumename', 'Media.Lastwritten', 'Media.VolStatus', 'Media.VolJobs', 'Pool.Name AS poolname'),
-            'join' => array(
-                array('table' => 'Pool', 'condition' => 'Media.PoolId = Pool.poolid')
-            ),
-            'where' => $where,
-            'orderby' => 'Media.Lastwritten DESC',
-            'limit' => '10');
-
-        // Run the query
-        $result = $volumeTable->run_query(CDBQuery::get_Select($statment, $volumeTable->get_driver_name()));
-
-        foreach ($result as $volume) {
-            if ($volume['lastwritten'] != '0000-00-00 00:00:00' && !is_null($volume['lastwritten'])) {
-                $volume['lastwritten'] = date(
-                    $this->config->get('datetime_format', 'Y-m-d H:i:s'),
-                    strtotime($volume['lastwritten'])
-                );
+            if($daysInterval === 0) {
+                $customPeriod[0] = new DateTime('1970-01-01');
             } else {
-                $volume['lastwritten'] = 'n/a';
+                $interval = new \DateInterval("P{$daysInterval}D");
+                $customPeriod[0] = $customPeriod[1]->sub($interval);
             }
-            $last_volumes[] = $volume;
         }
 
-        $tplData['volumes_list'] = $last_volumes;
+        $dateFormat = 'l, F j o';
+        $literalPeriod = date_format($customPeriod[0], $dateFormat) . ' to ' . date_format($customPeriod[1], $dateFormat);
 
-        // Per job name backup and restore statistics
-        $job_types = array('R' => 'Restore', 'B' => 'Backup');      // TO IMPROVE
+        $statsChart = new StatsChart($this->entityManager);
+        $lastJobsChart = $statsChart->getLastJobsChart($customPeriod[0],$customPeriod[1], $this->generateUrl('jobs'));
+        $poolsUsageChart = $statsChart->getPoolsUsageChart($this->generateUrl('pools'));
+        $storedBytesChart = $statsChart->getStoredBytesChart();
+        $storedFilesChart = $statsChart->getStoredFilesChart();
 
-        $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes, Name AS JobName FROM Job WHERE Type in ('B','R') GROUP BY Name,Type";
-        $result = $jobTable->run_query($query);
-        $jobs_result = [];
-
-        foreach ($result->fetchAll() as $job) {
-            $job['jobfiles'] = number_format($job['jobfiles']);
-            $job['jobbytes'] = CUtils::GetHumanSize($job['jobbytes']);
-            $job['type'] = $job_types[$job['type']];
-            $jobs_result[] = $job;
-        }
-
-        $tplData['jobnames_jobs_stats'] = $jobs_result;
-
-        // Per job type backup and restore statistics
-        $query = "SELECT count(*) AS JobsCount, sum(JobFiles) AS JobFiles, Type, sum(JobBytes) AS JobBytes FROM Job WHERE Type in ('B','R') GROUP BY Type";
-        $result = $jobTable->run_query($query);
-        $jobs_result = null;
-
-        foreach ($result->fetchAll() as $job) {
-            $job['jobfiles'] = number_format($job['jobfiles']);
-            $job['jobbytes'] = CUtils::GetHumanSize($job['jobbytes']);
-            $job['type'] = $job_types[$job['type']];
-            $jobs_result[] = $job;
-        }
-
-        $tplData['jobtypes_jobs_stats'] = $jobs_result;
-
-        // Weekly jobTable statistics
-        $tplData['weeklyjobsstats'] = $jobTable->getWeeklyJobsStats();
-
-        // 10 biggest completed backup jobTable
-        $tplData['biggestjobs'] = $jobTable->getBiggestJobsStats();
-
-        return $this->view->render($response, 'pages/dashboard.html.twig', $tplData);
+        return $this->render('pages/dashboard.html.twig', [
+           'form' => $form,
+            'literal_period' => $literalPeriod,
+            'running_jobs' => $jobRepository->countJobsByStatus('running'),
+            'completed_jobs' => $jobRepository->countJobsByStatus('completed', $customPeriod[0], $customPeriod[1]),
+            'completed_jobs_with_errors' => $jobRepository->countJobsByStatus('completed_with_errors', $customPeriod[0], $customPeriod[1]),
+            'failed_jobs' => $jobRepository->countJobsByStatus('failed', $customPeriod[0], $customPeriod[1]),
+            'waiting_jobs' => $jobRepository->countJobsByStatus('waiting'),
+            'canceled_jobs' => $jobRepository->countJobsByStatus('canceled', $customPeriod[0], $customPeriod[1]),
+            'bytes_last' => $jobRepository->getTotalStoredBytes($customPeriod[0], $customPeriod[1]),
+            'files_last' => $jobRepository->getTotalStoredFiles($customPeriod[0], $customPeriod[1]),
+            'incr_jobs' => $jobRepository->countJobsByLevel($customPeriod[0], $customPeriod[1], 'I'),
+            'diff_jobs' => $jobRepository->countJobsByLevel($customPeriod[0], $customPeriod[1], 'D'),
+            'full_jobs' => $jobRepository->countJobsByLevel($customPeriod[0], $customPeriod[1], 'F'),
+            'last_jobs_chart_id' => $lastJobsChart->name,
+            'last_jobs_chart' => $lastJobsChart->render(),
+            'pools_usage_chart_id' => $poolsUsageChart->name,
+            'pools_usage_chart' => $poolsUsageChart->render(),
+            'storedbytes_chart_id' => $storedBytesChart->name,
+            'storedbytes_chart' => $storedBytesChart->render(),
+            'storedfiles_chart_id' => $storedFilesChart->name,
+            'storedfiles_chart' => $storedFilesChart->render(),
+            'volumes_list' => $volumeRepository->getLastUsedVolumes(),
+            'jobnames_jobs_stats' => $jobRepository->getJobNameStats(),
+            'job_types_jobs_stats' => $jobRepository->getStatisticsPerType(),
+            'weekly_jobs_stats' => $jobRepository->getWeeklyJobsStats(),
+            'biggestjobs' => $jobRepository->getBiggestJobs()
+        ]);
     }
 }

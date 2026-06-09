@@ -41,4 +41,20 @@ class VolumeRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function getLastUsedVolumes()
+    {
+        $queryBuilder = $this->createQueryBuilder('v');
+
+        return $queryBuilder
+            ->select('v', 'p')
+            ->join('v.pool', 'p')
+            ->setMaxResults(10)
+            ->where('v.lastwritten IS NOT NULL')
+            ->andWhere('v.status != :status')
+            ->setParameter('status', 'Disabled')
+            ->orderBy('v.lastwritten', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -22,6 +22,7 @@ declare(strict_types=1);
 namespace App\Entity\Bacula\Repository;
 
 use App\Entity\Bacula\Job;
+use Carbon\Carbon;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -212,6 +213,178 @@ class JobRepository extends ServiceEntityRepository
             ->getQuery()
         ;
 
+        return $query->getResult();
+    }
+
+    /**
+     * @param string $status
+     * @param DateTimeInterface|null $start
+     * @param DateTimeInterface|null $end
+     * @return int
+     */
+    public function countJobsByStatus(string $status, DateTimeInterface $start = null, DateTimeInterface $end  = null)
+    {
+        $queryBuilder = $this->createQueryBuilder('j');
+
+        $queryBuilder
+            ->select('count(j.id)');
+
+        switch ($status) {
+            case 'running':
+                $queryBuilder
+                    ->andWhere('j.status = :status')
+                    ->setParameter('status', 'R');
+                break;
+            case 'completed':
+                $queryBuilder
+                    ->andWhere('j.status = :status')
+                    ->setParameter('status', 'T');
+                break;
+            case 'completed_with_errors':
+                $queryBuilder
+                    ->andWhere('j.status IN(:status)')
+                    ->setParameter('status', ['E', 'e']);
+                break;
+            case 'waiting':
+                $queryBuilder
+                    ->andWhere('j.status IN(:status)')
+                    ->setParameter('status', ['F', 'S', 'M', 'm', 's', 'j', 'c', 'd', 't', 'p', 'C']);
+                break;
+            case 'failed':
+                $queryBuilder
+                    ->andWhere('j.status = :status')
+                    ->setParameter('status', 'f');
+                break;
+            case 'canceled':
+                $queryBuilder
+                    ->andWhere('j.status = :status')
+                    ->setParameter('status', 'A');
+                break;
+        }
+
+        if ($start && $end) {
+            $queryBuilder
+                ->andWhere('j.endtime BETWEEN :from AND :to')
+                ->setParameter('from', $start)
+                ->setParameter('to', $end);
+        }
+
+        return (int) $queryBuilder
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @param DateTimeInterface $from
+     * @param DateTimeInterface $to
+     * @param string $level
+     * @return void
+     */
+    public function countJobsByLevel(DateTimeInterface $from, DateTimeInterface $to, string $level): int
+    {
+        $queryBuilder = $this->createQueryBuilder('j');
+
+        $queryBuilder
+            ->select('count(j.id)')
+            ->where('j.level = :level')
+            ->setParameter('level', $level)
+            ->andWhere('j.type = :type')
+            ->setParameter('type', 'B')
+        ;
+
+        if ($from && $to) {
+            $queryBuilder
+                ->andWhere('j.endtime BETWEEN :from AND :to ')
+                ->setParameter('from', $from)
+                ->setParameter('to', $to)
+            ;
+        }
+
+        return (int) $queryBuilder
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Return backup and restore job statistics.
+     */
+    public function getStatisticsPerType(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('j');
+
+        return $queryBuilder
+            ->select('COUNT(j.id) AS jobs_count, SUM(j.jobfiles) AS jobs_files, SUM(j.jobbytes) AS jobs_bytes')
+            ->where('j.type IN(:types)')
+            ->setParameter('types', ['B', 'R'])
+            // ->groupBy('j.name')
+            ->groupBy('j.type')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Return a list of the top 10 biggest (job bytes) backup jobs.
+     */
+    public function getBiggestJobs(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('j');
+
+        return $queryBuilder
+            ->select('j.name,
+             j.type,
+             j.jobfiles AS jobs_files,
+             j.jobbytes AS jobs_bytes')
+            ->where('j.type IN(:types)')
+            ->setParameter('types', ['B', 'R'])
+            ->setMaxResults(10)
+            ->orderBy('j.jobbytes', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Return an array which contains stored bytes and files of completed backup jobs of each day of the week.
+     *
+     * @return array<int,array<string,string>>|null
+     */
+    public function getWeeklyJobsStats(): ?array
+    {
+        $weeklyJobStats = [
+            'Sunday' => ['job_bytes' => 0, 'job_files' => 0],
+            'Monday' => ['job_bytes' => 0, 'job_files' => 0],
+            'Tuesday' => ['job_bytes' => 0, 'job_files' => 0],
+            'Wednesday' => ['job_bytes' => 0, 'job_files' => 0],
+            'Thursday' => ['job_bytes' => 0, 'job_files' => 0],
+            'Friday' => ['job_bytes' => 0, 'job_files' => 0],
+            'Saturday' => ['job_bytes' => 0, 'job_files' => 0],
+        ];
+
+        $qb = $this->createQueryBuilder('j');
+        $result = $qb
+            ->select('j.jobfiles, j.jobbytes, j.endtime')
+            ->where('j.status = :status')
+            ->setParameter('status', 'T')
+            ->andWhere('j.type = :type')
+            ->setParameter('type', 'B')
+            ->getQuery()
+            ->getResult();
+
+        foreach ($result as $job) {
+            $day = Carbon::create($job['endtime'])->dayName;
+            $weeklyJobStats[$day]['job_files'] += $job['jobfiles'];
+            $weeklyJobStats[$day]['job_bytes'] += $job['jobbytes'];
+        }
+
+        return $weeklyJobStats;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getJobNameStats()
+    {
+        $dql = "SELECT count(j.id) AS jobscount, sum(j.jobfiles) AS jobfiles, j.type, sum(j.jobbytes) AS jobbytes, j.name AS jobname FROM App\Entity\Bacula\Job AS j WHERE j.type IN ('B','R') GROUP BY j.name, j.type";
+        $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
 }

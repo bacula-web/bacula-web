@@ -16,26 +16,16 @@
                     <div class="card-header"><b>{{ 'Last period job status'|trans }}</b> {{ literal_period }}</div>
                     <!-- Period selector -->
                     <div class="card-body">
-                        <form class="form-inline pull-right" method="post" action="{{ url_for('home') }}">
+
+                        {{ form_start(form) }}
                             <div class="input-group input-group-sm">
-                                <span class="input-group-text">{{ 'Period'|trans }} </span>
-                                <select class="form-control input-sm {{ validation_errors['period_selector'] ? 'is-invalid' : ' ' }}" name="period_selector">
-                                    {% for period in custom_period_list %}
-                                        <option value="{{ period.id }}"
-                                                {% if period.id == custom_period_list_selected %}selected{% endif %}>
-                                            {{ period.label }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="invalid-feedback">
-                                    {{ validation_errors['period_selector']|first }}
-                                </div>
+                                <span class="input-group-text">{{ form_label(form.period)}} </span>
 
-                                <button title="{{ 'Update with selected period'|trans }}" class="btn btn-primary btn-sm"
-                                        type="submit">{{ 'Submit'|trans }}</button>
+                                {{ form_widget(form.period) }}
 
-                                {{ csrf|raw }}
+                                {{ form_widget(form.submit) }}
                             </div>
-                        </form>
+                        {{ form_end(form) }}
                     </div>
 
                     <!-- Last period job status graph -->
@@ -55,67 +45,37 @@
                             <tr>
                                 <td><h5>{{ 'Running jobs'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="1"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ running_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
+                                    <a class="btn btn-link fs-5" href="{{ path('jobs') }}?status=running">{{ running_jobs|format_number }}</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td><h5>{{ 'Completed job(s)'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="3"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ completed_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
+                                    <a class="btn btn-link fs-5" href="{{ path('jobs') }}?status=completed">{{ completed_jobs|format_number }}</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td><h5>{{ 'Completed with errors job(s)'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="4"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ completed_with_errors_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
+                                    <a class="btn btn-link fs-5" href="{{ path('jobs') }}?status=completed_with_errors">{{ completed_jobs_with_errors|format_number }}</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td><h5>{{ 'Waiting jobs(s)'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="2"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ waiting_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
+                                    <a class="btn btn-link fs-5" href="{{ path('jobs') }}?status=waiting">{{ waiting_jobs|format_number }}</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td><h5>{{ 'Failed job(s)'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="5"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ failed_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
+                                    <a class="btn btn-link fs-5" href="{{ path('jobs') }}?status=failed">{{ failed_jobs|format_number }}</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td><h5>{{ 'Canceled job(s)'|trans }}</h5></td>
                                 <td class="text-center">
-                                    <form action="{{ url_for('jobs') }}" method="post">
-                                        <input type="hidden" name="filter_jobstatus" value="6"/>
-                                        <button class="btn btn-lg btn-link type=" submit
-                                        ">{{ canceled_jobs }}</button>
-                                        {{ csrf|raw }}
-                                    </form>
+                                    <a class="btn btn-link fs-5" href="{{ path('jobs') }}?status=canceled">{{ canceled_jobs|format_number }}</a>
                                 </td>
                             </tr>
                             <tr>
@@ -125,7 +85,7 @@
                             </tr>
                             <tr>
                                 <td><h5>{{ 'Transferred Bytes / Files'|trans }}</h5></td>
-                                <td class="text-center"><h4>{{ bytes_last }} / {{ files_last }} </h4></td>
+                                <td class="text-center"><h4>{{ readable_size(bytes_last) }} / {{ files_last|format_number }} </h4></td>
                             </tr>
                         </table>
                     </div>
@@ -210,11 +170,11 @@
                                 {% for vol in volumes_list %}
                                     <tr>
                                         <td>
-                                            <a href="{{ url_for('volume_detail', {'id': vol.mediaid}) }}"
-                                               title="{{ 'Show volume'|trans }}">{{ vol.volumename }}</a>
+                                            <a href="{{ path('volume_detail', {'id': vol.id}) }}"
+                                               title="{{ 'Show volume'|trans }}">{{ vol.name }}</a>
                                         </td>
-                                        <td>{{ vol.volstatus }}</td>
-                                        <td>{{ vol.poolname }}</td>
+                                        <td>{{ vol.status }}</td>
+                                        <td>{{ vol.pool.name }}</td>
                                         <td>{{ vol.lastwritten }}</td>
                                         <td class="strong">{{ vol.voljobs }}</td>
                                     </tr>
@@ -251,9 +211,9 @@
                         {% for jobname in jobnames_jobs_stats %}
                             <tr>
                                 <td>{{ jobname.jobname }}</td>
-                                <td class="text-right">{{ jobname.jobscount }}</td>
-                                <td class="text-right">{{ jobname.jobfiles }}</td>
-                                <td class="text-right">{{ jobname.jobbytes }}</td>
+                                <td class="text-right">{{ jobname.jobscount|number_format }}</td>
+                                <td class="text-right">{{ jobname.jobfiles|number_format }}</td>
+                                <td class="text-right">{{ readable_size(jobname.jobbytes) }}</td>
                                 <td>{{ jobname.type }}</td>
                             </tr>
                         {% endfor %}
@@ -268,14 +228,24 @@
                             <th class="text-right">{{ 'Bytes'|trans }}</th>
                             <th class="text-right">{{ 'Jobs'|trans }}</th>
                         </tr>
-                        {% for jobtype in jobtypes_jobs_stats %}
-                            <tr>
-                                <td>{{ jobtype.type }}</td>
-                                <td class="text-right">{{ jobtype.jobfiles }}</td>
-                                <td class="text-right">{{ jobtype.jobbytes }}</td>
-                                <td class="text-right">{{ jobtype.jobscount }}</td>
-                            </tr>
-                        {% endfor %}
+                        <tr>
+                            <td>{{ 'Backup'|trans }}</td>
+                            <td class="text-right">{{ job_types_jobs_stats[0].jobs_files|number_format }}</td>
+                            <td class="text-right">{{ readable_size(job_types_jobs_stats[0].jobs_bytes) }}</td>
+                            <td class="text-right">{{ job_types_jobs_stats[0].jobs_count|number_format }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'Restore'|trans }}</td>
+                            {% if job_types_jobs_stats[1] is defined %}
+                                <td class="text-right">{{ job_types_jobs_stats[1].jobs_files|number_format }}</td>
+                                <td class="text-right">{{ readable_size(job_types_jobs_stats[1].jobs_bytes) }}</td>
+                                <td class="text-right">{{ job_types_jobs_stats[1].jobs_count }}</td>
+                            {% else %}
+                                <td class="text-right">{{ 0|number_format }}</td>
+                                <td class="text-right">{{ readable_size(0) }}</td>
+                                <td class="text-right">{{ 0|number_format }}</td>
+                            {% endif %}
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -293,11 +263,11 @@
                                 <th class="text-right">{{ 'Bytes'|trans }}</th>
                                 <th class="text-right">{{ 'Files'|trans }}</th>
                             </tr>
-                            {% for day in weeklyjobsstats %}
+                            {% for day, daily_stats in weekly_jobs_stats %}
                                 <tr>
-                                    <td>{{ day.dayofweek }}</td>
-                                    <td class="text-right">{{ day.jobbytes }}</td>
-                                    <td class="text-right">{{ day.jobfiles }}</td>
+                                    <td>{{ day }}</td>
+                                    <td class="text-right">{{ readable_size(daily_stats.job_bytes) }}</td>
+                                    <td class="text-right">{{ daily_stats.job_files|number_format }}</td>
                                 </tr>
                             {% else %}
                                 <tr>
@@ -337,15 +307,13 @@
                             {% for job in biggestjobs %}
                                 <tr>
                                     <td>
-                                        <form action="{{ url_for('backupjob') }}" method="post">
+                                        <form action="{{ path('backupjob') }}" method="post">
                                             <input type="hidden" name="backupjob_name" value="{{ job.name }}"/>
-                                            <button class="btn btn-link type=" submit
-                                            ">{{ job.name }}</button>
-                                            {{ csrf|raw }}
+                                            <button class="btn btn-link type="submit">{{ job.name }}</button>
                                         </form>
                                     </td>
-                                    <td class="text-right">{{ job.jobbytes }}</td>
-                                    <td class="text-right">{{ job.jobfiles }}</td>
+                                    <td class="text-right">{{ readable_size(job.jobs_bytes) }}</td>
+                                    <td class="text-right">{{ job.jobs_files|number_format }}</td>
                                 </tr>
                             {% else %}
                                 <tr>
