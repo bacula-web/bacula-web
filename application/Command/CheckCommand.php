@@ -61,12 +61,12 @@ class CheckCommand extends Command
             ]
         );
 
-        if (version_compare(PHP_VERSION, '8.0', '>=')) {
+        if (version_compare(PHP_VERSION, '8.1', '>=')) {
             $errorMessages = ['PHP version -> ok'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'info');
         } else {
             $hasErrors = true;
-            $errorMessages = ['Wrong PHP version', 'You have to upgrade PHP to at least version 8.0'];
+            $errorMessages = ['Wrong PHP version', 'You have to upgrade PHP to at least version 8.1'];
             $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
         }
         $output->writeln($formattedBlock);

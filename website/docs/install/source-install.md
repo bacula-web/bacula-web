@@ -19,11 +19,11 @@ $ cd bacula-web
 Checkout latest release tag (see [latest release tag](https://github.com/bacula-web/bacula-web/tags))
 
 ```shell
-$ git checkout v9.7.0
+$ git checkout v10.0.0
 ```
 
 :::tip
-Above example use [9.7.0 release tag](https://github.com/bacula-web/bacula-web/releases/tag/v9.7.0)
+Above example use [10.0.0 release tag](https://github.com/bacula-web/bacula-web/releases/tag/v10.0.0)
 :::
 
 Install dependencies using Composer

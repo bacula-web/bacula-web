@@ -48,7 +48,7 @@
     }
   },
   "require": {
-    "php": ">=8.0",
+    "php": ">=8.1",
     "ext-gettext": "*",
     "ext-mbstring": "*",
     "ext-openssl": "*",

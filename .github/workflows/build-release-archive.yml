@@ -16,7 +16,7 @@ jobs:
       - name: create archive
         uses: php-actions/composer@v6
         with:
-          php_version: "8.0"
+          php_version: "8.1"
           php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext
           args: "--format=tar --file=bacula-web --profile -v"
           command: archive
@@ -32,7 +32,7 @@ jobs:
       - name: composer install
         uses: php-actions/composer@v6
         with:
-          php_version: "8.0"
+          php_version: "8.1"
           php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext
           dev: no
           working_dir: "bacula-web"
