@@ -5,7 +5,7 @@ Follow instructions below to set up Bacula-Web with [Nginx](https://nginx.org/en
 :::info
 Following instructions are for [Ubuntu 24.04 (Noble Numbat)](https://www.releases.ubuntu.com/noble/).
 
-If you are using another debian based distribution, you may need to adapt some paths or packages name.
+If you are using another Debian distribution, you may need to adapt some paths and/or the name of package(s).
 :::
 
 ## Install nginx & PHP-FPM
@@ -43,69 +43,43 @@ $ sudo systemctl php8.3-fpm restart
 
 Define a new virtual server configuration like below.
 
-```
+```nginx
 server {
+    listen 80;
     server_name bacula-web.domain.com;
+    index index.php;
+
+    error_log /var/log/nginx/bacula-web.error.log;
+    access_log /var/log/nginx/bacula-web.access.log;
 
     root /var/www/bacula-web/public;
 
     location / {
-        # try to serve file directly, fallback to index.php
         try_files $uri /index.php$is_args$args;
     }
 
-    # optionally disable falling back to PHP script for the asset directories;
-    # nginx will return a 404 error when files are not found instead of passing the
-    # request to Symfony (improves performance but Symfony's 404 page is not displayed)
-    # location /bundles {
-    #     try_files $uri =404;
-    # }
-
-    location ~ ^/index\.php(/|$) {
-        # when using PHP-FPM as a unix socket
-        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
-
-        # when PHP-FPM is configured to use TCP
-        # fastcgi_pass 127.0.0.1:9000;
-
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+    location ~ \.php {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
         include fastcgi_params;
-
-        # optionally set the value of the environment variables used in the application
-        # fastcgi_param APP_ENV prod;
-        # fastcgi_param APP_SECRET <app-secret-id>;
-        # fastcgi_param DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name";
-        # When you are using symlinks to link the document root to the
-        # current version of your application, you should pass the real
-        # application path instead of the path to the symlink to PHP
-        # FPM.
-        # Otherwise, PHP's OPcache may not properly detect changes to
-        # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
-        # for more information).
-        # Caveat: When PHP-FPM is hosted on a different machine from nginx
-        #         $realpath_root may not resolve as you expect! In this case try using
-        #         $document_root instead.
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        fastcgi_param DOCUMENT_ROOT $realpath_root;
-        # Prevents URIs that include the front controller. This will 404:
-        # http://example.com/index.php/some-path
-        # Remove the internal directive to allow URIs like this
-        internal;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+        fastcgi_index index.php;
+        fastcgi_pass 127.0.0.1:9123;
     }
-
-    # return 404 for all other php files not matching the front controller
-    # this prevents access to other php files you don't want to be accessible.
-    location ~ \.php$ {
-        return 404;
-    }
-
-    error_log /var/log/nginx/bacula-web_error.log;
-    access_log /var/log/nginx/bacula-web_access.log;
 }
 ```
 
 :::warning
-Please note that as of version 8.6.0, the DocumentRoot must be set to the `public` sub-folder.
+Since v8.6.0, the **root** path must be set to the `public` subdirectory.
+
+```nginx title="prior v8.6.0"
+root /var/www/bacula-web;
+```
+
+```nginx title="using v8.6.0 and above"
+root /var/www/bacula-web/public;
+```
 :::
 
 Test your configuration
@@ -120,4 +94,11 @@ Restart Nginx to apply configuration changes
 $ sudo systemctl restart nginx
 ```
 
-You can now proceed with the installation [using Composer](../composer-install.md)
+You can now proceed with any of the installation method below
+
+- [Using the archive](../archive-install.md)
+- [Using Composer](../composer-install.md)
+
+:::tip[Running in a subdirectory]
+If you would like to setup Bacula-Web on a shared web server, please follow the instructions from the [shared web server](shared-web-server.md) page.
+:::

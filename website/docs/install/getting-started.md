@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Before starting the installation of Bacula-Web, please you meet the requirements listed below
+Before installing Bacula-Web, please ensure you meet the requirements listed below.
 
 * you have access to the server using ssh or console access
 * you have root access or sudo privileges
@@ -23,8 +23,9 @@ Bacula-Web can be installed in different way, but the recommended way is by usin
 
 You will find more details by following the links below
 
+* Install [using archive](archive-install.md)
 * Install [using Composer](composer-install.md)
-* Install [using Docker](docker-install.md)
+* Install [using Docker](docker-install)
 * Install [from source](source-install.md)
 
 :::info

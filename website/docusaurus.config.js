@@ -42,12 +42,11 @@ const config = {
                     path: 'docs',
                     sidebarPath: './sidebars.js',
                     breadcrumbs: false,
+                    lastVersion: 'current',
                     versions: {
                         current: {
                             label: '10.x',
-                            path: '10.x',
-                            banner: 'unreleased',
-                        }
+                        },
                     },
                 },
                 blog: {

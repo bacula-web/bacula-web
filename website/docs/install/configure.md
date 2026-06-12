@@ -268,7 +268,7 @@ Please read the Bacula [database user/role](../admin-guides/bacula-database-user
 
 **Examples**
 
-### Single MySQL/MariaDB Bacula catalog
+### Single MySQL Bacula catalog
 
 Truncated `config.php` file
 
@@ -347,7 +347,7 @@ Truncated `config.php` file
 :::warning
 If you define several Bacula catalog, make sure each catalog connection settings have a different id
 
-Example: 
+Example:
 
 ```php
 <?php

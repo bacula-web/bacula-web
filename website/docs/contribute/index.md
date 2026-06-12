@@ -4,35 +4,35 @@ description: Contribution guide introduction
 
 # How to contribute
 
-Bacula-Web project is a free and opensource project, and contributing to this project involves supporting its development, improvement, and documentation.
+## How ?
 
-Here’s how community users can contribute.
+The Bacula-Web project is a free and open source project, and by contributing to this project, you can support its development, improvement, and documentation.
+
+Every contribution, no matter how small, helps make Bacula-Web a better tool for the community!
+
+Here’s how anyone can contribute to this project.
 
 ## Report Issues
 
-   * Identify Bugs: If you encounter errors or malfunctions while using Bacula-Web, report them on the [project’s issue tracker](https://github.com/bacula-web/bacula-web/issues)
-     Instructions are details in the [support](../gethelp/support.md) page.
+See the [issue report guideline](reporting-issue-guideline) for further details.
 
 ## Submit Feature Requests
 
-   * Suggest Improvements: Propose new features or enhancements to improve Bacula-Web’s functionality or usability.
-   * Describe Use Cases: Explain how the proposed feature would benefit users and align with the project’s goals.
+To ask for a new feature, you should start by opening a new [discussion](https://github.com/bacula-web/bacula-web/discussions/new/choose), or contact me by e-mail at ([hello *at* bacula-web *dot* org]).
 
-## Contribute Code
+Once all details are sorted out, I'll create a proper issue on GitHub and plan the development of it.
 
-   * Bugs or Implement Features: Write code to resolve reported issues or add new functionalities.
-   * Follow Contribution Guidelines: Ensure you adhere to the project’s coding standards, commit message formats, and branch-naming conventions (typically outlined in a CONTRIBUTING.md file).
-   * Submit Pull Requests: Fork the repository, make your changes, and create a pull request with a clear explanation of what your contribution adds.
+## Contribute to source code
+
+See how you can contribute to [Bacula-Web source code](source-code.md)
+
+## Create or update translations
+
+See [how to contribute to translations](./translations)
 
 ## Donate or Sponsor
 
-If you enjoy using Bacula-Web and would like to encourage the project efforts, please consider making a small donation using one of the option below.
+If you enjoy using Bacula-Web and would like to encourage the project's efforts, please consider making a small donation using one of the options below.
 
-   * [https://buymeacoffee.com/dfranco](https://buymeacoffee.com/dfranco)
-   * [GitHub sponsor](https://github.com/sponsors/dfranco)
-
-## Getting Started
-
-You can contribute in two different way, either contributing to [Bacula-Web source code](source-code.md), or by keeping Bacula-Web [Translations](translations.md) up-to-date.
-
-Every contribution, no matter how small, helps make Bacula-Web a better tool for the community!
+* [https://buymeacoffee.com/dfranco](https://buymeacoffee.com/dfranco)
+* [GitHub sponsor](https://github.com/sponsors/dfranco)

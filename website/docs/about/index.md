@@ -5,9 +5,11 @@ description: some information about the Bacula-Web project
 
 # About the project
 
-Bacula-Web is a php web based tool that provide you a summarized view of jobs, pools and volumes. Its obtain his information from your bacula catalog database.
+## What is Bacula-Web?
 
-This tool provide you information on the last day jobs status, medias and pool usage, catalog size usage, and even more ...
+Bacula-Web is a PHP web-based tool that provides you with a summarized view of jobs, pools, and volumes. It obtains its information from your Bacula catalog database.
+
+This tool provides you with information on the last day's jobs status, media and pool usage, catalog size usage, and even more ...
 
 All features are described in the [features](/docs/about/features) page.
 
@@ -17,46 +19,46 @@ The main advantages of Bacula-Web are
 * it's easy to install (you just need a LAMP server and a valid connection to your Bacula catalog)
 * it contains a lot of information into a single page (have a look on your last jobs for example)
 
-and what's not ?
+## What's not?
 
 If you're looking for a tool able to manage Bacula like bat, Bacula-Web might not the right tool (yet).
 
-I'd advise to have a look on Bweb, baculum, BAT or Bacula Webmin plugin instead.
+I'd advise having a look on Bweb, baculum, Bacularis, BAT or Bacula Webmin plugin instead.
 
 ## The project history
 
-Bacula-Web was originally created and developed by Juan-Luis Frances Jimenez.
-He made a very nice work.
+Bacula-Web was originally created and developed by Juan-Luis Frances Jimenez, who did a fantastic job.
 
-Since the end of 2010, I was officially designed the official maintainer by Kern S. and Eric B. for this project.
+Since the end of 2010, I was officially designated the official maintainer by Kern S. and Eric B. for this project.
 
 ### Project timeline
 
 **2004 - 2008**
 
-Bacula-Web has been firstly created around 2004 by Juan Luis Frances.
-He made a really fantastic work and provide to the community a very nice tool that provide useful information about Bacula backup jobs, pools and volumes.
+Bacula-Web was first created around 2004 by Juan Luis Frances.
+He made a really fantastic work and provided to the community with a very nice tool that provide useful information about Bacula backup jobs, pools, and volumes.
 
-Then from 2004 to 2008, the  project was maintained by Juan Luis Frances making bug fixes and improvements.
+Then, from 2004 to 2008, the  project was maintained by Juan Luis Frances, making bug fixes and improvements.
 
 **2010 - the project revival**
 
 *Why reviving this project ?*
 
-Since November 2010, this project got a new official maintainer and a new beginning.
+Since November 2010, this project has had a new official maintainer and a new beginning.
 
-Since several years, I use Bacula for personal and professional purpose.
+For several years, I have been using Bacula for personal and professional purposes.
 
-Then I was looking for a web based tool which can provide me useful information about last backup jobs, pools usage, volumes, etc.
+Then I was looking for a web-based tool that could provide me with useful information about last backup jobs, pools usage, volumes, etc.
 
-My first look were on webacula and bweb which are very good tool to use and features full but they look maybe pretty much not easy to install and configure.
-Then, I've found Bacula-Web which at this time, wasn't maintained since few years.
+My first look was on webacula and bweb, which are very good tools to use and features full but they look maybe pretty much not easy to install and configure.
+Then, I've found Bacula-Web, which at this time, wasn't maintained for a few years.
 
-After I've submitted some patches to Bacula developers, I proposed to become the official maintainer of this project. So the project revival started on July 2010.
+After I've submitted some patches to Bacula developers, I proposed to become the official maintainer of this project. So the project revival started in July 2010.
+
+I do use Bacula-Web for personal usage every single day, and the idea was simply to share those improvements with the Bacula community
 
 ## Third-party tools and libraries
 
-Bacula-Web use the following tools and libraries
 Bacula-Web uses the following tools and libraries.
 
 | Component                                                    | License           |
@@ -82,18 +84,18 @@ Bacula-Web uses the following tools and libraries.
 
 Bacula-Web was successfully tested with
 
-* Mozilla Firefox 94.0.1
-* Google Chrome 95.0.4638.69
-* Brave version 1.31.88
-* Microsoft Edge 95.0.1020.44
+* Mozilla Firefox
+* Google Chrome
+* Brave version
+* Microsoft Edge
 
 ::::tip
-Bacula-Web needs Javascript and Cookies to run well in your web browser, do not disable one of those.
+Bacula-Web needs JavaScript and Cookies to run well in your web browser (do not disable one of those).
 ::::
 
 ## Translations
 
-Bacula-Web language is by default in english, but it's also translated in not less than 15 languages
+Bacula-Web language is by default in English, but it's also translated into not least 15 languages.
 
 * Belarusian
 * Catalan
@@ -116,22 +118,19 @@ I would like to say **thank you very much** to all people involved in Bacula-Web
 You're all doing a fantastic job !!!
 
 ::::tip
-
-If you want to contribute in maintaining translations for a language or add a new one, have a look at the [contribution page](/docs/contribute/translations).
-
+If you want to contribute to maintaining translations for a language or add a new one, have a look at the [contribution page](/docs/contribute/translations).
 ::::
 
 ## About Bacula
 
-Bacula is a set of Open Source, enterprise ready, computer programs that permit you (or the system administrator) to manage backup, recovery, and verification of computer data across a network of computers of different kinds. Bacula is relatively easy to use and efficient, while offering many advanced storage management features that make it easy to find and recover lost or damaged files. In technical terms, it is an Open Source, enterprise ready, network based backup program (source [www.bacula.org](https://www.bacula.org)).
+Bacula is a set of Open Source, enterprise-ready computer programs that permit you (or the system administrator) to manage backup, recovery, and verification of computer data across a network of computers of different kinds. Bacula is relatively easy to use and efficient, while offering many advanced storage management features that make it easy to find and recover lost or damaged files. In technical terms, it is an Open Source, enterprise-ready, network-based backup program (source [www.bacula.org](https://www.bacula.org)).
 
-IMHO, Bacula is a great open source backup tool (for professional and private purpose)
+IMHO, Bacula is a great open source backup tool (for professional and private purposes)
 
-About myself
-------------
+## About me
 
 I've discovered Linux with [Slackware](http://www.slackware.com/) maybe around 1995 ( I know, I'm an old guy).
-Since this time, I had some experiences with
+Since this time, I have had some experiences with
 
 * Enterprise oriented linux distros
 * Database such as MySQL, postGreSQL, Oracle, etc...
@@ -140,22 +139,22 @@ Since this time, I had some experiences with
 * Networking skills
 * Programming (Javascript, PHP, C++, Pascal, bash, perl, etc.)
 
-And many more stuff that I'll not describe there (it's not a resume, it's just a simple presentation about myself ;)
+And many more things that I'll not describe there (it's not a resume, it's just a simple presentation about myself ;)
 
 My preferred Linux distros is [Gentoo](https://www.gentoo.org/) and I use [Centos](https://www.centos.org/) for labs, development and testing
 
-Others good tools
------------------
+## Other good tools
 
-There are a lot of tool which can help you administering, monitoring and configuring Bacula like
+There are a lot of tools which can help you administer, monitor and configure Bacula like
 
 * Bacula module in [Webmin](http://www.webmin.com/index.html)
 * [Bacula Status](https://github.com/evaldoprestes/baculastatus)
-* [Reportula](https://www.reportula.org)
-* [baculum](https://www.bacula.org/7.4.x-manuals/en/console/Baculum_Web_GUI_Tool.html)
 * [breport](https://breport.sourceforge.net) - The Bacula Reporter
-* bat
+* bat (Bacula Admin Tool GUI)
 * [Webacula](https://webacula.sourceforge.net/)
+* [Reportula](https://github.com/oliveiraped/Reportula)
+* [Baculum](https://www.bacula.org/15.0.x-manuals/en/console/Baculum_API_Web_GUI_Tools.html)
+* [Bacularis](https://bacularis.app/)
 * and many others ...
 
-You can find a complete [list of GUI](https://www.bacula.org/manuals/en/console/console/GUI_Programs.html) on the Bacula's website
+You can also find a complete list of GUIs on Bacula's website.

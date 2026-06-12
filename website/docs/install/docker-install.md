@@ -1,9 +1,246 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Install using Docker
 
-## Resources
-
-More details are available at [https://hub.docker.com/r/baculaweb/bacula-web](https://hub.docker.com/r/baculaweb/bacula-web)
-
-::::note
-Bacula-Web Docker image are available since since version 8.7.0
+::::note[Available since v8.7.0]
 ::::
+
+## Requirements
+
+- `docker` installed and properly configured, and `docker compose` addon installed
+- your user is a member of the `docker` group (or you're allowed to run the `sudo` command)
+
+::::tip[Links to Docker documentation]
+- [Getting started with Docker](https://docs.docker.com/get-started/)
+- [Docker Compose documentation](https://docs.docker.com/compose/)
+  ::::
+
+## Available tags
+
+| tag           | description                         |
+|---------------|-------------------------------------|
+| `latest`      | Latest release                      |
+| `nightly-9.x` | Nightly build from branch dev-9.x   |
+| `v<version>`  | Released version (example: v10.0.0) |
+
+## Supported architectures
+
+- linux/amd64
+- linux/arm64
+
+## Getting started
+
+### Prepare the configuration
+
+Create a `bacula-web` folder and move into it
+
+```shell
+mkdir ~/bacula-web && cd bacula-web
+```
+
+Download the `config.php.sample` PHP config file.
+
+```shell
+curl -L https://raw.githubusercontent.com/bacula-web/bacula-web/master/application/config/config.php.sample > config.php
+```
+
+### Configure Bacula director catalog database
+
+::::warning[Mandatory]
+::::
+
+Configure at least one Bacula director database connection to the 'config.php` file and update the other settings if needed.
+
+For more details, refer to the [General Configuration](configure#general-settings) or [Bacula Catalog Database Connection](configure#database-connection-settings) sections.
+
+::::tip
+You can also use the `application/config/config.php` if you've previously installed Bacula-Web on another server and
+want to keep the same configuration.
+::::
+
+### Authentication
+
+In order to authenticate users, you need to
+
+- create an SQLite database file (stored in `application/assets/protected/application.db`) to store users' credentials and details
+- create your first user
+
+::::tip
+Additional users can be created using the web UI after setup is complete.
+::::
+
+Create a directory named `protected` in the current working directory.
+
+```shell
+mkdir protected
+```
+
+Create the users database and first user
+
+```shell
+docker run --rm -it -u www-data \
+  -v $PWD/protected:/var/www/html/application/assets/protected \
+  baculaweb/bacula-web:latest php bwc setupauth
+```
+
+```shell title="Output example"
+It's now time to set up the application back-end database
+[Important!] Please note that all information stored in the user database will be destroyed
+Can we proceed ?
+  [0] yes
+  [1] no
+ > 0
+You have selected: yes
+Deleting the users' authentication database
+Creating database schema
+Database created
+User creation
+Username: admin
+Email: admin@acme.net
+Password:
+ User created successfully
+You can now connect to your Bacula-Web instance using the provided credentials.
+```
+
+After providing all the necessary information, the SQLite database and the new user should be created.
+
+## Start the container
+
+### Using Docker Compose
+
+The easiest way to use the Bacula-Web Docker image is by using [Docker Compose](https://docs.docker.com/compose/)
+
+Create a `docker-compose.yml` file in the current directory.
+
+```yaml title="docker-compose.yml"
+services:
+  bacula-web:
+    image: baculaweb/bacula-web:latest
+    container_name: "bacula-web"
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ${PWD}/config.php:/var/www/html/application/config/config.php
+      - ${PWD}/protected:/var/www/html/application/assets/protected
+```
+
+::::tip[Docker image tag]
+In the above example, we use the `:latest` Docker image tag, which refers to the latest released version.
+
+But you can, of course, set it to any [available release tag (e.g: v9.8.0)](https://hub.docker.com/repository/docker/baculaweb/bacula-web/tags)
+::::
+
+To start the Docker container, run
+
+```shell
+docker-compose up -d
+```
+
+### Using docker run
+
+You can also simply use the `docker run` command.
+
+```shell
+docker run --rm --name bacula-web \
+  -d -p 8000:80 \
+  -v $PWD/config.php:/var/www/html/application/config/config.php \
+  -v $PWD/protected:/var/www/html/application/assets/protected \
+  baculaweb/bacula-web:latest
+```
+
+If you've followed the above instructions, Bacula-Web should be available using your web browser at [http://localhost:8080](http://localhost:8080)
+
+### Bacula with SQLite catalog database
+
+If you are using Bacula with SQLite catalog database, you must run the Docker container on the same server running the Bacula director.
+
+You can use the instructions below to bind the Bacula SQLite database into the Docker container.
+
+<Tabs>
+    <TabItem value="docker-run" label="Using docker run" default>
+        ```shell
+        docker run --rm --name bacula-web -d -p 8000:80 \
+        -v $PWD/config.php:/var/www/html/application/config/config.php \
+        -v $PWD/protected:/var/www/html/application/assets/protected \
+        -v /var/lib/bacula/bacula.db:/var/lib/bacula/bacula.db \
+        baculaweb/bacula-web:latest
+        ```
+    </TabItem>
+    <TabItem value="docker-compose" label="Using docker compose">
+        ```yaml title="docker-compose.yml"
+        services:
+          web:
+            image: baculaweb/bacula-web:latest
+            container_name: "bacula-web"
+            restart: unless-stopped
+            ports:
+              - "8080:80"
+            volumes:
+              - ${PWD}/config.php:/var/www/html/application/config/config.php
+              - ${PWD}/protected:/var/www/html/application/assets/protected
+              - /var/lib/bacula/bacula.db:/var/www/html/application/assets/protected:ro
+        ```
+        Start the Docker container
+        ```shell
+        docker-compose up -d
+        ```
+    </TabItem>
+</Tabs>
+
+::::tip
+If you get the error below
+
+**SQLSTATE[HY000] [14] unable to open database file**
+
+Make sure your user have read permission the
+`/var/lib/bacula/bacula.db` file.
+
+A simple way to fix this is to add current user to the `bacula` group.
+
+```shell
+sudo usermod -a -G bacula <your-username>
+```
+::::
+
+## Troubleshoot
+
+A few troubleshooting tips
+
+### Check container status
+
+<Tabs>
+  <TabItem value="docker-run" label="Using docker run" default>
+```shell
+docker ps
+```
+  </TabItem>
+  <TabItem value="docker-compose" label="Using docker compose">
+```shell
+docker-compose ps
+```
+  </TabItem>
+</Tabs>
+
+
+### Docker container logs
+
+If you have used the `docker-compose.yml` file with Docker Compose, you can check the container logs as shown below.
+
+<Tabs>
+    <TabItem value="docker-run" label="Using docker run" default>
+        ```shell
+        docker logs bacula-web -f --tail 50
+        ```
+    </TabItem>
+    <TabItem value="docker-compose" label="Using docker compose">
+        ```shell
+        docker-compose logs -f --tail 50
+        ```
+    </TabItem>
+</Tabs>
+
+## Docker registry
+
+Bacula-Web Docker image is available at [DockerHub](https://hub.docker.com/r/baculaweb/bacula-web)

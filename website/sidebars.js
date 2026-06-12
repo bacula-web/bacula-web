@@ -29,7 +29,8 @@ export default {
                                 'install/php/index',
                                 'install/web-server/apache',
                                 'install/web-server/nginx',
-                                'install/web-server/lighttpd'
+                                'install/web-server/lighttpd',
+                                "install/web-server/shared-web-server"
                             ],
                         },
                         {
@@ -40,9 +41,10 @@ export default {
                                 title: 'Installation options',
                             },
                             items: [
-                                'install/composer-install',
-                                'install/docker-install',
-                                'install/source-install',
+                                "install/archive-install",
+                                "install/composer-install",
+                                "install/docker-install",
+                                "install/source-install"
                             ],
                         },
                         'install/configure',
@@ -71,19 +73,19 @@ export default {
                 'admin-guides/references'
             ]
         },
+        "gethelp/index",
         {
-            type: 'category',
-            label: 'Get help',
-            link: {
-                type: 'generated-index',
-            },
-            collapsed: true,
-            items: [
-                'gethelp/index',
-                'gethelp/faq',
-                'gethelp/support'
+            "type": "category",
+            "label": "Contributing",
+            "collapsed": true,
+            "items": [
+                "contribute/index",
+                "contribute/reporting-issue-guideline",
+                "contribute/source-code",
+                "contribute/translations"
             ]
         },
+        "faq",
         {
             type: 'category',
             label: 'About',
@@ -105,6 +107,7 @@ export default {
             collapsed: true,
             items: [
                 'contribute/index',
+                "contribute/reporting-issue-guideline",
                 'contribute/source-code',
                 'contribute/translations'
             ],
