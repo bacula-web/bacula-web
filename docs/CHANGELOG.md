@@ -1,5 +1,16 @@
 # Changelog
 
+## [10.0.0](https://github.com/bacula-web/bacula-web/compare/v9.9.5...v10.0.0) (2026-06-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* The minimum required PHP version is now 8.1. Users on PHP 8.0 or lower must upgrade their runtime to install this version.
+
+### chore
+
+* require php 8,1 as as minimum version ([fa1812e](https://github.com/bacula-web/bacula-web/commit/fa1812e67c439813fdafa8fed85a7d48fd5bc96f))
+
 ## [9.9.5](https://github.com/bacula-web/bacula-web/compare/v9.9.4...v9.9.5) (2026-03-04)
 
 
