@@ -22,13 +22,19 @@ declare(strict_types=1);
 namespace App\Entity\Bacula\Repository;
 
 use App\Entity\Bacula\Pool;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * This is the Doctrine Repository class for the Pool entity.
  */
-class PoolRepository extends EntityRepository
+class PoolRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Pool::class);
+    }
+
     /**
      * @param bool $hideEmpty
      * @return Pool[]
