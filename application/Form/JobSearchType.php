@@ -25,7 +25,7 @@ use App\Entity\Bacula\Client;
 use App\Entity\Bacula\Pool;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use JobSearch;
+use App\Entity\Bacula\JobSearch;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
