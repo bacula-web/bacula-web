@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.0.1](https://github.com/bacula-web/bacula-web/compare/v10.0.0...v10.0.1) (2026-08-30)
+
+
+### 🐛 Bug Fixes
+
+* error rendering job log ([de1a4a0](https://github.com/bacula-web/bacula-web/commit/de1a4a08161488a15c8a26680bbb82fd61e6504f)), closes [#297](https://github.com/bacula-web/bacula-web/issues/297)
+
 ## [10.0.0](https://github.com/bacula-web/bacula-web/compare/v9.9.5...v10.0.0) (2026-06-12)
 
 
