@@ -36,7 +36,7 @@
                         <p class="card-text">{{ job.level }}</p>
 
                         <h5 class="card-title">{{ 'Pool'|trans }}</h5>
-                        <p class="card-text">{{ job.pool.name }}</p>
+                        <p class="card-text">{{ job.pool.id ? job.pool.name : 'n/a' }}</p>
                     </div>
                 </div>
             </div>
