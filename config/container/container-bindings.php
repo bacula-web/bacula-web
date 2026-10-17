@@ -190,6 +190,7 @@ return ['settings' => [
             $connection = DriverManager::getConnection([
                 'driver' => 'pdo_' . FileConfig::get_Value('db_type', $catalogId),
                 'dbname' => FileConfig::get_Value('db_name', $catalogId),
+                'port' => FileConfig::get_Value('db_port', $catalogId),
                 'user' => FileConfig::get_Value('login', $catalogId),
                 'password' => FileConfig::get_Value('password', $catalogId),
                 'host' => FileConfig::get_Value('host', $catalogId)
