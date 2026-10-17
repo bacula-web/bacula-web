@@ -9,7 +9,7 @@ on:
       - 'website/**'
       - 'docs/**'
     branches:
-      - 'dev-9.x'
+      - '10.x'
 
 jobs:
   docker:
