@@ -1,5 +1,13 @@
 # Changelog
 
+## [10.0.2](https://github.com/bacula-web/bacula-web/compare/v10.0.1...v10.0.2) (2026-10-24)
+
+
+### 🐛 Bug Fixes
+
+* **docker:** bump PHP to 8.5.12 for PHP2Shell (CVE-2026-109618, CVE-2026-109619) ([#330](https://github.com/bacula-web/bacula-web/issues/330)) ([d3622bd](https://github.com/bacula-web/bacula-web/commit/d3622bdb208efddd9aec6dfa2a76293d9607a9d4))
+* unused custom database port ([103574c](https://github.com/bacula-web/bacula-web/commit/103574c73a00e8801c1bbe4d5939c82b1537dc17)), closes [#323](https://github.com/bacula-web/bacula-web/issues/323)
+
 ## [10.0.1](https://github.com/bacula-web/bacula-web/compare/v10.0.0...v10.0.1) (2026-09-26)
 
 
