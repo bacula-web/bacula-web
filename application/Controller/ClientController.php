@@ -63,7 +63,6 @@ class ClientController extends AbstractController
     ): ResponseInterface {
         $tplData = [];
 
-        $period = 7;
         $backup_jobs = array();
         $days_stored_bytes = array();
         $days_stored_files = array();
