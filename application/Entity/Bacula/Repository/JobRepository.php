@@ -22,8 +22,11 @@ declare(strict_types=1);
 namespace App\Entity\Bacula\Repository;
 
 use App\Entity\Bacula\Job;
+use Carbon\Carbon;
+use DateTimeInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 class JobRepository extends EntityRepository
 {
@@ -109,5 +112,67 @@ class JobRepository extends EntityRepository
         }
 
         return $usedTypes;
+    }
+
+    /**
+     * @param string $status
+     * @param int|null $start
+     * @param int|null $end
+     * @return int
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function countJobsByStatus(string $status, int $start = null, int $end  = null): int
+    {
+        $queryBuilder = $this->createQueryBuilder('j');
+
+        $queryBuilder->select('COUNT(j.id)');
+
+        switch ($status) {
+            case 'running':
+                $queryBuilder
+                    ->andWhere('j.status = :status')
+                    ->setParameter('status', 'R');
+                break;
+            case 'completed':
+                $queryBuilder
+                    ->andWhere('j.status = :status')
+                    ->setParameter('status', 'T');
+                break;
+            case 'completed_with_errors':
+                $queryBuilder
+                    ->andWhere('j.status IN(:status)')
+                    ->setParameter('status', ['E', 'e']);
+                break;
+            case 'waiting':
+                $queryBuilder
+                    ->andWhere('j.status IN(:status)')
+                    ->setParameter('status', ['F', 'S', 'M', 'm', 's', 'j', 'c', 'd', 't', 'p', 'C']);
+                break;
+            case 'failed':
+                $queryBuilder
+                    ->andWhere('j.status = :status')
+                    ->setParameter('status', 'f');
+                break;
+            case 'canceled':
+                $queryBuilder
+                    ->andWhere('j.status = :status')
+                    ->setParameter('status', 'A');
+                break;
+        }
+
+        if( $start && $end) {
+            $startDate = Carbon::createFromTimestamp($start);
+            $endDate = Carbon::createFromTimestamp($end);
+
+            $queryBuilder
+                ->andWhere('j.endtime BETWEEN :start AND :end')
+                ->setParameter('start', $startDate)
+                ->setParameter('end', $endDate);
+        }
+
+        return (int) $queryBuilder
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

@@ -20,6 +20,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Bacula\Job;
 use App\Table\JobTable;
 use App\Table\PoolTable;
 use App\Table\VolumeTable;
@@ -64,6 +65,7 @@ class HomeController extends AbstractController
         PoolTable $poolTable,
         VolumeTable $volumeTable
     ): ResponseInterface {
+        $em = $this->managerRegistry->getManager('bacula');
         $tplData = [];
 
         $routeContext = RouteContext::fromRequest($request);
@@ -132,13 +134,14 @@ class HomeController extends AbstractController
         $dateFormat = 'l, F j o';
         $tplData['literal_period'] = date($dateFormat, $custom_period[0]) . ' to ' . date($dateFormat, $custom_period[1]);
 
-        // Running, completed, failed, waiting and canceled jobTable status over last 24 hours
-        $tplData['running_jobs'] = $jobTable->count_Jobs($custom_period, 'running');
-        $tplData['completed_jobs'] = $jobTable->count_Jobs($custom_period, 'completed');
-        $tplData['completed_with_errors_jobs'] = $jobTable->count_Jobs($custom_period, 'completed with errors');
-        $tplData['failed_jobs'] = $jobTable->count_Jobs($custom_period, 'failed');
-        $tplData['waiting_jobs'] = $jobTable->count_Jobs($custom_period, 'waiting');
-        $tplData['canceled_jobs'] = $jobTable->count_Jobs($custom_period, 'canceled');
+        // Running, completed, failed, waiting and canceled jobTable status for the selected period
+        $jobRepository = $em->getRepository(Job::class);
+        $tplData['running_jobs'] = $jobRepository->countJobsByStatus('running', $custom_period[0], $custom_period[1]);
+        $tplData['completed_jobs'] = $jobRepository->countJobsByStatus('completed', $custom_period[0], $custom_period[1]);
+        $tplData['completed_with_errors_jobs'] = $jobRepository->countJobsByStatus('completed_with_errors', $custom_period[0], $custom_period[1]);
+        $tplData['failed_jobs'] = $jobRepository->countJobsByStatus('failed', $custom_period[0], $custom_period[1]);
+        $tplData['waiting_jobs'] = $jobRepository->countJobsByStatus('waiting', $custom_period[0], $custom_period[1]);
+        $tplData['canceled_jobs'] = $jobRepository->countJobsByStatus('canceled', $custom_period[0], $custom_period[1]);
 
         // Stored files number
         $tplData['stored_files'] = number_format($jobTable->getStoredFiles($no_period));
