@@ -175,4 +175,24 @@ class JobRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * @param string $level
+     * @param int|null $start
+     * @param int|null $end
+     * @return int
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function countJobsByLevel(string $level, int $start = null, int $end  = null): int
+    {
+        $queryBuilder = $this->createQueryBuilder('j');
+        $queryBuilder->select('COUNT(j.id)');
+
+        return (int) $queryBuilder
+            ->andWhere('j.level = :level')
+            ->setParameter('level', $level)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

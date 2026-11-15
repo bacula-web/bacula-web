@@ -150,20 +150,20 @@ class HomeController extends AbstractController
         $tplData['bytes_last'] = CUtils::GetHumanSize($jobTable->getStoredBytes($custom_period));
         $tplData['files_last'] = number_format($jobTable->getStoredFiles($custom_period));
 
-        // Incremental, Differential and Full jobTable over the last 24 hours
-        $tplData['incr_jobs'] = $jobTable->count_Jobs($custom_period, null, J_INCR);
-        $tplData['diff_jobs'] = $jobTable->count_Jobs($custom_period, null, J_DIFF);
-        $tplData['full_jobs'] = $jobTable->count_Jobs($custom_period, null, J_FULL);
+        // Incremental, Differential and Full jobTable over the selected period
+        $tplData['incr_jobs'] = $jobRepository->countJobsByLevel(J_INCR, $custom_period[0], $custom_period[1]);
+        $tplData['diff_jobs'] = $jobRepository->countJobsByLevel(J_DIFF, $custom_period[0], $custom_period[1]);
+        $tplData['full_jobs'] = $jobRepository->countJobsByLevel(J_FULL, $custom_period[0], $custom_period[1]);
 
         // ==============================================================
         // Last period <Job status graph>
         // ==============================================================
 
-        $jobs_status = array('Running', 'Completed', 'Completed with errors', 'Waiting', 'Failed', 'Canceled');
+        $jobs_status = array('Running', 'Completed', 'Completed_with_errors', 'Waiting', 'Failed', 'Canceled');
         $jobs_status_data = array();
 
         foreach ($jobs_status as $status) {
-            $jobs_count = $jobTable->count_Jobs($custom_period, strtolower($status));
+            $jobs_count = $jobRepository->countJobsByStatus(strtolower($status), $custom_period[0], $custom_period[1]);
             $jobs_status_data[] = array($status, $jobs_count);
         }
 
