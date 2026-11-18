@@ -21,6 +21,7 @@ declare(strict_types=1);
 
 namespace App\Entity\Bacula\Repository;
 
+use App\Entity\Bacula\Client;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -32,7 +33,7 @@ class ClientRepository extends EntityRepository
      * Return an array of clients (optionally only active clients)
      *
      * @param bool $showInactiveClient
-     * @return array
+     * @return array<Client>
      */
     public function getClients(bool $showInactiveClient = false): array
     {

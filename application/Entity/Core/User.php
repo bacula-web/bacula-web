@@ -98,6 +98,6 @@ class User
      */
     public function setPassword(string $password): void
     {
-        $this->passwordhash = password_hash($password, CRYPT_BLOWFISH);
+        $this->passwordhash = password_hash($password, PASSWORD_BCRYPT);
     }
 }

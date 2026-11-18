@@ -17,10 +17,10 @@ class Pool
     #[ORM\Column(name: 'Name', type: 'string')]
     private string $name;
 
-    #[ORM\OneToMany(mappedBy: 'pool', targetEntity: Volume::class)]
     /**
-     * @var Collection
+     * @var Collection<Volume>
      */
+    #[ORM\OneToMany(mappedBy: 'pool', targetEntity: Volume::class)]
     private Collection $volumes;
 
     #[ORM\Column(type: "integer")]

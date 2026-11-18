@@ -53,7 +53,7 @@ class Volume
 
     #[ORM\ManyToOne(targetEntity: Pool::class, inversedBy: 'volumes')]
     #[ORM\JoinColumn(name: 'PoolId', referencedColumnName: 'PoolId')]
-    private Pool $pool;
+    private ?Pool $pool;
 
     #[ORM\Column(name: 'VolBytes', type: 'integer')]
     private int $volbytes;
@@ -67,16 +67,10 @@ class Volume
     #[ORM\Column(name: "PoolId", type: "integer")]
     private int $poolId;
 
-    /**
-     * @var string|null
-     */
-    #[ORM\Column(name: "FirstWritten", type: "string")]
+    #[ORM\Column(name: "FirstWritten", type: "string", nullable: true)]
     private ?string $firstwritten;
 
-    /**
-     * @var string|null
-     */
-    #[ORM\Column(name: "LastWritten", type: "string")]
+    #[ORM\Column(name: "LastWritten", type: "string", nullable: true)]
     private ?string $lastwritten;
 
     #[ORM\Column(name: 'VolMounts', type: 'integer')]

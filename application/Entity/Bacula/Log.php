@@ -44,7 +44,7 @@ class Log
 
     #[ORM\ManyToOne(targetEntity: Job::class, inversedBy: "logs")]
     #[ORM\JoinColumn(name: "JobId", referencedColumnName: "JobId")]
-    private Job $job;
+    private ?Job $job;
 
     /**
      * @return string

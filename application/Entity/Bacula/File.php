@@ -36,19 +36,19 @@ class File
     #[ORM\Column(type: "integer", name: "JobId")]
     private int $jobid;
 
-    #[ORM\Column(type: "integer", name: "PathId")]
+    #[ORM\Column(type: "integer", name: "PathId", nullable: true)]
     private ?int $pathid;
 
-    #[ORM\Column(type: "integer", name: "FileIndex")]
+    #[ORM\Column(type: "integer", name: "FileIndex", nullable: true)]
     private ?int $fileindex;
 
     #[ORM\JoinColumn(name: "JobId", referencedColumnName: "JobId")]
     #[ORM\ManyToOne(targetEntity: "App\Entity\Bacula\Job", inversedBy: "files")]
-    private Job $job;
+    private ?Job $job;
 
     #[ORM\JoinColumn(name: "PathId", referencedColumnName: "PathId")]
     #[ORM\OneToOne(targetEntity: "App\Entity\Bacula\Path")]
-    private Path $path;
+    private ?Path $path;
 
     #[ORM\Column(type: "string", name: "Filename")]
     private string $filename;

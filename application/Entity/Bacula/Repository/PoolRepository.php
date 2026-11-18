@@ -50,7 +50,7 @@ class PoolRepository extends EntityRepository
 
     /**
      * @param bool $hideEmpty
-     * @return array
+     * @return array<Pool>
      */
     public function getPoolsList(bool $hideEmpty = true): array
     {

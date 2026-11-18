@@ -24,8 +24,10 @@ namespace App\Entity\Bacula;
 use App\Entity\Bacula\Repository\JobRepository;
 use Carbon\Carbon;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: JobRepository::class)]
 #[ORM\Table(name: 'Job')]
@@ -75,7 +77,7 @@ class Job
 
     #[ORM\JoinColumn(name: "ClientId", referencedColumnName: "ClientId")]
     #[ORM\ManyToOne(targetEntity: Client::class)]
-    private Client $client;
+    private ?Client $client;
 
     #[ORM\Column(name: 'Level', type: 'string')]
     private string $level;
@@ -91,13 +93,16 @@ class Job
 
     #[ORM\OneToOne(targetEntity: Status::class)]
     #[ORM\JoinColumn(name: "JobStatus", referencedColumnName: "JobStatus")]
-    private Status $status;
+    private ?Status $status;
 
     /**
      * @var string
      */
     private string $statusIcon;
 
+    /**
+     * @var Collection<Log>
+     */
     #[ORM\OneToMany(mappedBy: 'job', targetEntity: Log::class)]
     private Collection $logs;
 
@@ -108,13 +113,13 @@ class Job
     #[ORM\Column(name: 'PoolId', type: 'integer')]
     private int $poolid;
 
-    #[ORM\Column(name: 'SchedTime', type: 'datetime')]
+    #[ORM\Column(name: 'SchedTime', type: Types::DATETIME_MUTABLE)]
     private DateTime $scheduledTime;
 
-    #[ORM\Column(name: 'StartTime', type: 'datetime')]
+    #[ORM\Column(name: 'StartTime', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTime $starttime;
 
-    #[ORM\Column(name: 'EndTime', type: 'datetime')]
+    #[ORM\Column(name: 'EndTime', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTime $endtime;
 
     /**
