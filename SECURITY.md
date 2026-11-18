@@ -6,8 +6,8 @@ Please find below a list of supported Bacula-Web versions
 
 | Version | Supported          |
 |---------|--------------------|
-| 8.0.x   | :white_check_mark: |
-| < 8.0.0 | :x:                |
+| 9.7.1   | :white_check_mark: |
+| < 9.7.1 | :x:                |
 
 ## Reporting a Vulnerability
 
