@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.0.3](https://github.com/bacula-web/bacula-web/compare/v10.0.2...v10.0.3) (2026-11-18)
+
+
+### 🐛 Bug Fixes
+
+* amount of completed jobs in dashboard ([3e48182](https://github.com/bacula-web/bacula-web/commit/3e48182b6dfe39e9b889903996fc816097f98559))
+
 ## [10.0.2](https://github.com/bacula-web/bacula-web/compare/v10.0.1...v10.0.2) (2026-10-24)
 
 
