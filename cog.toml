@@ -20,5 +20,3 @@ path = "CHANGELOG.md"
 authors = []
 
 [bump_profiles]
-
-[packages]
