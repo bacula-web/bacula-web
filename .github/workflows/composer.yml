@@ -42,3 +42,9 @@ jobs:
         php_version: "${{ matrix.version }}"
         php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext openssl pdo sqlite3 posix
         command: check
+
+    - uses: php-actions/composer@v6
+      with:
+        php_version: "${{ matrix.version }}"
+        php_extensions: pdo_mysql pdo_sqlite pdo_pgsql gettext openssl pdo sqlite3 posix
+        command: audit
