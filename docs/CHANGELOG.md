@@ -1,5 +1,14 @@
 # Changelog
 
+## [10.0.3](https://github.com/bacula-web/bacula-web/compare/v10.0.2...v10.0.3) (2026-11-26)
+
+
+### 🐛 Bug Fixes
+
+* amount of completed jobs in dashboard ([3e48182](https://github.com/bacula-web/bacula-web/commit/3e48182b6dfe39e9b889903996fc816097f98559))
+* font weight of files statistics graph header ([d82cafd](https://github.com/bacula-web/bacula-web/commit/d82cafdfb7a14b24a90e262a92055703328e7a00))
+* php docker image tag to fix security issues ([bb8a809](https://github.com/bacula-web/bacula-web/commit/bb8a80980408fe5fa0b2f4a4fb1d4a006d2b72cd))
+
 ## [10.0.2](https://github.com/bacula-web/bacula-web/compare/v10.0.1...v10.0.2) (2026-10-24)
 
 
