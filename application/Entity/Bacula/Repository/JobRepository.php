@@ -122,7 +122,7 @@ class JobRepository extends EntityRepository
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function countJobsByStatus(string $status, int $start = null, int $end  = null): int
+    public function countJobsByStatus(string $status, int $start = null, int $end = null): int
     {
         $queryBuilder = $this->createQueryBuilder('j');
 
@@ -161,7 +161,7 @@ class JobRepository extends EntityRepository
                 break;
         }
 
-        if( $start && $end) {
+        if ($start && $end) {
             $startDate = Carbon::createFromTimestamp($start);
             $endDate = Carbon::createFromTimestamp($end);
 
@@ -184,7 +184,7 @@ class JobRepository extends EntityRepository
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function countJobsByLevel(string $level, int $start = null, int $end  = null): int
+    public function countJobsByLevel(string $level, int $start = null, int $end = null): int
     {
         $queryBuilder = $this->createQueryBuilder('j');
         $queryBuilder->select('COUNT(j.id)');

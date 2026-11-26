@@ -57,8 +57,7 @@ class PoolRepository extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('p');
         $queryBuilder->select('p');
 
-        if($hideEmpty)
-        {
+        if ($hideEmpty) {
             $queryBuilder->andWhere('p.numvols > 0');
         }
         return $queryBuilder->getQuery()->getResult();
