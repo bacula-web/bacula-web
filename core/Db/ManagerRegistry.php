@@ -49,7 +49,7 @@ class ManagerRegistry extends AbstractManagerRegistry
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    protected function getService(string $name): mixed
+    protected function getService(string $name): object
     {
         return $this->container->get($name);
     }
